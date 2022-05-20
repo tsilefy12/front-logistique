@@ -1,0 +1,1 @@
+{"buildTargets":["start_dev_container","start_dev_container_detach","start_pord_container","start_pord_container_detach","stop_dev_container","stop_pord_container"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}
