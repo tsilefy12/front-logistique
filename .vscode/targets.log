@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri May 20 21:01:27 2022
+# Make data base, printed on Tue May 31 09:03:26 2022
 
 # Variables
 
@@ -17,7 +17,7 @@ GDK_BACKEND = x11
 # environment
 LC_ALL = C
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-51f4800e-0c52-4eca-b448-cd57887d6e03.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-c25dd6ad-6a6f-4892-8bad-07f9931f0adb.sock
 # environment
 VSCODE_CWD = /home/randry/Documents/projects/haisoa/MV/base_nextjs
 # environment
@@ -59,11 +59,11 @@ XAUTHORITY = /run/user/1000/gdm/Xauthority
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.166
+GNOME_TERMINAL_SERVICE = :1.136
 # makefile
 MAKEFLAGS = pqrR
 # environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=fa48867bb8284b9521df71dd62874de1
+DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=4ae07af0b6a8cdd84f02e0f062959120
 # makefile
 CURDIR := /home/randry/Documents/projects/haisoa/MV/base_nextjs
 # environment
@@ -89,19 +89,19 @@ MAKEFILE_LIST := makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 49088
+VSCODE_PID = 24310
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/debian:@/tmp/.ICE-unix/1935,unix/debian:/tmp/.ICE-unix/1935
+SESSION_MANAGER = local/debian:@/tmp/.ICE-unix/2386,unix/debian:/tmp/.ICE-unix/2386
 # automatic
 *F = $(notdir $*)
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=fa48867bb8284b9521df71dd62874de1
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=4ae07af0b6a8cdd84f02e0f062959120
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -121,7 +121,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/999ba68a_7bfb_4854_bde6_f0311a1b2c1d
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/141164fc_c001_4a67_aca9_48b8ab0f85ee
 # environment
 MAKELEVEL := 0
 # default
@@ -165,7 +165,7 @@ MAKE_VERSION := 4.3
 # environment
 DBUS_STARTER_BUS_TYPE = session
 # environment
-SSH_AGENT_PID = 1894
+SSH_AGENT_PID = 2338
 # environment
 _ = /usr/bin/code
 # environment
@@ -278,6 +278,7 @@ all:
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
+ 
 #  Last modified 2022-05-20 08:13:36.111951
 #  File has been updated.
 #  Successfully updated.
@@ -303,7 +304,6 @@ stop_pord_container:
 # strcache performance: lookups = 53 / hit rate = 18%
 # hash-table stats:
 # Load=43/8192=1%, Rehash=0, Collisions=0/53=0%
- 
-# Finished Make data base on Fri May 20 21:01:27 2022
+# Finished Make data base on Tue May 31 09:03:26 2022
 
  
