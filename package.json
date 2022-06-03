@@ -6,7 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "start:dev_container": "docker-compose up --build -V",
+    "start:prod_container": "docker-compose -f docker-compose.production.yaml up --build -V",
+    "start:prod_container_detatch": "docker-compose -f docker-compose.production.yaml up --build -V -d",
+    "stop:dev_container": "docker-compose down",
+    "stop:prod_container": "docker-compose -f docker-compose.production.yaml down",
+    "exec:terminal": "docker exec -it mv-front-module /bin/sh"
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",
