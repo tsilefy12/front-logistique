@@ -2,24 +2,26 @@ import React, { Fragment, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
-import { Paper, Container} from "@mui/material";
+import { Stack, Container } from "@mui/material";
 import { useRouter } from "next/router";
 import IconButton from "@mui/material/IconButton";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
+import { BreadcrumbSeparator } from "../../components/shared/BreadcrumbSeparator";
 
 const MvBreadcrumbs = () => {
   const router = useRouter();
   const routeArray = router.pathname.split("/");
-  routeArray.shift() 
-  
+  routeArray.shift();
+
   return (
-    <Paper sx={{ py: 1 }}>
-      <Container maxWidth="lg">
-        <Breadcrumbs aria-label="breadcrumb">
+    <Stack sx={{ px: 3.2, py: 2 }}>
+      <Container maxWidth="xl">
+        <Breadcrumbs
+          aria-label="breadcrumb"
+          separator={<BreadcrumbSeparator />}
+        >
           <Link underline="hover" color="inherit" href="/">
-            <IconButton aria-label="home" size="large">
-              <HomeWorkIcon fontSize="inherit" />
-            </IconButton>
+            App
           </Link>
           <Link underline="hover" color="inherit" href="/">
             Employés
@@ -39,7 +41,7 @@ const MvBreadcrumbs = () => {
           )}
         </Breadcrumbs>
       </Container>
-    </Paper>
+    </Stack>
   );
 };
 
