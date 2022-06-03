@@ -1,5 +1,0 @@
-make --dry-run --always-make --keep-going --print-directory
-make: Entering directory '/home/randry/Documents/projects/haisoa/MV/base_nextjs'
-docker-compose up --build
-make: Leaving directory '/home/randry/Documents/projects/haisoa/MV/base_nextjs'
- 
