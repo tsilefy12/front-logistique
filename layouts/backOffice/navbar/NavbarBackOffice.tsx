@@ -10,9 +10,13 @@ import { Badge, Stack, styled, useTheme } from "@mui/material";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import { useAppSelector } from "../../../hooks/reduxHooks";
-import { OneButtonLink, OneButtonLinkWithItems, ButtonProfile } from "./ButtonNav";
+import {
+  OneButtonLink,
+  OneButtonLinkWithItems,
+  ButtonProfile,
+} from "./ButtonNav";
 
-const NavbarBackOffice = ({matches}: any) => {
+const NavbarBackOffice = ({ matches }: any) => {
   const theme = useTheme();
   /**
    * Take all menu lists in the redux store
@@ -91,7 +95,7 @@ export const MenuNavbarBo = styled(Stack)(({ theme }) => ({
 }));
 
 export const IconBntNavBO = styled(IconButton)(({ theme }) => ({
-  backgroundColor: theme.palette.common.white,
+  // backgroundColor: theme.palette.common.white,
 }));
 
 export const AppbarBackOffice = styled(AppBar)(({ theme }) => ({
