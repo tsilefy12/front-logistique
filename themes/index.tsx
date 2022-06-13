@@ -22,3 +22,34 @@ export const themes = (customization: any) => {
 
 export default themes;
 
+/**
+ * Add custom color in material ui
+ * 
+ */
+declare module "@mui/material/styles" {
+    interface PaletteColor {
+      lightest?: string;
+      lighter?: string;
+      darker?: string;
+    }
+  
+    interface PaletteOptions {
+      accent: any;
+      greymenu: any;
+    }
+  }
+  
+  declare module "@mui/material/IconButton" {
+    interface IconButtonPropsColorOverrides {
+      accent: any;
+      greymenu: any;
+    }
+  }
+  
+  declare module "@mui/material/Button" {
+    interface ButtonPropsColorOverrides {
+      accent: any;
+      greymenu: any;
+    }
+  }
+
