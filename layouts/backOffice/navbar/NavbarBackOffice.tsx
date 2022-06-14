@@ -32,7 +32,7 @@ const NavbarBackOffice = ({ matches }: any) => {
               <HomeWorkIcon fontSize="inherit" />
             </IconBntNavBO>
             <Typography variant="h5" paddingX={2} color="GrayText">
-              Employés
+              Logistique
             </Typography>
             <ListPageContainer>
               {navMenu.map((page, index) =>
