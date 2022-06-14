@@ -24,7 +24,11 @@ const menu = [
     },
     {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       id: 34,
+=======
+      id: 14,
+>>>>>>> Stashed changes
 =======
       id: 14,
 >>>>>>> Stashed changes
@@ -34,7 +38,11 @@ const menu = [
     },
     {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       id: 35,
+=======
+      id: 15,
+>>>>>>> Stashed changes
 =======
       id: 15,
 >>>>>>> Stashed changes
