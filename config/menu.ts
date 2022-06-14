@@ -23,29 +23,13 @@ const menu = [
       icon: "",
     },
     {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-      id: 34,
-=======
       id: 14,
->>>>>>> Stashed changes
-=======
-      id: 14,
->>>>>>> Stashed changes
       name: "Fiche détention materielle",
       link: "/Materiels/FicheDetention",
       icon: "",
     },
     {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-      id: 35,
-=======
       id: 15,
->>>>>>> Stashed changes
-=======
-      id: 15,
->>>>>>> Stashed changes
       name: "Type de materiel",
       link: "/Materiels/type",
       icon: "",
