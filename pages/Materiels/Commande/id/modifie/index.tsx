@@ -1,9 +1,9 @@
 import { Container } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
-import BackOfficeLayout from "../../../layouts/backOffice";
-import ListCommande from "../../../components/Commande/ListeCommande";
-import useBasePath from "../../../hooks/useBasePath";
+import BackOfficeLayout from "../../../../../layouts/backOffice";
+import ListCommande from "../../../../../components/Commande/ListeCommande";
+import useBasePath from "../../../../../hooks/useBasePath";
 
 const Home: NextPage = () => {
   const basePath = useBasePath();
