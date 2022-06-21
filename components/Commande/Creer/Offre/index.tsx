@@ -9,12 +9,8 @@ import List from './list'
 const GestionOffre = () => {
   return (
     <Container>
-      <Card sx={{ minWidth: 275 }}>
-      <CardContent>
       <ListButtonOffre/>
       <List/>
-      </CardContent>
-      </Card>
     </Container>
     
   )

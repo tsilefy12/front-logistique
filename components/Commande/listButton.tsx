@@ -5,6 +5,7 @@ import Button from '@mui/material/Button'
 import CheckIcon from '@mui/icons-material/Check'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import CloseIcon from '@mui/icons-material/Close'
+import Typography from '../../themes/overrides/Typography'
 
 const ListButton= ()=>{
   return(
@@ -18,7 +19,9 @@ const ListButton= ()=>{
     </Stack>
     </Grid>
     <Grid item xs={2}>
-    <h5>Gerér offres</h5>
+      <Typography variant="h5">
+    Gerér offres
+    </Typography>
   </Grid>
   </Grid>
     </Container>
