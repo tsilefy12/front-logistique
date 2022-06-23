@@ -9,6 +9,7 @@ services:
     networks:
       - mv-docker-network
     command: npm run start
+    restart: always
     expose:
       - 3000
 networks:
