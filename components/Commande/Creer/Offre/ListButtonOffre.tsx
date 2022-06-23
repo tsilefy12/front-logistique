@@ -5,6 +5,8 @@ import Button from '@mui/material/Button'
 import CheckIcon from '@mui/icons-material/Check'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import CloseIcon from '@mui/icons-material/Close'
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 
 const ListButtonOffre= ()=>{
   return(
@@ -18,10 +20,12 @@ const ListButtonOffre= ()=>{
     </Stack>
     </Grid>
     <Grid item xs={2}>
-    <h5>Gérer Offres</h5>
+    <Typography variant="h5">Gérer Offres</Typography>
   </Grid>
   </Grid>
+  <Divider variant="middle" />
     </Container>
+    
   )
 }
 
