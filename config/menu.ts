@@ -4,37 +4,38 @@ const menu = [
     name: "Matériels",
     link: "/",
     icon: "inventory_2",
-    items: [{
-      id: 11,
-      name: "Commande",
-      link: "/Materiels/Commande",
-      icon: "",
-    },
-    {
-      id: 12,
-      name: "Bon de commande",
-      link: "/Materiels/BonCommande",
-      icon: "",
-    },
-    {
-      id: 13,
-      name: "Liste des materiels",
-      link: "/Materiels/Liste",
-      icon: "",
-    },
-    {
-      id: 14,
-      name: "Fiche détention materielle",
-      link: "/Materiels/FicheDetention",
-      icon: "",
-    },
-    {
-      id: 15,
-      name: "Type de materiel",
-      link: "/Materiels/type",
-      icon: "",
-    },
-  ],
+    items: [
+      {
+        id: 11,
+        name: "Commande",
+        link: "/Materiels/Commande",
+        icon: "",
+      },
+      {
+        id: 12,
+        name: "Bon de commande",
+        link: "/Materiels/BonCommande",
+        icon: "",
+      },
+      {
+        id: 13,
+        name: "Liste des materiels",
+        link: "/Materiels/Liste",
+        icon: "",
+      },
+      {
+        id: 14,
+        name: "Fiche détention materielle",
+        link: "/Materiels/FicheDetention",
+        icon: "",
+      },
+      {
+        id: 15,
+        name: "Type de materiel",
+        link: "/Materiels/type",
+        icon: "",
+      },
+    ],
   },
   {
     id: 2,
@@ -54,7 +55,6 @@ const menu = [
         link: "/Fourniteur/Commande",
         icon: "",
       },
-
     ],
   },
   {
@@ -85,8 +85,8 @@ const menu = [
   },
   {
     id: 4,
-    name: "Fournisseur",
-    link: "/Fournisseur",
+    name: "Fournisseurs",
+    link: "/fournisseurs",
     icon: "contacts",
     items: [],
   },

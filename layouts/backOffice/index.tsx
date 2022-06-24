@@ -1,4 +1,4 @@
-import { useMediaQuery, useTheme } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 import FooterBackOffice from "./FooterBackOffice";
 import NavbarBackOffice from "./navbar/NavbarBackOffice";
@@ -10,16 +10,16 @@ const BackOfficeLayout = ({ children }: any) => {
   const matches = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <>
+    <Box sx={{ position: "relative" }}>
       {matches ? (
         <NavbarMobile matches={matches} />
       ) : (
         <NavbarBackOffice matches={matches} />
       )}
-      <MvBreadcrumbs/>
-      {children}
+      <MvBreadcrumbs />
+      <Box sx={{ minHeight: "87vh" }}>{children}</Box>
       <FooterBackOffice />
-    </>
+    </Box>
   );
 };
 
