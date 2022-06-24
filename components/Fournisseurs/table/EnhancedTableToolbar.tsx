@@ -6,6 +6,7 @@ import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { EnhancedTableToolbarProps } from "./type-variable";
 import { TextField, Stack, Typography } from "@mui/material";
+import { selectedItemsLabel } from "../../../config/table.config";
 
 const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
   const { numSelected } = props;
@@ -30,7 +31,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           variant="subtitle1"
           component="div"
         >
-          {numSelected} selected
+          {numSelected} {" " + selectedItemsLabel}
         </Typography>
       ) : (
         <Stack
