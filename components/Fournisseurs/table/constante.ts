@@ -6,7 +6,7 @@ export const headCells: readonly HeadCell[] = [
     id: "nom",
     numeric: false,
     disablePadding: true,
-    label: "nom",
+    label: "Nom",
   },
   {
     id: "adresse",
