@@ -101,7 +101,7 @@ const ListFournisseur = () => {
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-        <Link href="/fournisseur/add">
+        <Link href="/fournisseurs/add">
           <Button variant="contained" size="small" startIcon={<Add />}>
             Créer
           </Button>
@@ -185,13 +185,15 @@ const ListFournisseur = () => {
                                   <VisibilityIcon />
                                 </IconButton>
                               </Link>
-                              <IconButton
-                                color="primary"
-                                aria-label="Modifier"
-                                component="span"
-                              >
-                                <EditIcon />
-                              </IconButton>
+                              <Link href="/fournisseurs/1/edit">
+                                <IconButton
+                                  color="primary"
+                                  aria-label="Modifier"
+                                  component="span"
+                                >
+                                  <EditIcon />
+                                </IconButton>
+                              </Link>
                               <IconButton
                                 color="warning"
                                 aria-label="Supprimer"
