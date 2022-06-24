@@ -1,15 +1,12 @@
-
 export default interface Data {
-    nom: string;
-    adresse: string;
-    tel: string;
-    email: string;
-    site: string;
-  }
-  
+  nom: string;
+  adresse: string;
+  tel: string;
+  email: string;
+  site: string;
+}
 
-export type Order = 'asc' | 'desc';
-
+export type Order = "asc" | "desc";
 
 export interface HeadCell {
   disablePadding: boolean;

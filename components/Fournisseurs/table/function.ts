@@ -5,7 +5,7 @@ export function createData(
   adresse: string,
   tel: string,
   email: string,
-  site: string,
+  site: string
 ): Data {
   return {
     nom,
@@ -53,27 +53,4 @@ export function stableSort<T>(
     return a[1] - b[1];
   });
   return stabilizedThis.map((el) => el[0]);
-}
-
-export function getColorStatus(status: string) {
-  switch (status) {
-    case "Nouveau":
-      return "info";
-      break;
-    case "Encours":
-      return "primary";
-      break;
-    case "Expiré":
-      return "warning";
-      break;
-    case "Annulé":
-      return "error";
-      break;
-    case "En attente":
-      return "secondary";
-      break;
-
-    default:
-      break;
-  }
 }
