@@ -3,13 +3,13 @@ import { HeadCell } from "./type-variable";
 
 export const headCells: readonly HeadCell[] = [
     {
-      id: 'num',
+      id: 'num_optim',
       numeric: false,
       disablePadding: true,
       label: 'N°Optim',
     },
     {
-      id: 'type',
+      id: 'type_materiel',
       numeric: true,
       disablePadding: false,
       label: 'Type',

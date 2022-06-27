@@ -1,15 +1,15 @@
 import Data, { Order } from "./type-variable";
 
 export function createData(
-  num: string,
-  type: string,
+  num_optim: string,
+  type_materiel: string,
   user: string,
   designation: string,
   etat: string
 ): Data {
   return {
-    num,
-    type,
+    num_optim,
+    type_materiel,
     user,
     designation,
     etat

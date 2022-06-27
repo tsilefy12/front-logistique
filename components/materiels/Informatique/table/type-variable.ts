@@ -1,7 +1,7 @@
 
 export default interface Data {
-    num: string;
-    type: string;
+    num_optim: string;
+    type_materiel: string;
     user: string;
     designation: string;
     etat: string;

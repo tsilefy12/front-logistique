@@ -34,7 +34,7 @@ import {
 
 const ListInfo = () => {
   const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("num");
+  const [orderBy, setOrderBy] = React.useState<keyof Data>("num_optim");
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -132,22 +132,22 @@ const ListInfo = () => {
                   {stableSort(rows, getComparator(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
-                      const isItemSelected = isSelected(row.num);
+                      const isItemSelected = isSelected(row.num_optim);
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
                         <TableRow
                           hover
-                          //   onClick={(event) => handleClick(event, row.num)}
+                          //   onClick={(event) => handleClick(event, row.num_optim)}
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}
-                          key={row.num}
+                          key={row.num_optim}
                           selected={isItemSelected}
                         >
                           <TableCell
                             padding="checkbox"
-                            onClick={(event) => handleClick(event, row.num)}
+                            onClick={(event) => handleClick(event, row.num_optim)}
                           >
                             <Checkbox
                               color="primary"
@@ -164,9 +164,9 @@ const ListInfo = () => {
                             padding="none"
                             align="left"
                           >
-                            {row.num}
+                            {row.num_optim}
                           </TableCell>
-                          <TableCell align="left">{row.type}</TableCell>
+                          <TableCell align="left">{row.type_materiel}</TableCell>
                           <TableCell align="left">{row.user}</TableCell>
                           <TableCell align="left">{row.designation}</TableCell>
                           <TableCell align="left">
