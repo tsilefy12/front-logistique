@@ -57,7 +57,7 @@ export function stableSort<T>(
 
 export function getColorStatus(etat: string) {
   switch (etat) {
-    case "Bon état":
+    case "Bon_état":
       return "info";
       break;
     case "Amorti":

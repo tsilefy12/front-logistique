@@ -31,7 +31,7 @@ import {
   
   const ListBc = () => {
     const [order, setOrder] = React.useState<Order>("asc");
-    const [orderBy, setOrderBy] = React.useState<keyof Data>("employe");
+    const [orderBy, setOrderBy] = React.useState<keyof Data>("numero");
     const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
