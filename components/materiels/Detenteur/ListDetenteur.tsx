@@ -12,7 +12,6 @@ import {
   TextField,
 } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
 import AddIcon from "@mui/icons-material/Add";
 import CardEmploye from "../../CardEmploye";
 import Link from "next/link";
@@ -27,10 +26,8 @@ const ListDetenteur = () => {
         <Grid item xs={12} md={3}>
           <FilterContainer>
             <FilterTitle>
-              <MapsHomeWorkIcon color="disabled" fontSize="large" />
-              <Typography variant="h4" color="GrayText">
-                Département
-              </Typography>
+              <FilterAltIcon color="disabled" fontSize="small" />
+              <Typography variant="h4">Département</Typography>
             </FilterTitle>
             <Divider />
             <FilterContent>
@@ -81,7 +78,7 @@ const ListDetenteur = () => {
         <Grid item xs={12} md={9}>
           <ContainerListEmploye>
             <ListTitle>
-              <Typography variant="h4" color="black">
+              <Typography variant="h4">
                 Liste des détenteurs de materiels
               </Typography>
               <TextField
