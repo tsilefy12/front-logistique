@@ -26,8 +26,12 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Badge from "@mui/material/Badge";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Add from "@mui/icons-material/Add";
+import {
+  defaultLabelDisplayedRows,
+  labelRowsPerPage,
+} from "../../../config/table.config";
 
 const ListStock = () => {
   const [order, setOrder] = React.useState<Order>("asc");
@@ -48,7 +52,7 @@ const ListStock = () => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.reference);
+      const newSelecteds = rows.map((n) => n.article);
       setSelected(newSelecteds);
       return;
     }
@@ -100,7 +104,12 @@ const ListStock = () => {
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
         <Link href="/contracts/add">
-          <Button variant="text" size="small" color="accent" startIcon={<ArrowBackIcon />}>
+          <Button
+            variant="text"
+            size="small"
+            color="accent"
+            startIcon={<ArrowBackIcon />}
+          >
             retour
           </Button>
         </Link>
@@ -143,10 +152,10 @@ const ListStock = () => {
                           selected={isItemSelected}
                         >
                           <TableCell
+                            padding="normal"
                             component="th"
                             id={labelId}
                             scope="row"
-                            padding="none"
                             align="left"
                           >
                             {row.article}
@@ -193,6 +202,8 @@ const ListStock = () => {
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
+              labelRowsPerPage={labelRowsPerPage}
+              labelDisplayedRows={defaultLabelDisplayedRows}
             />
           </Paper>
           {/* <FormControlLabel
