@@ -113,6 +113,7 @@ const ListStock = () => {
             retour
           </Button>
         </Link>
+        <Typography variant="h4">Stock par type</Typography>
       </SectionNavigation>
       <SectionTable>
         <Box sx={{ width: "100%" }}>

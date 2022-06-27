@@ -108,6 +108,7 @@ const ListBc = () => {
             Créer
           </Button>
         </Link>
+        <Typography variant="h4">Liste des BC</Typography>
       </SectionNavigation>
       <SectionTable>
         <Box sx={{ width: "100%" }}>

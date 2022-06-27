@@ -107,6 +107,7 @@ const ListInfo = () => {
             Creer
           </Button>
         </Link>
+        <Typography variant="h4">Liste des matériels</Typography>
       </SectionNavigation>
       <SectionTable>
         <Box sx={{ width: "100%" }}>
