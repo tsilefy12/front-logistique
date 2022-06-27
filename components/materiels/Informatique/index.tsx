@@ -51,7 +51,7 @@ const ListInfo = () => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.num);
+      const newSelecteds = rows.map((n) => n.num_optim);
       setSelected(newSelecteds);
       return;
     }
@@ -147,7 +147,9 @@ const ListInfo = () => {
                         >
                           <TableCell
                             padding="checkbox"
-                            onClick={(event) => handleClick(event, row.num_optim)}
+                            onClick={(event) =>
+                              handleClick(event, row.num_optim)
+                            }
                           >
                             <Checkbox
                               color="primary"
@@ -166,7 +168,9 @@ const ListInfo = () => {
                           >
                             {row.num_optim}
                           </TableCell>
-                          <TableCell align="left">{row.type_materiel}</TableCell>
+                          <TableCell align="left">
+                            {row.type_materiel}
+                          </TableCell>
                           <TableCell align="left">{row.user}</TableCell>
                           <TableCell align="left">{row.designation}</TableCell>
                           <TableCell align="left">
