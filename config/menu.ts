@@ -71,7 +71,7 @@ const menu = [
     items: [
       {
         id: 31,
-        name: "tous les materiels",
+        name: "Tous les materiels",
         link: "/Transport/AllMateriels",
         icon: "",
       },
@@ -98,7 +98,7 @@ const menu = [
   },
   {
     id: 5,
-    name: "Configuration",
+    name: "Configurations",
     link: "/Configuration",
     icon: "settings",
     items: [
