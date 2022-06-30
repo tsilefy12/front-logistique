@@ -16,6 +16,10 @@ import Link from "next/link";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {
+  defaultLabelDisplayedRows,
+  labelRowsPerPage,
+} from "../../../../config/table.config";
 
 const ListEtatMateriel = () => {
   const [order, setOrder] = React.useState<Order>("asc");
@@ -195,6 +199,8 @@ const ListEtatMateriel = () => {
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
+            labelRowsPerPage={labelRowsPerPage}
+            labelDisplayedRows={defaultLabelDisplayedRows}
           />
         </Paper>
         {/* <FormControlLabel
