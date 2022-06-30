@@ -8,7 +8,7 @@ const menu = [
       {
         id: 11,
         name: "Commande",
-        link: "/Materiels/Commande",
+        link: "/materiels/commande",
         icon: "",
       },
       {
@@ -105,7 +105,7 @@ const menu = [
       {
         id: 51,
         name: "Etat materiel",
-        link: "/Configuration/Etat",
+        link: "/configuration/etat",
         icon: "",
       },
     ],
