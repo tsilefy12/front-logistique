@@ -14,28 +14,27 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
+import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
 import Data, { Order } from "./table/type-variable";
 import { rows } from "./table/constante";
 import EnhancedTableToolbar from "./table/EnhancedTableToolbar";
-import EnhancedTableHead from "./table/EnhancedTableHead";
-import { getColorStatus, getComparator, stableSort } from "./table/function";
+import { getComparator, stableSort } from "./table/function";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Badge from "@mui/material/Badge";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Add from "@mui/icons-material/Add";
 import {
   defaultLabelDisplayedRows,
   labelRowsPerPage,
-} from "../../../config/table.config";
+} from "../../../../config/table.config";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const ListStock = () => {
+const ListDetailStockParType = () => {
   const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("article");
+  const [orderBy, setOrderBy] = React.useState<keyof Data>("designation");
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -52,7 +51,7 @@ const ListStock = () => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.article);
+      const newSelecteds = rows.map((n) => n.designation);
       setSelected(newSelecteds);
       return;
     }
@@ -107,13 +106,13 @@ const ListStock = () => {
           <Button
             variant="text"
             size="small"
-            color="accent"
+            color="info"
             startIcon={<ArrowBackIcon />}
           >
-            retour
+            Retour
           </Button>
         </Link>
-        <Typography variant="h4">Stock par type</Typography>
+        <Typography variant="h4">Détails</Typography>
       </SectionNavigation>
       <SectionTable>
         <Box sx={{ width: "100%" }}>
@@ -125,70 +124,31 @@ const ListStock = () => {
                 aria-labelledby="tableTitle"
                 size="small"
               >
-                <EnhancedTableHead
-                  numSelected={selected.length}
-                  order={order}
-                  orderBy={orderBy}
-                  onSelectAllClick={handleSelectAllClick}
-                  onRequestSort={handleRequestSort}
-                  rowCount={rows.length}
-                />
+                <TableHead>
+                  <TableRow>
+                    <TableCell>N° OPTIM</TableCell>
+                    <TableCell align="right">Désignation</TableCell>
+                    <TableCell align="right">Date début de stock</TableCell>
+                  </TableRow>
+                </TableHead>
                 <TableBody>
-                  {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-              rows.slice().sort(getComparator(order, orderBy)) */}
-                  {stableSort(rows, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      const isItemSelected = isSelected(row.article);
-                      const labelId = `enhanced-table-checkbox-${index}`;
-
-                      return (
-                        <TableRow
-                          hover
-                          //   onClick={(event) => handleClick(event, row.article)}
-                          role="checkbox"
-                          aria-checked={isItemSelected}
-                          tabIndex={-1}
-                          key={row.article}
-                          selected={isItemSelected}
-                        >
-                          <TableCell
-                            padding="normal"
-                            component="th"
-                            id={labelId}
-                            scope="row"
-                            align="left"
-                          >
-                            {row.article}
-                          </TableCell>
-                          <TableCell align="left">{row.stock}</TableCell>
-                          <TableCell align="left">{row.utilisation}</TableCell>
-                          <TableCell align="left">{row.defectueux}</TableCell>
-                          <TableCell align="right">
-                            <BtnActionContainer
-                              direction="row"
-                              justifyContent="center"
-                            >
-                              <Link href="stock/1/details">
-                                <IconButton
-                                  color="accent"
-                                  aria-label="Details"
-                                  component="span"
-                                >
-                                  <VisibilityIcon />
-                                </IconButton>
-                              </Link>
-                            </BtnActionContainer>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
+                  {(rowsPerPage > 0
+                    ? rows.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                    : rows
+                  ).map((row) => (
+                    <TableRow key={row.numero}>
+                      <TableCell component="th" scope="row">
+                        {row.numero}
+                      </TableCell>
+                      <TableCell align="right">{row.designation}</TableCell>
+                      <TableCell align="right">{row.dateDebutStock}</TableCell>
+                    </TableRow>
+                  ))}
                   {emptyRows > 0 && (
-                    <TableRow
-                      style={{
-                        height: (dense ? 33 : 53) * emptyRows,
-                      }}
-                    >
+                    <TableRow style={{ height: 53 * emptyRows }}>
                       <TableCell colSpan={6} />
                     </TableRow>
                   )}
@@ -208,16 +168,16 @@ const ListStock = () => {
             />
           </Paper>
           {/* <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      /> */}
+            control={<Switch checked={dense} onChange={handleChangeDense} />}
+            label="Dense padding"
+          /> */}
         </Box>
       </SectionTable>
     </Container>
   );
 };
 
-export default ListStock;
+export default ListDetailStockParType;
 
 export const BtnActionContainer = styled(Stack)(({ theme }) => ({}));
 export const SectionNavigation = styled(Stack)(({ theme }) => ({}));
