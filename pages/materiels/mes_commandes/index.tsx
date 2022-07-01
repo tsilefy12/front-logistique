@@ -15,7 +15,7 @@ const ListeDemandesMaterielsEmployerConnecter: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-          <ListCommandeDesEmployerConnecter/>
+        <ListCommandeDesEmployerConnecter />
       </Container>
     </BackOfficeLayout>
   );
