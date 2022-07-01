@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import BackOfficeLayout from "../../../layouts/backOffice";
 import useBasePath from "../../../hooks/useBasePath";
-import ListCommandeDesEmployerConnecter from "../../../components/materiels/mescommandes/ListCommandesEmployeConnecter";
+import ListCommandeDesEmployerConnecter from "../../../components/materiels/mes_commandes/ListCommandesEmployeConnecter";
 
 const ListeDemandesMaterielsEmployerConnecter: NextPage = () => {
   const basePath = useBasePath();
