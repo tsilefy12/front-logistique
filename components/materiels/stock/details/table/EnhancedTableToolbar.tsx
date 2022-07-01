@@ -21,28 +21,27 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
               theme.palette.action.activatedOpacity
             ),
         }),
-        
       }}
     >
-        <Stack
-          direction="row"
-          sx={{
-            flex: "1 1 100%",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h4" id="tableTitle" component="div">
-            Détail de stock par type
-          </Typography>
-          <TextField
-            variant="outlined"
-            id="search"
-            name="search"
-            placeholder="Recherche"
-            size="small"
-          />
-        </Stack>  
+      <Stack
+        direction="row"
+        sx={{
+          flex: "1 1 100%",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h5" id="tableTitle" component="div">
+          Détail de stock par type
+        </Typography>
+        <TextField
+          variant="outlined"
+          id="search"
+          name="search"
+          placeholder="Recherche"
+          size="small"
+        />
+      </Stack>
     </Toolbar>
   );
 };

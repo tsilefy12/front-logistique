@@ -1,9 +1,9 @@
 import { Container } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
-import BackOfficeLayout from "../../../../layouts/backOffice";
-import useBasePath from "../../../../hooks/useBasePath";
-import ListDetailStockParType from "../../../../components/materiels/stock/details/ListDetailStockParType";
+import BackOfficeLayout from "../../../../../layouts/backOffice";
+import useBasePath from "../../../../../hooks/useBasePath";
+import ListDetailStockParType from "../../../../../components/materiels/stock/details/ListDetailStockParType";
 
 const DetailStockParType: NextPage = () => {
   const basePath = useBasePath();
@@ -15,7 +15,7 @@ const DetailStockParType: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <ListDetailStockParType/>
+        <ListDetailStockParType />
       </Container>
     </BackOfficeLayout>
   );

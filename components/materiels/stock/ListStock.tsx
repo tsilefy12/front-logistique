@@ -103,7 +103,7 @@ const ListStock = () => {
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-        <Link href="/contracts/add">
+        <Link href="/materiels/stock">
           <Button
             variant="text"
             size="small"
@@ -169,7 +169,7 @@ const ListStock = () => {
                               direction="row"
                               justifyContent="center"
                             >
-                              <Link href="contracts/1">
+                              <Link href="stock/1/details">
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"
