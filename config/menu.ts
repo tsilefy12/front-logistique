@@ -84,7 +84,7 @@ const menu = [
       {
         id: 32,
         name: "Bon de voiture",
-        link: "/Transport/Bon",
+        link: "/materiel_de_transport/bon_de_voiture",
         icon: "",
       },
       {
