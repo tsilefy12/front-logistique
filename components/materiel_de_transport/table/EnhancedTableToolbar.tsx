@@ -42,7 +42,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           }}
         >
           <Typography variant="h6" id="tableTitle" component="div">
-            Liste des Materiels des Transports
+            Liste des materiels de transport
           </Typography>
           <TextField
             variant="outlined"

@@ -66,13 +66,13 @@ const menu = [
   {
     id: 3,
     name: "Materiel de Transport",
-    link: "/Transport",
+    link: "/materiel_de_transport",
     icon: "local_shipping",
     items: [
       {
         id: 31,
         name: "Tous les materiels",
-        link: "/Transport/AllMateriels",
+        link: "/materiel_de_transport",
         icon: "",
       },
       {
