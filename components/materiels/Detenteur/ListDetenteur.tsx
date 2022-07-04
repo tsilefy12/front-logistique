@@ -91,7 +91,7 @@ const ListDetenteur = () => {
             <Divider />
             <ListEmployeContent>
               <CustomBtnAdd>
-                <Link href="/employe/add">
+                <Link href="/materiels/detenteur/ajouter">
                   <Button
                     sx={{
                       width: 286,
