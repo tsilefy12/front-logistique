@@ -44,7 +44,7 @@ const menu = [
       {
         id: 17,
         name: "Type de materiel",
-        link: "/Materiels/",
+        link: "/materiels/type",
         icon: "",
       },
     ],
