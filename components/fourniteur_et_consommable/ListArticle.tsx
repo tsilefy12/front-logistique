@@ -103,7 +103,7 @@ const ListFourniteur_et_Consommable = () => {
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
         
         <Typography variant="h4">Liste des Article</Typography>
-        <Link href="/fournisseurs/add">
+        <Link href="/fourniteur_et_consommable/add">
           <Button variant="contained" size="small" startIcon={<Add />}>
             Créer
           </Button>
@@ -175,7 +175,7 @@ const ListFourniteur_et_Consommable = () => {
                               direction="row"
                               justifyContent="center"
                             >
-                              <Link href="contracts/1">
+                              <Link href="/Gerer/1">
                                 <Button
                                   color="accent"
                                   variant="outlined"
@@ -183,7 +183,7 @@ const ListFourniteur_et_Consommable = () => {
                                   <AddIcon/>Gerer
                                 </Button>
                               </Link>
-                              <Link href="contracts/1">
+                              <Link href="/details/1">
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"
