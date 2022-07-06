@@ -26,7 +26,11 @@ import {
              <NavigationContainer>
                     <SectionNavigation>
                         <Stack flexDirection={"row"}>
+<<<<<<< Updated upstream
                             <Link href="/detenteur">
+=======
+                            <Link href="/Materiels/detenteur">
+>>>>>>> Stashed changes
                             <Button color="info" variant="text" startIcon={<ArrowBack />}>
                                 Retour
                             </Button>
@@ -107,6 +111,10 @@ import {
   }));
   
   const SectionNavigation = styled(Stack)(({ theme }) => ({
+<<<<<<< Updated upstream
+=======
+    padding: 30,
+>>>>>>> Stashed changes
     flexDirection: "row",
     justifyContent: "space-between",
     paddingBottom: "5px",

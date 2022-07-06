@@ -10,8 +10,13 @@ import CardContent from '@mui/material/CardContent';
 const ListFormDetationMateriel = () => {
     return(
         <Container maxWidth="xl">
+<<<<<<< Updated upstream
              <Card sx={{ minWidth: 275 }}>
                 <CardContent>
+=======
+             
+               
+>>>>>>> Stashed changes
                     <Grid
                         container
                         spacing={2}
@@ -22,9 +27,14 @@ const ListFormDetationMateriel = () => {
                         <FormDetentionMateriel/>
                         <ListDetentionMateriel/>
                     </Grid>
+<<<<<<< Updated upstream
                 </CardContent>
              </Card>
 
+=======
+               
+            
+>>>>>>> Stashed changes
            
         </Container>
     );
