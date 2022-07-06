@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import BackOfficeLayout from "../../../layouts/backOffice";
 import useBasePath from "../../../hooks/useBasePath";
-import ListInfo from "../../../components/materiels/informatique/index";
+import ListInfo from "../../../components/materiels/Informatique";
 
 const Informatique: NextPage = () => {
   const basePath = useBasePath();

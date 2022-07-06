@@ -24,7 +24,7 @@ const NavbarBackOffice = ({ matches }: any) => {
   const navMenu = useAppSelector((state) => state.menu.value);
 
   return (
-    <AppbarBackOffice position="static" elevation={0}>
+    <AppbarBackOffice position="sticky" elevation={0}>
       <Container maxWidth="xl">
         <ToolbarBackOffice variant="dense">
           <ListMenuContainer>
@@ -45,14 +45,14 @@ const NavbarBackOffice = ({ matches }: any) => {
             </ListPageContainer>
           </ListMenuContainer>
           <MenuNavbarBo>
-            <Tooltip title="Open notification" sx={{ mx: 4 }}>
+            <Tooltip title="Pas de notification" sx={{ mx: 4 }}>
               <IconButton
                 size="large"
                 aria-label="show 17 new notifications"
                 color="inherit"
               >
                 <Badge
-                  badgeContent={17}
+                  badgeContent={0}
                   color="error"
                   sx={{
                     ".MuiBadge-badge": {
