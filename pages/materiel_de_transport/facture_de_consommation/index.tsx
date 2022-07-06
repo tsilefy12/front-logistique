@@ -1,9 +1,9 @@
 import { Container } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
-import BackOfficeLayout from "../../layouts/backOffice";
-import useBasePath from "../../hooks/useBasePath";
-import ListFacture from "../../components/facture_de_consommation/ListFacture";
+import BackOfficeLayout from "../../../layouts/backOffice";
+import useBasePath from "../../../hooks/useBasePath";
+import ListFacture from "../../../components/materiel_de_transport/facture_de_consommation/ListFacture";
 
 const FacturePage: NextPage = () => {
   const basePath = useBasePath();
@@ -15,7 +15,7 @@ const FacturePage: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <ListFacture/>
+        <ListFacture />
       </Container>
     </BackOfficeLayout>
   );
