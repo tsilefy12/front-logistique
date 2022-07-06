@@ -90,7 +90,7 @@ const menu = [
       {
         id: 33,
         name: "Facture de consommation",
-        link: "/Transport/Facture",
+        link: "/materiel_de_transport/facture_de_consommation",
         icon: "",
       },
     ],
