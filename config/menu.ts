@@ -84,11 +84,7 @@ const menu = [
       {
         id: 33,
         name: "Facture de consommation",
-<<<<<<< HEAD
         link: "/materiel_de_transport/facture_de_consommation",
-=======
-        link: "/facture",
->>>>>>> 96506fe7134731e0f18ea052553f71f1edfc9b04
         icon: "",
       },
     ],
