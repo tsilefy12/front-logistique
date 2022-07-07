@@ -101,7 +101,7 @@ const ListCommande = () => {
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-        <Link href="/fournisseurs/add">
+        <Link href="/materiels/commande/creer">
           <Button variant="contained" size="small" startIcon={<Add />}>
             Créer
           </Button>

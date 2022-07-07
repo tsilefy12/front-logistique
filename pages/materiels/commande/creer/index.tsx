@@ -15,15 +15,10 @@ const FormDemmandeMaterielEmployerConnecter: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-            <CreationFormDemmandeCommandeMateriel/>
+        <CreationFormDemmandeCommandeMateriel />
       </Container>
     </BackOfficeLayout>
   );
 };
 
-export default   FormDemmandeMaterielEmployerConnecter;
-
-
-
-
-
+export default FormDemmandeMaterielEmployerConnecter;
