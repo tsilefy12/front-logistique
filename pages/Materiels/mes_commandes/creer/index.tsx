@@ -15,7 +15,7 @@ const FormulaireDemandeMaterielEmploye: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-            <FormDemandeMateriel/>
+        <FormDemandeMateriel />
       </Container>
     </BackOfficeLayout>
   );
