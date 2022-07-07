@@ -47,7 +47,7 @@ const ListArticleCommander = () => {
                   </TableCell>
                   <TableCell align="left">{row.quanite}</TableCell>
                   <TableCell align="left">{row.prix_unitaire} Ar</TableCell>
-                  <TableCell align="center">
+                  <TableCell align="center" sx={{ background: "#F5F5F5" }}>
                     <Stack
                       direction="row"
                       justifyContent="center"
