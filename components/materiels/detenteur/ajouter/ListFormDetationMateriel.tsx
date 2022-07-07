@@ -19,7 +19,7 @@ const ListFormDetationMateriel = () => {
         <NavigationContainer>
           <SectionNavigation>
             <Stack flexDirection={"row"}>
-              <Link href="/detenteur">
+              <Link href="/materiels/detenteur">
                 <Button color="info" variant="text" startIcon={<ArrowBack />}>
                   Retour
                 </Button>
