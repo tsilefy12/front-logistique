@@ -71,7 +71,7 @@ const menu = [
     items: [
       {
         id: 31,
-        name: "tous les materiels",
+        name: "Tous les materiels",
         link: "/materiel_de_transport",
         icon: "",
       },
