@@ -91,11 +91,7 @@ const ListDetenteur = () => {
             <Divider />
             <ListEmployeContent>
               <CustomBtnAdd>
-<<<<<<< Updated upstream
                 <Link href="/materiels/detenteur/ajouter">
-=======
-                <Link href="/Materiels/detenteur/ajouter">
->>>>>>> Stashed changes
                   <Button
                     sx={{
                       width: 286,
