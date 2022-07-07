@@ -99,7 +99,7 @@ const ListCommande = () => {
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-        <Link href="/materiels/commande/creer">
+        <Link href="/materiels/commande/add">
           <Button variant="contained" size="small" startIcon={<Add />}>
             Créer
           </Button>
@@ -176,7 +176,7 @@ const ListCommande = () => {
                               <Link href="contracts/1">
                                   <Button variant="outlined" size="small" startIcon={<Add />}>Gérer Offres</Button>
                               </Link>
-                              <Link href="contracts/1">
+                              <Link href="commande/1/modifie">
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"

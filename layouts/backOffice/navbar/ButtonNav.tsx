@@ -119,7 +119,7 @@ export const ButtonProfile = ({ page }: any) => {
 
   return (
     <>
-      <Tooltip title="Open settings">
+      <Tooltip title="Ouvrir les paramètres">
         <IconButton onClick={handleClick}>
           <Avatar alt="Remy Sharp" src={`${basePaht}/images/Avatar.png`} />
         </IconButton>
