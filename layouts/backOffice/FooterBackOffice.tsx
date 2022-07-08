@@ -29,7 +29,7 @@ const Lien = styled("span")(({ theme }) => ({
 const ContainerFooter = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.grey[300],
   // position: "absolute",
-  // bottom: 0,
-  // width: "100%",
+  bottom: 0,
+  width: "100%",
   borderRadius: 0
 }));
