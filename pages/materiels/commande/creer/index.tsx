@@ -5,7 +5,7 @@ import BackOfficeLayout from "../../../../layouts/backOffice";
 import useBasePath from "../../../../hooks/useBasePath";
 import FormCommande from "../../../../components/materiels/commandes/form/FormCommande";
 
-const CreteCommande: NextPage = () => {
+const CreateCommande: NextPage = () => {
   const basePath = useBasePath();
   return (
     <BackOfficeLayout>
