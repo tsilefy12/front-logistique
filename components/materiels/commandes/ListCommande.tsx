@@ -27,8 +27,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Add from "@mui/icons-material/Add";
 
-
-import { defaultLabelDisplayedRows,labelRowsPerPage } from "../../../config/table.config";
+import {
+  defaultLabelDisplayedRows,
+  labelRowsPerPage,
+} from "../../../config/table.config";
 const ListCommande = () => {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("designation");
@@ -99,7 +101,7 @@ const ListCommande = () => {
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-        <Link href="/materiels/commande/add">
+        <Link href="/materiels/commande/creer">
           <Button variant="contained" size="small" startIcon={<Add />}>
             Créer
           </Button>
@@ -144,7 +146,9 @@ const ListCommande = () => {
                         >
                           <TableCell
                             padding="checkbox"
-                            onClick={(event) => handleClick(event, row.designation)}
+                            onClick={(event) =>
+                              handleClick(event, row.designation)
+                            }
                           >
                             <Checkbox
                               color="primary"
@@ -165,7 +169,9 @@ const ListCommande = () => {
                           </TableCell>
                           <TableCell align="left">{row.demandeur}</TableCell>
                           <TableCell align="left">{row.quantite}</TableCell>
-                          <TableCell align="left">{row.deadline_reception}</TableCell>
+                          <TableCell align="left">
+                            {row.deadline_reception}
+                          </TableCell>
                           <TableCell align="left">{row.budget_max}</TableCell>
 
                           <TableCell align="right">
@@ -174,7 +180,13 @@ const ListCommande = () => {
                               justifyContent="center"
                             >
                               <Link href="contracts/1">
-                                  <Button variant="outlined" size="small" startIcon={<Add />}>Gérer Offres</Button>
+                                <Button
+                                  variant="outlined"
+                                  size="small"
+                                  startIcon={<Add />}
+                                >
+                                  Gérer Offres
+                                </Button>
                               </Link>
                               <Link href="commande/1/modifie">
                                 <IconButton
@@ -185,7 +197,6 @@ const ListCommande = () => {
                                   <VisibilityIcon />
                                 </IconButton>
                               </Link>
-                              
                             </BtnActionContainer>
                           </TableCell>
                         </TableRow>
