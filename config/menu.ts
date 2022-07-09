@@ -6,9 +6,15 @@ const menu = [
     icon: "inventory_2",
     items: [
       {
-        id: 11,
+        id: 10,
         name: "Commande",
         link: "/materiels/commande",
+        icon: "",
+      },
+      {
+        id: 11,
+        name: "Mes commandes",
+        link: "/materiels/mes_commandes",
         icon: "",
       },
       {
