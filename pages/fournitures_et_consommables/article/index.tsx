@@ -1,9 +1,9 @@
 import { Container } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
-import BackOfficeLayout from "../../layouts/backOffice";
-import useBasePath from "../../hooks/useBasePath";
-import ListFourniteur_et_Consommable from "../../components/fourniteur_et_consommable/ListArticle";
+import BackOfficeLayout from "../../../layouts/backOffice";
+import useBasePath from "../../../hooks/useBasePath";
+import ListFourniteur_et_Consommable from "../../../components/fournitures_et_consommables/ListArticle";
 
 const TransportPage: NextPage = () => {
   const basePath = useBasePath();
@@ -15,7 +15,7 @@ const TransportPage: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <ListFourniteur_et_Consommable/>
+        <ListFourniteur_et_Consommable />
       </Container>
     </BackOfficeLayout>
   );
