@@ -103,7 +103,7 @@ const ListBc = () => {
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-        <Link href="/Materiels/bon_de_commande/creer">
+        <Link href="/materiels/bon_de_commande/creer">
           <Button variant="contained" size="small" startIcon={<Add />}>
             Créer
           </Button>

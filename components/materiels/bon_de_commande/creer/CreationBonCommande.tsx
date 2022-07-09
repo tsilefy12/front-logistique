@@ -1,25 +1,19 @@
-import * as React from 'react';
-import Grid from '@mui/material/Grid';
-import AddFormBonCommande from './form/AddFormBonCommande';
-import ListeArticle from './table/ListeArticle';
-import Container from "@mui/material/Container";
+import * as React from "react";
+import AddFormBonCommande from "./form/AddFormBonCommande";
+import ListeArticle from "./table/ListeArticle";
+import Stack from "@mui/material/Stack";
 
 const CreationBonCommande = () => {
-    return(
-        <Container maxWidth="xl">
-            <Grid
-                container
-                spacing={1}
-                direction="column"
-                justifyContent="flex-start"
-                alignItems="flex-start"
-            >
-                <AddFormBonCommande/>
-                <ListeArticle/>
-             </Grid>
-
-        </Container>
-    );
-}
+  return (
+    <Stack
+      direction="column"
+      justifyContent="flex-start"
+      alignItems="flex-start"
+    >
+      <AddFormBonCommande />
+      <ListeArticle />
+    </Stack>
+  );
+};
 
 export default CreationBonCommande;
