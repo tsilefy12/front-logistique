@@ -1,28 +1,20 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import * as React from "react";
 import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
 import Nav from "./navigation/SectionNav";
 import Detail from "./detail/Detail";
 import ListHistoDetention from "./table/ListHistoDetentio";
 
 const HistoriqueDetentionMateriel = () => {
-    return(
-        <Container maxWidth="xl">
-            <Nav/>
-            <Card>
-                <CardContent>
-                    <Detail/>
-                    <ListHistoDetention/>
-                </CardContent>
-            </Card>        
-        </Container>
-    );
-}
+  return (
+    <Container maxWidth="xl">
+      <Nav />
+      <Stack spacing={2}>
+        <Detail />
+        <ListHistoDetention />
+      </Stack>
+    </Container>
+  );
+};
 
 export default HistoriqueDetentionMateriel;
-
-
-
-
-

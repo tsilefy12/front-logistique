@@ -185,7 +185,7 @@ const ListInfo = () => {
                               direction="row"
                               justifyContent="center"
                             >
-                              <Link href="/Materiels/detenteur/historique">
+                              <Link href="/materiels/detenteur/historique">
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"
