@@ -6,65 +6,65 @@ const menu = [
     icon: "inventory_2",
     items: [
       {
-        id: 11,
+        id: 10,
         name: "Commande",
         link: "/materiels/commande",
         icon: "",
       },
       {
-        id: 12,
+        id: 11,
         name: "Mes commandes",
         link: "/materiels/mes_commandes",
         icon: "",
       },
       {
-        id: 13,
+        id: 12,
         name: "Bon de commande",
         link: "/materiels/bon_de_commande",
         icon: "",
       },
       {
-        id: 14,
+        id: 13,
         name: "Liste des materiels",
         link: "/materiels/informatiques",
         icon: "",
       },
       {
-        id: 15,
+        id: 14,
         name: "Stock",
         link: "/materiels/stock",
         icon: "",
       },
       {
-        id: 16,
+        id: 15,
         name: "Fiche détention materielle",
         link: "/materiels/detenteur",
         icon: "",
       },
       {
-        id: 17,
+        id: 16,
         name: "Type de materiel",
-        link: "/Materiels/",
+        link: "/materiels/type",
         icon: "",
       },
     ],
   },
   {
     id: 2,
-    name: "Fourniteurs et Consomables",
-    link: "/fourniteurs",
+    name: "Fournitures et Consomables",
+    link: "/fournitures_et_consommables",
     icon: "edit_note",
     items: [
       {
         id: 21,
         name: "Article",
-        link: "/Fourniteur/Article",
+        link: "/fournitures_et_consommables/article",
         icon: "",
       },
       {
         id: 22,
         name: "Commande",
-        link: "/Fourniteur/Commande",
+        link: "/fournitures_et_consommables/commande",
         icon: "",
       },
     ],
@@ -72,7 +72,7 @@ const menu = [
   {
     id: 3,
     name: "Materiel de Transport",
-    link: "/materiel_de_transport",
+    link: "",
     icon: "local_shipping",
     items: [
       {
@@ -85,12 +85,12 @@ const menu = [
         id: 32,
         name: "Bon de voiture",
         link: "/materiel_de_transport/bon_de_voiture",
-        icon: "",
+        icon: "/materiel_de_transport",
       },
       {
         id: 33,
         name: "Facture de consommation",
-        link: "/Transport/Facture",
+        link: "/materiel_de_transport/facture_de_consommation",
         icon: "",
       },
     ],
@@ -104,14 +104,14 @@ const menu = [
   },
   {
     id: 5,
-    name: "Configurations",
+    name: "Configuration",
     link: "/Configuration",
     icon: "settings",
     items: [
       {
         id: 51,
         name: "Etat materiel",
-        link: "/configuration/etat",
+        link: "/configuration/etat_article",
         icon: "",
       },
     ],

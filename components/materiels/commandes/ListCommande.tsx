@@ -101,7 +101,7 @@ const ListCommande = () => {
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-        <Link href="/fournisseurs/add">
+        <Link href="/materiels/commande/creer">
           <Button variant="contained" size="small" startIcon={<Add />}>
             Créer
           </Button>
@@ -128,7 +128,7 @@ const ListCommande = () => {
                 />
                 <TableBody>
                   {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                  rows.slice().sort(getComparator(order, orderBy)) */}
+                rows.slice().sort(getComparator(order, orderBy)) */}
                   {stableSort(rows, getComparator(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
@@ -178,7 +178,7 @@ const ListCommande = () => {
                           <TableCell align="right">
                             <BtnActionContainer
                               direction="row"
-                              justifyContent="right"
+                              justifyContent="center"
                             >
                               <Link href="contracts/1">
                                 <Button
@@ -186,17 +186,15 @@ const ListCommande = () => {
                                   size="small"
                                   startIcon={<Add />}
                                   color="info"
-                                  sx={{ mr: 2 }}
                                 >
                                   Gérer Offres
                                 </Button>
                               </Link>
-                              <Link href="contracts/1">
+                              <Link href="commande/1/modifie">
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"
                                   component="span"
-                                  size="small"
                                 >
                                   <VisibilityIcon />
                                 </IconButton>
@@ -231,9 +229,9 @@ const ListCommande = () => {
             />
           </Paper>
           {/* <FormControlLabel
-            control={<Switch checked={dense} onChange={handleChangeDense} />}
-            label="Dense padding"
-          /> */}
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Dense padding"
+        /> */}
         </Box>
       </SectionTable>
     </Container>

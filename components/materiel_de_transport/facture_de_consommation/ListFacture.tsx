@@ -23,17 +23,13 @@ import EnhancedTableToolbar from "./table/EnhancedTableToolbar";
 import EnhancedTableHead from "./table/EnhancedTableHead";
 import { getComparator, stableSort } from "./table/function";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Add from "@mui/icons-material/Add";
-import {
-  defaultLabelDisplayedRows,
-  labelRowsPerPage,
-} from "../../config/table.config";
 
-const ListFourniteur_et_Consommable = () => {
+const ListFacture = () => {
   const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("designation");
+  const [orderBy, setOrderBy] = React.useState<keyof Data>("numero_BV");
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -50,7 +46,7 @@ const ListFourniteur_et_Consommable = () => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.designation);
+      const newSelecteds = rows.map((n) => n.numero_BV);
       setSelected(newSelecteds);
       return;
     }
@@ -101,13 +97,12 @@ const ListFourniteur_et_Consommable = () => {
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-        
-        <Typography variant="h4">Liste des Article</Typography>
-        <Link href="/fourniteur_et_consommable/add">
+        <Link href="/contracts/add">
           <Button variant="contained" size="small" startIcon={<Add />}>
             Créer
           </Button>
         </Link>
+        <Typography variant="h4">Facture de consommation</Typography>
       </SectionNavigation>
       <SectionTable>
         <Box sx={{ width: "100%" }}>
@@ -133,22 +128,24 @@ const ListFourniteur_et_Consommable = () => {
                   {stableSort(rows, getComparator(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
-                      const isItemSelected = isSelected(row.designation);
+                      const isItemSelected = isSelected(row.numero_facture);
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
                         <TableRow
                           hover
-                          //   onClick={(event) => handleClick(event, row.designation)}
+                          //   onClick={(event) => handleClick(event, row.numero_facture)}
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}
-                          key={row.designation}
+                          key={row.numero_facture}
                           selected={isItemSelected}
                         >
                           <TableCell
                             padding="checkbox"
-                            onClick={(event) => handleClick(event, row.designation)}
+                            onClick={(event) =>
+                              handleClick(event, row.numero_facture)
+                            }
                           >
                             <Checkbox
                               color="primary"
@@ -165,25 +162,21 @@ const ListFourniteur_et_Consommable = () => {
                             padding="none"
                             align="left"
                           >
-                            {row.designation}
+                            {row.numero_facture}
                           </TableCell>
-                          <TableCell align="left">{row.quantite}</TableCell>
-                          <TableCell align="left">{row.prix_unitaire}</TableCell>
+                          <TableCell align="left">{row.numero_BV}</TableCell>
+                          <TableCell align="left">
+                            {row.motif_de_la_course}
+                          </TableCell>
+                          <TableCell align="left">{row.km_depart}</TableCell>
+                          <TableCell align="left">{row.km_arrive}</TableCell>
 
                           <TableCell align="right">
                             <BtnActionContainer
                               direction="row"
                               justifyContent="center"
                             >
-                              <Link href="/Gerer/1">
-                                <Button
-                                  color="accent"
-                                  variant="outlined"
-                                >
-                                  <AddIcon/>Gerer
-                                </Button>
-                              </Link>
-                              <Link href="/details/1">
+                              <Link href="contracts/1">
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"
@@ -192,6 +185,13 @@ const ListFourniteur_et_Consommable = () => {
                                   <VisibilityIcon />
                                 </IconButton>
                               </Link>
+                              <IconButton
+                                color="primary"
+                                aria-label="Modifier"
+                                component="span"
+                              >
+                                <EditIcon />
+                              </IconButton>
                               <IconButton
                                 color="warning"
                                 aria-label="Supprimer"
@@ -224,8 +224,6 @@ const ListFourniteur_et_Consommable = () => {
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
-              labelRowsPerPage={labelRowsPerPage}
-              labelDisplayedRows={defaultLabelDisplayedRows}
             />
           </Paper>
           {/* <FormControlLabel
@@ -238,7 +236,7 @@ const ListFourniteur_et_Consommable = () => {
   );
 };
 
-export default ListFourniteur_et_Consommable;
+export default ListFacture;
 
 export const BtnActionContainer = styled(Stack)(({ theme }) => ({}));
 export const SectionNavigation = styled(Stack)(({ theme }) => ({}));

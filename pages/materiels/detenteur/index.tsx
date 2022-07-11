@@ -15,7 +15,7 @@ const Detenteur: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <ListDetenteur/>
+        <ListDetenteur />
       </Container>
     </BackOfficeLayout>
   );

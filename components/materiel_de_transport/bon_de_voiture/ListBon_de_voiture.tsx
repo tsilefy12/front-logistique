@@ -98,7 +98,7 @@ const ListBv = () => {
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-        <Link href="/contracts/add">
+        <Link href="/materiel_de_transport/bon_de_voiture/add">
           <Button variant="contained" size="small" startIcon={<Add />}>
             Créer
           </Button>

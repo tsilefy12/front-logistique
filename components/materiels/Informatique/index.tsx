@@ -102,7 +102,7 @@ const ListInfo = () => {
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-        <Link href="/contracts/add">
+        <Link href="informatiques/creer">
           <Button variant="contained" size="small" startIcon={<Add />}>
             Creer
           </Button>
@@ -185,7 +185,7 @@ const ListInfo = () => {
                               direction="row"
                               justifyContent="center"
                             >
-                              <Link href="contracts/1">
+                              <Link href="/materiels/detenteur/historique">
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"
