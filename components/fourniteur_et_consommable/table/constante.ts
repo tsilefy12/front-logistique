@@ -31,12 +31,12 @@ export const rows = [
   ),
   createData(
     "Bloc Note",
-    "Adresse 2",
+    "20",
     "[208] 555-0126"
   ),
   createData(
     "Stylo Bleu",
-    "Adresse 3",
+    "3",
     "[252] 555-0111"
   ),
   
