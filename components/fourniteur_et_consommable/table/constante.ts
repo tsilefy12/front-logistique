@@ -27,17 +27,17 @@ export const rows = [
   createData(
     "Cahier",
     "10",
-    "[252] 555-0121",
+    "1000 ar",
   ),
   createData(
     "Bloc Note",
     "20",
-    "[208] 555-0126"
+    "500 ar"
   ),
   createData(
     "Stylo Bleu",
     "3",
-    "[252] 555-0111"
+    "600 ar"
   ),
   
 
