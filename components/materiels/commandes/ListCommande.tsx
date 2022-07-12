@@ -187,18 +187,10 @@ const ListCommande = () => {
                                   size="small"
                                   startIcon={<Add />}
                                   color="info"
+                                  sx={{ mr: 1 }}
                                 >
                                   Gérer Offres
                                 </Button>
-                              </Link>
-                              <Link href="commande/1/edit">
-                                <IconButton
-                                  color="accent"
-                                  aria-label="Details"
-                                  component="span"
-                                >
-                                  <Edit />
-                                </IconButton>
                               </Link>
                               <Link href="commande/1/modifie">
                                 <IconButton
@@ -207,6 +199,15 @@ const ListCommande = () => {
                                   component="span"
                                 >
                                   <VisibilityIcon />
+                                </IconButton>
+                              </Link>
+                              <Link href="commande/1/edit">
+                                <IconButton
+                                  color="primary"
+                                  aria-label="Details"
+                                  component="span"
+                                >
+                                  <Edit />
                                 </IconButton>
                               </Link>
                             </BtnActionContainer>
