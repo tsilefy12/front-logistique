@@ -49,7 +49,7 @@ const ListArticle = () => {
                 </TableCell>
                 <TableCell align="left">{row.quantite}</TableCell>
                 <TableCell align="left">${row.prix_unitaire}</TableCell>
-                <TableCell align="left" padding="none">
+                <TableCell padding="none">
                   <TextField
                     id="filled-basic"
                     label="Autre information"
