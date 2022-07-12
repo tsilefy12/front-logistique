@@ -1,11 +1,11 @@
+import React from "react";
 import Head from "next/head";
 import type { NextPage } from "next";
 import Container from "@mui/material/Container";
 import BackOfficeLayout from "../../../../../layouts/backOffice";
 import useBasePath from "../../../../../hooks/useBasePath";
 import FormCommande from "../../../../../components/materiels/commandes/form/FormCommande";
-
-const Home: NextPage = () => {
+const EditCommande: NextPage = () => {
   const basePath = useBasePath();
   return (
     <BackOfficeLayout>
@@ -22,4 +22,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default EditCommande;
