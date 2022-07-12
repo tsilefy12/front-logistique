@@ -31,6 +31,7 @@ import {
   defaultLabelDisplayedRows,
   labelRowsPerPage,
 } from "../../../config/table.config";
+import { Edit } from "@mui/icons-material";
 const ListCommande = () => {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("designation");
@@ -189,6 +190,15 @@ const ListCommande = () => {
                                 >
                                   Gérer Offres
                                 </Button>
+                              </Link>
+                              <Link href="commande/1/edit">
+                                <IconButton
+                                  color="accent"
+                                  aria-label="Details"
+                                  component="span"
+                                >
+                                  <Edit />
+                                </IconButton>
                               </Link>
                               <Link href="commande/1/modifie">
                                 <IconButton
