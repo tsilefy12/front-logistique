@@ -106,7 +106,7 @@ const ListArticleFournitureConsommable = () => {
             Créer
           </Button>
         </Link>
-        <Typography variant="h4">Liste des Article</Typography>
+        <Typography variant="h4">Liste des articles</Typography>
       </SectionNavigation>
       <SectionTable>
         <Box sx={{ width: "100%" }}>
