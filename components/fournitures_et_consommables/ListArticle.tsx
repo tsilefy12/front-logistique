@@ -101,7 +101,7 @@ const ListArticleFournitureConsommable = () => {
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-        <Link href="/fourniteur_et_consommable/add">
+        <Link href="/fourniteur_et_consommable/article/add">
           <Button variant="contained" size="small" startIcon={<Add />}>
             Créer
           </Button>
