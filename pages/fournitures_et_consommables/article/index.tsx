@@ -3,9 +3,9 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import BackOfficeLayout from "../../../layouts/backOffice";
 import useBasePath from "../../../hooks/useBasePath";
-import ListFourniteur_et_Consommable from "../../../components/fournitures_et_consommables/ListArticle";
+import ListArticleFournitureConsommable from "../../../components/fournitures_et_consommables/ListArticle";
 
-const TransportPage: NextPage = () => {
+const ArticlePage: NextPage = () => {
   const basePath = useBasePath();
   return (
     <BackOfficeLayout>
@@ -15,10 +15,10 @@ const TransportPage: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <ListFourniteur_et_Consommable />
+        <ListArticleFournitureConsommable />
       </Container>
     </BackOfficeLayout>
   );
 };
 
-export default TransportPage;
+export default ArticlePage;

@@ -25,39 +25,20 @@ export const headCells: readonly HeadCell[] = [
 
 export const rows = [
   createData(
-    "Bessie Cooper",
-    "Adresse 1",
-    "[252] 555-0121",
+    "Cahier",
+    "10",
+    "1000 ar",
   ),
   createData(
-    "Kessie Cooper",
-    "Adresse 2",
-    "[208] 555-0126"
+    "Bloc Note",
+    "20",
+    "500 ar"
   ),
   createData(
-    "Sie Cooper",
-    "Adresse 3",
-    "[252] 555-0111"
+    "Stylo Bleu",
+    "3",
+    "600 ar"
   ),
-  createData(
-    "Cesie Cooper",
-    "Adresse 4",
-    "[907] 555-0158"
-  ),
-  createData(
-    "Esie Deker",
-    "Adresse",
-    "[907] 555-0184"
-  ),
-  createData(
-    "Dua Cooper",
-    "Adresse 6",
-    "[252] 555-0451"
-  ),
-  createData(
-    "Dua Lipa",
-    "Adresse 2",
-    "[208] 555-0125"
-  ),
+  
 
 ];
