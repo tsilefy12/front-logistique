@@ -111,7 +111,7 @@ const menu = [
       {
         id: 51,
         name: "Etat materiel",
-        link: "/configuration/etat_article",
+        link: "/configuration/etat_materiel",
         icon: "",
       },
     ],
