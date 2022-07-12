@@ -21,7 +21,6 @@ import { styled } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Link from "next/link";
 
-
 const TableOffre = () => {
   return (
     <MyTableContainer>
@@ -62,8 +61,8 @@ const TableOffre = () => {
                     alignItems="center"
                     spacing={2}
                   >
-                    <Link href="/materiels/commandes/1/offre/article">
-                      <Button variant="outlined">
+                    <Link href="/materiels/commande/1/offre/article">
+                      <Button variant="outlined" color="info">
                         <AddIcon />
                         Article
                       </Button>
