@@ -180,7 +180,7 @@ const ListCommande = () => {
                               direction="row"
                               justifyContent="center"
                             >
-                              <Link href="contracts/1">
+                              <Link href="commande/1/offre">
                                 <Button
                                   variant="outlined"
                                   size="small"

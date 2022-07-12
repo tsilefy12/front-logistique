@@ -1,58 +1,25 @@
-import {
-  Button,
-  Container,
-  styled,
-  Typography,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Stack,
-  Grid,
-  Divider,
-} from "@mui/material";
-import Link from "next/link";
+import { styled } from "@mui/material";
 import React from "react";
-import ArrowBack from "@mui/icons-material/ArrowBack";
-import AttachFileIcon from "@mui/icons-material/AttachFile";
-import { Check, Close, Save } from "@mui/icons-material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+import Grid from "@mui/material/Grid";
+import KeyValue from "../../../../../shared/keyValue";
 
 const Commande = () => {
   return (
     <FormContainer spacing={2}>
       <Typography variant="h6">Commande</Typography>
 
-      <Stack spacing={2} direction="row">
-      <Stack
-         direction="row"
-         justifyContent="flex-start"
-         alignItems="flex-start"
-         spacing={1}
-        >
-        <Typography sx={{ fontSize: 15 }} color="secondary" gutterBottom>
-         Demandeur :
-        </Typography>
-        <Typography sx={{ fontSize: 15 }} color="grey" gutterBottom>
-         Kristin Watson
-        </Typography>
-        </Stack>
-        <Stack
-         direction="row"
-         justifyContent="flex-start"
-         alignItems="flex-start"
-         spacing={1}
-        >
-        <Typography sx={{ fontSize: 15 }} color="secondary" gutterBottom>
-         Designation :
-        </Typography>
-        <Typography sx={{ fontSize: 15 }} color="grey" gutterBottom>
-         Commande_1
-        </Typography>
-        </Stack>
-      </Stack>
+      <Grid container>
+        <Grid item xs={12} md={6}>
+          <KeyValue keyName="Demandeur" value="Kristin Watson" />
+          <KeyValue keyName="Designation" value="Commande_1" />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <KeyValue keyName="Quantité" value="12" />
+          <KeyValue keyName="Deadline de réception" value="12/04/2022" />
+        </Grid>
+      </Grid>
     </FormContainer>
   );
 };

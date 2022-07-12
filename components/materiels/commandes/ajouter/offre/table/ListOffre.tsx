@@ -60,7 +60,10 @@ const TableOffre = () => {
                     alignItems="center"
                     spacing={2}
                   >
-                    <Button variant="outlined"><AddIcon/>Article</Button>
+                    <Button variant="outlined">
+                      <AddIcon />
+                      Article
+                    </Button>
                     <EditIcon color="primary" />
                     <DeleteIcon color="warning" />
                   </Stack>
@@ -146,5 +149,5 @@ const MyTableContainer = styled(Stack)(({ theme }) => ({
   borderRadius: 20,
   background: "#fff",
   width: "100%",
-  marginBottom: theme.spacing(10),
+  marginBottom: theme.spacing(2),
 }));
