@@ -5,7 +5,7 @@ import BackOfficeLayout from "../../../../../layouts/backOffice";
 import useBasePath from "../../../../../hooks/useBasePath";
 import ListFormCommandeOffre from "../../../../../components/materiels/commandes/ajouter/offre/ListOffre";
 
-const CreateCommande: NextPage = () => {
+const CreateOffre: NextPage = () => {
   const basePath = useBasePath();
   return (
     <BackOfficeLayout>
@@ -22,4 +22,4 @@ const CreateCommande: NextPage = () => {
   );
 };
 
-export default CreateCommande;
+export default CreateOffre;
