@@ -97,7 +97,7 @@ const ListFacture = () => {
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-        <Link href="/contracts/add">
+        <Link href="/materiel_de_transport/facture_de_consommation/creer">
           <Button variant="contained" size="small" startIcon={<Add />}>
             Créer
           </Button>
