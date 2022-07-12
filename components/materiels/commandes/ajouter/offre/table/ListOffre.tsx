@@ -19,6 +19,7 @@ import Container from "@mui/material/Container";
 import { rows } from "./constante";
 import { styled } from "@mui/material";
 import Grid from "@mui/material/Grid";
+import Link from "next/link";
 
 const TableOffre = () => {
   return (
@@ -60,10 +61,12 @@ const TableOffre = () => {
                     alignItems="center"
                     spacing={2}
                   >
-                    <Button variant="outlined">
-                      <AddIcon />
-                      Article
-                    </Button>
+                    <Link href="/materiels/commande/1/offre/article">
+                      <Button variant="outlined" color="info">
+                        <AddIcon />
+                        Article
+                      </Button>
+                    </Link>
                     <EditIcon color="primary" />
                     <DeleteIcon color="warning" />
                   </Stack>
