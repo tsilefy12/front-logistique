@@ -31,7 +31,7 @@ import {
   labelRowsPerPage,
 } from "../../config/table.config";
 
-const ListFourniteurConsommable = () => {
+const ListArticleFournitureConsommable = () => {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("designation");
   const [selected, setSelected] = React.useState<readonly string[]>([]);
@@ -101,13 +101,12 @@ const ListFourniteurConsommable = () => {
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-        
-        <Typography variant="h4">Liste des Article</Typography>
         <Link href="/fourniteur_et_consommable/add">
           <Button variant="contained" size="small" startIcon={<Add />}>
             Créer
           </Button>
         </Link>
+        <Typography variant="h4">Liste des Article</Typography>
       </SectionNavigation>
       <SectionTable>
         <Box sx={{ width: "100%" }}>
@@ -148,7 +147,9 @@ const ListFourniteurConsommable = () => {
                         >
                           <TableCell
                             padding="checkbox"
-                            onClick={(event) => handleClick(event, row.designation)}
+                            onClick={(event) =>
+                              handleClick(event, row.designation)
+                            }
                           >
                             <Checkbox
                               color="primary"
@@ -168,19 +169,23 @@ const ListFourniteurConsommable = () => {
                             {row.designation}
                           </TableCell>
                           <TableCell align="left">{row.quantite}</TableCell>
-                          <TableCell align="left">{row.prix_unitaire}</TableCell>
+                          <TableCell align="left">
+                            {row.prix_unitaire}
+                          </TableCell>
 
                           <TableCell align="right">
                             <BtnActionContainer
                               direction="row"
-                              justifyContent="center"
+                              justifyContent="right"
                             >
                               <Link href="/Gerer/1">
                                 <Button
+                                  sx={{ mr: 1 }}
                                   color="accent"
                                   variant="outlined"
                                 >
-                                  <AddIcon/>Gerer
+                                  <AddIcon />
+                                  Gerer
                                 </Button>
                               </Link>
                               <Link href="/details/1">
@@ -238,7 +243,7 @@ const ListFourniteurConsommable = () => {
   );
 };
 
-export default ListFourniteurConsommable;
+export default ListArticleFournitureConsommable;
 
 export const BtnActionContainer = styled(Stack)(({ theme }) => ({}));
 export const SectionNavigation = styled(Stack)(({ theme }) => ({}));
