@@ -12,68 +12,65 @@ import { styled } from "@mui/material";
 import Detail from "./detail";
 import ListArticle from "./table/ListArticle";
 
-
 const FormGestionArticle = () => {
-    return(
-        <>
-            <Container maxWidth="xl">
-                <NavigationContainer>
-                    <SectionNavigation>
-                    <Stack flexDirection={"row"}>
-                        <Link href="/materiels/commandes/1/offre">
-                            <Button color="info" variant="text" startIcon={<ArrowBack />}>
-                                Retour
-                            </Button>
-                        </Link>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="small"
-                            startIcon={<Check />}
-                            sx={{ marginInline: 3 }}
-                        >
-                            Enregistrer
-                        </Button>
-                        <Button
-                            variant="text"
-                            color="warning"
-                            size="small"
-                            startIcon={<Close />}
-                            sx={{ marginInline: 3 }}
-                        >
-                            Annuler
-                        </Button>
-                    </Stack>
-                    <Typography variant="h4">Gérer article pour un offre</Typography>
-                    </SectionNavigation>
-                 <Divider />
-                </NavigationContainer>
-                <Stack
-                    direction="column"
-                    justifyContent="flex-start"
-                    alignItems="flex-start"
-                >
-                    <Detail/>
-                    <ListArticle/>
-                </Stack>
-            </Container>
-        </>
-            
-    );
-}
+  return (
+    <>
+      <Container maxWidth="xl">
+        <NavigationContainer>
+          <SectionNavigation>
+            <Stack flexDirection={"row"}>
+              <Link href="/materiels/commande/1/offre">
+                <Button color="info" variant="text" startIcon={<ArrowBack />}>
+                  Retour
+                </Button>
+              </Link>
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                startIcon={<Check />}
+                sx={{ marginInline: 3 }}
+              >
+                Enregistrer
+              </Button>
+              <Button
+                variant="text"
+                color="warning"
+                size="small"
+                startIcon={<Close />}
+                sx={{ marginInline: 3 }}
+              >
+                Annuler
+              </Button>
+            </Stack>
+            <Typography variant="h4">Gérer article pour un offre</Typography>
+          </SectionNavigation>
+          <Divider />
+        </NavigationContainer>
+        <Stack
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="flex-start"
+        >
+          <Detail />
+          <ListArticle />
+        </Stack>
+      </Container>
+    </>
+  );
+};
 
 export default FormGestionArticle;
 
 const NavigationContainer = styled(Stack)(({ theme }) => ({
-    flexDirection: "column",
-    marginBottom: theme.spacing(2),
-    flex: 1,
-    width: "100%",
-  }));
-  
-  const SectionNavigation = styled(Stack)(({ theme }) => ({
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingBottom: "5px",
-  }));
-  
+  flexDirection: "column",
+  marginBottom: theme.spacing(2),
+  flex: 1,
+  width: "100%",
+}));
+
+const SectionNavigation = styled(Stack)(({ theme }) => ({
+  flexDirection: "row",
+  justifyContent: "space-between",
+  paddingBottom: "5px",
+}));
