@@ -201,7 +201,7 @@ const ListCommande = () => {
                                   <VisibilityIcon />
                                 </IconButton>
                               </Link>
-                              <Link href="commande/1/edit">
+                              <Link href="commande/1/details">
                                 <IconButton
                                   color="primary"
                                   aria-label="Details"
