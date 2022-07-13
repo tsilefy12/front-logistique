@@ -6,9 +6,15 @@ const menu = [
     icon: "inventory_2",
     items: [
       {
-        id: 11,
+        id: 10,
         name: "Commande",
         link: "/materiels/commande",
+        icon: "",
+      },
+      {
+        id: 11,
+        name: "Mes commandes",
+        link: "/materiels/mes_commandes",
         icon: "",
       },
       {
@@ -38,27 +44,27 @@ const menu = [
       {
         id: 16,
         name: "Type de materiel",
-        link: "/Materiels/",
+        link: "/materiels/type",
         icon: "",
       },
     ],
   },
   {
     id: 2,
-    name: "Fourniteurs et Consomables",
-    link: "/fourniteur_et_consommable",
+    name: "Fournitures et Consomables",
+    link: "/fournitures_et_consommables",
     icon: "edit_note",
     items: [
       {
         id: 21,
         name: "Article",
-        link: "/fourniteur_et_consommable",
+        link: "/fournitures_et_consommables/article",
         icon: "",
       },
       {
         id: 22,
         name: "Commande",
-        link: "/Fourniteur/Commande",
+        link: "/fournitures_et_consommables/commande",
         icon: "",
       },
     ],
@@ -71,7 +77,7 @@ const menu = [
     items: [
       {
         id: 31,
-        name: "tous les materiels",
+        name: "Tous les materiels",
         link: "/materiel_de_transport",
         icon: "",
       },
@@ -105,7 +111,7 @@ const menu = [
       {
         id: 51,
         name: "Etat materiel",
-        link: "/configuration/etat_article",
+        link: "/configuration/etat_materiel",
         icon: "",
       },
     ],

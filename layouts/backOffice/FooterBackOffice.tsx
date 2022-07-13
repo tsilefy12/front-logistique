@@ -5,7 +5,7 @@ import React from 'react'
 const FooterBackOffice = () => {
   const theme = useTheme()
   return (
-    <ContainerFooter>
+    <ContainerFooter sx={{ mt : 2 }}>
       <Container maxWidth="xl">
         <Stack spacing={0} direction="column" alignItems="center" py={1}>
           <Typography  variant="body2" sx={{color: theme.palette.grey[500]}}>Copyright © 2022 | <Lien>HAISOA</Lien> </Typography>
@@ -29,7 +29,7 @@ const Lien = styled("span")(({ theme }) => ({
 const ContainerFooter = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.grey[300],
   // position: "absolute",
-  // bottom: 0,
-  // width: "100%",
+  bottom: 0,
+  width: "100%",
   borderRadius: 0
 }));

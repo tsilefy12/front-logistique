@@ -31,7 +31,7 @@ import {
   labelRowsPerPage,
 } from "../../config/table.config";
 
-const ListFourniteur_et_Consommable = () => {
+const ListArticleFournitureConsommable = () => {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("designation");
   const [selected, setSelected] = React.useState<readonly string[]>([]);
@@ -101,13 +101,12 @@ const ListFourniteur_et_Consommable = () => {
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-        
-        <Typography variant="h4">Liste des Article</Typography>
-        <Link href="/fournisseurs/add">
+        <Link href="/fourniteur_et_consommable/article/add">
           <Button variant="contained" size="small" startIcon={<Add />}>
             Créer
           </Button>
         </Link>
+        <Typography variant="h4">Liste des articles</Typography>
       </SectionNavigation>
       <SectionTable>
         <Box sx={{ width: "100%" }}>
@@ -148,7 +147,9 @@ const ListFourniteur_et_Consommable = () => {
                         >
                           <TableCell
                             padding="checkbox"
-                            onClick={(event) => handleClick(event, row.designation)}
+                            onClick={(event) =>
+                              handleClick(event, row.designation)
+                            }
                           >
                             <Checkbox
                               color="primary"
@@ -168,22 +169,26 @@ const ListFourniteur_et_Consommable = () => {
                             {row.designation}
                           </TableCell>
                           <TableCell align="left">{row.quantite}</TableCell>
-                          <TableCell align="left">{row.prix_unitaire}</TableCell>
+                          <TableCell align="left">
+                            {row.prix_unitaire}
+                          </TableCell>
 
                           <TableCell align="right">
                             <BtnActionContainer
                               direction="row"
-                              justifyContent="center"
+                              justifyContent="right"
                             >
-                              <Link href="contracts/1">
+                              <Link href="/Gerer/1">
                                 <Button
+                                  sx={{ mr: 1 }}
                                   color="accent"
                                   variant="outlined"
                                 >
-                                  <AddIcon/>Gerer
+                                  <AddIcon />
+                                  Gerer
                                 </Button>
                               </Link>
-                              <Link href="contracts/1">
+                              <Link href="/details/1">
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"
@@ -238,7 +243,7 @@ const ListFourniteur_et_Consommable = () => {
   );
 };
 
-export default ListFourniteur_et_Consommable;
+export default ListArticleFournitureConsommable;
 
 export const BtnActionContainer = styled(Stack)(({ theme }) => ({}));
 export const SectionNavigation = styled(Stack)(({ theme }) => ({}));

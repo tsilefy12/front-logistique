@@ -9,4 +9,5 @@ const ListEmploye = () => {
   )
 }
 
-export default ListEmploye
+
+export default ListEmploye;
