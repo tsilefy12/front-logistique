@@ -5,7 +5,7 @@ import BackOfficeLayout from "../../../../layouts/backOffice";
 import useBasePath from "../../../../hooks/useBasePath";
 import FormArticle from "../../../../components/fournitures_et_consommables/form/FormArticle";
 
-const ArticlePage: NextPage = () => {
+const FormArticlePage: NextPage = () => {
   const basePath = useBasePath();
   return (
     <BackOfficeLayout>
@@ -21,4 +21,4 @@ const ArticlePage: NextPage = () => {
   );
 };
 
-export default ArticlePage;
+export default FormArticlePage;
