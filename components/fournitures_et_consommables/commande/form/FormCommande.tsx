@@ -27,7 +27,7 @@ import {
   const FormArticle = () => {
     return (
       <Container maxWidth="xl" sx={{ pb: 5 }}>
-        <Typography variant="h5">Creer Article</Typography>
+        <Typography variant="h5">Commande des fourniture et consommable</Typography>
         <FormContainer spacing={2}>
         <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Article</InputLabel>
