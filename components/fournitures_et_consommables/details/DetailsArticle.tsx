@@ -148,7 +148,7 @@ import {
                             </TableCell>
                             <TableCell align="left">
                               <Badge
-                                badgeContent={row.quantité_stocké}
+                                badgeContent={row.type}
                                 color={getColorStatus(row.type)}
                               />
                             </TableCell>
