@@ -59,12 +59,12 @@ import { Check, Close, Save } from "@mui/icons-material";
               Annuler
             </Button>
           </Stack>
-          <Typography variant="h4">Créer(modifier) fournisseur</Typography>
+          <Typography variant="h5">Commande des fourniture et consommable</Typography>
         </SectionNavigation>
         <Divider />
       </NavigationContainer>
 
-        <Typography variant="h5">Commande des fourniture et consommable</Typography>
+        
         <FormContainer spacing={2}>
         <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Article</InputLabel>
