@@ -31,6 +31,7 @@ import {
     defaultLabelDisplayedRows,
     labelRowsPerPage,
   } from "../../../config/table.config";
+import KeyValue from "../../shared/keyValue";
   
   const DetailsArticle = () => {
     const [order, setOrder] = React.useState<Order>("asc");
@@ -105,6 +106,7 @@ import {
           
           <Typography variant="h4">Détails d’un article</Typography>
         </SectionNavigation>
+        <KeyValue  keyName="Designation" value="Cahier" />
         <SectionTable>
           <Box sx={{ width: "100%" }}>
             <Paper sx={{ width: "100%", mb: 2 }}>
