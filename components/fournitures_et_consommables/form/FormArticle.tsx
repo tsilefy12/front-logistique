@@ -5,22 +5,39 @@ import {
     Typography,
     TextField,
     FormControl,
-    Stack
+    Stack,
+    MenuItem,
+    InputLabel
   } from "@mui/material";
   import React from "react";
   import { Check, Close, Save } from "@mui/icons-material";
+  import Select, { SelectChangeEvent } from '@mui/material/Select';
+
+  const [Value, setValue] = React.useState('');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setValue(event.target.value as string);
+  };
   
   const FormArticle = () => {
     return (
       <Container maxWidth="xl" sx={{ pb: 5 }}>
         <Typography variant="h5">Creer Article</Typography>
         <FormContainer spacing={2}>
-          <TextField
-            fullWidth
-            id="outlined-basic"
-            label="Designation"
-            variant="outlined"
-          />
+          <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Designation</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={Value}
+          label="Designation"
+          onChange={handleChange}
+        >
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+      </FormControl>
           <FormControl fullWidth>
             <TextField id="outlined-basic" label="Quantite stocké" variant="outlined" />
           </FormControl>
