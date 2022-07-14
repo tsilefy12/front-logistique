@@ -7,9 +7,12 @@ import {
     FormControl,
     Stack,
     MenuItem,
+    Divider,
     InputLabel
   } from "@mui/material";
   import React from "react";
+  import Link from "next/link";
+  import ArrowBack from "@mui/icons-material/ArrowBack";
   import { Check, Close, Save } from "@mui/icons-material";
   import Select, { SelectChangeEvent } from '@mui/material/Select';
 
@@ -22,6 +25,37 @@ import {
   const FormArticle = () => {
     return (
       <Container maxWidth="xl" sx={{ pb: 5 }}>
+        <NavigationContainer>
+        <SectionNavigation>
+          <Stack flexDirection={"row"}>
+            <Link href="/fournitures_et_consommables">
+              <Button color="info" variant="text" startIcon={<ArrowBack />}>
+                Retour
+              </Button>
+            </Link>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              startIcon={<Check />}
+              sx={{ marginInline: 3 }}
+            >
+              Enregistrer
+            </Button>
+            <Button
+              variant="text"
+              color="warning"
+              size="small"
+              startIcon={<Close />}
+              sx={{ marginInline: 3 }}
+            >
+              Annuler
+            </Button>
+          </Stack>
+          <Typography variant="h4">Créer Article</Typography>
+        </SectionNavigation>
+        <Divider />
+      </NavigationContainer>
         <Typography variant="h5">Creer Article</Typography>
         <FormContainer spacing={2}>
           <FormControl fullWidth>
@@ -44,31 +78,7 @@ import {
           <FormControl fullWidth>
             <TextField id="outlined-basic" label="Prix Unitaire" variant="outlined" />
           </FormControl>
-          <Stack
-            direction="row-reverse"
-            justifyContent="flex-start"
-            alignItems="center"
-            spacing={2}
-          >
-            <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            startIcon={<Check />}
-            sx={{ marginInline: 3 }}
-            >
-            Enregistrer
-            </Button>
-            <Button
-            variant="text"
-            color="warning"
-            size="small"
-            startIcon={<Close />}
-            sx={{ marginInline: 3 }}
-            >
-            Annuler
-            </Button>
-          </Stack>
+          
         </FormContainer>
       </Container>
     );
@@ -87,5 +97,17 @@ import {
     // border: "1px solid #E0E0E0",
     borderRadius: 20,
     background: "#fff",
+  }));
+  const NavigationContainer = styled(Stack)(({ theme }) => ({
+    flexDirection: "column",
+    marginBottom: theme.spacing(2),
+    flex: 1,
+    width: "100%",
+  }));
+  
+  const SectionNavigation = styled(Stack)(({ theme }) => ({
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingBottom: "5px",
   }));
   
