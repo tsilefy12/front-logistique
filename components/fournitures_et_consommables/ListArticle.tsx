@@ -188,7 +188,7 @@ const ListArticleFournitureConsommable = () => {
                                   Gerer
                                 </Button>
                               </Link>
-                              <Link href="/1/details">
+                              <Link href="/fournitures_et_consommables/1/details">
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"
