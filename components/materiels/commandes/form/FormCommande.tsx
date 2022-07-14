@@ -52,12 +52,11 @@ const FormCommande = () => {
               color="warning"
               size="small"
               startIcon={<Close />}
-              sx={{ marginInline: 3 }}
             >
               Annuler
             </Button>
           </Stack>
-          <Typography variant="h4">Créer(modifier) fournisseur</Typography>
+          <Typography variant="h4">Créer(modifier) commande</Typography>
         </SectionNavigation>
         <Divider />
       </NavigationContainer>
