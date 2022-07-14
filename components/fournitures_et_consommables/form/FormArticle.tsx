@@ -28,7 +28,7 @@ const FormArticle = () => {
       <NavigationContainer>
         <SectionNavigation>
           <Stack flexDirection={"row"}>
-            <Link href="/fournitures_et_consommables">
+            <Link href="/fournitures_et_consommables/article">
               <Button color="info" variant="text" startIcon={<ArrowBack />}>
                 Retour
               </Button>
@@ -47,7 +47,6 @@ const FormArticle = () => {
               color="warning"
               size="small"
               startIcon={<Close />}
-              sx={{ marginInline: 3 }}
             >
               Annuler
             </Button>
