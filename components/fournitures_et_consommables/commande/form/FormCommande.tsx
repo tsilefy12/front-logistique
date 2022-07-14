@@ -1,16 +1,21 @@
 import {
-    Button,
-    Container,
-    styled,
-    Typography,
-    TextField,
-    FormControl,
-    InputLabel,
-    Stack,
-    MenuItem
-  } from "@mui/material";
-  import React from "react";
-  import { Check, Close, Save } from "@mui/icons-material";
+  Button,
+  Container,
+  styled,
+  Typography,
+  TextField,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Stack,
+  Grid,
+  Divider,
+} from "@mui/material";
+import Link from "next/link";
+import React from "react";
+import ArrowBack from "@mui/icons-material/ArrowBack";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import { Check, Close, Save } from "@mui/icons-material";
   import Select, { SelectChangeEvent } from '@mui/material/Select';
 
   const [article, setArticle] = React.useState('');
@@ -24,9 +29,41 @@ import {
     setDemandeur(event.target.value as string);
   };
   
-  const FormArticle = () => {
+  const FormCommande = () => {
     return (
       <Container maxWidth="xl" sx={{ pb: 5 }}>
+        <NavigationContainer>
+        <SectionNavigation>
+          <Stack flexDirection={"row"}>
+            <Link href="/fournitures_et_consommables/commande/ajouter">
+              <Button color="info" variant="text" startIcon={<ArrowBack />}>
+                Retour
+              </Button>
+            </Link>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              startIcon={<Check />}
+              sx={{ marginInline: 3 }}
+            >
+              Enregistrer
+            </Button>
+            <Button
+              variant="text"
+              color="warning"
+              size="small"
+              startIcon={<Close />}
+              sx={{ marginInline: 3 }}
+            >
+              Annuler
+            </Button>
+          </Stack>
+          <Typography variant="h4">Créer(modifier) fournisseur</Typography>
+        </SectionNavigation>
+        <Divider />
+      </NavigationContainer>
+
         <Typography variant="h5">Commande des fourniture et consommable</Typography>
         <FormContainer spacing={2}>
         <FormControl fullWidth>
@@ -76,37 +113,13 @@ import {
           <FormControl fullWidth>
             <TextField id="outlined-basic" label="Date de livraison" variant="outlined" />
           </FormControl>
-          <Stack
-            direction="row-reverse"
-            justifyContent="flex-start"
-            alignItems="center"
-            spacing={2}
-          >
-            <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            startIcon={<Check />}
-            sx={{ marginInline: 3 }}
-            >
-            Enregistrer
-            </Button>
-            <Button
-            variant="text"
-            color="warning"
-            size="small"
-            startIcon={<Close />}
-            sx={{ marginInline: 3 }}
-            >
-            Annuler
-            </Button>
-          </Stack>
+          
         </FormContainer>
       </Container>
     );
   };
   
-  export default FormArticle;
+  export default FormCommande;
   
   export const CustomStack = styled(Stack)(({ theme }) => ({
     [theme.breakpoints.down("sm")]: {
@@ -120,4 +133,16 @@ import {
     borderRadius: 20,
     background: "#fff",
   }));
+  const NavigationContainer = styled(Stack)(({ theme }) => ({
+  flexDirection: "column",
+  marginBottom: theme.spacing(2),
+  flex: 1,
+  width: "100%",
+}));
+
+const SectionNavigation = styled(Stack)(({ theme }) => ({
+  flexDirection: "row",
+  justifyContent: "space-between",
+  paddingBottom: "5px",
+}));
   

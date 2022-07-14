@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import BackOfficeLayout from "../../../../layouts/backOffice";
 import useBasePath from "../../../../hooks/useBasePath";
+import FormCommande from "../../../../components/materiels/commandes/form/FormCommande";
 
 const ArticlePage: NextPage = () => {
   const basePath = useBasePath();
@@ -14,6 +15,7 @@ const ArticlePage: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
+        <FormCommande/>
       </Container>
     </BackOfficeLayout>
   );
