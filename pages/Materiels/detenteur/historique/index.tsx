@@ -3,7 +3,8 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import BackOfficeLayout from "../../../../layouts/backOffice";
 import useBasePath from "../../../../hooks/useBasePath";
-import HistoriqueDetentionMateriel from "../../../../components/materiels/detenteur/historique/HistoriqueDetentionMateriel";
+import HistoriqueDetentionMateriel from "../../../../components/materiels/Detenteur/historique/HistoriqueDetentionMateriel";
+
 
 const HistoDetenteurMateriel: NextPage = () => {
   const basePath = useBasePath();

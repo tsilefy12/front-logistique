@@ -18,16 +18,16 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { Check, Close, Save } from "@mui/icons-material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-const [article, setArticle] = React.useState("");
+//const [article, setArticle] = React.useState("");
 
-const handleChange = (event: SelectChangeEvent) => {
-  setArticle(event.target.value as string);
-};
-const [demandeur, setDemandeur] = React.useState("");
+// const handleChange = (event: SelectChangeEvent) => {
+//   setArticle(event.target.value as string);
+// };
+// const [demandeur, setDemandeur] = React.useState("");
 
-const handleChange_1 = (event: SelectChangeEvent) => {
-  setDemandeur(event.target.value as string);
-};
+// const handleChange_1 = (event: SelectChangeEvent) => {
+//   setDemandeur(event.target.value as string);
+// };
 
 const FormCommande = () => {
   return (
@@ -72,9 +72,9 @@ const FormCommande = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={article}
+            //value={article}
             label="Article"
-            onChange={handleChange}
+           // onChange={handleChange}
           >
             <MenuItem value={10}>Ten</MenuItem>
             <MenuItem value={20}>Twenty</MenuItem>
@@ -86,9 +86,9 @@ const FormCommande = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={demandeur}
+            //value={demandeur}
             label="Demandeur"
-            onChange={handleChange_1}
+           // onChange={handleChange_1}
           >
             <MenuItem value={10}>Ten</MenuItem>
             <MenuItem value={20}>Twenty</MenuItem>

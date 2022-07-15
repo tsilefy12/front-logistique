@@ -101,7 +101,7 @@ const AddFormBonCommande = () => {
           </FormControl>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">
-              Mode d'expedition
+              Mode expedition
             </InputLabel>
             <Select
               labelId="demo-simple-select-label"

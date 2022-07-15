@@ -3,7 +3,8 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import BackOfficeLayout from "../../../../layouts/backOffice";
 import useBasePath from "../../../../hooks/useBasePath";
-import ListFormDetationMateriel from "../../../../components/materiels/detenteur/ajouter/ListFormDetationMateriel";
+import ListFormDetationMateriel from "../../../../components/materiels/Detenteur/ajouter/ListFormDetationMateriel";
+
 
 const Detenteur: NextPage = () => {
   const basePath = useBasePath();

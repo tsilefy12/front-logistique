@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
-import FournisseurForm from "../../../../components/fournisseurs/form/FournisseurForm";
+import FournisseurForm from "../../../../components/Fournisseurs/form/FournisseurForm";
 import useBasePath from "../../../../hooks/useBasePath";
 import BackOfficeLayout from "../../../../layouts/backOffice";
 

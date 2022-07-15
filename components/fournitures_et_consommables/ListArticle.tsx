@@ -178,7 +178,7 @@ const ListArticleFournitureConsommable = () => {
                               direction="row"
                               justifyContent="right"
                             >
-                              <Link href="/Gerer/1">
+                              <Link href="/fournitures_et_consommables/article/1/entre_sortie">
                                 <Button
                                   sx={{ mr: 1 }}
                                   color="accent"

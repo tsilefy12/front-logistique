@@ -30,8 +30,8 @@ const ListDetentionMateriel = () => {
             <TableRow>
               <TableCell>N° OPTIM</TableCell>
               <TableCell align="left">Désignation</TableCell>
-              <TableCell align="left">Date d'acquisition</TableCell>
-              <TableCell align="left">Valeur d'acquisition</TableCell>
+              <TableCell align="left">Date acquisition</TableCell>
+              <TableCell align="left">Valeur acquisition</TableCell>
               <TableCell></TableCell>
             </TableRow>
           </TableHead>
