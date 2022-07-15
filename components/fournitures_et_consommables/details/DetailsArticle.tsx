@@ -5,6 +5,7 @@ import {
     Stack,
     styled,
     Typography,
+    Divider
   } from "@mui/material";
   import Link from "next/link";
   import React from "react";
@@ -32,6 +33,8 @@ import {
     labelRowsPerPage,
   } from "../../../config/table.config";
 import KeyValue from "../../shared/keyValue";
+import ArrowBack from "@mui/icons-material/ArrowBack";
+import { Check, Close, Save } from "@mui/icons-material";
   
   const DetailsArticle = () => {
     const [order, setOrder] = React.useState<Order>("asc");
@@ -102,10 +105,20 @@ import KeyValue from "../../shared/keyValue";
   
     return (
       <Container maxWidth="xl">
-        <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-          
-          <Typography variant="h4">Détails d’un article</Typography>
+        <NavigationContainer>
+        <SectionNavigation>
+          <Stack flexDirection={"row"}>
+            <Link href="/fournitures_et_consommables/article">
+              <Button color="info" variant="text" startIcon={<ArrowBack />}>
+                Retour
+              </Button>
+            </Link>
+            
+          </Stack>
+          <Typography variant="h4">Details d'un article</Typography>
         </SectionNavigation>
+        <Divider />
+      </NavigationContainer>
         <KeyValue  keyName="Designation" value="Cahier" />
         <SectionTable>
           <Box sx={{ width: "100%" }}>
@@ -173,7 +186,12 @@ import KeyValue from "../../shared/keyValue";
   };
   
   export default DetailsArticle;
-  
+  const NavigationContainer = styled(Stack)(({ theme }) => ({
+    flexDirection: "column",
+    marginBottom: theme.spacing(2),
+    flex: 1,
+    width: "100%",
+  }));
   export const BtnActionContainer = styled(Stack)(({ theme }) => ({}));
   export const SectionNavigation = styled(Stack)(({ theme }) => ({}));
   const SectionTable = styled("div")(({ theme }) => ({}));

@@ -43,7 +43,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           }}
         >
           <Typography variant="h6" id="tableTitle" component="div">
-            Liste des Articles
+            Details d'un article
           </Typography>
           <TextField
             variant="outlined"
