@@ -7,6 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { EnhancedTableToolbarProps } from "./type-variable";
 import { TextField, Stack, Typography } from "@mui/material";
 import { selectedItemsLabel } from "../../../../config/table.config";
+import KeyValue from "../../shared/keyValue";
 
 const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
   const { numSelected } = props;
@@ -45,6 +46,8 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           <Typography variant="h6" id="tableTitle" component="div">
             Details d'un article
           </Typography>
+          
+<KeyValue  keyName="Designation" value="Cahier" />
           <TextField
             variant="outlined"
             id="search"

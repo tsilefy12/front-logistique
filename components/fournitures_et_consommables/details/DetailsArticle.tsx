@@ -32,7 +32,7 @@ import {
     defaultLabelDisplayedRows,
     labelRowsPerPage,
   } from "../../../config/table.config";
-import KeyValue from "../../shared/keyValue";
+
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { Check, Close, Save } from "@mui/icons-material";
   
@@ -119,7 +119,7 @@ import { Check, Close, Save } from "@mui/icons-material";
         </SectionNavigation>
         <Divider />
       </NavigationContainer>
-        <KeyValue  keyName="Designation" value="Cahier" />
+        
         <SectionTable>
           <Box sx={{ width: "100%" }}>
             <Paper sx={{ width: "100%", mb: 2 }}>
