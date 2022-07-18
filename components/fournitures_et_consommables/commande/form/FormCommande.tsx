@@ -30,13 +30,27 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 // };
 
 const FormCommande = () => {
+  const [article, setArticle] = React.useState("");
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setArticle(event.target.value as string);
+  };
+  const [demandeur, setDemandeur] = React.useState("");
+
+  const handleChange_1 = (event: SelectChangeEvent) => {
+    setDemandeur(event.target.value as string);
+  };
   return (
     <Container maxWidth="xl" sx={{ pb: 5 }}>
       <NavigationContainer>
         <SectionNavigation>
           <Stack flexDirection={"row"}>
             <Link href="/fournitures_et_consommables/commande">
-              <Button color="info" variant="text" startIcon={<ArrowBack />}>
+              <Button
+                color="info"
+                variant="text"
+                startIcon={<ArrowBack />}
+              >
                 Retour
               </Button>
             </Link>
@@ -68,7 +82,9 @@ const FormCommande = () => {
 
       <FormContainer spacing={2}>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Article</InputLabel>
+          <InputLabel id="demo-simple-select-label">
+            Article
+          </InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -82,7 +98,9 @@ const FormCommande = () => {
           </Select>
         </FormControl>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Demandeur</InputLabel>
+          <InputLabel id="demo-simple-select-label">
+            Demandeur
+          </InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
