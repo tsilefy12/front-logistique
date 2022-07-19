@@ -1,9 +1,9 @@
 import { Container } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
-import BackOfficeLayout from "../../../../layouts/backOffice";
-import useBasePath from "../../../../hooks/useBasePath";
-import DetailsArticle from "../../../../components/fournitures_et_consommables/details/DetailsArticle";
+import BackOfficeLayout from "../../../../../layouts/backOffice";
+import useBasePath from "../../../../../hooks/useBasePath";
+import DetailsArticle from "../../../../../components/fournitures_et_consommables/article/id/details";
 
 const ArticlePage: NextPage = () => {
   const basePath = useBasePath();
@@ -15,7 +15,7 @@ const ArticlePage: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <DetailsArticle/>
+        <DetailsArticle />
       </Container>
     </BackOfficeLayout>
   );

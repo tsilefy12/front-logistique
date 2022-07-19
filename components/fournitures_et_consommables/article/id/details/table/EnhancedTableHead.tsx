@@ -26,7 +26,6 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
   return (
     <TableHead>
       <TableRow>
-       
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -48,7 +47,6 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
             </TableSortLabel>
           </TableCell>
         ))}
-        <TableCell></TableCell>
       </TableRow>
     </TableHead>
   );

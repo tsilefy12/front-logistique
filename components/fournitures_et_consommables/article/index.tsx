@@ -29,7 +29,7 @@ import Add from "@mui/icons-material/Add";
 import {
   defaultLabelDisplayedRows,
   labelRowsPerPage,
-} from "../../config/table.config";
+} from "../../../config/table.config";
 
 const ListArticleFournitureConsommable = () => {
   const [order, setOrder] = React.useState<Order>("asc");
@@ -189,7 +189,7 @@ const ListArticleFournitureConsommable = () => {
                                   Gerer
                                 </Button>
                               </Link>
-                              <Link href="/fournitures_et_consommables/1/details">
+                              <Link href="/fournitures_et_consommables/article/1/details">
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"
