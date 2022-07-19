@@ -183,6 +183,7 @@ const ListArticleFournitureConsommable = () => {
                                   sx={{ mr: 1 }}
                                   color="accent"
                                   variant="outlined"
+                                  size="small"
                                 >
                                   <AddIcon />
                                   Gerer
@@ -193,6 +194,7 @@ const ListArticleFournitureConsommable = () => {
                                   color="accent"
                                   aria-label="Details"
                                   component="span"
+                                  size="small"
                                 >
                                   <VisibilityIcon />
                                 </IconButton>
@@ -201,6 +203,7 @@ const ListArticleFournitureConsommable = () => {
                                 color="warning"
                                 aria-label="Supprimer"
                                 component="span"
+                                size="small"
                               >
                                 <DeleteIcon />
                               </IconButton>
