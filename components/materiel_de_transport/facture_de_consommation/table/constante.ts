@@ -3,48 +3,42 @@ import { HeadCell } from "./type-variable";
 
 export const headCells: readonly HeadCell[] = [
     {
-      id: 'numero_BV',
+      id: 'numero_facture',
       numeric: false,
       disablePadding: true,
-      label: 'Numéro BV',
+      label: 'Numéro de facture',
     },
     {
-      id: 'immatriculation',
+      id: 'numero_BV',
       numeric: true,
       disablePadding: false,
-      label: 'Immatriculation',
+      label: 'Numéro de BV',
     },
     {
-      id: 'numero_OM',
+      id: 'motif_de_la_course',
       numeric: true,
       disablePadding: false,
-      label: 'Numéro OM',
+      label: 'Motif de la course',
     },
     {
-      id: 'date_et_heure_de_depart',
+      id: 'km_depart',
       numeric: true,
       disablePadding: false,
-      label: 'Date et heure de depart',
+      label: 'Km de depart',
     },
     {
-      id: 'date_et_heure_d_arrive',
+      id: 'km_arrive',
       numeric: true,
       disablePadding: false,
-      label: "Date et heure d'arrivé",
+      label: "Km d'arrivé",
     },
   ];
 
   export const rows = [
-    createData('Bessie Cooper', 'Adresse 1', '[252] 555-0121', 'juliano@gmail.com','date'),
-    createData('Kessie Cooper', 'Adresse 2', '[208] 555-0126', 'kessC@gmail.com','date'),
-    createData('Sie Cooper', 'Adresse 3', '[252] 555-0111', 'Des@gmail.com','date'),
-    createData('Cesie Cooper', 'Adresse 4', '[907] 555-0158', 'juliano@gmail.com','date'),
-    createData('Esie Deker', 'Adresse', '[907] 555-0184', 'juliano@gmail.com','date'),
-    createData('Dua Cooper', 'Adresse 6', '[252] 555-0451', 'juliano@gmail.com','date'),
-    createData('Dua Lipa', 'Adresse 2', '[208] 555-0125', 'juliano@gmail.com','date'),
-    createData('Dua Jean', 'Adresse 3', '[252] 555-2500', 'juliano@gmail.com','date'),
-    createData('Dua Spencer', 'Adresse 4', '[308] 555-0121', 'juliano@gmail.com','date'),
-    createData('Brooklyn Simons', 'Adresse', '[907] 555-0164', 'juliano@gmail.com','date'),
-  
-  
+    createData('FATC001', 'BV001', 'Supérvision AT', '10001','10500'),
+    createData('FATC002', 'BV002', 'Supérvision AT', '10500','11000'),
+    createData('FATC003', 'BV003', 'Supérvision AT', '11500','12000'),
+    createData('FATC004', 'BV004', 'Supérvision AT', '12000','12500'),
+    createData('FATC005', 'BV005', 'Supérvision AT', '12500','13000'),
+    createData('FATC006', 'BV006', 'Supérvision AT', '13000','13500'),
   ];

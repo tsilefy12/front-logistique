@@ -41,12 +41,6 @@ const menu = [
         link: "/materiels/detenteur",
         icon: "",
       },
-      {
-        id: 16,
-        name: "Type de materiel",
-        link: "/materiels/type",
-        icon: "",
-      },
     ],
   },
   {
@@ -104,14 +98,20 @@ const menu = [
   },
   {
     id: 5,
-    name: "Configuration",
-    link: "/Configuration",
+    name: "Configurations",
+    link: "/configurations/etat_materiel",
     icon: "settings",
     items: [
       {
         id: 51,
-        name: "Etat materiel",
-        link: "/configuration/etat_materiel",
+        name: "Etat matériel",
+        link: "/configurations/etat_materiel",
+        icon: "",
+      },
+      {
+        id: 52,
+        name: "Type de matériel",
+        link: "/configurations/type_materiel",
         icon: "",
       },
     ],
