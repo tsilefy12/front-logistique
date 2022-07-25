@@ -55,7 +55,7 @@ const ListFormAfficherCommande = () => {
         >
           <Commande />
           <TableOffre />
-          <FormulaireOffre/>
+          <FormulaireOffre />
         </Stack>
       </Container>
     </>

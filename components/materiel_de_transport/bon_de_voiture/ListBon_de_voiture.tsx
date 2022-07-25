@@ -181,15 +181,13 @@ const ListBv = () => {
                               direction="row"
                               justifyContent="right"
                             >
-                              <Link href="contracts/1">
-                                <IconButton
-                                  color="accent"
-                                  aria-label="Details"
-                                  component="span"
-                                >
-                                  <VisibilityIcon />
-                                </IconButton>
-                              </Link>
+                              <IconButton
+                                color="accent"
+                                aria-label="Details"
+                                component="span"
+                              >
+                                <VisibilityIcon />
+                              </IconButton>
                               <IconButton
                                 color="primary"
                                 aria-label="Modifier"

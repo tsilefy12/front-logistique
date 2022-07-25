@@ -177,26 +177,22 @@ const ListBc = () => {
                               direction="row"
                               justifyContent="center"
                             >
-                              <Link href="contracts/1">
-                                <Button
-                                  size="small"
-                                  variant="outlined"
-                                  color="accent"
-                                  sx={{ mr: 2 }}
-                                >
-                                  <AddIcon /> Gérer Articles
-                                </Button>
-                              </Link>
-                              <Link href="contracts/1">
-                                <IconButton
-                                  color="accent"
-                                  aria-label="Details"
-                                  component="span"
-                                  size="small"
-                                >
-                                  <VisibilityIcon />
-                                </IconButton>
-                              </Link>
+                              <Button
+                                size="small"
+                                variant="outlined"
+                                color="accent"
+                                sx={{ mr: 2 }}
+                              >
+                                <AddIcon /> Gérer Articles
+                              </Button>
+                              <IconButton
+                                color="accent"
+                                aria-label="Details"
+                                component="span"
+                                size="small"
+                              >
+                                <VisibilityIcon />
+                              </IconButton>
                               <IconButton
                                 color="primary"
                                 aria-label="Modifier"

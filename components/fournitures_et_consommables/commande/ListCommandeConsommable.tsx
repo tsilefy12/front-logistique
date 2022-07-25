@@ -183,24 +183,22 @@ const ListCommandeConsommable = () => {
                               direction="row"
                               justifyContent="right"
                             >
-                              <Link href="/details/1">
-                                <IconButton
-                                  color="accent"
-                                  aria-label="Details"
-                                  component="span"
-                                >
-                                  <VisibilityIcon />
-                                </IconButton>
-                              </Link>
-                              <Link href="/fourniteures_et_consommables/commande/1/edit">
-                                <IconButton
-                                  color="primary"
-                                  aria-label="Details"
-                                  component="span"
-                                >
-                                  <EditIcon />
-                                </IconButton>
-                              </Link>
+                              <IconButton
+                                color="accent"
+                                aria-label="Details"
+                                component="span"
+                              >
+                                <VisibilityIcon />
+                              </IconButton>
+
+                              <IconButton
+                                color="primary"
+                                aria-label="Details"
+                                component="span"
+                              >
+                                <EditIcon />
+                              </IconButton>
+
                               <IconButton
                                 color="warning"
                                 aria-label="Supprimer"

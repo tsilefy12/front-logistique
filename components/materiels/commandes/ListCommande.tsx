@@ -192,7 +192,7 @@ const ListCommande = () => {
                                   Gérer Offres
                                 </Button>
                               </Link>
-                              <Link href="commande/1/modifie">
+                              <Link href="commande/1/details">
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"
@@ -201,7 +201,7 @@ const ListCommande = () => {
                                   <VisibilityIcon />
                                 </IconButton>
                               </Link>
-                              <Link href="commande/1/details">
+                              <Link href="commande/1/edit">
                                 <IconButton
                                   color="primary"
                                   aria-label="Details"
