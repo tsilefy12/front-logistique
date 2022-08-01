@@ -1,21 +1,23 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import { customizationSlice } from './slices/customizationSlice';
-import { menuSlice } from './menu/menuSlice';
-import { menuProfileSlice } from './menu/menuprofileSlice';
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import { customizationSlice } from "./features/slices/customizationSlice";
+import { menuSlice } from "./features/menu/menuSlice";
+import { menuProfileSlice } from "./features/menu/menuprofileSlice";
+import { authSlice } from "./features/auth";
 
 export const store = configureStore({
-  reducer: {
-    customization: customizationSlice.reducer,
-    menu: menuSlice.reducer,
-    menuprofile: menuProfileSlice.reducer
-  },
+	reducer: {
+		customization: customizationSlice.reducer,
+		menu: menuSlice.reducer,
+		menuprofile: menuProfileSlice.reducer,
+		auth: authSlice.reducer,
+	},
 });
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
+	ReturnType,
+	RootState,
+	unknown,
+	Action<string>
 >;

@@ -9,102 +9,109 @@ import Tooltip from "@mui/material/Tooltip";
 import { Badge, Link, Stack, styled, useTheme } from "@mui/material";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
-import { useAppSelector } from "../../../hooks/reduxHooks";
+import { useAppSelector, useAppDispatch } from "../../../hooks/reduxHooks";
 import {
-  OneButtonLink,
-  OneButtonLinkWithItems,
-  ButtonProfile,
+	OneButtonLink,
+	OneButtonLinkWithItems,
+	ButtonProfile,
 } from "./ButtonNav";
+import { useRouter } from "next/router";
+import { logout } from "../../../redux/features/auth/authSlice";
 
 const NavbarBackOffice = ({ matches }: any) => {
-  const theme = useTheme();
-  /**
-   * Take all menu lists in the redux store
-   */
-  const navMenu = useAppSelector((state) => state.menu.value);
+	const theme = useTheme();
+	/**
+	 * Take all menu lists in the redux store
+	 */
+	const navMenu = useAppSelector((state) => state.menu.value);
+	const dispatch = useAppDispatch();
+	const router = useRouter();
 
-  return (
-    <AppbarBackOffice position="sticky" elevation={0}>
-      <Container maxWidth="xl">
-        <ToolbarBackOffice variant="dense">
-          <ListMenuContainer>
-            <Link href="/">
-              <IconBntNavBO aria-label="home">
-                <HomeWorkIcon fontSize="inherit" />
-              </IconBntNavBO>
-            </Link>
-            <Typography variant="h5" paddingX={2} color="GrayText">
-              Logistiques
-            </Typography>
-            <ListPageContainer>
-              {navMenu.map((page, index) =>
-                page.items.length === 0 ? (
-                  <OneButtonLink page={page} key={index} />
-                ) : (
-                  <OneButtonLinkWithItems page={page} key={index} />
-                )
-              )}
-            </ListPageContainer>
-          </ListMenuContainer>
-          <MenuNavbarBo>
-            <Tooltip title="Pas de notification" sx={{ mx: 4 }}>
-              <IconButton
-                size="large"
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
-                <Badge
-                  badgeContent={0}
-                  color="error"
-                  sx={{
-                    ".MuiBadge-badge": {
-                      top: 6,
-                    },
-                  }}
-                >
-                  <CircleNotificationsIcon fontSize="large" />
-                </Badge>
-              </IconButton>
-            </Tooltip>
-            <ButtonProfile />
-          </MenuNavbarBo>
-        </ToolbarBackOffice>
-      </Container>
-    </AppbarBackOffice>
-  );
+	const handleClickLogout = () => {
+		dispatch(logout({}));
+		window.location.href = "/login";
+	};
+
+	return (
+		<AppbarBackOffice position="sticky" elevation={0}>
+			<Container maxWidth="xl">
+				<ToolbarBackOffice variant="dense">
+					<ListMenuContainer>
+						<Link href="/">
+							<IconBntNavBO aria-label="home">
+								<HomeWorkIcon fontSize="inherit" />
+							</IconBntNavBO>
+						</Link>
+						<Typography variant="h5" paddingX={2} color="GrayText">
+							Logistique
+						</Typography>
+						<ListPageContainer>
+							{navMenu.map((page, index) =>
+								page.items.length === 0 ? (
+									<OneButtonLink page={page} key={index} />
+								) : (
+									<OneButtonLinkWithItems page={page} key={index} />
+								)
+							)}
+						</ListPageContainer>
+					</ListMenuContainer>
+					<MenuNavbarBo>
+						<Tooltip title="Pas de notification" sx={{ mx: 4 }}>
+							<IconButton
+								size="large"
+								aria-label="show 17 new notifications"
+								color="inherit"
+							>
+								<Badge
+									badgeContent={0}
+									color="error"
+									sx={{
+										".MuiBadge-badge": {
+											top: 6,
+										},
+									}}
+								>
+									<CircleNotificationsIcon fontSize="large" />
+								</Badge>
+							</IconButton>
+						</Tooltip>
+						<ButtonProfile handleClickLogout={handleClickLogout} />
+					</MenuNavbarBo>
+				</ToolbarBackOffice>
+			</Container>
+		</AppbarBackOffice>
+	);
 };
 
 export default NavbarBackOffice;
 
 const ListPageContainer = styled(Box)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "center",
+	display: "flex",
+	flexDirection: "row",
+	alignItems: "center",
+	justifyContent: "center",
 }));
 
 const ListMenuContainer = styled(Stack)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "center",
+	display: "flex",
+	flexDirection: "row",
+	alignItems: "center",
+	justifyContent: "center",
 }));
 
 export const MenuNavbarBo = styled(Stack)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
+	display: "flex",
+	flexDirection: "row",
+	alignItems: "center",
 }));
 
-export const IconBntNavBO = styled(IconButton)(({ theme }) => ({
-  // backgroundColor: theme.palette.common.white,
-}));
+export const IconBntNavBO = styled(IconButton)(({ theme }) => ({}));
 
 export const AppbarBackOffice = styled(AppBar)(({ theme }) => ({
-  backgroundColor: theme.palette.grey[300],
+	backgroundColor: theme.palette.grey[300],
 }));
 
 export const ToolbarBackOffice = styled(Toolbar)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
+	display: "flex",
+	justifyContent: "space-between",
 }));
