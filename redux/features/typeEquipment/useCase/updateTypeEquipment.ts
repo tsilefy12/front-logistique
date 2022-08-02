@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { axios } from "../../../../axios";
+import { axios } from "../../../../lib/axios";
 import { enqueueSnackbar } from "../../notification/notificationSlice";
 import { TypeEquipmentItem } from "../typeEquipmentSlice.interface";
 
