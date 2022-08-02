@@ -1,4 +1,9 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  ThunkAction,
+  Action,
+  getDefaultMiddleware,
+} from "@reduxjs/toolkit";
 import { customizationSlice } from "./features/slices/customizationSlice";
 import { menuSlice } from "./features/menu/menuSlice";
 import { menuProfileSlice } from "./features/menu/menuprofileSlice";
@@ -15,6 +20,10 @@ export const store = configureStore({
     auth: authSlice.reducer,
     typeEquipment: typeEquipmentSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export type AppDispatch = typeof store.dispatch;
