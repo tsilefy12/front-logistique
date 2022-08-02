@@ -41,7 +41,7 @@ const FormCommande = () => {
   const status = [
     { id: "PENDING", value: "En attente" },
     { id: "APPROVED", value: "Approuvé" },
-    { id: "APPROVED", value: "Refusé" },
+    { id: "REJECTED", value: "Refusé" },
   ];
 
   const ifChange = (event: SelectChangeEvent) => {
