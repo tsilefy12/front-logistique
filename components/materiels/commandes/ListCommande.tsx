@@ -5,9 +5,10 @@ import {
   Stack,
   styled,
   Typography,
+  Badge,
 } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -17,65 +18,101 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
-import Data, { Order } from "./table/type-variable";
-import { rows } from "./table/constante";
-import EnhancedTableToolbar from "./table/EnhancedTableToolbar";
-import EnhancedTableHead from "./table/EnhancedTableHead";
-import { getComparator, stableSort } from "./table/function";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Add from "@mui/icons-material/Add";
-
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
+import { deleteOrderEquipment } from "../../../redux/features/orderEquipment";
+import { editOrderEquipment } from "../../../redux/features/orderEquipment";
+import { OrderEquipmentItem } from "../../../redux/features/orderEquipment/orderEquipmentSlice.interface";
 import {
   defaultLabelDisplayedRows,
+  getComparator,
   labelRowsPerPage,
+  Order,
 } from "../../../config/table.config";
+import { useRouter } from "next/router";
+import useFetchOrderEquipement from "./hooks/useFetchOrderEquipment";
+import { useConfirm } from "material-ui-confirm";
+import OrderEquipmentTableToolbar from "./table/OrderEquipmentTableToolbar";
+import OrderEquipmentTableHead from "./table/OrderEquipmentTableHead";
 import { Edit } from "@mui/icons-material";
+import Moment from "react-moment";
+
 const ListCommande = () => {
-  const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("designation");
-  const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const dispatch: any = useAppDispatch();
+  const { orderEquipmentList } = useAppSelector(
+    (state) => state.orderEquipment
+  );
+  const router = useRouter();
+  const confirm = useConfirm();
 
-  const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
-    property: keyof Data
-  ) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
+  const fetchOrderEquipmentList = useFetchOrderEquipement();
+
+  useEffect(() => {
+    fetchOrderEquipmentList();
+  }, [router.query]);
+
+  const handleClickEdit = async (id: any) => {
+    await dispatch(editOrderEquipment({ id }));
   };
 
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.designation);
-      setSelected(newSelecteds);
-      return;
+  const getColorsStatus = (status: string | undefined) => {
+    switch (status) {
+      case "PENDING":
+        return "info";
+        break;
+      case "APPROVED":
+        return "primary";
+        break;
+      case "REJECTED":
+        return "error";
+        break;
+      default:
+        return "primary";
+        break;
     }
-    setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected: readonly string[] = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
+  const getTextStatus = (status: string | undefined) => {
+    switch (status) {
+      case "PENDING":
+        return "En_attent";
+        break;
+      case "APPROVED":
+        return "Approuvé";
+        break;
+      case "REJECTED":
+        return "Rejeté";
+        break;
+      default:
+        return "primary";
+        break;
     }
+  };
 
-    setSelected(newSelected);
+  const handleclickDelete = async (id: any) => {
+    confirm({
+      title: "Supprimer le commande",
+      description: "Voulez-vous vraiment supprimer cette commande ?",
+      cancellationText: "Annuler",
+      confirmationText: "Supprimer",
+      cancellationButtonProps: {
+        color: "warning",
+      },
+      confirmationButtonProps: {
+        color: "error",
+      },
+    })
+      .then(async () => {
+        await dispatch(deleteOrderEquipment({ id }));
+        fetchOrderEquipmentList();
+      })
+      .catch(() => {});
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -89,15 +126,11 @@ const ListCommande = () => {
     setPage(0);
   };
 
-  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDense(event.target.checked);
-  };
-
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - orderEquipmentList.length)
+      : 0;
 
   return (
     <Container maxWidth="xl">
@@ -112,69 +145,83 @@ const ListCommande = () => {
       <SectionTable>
         <Box sx={{ width: "100%" }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <EnhancedTableToolbar numSelected={selected.length} />
+            <OrderEquipmentTableToolbar />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
                 size="small"
               >
-                <EnhancedTableHead
-                  numSelected={selected.length}
-                  order={order}
-                  orderBy={orderBy}
-                  onSelectAllClick={handleSelectAllClick}
-                  onRequestSort={handleRequestSort}
-                  rowCount={rows.length}
-                />
+                <OrderEquipmentTableHead />
                 <TableBody>
                   {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                 rows.slice().sort(getComparator(order, orderBy)) */}
-                  {stableSort(rows, getComparator(order, orderBy))
+                  {orderEquipmentList
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      const isItemSelected = isSelected(row.designation);
+                    .map((row: OrderEquipmentItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
-                        <TableRow
-                          hover
-                          //   onClick={(event) => handleClick(event, row.nom)}
-                          role="checkbox"
-                          aria-checked={isItemSelected}
-                          tabIndex={-1}
-                          key={row.designation}
-                          selected={isItemSelected}
-                        >
+                        <TableRow hover tabIndex={-1} key={row.id}>
                           <TableCell
-                            padding="checkbox"
-                            onClick={(event) =>
-                              handleClick(event, row.designation)
-                            }
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="normal"
+                            align="left"
                           >
-                            <Checkbox
-                              color="primary"
-                              checked={isItemSelected}
-                              inputProps={{
-                                "aria-labelledby": labelId,
-                              }}
-                            />
+                            {row.designation}
+                          </TableCell>
+                          {/* <TableCell
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="normal"
+                            align="left"
+                          >
+                            {row?.applicantId}
+                          </TableCell> */}
+                          <TableCell
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="normal"
+                            align="left"
+                          >
+                            {row.quantity}
                           </TableCell>
                           <TableCell
                             component="th"
                             id={labelId}
                             scope="row"
-                            padding="none"
+                            padding="normal"
                             align="left"
                           >
-                            {row.designation}
+                            <Moment format="DD/MM/YYYY">
+                              {row.deadlineOfReception}
+                            </Moment>
                           </TableCell>
-                          <TableCell align="left">{row.demandeur}</TableCell>
-                          <TableCell align="left">{row.quantite}</TableCell>
-                          <TableCell align="left">
-                            {row.deadline_reception}
+                          <TableCell
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="normal"
+                            align="left"
+                          >
+                            {row.numberOfAuthorisedOffersPossible}
                           </TableCell>
-                          <TableCell align="left">{row.budget_max}</TableCell>
+                          <TableCell
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="normal"
+                            align="left"
+                          >
+                            <Badge
+                              badgeContent={getTextStatus(row.status)}
+                              color={getColorsStatus(row.status)}
+                            />
+                          </TableCell>
 
                           <TableCell align="right">
                             <BtnActionContainer
@@ -192,7 +239,7 @@ const ListCommande = () => {
                                   Gérer Offres
                                 </Button>
                               </Link>
-                              <Link href="commande/1/details">
+                              <Link href={`commande/${row.id}/details`}>
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"
@@ -201,7 +248,7 @@ const ListCommande = () => {
                                   <VisibilityIcon />
                                 </IconButton>
                               </Link>
-                              <Link href="commande/1/edit">
+                              <Link href={`commande/${row.id}/edit`}>
                                 <IconButton
                                   color="primary"
                                   aria-label="Details"
@@ -230,7 +277,7 @@ const ListCommande = () => {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={rows.length}
+              count={orderEquipmentList.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
@@ -239,10 +286,6 @@ const ListCommande = () => {
               labelDisplayedRows={defaultLabelDisplayedRows}
             />
           </Paper>
-          {/* <FormControlLabel
-          control={<Switch checked={dense} onChange={handleChangeDense} />}
-          label="Dense padding"
-        /> */}
         </Box>
       </SectionTable>
     </Container>

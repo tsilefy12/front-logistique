@@ -10,6 +10,7 @@ import { menuProfileSlice } from "./features/menu/menuprofileSlice";
 import { authSlice } from "./features/auth";
 import { typeEquipmentSlice } from "./features/typeEquipment/typeEquipmentSlice";
 import { notificationSlice } from "./features/notification/notificationSlice";
+import { orderEquipmentSlice } from "./features/orderEquipment/orderEquipmentSlice";
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     menuprofile: menuProfileSlice.reducer,
     auth: authSlice.reducer,
     typeEquipment: typeEquipmentSlice.reducer,
+    orderEquipment: orderEquipmentSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
