@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -17,64 +17,64 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
-import Data, { Order } from "./table/type-variable";
-import { rows } from "./table/constante";
-import EnhancedTableToolbar from "./table/EnhancedTableToolbar";
-import EnhancedTableHead from "./table/EnhancedTableHead";
-import { getComparator, stableSort } from "./table/function";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Add from "@mui/icons-material/Add";
+
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { deleteFournisseur } from "../../redux/features/fournisseur";
+import { editFournisseur } from "../../redux/features/fournisseur";
+import { FournisseurItem } from "../../redux/features/fournisseur/fournisseurSlice.interface";
 import {
   defaultLabelDisplayedRows,
+  getComparator,
   labelRowsPerPage,
+  Order,
 } from "../../config/table.config";
+import { useRouter } from "next/router";
+import useFetchFournisseur from "./hooks/useFetchFournisseur";
+import { useConfirm } from "material-ui-confirm";
+import FournisseurTableHead from "./table/FournisseurTableHead";
+import FournisseurTableToolbar from "./table/FournisseurTableToolbar";
 
 const ListFournisseur = () => {
-  const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("nom");
-  const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const dispatch: any = useAppDispatch();
+  const { fournisseurList } = useAppSelector((state) => state.fournisseur);
+  const router = useRouter();
+  const confirm = useConfirm();
 
-  const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
-    property: keyof Data
-  ) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
+  const fetchFournisseurtList = useFetchFournisseur();
+
+  useEffect(() => {
+    fetchFournisseurtList();
+  }, [router.query]);
+
+  const handleClickEdit = async (id: any) => {
+    await dispatch(editFournisseur({ id }));
   };
 
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.nom);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected: readonly string[] = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
+  const handleclickDelete = async (id: any) => {
+    confirm({
+      title: "Supprimer Fournisseur",
+      description: "Voulez-vous vraiment supprimer ce fournisseur ?",
+      cancellationText: "Annuler",
+      confirmationText: "Supprimer",
+      cancellationButtonProps: {
+        color: "warning",
+      },
+      confirmationButtonProps: {
+        color: "error",
+      },
+    })
+      .then(async () => {
+        await dispatch(deleteFournisseur({ id }));
+        fetchFournisseurtList();
+      })
+      .catch(() => {});
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -88,15 +88,11 @@ const ListFournisseur = () => {
     setPage(0);
   };
 
-  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDense(event.target.checked);
-  };
-
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - fournisseurList.length)
+      : 0;
 
   return (
     <Container maxWidth="xl">
@@ -111,81 +107,76 @@ const ListFournisseur = () => {
       <SectionTable>
         <Box sx={{ width: "100%" }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <EnhancedTableToolbar numSelected={selected.length} />
+            <FournisseurTableToolbar />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
                 size="small"
               >
-                <EnhancedTableHead
-                  numSelected={selected.length}
-                  order={order}
-                  orderBy={orderBy}
-                  onSelectAllClick={handleSelectAllClick}
-                  onRequestSort={handleRequestSort}
-                  rowCount={rows.length}
-                />
+                <FournisseurTableHead />
                 <TableBody>
                   {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                 rows.slice().sort(getComparator(order, orderBy)) */}
-                  {stableSort(rows, getComparator(order, orderBy))
+                  {fournisseurList
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      const isItemSelected = isSelected(row.nom);
+                    .map((row: FournisseurItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
-                        <TableRow
-                          hover
-                          //   onClick={(event) => handleClick(event, row.nom)}
-                          role="checkbox"
-                          aria-checked={isItemSelected}
-                          tabIndex={-1}
-                          key={row.nom}
-                          selected={isItemSelected}
-                        >
+                        <TableRow hover tabIndex={-1} key={row.id}>
                           <TableCell
-                            padding="checkbox"
-                            onClick={(event) => handleClick(event, row.nom)}
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="normal"
+                            align="left"
                           >
-                            <Checkbox
-                              color="primary"
-                              checked={isItemSelected}
-                              inputProps={{
-                                "aria-labelledby": labelId,
-                              }}
-                            />
+                            {row.name}
                           </TableCell>
                           <TableCell
                             component="th"
                             id={labelId}
                             scope="row"
-                            padding="none"
+                            padding="normal"
                             align="left"
                           >
-                            {row.nom}
+                            {row.address}
                           </TableCell>
-                          <TableCell align="left">{row.adresse}</TableCell>
-                          <TableCell align="left">{row.tel}</TableCell>
-                          <TableCell align="left">{row.email}</TableCell>
-                          <TableCell align="left">{row.site}</TableCell>
+                          <TableCell
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="normal"
+                            align="left"
+                          >
+                            {row.phone}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="normal"
+                            align="left"
+                          >
+                            {row.email}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="normal"
+                            align="left"
+                          >
+                            {row.website}
+                          </TableCell>
 
                           <TableCell align="right">
                             <BtnActionContainer
                               direction="row"
                               justifyContent="center"
                             >
-                              <Link href="contracts/1">
-                                <IconButton
-                                  color="accent"
-                                  aria-label="Details"
-                                  component="span"
-                                >
-                                  <VisibilityIcon />
-                                </IconButton>
-                              </Link>
-                              <Link href="/fournisseurs/1/edit">
+                              <Link href={`/fournisseurs/${row.id}/edit`}>
                                 <IconButton
                                   color="primary"
                                   aria-label="Modifier"
@@ -198,6 +189,7 @@ const ListFournisseur = () => {
                                 color="warning"
                                 aria-label="Supprimer"
                                 component="span"
+                                onClick={() => handleclickDelete(row.id)}
                               >
                                 <DeleteIcon />
                               </IconButton>
@@ -221,7 +213,7 @@ const ListFournisseur = () => {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={rows.length}
+              count={fournisseurList.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
