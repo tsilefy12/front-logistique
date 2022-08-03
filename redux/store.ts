@@ -11,6 +11,7 @@ import { authSlice } from "./features/auth";
 import { typeEquipmentSlice } from "./features/typeEquipment/typeEquipmentSlice";
 import { notificationSlice } from "./features/notification/notificationSlice";
 import { orderEquipmentSlice } from "./features/orderEquipment/orderEquipmentSlice";
+import { fournisseurSlice } from "./features/fournisseur/fournisseurSlice";
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
     auth: authSlice.reducer,
     typeEquipment: typeEquipmentSlice.reducer,
     orderEquipment: orderEquipmentSlice.reducer,
+    fournisseur: fournisseurSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
