@@ -1,18 +1,4 @@
-import Data, { Order } from "./type-variable";
-
-export function createData(
-  immatriculation: string,
-  type: string,
-  marque: string,
-  autre_information: string,
-): Data {
-  return {
-    immatriculation,
-    type,
-    marque,
-    autre_information,
-  };
-}
+export type Order = "asc" | "desc";
 
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -53,25 +39,15 @@ export function stableSort<T>(
   return stabilizedThis.map((el) => el[0]);
 }
 
-export function getColorStatus(status: string) {
-  switch (status) {
-    case "Nouveau":
-      return "info";
-      break;
-    case "Encours":
-      return "primary";
-      break;
-    case "Expiré":
-      return "warning";
-      break;
-    case "Annulé":
-      return "error";
-      break;
-    case "En attente":
-      return "secondary";
-      break;
-
-    default:
-      break;
-  }
+/**
+ * translate table to fr
+ * @param param0 object
+ * @returns
+ */
+export function defaultLabelDisplayedRows({ from, to, count }: any) {
+  return `${from}–${to} sur ${count !== -1 ? count : `plus que ${to}`}`;
 }
+
+export const labelRowsPerPage = "Ligne(s) par page";
+
+export const selectedItemsLabel = "séléctionné(s)";

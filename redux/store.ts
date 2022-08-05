@@ -3,6 +3,9 @@ import { customizationSlice } from "./features/slices/customizationSlice";
 import { menuSlice } from "./features/menu/menuSlice";
 import { menuProfileSlice } from "./features/menu/menuprofileSlice";
 import { authSlice } from "./features/auth";
+import { notificationSlice } from "./features/notification/notificationSlice";
+import { transportationEquipmentSlice } from "./features/transportation_equipment/transportationEquipmentSlice";
+
 
 export const store = configureStore({
 	reducer: {
@@ -10,6 +13,8 @@ export const store = configureStore({
 		menu: menuSlice.reducer,
 		menuprofile: menuProfileSlice.reducer,
 		auth: authSlice.reducer,
+        notification: notificationSlice.reducer,
+        transportationEquipment: transportationEquipmentSlice.reducer,
 	},
 });
 
