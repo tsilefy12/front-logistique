@@ -3,7 +3,8 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import BackOfficeLayout from "../../../../layouts/backOffice";
 import useBasePath from "../../../../hooks/useBasePath";
-import AddArticleForm from "../../../../components/materiels/informatique/creer/AddArticleForm";
+// import AddArticleForm from "../../../../components/materiels/informatique/creer/AddArticleForm";
+import AddArticleForm from "../../../../components/materiels/Informatique/creer/AddArticleForm";
 
 const FormMaterielInformatique: NextPage = () => {
   const basePath = useBasePath();

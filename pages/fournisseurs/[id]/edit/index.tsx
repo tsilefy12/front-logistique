@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import useBasePath from "../../../../hooks/useBasePath";
 import BackOfficeLayout from "../../../../layouts/backOffice";
-import FournisseurForm from "../../../../components/fournisseurs/form/FournisseurForm";
+import VendorForm from "../../../../components/vendor/organism/VendorForm";
 
 const EditFournisseur: NextPage = () => {
   const basePath = useBasePath();
@@ -15,7 +15,7 @@ const EditFournisseur: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <FournisseurForm />
+        <VendorForm />
       </Container>
     </BackOfficeLayout>
   );
