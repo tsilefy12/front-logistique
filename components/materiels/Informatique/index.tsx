@@ -27,10 +27,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Badge from "@mui/material/Badge";
 import Add from "@mui/icons-material/Add";
+import { useRouter } from "next/router";
 import {
   defaultLabelDisplayedRows,
   labelRowsPerPage,
 } from "../../../config/table.config";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
+import useFetchEquipment from "./hooks/useFetchEquipment";
+import { EquipmentItem } from "../../../redux/features/equipment/equipment.interface";
 
 const ListInfo = () => {
   const [order, setOrder] = React.useState<Order>("asc");
@@ -39,7 +43,17 @@ const ListInfo = () => {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const router = useRouter();
 
+
+	const dispatch = useAppDispatch();
+  const { equipments } = useAppSelector((state) => state.equipment);
+  console.log(equipments);
+  const fetchEquipment = useFetchEquipment();
+
+  React.useEffect(() => {
+		fetchEquipment();
+	}, [router.query]);
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: keyof Data
@@ -130,10 +144,10 @@ const ListInfo = () => {
                 <TableBody>
                   {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                 rows.slice().sort(getComparator(order, orderBy)) */}
-                  {stableSort(rows, getComparator(order, orderBy))
+                  {equipments
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
-                      const isItemSelected = isSelected(row.num_optim);
+                      const isItemSelected = isSelected(row.numOptim);
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
@@ -143,13 +157,13 @@ const ListInfo = () => {
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}
-                          key={row.num_optim}
+                          key={row.numOptim}
                           selected={isItemSelected}
                         >
                           <TableCell
                             padding="checkbox"
                             onClick={(event) =>
-                              handleClick(event, row.num_optim)
+                              handleClick(event, row.numOptim)
                             }
                           >
                             <Checkbox
@@ -167,17 +181,17 @@ const ListInfo = () => {
                             padding="none"
                             align="left"
                           >
-                            {row.num_optim}
+                            {row.numOptim}
                           </TableCell>
                           <TableCell align="left">
-                            {row.type_materiel}
+                            {row.typeEquipmentId}
                           </TableCell>
-                          <TableCell align="left">{row.user}</TableCell>
+                          <TableCell align="left">{row.ownerId}</TableCell>
                           <TableCell align="left">{row.designation}</TableCell>
                           <TableCell align="left">
                             <Badge
-                              badgeContent={row.etat}
-                              color={getColorStatus(row.etat)}
+                              badgeContent={row.status}
+                              color={getColorStatus(row.status)}
                             />
                           </TableCell>
                           <TableCell align="right">
