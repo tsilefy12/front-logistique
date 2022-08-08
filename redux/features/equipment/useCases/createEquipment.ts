@@ -15,6 +15,7 @@ export const createEquipment = createAsyncThunk(
     "equipment/createEquipment",
     async (equipment: EquipementItem, thunkAPI) => {
         try {
+            console.log(equipment);
             const response = await axios.post("/logistique/equipment", equipment);
             thunkAPI.dispatch(
                 enqueueSnackbar({

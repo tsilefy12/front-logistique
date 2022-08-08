@@ -32,6 +32,7 @@ const AddArticleForm = () => {
   const fetchTypeEquipment = useFetchTypeEquipment();
   const fetchEmployes = useFetchEmployes();
   const dispatch = useAppDispatch();
+  const etat=[{name:"GOOD"},{name:"BAD"},{name:"BROKEN"}];
   const route = useRouter();
   const { typeequipment,employees,isEditing,equipment} = useAppSelector(
 		(state) => state.equipment
@@ -56,10 +57,10 @@ const AddArticleForm = () => {
 					})
 				);
 			} else {
-        console.log(values);
+        
 				await dispatch(createEquipment(values));
 			}
-			route.push("/");
+			// route.push("/");
 		} catch (error) {
 			console.log("error", error);
 		}
@@ -77,7 +78,7 @@ const AddArticleForm = () => {
 					additionalInformation: isEditing ? equipment?.additionalInformation : "",
 					acquisitionDate: isEditing ? equipment?.acquisitionDate : new Date(),
 					acquisitionValue: isEditing ? equipment?.acquisitionValue :"",
-			
+          imageUrl: isEditing ? equipment?.imageUrl :"",
 					designation: isEditing ? equipment?.designation : "",
 					status: isEditing ? equipment?.status : "",
           typeEquipmentId: isEditing ? equipment?.typeEquipmentId : "",
@@ -117,6 +118,7 @@ const AddArticleForm = () => {
               size="small"
               startIcon={<Check />}
               sx={{ marginInline: 3 }}
+              type="submit"
             >
               Enregistrer
             </Button>
@@ -161,9 +163,9 @@ const AddArticleForm = () => {
 									id="workplaceId"
 									label="Etat"
 									name="status"
-									options={typeequipment}
-									dataKey="type"
-									valueKey="id"
+									options={etat}
+									dataKey="name"
+									valueKey="name"
 								/>
       
           </FormControl>
