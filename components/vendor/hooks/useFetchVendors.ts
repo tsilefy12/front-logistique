@@ -12,15 +12,6 @@ const useFetchVendors = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  // return async () => {
-  //     let args: any = {};
-  //     if (router.query.search) {
-  //         args.where = {};
-  //     }
-  //     if (router.query.orderBy && router.query.order) {
-  //         args.orderBy = {
-  //             [<string>router.query.orderBy]: router.query.order,
-  //         };
       return async () => {
         let args: any = {};
         if (router.query.search) {
@@ -92,7 +83,8 @@ const useFetchVendors = () => {
                 };
                 break;
             }
-          }
+            
+          };
     await dispatch(getVendors({ args }));
   };
 };

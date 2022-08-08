@@ -11,7 +11,7 @@ import { axios } from "../../../../lib/axios";
  */
 export const getVendor = createAsyncThunk(
     "vendor/getVendor",
-    async (data: { id: string }, thunkAPI) => {
+    async (data: { id: string; args?: any }, thunkAPI) => {
         try {
             const response = await axios.get(`/logistique/vendor/${data.id}`);
             return response.data;

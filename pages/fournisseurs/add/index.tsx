@@ -4,7 +4,6 @@ import Head from "next/head";
 import VendorForm from "../../../components/vendor/organism/VendorForm";
 import useBasePath from "../../../hooks/useBasePath";
 import BackOfficeLayout from "../../../layouts/backOffice";
-// import FournisseurForm from "../../../components/fournisseurs/form/FournisseurForm";
 
 const AddFournisseur: NextPage = () => {
   const basePath = useBasePath();
@@ -16,7 +15,6 @@ const AddFournisseur: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        {/* <FournisseurForm /> */}
         <VendorForm />
       </Container>
     </BackOfficeLayout>

@@ -1,9 +1,9 @@
 import { Container } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
-import useBasePath from "../../../../hooks/useBasePath";
-import BackOfficeLayout from "../../../../layouts/backOffice";
-import VendorForm from "../../../../components/vendor/organism/VendorForm";
+import DetailsVendor from "../../../components/vendor/id/DetailsContracts";
+import useBasePath from "../../../hooks/useBasePath";
+import BackOfficeLayout from "../../../layouts/backOffice";
 
 const EditFournisseur: NextPage = () => {
   const basePath = useBasePath();
@@ -15,7 +15,7 @@ const EditFournisseur: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <VendorForm />
+        <DetailsVendor />
       </Container>
     </BackOfficeLayout>
   );

@@ -17,7 +17,7 @@ export const deleteVendor = createAsyncThunk(
 			const response = await axios.delete(`/logistique/vendor/${data.id}`);
 			thunkAPI.dispatch(
 				enqueueSnackbar({
-					message: "Vendor supprimé avec succès",
+					message: "fournisseur supprimé avec succès",
 					options: { variant: "success" },
 				})
 			);

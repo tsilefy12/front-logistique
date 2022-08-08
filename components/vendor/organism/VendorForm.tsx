@@ -16,7 +16,6 @@ import * as Yup from "yup";
 import OSTextField from "../../shared/input copy/OSTextField";
 import { createVendor, updateVendor } from "../../../redux/features/vendor";
 import { cancelEdit } from "../../../redux/features/vendor/vendorSlice";
-// import useFetchVendors from "../hooks/useFetchVendors";
 
 export default function VendorForm() {
 	const route = useRouter();

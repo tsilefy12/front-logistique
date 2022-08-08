@@ -15,12 +15,11 @@ import { VendorItem } from "../vendor.interface";
 export const createVendor = createAsyncThunk(
     "vendor/createVendor",
     async (vendor: VendorItem, thunkAPI) => {
-        console.log(vendor);
         try {
             const response = await axios.post("/logistique/vendor", vendor);
             thunkAPI.dispatch(
                 enqueueSnackbar({
-                    message: 'Vendor created successfully',
+                    message: 'fournisseur created successfully',
                     options: { variant: "succes" },
                 })
             );

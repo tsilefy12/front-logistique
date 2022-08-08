@@ -28,6 +28,7 @@ import { labelRowsPerPage, defaultLabelDisplayedRows } from "../shared/table/tab
 import { deleteVendor, editVendor } from "../../redux/features/vendor";
 import VendorTableToolbar from "./organism/table/VendorTableToolbar";
 import Visibility from "@mui/icons-material/Visibility";
+// import { detailVendor } from "../../redux/features/vendor/useCase/detailVendor";
 
 export default function VendorList() {
 	const [page, setPage] = React.useState(0);
@@ -48,6 +49,10 @@ export default function VendorList() {
 		fetchVendors();
 	}, [router.query]);
 
+	const handleClickDetail = async (id: any) => {
+		router.push(`/fournisseurs/${id}/detail`);
+	}
+
 	const handleClickEdit = async (id: any) => {
 		await dispatch(editVendor({ id }));
 		router.push(`/fournisseurs/${id}/edit`);
@@ -55,8 +60,8 @@ export default function VendorList() {
 
 	const handleClickDelete = async (id: any) => {
 		confirm({
-			title: "Supprimer le vendor",
-			description: "Voulez-vous vraiment supprimer ce vendor ?",
+			title: "Supprimer le fournisseur",
+			description: "Voulez-vous vraiment supprimer ce fournisseur ?",
 			cancellationText: "Annuler",
 			confirmationText: "Supprimer",
 			cancellationButtonProps: {
@@ -144,14 +149,19 @@ export default function VendorList() {
 															direction="row"
 															justifyContent="right"
 														>
-																<IconButton
+															<Link href={`/fournisseurs/${row.id}`}>
+																<IconButton 
 																	color="accent"
 																	aria-label="Details"
 																	component="span"
 																	size="small"
+																	// onClick={() => {
+																	// 	handleClickDetail(row.id);
+																	// }}
 																>
 																	<Visibility />
 																</IconButton>
+															</Link>
 																<IconButton
 																	color="primary"
 																	aria-label="Modifier"
