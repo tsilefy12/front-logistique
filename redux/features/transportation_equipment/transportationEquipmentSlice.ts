@@ -5,6 +5,7 @@ import { createTransportEquipment } from "./useCases/createTransportEquipment";
 import { updateTransportationEquipment } from "./useCases/updateTransportEquipment";
 import { editTransportationEquipment } from "./useCases/editTransportEquipment";
 import { deleteTransportationEquipment } from "./useCases/deleteTransportEquipment";
+import { getTransportationEquipment } from "./useCases/getTransportEquipment";
 
 
 
@@ -26,6 +27,20 @@ export const transportationEquipmentSlice = createSlice({
         },
     },
     extraReducers: {
+
+
+        // get transportation Equipments
+        [getTransportationEquipment.pending.type]: (state) => {
+            state.loading = true;
+        },
+        [getTransportationEquipment.fulfilled.type]: (state, action) => {
+            state.loading = false;
+            state.transportationEquipment = action.payload;
+        },
+        [getTransportationEquipment.rejected.type]: (state, action) => {
+            state.loading = false;
+            state.error = action.error;
+        },
       
         // get transportation Equipments
         [getTransportationEquipments.pending.type]: (state) => {
@@ -93,6 +108,8 @@ export const transportationEquipmentSlice = createSlice({
             state.loading = false;
             state.error = action.error;
         },
+
+
 
     },
 });

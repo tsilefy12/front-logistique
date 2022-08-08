@@ -3,3 +3,4 @@ export { getTransportationEquipments } from  "./useCases/TransportationEquipment
 export { updateTransportationEquipment } from "./useCases/updateTransportEquipment";
 export { editTransportationEquipment } from "./useCases/editTransportEquipment";
 export { deleteTransportationEquipment } from "./useCases/deleteTransportEquipment";
+export { getTransportationEquipment } from "./useCases/getTransportEquipment";

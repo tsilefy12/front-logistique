@@ -55,6 +55,10 @@ const ListTransport = () => {
 		router.push(`/materiel_de_transport/${id}/edit`);
 	};
 
+    const handleClickDetail = async (id: any) => {
+		router.push(`/materiel_de_transport/${id}/detail`);
+	};
+
     const handleClickDelete = async (id: any) => {
 		confirm({
 			title: "Supprimer le matériel de transport",
@@ -141,13 +145,15 @@ const ListTransport = () => {
 															direction="row"
 															justifyContent="right"
 														>
-                                                            <IconButton
-                                                                color="accent"
-                                                                aria-label="Details"
-                                                                component="span"
-                                                            >
-                                                                <VisibilityIcon />
-                                                            </IconButton>
+                                                            <Link href={`/materiel_de_transport/${row.id}/detail`}>
+                                                                <IconButton
+                                                                    color="accent"
+                                                                    aria-label="Details"
+                                                                    component="span"
+                                                                >
+                                                                    <VisibilityIcon />
+                                                                </IconButton>
+                                                            </Link>
 															<IconButton
 																color="primary"
 																aria-label="Modifier"
