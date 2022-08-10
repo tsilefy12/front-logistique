@@ -1,5 +1,10 @@
-export function defaultLabelDisplayedRows({ from, to, count }: any) {
-  return `${from}–${to} sur ${count !== -1 ? count : `plus que ${to}`}`;
+/**
+ * translate table to fr
+ * @param param0 object
+ * @returns
+ */
+ export function defaultLabelDisplayedRows({ from, to, count }: any) {
+	return `${from}–${to} sur ${count !== -1 ? count : `plus que ${to}`}`;
 }
 
 export type Order = "asc" | "desc";
