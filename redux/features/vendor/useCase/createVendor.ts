@@ -4,7 +4,7 @@ import { enqueueSnackbar } from "../../notification/notificationSlice";
 import { VendorItem } from "../vendor.interface";
 
 /**
- * create a new vendor 
+ * create a new vendor
  * @param vendorItem
  * @param thunkAPI
  * @returns {Promise<void>}
@@ -13,23 +13,22 @@ import { VendorItem } from "../vendor.interface";
  */
 
 export const createVendor = createAsyncThunk(
-    "vendor/createVendor",
-    async (vendor: VendorItem, thunkAPI) => {
-        try {
-            const response = await axios.post("/logistique/vendor", vendor);
-            thunkAPI.dispatch(
-                enqueueSnackbar({
-                    message: 'fournisseur created successfully',
-                    options: { variant: "succes" },
-                })
-            );
-            return response.data;
-        }
-        catch (error: any) {
-            if (error.response) {
-                return thunkAPI.rejectWithValue(error)
-            }
-            return
-        }
+  "vendor/createVendor",
+  async (vendor: VendorItem, thunkAPI) => {
+    try {
+      const response = await axios.post("/logistique/vendor", vendor);
+      thunkAPI.dispatch(
+        enqueueSnackbar({
+          message: "fournisseur created successfully",
+          options: { variant: "success" },
+        })
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response) {
+        return thunkAPI.rejectWithValue(error);
+      }
+      return;
     }
+  }
 );

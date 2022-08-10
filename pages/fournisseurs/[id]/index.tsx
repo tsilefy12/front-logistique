@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
-import DetailsVendor from "../../../components/vendor/id/DetailsContracts";
+import DetailsVendor from "../../../components/vendor/[id]/DetailsContracts";
 import useBasePath from "../../../hooks/useBasePath";
 import BackOfficeLayout from "../../../layouts/backOffice";
 
