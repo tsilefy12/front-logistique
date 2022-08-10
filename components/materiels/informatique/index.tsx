@@ -21,7 +21,11 @@ import Data, { Order } from "./table/type-variable";
 import { rows } from "./table/constante";
 import EnhancedTableToolbar from "./table/EnhancedTableToolbar";
 import EnhancedTableHead from "./table/EnhancedTableHead";
-import { getColorStatus, getComparator, stableSort } from "./table/function";
+import {
+  getColorStatus,
+  getComparator,
+  stableSort,
+} from "./table/function";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -34,8 +38,11 @@ import {
 
 const ListInfo = () => {
   const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("num_optim");
-  const [selected, setSelected] = React.useState<readonly string[]>([]);
+  const [orderBy, setOrderBy] =
+    React.useState<keyof Data>("num_optim");
+  const [selected, setSelected] = React.useState<readonly string[]>(
+    []
+  );
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -49,7 +56,9 @@ const ListInfo = () => {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelectAllClick = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     if (event.target.checked) {
       const newSelecteds = rows.map((n) => n.num_optim);
       setSelected(newSelecteds);
@@ -58,7 +67,10 @@ const ListInfo = () => {
     setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+  const handleClick = (
+    event: React.MouseEvent<unknown>,
+    name: string
+  ) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected: readonly string[] = [];
 
@@ -89,7 +101,9 @@ const ListInfo = () => {
     setPage(0);
   };
 
-  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeDense = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setDense(event.target.checked);
   };
 
@@ -97,13 +111,23 @@ const ListInfo = () => {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - rows.length)
+      : 0;
 
   return (
     <Container maxWidth="xl">
-      <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
+      <SectionNavigation
+        direction="row"
+        justifyContent="space-between"
+        mb={2}
+      >
         <Link href="informatiques/creer">
-          <Button variant="contained" size="small" startIcon={<Add />}>
+          <Button
+            variant="contained"
+            size="small"
+            startIcon={<Add />}
+          >
             Creer
           </Button>
         </Link>
@@ -131,9 +155,14 @@ const ListInfo = () => {
                   {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                 rows.slice().sort(getComparator(order, orderBy)) */}
                   {stableSort(rows, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage
+                    )
                     .map((row, index) => {
-                      const isItemSelected = isSelected(row.num_optim);
+                      const isItemSelected = isSelected(
+                        row.num_optim
+                      );
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
@@ -172,8 +201,12 @@ const ListInfo = () => {
                           <TableCell align="left">
                             {row.type_materiel}
                           </TableCell>
-                          <TableCell align="left">{row.user}</TableCell>
-                          <TableCell align="left">{row.designation}</TableCell>
+                          <TableCell align="left">
+                            {row.user}
+                          </TableCell>
+                          <TableCell align="left">
+                            {row.designation}
+                          </TableCell>
                           <TableCell align="left">
                             <Badge
                               badgeContent={row.etat}
