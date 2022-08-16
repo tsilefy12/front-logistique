@@ -91,7 +91,7 @@ const AddArticleForm = () => {
 					acquisitionDate: Yup.date().required(
 						"Veuillez sélectionner une date d'acquisition"
 					),
-					acquisitionValue: Yup.string().required("Veuillez remplir le champ acquisitionValue"),
+					acquisitionValue: Yup.number().required("Veuillez remplir le champ acquisitionValue"),
 					designation: Yup.string().required("Veuillez remplir le champ designation"),
 					status: Yup.string().required("Veuillez sélectionner un status"),
           typeEquipmentId:Yup.string().required("Veuillez sélectionner un type"),
@@ -199,6 +199,7 @@ const AddArticleForm = () => {
             id="outlined-basic"
             label="Valeur d'acquisition"
             variant="outlined"
+            type="number"
           />
         </CustomStack>
         <OSTextField
