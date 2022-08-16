@@ -13,77 +13,138 @@ import {
   Divider,
 } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { Check, Close, Save } from "@mui/icons-material";
+import { Form, Formik } from "formik";
+import * as Yup from "yup";
+import { cancelEdit } from "../../../redux/features/fournisseur/fournisseurSlice";
+import { createFournisseur } from "../../../redux/features/fournisseur";
+import { updateFournisseur } from "../../../redux/features/fournisseur";
+import useFetchFournisseur from "../hooks/useFetchFournisseur";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
+import OSTextField from "../../shared/input/OSTextField";
+import { useRouter } from "next/router";
+import { editFournisseur } from "../../../redux/features/fournisseur";
 
 const FournisseurForm = () => {
+  const { isEditing, fournisseur } = useAppSelector(
+    (state) => state.fournisseur
+  );
+  const router = useRouter();
+  const { id }: any = router.query;
+  const dispatch = useAppDispatch();
+  const fetchFurnisseurList = useFetchFournisseur();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(editFournisseur({ id }));
+    }
+  }, [id]);
+
+  const handleSubmint = async (values: any) => {
+    try {
+      if (isEditing) {
+        await dispatch(
+          updateFournisseur({
+            id: fournisseur.id!,
+            fournisseur: values,
+          })
+        );
+      } else {
+        await dispatch(createFournisseur(values));
+      }
+      fetchFurnisseurList();
+      router.push("/fournisseurs");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Container maxWidth="xl" sx={{ pb: 5 }}>
-      <NavigationContainer>
-        <SectionNavigation>
-          <Stack flexDirection={"row"}>
-            <Link href="/fournisseurs">
-              <Button color="info" variant="text" startIcon={<ArrowBack />}>
-                Retour
-              </Button>
-            </Link>
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              startIcon={<Check />}
-              sx={{ marginInline: 3 }}
-            >
-              Enregistrer
-            </Button>
-            <Button
-              variant="text"
-              color="warning"
-              size="small"
-              startIcon={<Close />}
-              sx={{ marginInline: 3 }}
-            >
-              Annuler
-            </Button>
-          </Stack>
-          <Typography variant="h4">Créer(modifier) fournisseur</Typography>
-        </SectionNavigation>
-        <Divider />
-      </NavigationContainer>
+      <Formik
+        enableReinitialize
+        initialValues={
+          isEditing
+            ? fournisseur
+            : {
+                name: "",
+                address: "",
+                email: "",
+                phone: "",
+                website: "",
+              }
+        }
+        validationSchema={Yup.object({
+          name: Yup.string().required("Champ obligatoire"),
+        })}
+        onSubmit={async (value: any, action) => {
+          await handleSubmint(value);
+          action.resetForm();
+        }}
+      >
+        {(formikProps) => (
+          <Form>
+            <NavigationContainer>
+              <SectionNavigation>
+                <Stack flexDirection={"row"}>
+                  <Link href="/fournisseurs">
+                    <Button
+                      color="info"
+                      variant="text"
+                      startIcon={<ArrowBack />}
+                    >
+                      Retour
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    startIcon={<Check />}
+                    sx={{ marginInline: 3 }}
+                    type="submit"
+                  >
+                    Enregistrer
+                  </Button>
+                  <Button
+                    variant="text"
+                    color="warning"
+                    size="small"
+                    startIcon={<Close />}
+                    sx={{ marginInline: 3 }}
+                    type="reset"
+                  >
+                    Annuler
+                  </Button>
+                </Stack>
+                <Typography variant="h4">
+                  Créer(modifier) fournisseur
+                </Typography>
+              </SectionNavigation>
+              <Divider />
+            </NavigationContainer>
 
-      <FormContainer spacing={2}>
-        <TextField
-          fullWidth
-          id="outlined-basic"
-          label="Nom"
-          variant="outlined"
-        />
-        <FormControl fullWidth>
-          <TextField id="outlined-basic" label="Adresse" variant="outlined" />
-        </FormControl>
-        <FormControl fullWidth>
-          <TextField id="outlined-basic" label="Téléphone" variant="outlined" />
-        </FormControl>
-        <FormControl fullWidth>
-          <TextField id="outlined-basic" label="Email" variant="outlined" />
-        </FormControl>
-        <TextField
-          fullWidth
-          id="outlined-basic"
-          label="Site Web"
-          variant="outlined"
-        />
-        <Button
-          color="inherit"
-          fullWidth
-          variant="outlined"
-          startIcon={<AttachFileIcon />}
-        >
-          PJ : Contrat_rakoto_randria.jpeg
-        </Button>
-      </FormContainer>
+            <FormContainer spacing={2}>
+              <OSTextField label="Nom" name="name" />
+              <OSTextField label="Adresse" name="address" />
+              <OSTextField label="Téléphone" name="phone" />
+              <OSTextField label="Email" name="email" />
+              <OSTextField label="Site Web" name="website" />
+              {/* <Button
+                color="inherit"
+                fullWidth
+                variant="outlined"
+                startIcon={<AttachFileIcon />}
+              >
+                PJ : Contrat_rakoto_randria.jpeg
+              </Button> */}
+            </FormContainer>
+          </Form>
+        )}
+      </Formik>
     </Container>
   );
 };

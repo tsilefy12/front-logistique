@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import BackOfficeLayout from "../../../layouts/backOffice";
 import useBasePath from "../../../hooks/useBasePath";
-import TypeMaterielSection from "../../../components/materiels/type/TypeMaterielSection";
+import TypeEquipmentSection from "../../../components/configurations/type-equipment/ValuerIndiceSection";
 
 const ListFormTypeMateriel: NextPage = () => {
   const basePath = useBasePath();
@@ -15,7 +15,7 @@ const ListFormTypeMateriel: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <TypeMaterielSection/>
+        <TypeEquipmentSection />
       </Container>
     </BackOfficeLayout>
   );
