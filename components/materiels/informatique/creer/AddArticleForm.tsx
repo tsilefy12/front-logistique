@@ -93,6 +93,7 @@ const AddArticleForm = () => {
           imageUrl: isEditing ? equipment?.imageUrl : "",
           designation: isEditing ? equipment?.designation : "",
           status: isEditing ? equipment?.status : "",
+          ownerId: isEditing ? equipment?.ownerId : "",
           typeEquipmentId: isEditing
             ? equipment?.typeEquipmentId
             : "",

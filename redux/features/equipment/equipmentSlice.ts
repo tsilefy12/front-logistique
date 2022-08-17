@@ -6,6 +6,7 @@ import { updateEquipment } from "./useCases/updateEquipment";
 import { deleteEquipment } from "./useCases/deleteEquipment";
 import { getTypeEquipments } from "./useCases/getTypeEquipments";
 import { getEmployees } from "./useCases/getEmployees";
+import { editEquipment } from "./useCases/editEquipment";
 
 
 
@@ -31,7 +32,7 @@ export const equipmentSlice = createSlice({
     },
     extraReducers: {
        
-        // get timesheets
+        // get equipment
         [getTypeEquipments.pending.type]: (state) => {
             state.loading = true;
         },
@@ -43,7 +44,7 @@ export const equipmentSlice = createSlice({
             state.loading = false;
             state.error = action.error;
         },
-        // get timesheets
+        // get employee
         [getEmployees.pending.type]: (state) => {
             state.loading = true;
         },
@@ -55,20 +56,32 @@ export const equipmentSlice = createSlice({
             state.loading = false;
             state.error = action.error;
         },
-        // get timesheets
+        // get equipments
         [getEquipments.pending.type]: (state) => {
             state.loading = true;
         },
         [getEquipments.fulfilled.type]: (state, action) => {
             state.loading = false;
-            state.equipment = action.payload;
+            state.equipments = action.payload;
         },
         [getEquipments.rejected.type]: (state, action) => {
             state.loading = false;
             state.error = action.error;
         },
-
-        // create timesheet
+        // edit equipment
+        [editEquipment.pending.type]: (state) => {
+            state.loading = true;
+        },
+        [editEquipment.fulfilled.type]: (state, action) => {
+            state.loading = false;
+            state.equipment = action.payload;
+            state.isEditing = true;
+        },
+        [editEquipment.rejected.type]: (state, action) => {
+            state.loading = false;
+            state.error = action.error;
+        },
+        // create equipment
         [createEquipment.pending.type]: (state) => {
             state.loading = true;
         },
@@ -80,20 +93,20 @@ export const equipmentSlice = createSlice({
             state.loading = false;
             state.error = action.error;
         },
-        // update timesheet
+        // update equipment
         [updateEquipment.pending.type]: (state) => {
             state.loading = true;
         },
         [updateEquipment.fulfilled.type]: (state, action) => {
             state.loading = false;
-            state.timesheet = {};
+            state.equipment = {};
             state.isEditing = false;
         },
         [updateEquipment.rejected.type]: (state, action) => {
             state.loading = false;
             state.error = action.error;
         },
-        // delete timesheet
+        // delete equipment
         [deleteEquipment.pending.type]: (state) => {
             state.loading = true;
         },

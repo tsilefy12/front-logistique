@@ -17,15 +17,6 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
-import Data, { Order } from "./table/type-variable";
-import { rows } from "./table/constante";
-import EnhancedTableToolbar from "./table/EnhancedTableToolbar";
-import EnhancedTableHead from "./table/EnhancedTableHead";
-import {
-  getColorStatus,
-  getComparator,
-  stableSort,
-} from "./table/function";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -42,19 +33,51 @@ import {
 } from "../../../hooks/reduxHooks";
 import useFetchEquipment from "./hooks/useFetchEquipment";
 import { EquipmentItem } from "../../../redux/features/equipment/equipment.interface";
+import EquipmentTableHeader from "./organism/table/EquipmentTableHeader";
+import EquipmentTableToolbar from "./organism/table/EquipmentTableToolbar";
+import { deleteEquipment, editEquipment } from "../../../redux/features/equipment";
+import { useConfirm } from "material-ui-confirm";
+
 
 const ListInfo = () => {
-  const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] =
-    React.useState<keyof Data>("num_optim");
-  const [selected, setSelected] = React.useState<readonly string[]>(
-    []
-  );
+  function getColorStatus(etat: string) {
+    switch (etat) {
+      case "GOOD":
+        return "info";
+        break;
+      case "BAD":
+        return "warning";
+        break;
+      case "BROKEN":
+        return "error";
+        break;
+  
+      default:
+        break;
+    }
+  }
+ function getText(etat: string) {
+    switch (etat) {
+      case "GOOD":
+        return "Bon_état";
+        break;
+      case "BAD":
+        return "mauvais";
+        break;
+      case "BROKEN":
+        return "Inutilisable";
+        break;
+  
+      default:
+        break;
+    }
+  }
+  
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const router = useRouter();
-
+  const confirm = useConfirm();
   const dispatch = useAppDispatch();
   const { equipments } = useAppSelector((state) => state.equipment);
   console.log(equipments);
@@ -63,49 +86,29 @@ const ListInfo = () => {
   React.useEffect(() => {
     fetchEquipment();
   }, [router.query]);
-  const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
-    property: keyof Data
-  ) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.num_optim);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (
-    event: React.MouseEvent<unknown>,
-    name: string
-  ) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected: readonly string[] = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-  };
-
+  const handleClickDelete = async (id: any) => {
+		confirm({
+			title: "Supprimer le materiel",
+			description: "Voulez-vous vraiment supprimer ce materiel ?",
+			cancellationText: "Annuler",
+			confirmationText: "Supprimer",
+			cancellationButtonProps: {
+				color: "warning",
+			},
+			confirmationButtonProps: {
+				color: "error",
+			},
+		})
+			.then(async () => {
+				await dispatch(deleteEquipment({ id }));
+				fetchEquipment();
+			})
+			.catch(() => {});
+	};
+  const handleClickEdit = async (id: any) => {
+		await dispatch(editEquipment({ id }));
+		router.push(`/materiels/informatiques/${id}/edit`);
+	};
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -117,19 +120,6 @@ const ListInfo = () => {
     setPage(0);
   };
 
-  const handleChangeDense = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setDense(event.target.checked);
-  };
-
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0
-      ? Math.max(0, (1 + page) * rowsPerPage - rows.length)
-      : 0;
 
   return (
     <Container maxWidth="xl">
@@ -152,58 +142,24 @@ const ListInfo = () => {
       <SectionTable>
         <Box sx={{ width: "100%" }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <EnhancedTableToolbar numSelected={selected.length} />
+            <EquipmentTableToolbar/>
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
                 size="small"
               >
-                <EnhancedTableHead
-                  numSelected={selected.length}
-                  order={order}
-                  orderBy={orderBy}
-                  onSelectAllClick={handleSelectAllClick}
-                  onRequestSort={handleRequestSort}
-                  rowCount={rows.length}
-                />
+                <EquipmentTableHeader/>
                 <TableBody>
                   {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                 rows.slice().sort(getComparator(order, orderBy)) */}
                   {equipments
-                    .slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
-                    .map((row, index) => {
-                      const isItemSelected = isSelected(row.numOptim);
-                      const labelId = `enhanced-table-checkbox-${index}`;
-
-                      return (
-                        <TableRow
-                          hover
-                          //   onClick={(event) => handleClick(event, row.num_optim)}
-                          role="checkbox"
-                          aria-checked={isItemSelected}
-                          tabIndex={-1}
-                          key={row.numOptim}
-                          selected={isItemSelected}
-                        >
-                          <TableCell
-                            padding="checkbox"
-                            onClick={(event) =>
-                              handleClick(event, row.numOptim)
-                            }
-                          >
-                            <Checkbox
-                              color="primary"
-                              checked={isItemSelected}
-                              inputProps={{
-                                "aria-labelledby": labelId,
-                              }}
-                            />
-                          </TableCell>
-                          <TableCell
+										.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+										.map((row: EquipmentItem | any, index) => {
+											const labelId = `enhanced-table-checkbox-${index}`;
+											return (
+												<TableRow hover tabIndex={-1} key={row.id}>
+													 <TableCell
                             component="th"
                             id={labelId}
                             scope="row"
@@ -223,7 +179,7 @@ const ListInfo = () => {
                           </TableCell>
                           <TableCell align="left">
                             <Badge
-                              badgeContent={row.status}
+                              badgeContent={getText(row.status)}
                               color={getColorStatus(row.status)}
                             />
                           </TableCell>
@@ -242,24 +198,32 @@ const ListInfo = () => {
                                 </IconButton>
                               </Link>
                               <IconButton
-                                color="primary"
-                                aria-label="Modifier"
-                                component="span"
-                              >
-                                <EditIcon />
-                              </IconButton>
+																color="primary"
+																aria-label="Modifier"
+																component="span"
+																size="small"
+																onClick={() => {
+																	handleClickEdit(row.id);
+																}}
+															>
+																<EditIcon />
+															</IconButton>
                               <IconButton
                                 color="warning"
-                                aria-label="Supprimer"
-                                component="span"
+																aria-label="Supprimer"
+																component="span"
+																size="small"
+																onClick={() => {
+																	handleClickDelete(row.id);
+																}}
                               >
                                 <DeleteIcon />
                               </IconButton>
                             </BtnActionContainer>
                           </TableCell>
-                        </TableRow>
-                      );
-                    })}
+												</TableRow>
+											);
+										})}
                   {emptyRows > 0 && (
                     <TableRow
                       style={{

@@ -57,14 +57,30 @@ export function stableSort<T>(
 
 export function getColorStatus(etat: string) {
   switch (etat) {
-    case "Bon_état":
+    case "GOOD":
       return "info";
       break;
-    case "Amorti":
+    case "BAD":
       return "warning";
       break;
-    case "Inutilisable":
+    case "BROKEN":
       return "error";
+      break;
+
+    default:
+      break;
+  }
+}
+export function getText(etat: string) {
+  switch (etat) {
+    case "GOOD":
+      return "Bon_état";
+      break;
+    case "BAD":
+      return "mauvais";
+      break;
+    case "BROKEN":
+      return "Inutilisable";
       break;
 
     default:
