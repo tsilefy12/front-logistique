@@ -13,6 +13,11 @@ import { notificationSlice } from "./features/notification/notificationSlice";
 import { transportationEquipmentSlice } from "./features/transportation_equipment/transportationEquipmentSlice";
 import { fournisseurSlice } from "./features/fournisseur/fournisseurSlice";
 import { orderEquipmentSlice } from "./features/orderEquipment/orderEquipmentSlice";
+<<<<<<< Updated upstream
+=======
+import { carVoucherSlice } from "./features/car-voucher/carVoucherSlice";
+import { consumptionInvoiceSlice } from "./features/consumption_invoice/consumptionInvoiceSlice";
+>>>>>>> Stashed changes
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +31,11 @@ export const store = configureStore({
     orderEquipment: orderEquipmentSlice.reducer,
     fournisseur: fournisseurSlice.reducer,
     transportationEquipment: transportationEquipmentSlice.reducer,
+<<<<<<< Updated upstream
+=======
+    carVoucher: carVoucherSlice.reducer,
+    consumptionInvoice: consumptionInvoiceSlice.reducer,
+>>>>>>> Stashed changes
   },
 });
 
