@@ -119,7 +119,8 @@ const ListInfo = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
+  const emptyRows =
+  page > 0 ? Math.max(0, (1 + page) * rowsPerPage - timesheets.length) : 0;
 
   return (
     <Container maxWidth="xl">
@@ -169,7 +170,7 @@ const ListInfo = () => {
                             {row.numOptim}
                           </TableCell>
                           <TableCell align="left">
-                            {row.typeEquipmentId}
+                            {row.type.type}
                           </TableCell>
                           <TableCell align="left">
                             {row.ownerId}
@@ -239,7 +240,7 @@ const ListInfo = () => {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={rows.length}
+              count={equipments.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
