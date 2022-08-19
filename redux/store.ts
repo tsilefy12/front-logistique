@@ -14,6 +14,7 @@ import { transportationEquipmentSlice } from "./features/transportation_equipmen
 import { fournisseurSlice } from "./features/fournisseur/fournisseurSlice";
 import { orderEquipmentSlice } from "./features/orderEquipment/orderEquipmentSlice";
 import { articlSlice } from "./features/artikel/articl";
+import { consumableSlice } from "./features/consummable/consumable";
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
     fournisseur: fournisseurSlice.reducer,
     transportationEquipment: transportationEquipmentSlice.reducer,
     articl: articlSlice.reducer,
+    consumable: consumableSlice.reducer,
   },
 });
 
