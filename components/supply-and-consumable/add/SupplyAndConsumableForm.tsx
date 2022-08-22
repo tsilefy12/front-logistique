@@ -11,7 +11,10 @@ import Check from "@mui/icons-material/Check";
 import Close from "@mui/icons-material/Close";
 import { styled } from "@mui/material";
 import { Form, Formik } from "formik";
-import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../hooks/reduxHooks";
 import * as Yup from "yup";
 import OSTextField from "../../shared/input copy/OSTextField";
 import { cancelEdit } from "../../../redux/features/supply-and-consumable/supply-and-consumable";
@@ -22,7 +25,9 @@ export default function ArticleForm() {
 
   const dispatch = useAppDispatch();
 
-  const { isEditing, articl } = useAppSelector((state) => state.articl);
+  const { isEditing, articl } = useAppSelector(
+    (state) => state.articl
+  );
 
   const handleSubmit = async (values: any) => {
     try {
@@ -58,9 +63,9 @@ export default function ArticleForm() {
         }
         validationSchema={Yup.object({
           designation: Yup.string().required("Champ obligatoire"),
-          unitPrice: Yup.number().required("champ obligatoir"),
-          quantity: Yup.number().required("Champ obligatoir"),
-          SKU: Yup.string().required("Unité de Gestion de Stock invalide"),
+          unitPrice: Yup.number().required("champ obligatoire"),
+          quantity: Yup.number().required("Champ obligatoire"),
+          SKU: Yup.string(),
         })}
         onSubmit={(value: any, action: any) => {
           handleSubmit(value);
@@ -71,7 +76,6 @@ export default function ArticleForm() {
       >
         {(formikProps) => {
           return (
-            
             <Form>
               <NavigationContainer>
                 <SectionNavigation>
@@ -131,13 +135,13 @@ export default function ArticleForm() {
                   id="outlined-basic"
                   label="Quantite"
                   name="quantity"
-                  type= "number"
+                  type="number"
                 />
                 <OSTextField
                   id="outlined-basic"
                   label="Prix Unitaire"
                   name="unitPrice"
-                  type= "number"
+                  type="number"
                 />
                 <OSTextField
                   id="outlined-basic"

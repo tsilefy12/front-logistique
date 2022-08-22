@@ -15,6 +15,9 @@ import { fournisseurSlice } from "./features/fournisseur/fournisseurSlice";
 import { orderEquipmentSlice } from "./features/orderEquipment/orderEquipmentSlice";
 import { articlSlice } from "./features/supply-and-consumable/supply-and-consumable";
 import { consumableSlice } from "./features/order-supply-and-consumable/OrderSupplyAndConsumable";
+import { carVoucherSlice } from "./features/car-voucher/carVoucherSlice";
+import { consumptionInvoiceSlice } from "./features/consumption_invoice/consumptionInvoiceSlice";
+import { equipmentSlice } from "./features/equipment/equipmentSlice";
 
 export const store = configureStore({
   reducer: {
@@ -28,7 +31,10 @@ export const store = configureStore({
     orderEquipment: orderEquipmentSlice.reducer,
     fournisseur: fournisseurSlice.reducer,
     transportationEquipment: transportationEquipmentSlice.reducer,
+    carVoucher: carVoucherSlice.reducer,
     articl: articlSlice.reducer,
+    consumptionInvoice: consumptionInvoiceSlice.reducer,
+    equipment: equipmentSlice.reducer,
     consumable: consumableSlice.reducer,
   },
 });

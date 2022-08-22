@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import BackOfficeLayout from "../../../../layouts/backOffice";
 import useBasePath from "../../../../hooks/useBasePath";
-import FormBonDeVoiture from "../../../../components/materiel_de_transport/bon_de_voiture/form/formBondeVoiture";
+import FormBonDeVoiture from "../../../../components/materiel_de_transport/bon_de_voiture/add/formBondeVoiture";
 
 const FormBvPage: NextPage = () => {
   const basePath = useBasePath();
