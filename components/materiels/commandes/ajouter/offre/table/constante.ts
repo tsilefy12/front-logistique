@@ -1,18 +1,29 @@
-function createData(
-    numero : string,
-    societe: string,
-    num_proforma:string,
-    regime_tva: string,
-    tva: number
-  ) {
-    return { numero,societe,num_proforma, regime_tva,tva};
-  }
+import { GridRowsProp } from '@mui/x-data-grid';
+ 
 
- export  const rows = [
-    createData('0001', 'Brand garage', 'Ordinateur Asus','assujeti',10),
-    createData('0002', 'hidden collective', 'Ondileur','assujeti', 13),
-    createData('0003', 'Pentaconique', 'Ecran','assujeti',20),
-  ];
-
-
-  
+  export const initialRows: GridRowsProp = [
+    {
+        id: 1,
+        numero: '0001',
+        societe: 'Brand garage',
+        num_proforma: 'Ordinateur Asus',
+        regime_tva: 'assujeti',
+        tva: 10,
+    },
+    {
+        id: 2,
+        numero: '0002',
+        societe: 'Hidden collective',
+        num_proforma: 'Ondileur',
+        regime_tva: 'assujeti',
+        tva: 13,
+    },
+    {
+        id: 3,
+        numero: '0003',
+        societe: 'Pentaconique',
+        num_proforma: 'Ordinateur Asus',
+        regime_tva: 'Ecran',
+        tva: 20,
+    },
+];  
