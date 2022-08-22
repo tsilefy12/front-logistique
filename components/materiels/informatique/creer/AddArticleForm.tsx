@@ -102,15 +102,9 @@ const AddArticleForm = () => {
           numOptim: Yup.string().required(
             "Veuillez sélectionner un numOptim"
           ),
-          additionalInformation: Yup.string().required(
-            "Veuillez saisir un additionalInformation"
-          ),
-          acquisitionDate: Yup.date().required(
-            "Veuillez sélectionner une date d'acquisition"
-          ),
-          acquisitionValue: Yup.number().required(
-            "Veuillez remplir le champ acquisitionValue"
-          ),
+          additionalInformation: Yup.string(),
+          acquisitionDate: Yup.date(),
+          acquisitionValue: Yup.number(),
           designation: Yup.string().required(
             "Veuillez remplir le champ designation"
           ),
