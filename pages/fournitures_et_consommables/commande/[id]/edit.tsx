@@ -1,11 +1,8 @@
 import { Container } from "@mui/material";
 import Head from "next/head";
 import React from "react";
-// import Index from "../../../components/vendor/[id]/edit/Index";
-import Index from "../../../../components/consumable/[id]/edit/Index";
-// import useBasePath from "../../../hooks/useBasePath";
+import Index from "../../../../components/Order-Supply-And-Consumable/[id]/edit/Index";
 import useBasePath from "../../../../hooks/useBasePath";
-// import BackOfficeLayout from "../../../layouts/backOffice";
 import BackOfficeLayout from "../../../../layouts/backOffice";
 const Edit = () => {
   const basePath = useBasePath();

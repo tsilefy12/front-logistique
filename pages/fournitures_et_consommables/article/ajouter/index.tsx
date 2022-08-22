@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import BackOfficeLayout from "../../../../layouts/backOffice";
 import useBasePath from "../../../../hooks/useBasePath";
-import ArticleForm from "../../../../components/artikel/add/ArticleForm";
+import ArticleForm from "../../../../components/supply-and-consumable/add/SupplyAndConsumableForm";
 
 const FormArticlePage: NextPage = () => {
   const basePath = useBasePath();

@@ -13,8 +13,8 @@ import { notificationSlice } from "./features/notification/notificationSlice";
 import { transportationEquipmentSlice } from "./features/transportation_equipment/transportationEquipmentSlice";
 import { fournisseurSlice } from "./features/fournisseur/fournisseurSlice";
 import { orderEquipmentSlice } from "./features/orderEquipment/orderEquipmentSlice";
-import { articlSlice } from "./features/artikel/articl";
-import { consumableSlice } from "./features/consummable/consumable";
+import { articlSlice } from "./features/supply-and-consumable/supply-and-consumable";
+import { consumableSlice } from "./features/order-supply-and-consumable/OrderSupplyAndConsumable";
 
 export const store = configureStore({
   reducer: {
