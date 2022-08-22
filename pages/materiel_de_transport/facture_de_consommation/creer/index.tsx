@@ -4,7 +4,7 @@ import Head from "next/head";
 import Container from "@mui/material/Container";
 import BackOfficeLayout from "../../../../layouts/backOffice";
 import useBasePath from "../../../../hooks/useBasePath";
-import FormFactureConsommation from "../../../../components/materiel_de_transport/facture_de_consommation/form";
+import FormFactureConsommation from "../../../../components/materiel_de_transport/facture_de_consommation/creer";
 
 const FormulaireFactureConsommation: NextPage = () => {
   const basePath = useBasePath();
