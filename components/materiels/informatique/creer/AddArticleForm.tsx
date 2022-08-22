@@ -16,128 +16,245 @@ import Link from "next/link";
 import React from "react";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { Check, Close, Save } from "@mui/icons-material";
-
+import { Form, Formik } from "formik";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../hooks/reduxHooks";
+import * as Yup from "yup";
+import OSSelectField from "../../../shared/select/OSSelectField";
+import OSTextField from "../../../shared/input copy/OSTextField";
+import OSDatePicker from "../../../shared/date/OSDatePicker";
+import OSTimePicker from "../../../shared/time/OSTimePicker";
+import useFetchTypeEquipment from "../hooks/useFetchTypeEquipment";
+import {
+  createEquipment,
+  updateEquipment,
+} from "../../../../redux/features/equipment";
+import { useRouter } from "next/router";
+import useFetchEquipment from "../hooks/useFetchEquipment";
+import useFetchEmployes from "../hooks/useFetchEmployees";
 const AddArticleForm = () => {
+  const fetchTypeEquipment = useFetchTypeEquipment();
+  const fetchEmployes = useFetchEmployes();
+  const dispatch = useAppDispatch();
+  const etat = [
+    { name: "GOOD" },
+    { name: "BAD" },
+    { name: "BROKEN" },
+  ];
+  const route = useRouter();
+  const { typeequipment, employees, isEditing, equipment } =
+    useAppSelector((state) => state.equipment);
+  console.log(employees);
+  React.useEffect(() => {
+    fetchTypeEquipment();
+  }, []);
+  React.useEffect(() => {
+    fetchEmployes();
+  }, []);
+
+  const handleSubmit = async (values: any) => {
+    values.acquisitionDate = new Date(
+      values?.acquisitionDate
+    ).toISOString();
+
+    try {
+      if (isEditing) {
+        await dispatch(
+          updateEquipment({
+            id: equipment.id!,
+            equipment: values,
+          })
+        );
+      } else {
+        await dispatch(createEquipment(values));
+      }
+      // route.push("/");
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   return (
     <Container maxWidth="xl" sx={{ pb: 5 }}>
-      <NavigationContainer>
-        <SectionNavigation>
-          <Stack flexDirection={"row"}>
-            <Link href="/materiels/informatiques">
-              <Button color="info" variant="text" startIcon={<ArrowBack />}>
-                Retour
-              </Button>
-            </Link>
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              startIcon={<Check />}
-              sx={{ marginInline: 3 }}
-            >
-              Enregistrer
-            </Button>
-            <Button
-              variant="text"
-              color="warning"
-              size="small"
-              startIcon={<Close />}
-              sx={{ marginInline: 3 }}
-            >
-              Annuler
-            </Button>
-          </Stack>
-          <Typography variant="h4">Créer materiel informatique</Typography>
-        </SectionNavigation>
-        <Divider />
-      </NavigationContainer>
-
-      <FormContainer spacing={2}>
-        <CustomStack
-          direction={{ xs: "column", sm: "column", md: "row" }}
-          spacing={{ xs: 2, sm: 2, md: 1 }}
-        >
-          <TextField
-            fullWidth
-            id="outlined-basic"
-            label="N° OPTIM"
-            variant="outlined"
-          />
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Type</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              // value={age}
-              label="Type"
-              // onChange={handleChange}
-            >
-              <MenuItem value={10}>Type 1</MenuItem>
-              <MenuItem value={20}>Type 2</MenuItem>
-              <MenuItem value={30}>Type 3</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Etat</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              // value={age}
-              label="Etat"
-              // onChange={handleChange}
-            >
-              <MenuItem value={10}>Etat 1</MenuItem>
-              <MenuItem value={20}>Etat 2</MenuItem>
-              <MenuItem value={30}>Etat 3</MenuItem>
-            </Select>
-          </FormControl>
-        </CustomStack>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">
-            Employé utilisateur
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            // value={age}
-            label="Employé utilisateur"
-            // onChange={handleChange}
-          >
-            <MenuItem value={10}>Employé Ten</MenuItem>
-            <MenuItem value={20}>Employé Twenty</MenuItem>
-            <MenuItem value={30}>Employé Thirty</MenuItem>
-          </Select>
-        </FormControl>
-        <CustomStack
-          direction={{ xs: "column", sm: "column", md: "row" }}
-          spacing={{ xs: 2, sm: 2, md: 1 }}
-        >
-          <TextField
-            fullWidth
-            id="outlined-basic"
-            label="Date d'acquisition"
-            variant="outlined"
-          />
-          <TextField
-            fullWidth
-            id="outlined-basic"
-            label="Valeur d'acquisition"
-            variant="outlined"
-          />
-        </CustomStack>
-        <TextField
-          fullWidth
-          id="outlined-basic"
-          label="Information suplémentaire"
-          variant="outlined"
-        />
-        <TextField
-          fullWidth
-          id="outlined-basic"
-          label="Déscription"
-          variant="outlined"
-        />
-      </FormContainer>
+      <Formik
+        enableReinitialize
+        initialValues={{
+          numOptim: isEditing ? equipment?.numOptim : "",
+          additionalInformation: isEditing
+            ? equipment?.additionalInformation
+            : "",
+          acquisitionDate: isEditing
+            ? equipment?.acquisitionDate
+            : new Date(),
+          acquisitionValue: isEditing
+            ? equipment?.acquisitionValue
+            : "",
+          imageUrl: isEditing ? equipment?.imageUrl : "",
+          designation: isEditing ? equipment?.designation : "",
+          status: isEditing ? equipment?.status : "",
+          ownerId: isEditing ? equipment?.ownerId : "",
+          typeEquipmentId: isEditing
+            ? equipment?.typeEquipmentId
+            : "",
+        }}
+        validationSchema={Yup.object({
+          numOptim: Yup.string().required(
+            "Veuillez sélectionner un numOptim"
+          ),
+          additionalInformation: Yup.string(),
+          acquisitionDate: Yup.date(),
+          acquisitionValue: Yup.number(),
+          designation: Yup.string().required(
+            "Veuillez remplir le champ designation"
+          ),
+          status: Yup.string().required(
+            "Veuillez sélectionner un status"
+          ),
+          typeEquipmentId: Yup.string().required(
+            "Veuillez sélectionner un type"
+          ),
+        })}
+        onSubmit={(value: any, action: any) => {
+          handleSubmit(value);
+          action.resetForm();
+        }}
+      >
+        {(formikProps) => {
+          return (
+            <Form>
+              <NavigationContainer>
+                <SectionNavigation>
+                  <Stack flexDirection={"row"}>
+                    <Link href="/materiels/informatiques">
+                      <Button
+                        color="info"
+                        variant="text"
+                        startIcon={<ArrowBack />}
+                      >
+                        Retour
+                      </Button>
+                    </Link>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      startIcon={<Check />}
+                      sx={{ marginInline: 3 }}
+                      type="submit"
+                    >
+                      Enregistrer
+                    </Button>
+                    <Button
+                      variant="text"
+                      color="warning"
+                      size="small"
+                      startIcon={<Close />}
+                      sx={{ marginInline: 3 }}
+                    >
+                      Annuler
+                    </Button>
+                  </Stack>
+                  <Typography variant="h4">
+                    {isEditing ? "Modifier" : "Ajouter"} materiel
+                    informatique
+                  </Typography>
+                </SectionNavigation>
+                <Divider />
+              </NavigationContainer>
+              <FormContainer spacing={2}>
+                <CustomStack
+                  direction={{
+                    xs: "column",
+                    sm: "column",
+                    md: "row",
+                  }}
+                  spacing={{ xs: 2, sm: 2, md: 1 }}
+                >
+                  <OSTextField
+                    fullWidth
+                    id="outlined-basic"
+                    label="N° OPTIM"
+                    variant="outlined"
+                    name="numOptim"
+                  />
+                  <FormControl fullWidth>
+                    <OSSelectField
+                      id="workplaceId"
+                      label="Type"
+                      name="typeEquipmentId"
+                      options={typeequipment}
+                      dataKey="type"
+                      valueKey="id"
+                    />
+                  </FormControl>
+                  <FormControl fullWidth>
+                    <OSSelectField
+                      id="workplaceId"
+                      label="Etat"
+                      name="status"
+                      options={etat}
+                      dataKey="name"
+                      valueKey="name"
+                    />
+                  </FormControl>
+                </CustomStack>
+                <FormControl fullWidth>
+                  <OSSelectField
+                    label="Employé utilisateur"
+                    name="ownerId"
+                    options={employees}
+                    dataKey="name"
+                    valueKey="id"
+                  />
+                </FormControl>
+                <CustomStack
+                  direction={{
+                    xs: "column",
+                    sm: "column",
+                    md: "row",
+                  }}
+                  spacing={{ xs: 2, sm: 2, md: 1 }}
+                >
+                  <OSDatePicker
+                    fullWidth
+                    label="Date d'acquisition"
+                    value={formikProps.values.acquisitionDate}
+                    onChange={(value: any) =>
+                      formikProps.setFieldValue(
+                        "acquisitionDate",
+                        value
+                      )
+                    }
+                  />
+                  <OSTextField
+                    name="acquisitionValue"
+                    fullWidth
+                    id="outlined-basic"
+                    label="Valeur d'acquisition"
+                    variant="outlined"
+                    type="number"
+                  />
+                </CustomStack>
+                <OSTextField
+                  name="additionalInformation"
+                  fullWidth
+                  id="outlined-basic"
+                  label="Information suplémentaire"
+                  variant="outlined"
+                />
+                <OSTextField
+                  name="designation"
+                  fullWidth
+                  id="outlined-basic"
+                  label="Déscription"
+                  variant="outlined"
+                />
+              </FormContainer>
+            </Form>
+          );
+        }}
+      </Formik>
     </Container>
   );
 };
