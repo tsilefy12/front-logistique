@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import BackOfficeLayout from "../../../../layouts/backOffice";
 import useBasePath from "../../../../hooks/useBasePath";
-import FormArticle from "../../../../components/fournitures_et_consommables/article/form/FormArticle";
+import ArticleForm from "../../../../components/artikel/add/ArticleForm";
 
 const FormArticlePage: NextPage = () => {
   const basePath = useBasePath();
@@ -15,7 +15,7 @@ const FormArticlePage: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <FormArticle />
+        <ArticleForm />
       </Container>
     </BackOfficeLayout>
   );
