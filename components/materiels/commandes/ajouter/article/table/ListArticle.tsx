@@ -1,146 +1,230 @@
 import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
-import Stack from "@mui/material/Stack";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import CheckIcon from "@mui/icons-material/Check";
+import CancelIcon from "@mui/icons-material/Close";
+import { IconButton, styled } from "@mui/material";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import DoneIcon from "@mui/icons-material/Done";
-import CloseIcon from "@mui/icons-material/Close";
-import { rows } from "./constante";
-import { styled } from "@mui/material";
+import { initialRows } from "./constante";
+import Button from "@mui/material/Button";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import Link from "next/link";
+import {
+  GridRowModesModel,
+  GridRowModes,
+  DataGrid,
+  GridColumns,
+  GridRowParams,
+  MuiEvent,
+  GridActionsCellItem,
+  GridEventListener,
+  GridRowId,
+  GridRowModel,
+  frFR,
+} from "@mui/x-data-grid";
+import { defaultLabelDisplayedRows, labelRowsPerPage } from "../../../../../../config/table.config";
+import EditToolbar from "./EditToolbar";
+import AddIcon from "@mui/icons-material/Add";
+import { useRouter } from "next/router";
 
-const ListArticle = () => {
+export default function ListDocCandidature() {
+  const [rows, setRows] = React.useState(initialRows);
+  const router = useRouter();
+  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
+    {}
+  );
+
+  const handleRowEditStart = (
+    params: GridRowParams,
+    event: MuiEvent<React.SyntheticEvent>
+  ) => {
+    event.defaultMuiPrevented = true;
+  };
+
+  const handleRowEditStop: GridEventListener<"rowEditStop"> = (
+    params: any,
+    event: any
+  ) => {
+    event.defaultMuiPrevented = true;
+  };
+
+  const handleEditClick = (id: GridRowId) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+  };
+
+  const handleSaveClick = (id: GridRowId) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+  };
+
+  const handleDeleteClick = (id: GridRowId) => () => {
+    setRows(rows.filter((row: any) => row.id !== id));
+  };
+
+  const handleClickAddArticle = async (id : any) => {
+    router.push(`/materiels/commande/${id}/offre/article`);
+  }
+
+  const handleCancelClick = (id: GridRowId) => () => {
+    setRowModesModel({
+      ...rowModesModel,
+      [id]: { mode: GridRowModes.View, ignoreModifications: true },
+    });
+
+    const editedRow = rows.find((row: any) => row.id === id);
+    if (editedRow!.isNew) {
+      setRows(rows.filter((row: any) => row.id !== id));
+    }
+  };
+
+  const processRowUpdate = (newRow: GridRowModel) => {
+    const updatedRow = { ...newRow, isNew: false };
+    setRows(rows.map((row: any) => (row.id === newRow.id ? updatedRow : row)));
+    return updatedRow;
+  };
+
+  function getId(params: any) {
+    return `${params.row.id || ""}`;
+  }
+
+  const columns: GridColumns = [
+    {
+      field: "designation",
+      headerName: "Désignation",
+      editable: true,
+      flex: 1,
+      align: "left",
+      headerAlign: "left",
+    },
+    {
+      field: "quantite",
+      headerName: "Quantité",
+      type: "text",
+      editable: true,
+      flex: 1,
+      align: "left",
+      headerAlign: "left",
+    },
+    {
+      field: "prix_unitaire",
+      headerName: "Prix unitaire",
+      type: "text",
+      editable: true,
+      flex: 1,
+      align: "left",
+      headerAlign: "left",
+    },
+    {
+        field: "autre_info",
+        headerName: "Autre inforamtion",
+        type: "text",
+        editable: true,
+        flex: 1,
+        align: "left",
+        headerAlign: "left",
+    },
+    {
+      field: "actions",
+      type: "actions",
+      headerName: "",
+      width: 200,
+      cellClassName: "actions",
+      getActions: ({ id }) => {
+        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+        if (isInEditMode) {
+          return [
+
+            <GridActionsCellItem
+              key={`${id}-save`}
+              icon={<CheckIcon color="info" />}
+              label="Save"
+              onClick={handleSaveClick(id)}
+            />,
+            <GridActionsCellItem
+              key={`${id}-cancel`}
+              icon={<CancelIcon color="warning" />}
+              label="Cancel"
+              className="textPrimary"
+              onClick={handleCancelClick(id)}
+              color="inherit"
+            />,
+          ];
+        }
+
+        return [
+          <GridActionsCellItem
+            key={`${id}-edit`}
+            icon={<EditIcon color="primary" />}
+            label="Edit"
+            className="textPrimary"
+            onClick={handleEditClick(id)}
+            color="inherit"
+          />,
+          <GridActionsCellItem
+            key={`${id}-delete`}
+            icon={<DeleteIcon color="warning" />}
+            label="Delete"
+            onClick={handleDeleteClick(id)}
+            color="inherit"
+          />,
+        ];
+      },
+    },
+  ];
+
   return (
     <MyTableContainer>
-      <Typography variant="h5">Article</Typography>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Désignation</TableCell>
-              <TableCell align="left">Quantite</TableCell>
-              <TableCell align="left">Prix Unitaire</TableCell>
-              <TableCell align="left">
-                <Button size="small" color="info">
-                  <AddIcon />
-                  Ajouter Article
-                </Button>
-              </TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.designation}
-                </TableCell>
-                <TableCell align="left">{row.quantite}</TableCell>
-                <TableCell align="left">${row.prix_unitaire}</TableCell>
-                <TableCell padding="none">
-                  <TextField
-                    id="filled-basic"
-                    label="Autre information"
-                    variant="filled"
-                    sx={{ width: "100%" }}
-                  />
-                </TableCell>
-
-                <TableCell sx={{ background: "#F5F5F5" }}>
-                  <Stack
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                    spacing={2}
-                  >
-                    <EditIcon color="primary" />
-                    <DeleteIcon color="warning" />
-                  </Stack>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          <TableRow>
-            <TableCell padding="none">
-              <TextField
-                id="filled-basic"
-                label="Saisir designation"
-                variant="filled"
-                sx={{ width: "100%" }}
-              />
-            </TableCell>
-            <TableCell padding="none">
-              <TextField
-                id="filled-basic"
-                label="Saisir quantité"
-                variant="filled"
-                sx={{ width: "100%" }}
-              />
-            </TableCell>
-            <TableCell padding="none">
-              <TextField
-                id="filled-basic"
-                label="Saisir PU"
-                variant="filled"
-                sx={{ width: "100%" }}
-              />
-            </TableCell>
-            <TableCell padding="none">
-              <TextField
-                id="filled-basic"
-                label="Saisir autre information"
-                variant="filled"
-                sx={{ width: "100%" }}
-              />
-            </TableCell>
-            <TableCell sx={{ background: "#F5F5F5" }}>
-              <Stack
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-                spacing={2}
-              >
-                <DoneIcon color="info" />
-                <CloseIcon color="warning" />
-              </Stack>
-            </TableCell>
-          </TableRow>
-        </Table>
-
-        <Stack
-          direction="row"
-          justifyContent="flex-start"
-          alignItems="center"
-          sx={{ mt: 2 }}
-        >
-          <Button size="small" color="info">
-            <AddIcon />
-            Ajouter Article
-          </Button>
-        </Stack>
-      </TableContainer>
+      <Typography variant="h6" mb={1}>
+        Article
+      </Typography>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        editMode="row"
+        rowModesModel={rowModesModel}
+        onRowEditStart={handleRowEditStart}
+        onRowEditStop={handleRowEditStop}
+        processRowUpdate={processRowUpdate}
+        components={{
+          Toolbar: EditToolbar,
+        }}
+        componentsProps={{
+          toolbar: { setRows, setRowModesModel },
+        }}
+        experimentalFeatures={{ newEditingApi: true }}
+        localeText={
+          (frFR.components.MuiDataGrid.defaultProps.localeText || {},
+          {
+            columnMenuSortAsc: "Trier par ordre croissant",
+            columnMenuSortDesc: "Trier par ordre décroissant",
+            columnMenuUnsort: "Annuler le tri",
+            columnMenuFilter: "Filtrer",
+            columnMenuHideColumn: "Masquer la colonne",
+            columnMenuShowColumns: "Afficher toutes les colonnes",
+            footerRowSelected(count) {
+              return `${count} ligne(s) sélectionnée(s)`;
+            },
+            MuiTablePagination: {
+              labelRowsPerPage: labelRowsPerPage,
+              labelDisplayedRows: defaultLabelDisplayedRows,
+            },
+          })
+        }
+      />
     </MyTableContainer>
   );
-};
-
-export default ListArticle;
+}
 
 const MyTableContainer = styled(Stack)(({ theme }) => ({
-  padding: 30,
+  padding: 20,
   borderRadius: 20,
   background: "#fff",
+  marginBottom: theme.spacing(5),
+  height: 500,
   width: "100%",
-  marginBottom: theme.spacing(2),
+}));
+
+const MyBoutton = styled(Button)(({ theme }) => ({
+  color: "#9E9E9E",
 }));
