@@ -39,9 +39,9 @@ const AddArticleForm = () => {
   const fetchEmployes = useFetchEmployes();
   const dispatch = useAppDispatch();
   const etat = [
-    { name: "GOOD" },
-    { name: "BAD" },
-    { name: "BROKEN" },
+    { name: "GOOD",french:"Bon etat" },
+    { name: "BAD",french:"Moyen" },
+    { name: "BROKEN",french:"Mauvais" },
   ];
   const route = useRouter();
   const { typeequipment, employees, isEditing, equipment } =
@@ -194,7 +194,7 @@ const AddArticleForm = () => {
                       label="Etat"
                       name="status"
                       options={etat}
-                      dataKey="name"
+                      dataKey="french"
                       valueKey="name"
                     />
                   </FormControl>
