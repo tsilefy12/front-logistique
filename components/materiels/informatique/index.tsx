@@ -35,7 +35,7 @@ import useFetchEquipment from "./hooks/useFetchEquipment";
 import { EquipmentItem } from "../../../redux/features/equipment/equipment.interface";
 import EquipmentTableHeader from "./organism/table/EquipmentTableHeader";
 import EquipmentTableToolbar from "./organism/table/EquipmentTableToolbar";
-import { deleteEquipment, editEquipment } from "../../../redux/features/equipment";
+import { deleteEquipment, editEquipment, getEmployee } from "../../../redux/features/equipment";
 import { useConfirm } from "material-ui-confirm";
 
 
@@ -109,6 +109,10 @@ const ListInfo = () => {
 		await dispatch(editEquipment({ id }));
 		router.push(`/materiels/informatiques/${id}/edit`);
 	};
+  // const name = async (id: any) => {
+  //   console.log(getEmployee({ id }));
+  //   await getEmployee({ id });
+	// };
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -173,7 +177,7 @@ const ListInfo = () => {
                             {row.type.type}
                           </TableCell>
                           <TableCell align="left">
-                            {row.ownerId}
+                            {row.applicant?.name}
                           </TableCell>
                           <TableCell align="left">
                             {row.designation}

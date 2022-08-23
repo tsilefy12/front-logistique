@@ -9,6 +9,8 @@ export interface EquipmentItem {
   acquisitionValue?: string;
   imageUrl?: string;
   typeEquipmentId?: string;
+  applicant?: any;
+  type?: any;
 }
 
 export interface EquipmentInitialState {
