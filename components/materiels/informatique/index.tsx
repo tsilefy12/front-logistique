@@ -174,7 +174,7 @@ const ListInfo = () => {
                             {row.numOptim}
                           </TableCell>
                           <TableCell align="left">
-                            {row.type.type}
+                            {row.type?.type}
                           </TableCell>
                           <TableCell align="left">
                             {row.applicant?.name}

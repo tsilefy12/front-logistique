@@ -58,7 +58,12 @@ const AddArticleForm = () => {
     values.acquisitionDate = new Date(
       values?.acquisitionDate
     ).toISOString();
-
+    Object.keys(values).forEach((key) => {
+      if (values[key] === "") {
+        values[key] = null;
+      }
+    });
+  
     try {
       if (isEditing) {
         await dispatch(
