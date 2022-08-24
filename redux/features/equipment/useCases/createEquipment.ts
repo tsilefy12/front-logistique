@@ -19,14 +19,21 @@ export const createEquipment = createAsyncThunk(
             const response = await axios.post("/logistique/equipment", equipment);
             thunkAPI.dispatch(
                 enqueueSnackbar({
-                    message: "Timesheet created successfully",
+                    message: "Equipment created successfully",
                     options: { variant: "success" },
                 })
             );
             return response.data;
         } catch (error: any) {
             if (error.response) {
+                thunkAPI.dispatch(
+                    enqueueSnackbar({
+                        message: "Equipment not created",
+                        options: { variant: "error" },
+                    })
+                );
                 return thunkAPI.rejectWithValue(error);
+               
             }
             return error;
         }

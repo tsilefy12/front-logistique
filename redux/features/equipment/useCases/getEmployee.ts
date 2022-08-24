@@ -12,6 +12,7 @@ export const getEmployee = createAsyncThunk(
     "employee/getEmployee",
     async (data: { employeeId?: string; args?: any }, thunkAPI) => {
         try {
+            console.log(data.employeeId);
             const response = await axios.get(`/rh/employee/${data.employeeId}`);
             return response.data;
         } catch (error: any) {
