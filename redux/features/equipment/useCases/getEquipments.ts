@@ -25,26 +25,46 @@ export const getEquipments = createAsyncThunk(
           response.data.map(async (cons: EquipmentItem) => {
             const employeeId = cons.ownerId;
             const typ= cons.typeEquipmentId;
-            const detailEmployee = await thunkAPI
+            if(employeeId!=null)
+            {
+              const detailEmployee = await thunkAPI
               .dispatch(getEmployee({ employeeId }))
               .unwrap();
+              const oneCons = {
+                id: cons.id,
+                numOptim: cons.numOptim,
+                designation: cons.designation,
+                additionalInformation: cons.additionalInformation,
+                status: cons.status,
+                ownerId: cons.ownerId,
+                acquisitionDate: cons.acquisitionDate,
+                acquisitionValue: cons.acquisitionValue,
+                imageUrl: cons.imageUrl,
+                type: cons.type,
+                applicant: detailEmployee,
+              };
+              newData.push(oneCons);
+            }
+            else{
+              const oneCons = {
+                id: cons.id,
+                numOptim: cons.numOptim,
+                designation: cons.designation,
+                additionalInformation: cons.additionalInformation,
+                status: cons.status,
+                ownerId: cons.ownerId,
+                acquisitionDate: cons.acquisitionDate,
+                acquisitionValue: cons.acquisitionValue,
+                imageUrl: cons.imageUrl,
+                type: cons.type,
+              };
+              newData.push(oneCons);
+            }
+            
             // const typeEq = await thunkAPI
             //   .dispatch(getTypeEquipment({ typ }))
             //   .unwrap();
-            const oneCons = {
-              id: cons.id,
-              numOptim: cons.numOptim,
-              designation: cons.designation,
-              additionalInformation: cons.additionalInformation,
-              status: cons.status,
-              ownerId: cons.ownerId,
-              acquisitionDate: cons.acquisitionDate,
-              acquisitionValue: cons.acquisitionValue,
-              imageUrl: cons.imageUrl,
-              type: cons.type,
-              applicant: detailEmployee,
-            };
-            newData.push(oneCons);
+            
           })
         );
 		return newData; 
