@@ -32,7 +32,6 @@ import {
   updateEquipment,
 } from "../../../../redux/features/equipment";
 import { useRouter } from "next/router";
-import useFetchEquipment from "../hooks/useFetchEquipment";
 import useFetchEmployes from "../hooks/useFetchEmployees";
 const AddArticleForm = () => {
   const fetchTypeEquipment = useFetchTypeEquipment();
@@ -40,8 +39,8 @@ const AddArticleForm = () => {
   const dispatch = useAppDispatch();
   const etat = [
     { name: "GOOD",french:"Bon etat" },
-    { name: "BAD",french:"Moyen" },
-    { name: "BROKEN",french:"Mauvais" },
+    { name: "BAD",french:"Mauvais" },
+    { name: "BROKEN",french:"inutilisable" },
   ];
   const route = useRouter();
   const { typeequipment, employees, isEditing, equipment } =
