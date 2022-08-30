@@ -32,16 +32,15 @@ import {
   updateEquipment,
 } from "../../../../redux/features/equipment";
 import { useRouter } from "next/router";
-import useFetchEquipment from "../hooks/useFetchEquipment";
 import useFetchEmployes from "../hooks/useFetchEmployees";
 const AddArticleForm = () => {
   const fetchTypeEquipment = useFetchTypeEquipment();
   const fetchEmployes = useFetchEmployes();
   const dispatch = useAppDispatch();
   const etat = [
-    { name: "GOOD" },
-    { name: "BAD" },
-    { name: "BROKEN" },
+    { name: "GOOD",french:"Bon etat" },
+    { name: "BAD",french:"Mauvais" },
+    { name: "BROKEN",french:"inutilisable" },
   ];
   const route = useRouter();
   const { typeequipment, employees, isEditing, equipment } =
@@ -58,7 +57,12 @@ const AddArticleForm = () => {
     values.acquisitionDate = new Date(
       values?.acquisitionDate
     ).toISOString();
-
+    Object.keys(values).forEach((key) => {
+      if (values[key] === "") {
+        values[key] = null;
+      }
+    });
+  
     try {
       if (isEditing) {
         await dispatch(
@@ -194,7 +198,7 @@ const AddArticleForm = () => {
                       label="Etat"
                       name="status"
                       options={etat}
-                      dataKey="name"
+                      dataKey="french"
                       valueKey="name"
                     />
                   </FormControl>

@@ -28,6 +28,12 @@ export const updateEquipment = createAsyncThunk(
 			return response.data;
 		} catch (error: any) {
 			if (error.response) {
+				thunkAPI.dispatch(
+					enqueueSnackbar({
+						message: "Equipment not updated",
+						options: { variant: "error" },
+					})
+				);
 				return thunkAPI.rejectWithValue(error);
 			}
 			return error;
