@@ -30,7 +30,7 @@ const FooterBackOffice = () => {
             sx={{ color: theme.palette.grey[500] }}
           >
             Version ¤ <Lien>1.0.0</Lien>, dernière mise à jour :{" "}
-            <Lien>20/07/2022</Lien>{" "}
+            <Lien>05/10/2022</Lien>{" "}
           </Typography>
         </Stack>
       </Container>
