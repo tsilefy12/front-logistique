@@ -35,9 +35,11 @@ import {
 import { useRouter } from "next/router";
 import useFetchOrderEquipement from "./hooks/useFetchOrderEquipment";
 import { useConfirm } from "material-ui-confirm";
-import OrderEquipmentTableToolbar from "./table/OrderEquipmentTableToolbar";
-import OrderEquipmentTableHead from "./table/OrderEquipmentTableHead";
-import { Edit } from "@mui/icons-material";
+// import OrderEquipmentTableToolbar from "../orderForm/table/OrderFormTableToolbar";
+import { OrderEquipementTableProps } from "./table/orderEquipement.interface";
+// import OrderEquipmentTableHead from "../orderForm/table/OrderFormTableHead";
+import OrderEquipementTableHead from "./table/OrderEquipementTableHead";
+import { Delete, Edit } from "@mui/icons-material";
 import Moment from "react-moment";
 
 const ListCommande = () => {
@@ -95,7 +97,7 @@ const ListCommande = () => {
     }
   };
 
-  const handleclickDelete = async (id: any) => {
+  const handleClickDelete = async (id: any) => {
     confirm({
       title: "Supprimer le commande",
       description: "Voulez-vous vraiment supprimer cette commande ?",
@@ -145,14 +147,14 @@ const ListCommande = () => {
       <SectionTable>
         <Box sx={{ width: "100%" }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <OrderEquipmentTableToolbar />
+            <OrderEquipementTableHead />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
                 size="small"
               >
-                <OrderEquipmentTableHead />
+                <OrderEquipementTableHead />
                 <TableBody>
                   {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                 rows.slice().sort(getComparator(order, orderBy)) */}
@@ -172,23 +174,14 @@ const ListCommande = () => {
                           >
                             {row.designation}
                           </TableCell>
-                          {/* <TableCell
-                            component="th"
-                            id={labelId}
-                            scope="row"
-                            padding="normal"
-                            align="left"
-                          >
-                            {row?.applicantId}
-                          </TableCell> */}
                           <TableCell
                             component="th"
                             id={labelId}
                             scope="row"
                             padding="normal"
                             align="left"
-                          >
-                            {row.quantity}
+                            >
+                            {row.reason}
                           </TableCell>
                           <TableCell
                             component="th"
@@ -196,7 +189,7 @@ const ListCommande = () => {
                             scope="row"
                             padding="normal"
                             align="left"
-                          >
+                            >
                             <Moment format="DD/MM/YYYY">
                               {row.deadlineOfReception}
                             </Moment>
@@ -207,9 +200,18 @@ const ListCommande = () => {
                             scope="row"
                             padding="normal"
                             align="left"
-                          >
+                            >
                             {row.numberOfAuthorisedOffersPossible}
                           </TableCell>
+                            <TableCell
+                              component="th"
+                              id={labelId}
+                              scope="row"
+                              padding="normal"
+                              align="left"
+                            >
+                              {row.applicant?.name}
+                            </TableCell>
                           <TableCell
                             component="th"
                             id={labelId}
@@ -239,7 +241,7 @@ const ListCommande = () => {
                                   Gérer Offres
                                 </Button>
                               </Link>
-                              <Link href={`commande/${row.id}/details`}>
+                              {/* <Link href={`commande/${row.id}/details`}>
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"
@@ -247,7 +249,7 @@ const ListCommande = () => {
                                 >
                                   <VisibilityIcon />
                                 </IconButton>
-                              </Link>
+                              </Link> */}
                               <Link href={`commande/${row.id}/edit`}>
                                 <IconButton
                                   color="primary"
@@ -257,6 +259,17 @@ const ListCommande = () => {
                                   <Edit />
                                 </IconButton>
                               </Link>
+                              <IconButton
+                                color="warning"
+                                aria-label="Supprimer"
+                                component="span"
+                                size="small"
+                                onClick={() => {
+                                  handleClickDelete(row.id);
+                                }}
+                              >
+                                <Delete />
+                              </IconButton>
                             </BtnActionContainer>
                           </TableCell>
                         </TableRow>

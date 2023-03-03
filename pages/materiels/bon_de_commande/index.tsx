@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import BackOfficeLayout from "../../../layouts/backOffice";
 import useBasePath from "../../../hooks/useBasePath";
-import ListBc from "../../../components/materiels/bon_de_commande";
+import OrderFormList from "../../../components/materiels/orderForm";
 
 const Bon_de_Commande: NextPage = () => {
   const basePath = useBasePath();
@@ -15,7 +15,7 @@ const Bon_de_Commande: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <ListBc/>
+        <OrderFormList />
       </Container>
     </BackOfficeLayout>
   );

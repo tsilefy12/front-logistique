@@ -6,7 +6,7 @@ import { useAppSelector } from "../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { debounce } from "lodash";
 
-const OrderEquipmentTableToolbar = () => {
+const OrderEquipementTableToolbar = () => {
   const { loading } = useAppSelector((state) => state.orderEquipment);
   const [key, setKey] = useState<any>("");
   const router = useRouter();
@@ -51,7 +51,7 @@ const OrderEquipmentTableToolbar = () => {
           }}
         >
           <Typography variant="h6" id="tableTitle" component="div">
-            Liste des commandes
+            Liste des
           </Typography>
           <TextField
             variant="outlined"
@@ -69,4 +69,4 @@ const OrderEquipmentTableToolbar = () => {
   );
 };
 
-export default OrderEquipmentTableToolbar;
+export default OrderEquipementTableToolbar;

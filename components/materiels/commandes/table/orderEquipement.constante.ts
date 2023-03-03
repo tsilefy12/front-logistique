@@ -1,26 +1,20 @@
-import { OrderEquipmentHeadCell } from "./orderEquipment.interface";
+import { OrderEquipementHeadCell } from "./orderEquipement.interface";
 
-export const orderequipmentheadCells: readonly OrderEquipmentHeadCell[] = [
+export const orderequipmentheadCells: readonly OrderEquipementHeadCell[] = [
   {
     id: "designation",
     numeric: false,
     disablePadding: false,
     label: "Designation",
   },
-  // {
-  //   id: "demandeur",
-  //   numeric: false,
-  //   disablePadding: false,
-  //   label: "Demandeur",
-  // },
   {
-    id: "quantite",
+    id: "reason",
     numeric: false,
     disablePadding: false,
-    label: "Quantité",
+    label: "Raison",
   },
   {
-    id: "deadline_reception",
+    id: "deadlineOfReception",
     numeric: false,
     disablePadding: false,
     label: "Deadline de reception",
@@ -30,6 +24,12 @@ export const orderequipmentheadCells: readonly OrderEquipmentHeadCell[] = [
     numeric: false,
     disablePadding: false,
     label: "Nombre offre possible",
+  },
+  {
+    id: "applicantId",
+    numeric: false,
+    disablePadding: false,
+    label: "Demandeur",
   },
   {
     id: "status",

@@ -42,7 +42,7 @@ import { defaultLabelDisplayedRows, labelRowsPerPage } from "../../shared/table/
       (state) => state.consumptionInvoice
     );
   
-    console.log(consumptionInvoices);
+    // console.log(consumptionInvoices);
 
     const fetchConsumptionInvoices = useFetchConsumptionInvoice();
   
