@@ -19,6 +19,8 @@ import { carVoucherSlice } from "./features/car-voucher/carVoucherSlice";
 import { consumptionInvoiceSlice } from "./features/consumption_invoice/consumptionInvoiceSlice";
 import { equipmentSlice } from "./features/equipment/equipmentSlice";
 import { detenteurSlice } from "./features/detenteur/detenteurSlice";
+import { passengerSlice } from "./features/passenger/passengerSlice";
+import { orderFormSlice } from "./features/order-form/orderFormSlice";
 
 export const store = configureStore({
   reducer: {
@@ -38,6 +40,8 @@ export const store = configureStore({
     equipment: equipmentSlice.reducer,
     consumable: consumableSlice.reducer,
     detenteur: detenteurSlice.reducer,
+    passenger: passengerSlice.reducer,
+    orderForm: orderFormSlice.reducer,
   },
 });
 

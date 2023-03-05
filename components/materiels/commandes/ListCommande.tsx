@@ -6,131 +6,131 @@ import {
   styled,
   Typography,
   Badge,
-} from "@mui/material";
-import Link from "next/link";
-import React, { useEffect } from "react";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Add from "@mui/icons-material/Add";
-import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
-import { deleteOrderEquipment } from "../../../redux/features/orderEquipment";
-import { editOrderEquipment } from "../../../redux/features/orderEquipment";
-import { OrderEquipmentItem } from "../../../redux/features/orderEquipment/orderEquipmentSlice.interface";
+} from '@mui/material'
+import Link from 'next/link'
+import React, { useEffect } from 'react'
+import Box from '@mui/material/Box'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TablePagination from '@mui/material/TablePagination'
+import TableRow from '@mui/material/TableRow'
+import Paper from '@mui/material/Paper'
+import Checkbox from '@mui/material/Checkbox'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import Add from '@mui/icons-material/Add'
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks'
+import { deleteOrderEquipment } from '../../../redux/features/orderEquipment'
+import { editOrderEquipment } from '../../../redux/features/orderEquipment'
+import { OrderEquipmentItem } from '../../../redux/features/orderEquipment/orderEquipmentSlice.interface'
 import {
   defaultLabelDisplayedRows,
   getComparator,
   labelRowsPerPage,
   Order,
-} from "../../../config/table.config";
-import { useRouter } from "next/router";
-import useFetchOrderEquipement from "./hooks/useFetchOrderEquipment";
-import { useConfirm } from "material-ui-confirm";
-import OrderEquipmentTableToolbar from "./table/OrderEquipmentTableToolbar";
-import OrderEquipmentTableHead from "./table/OrderEquipmentTableHead";
-import { Edit } from "@mui/icons-material";
-import Moment from "react-moment";
+} from '../../../config/table.config'
+import { useRouter } from 'next/router'
+import useFetchOrderEquipement from './hooks/useFetchOrderEquipment'
+import { useConfirm } from 'material-ui-confirm'
+// import OrderEquipmentTableToolbar from "../orderForm/table/OrderFormTableToolbar";
+import { OrderEquipementTableProps } from './table/orderEquipement.interface'
+// import OrderEquipmentTableHead from "../orderForm/table/OrderFormTableHead";
+import OrderEquipementTableHead from './table/OrderEquipementTableHead'
+import { Delete, Edit } from '@mui/icons-material'
+import Moment from 'react-moment'
 
 const ListCommande = () => {
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const dispatch: any = useAppDispatch();
-  const { orderEquipmentList } = useAppSelector(
-    (state) => state.orderEquipment
-  );
-  const router = useRouter();
-  const confirm = useConfirm();
+  const [page, setPage] = React.useState(0)
+  const [dense, setDense] = React.useState(false)
+  const [rowsPerPage, setRowsPerPage] = React.useState(5)
+  const dispatch: any = useAppDispatch()
+  const { orderEquipmentList } = useAppSelector((state) => state.orderEquipment)
+  const router = useRouter()
+  const confirm = useConfirm()
 
-  const fetchOrderEquipmentList = useFetchOrderEquipement();
+  const fetchOrderEquipmentList = useFetchOrderEquipement()
 
   useEffect(() => {
-    fetchOrderEquipmentList();
-  }, [router.query]);
+    fetchOrderEquipmentList()
+  }, [router.query])
 
   const handleClickEdit = async (id: any) => {
-    await dispatch(editOrderEquipment({ id }));
-  };
+    await dispatch(editOrderEquipment({ id }))
+  }
 
   const getColorsStatus = (status: string | undefined) => {
     switch (status) {
-      case "PENDING":
-        return "info";
-        break;
-      case "APPROVED":
-        return "primary";
-        break;
-      case "REJECTED":
-        return "error";
-        break;
+      case 'PENDING':
+        return 'info'
+        break
+      case 'APPROVED':
+        return 'primary'
+        break
+      case 'REJECTED':
+        return 'error'
+        break
       default:
-        return "primary";
-        break;
+        return 'primary'
+        break
     }
-  };
+  }
 
   const getTextStatus = (status: string | undefined) => {
     switch (status) {
-      case "PENDING":
-        return "En_attent";
-        break;
-      case "APPROVED":
-        return "Approuvé";
-        break;
-      case "REJECTED":
-        return "Rejeté";
-        break;
+      case 'PENDING':
+        return 'En_attent'
+        break
+      case 'APPROVED':
+        return 'Approuvé'
+        break
+      case 'REJECTED':
+        return 'Rejeté'
+        break
       default:
-        return "primary";
-        break;
+        return 'primary'
+        break
     }
-  };
+  }
 
-  const handleclickDelete = async (id: any) => {
+  const handleClickDelete = async (id: any) => {
     confirm({
-      title: "Supprimer le commande",
-      description: "Voulez-vous vraiment supprimer cette commande ?",
-      cancellationText: "Annuler",
-      confirmationText: "Supprimer",
+      title: 'Supprimer le commande',
+      description: 'Voulez-vous vraiment supprimer cette commande ?',
+      cancellationText: 'Annuler',
+      confirmationText: 'Supprimer',
       cancellationButtonProps: {
-        color: "warning",
+        color: 'warning',
       },
       confirmationButtonProps: {
-        color: "error",
+        color: 'error',
       },
     })
       .then(async () => {
-        await dispatch(deleteOrderEquipment({ id }));
-        fetchOrderEquipmentList();
+        await dispatch(deleteOrderEquipment({ id }))
+        fetchOrderEquipmentList()
       })
-      .catch(() => {});
-  };
+      .catch(() => {})
+  }
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
+    setPage(newPage)
+  }
 
   const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0
       ? Math.max(0, (1 + page) * rowsPerPage - orderEquipmentList.length)
-      : 0;
+      : 0
 
   return (
     <Container maxWidth="xl">
@@ -143,23 +143,23 @@ const ListCommande = () => {
         <Typography variant="h4">Commandes</Typography>
       </SectionNavigation>
       <SectionTable>
-        <Box sx={{ width: "100%" }}>
-          <Paper sx={{ width: "100%", mb: 2 }}>
-            <OrderEquipmentTableToolbar />
+        <Box sx={{ width: '100%' }}>
+          <Paper sx={{ width: '100%', mb: 2 }}>
+            {/* <OrderEquipementTableHead /> */}
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
                 size="small"
               >
-                <OrderEquipmentTableHead />
+                <OrderEquipementTableHead />
                 <TableBody>
                   {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                 rows.slice().sort(getComparator(order, orderBy)) */}
                   {orderEquipmentList
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row: OrderEquipmentItem, index: any) => {
-                      const labelId = `enhanced-table-checkbox-${index}`;
+                      const labelId = `enhanced-table-checkbox-${index}`
 
                       return (
                         <TableRow hover tabIndex={-1} key={row.id}>
@@ -172,15 +172,6 @@ const ListCommande = () => {
                           >
                             {row.designation}
                           </TableCell>
-                          {/* <TableCell
-                            component="th"
-                            id={labelId}
-                            scope="row"
-                            padding="normal"
-                            align="left"
-                          >
-                            {row?.applicantId}
-                          </TableCell> */}
                           <TableCell
                             component="th"
                             id={labelId}
@@ -188,7 +179,7 @@ const ListCommande = () => {
                             padding="normal"
                             align="left"
                           >
-                            {row.quantity}
+                            {row.reason}
                           </TableCell>
                           <TableCell
                             component="th"
@@ -217,6 +208,15 @@ const ListCommande = () => {
                             padding="normal"
                             align="left"
                           >
+                            {row.applicant?.name}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="normal"
+                            align="center"
+                          >
                             <Badge
                               badgeContent={getTextStatus(row.status)}
                               color={getColorsStatus(row.status)}
@@ -239,7 +239,7 @@ const ListCommande = () => {
                                   Gérer Offres
                                 </Button>
                               </Link>
-                              <Link href={`commande/${row.id}/details`}>
+                              {/* <Link href={`commande/${row.id}/details`}>
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"
@@ -247,7 +247,7 @@ const ListCommande = () => {
                                 >
                                   <VisibilityIcon />
                                 </IconButton>
-                              </Link>
+                              </Link> */}
                               <Link href={`commande/${row.id}/edit`}>
                                 <IconButton
                                   color="primary"
@@ -257,10 +257,21 @@ const ListCommande = () => {
                                   <Edit />
                                 </IconButton>
                               </Link>
+                              <IconButton
+                                color="warning"
+                                aria-label="Supprimer"
+                                component="span"
+                                size="small"
+                                onClick={() => {
+                                  handleClickDelete(row.id)
+                                }}
+                              >
+                                <Delete />
+                              </IconButton>
                             </BtnActionContainer>
                           </TableCell>
                         </TableRow>
-                      );
+                      )
                     })}
                   {emptyRows > 0 && (
                     <TableRow
@@ -289,11 +300,11 @@ const ListCommande = () => {
         </Box>
       </SectionTable>
     </Container>
-  );
-};
+  )
+}
 
-export default ListCommande;
+export default ListCommande
 
-export const BtnActionContainer = styled(Stack)(({ theme }) => ({}));
-export const SectionNavigation = styled(Stack)(({ theme }) => ({}));
-const SectionTable = styled("div")(({ theme }) => ({}));
+export const BtnActionContainer = styled(Stack)(({ theme }) => ({}))
+export const SectionNavigation = styled(Stack)(({ theme }) => ({}))
+const SectionTable = styled('div')(({ theme }) => ({}))

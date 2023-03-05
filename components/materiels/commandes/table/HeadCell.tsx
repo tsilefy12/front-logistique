@@ -1,13 +1,13 @@
 import { TableCell, TableSortLabel } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { OrderEquipmentHeadCell } from "./orderEquipment.interface";
+import { OrderEquipementHeadCell } from "./orderEquipement.interface";
 
 const HeadCell = ({
   headCell,
   children,
 }: {
-  headCell: OrderEquipmentHeadCell;
+  headCell: OrderEquipementHeadCell;
   [key: string]: any;
 }) => {
   const [order, setOrder] = React.useState<any>("asc");

@@ -29,6 +29,7 @@ import OSSelectField from "../../../shared/select/OSSelectField";
 import OSDatePicker from "../../../shared/date/OSDatePicker";
 import { useRouter } from "next/router";
 import { editOrderEquipment } from "../../../../redux/features/orderEquipment";
+// import { cancelEdit } from "../../../../redux/features/orderEquipment/orderEquipmentSlice";
 
 const FormCommande = () => {
   const [demandeur, setDemandeur] = React.useState("");
@@ -92,17 +93,21 @@ const FormCommande = () => {
           isEditing
             ? orderEquipment
             : {
-                designation: "",
-                quantity: 0,
-                deadlineOfReception: "",
-                numberOfAuthorisedOffersPossible: 0,
-                applicantId: "",
-                status: "",
+                designation: isEditing ? orderEquipment?.designation : "",
+                reason: isEditing ? orderEquipment?.reason : "",
+                deadlineOfReception: isEditing
+                  ? orderEquipment?.deadlineOfReception
+                  : new Date(),
+                numberOfAuthorisedOffersPossible: isEditing
+                  ? orderEquipment?.numberOfAuthorisedOffersPossible
+                  : "",
+                applicantId: isEditing ? orderEquipment?.applicantId : "",
+                status: isEditing ? orderEquipment?.status : "En_attent",
               }
         }
         validationSchema={Yup.object({
           designation: Yup.string().required("Champ obligatoire"),
-          quantity: Yup.number().required("Champ obligatoire"),
+          reason: Yup.string().required("Champ obligatoire"),
           applicantId: Yup.string().required("Champ obligatoire"),
         })}
         onSubmit={async (value: any, action) => {
@@ -110,114 +115,60 @@ const FormCommande = () => {
           action.resetForm();
         }}
       >
-        {(formikProps) => (
-          <Form>
-            <NavigationContainer>
-              <SectionNavigation>
-                <Stack flexDirection={"row"}>
-                  <Link href="/materiels/commande">
+        {(formikProps) => {
+          return (
+            <Form>
+              <NavigationContainer>
+                <SectionNavigation>
+                  <Stack flexDirection={"row"}>
+                    <Link href="/materiels/commande">
+                      <Button
+                        color="info"
+                        variant="text"
+                        startIcon={<ArrowBack />}
+                        onClick={() => {
+                          formikProps.resetForm();
+                          dispatch(cancelEdit());
+                        }}
+                      >
+                        Retour
+                      </Button>
+                    </Link>
                     <Button
-                      color="info"
-                      variant="text"
-                      startIcon={<ArrowBack />}
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      startIcon={<Check />}
+                      sx={{ marginInline: 3 }}
+                      type="submit"
                     >
-                      Retour
+                      Enregistrer
                     </Button>
-                  </Link>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    startIcon={<Check />}
-                    sx={{ marginInline: 3 }}
-                    type="submit"
-                  >
-                    Enregistrer
-                  </Button>
-                  <Button
-                    variant="text"
-                    color="warning"
-                    size="small"
-                    type="reset"
-                    startIcon={<Close />}
-                  >
-                    Annuler
-                  </Button>
-                </Stack>
-                <Typography variant="h4">Créer(modifier) commande</Typography>
-              </SectionNavigation>
-              <Divider />
-            </NavigationContainer>
-            <FormContainer spacing={2}>
-              <OSSelectField
-                id="applicantId"
-                label="Demandeur"
-                name="applicantId"
-                options={employeList}
-                dataKey={"name"}
-                valueKey="id"
-              />
-
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">GRANT</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={grant}
-                  label="GRANT"
-                  onChange={ifChange}
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-              <OSTextField
-                id="designation"
-                label="Designation"
-                name="designation"
-              />
-
-              <Stack
-                direction="row"
-                justifyContent="flex-start"
-                alignItems="flex-start"
-                spacing={2}
-              >
-                <FormControl fullWidth>
-                  <OSTextField
-                    id="numberOfAuthorisedOffersPossible"
-                    label="Nombre d'offres autorisé possible pour une commande"
-                    name="numberOfAuthorisedOffersPossible"
-                    type="number"
-                  />
-                </FormControl>
-                <FormControl fullWidth>
-                  <OSSelectField
-                    id="status"
-                    label="Status"
-                    name="status"
-                    options={status}
-                    dataKey={"value"}
-                    valueKey="id"
-                  />
-                </FormControl>
-              </Stack>
-
-              <Stack
-                direction="row"
-                justifyContent="flex-start"
-                alignItems="flex-start"
-                spacing={2}
-              >
-                <FormControl fullWidth>
-                  <OSTextField
-                    id="quantity"
-                    label="Quantité"
-                    name="quantity"
-                    type="number"
-                  />
-                </FormControl>
+                    <Button
+                      variant="text"
+                      color="warning"
+                      size="small"
+                      type="reset"
+                      startIcon={<Close />}
+                      onClick={() => {
+                        formikProps.resetForm();
+                        dispatch(cancelEdit());
+                      }}
+                    >
+                      Annuler
+                    </Button>
+                  </Stack>
+                  <Typography variant="h4">Créer(modifier) commande</Typography>
+                </SectionNavigation>
+                <Divider />
+              </NavigationContainer>
+              <FormContainer spacing={2}>
+                <OSTextField
+                  id="designation"
+                  label="Designation"
+                  name="designation"
+                />
+                <OSTextField id="reason" label="Raison" name="reason" />
                 <OSDatePicker
                   fullWidth
                   label="Deadline de réceptionate"
@@ -226,10 +177,43 @@ const FormCommande = () => {
                     formikProps.setFieldValue("deadlineOfReception", value)
                   }
                 />
-              </Stack>
-            </FormContainer>
-          </Form>
-        )}
+                <Stack
+                  direction="row"
+                  justifyContent="flex-start"
+                  alignItems="flex-start"
+                  spacing={2}
+                >
+                  <FormControl fullWidth>
+                    <OSTextField
+                      id="numberOfAuthorisedOffersPossible"
+                      label="Nombre d'offres autorisé possible pour une commande"
+                      name="numberOfAuthorisedOffersPossible"
+                      type="number"
+                    />
+                  </FormControl>
+                  <FormControl fullWidth>
+                    <OSSelectField
+                      id="status"
+                      label="Status"
+                      name="status"
+                      options={status}
+                      dataKey={"value"}
+                      valueKey="id"
+                    />
+                  </FormControl>
+                </Stack>
+                <OSSelectField
+                  id="applicantId"
+                  label="Demandeur"
+                  name="applicantId"
+                  options={employeList}
+                  dataKey={"name"}
+                  valueKey="id"
+                />
+              </FormContainer>
+            </Form>
+          );
+        }}
       </Formik>
     </Container>
   );

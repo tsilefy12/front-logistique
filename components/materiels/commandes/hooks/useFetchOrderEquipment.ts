@@ -16,19 +16,47 @@ const useFetchOrderEquipement = () => {
               mode: "insensitive",
             },
           },
-          {
-            status: {
-              contains: router.query.search,
-              mode: "insensitive",
-            },
-          },
         ],
       };
     }
     if (router.query.orderBy && router.query.order) {
-      args.orderBy = {
-        [<string>router.query.orderBy]: router.query.order,
-      };
+      switch (router.query.orderBy) {
+        case "Designation":
+          args.orderBy = {
+            designation: router.query.order,
+          };
+          break;
+
+        case "Raison":
+          args.orderBy = {
+            reason: router.query.order,
+          };
+          break;
+
+        case "deadline de Reception":
+          args.orderBy = {
+            deadlineOfReception: router.query.order,
+          };
+          break;
+
+        case "Demandeur":
+          args.orderBy = {
+            applicantId: router.query.order,
+          };
+          break;
+
+        case "Status":
+          args.orderBy = {
+            status: router.query.order,
+          };
+          break;
+
+        default:
+          args.orderBy = {
+            [<string>router.query.orderBy]: router.query.order,
+          };
+          break;
+      }
     }
     dispatch(getOrderEquipmentList({ args }));
   };

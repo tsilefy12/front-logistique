@@ -2,8 +2,10 @@ import React from "react";
 import BackOfficeLayout from "../../../../layouts/backOffice";
 import Head from "next/head";
 import { Container } from "@mui/material";
-import CreationBonCommande from "../../../../components/materiels/bon_de_commande/creer/CreationBonCommande";
 import useBasePath from "../../../../hooks/useBasePath";
+import CreationBonCommande from "../../../../components/materiels/orderForm/add/CreationBonCommande";
+
+
 
 const CreateBonCommande = () => {
 	const basePath = useBasePath();

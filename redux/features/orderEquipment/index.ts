@@ -5,3 +5,4 @@ export { createOrderEquipment } from "./useCase/createOrderEquipment";
 export { updateOrderEquipment } from "./useCase/updateOrderEquipment";
 export { deleteOrderEquipment } from "./useCase/deleteOrderEquipment";
 export { editOrderEquipment } from "./useCase/editOrderEquipment";
+export { getEmployee } from "./useCase/getEmployee";

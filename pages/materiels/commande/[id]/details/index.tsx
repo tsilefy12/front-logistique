@@ -2,8 +2,8 @@ import React from "react";
 import BackOfficeLayout from "../../../../../layouts/backOffice";
 import Head from "next/head";
 import { Container } from "@mui/material";
-import ListFormAfficherCommande from "../../../../../components/materiels/commandes/details/ListCommande";
 import useBasePath from "../../../../../hooks/useBasePath";
+import DetailsOrderEquipement from "../../../../../components/materiels/commandes/[id]";
 
 const DetailCommande = () => {
 	const basePath = useBasePath();
@@ -15,7 +15,7 @@ const DetailCommande = () => {
 				<link rel="icon" href={`${basePath}/favicon.ico`} />
 			</Head>
 			<Container maxWidth="xl">
-				<ListFormAfficherCommande />
+				<DetailsOrderEquipement />
 			</Container>
 		</BackOfficeLayout>
 	);

@@ -1,7 +1,7 @@
 export interface OrderEquipmentItem {
   id?: string;
   designation?: string;
-  quantity?: number;
+  reason?: string;
   deadlineOfReception?: string;
   numberOfAuthorisedOffersPossible?: number;
   applicantId?: string;
