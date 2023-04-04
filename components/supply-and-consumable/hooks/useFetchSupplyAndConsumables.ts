@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
-import { getArticls } from "../../../redux/features/supply-and-consumable";
+import { getSuplyAndConsumableList } from "../../../redux/features/supply-and-consumable";
 
-const useFetchArticls = () => {
+const useFetchSuplyAndConsumableList = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -60,8 +60,8 @@ const useFetchArticls = () => {
           break;
       }
     }
-    await dispatch(getArticls({ args }));
+    await dispatch(getSuplyAndConsumableList({ args }));
   };
 };
 
-export default useFetchArticls;
+export default useFetchSuplyAndConsumableList;

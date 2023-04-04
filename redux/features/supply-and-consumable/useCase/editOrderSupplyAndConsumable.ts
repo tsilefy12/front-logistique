@@ -2,16 +2,15 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axios } from "../../../../lib/axios";
 
 /**
- * @param data : { id: string } : the id of the article to get
+ * @param data
  * @param thunkAPI
  * @returns {Promise<void>}
- * @constructor
  * @memberof useCases
- * @description : This function is used to get one article
+ * @description : This function is used to get suplyAndconsumable data
  */
-export const getSuplyAndConsumable = createAsyncThunk(
-  "suplyAndConsumable/getSuplyAndConsumable",
-  async (data: { id: string; args?: any }, thunkAPI) => {
+export const editSuplyAndConsumable = createAsyncThunk(
+  "suplyAndConsumable/editSuplyAndConsumable",
+  async (data: { id: string }, thunkAPI) => {
     try {
       const response = await axios.get(
         `/logistique/supply-and-consumable/${data.id}`

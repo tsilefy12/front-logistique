@@ -46,13 +46,13 @@ const menu = [
   {
     id: 2,
     name: "Fournitures et Consomables",
-    link: "/fournitures_et_consommables",
+    link: "",
     icon: "edit_note",
     items: [
       {
         id: 21,
-        name: "Article",
-        link: "/fournitures_et_consommables/article",
+        name: "Fiche de Stock",
+        link: "/fournitures_et_consommables/fiche_de_stock",
         icon: "",
       },
       {

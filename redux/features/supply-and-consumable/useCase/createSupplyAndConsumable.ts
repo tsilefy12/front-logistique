@@ -1,35 +1,38 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axios } from "../../../../lib/axios";
 import { enqueueSnackbar } from "../../notification/notificationSlice";
-import { ArticlItem } from "../supply-and-consumable.interface";
+import { SuplyAndConsumableItem } from "../supply-and-consumable.interface";
 
 /**
- * create a new article
- * @param articlItem
+ * create a new Fiche de stock
+ * @param SuplyAndConsumableItem
  * @param thunkAPI
  * @returns {Promise<void>}
  * @memberof useCase
- * @description :this function is used to create a new article
+ * @description :this function is used to create a new fiche de stock
  */
 
-export const createArticl = createAsyncThunk(
-  "articl/createArticl",
-  async (articl: ArticlItem, thunkAPI) => {
+export const createSuplyAndConsumable = createAsyncThunk(
+  "suplyAndConsumble/createSuplyAndConsumable",
+  async (suplyAndConsumable: SuplyAndConsumableItem, thunkAPI) => {
     try {
-      const response = await axios.post("/logistique/supply-and-consumable", articl);
+      const response = await axios.post(
+        "/logistique/supply-and-consumable",
+        suplyAndConsumable
+      );
       thunkAPI.dispatch(
         enqueueSnackbar({
-          message: "article créé avec succès",
+          message: "Fiche de Stock créé avec succès",
           options: { variant: "success" },
         })
       );
       return response.data;
     } catch (error: any) {
       if (error.response) {
-        if(error.response.data.statusCode== 409) {
+        if (error.response.data.statusCode == 409) {
           thunkAPI.dispatch(
             enqueueSnackbar({
-              message: "Cet article a déjà été enregistré",
+              message: "Cet Fiche de Stock a déjà été enregistré",
               options: { variant: "error" },
             })
           );

@@ -3,9 +3,9 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import BackOfficeLayout from "../../../../layouts/backOffice";
 import useBasePath from "../../../../hooks/useBasePath";
-import ArticleForm from "../../../../components/supply-and-consumable/add/SupplyAndConsumableForm";
+import SuplyAndConsumableForm from "../../../../components/supply-and-consumable/add/SupplyAndConsumableForm";
 
-const FormArticlePage: NextPage = () => {
+const FormSuplyAndConsumablePage: NextPage = () => {
   const basePath = useBasePath();
   return (
     <BackOfficeLayout>
@@ -15,10 +15,10 @@ const FormArticlePage: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <ArticleForm />
+        <SuplyAndConsumableForm />
       </Container>
     </BackOfficeLayout>
   );
 };
 
-export default FormArticlePage;
+export default FormSuplyAndConsumablePage;
