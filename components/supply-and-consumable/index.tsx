@@ -150,7 +150,9 @@ export default function SuplyAndCosumableList() {
                               direction="row"
                               justifyContent="right"
                             >
-                              <Link href="/fournitures_et_consommables/fiche_de_stock/1/entre_sortie">
+                              <Link
+                                href={`/fournitures_et_consommables/fiche_de_stock/${row.id}/entre_sortie`}
+                              >
                                 <Button
                                   sx={{ mr: 1 }}
                                   color="accent"

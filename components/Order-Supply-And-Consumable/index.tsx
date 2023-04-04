@@ -38,6 +38,9 @@ export default function ConsumableList() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  // const { suplyAndConsumable } = useAppSelector(
+  //   (state) => state.suplyAndConsumable
+  // );
 
   const router = useRouter();
 
@@ -143,12 +146,12 @@ export default function ConsumableList() {
                 <TableBody>
                   {consumables
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row: ConsumableItem | any, index) => {
+                    .map((row: ConsumableItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (
                         <TableRow hover tabIndex={-1} key={row.id}>
                           <TableCell component="th" id={labelId} align="left">
-                            {row.item}
+                            {row?.item}
                           </TableCell>
 
                           <TableCell align="left">

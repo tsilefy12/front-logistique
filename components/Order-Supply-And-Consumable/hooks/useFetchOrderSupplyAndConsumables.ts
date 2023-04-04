@@ -12,7 +12,7 @@ const useFetchConsumables = () => {
       args.where = {
         OR: [
           {
-            item:{
+            item: {
               contains: router.query.search,
               mode: "insensitive",
             },

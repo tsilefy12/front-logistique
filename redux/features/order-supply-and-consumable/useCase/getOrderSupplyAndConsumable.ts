@@ -2,6 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axios } from "../../../../lib/axios";
 import { getEmployee } from "./getEmployee";
 import { ConsumableItem } from "../OrderSupplyAndConsumable.interface";
+import { getSuplyAndConsumable } from "./getSupplyAndConsumable";
+// import { getSuplyAndConsumable } from "../../supply-and-consumable";
 /**
  * @param data : { id: string } : the id of the consumable to get
  * @param thunkAPI
@@ -17,6 +19,10 @@ export const getConsumable = createAsyncThunk(
       const response = await axios.get(
         `/logistique/order-supply-and-consumable/${data.id}`
       );
+      // const suplyAndConsumableId = response?.data?.item;
+      // const detailSuplyAndConsumable = await thunkAPI
+      //   .dispatch(getSuplyAndConsumable({ suplyAndConsumableId }))
+      //   .unwrap();
       const employeeId = response?.data?.applicantId;
       const detailEmployee = await thunkAPI
         .dispatch(getEmployee({ employeeId }))
@@ -30,6 +36,7 @@ export const getConsumable = createAsyncThunk(
         deliveryDate: response.data?.deliveryDate,
         status: response.data?.status,
         applicant: detailEmployee,
+        // item: detailSuplyAndConsumable,
       };
       return oneCons;
     } catch (error: any) {

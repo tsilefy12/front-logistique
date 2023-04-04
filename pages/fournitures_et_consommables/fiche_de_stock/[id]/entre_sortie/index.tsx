@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import BackOfficeLayout from "../../../../../layouts/backOffice";
 import useBasePath from "../../../../../hooks/useBasePath";
-import FomLogEntreSortie from "../../../../../components/fournitures_et_consommables/article/id/entre_sortie";
+import FormLogEntreSortie from "../../../../../components/supply-and-consumable/[id]/registreStock";
 
 const CreationFournitureConsommable: NextPage = () => {
   const basePath = useBasePath();
@@ -17,7 +17,7 @@ const CreationFournitureConsommable: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <FomLogEntreSortie />
+        <FormLogEntreSortie />
       </Container>
     </BackOfficeLayout>
   );

@@ -5,7 +5,7 @@ export const consumableHeadCells: readonly HeadCell[] = [
     id: "item",
     numeric: false,
     disablePadding: false,
-    label: "Article",
+    label: "Fiche de stock",
   },
   {
     id: "applicantId",
