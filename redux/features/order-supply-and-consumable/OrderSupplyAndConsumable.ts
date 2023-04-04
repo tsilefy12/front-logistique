@@ -7,12 +7,13 @@ import { getConsumables } from "./useCase/getOrderSupplyAndConsumables";
 import { updateConsumable } from "./useCase/updateOrderSupplyAndConsumable";
 import { getEmployees } from "./useCase/getEmployees";
 import { editConsumable } from "./useCase/editOrderSupplyAndConsumable";
-// import { getEmployee } from "./useCase/getEmployee";
+// import { getSuplyAndConsumableList } from "./useCase/getSupplyAndConsumables";
 
 const consumableInitialState: ConsumableInitialState = {
   consumables: [],
   consumable: {},
   employeeList: [],
+  // suplyAndConsumableList: [],
   isEditing: false,
   loading: false,
   error: null,
@@ -92,7 +93,7 @@ export const consumableSlice = createSlice({
       state.error = action.error;
     },
 
-    // edit vendor
+    // edit consumable
     [editConsumable.pending.type]: (state) => {
       state.loading = true;
     },
@@ -118,6 +119,20 @@ export const consumableSlice = createSlice({
       state.loading = false;
       state.error = action.error;
     },
+
+    // get SuplyAndConsumable
+
+    // [getSuplyAndConsumableList.pending.type]: (state) => {
+    //   state.loading = true;
+    // },
+    // [getSuplyAndConsumableList.fulfilled.type]: (state, action) => {
+    //   state.loading = false;
+    //   state.suplyAndConsumableList = action.payload;
+    // },
+    // [getSuplyAndConsumableList.rejected.type]: (state, action) => {
+    //   state.loading = false;
+    //   state.error = action.error;
+    // },
 
     //
   },

@@ -17,6 +17,7 @@ import { detenteurSlice } from "./features/detenteur/detenteurSlice";
 import { passengerSlice } from "./features/passenger/passengerSlice";
 import { orderFormSlice } from "./features/order-form/orderFormSlice";
 import { suplyAndConsumableSlice } from "./features/supply-and-consumable/supply-and-consumable";
+import { logsuplyAndConsumableSlice } from "./features/logSuplyAndConsumable/log-supply-and-consumableSlice";
 
 export const store = configureStore({
   reducer: {
@@ -38,6 +39,7 @@ export const store = configureStore({
     detenteur: detenteurSlice.reducer,
     passenger: passengerSlice.reducer,
     orderForm: orderFormSlice.reducer,
+    logSuplyAndConsumable: logsuplyAndConsumableSlice.reducer,
   },
 });
 

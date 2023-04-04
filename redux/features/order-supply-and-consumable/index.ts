@@ -6,3 +6,5 @@ export { updateConsumable } from "./useCase/updateOrderSupplyAndConsumable";
 export { editConsumable } from "./useCase/editOrderSupplyAndConsumable";
 export { getEmployees } from "./useCase/getEmployees";
 export { getEmployee } from "./useCase/getEmployee";
+// export { getSuplyAndConsumable } from "./useCase/getSupplyAndConsumable";
+// export { getSuplyAndConsumableList } from "./useCase/getSupplyAndConsumables";

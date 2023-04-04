@@ -23,32 +23,52 @@ import {
 } from "../../../redux/features/order-supply-and-consumable";
 import useFetchEmployes from "../hooks/useFetchEmployees";
 import useFetchConsumables from "../hooks/useFetchOrderSupplyAndConsumables";
+// import useFetchSuplysAndConsumableList from "../hooks/useFetchSuplyAndConsumableList";
+// import useFetchSuplyAndConsumableList from "../../supply-and-consumable/hooks/useFetchSupplyAndConsumables";
 
 export default function ConsumableForm() {
   const dispatch = useAppDispatch();
   const route = useRouter();
   const fetchConsumables = useFetchConsumables();
   const fetchEmployees = useFetchEmployes();
+  // const { suplyAndConsumableList } = useAppSelector(
+  //   (state) => state.suplyAndConsumable
+  // );
+  // const fetchSuplyAndConsumable = useFetchSuplysAndConsumableList();
 
   useEffect(() => {
     fetchEmployees();
     fetchConsumables();
+    // fetchSuplyAndConsumable();
   }, []);
 
-  const listStatus = [
-    { id: "PENDING", name: "PENDING" },
-    { id: "APPROVEDBYMANAGER", name: "APPROVEDBYMANAGER" },
-    { id: "APPROVED", name: "APPROVED" },
-    { id: "CANCELLED", name: "CANCELLED" },
-    { id: "REJECTED", name: "REJECTED" },
-  ];
+  // const listStatus = [
+  //   { id: "PENDING", name: "PENDING" },
+  //   { id: "APPROVEDBYMANAGER", name: "APPROVEDBYMANAGER" },
+  //   { id: "APPROVED", name: "APPROVED" },
+  //   { id: "CANCELLED", name: "CANCELLED" },
+  //   { id: "REJECTED", name: "REJECTED" },
+  // ];
+  // const seuil = [
+  //   { id: "1", name: "1" },
+  //   { id: "2", name: "2" },
+  //   { id: "3", name: "3" },
+  //   { id: "4", name: "4" },
+  //   { id: "5", name: "5" },
+  //   { id: "10", name: "10" },
+  //   { id: "20", name: "20" },
+  //   { id: "30", name: "30" },
+  //   { id: "50", name: "50" },
+  // ];
 
-  const { isEditing, consumable, employeeList } = useAppSelector((state) => state.consumable);
-
-
+  const {
+    isEditing,
+    consumable,
+    employeeList,
+    //  suplyAndConsumableList
+  } = useAppSelector((state) => state.consumable);
 
   // const { linkedEmployee } = useAppSelector((state) => state.auth);
-  
 
   const handleSubmit = async (values: any) => {
     values.deliveryDate = new Date(values?.deliveryDate).toISOString();
@@ -158,6 +178,14 @@ export default function ConsumableForm() {
 
               <FormContainer spacing={2}>
                 <OSTextField id="outlined-basic" label="Article" name="item" />
+                {/* <OSSelectField
+                  id="outlined-basic"
+                  label="Fiche de Stock"
+                  name="item"
+                  options={suplyAndConsumableList}
+                  dataKey="designation"
+                  valueKey="id"
+                /> */}
                 <OSSelectField
                   id="outlined-basic"
                   label="Demandeur"
@@ -188,6 +216,15 @@ export default function ConsumableForm() {
                   }
                 />
                 <OSTextField id="outlined-basic" label="Statut" name="status" />
+                {/* <OSSelectField
+                  id="outlined-basic"
+                  label="Seuil"
+                  name="status"
+                  options={seuil}
+                  dataKey="name"
+                  valueKey="id"
+                  // type="string"
+                /> */}
               </FormContainer>
             </Form>
           );
