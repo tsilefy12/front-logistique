@@ -11,37 +11,37 @@ import Check from "@mui/icons-material/Check";
 import Close from "@mui/icons-material/Close";
 import { styled } from "@mui/material";
 import { Form, Formik } from "formik";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import * as Yup from "yup";
 import OSTextField from "../../shared/input copy/OSTextField";
+import {
+  createSuplyAndConsumable,
+  updateSuplyAndConsumable,
+} from "../../../redux/features/supply-and-consumable";
 import { cancelEdit } from "../../../redux/features/supply-and-consumable/supply-and-consumable";
-import { createArticl, updateArticl } from "../../../redux/features/supply-and-consumable";
 
-export default function ArticleForm() {
+export default function SuplyAndConsumableForm() {
   const route = useRouter();
 
   const dispatch = useAppDispatch();
 
-  const { isEditing, articl } = useAppSelector(
-    (state) => state.articl
+  const { isEditing, suplyAndConsumable } = useAppSelector(
+    (state) => state.suplyAndConsumable
   );
 
   const handleSubmit = async (values: any) => {
     try {
       if (isEditing) {
         await dispatch(
-          updateArticl({
-            id: articl.id!,
-            articl: values,
+          updateSuplyAndConsumable({
+            id: suplyAndConsumable.id!,
+            suplyAndConsumable: values,
           })
         );
       } else {
-        await dispatch(createArticl(values));
+        await dispatch(createSuplyAndConsumable(values));
       }
-      route.push("/fournitures_et_consommables/article");
+      route.push("/fournitures_et_consommables/fiche_de_stock");
     } catch (error) {
       console.log("error", error);
     }
@@ -53,12 +53,12 @@ export default function ArticleForm() {
         enableReinitialize
         initialValues={
           isEditing
-            ? articl
+            ? suplyAndConsumable
             : {
-                designation: isEditing ? articl?.designation : "",
-                quantity: isEditing ? articl?.quantity : "",
-                unitPrice: isEditing ? articl?.unitPrice : "",
-                SKU: isEditing ? articl?.SKU : "",
+                designation: isEditing ? suplyAndConsumable?.designation : "",
+                quantity: isEditing ? suplyAndConsumable?.quantity : "",
+                unitPrice: isEditing ? suplyAndConsumable?.unitPrice : "",
+                SKU: isEditing ? suplyAndConsumable?.SKU : "",
               }
         }
         validationSchema={Yup.object({
@@ -69,8 +69,6 @@ export default function ArticleForm() {
         })}
         onSubmit={(value: any, action: any) => {
           handleSubmit(value);
-          // console.log(value);
-          // alert("test");
           action.resetForm();
         }}
       >
@@ -80,7 +78,7 @@ export default function ArticleForm() {
               <NavigationContainer>
                 <SectionNavigation>
                   <Stack flexDirection={"row"}>
-                    <Link href="/fournitures_et_consommables/article">
+                    <Link href="/fournitures_et_consommables/fiche_de_stock">
                       <Button
                         color="info"
                         variant="text"
@@ -119,7 +117,7 @@ export default function ArticleForm() {
                     </Button>
                   </Stack>
                   <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"} article
+                    {isEditing ? "Modifier" : "Ajouter"} Fiche de Stock
                   </Typography>
                 </SectionNavigation>
                 <Divider />

@@ -3,30 +3,32 @@ import { enqueueSnackbar } from "../../notification/notificationSlice";
 import { axios } from "../../../../lib/axios";
 
 /**
- * delete a article
+ * delete a suplyAndConsumable
  * @param data
  * @param thunkAPI
  * @returns {Promise<void>}
  * @memberof useCases
- * @description : This function is used to delete a article
+ * @description : This function is used to delete a suplyAndConsumable
  */
-export const deleteArticl = createAsyncThunk(
-	"articl/deleteArticl",
-	async (data: { id: string }, thunkAPI) => {
-		try {
-			const response = await axios.delete(`/logistique/supply-and-consumable/${data.id}`);
-			thunkAPI.dispatch(
-				enqueueSnackbar({
-					message: "article supprimé avec succès",
-					options: { variant: "success" },
-				})
-			);
-			return response.data;
-		} catch (error: any) {
-			if (error.response) {
-				return thunkAPI.rejectWithValue(error);
-			}
-			return error;
-		}
-	}
+export const deleteSuplyAndConsumable = createAsyncThunk(
+  "suplyAndConsumable/deleteSuplyAndConsumable",
+  async (data: { id: string }, thunkAPI) => {
+    try {
+      const response = await axios.delete(
+        `/logistique/supply-and-consumable/${data.id}`
+      );
+      thunkAPI.dispatch(
+        enqueueSnackbar({
+          message: "Fiche de Stock supprimé avec succès",
+          options: { variant: "success" },
+        })
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response) {
+        return thunkAPI.rejectWithValue(error);
+      }
+      return error;
+    }
+  }
 );

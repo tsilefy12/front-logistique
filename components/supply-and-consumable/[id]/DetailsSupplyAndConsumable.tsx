@@ -9,24 +9,23 @@ import {
 import React, { useEffect } from "react";
 import Link from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
-import { getArticl } from "../../../redux/features/supply-and-consumable";
+import { getSuplyAndConsumable } from "../../../redux/features/supply-and-consumable";
 
-const DetailsArticl = () => {
+const DetailsSuplyAndConsumable = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { id }: any = router.query;
-  const { articl } = useAppSelector((state) => state.articl);
+  const { suplyAndConsumable } = useAppSelector(
+    (state) => state.suplyAndConsumable
+  );
 
   useEffect(() => {
-    getDetailsArticl();
+    getDetailSuplyAndConsumable();
   }, [id]);
 
-  const getDetailsArticl = () => {
+  const getDetailSuplyAndConsumable = () => {
     const args: any = {
       include: {
         designation: true,
@@ -35,7 +34,7 @@ const DetailsArticl = () => {
         SKU: true,
       },
     };
-    dispatch(getArticl({ id, args }));
+    dispatch(getSuplyAndConsumable({ id, args }));
   };
 
   return (
@@ -45,17 +44,13 @@ const DetailsArticl = () => {
         justifyContent="space-between"
         sx={{ mb: 2 }}
       >
-        <Link href="/fournitures_et_consommables/article">
-          <Button
-            color="info"
-            variant="text"
-            startIcon={<ArrowBackIcon />}
-          >
+        <Link href="/fournitures_et_consommables/fiche_de_stock">
+          <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
             Retour
           </Button>
         </Link>
         <Typography variant="h4" color="GrayText">
-          Details d'articles
+          Details Fiche de Stock
         </Typography>
       </SectionNavigation>
       <DetailsContainer>
@@ -66,7 +61,7 @@ const DetailsArticl = () => {
                 Désignation :
               </Typography>
               <Typography variant="body1" color="gray">
-                {articl.designation}
+                {suplyAndConsumable.designation}
               </Typography>
             </InfoItems>
           </Grid>
@@ -78,7 +73,7 @@ const DetailsArticl = () => {
                 Quantite :
               </Typography>
               <Typography variant="body1" color="gray">
-                {articl.quantity}
+                {suplyAndConsumable.quantity}
               </Typography>
             </InfoItems>
           </Grid>
@@ -90,7 +85,7 @@ const DetailsArticl = () => {
                 Prix Unitaire :
               </Typography>
               <Typography variant="body1" color="gray">
-                {articl.unitPrice}
+                {suplyAndConsumable.unitPrice}
               </Typography>
             </InfoItems>
           </Grid>
@@ -99,10 +94,10 @@ const DetailsArticl = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-              Unité de Gestion de Stock :
+                Unité de Gestion de Stock :
               </Typography>
               <Typography variant="body1" color="gray">
-                {articl.SKU}
+                {suplyAndConsumable.SKU}
               </Typography>
             </InfoItems>
           </Grid>
@@ -112,7 +107,7 @@ const DetailsArticl = () => {
   );
 };
 
-export default DetailsArticl;
+export default DetailsSuplyAndConsumable;
 
 export const InfoItems = styled(Stack)(({ theme }) => ({}));
 

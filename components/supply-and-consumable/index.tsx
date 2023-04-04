@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import Add from "@mui/icons-material/Add";
 import Delete from "@mui/icons-material/Delete";
-// import Edit from "@mui/icons-material/Edit";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -20,19 +19,23 @@ import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import { useConfirm } from "material-ui-confirm";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { ArticlItem } from "../../redux/features/supply-and-consumable/supply-and-consumable.interface";
-import ArticleTableHeader from "./organism/table/SupplyAndConsumableTableHeader";
 import {
   labelRowsPerPage,
   defaultLabelDisplayedRows,
 } from "../shared/table/tableFeature";
 import Visibility from "@mui/icons-material/Visibility";
-import useFetchArticls from "./hooks/useFetchSupplyAndConsumables";
-import { deleteArticl } from "../../redux/features/supply-and-consumable";
-import ArticleTableToolbar from "./organism/table/SupplyAndConsumableTableToolbar";
 import AddIcon from "@mui/icons-material/Add";
+import Edit from "@mui/icons-material/Edit";
+import useFetchSuplyAndConsumableList from "./hooks/useFetchSupplyAndConsumables";
+import {
+  deleteSuplyAndConsumable,
+  editSuplyAndConsumable,
+} from "../../redux/features/supply-and-consumable";
+import SuplyAndConsumableTableToolbar from "./organism/table/SupplyAndConsumableTableToolbar";
+import SuplyAndConsumableTableHeader from "./organism/table/SupplyAndConsumableTableHeader";
+import { SuplyAndConsumableItem } from "../../redux/features/supply-and-consumable/supply-and-consumable.interface";
 
-export default function ArticleList() {
+export default function SuplyAndCosumableList() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -43,27 +46,25 @@ export default function ArticleList() {
 
   const dispatch = useAppDispatch();
 
-  const { articls } = useAppSelector((state) => state.articl);
+  const { suplyAndConsumableList } = useAppSelector(
+    (state) => state.suplyAndConsumable
+  );
 
-  const fetchArticls = useFetchArticls();
+  const fetchSuplyAndConsumableList = useFetchSuplyAndConsumableList();
 
   React.useEffect(() => {
-    fetchArticls();
+    fetchSuplyAndConsumableList();
   }, [router.query]);
 
-  const handleClickDetail = async (id: any) => {
-    router.push(`/fournitures_et_consommables/article/${id}/details`);
+  const handleClickEdit = async (id: any) => {
+    await dispatch(editSuplyAndConsumable({ id }));
+    router.push(`/fournitures_et_consommables/fiche_de_stock/${id}/edit`);
   };
-
-  // const handleClickEdit = async (id: any) => {
-  // 	await dispatch(editVendor({ id }));
-  // 	router.push(`/fournisseurs/${id}/edit`);
-  // };
 
   const handleClickDelete = async (id: any) => {
     confirm({
-      title: "Supprimer l'article",
-      description: "Voulez-vous vraiment supprimer cet article ?",
+      title: "Supprimer Fiche de stock",
+      description: "Voulez-vous vraiment supprimer cet fiche de stock ?",
       cancellationText: "Annuler",
       confirmationText: "Supprimer",
       cancellationButtonProps: {
@@ -74,8 +75,8 @@ export default function ArticleList() {
       },
     })
       .then(async () => {
-        await dispatch(deleteArticl({ id }));
-        fetchArticls();
+        await dispatch(deleteSuplyAndConsumable({ id }));
+        fetchSuplyAndConsumableList();
       })
       .catch(() => {});
   };
@@ -93,18 +94,20 @@ export default function ArticleList() {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - articls.length) : 0;
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - suplyAndConsumableList.length)
+      : 0;
 
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
-          <Link href={"/fournitures_et_consommables/article/ajouter"}>
+          <Link href={"/fournitures_et_consommables/fiche_de_stock/ajouter"}>
             <Button variant="contained" startIcon={<Add />} size="small">
               Ajouter
             </Button>
           </Link>
-          <Typography variant="h4"> Liste des Articles </Typography>
+          <Typography variant="h4"> Fiche de Stock </Typography>
         </SectionNavigation>
         {/* <Divider /> */}
       </NavigationContainer>
@@ -112,18 +115,20 @@ export default function ArticleList() {
       <SectionTable>
         <Box sx={{ width: "100%", mb: 2 }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <ArticleTableToolbar />
+            {/* <ArticleTableToolbar /> */}
+            <SuplyAndConsumableTableToolbar />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
                 size="small"
               >
-                <ArticleTableHeader />
+                {/* <ArticleTableHeader /> */}
+                <SuplyAndConsumableTableHeader />
                 <TableBody>
-                  {articls
+                  {suplyAndConsumableList
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row: ArticlItem | any, index) => {
+                    .map((row: SuplyAndConsumableItem | any, index) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (
                         <TableRow hover tabIndex={-1} key={row.id}>
@@ -145,19 +150,19 @@ export default function ArticleList() {
                               direction="row"
                               justifyContent="right"
                             >
-                              <Link href="/fournitures_et_consommables/article/1/entre_sortie">
-                              <Button
-                                sx={{ mr: 1 }}
-                                color="accent"
-                                variant="outlined"
-                                size="small"
-                              >
-                                <AddIcon />
-                                Gerer
-                              </Button>
+                              <Link href="/fournitures_et_consommables/fiche_de_stock/1/entre_sortie">
+                                <Button
+                                  sx={{ mr: 1 }}
+                                  color="accent"
+                                  variant="outlined"
+                                  size="small"
+                                >
+                                  <AddIcon />
+                                  Gerer
+                                </Button>
                               </Link>
                               <Link
-                                href={`/fournitures_et_consommables/article/${row.id}/details`}
+                                href={`/fournitures_et_consommables/fiche_de_stock/${row.id}/details`}
                               >
                                 <IconButton
                                   color="accent"
@@ -168,6 +173,18 @@ export default function ArticleList() {
                                   <Visibility />
                                 </IconButton>
                               </Link>
+
+                              <IconButton
+                                color="primary"
+                                aria-label="Modifier"
+                                component="span"
+                                size="small"
+                                onClick={() => {
+                                  handleClickEdit(row.id);
+                                }}
+                              >
+                                <Edit />
+                              </IconButton>
                               <IconButton
                                 color="warning"
                                 aria-label="Supprimer"
@@ -199,7 +216,7 @@ export default function ArticleList() {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={articls.length}
+              count={suplyAndConsumableList.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

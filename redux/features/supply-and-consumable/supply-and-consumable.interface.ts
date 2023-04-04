@@ -1,15 +1,15 @@
-export interface ArticlItem{
-    id?: string;
-    designation?: string;
-    quantity?: number;
-    unitPrice?: number;
-    SKU?: string;
+export interface SuplyAndConsumableItem {
+  id?: string;
+  designation?: string;
+  quantity?: number;
+  unitPrice?: number;
+  SKU?: string;
 }
 
-export interface ArticlInitialState {
-    articls: ArticlItem[];
-    articl: ArticlItem;
-    isEditing: boolean;
-    loading: boolean;
-    [key: string]: any;
+export interface SuplyAndConsumableInitialState {
+  suplyAndConsumableList: SuplyAndConsumableItem[];
+  suplyAndConsumable: SuplyAndConsumableItem;
+  isEditing: boolean;
+  loading: boolean;
+  [key: string]: any;
 }
