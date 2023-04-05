@@ -6,37 +6,37 @@ const menu = [
     icon: "inventory_2",
     items: [
       {
-        id: 10,
+        id: 11,
         name: "Commande",
         link: "/materiels/commande",
         icon: "",
       },
       {
-        id: 11,
+        id: 12,
         name: "Mes commandes",
         link: "/materiels/mes_commandes",
         icon: "",
       },
       {
-        id: 12,
+        id: 13,
         name: "Bon de commande",
         link: "/materiels/bon_de_commande",
         icon: "",
       },
       {
-        id: 13,
+        id: 14,
         name: "Liste des materiels",
         link: "/materiels/informatiques",
         icon: "",
       },
       {
-        id: 14,
+        id: 15,
         name: "Stock",
         link: "/materiels/stock",
         icon: "",
       },
       {
-        id: 15,
+        id: 16,
         name: "Fiche détention materielle",
         link: "/materiels/detenteur",
         icon: "",

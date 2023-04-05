@@ -18,6 +18,7 @@ import { passengerSlice } from "./features/passenger/passengerSlice";
 import { orderFormSlice } from "./features/order-form/orderFormSlice";
 import { suplyAndConsumableSlice } from "./features/supply-and-consumable/supply-and-consumable";
 import { logsuplyAndConsumableSlice } from "./features/logSuplyAndConsumable/log-supply-and-consumableSlice";
+import { orderEquipmentItemSlice } from "./features/OrderEquipmentItem/orderEquipmentItemSlice";
 
 export const store = configureStore({
   reducer: {
@@ -40,6 +41,7 @@ export const store = configureStore({
     passenger: passengerSlice.reducer,
     orderForm: orderFormSlice.reducer,
     logSuplyAndConsumable: logsuplyAndConsumableSlice.reducer,
+    orderEquipmentItem: orderEquipmentItemSlice.reducer,
   },
 });
 

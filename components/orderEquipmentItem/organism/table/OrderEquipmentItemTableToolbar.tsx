@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Toolbar from "@mui/material/Toolbar";
-import { Stack, TextField, Typography } from "@mui/material";
-import { TableLoading } from "../../../shared/loading";
-import { useAppSelector } from "../../../../hooks/reduxHooks";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
+import { useAppSelector } from "../../../../hooks/reduxHooks";
+import { TableLoading } from "../../../shared/loading";
 import { debounce } from "lodash";
 
-const OrderEquipementTableToolbar = () => {
-  const { loading } = useAppSelector((state) => state.orderEquipment);
-  const [key, setKey] = useState<any>("");
+const OrderEquipmentItemTableToolbar = () => {
+  const { loading } = useAppSelector((state) => state.orderEquipmentItem);
+
+  const [key, setKey] = React.useState<any>("");
+
   const router = useRouter();
 
-  // initial search input value
-  useEffect(() => {
+  // initialisation du champ de recherche
+  React.useEffect(() => {
     if (router?.query?.search) {
       setKey(router.query.search);
     }
@@ -26,14 +30,15 @@ const OrderEquipementTableToolbar = () => {
     });
   };
 
-  const deboncedSearch = React.useCallback(debounce(search, 300), [
+  const debouncedSearch = React.useCallback(debounce(search, 300), [
     router.query,
   ]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKey(event.target.value);
-    deboncedSearch(event.target.value);
+    debouncedSearch(event.target.value);
   };
+
   return (
     <>
       <Toolbar
@@ -69,4 +74,4 @@ const OrderEquipementTableToolbar = () => {
   );
 };
 
-export default OrderEquipementTableToolbar;
+export default OrderEquipmentItemTableToolbar;
