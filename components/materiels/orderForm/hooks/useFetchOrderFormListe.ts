@@ -2,8 +2,6 @@ import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { getOrderFormListe } from "../../../../redux/features/order-form";
 
-
-
 const useFetchOrderFormListe = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -19,7 +17,25 @@ const useFetchOrderFormListe = () => {
               mode: "insensitive",
             },
           },
-        ]
+          {
+            number: {
+              contains: router.query.search,
+              mode: "insensitive",
+            },
+          },
+          {
+            vendor: {
+              OR: [
+                {
+                  name: {
+                    contains: router.query.search,
+                    mode: "insensitive",
+                  },
+                },
+              ],
+            },
+          },
+        ],
       };
     }
 
@@ -39,7 +55,7 @@ const useFetchOrderFormListe = () => {
       }
     }
     args.include = {
-      vendor:true,
+      vendor: true,
     };
     await dispatch(getOrderFormListe({ args }));
   };
