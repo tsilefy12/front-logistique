@@ -229,7 +229,8 @@ const ListCommande = () => {
                               direction="row"
                               justifyContent="center"
                             >
-                              <Link href="commande/1/offre">
+                              <Link href="/materiels/commande/$/offre">
+                                {/* <Link href={`commande/${row.id}/offre`}> */}
                                 <Button
                                   variant="outlined"
                                   size="small"

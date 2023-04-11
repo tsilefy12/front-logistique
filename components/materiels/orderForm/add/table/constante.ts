@@ -1,17 +1,22 @@
-function createData(
-    id: string,
-    grant: string,
-    poste: number,
-    designation: string,
-    prix_unitaire: number,
-    quanite: number,
-    montantTotal : number
-  ) {
-    return { id, grant, poste, designation, prix_unitaire, quanite, montantTotal };
-  }
+import { GridRowsProp } from "@mui/x-data-grid";
 
- export  const rows = [
-    createData('1', 'DWI-SSD', 1002, 'Article_1', 50000, 1, 50000),
-    createData('2', 'DWI-SSD2', 1004, 'Article_1', 50000, 1, 50000),
-    createData('3', 'DWI-SSD2', 1005, 'Article_1', 50000, 1, 50000),
-  ];
+export const initialRows: GridRowsProp = [
+  {
+    id: 1,
+    nom: "Copie",
+    nombre: 3,
+    description: "Description",
+  },
+  {
+    id: 2,
+    nom: "Photocopie CIN",
+    nombre: 2,
+    description: "Description",
+  },
+  {
+    id: 3,
+    nom: "Certificat de résidence",
+    nombre: 2,
+    description: "Description",
+  },
+];
