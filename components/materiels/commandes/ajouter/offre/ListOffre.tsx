@@ -12,6 +12,7 @@ import { styled } from "@mui/material";
 import Commande from "./form/Commande";
 import TableOffre from "./table/ListOffre";
 import FormulaireOffre from "./form/Formulaire";
+// import DetailsCommande from "./form/Commande";
 
 const ListFormCommandeOffre = () => {
   return (
@@ -54,8 +55,9 @@ const ListFormCommandeOffre = () => {
           alignItems="flex-start"
         >
           <Commande />
+          {/* <DetailsCommande /> */}
           <TableOffre />
-          <FormulaireOffre/>
+          <FormulaireOffre />
         </Stack>
       </Container>
     </>

@@ -9,7 +9,7 @@ import Divider from "@mui/material/Divider";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import Check from "@mui/icons-material/Check";
 import Close from "@mui/icons-material/Close";
-import { styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { Form, Formik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import * as Yup from "yup";
@@ -22,6 +22,7 @@ import OSTextField from "../../../shared/input copy/OSTextField";
 import OSDatePicker from "../../../shared/date/OSDatePicker";
 import useFetchVendors from "../../../vendor/hooks/useFetchVendors";
 import OSSelectField from "../../../shared/select/OSSelectField";
+import ListArticle from "./table/article";
 
 export default function OrderForm() {
   const route = useRouter();
@@ -35,7 +36,7 @@ export default function OrderForm() {
 
   useEffect(() => {
     fetchVendorListe();
-    }, []);
+  }, []);
 
   const handleSubmit = async (values: any) => {
     try {
@@ -152,19 +153,19 @@ export default function OrderForm() {
                   direction={{ xs: "column", sm: "column", md: "row" }}
                   spacing={{ xs: 2, sm: 2, md: 1 }}
                 >
-                <OSTextField
-                  id="outlined-basic"
-                  label="Mode de livraison"
-                  name="shippingMethod"
-                />
-                <OSDatePicker
-                  fullWidth
-                  label="Date de livraison"
-                  value={formikProps.values.deliveryDate}
-                  onChange={(value: any) =>
-                    formikProps.setFieldValue("deliveryDate", value)
-                  }
-                />
+                  <OSTextField
+                    id="outlined-basic"
+                    label="Mode de livraison"
+                    name="shippingMethod"
+                  />
+                  <OSDatePicker
+                    fullWidth
+                    label="Date de livraison"
+                    value={formikProps.values.deliveryDate}
+                    onChange={(value: any) =>
+                      formikProps.setFieldValue("deliveryDate", value)
+                    }
+                  />
                 </CustomStack>
                 <OSSelectField
                   id="vendorId"
@@ -179,6 +180,9 @@ export default function OrderForm() {
           );
         }}
       </Formik>
+      {/* <Box>
+        <ListArticle />
+      </Box> */}
     </Container>
   );
 }

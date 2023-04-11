@@ -1,7 +1,7 @@
 import * as React from "react";
-import ListeArticle from "./table/ListeArticle";
 import Stack from "@mui/material/Stack";
 import OrderForm from "./OrderForm";
+import ListArticle from "./table/article";
 
 const CreationBonCommande = () => {
   return (
@@ -11,7 +11,7 @@ const CreationBonCommande = () => {
       alignItems="flex-start"
     >
       <OrderForm />
-      <ListeArticle />
+      <ListArticle />
     </Stack>
   );
 };
