@@ -31,14 +31,6 @@ import {
   useAppSelector,
 } from "../../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
-// import {
-//   createOffreFile,
-//   editOffreFile,
-//   updateOffreFile,
-//   deleteOffreFile,
-// } from "../../../../redux/features/offreFile";
-// import { OffreFileItem } from "../../../../redux/features/offreFile/offreSliceFile.interface";
-// import { cancelEdit } from "../../../../redux/features/offreFile/offreFileSlice";
 import { useConfirm } from "material-ui-confirm";
 import useFetchOrderFormItemListe from "./hooks/useFetchOrderFormItemListe";
 import {

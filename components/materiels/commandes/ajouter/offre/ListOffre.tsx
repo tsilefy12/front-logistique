@@ -8,11 +8,10 @@ import Typography from "@mui/material/Typography";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import Check from "@mui/icons-material/Check";
 import Close from "@mui/icons-material/Close";
-import { styled } from "@mui/material";
+import { TextField, styled } from "@mui/material";
 import Commande from "./form/Commande";
 import TableOffre from "./table/ListOffre";
 import FormulaireOffre from "./form/Formulaire";
-// import DetailsCommande from "./form/Commande";
 
 const ListFormCommandeOffre = () => {
   return (
@@ -54,10 +53,25 @@ const ListFormCommandeOffre = () => {
           justifyContent="flex-start"
           alignItems="flex-start"
         >
-          <Commande />
-          {/* <DetailsCommande /> */}
+          {/* <Commande /> */}
           <TableOffre />
-          <FormulaireOffre />
+          <FormContainer spacing={2}>
+            <Typography variant="h6">Offre retenu</Typography>
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              label="Offre retenu"
+              variant="outlined"
+            />
+            <TextField
+              fullWidth
+              id="outlined-argument"
+              multiline
+              rows={4}
+              label="Arguments"
+              variant="outlined"
+            />
+          </FormContainer>
         </Stack>
       </Container>
     </>
@@ -77,4 +91,11 @@ const SectionNavigation = styled(Stack)(({ theme }) => ({
   flexDirection: "row",
   justifyContent: "space-between",
   paddingBottom: "5px",
+}));
+const FormContainer = styled(Stack)(({ theme }) => ({
+  width: "100%",
+  marginBottom: theme.spacing(3),
+  padding: 30,
+  borderRadius: 20,
+  background: "#fff",
 }));

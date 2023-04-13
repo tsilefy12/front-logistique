@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import { initialRows } from "./constante";
 import Button from "@mui/material/Button";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-import Link from "next/link";
+// import Link from "next/link";
 import {
   GridRowModesModel,
   GridRowModes,
@@ -23,12 +23,15 @@ import {
   GridRowModel,
   frFR,
 } from "@mui/x-data-grid";
-import { defaultLabelDisplayedRows, labelRowsPerPage } from "../../../../../../config/table.config";
+import {
+  defaultLabelDisplayedRows,
+  labelRowsPerPage,
+} from "../../../../../../config/table.config";
 import EditToolbar from "./EditToolbar";
 import AddIcon from "@mui/icons-material/Add";
 import { useRouter } from "next/router";
 
-export default function ListDocCandidature() {
+export default function ListArticleOffre() {
   const [rows, setRows] = React.useState(initialRows);
   const router = useRouter();
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
@@ -61,9 +64,9 @@ export default function ListDocCandidature() {
     setRows(rows.filter((row: any) => row.id !== id));
   };
 
-  const handleClickAddArticle = async (id : any) => {
+  const handleClickAddArticle = async (id: any) => {
     router.push(`/materiels/commande/${id}/offre/article`);
-  }
+  };
 
   const handleCancelClick = (id: GridRowId) => () => {
     setRowModesModel({
@@ -115,13 +118,13 @@ export default function ListDocCandidature() {
       headerAlign: "left",
     },
     {
-        field: "autre_info",
-        headerName: "Autre inforamtion",
-        type: "text",
-        editable: true,
-        flex: 1,
-        align: "left",
-        headerAlign: "left",
+      field: "autre_info",
+      headerName: "Autre inforamtion",
+      type: "text",
+      editable: true,
+      flex: 1,
+      align: "left",
+      headerAlign: "left",
     },
     {
       field: "actions",
@@ -134,7 +137,6 @@ export default function ListDocCandidature() {
 
         if (isInEditMode) {
           return [
-
             <GridActionsCellItem
               key={`${id}-save`}
               icon={<CheckIcon color="info" />}
