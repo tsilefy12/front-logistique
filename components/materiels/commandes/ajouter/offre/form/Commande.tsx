@@ -14,27 +14,54 @@ import DetailsOrderEquipement from "../../../[id]";
 import useFetchOrderEquipement from "../../../hooks/useFetchOrderEquipment";
 
 const Commande = () => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
+  // const router = useRouter();
+  // const { id }: any = router.query;
+  // const { orderEquipment } = useAppSelector((state) => state.orderEquipment);
+
+  // useEffect(() => {
+  //   getDetailsOrderEquipment();
+  // }, [id]);
+
+  // const getDetailsOrderEquipment = () => {
+  //   const args: any = {
+  //     include: {
+  //       // applicantId: true,
+  //       designation: true,
+  //       // numberOfAuthorisedOffersPossible: true,
+  //       // deadlineOfReception: true,
+  //     },
+  //   };
+  //   dispatch(getOrderEquipment({ id, args }));
+  // };
+
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const { id }: any = router.query;
   const { orderEquipment } = useAppSelector((state) => state.orderEquipment);
-  // const fetchOrderEquipment = useFetchOrderEquipement();
+  // const { trainingGoalList, trainingGoal } = useAppSelector(
+  //   (state) => state.trainingGoal
+  // );
+
+  // const objectif = trainingGoalList.map(
+  //   (trainingGoal: TrainingGoalItem, index: any) => (
+  //     <Typography key={index}>. {trainingGoal.description}</Typography>
+  //   )
+  // );
 
   useEffect(() => {
-    getDetailsOrderEquipment();
-    // fetchOrderEquipment();
+    if (id) {
+      getDetailsOrderEquipment();
+    }
   }, [id]);
 
   const getDetailsOrderEquipment = () => {
     const args: any = {
       include: {
-        applicantId: true,
         designation: true,
-        numberOfAuthorisedOffersPossible: true,
-        deadlineOfReception: true,
       },
     };
-    dispatch(getOrderEquipment({ id, args }));
+    dispatch(getOrderEquipment({ id }));
   };
   return (
     <FormContainer spacing={2}>
@@ -44,7 +71,7 @@ const Commande = () => {
         <Grid item xs={12} md={6}>
           <KeyValue
             keyName="Demandeur"
-            value={orderEquipment.applicant?.name}
+            // value={orderEquipment.applicant?.name}
           />
           <KeyValue keyName="Designation" value={orderEquipment.designation} />
         </Grid>

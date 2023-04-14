@@ -29,6 +29,15 @@ export const createOrderFormItem = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       if (error.response) {
+        if (error.response.data.statusCode == 400) {
+          thunkAPI.dispatch(
+            enqueueSnackbar({
+              message:
+                "Veuillez remplir le formulaire Bon de Commande et enregistre, puis appuyer sur modifier pour ajouter un Article",
+              options: { variant: "error" },
+            })
+          );
+        }
         return thunkAPI.rejectWithValue(error);
       }
       return;

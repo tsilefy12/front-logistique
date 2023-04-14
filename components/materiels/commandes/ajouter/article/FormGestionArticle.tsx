@@ -10,16 +10,21 @@ import Check from "@mui/icons-material/Check";
 import Close from "@mui/icons-material/Close";
 import { styled } from "@mui/material";
 import Detail from "./detail";
-import ListArticle from "./table/ListArticle";
+// import ListArticle from "./table/ListArticle";
+import { useRouter } from "next/router";
+import ListArticleOffre from "./table/ListArticle";
 
 const FormGestionArticle = () => {
+  const router = useRouter();
+  const { idc }: any = router.query;
   return (
     <>
       <Container maxWidth="xl">
         <NavigationContainer>
           <SectionNavigation>
             <Stack flexDirection={"row"}>
-              <Link href="/materiels/commande/1/offre">
+              {/* <Link href="/materiels/commande//offre"> */}
+              <Link href={`/materiels/commande/${idc}/offre`}>
                 <Button color="info" variant="text" startIcon={<ArrowBack />}>
                   Retour
                 </Button>
@@ -53,7 +58,7 @@ const FormGestionArticle = () => {
           alignItems="flex-start"
         >
           <Detail />
-          <ListArticle />
+          <ListArticleOffre />
         </Stack>
       </Container>
     </>

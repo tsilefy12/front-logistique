@@ -50,6 +50,7 @@ const ListCommande = () => {
     (state) => state.orderEquipment
   );
   const router = useRouter();
+  // const { idFile }: any = router.query.id;
   const confirm = useConfirm();
 
   const fetchOrderEquipmentList = useFetchOrderEquipement();
@@ -229,8 +230,9 @@ const ListCommande = () => {
                               direction="row"
                               justifyContent="center"
                             >
-                              <Link href="/materiels/commande/$/offre">
-                                {/* <Link href={`commande/${row.id}/offre`}> */}
+                              <Link
+                                href={`/materiels/commande/${row.id}/offre`}
+                              >
                                 <Button
                                   variant="outlined"
                                   size="small"
@@ -241,16 +243,7 @@ const ListCommande = () => {
                                   Gérer Offres
                                 </Button>
                               </Link>
-                              {/* <Link href={`commande/${row.id}/details`}>
-                                <IconButton
-                                  color="accent"
-                                  aria-label="Details"
-                                  component="span"
-                                >
-                                  <VisibilityIcon />
-                                </IconButton>
-                              </Link> */}
-                              <Link href={`commande/${row.id}/edit`}>
+                              <Link href={`/materiels/commande/${row.id}/edit`}>
                                 <IconButton
                                   color="primary"
                                   aria-label="Details"

@@ -20,6 +20,8 @@ import { suplyAndConsumableSlice } from "./features/supply-and-consumable/supply
 import { logsuplyAndConsumableSlice } from "./features/logSuplyAndConsumable/log-supply-and-consumableSlice";
 import { orderEquipmentItemSlice } from "./features/OrderEquipmentItem/orderEquipmentItemSlice";
 import { orderFormItemSlice } from "./features/orderFormItem/orderFormItemSlice";
+import { selectOfferOrderSlice } from "./features/selectOfferOrder/selectOfferOrderSlice";
+import { offerOrderSlice } from "./features/OfferOrder/offerOrderSlice";
 
 export const store = configureStore({
   reducer: {
@@ -44,6 +46,8 @@ export const store = configureStore({
     logSuplyAndConsumable: logsuplyAndConsumableSlice.reducer,
     orderEquipmentItem: orderEquipmentItemSlice.reducer,
     orderFormItem: orderFormItemSlice.reducer,
+    selectOfferOrder: selectOfferOrderSlice.reducer,
+    offerOrder: offerOrderSlice.reducer,
   },
 });
 

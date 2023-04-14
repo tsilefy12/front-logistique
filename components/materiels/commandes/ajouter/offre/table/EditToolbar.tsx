@@ -9,34 +9,47 @@ import {
   GridRowModes,
   GridToolbarContainer,
 } from "@mui/x-data-grid";
+import { useAppDispatch } from "../../../../../../hooks/reduxHooks";
+import { cancelEdit } from "../../../../../../redux/features/OfferOrder/offerOrderSlice";
 
 interface EditToolbarProps {
-    setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
-    setRowModesModel: (
-      newModel: (oldModel: GridRowModesModel) => GridRowModesModel
-    ) => void;
+  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
+  setRowModesModel: (
+    newModel: (oldModel: GridRowModesModel) => GridRowModesModel
+  ) => void;
 }
 
 export default function EditToolbar(props: EditToolbarProps) {
-    const { setRows, setRowModesModel } = props;
-    var id = initialRows.length;
-    const handleClick = () => {
-        id = id + 1;
-        setRows((oldRows) => [
-        ...oldRows,
-        { id, numero: "", societe: "",num_proforma: "" ,regime_tva: "",isNew: true },
-        ]);
-        setRowModesModel((oldModel) => ({
-        ...oldModel,
-        [id]: { mode: GridRowModes.Edit, fieldToFocus: "numero" },
-        }));
-    };
+  const dispatch = useAppDispatch();
+  const { setRows, setRowModesModel } = props;
+  var id = initialRows.length;
+  const handleClick = () => {
+    id = new Date().getTime();
+    setRows((oldRows) => [
+      ...oldRows,
+      {
+        id,
+        number: "",
+        paymentMethod: "",
+        ProformaNumber: "",
+        vatRegime: "",
+        vat: "",
+        // vendorId: "",
+        isNew: true,
+      },
+    ]);
+    setRowModesModel((oldModel) => ({
+      ...oldModel,
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: "number" },
+    }));
+    dispatch(cancelEdit());
+  };
 
-    return (
-        <GridToolbarContainer>
-        <Button color="info" startIcon={<AddIcon />} onClick={handleClick}>
-            Ajouter offre
-        </Button>
-        </GridToolbarContainer>
-    );
+  return (
+    <GridToolbarContainer>
+      <Button color="info" startIcon={<AddIcon />} onClick={handleClick}>
+        Ajouter entrée
+      </Button>
+    </GridToolbarContainer>
+  );
 }
