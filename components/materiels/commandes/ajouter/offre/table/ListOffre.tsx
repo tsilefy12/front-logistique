@@ -7,7 +7,6 @@ import { styled } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import AttachFileIcon from "@mui/icons-material/AttachFile";
 import {
   GridRowModesModel,
   GridRowModes,
@@ -41,7 +40,6 @@ import {
   defaultLabelDisplayedRows,
   labelRowsPerPage,
 } from "../../../../../../config/table.config";
-import Link from "next/link";
 
 export default function ListOffre() {
   const { isEditing, offerOrder, offerOrderListe } = useAppSelector(
@@ -52,9 +50,10 @@ export default function ListOffre() {
     {}
   );
   const refClickEdit: any = React.useRef(null);
+  // const refBtnArticle: any = React.useRef(null);
   const router = useRouter();
-  const commandeId: any = router.query.id;
-  // const { Idc }: any = router.query;
+  const commandeId: any = router.query.commandId;
+  const { commandId }: any = router.query;
   const fetchOfferOrderList = useFetchOfferOrderListe();
   const dispatch = useAppDispatch();
   const confirm = useConfirm();
@@ -160,8 +159,8 @@ export default function ListOffre() {
   };
 
   const handleButtonArticle = async (id: any) => {
-    router.push(`/materiels/commande/${commandeId}/offre/${id}/article`);
-    // console.log("aricle", handleButtonArticle);
+    console.log(id);
+    router.push(`/materiels/commande/${commandId}/offre/${id}/`);
   };
 
   const processRowUpdate = (newRow: GridRowModel) => {
@@ -274,16 +273,19 @@ export default function ListOffre() {
           <GridActionsCellItem
             key={`${id}-article`}
             icon={
-              <Link href="/materiels/commande/1/offre/article">
-                {/* // <Link href={`/materiels/commande/${row.id}/offre/`}> */}
-                <Button variant="outlined" color="info" startIcon={<AddIcon />}>
-                  Article
-                </Button>
-              </Link>
+              <Button
+                color="info"
+                variant="outlined"
+                size="medium"
+                startIcon={<AddIcon />}
+              >
+                Article
+              </Button>
             }
-            // onClick={() => handleButtonArticle(id)}
+            onClick={() => handleButtonArticle(id)}
             label="Article"
             color="inherit"
+            // ref={refBtnArticle}
           />,
           <GridActionsCellItem
             key={`${id}-edit`}
