@@ -14,40 +14,10 @@ import DetailsOrderEquipement from "../../../[id]";
 import useFetchOrderEquipement from "../../../hooks/useFetchOrderEquipment";
 
 const Commande = () => {
-  // const dispatch = useAppDispatch();
-  // const router = useRouter();
-  // const { id }: any = router.query;
-  // const { orderEquipment } = useAppSelector((state) => state.orderEquipment);
-
-  // useEffect(() => {
-  //   getDetailsOrderEquipment();
-  // }, [id]);
-
-  // const getDetailsOrderEquipment = () => {
-  //   const args: any = {
-  //     include: {
-  //       // applicantId: true,
-  //       designation: true,
-  //       // numberOfAuthorisedOffersPossible: true,
-  //       // deadlineOfReception: true,
-  //     },
-  //   };
-  //   dispatch(getOrderEquipment({ id, args }));
-  // };
-
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { id }: any = router.query;
   const { orderEquipment } = useAppSelector((state) => state.orderEquipment);
-  // const { trainingGoalList, trainingGoal } = useAppSelector(
-  //   (state) => state.trainingGoal
-  // );
-
-  // const objectif = trainingGoalList.map(
-  //   (trainingGoal: TrainingGoalItem, index: any) => (
-  //     <Typography key={index}>. {trainingGoal.description}</Typography>
-  //   )
-  // );
 
   useEffect(() => {
     if (id) {

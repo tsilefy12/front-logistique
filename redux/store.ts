@@ -22,6 +22,7 @@ import { orderEquipmentItemSlice } from "./features/OrderEquipmentItem/orderEqui
 import { orderFormItemSlice } from "./features/orderFormItem/orderFormItemSlice";
 import { selectOfferOrderSlice } from "./features/selectOfferOrder/selectOfferOrderSlice";
 import { offerOrderSlice } from "./features/OfferOrder/offerOrderSlice";
+import { offerOrderItemSlice } from "./features/offerOrderItem/offerOrderItemSlice";
 
 export const store = configureStore({
   reducer: {
@@ -48,6 +49,7 @@ export const store = configureStore({
     orderFormItem: orderFormItemSlice.reducer,
     selectOfferOrder: selectOfferOrderSlice.reducer,
     offerOrder: offerOrderSlice.reducer,
+    offerOrderItem: offerOrderItemSlice.reducer,
   },
 });
 

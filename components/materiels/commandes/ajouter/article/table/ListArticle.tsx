@@ -3,13 +3,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import CheckIcon from "@mui/icons-material/Check";
 import CancelIcon from "@mui/icons-material/Close";
-import { IconButton, styled } from "@mui/material";
+import { styled } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { initialRows } from "./constante";
 import Button from "@mui/material/Button";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-// import Link from "next/link";
 import {
   GridRowModesModel,
   GridRowModes,
@@ -23,20 +21,60 @@ import {
   GridRowModel,
   frFR,
 } from "@mui/x-data-grid";
+import { useRouter } from "next/router";
+import { useConfirm } from "material-ui-confirm";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../../../hooks/reduxHooks";
+// import useFetchOfferOrderListe from "./hooks/useFetchOfferOrder";
+import EditToolbar from "./EditToolbar";
+import {
+  createOfferOrder,
+  deleteOfferOrder,
+  editOfferOrder,
+  updateOfferOrder,
+} from "../../../../../../redux/features/OfferOrder";
+import AddIcon from "@mui/icons-material/Add";
+import { cancelEdit } from "../../../../../../redux/features/OfferOrder/offerOrderSlice";
 import {
   defaultLabelDisplayedRows,
   labelRowsPerPage,
 } from "../../../../../../config/table.config";
-import EditToolbar from "./EditToolbar";
-import AddIcon from "@mui/icons-material/Add";
-import { useRouter } from "next/router";
+import Link from "next/link";
+import useFetchOfferOrderItemListe from "./hooks/useFetchOfferOrderItem";
+import {
+  createOfferOrderItem,
+  deleteOfferOrderItem,
+  editOfferOrderItem,
+  updateOfferOrderItem,
+} from "../../../../../../redux/features/offerOrderItem";
 
 export default function ListArticleOffre() {
-  const [rows, setRows] = React.useState(initialRows);
-  const router = useRouter();
+  const { isEditing, offerOrderItem, offerOrderItemListe } = useAppSelector(
+    (state) => state.offerOrderItem
+  );
+  const [rows, setRows] = React.useState(offerOrderItemListe);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
     {}
   );
+  const refClickEdit: any = React.useRef(null);
+  // const refBtnArticle: any = React.useRef(null);
+  const router = useRouter();
+  // const commandeId: any = router.query.commandId;
+  const offerId: any = router.query.id;
+  // console.log("Id", offerId)
+  const fetchOfferOrderItemList = useFetchOfferOrderItemListe();
+  const dispatch = useAppDispatch();
+  const confirm = useConfirm();
+
+  React.useEffect(() => {
+    fetchOfferOrderItemList();
+  }, [router.query]);
+
+  React.useEffect(() => {
+    setRows(offerOrderItemListe);
+  }, [offerOrderItemListe]);
 
   const handleRowEditStart = (
     params: GridRowParams,
@@ -52,20 +90,69 @@ export default function ListArticleOffre() {
     event.defaultMuiPrevented = true;
   };
 
-  const handleEditClick = (id: GridRowId) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+  const handleEditClick = (idRow: GridRowId) => {
+    // console.log(id);
+    const id: any = idRow;
+    dispatch(editOfferOrderItem({ id }));
+    setRowModesModel({
+      ...rowModesModel,
+      [idRow]: { mode: GridRowModes.Edit },
+    });
   };
 
-  const handleSaveClick = (id: GridRowId) => () => {
+  const handleSaveClick = async (id: GridRowId, value: any) => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    // console.log(value);
+  };
+  React.useEffect(() => {
+    if (rows.length > offerOrderItemListe.length) {
+      addOfferOrderItem();
+    }
+  }, [rows]);
+
+  const addOfferOrderItem = async () => {
+    const lastIndex = offerOrderItemListe.length;
+    if (rows[lastIndex].isNew === false) {
+      try {
+        await dispatch(
+          createOfferOrderItem({
+            designation: rows[rows.length - 1].designation,
+            quantity: rows[rows.length - 1].quantity,
+            unitPrice: rows[rows.length - 1].unitPrice,
+            otherInformation: rows[rows.length - 1].otherInformation,
+            SKU: rows[rows.length - 1].SKU,
+            offerOrderId: offerId,
+          })
+        );
+        fetchOfferOrderItemList();
+      } catch (error) {
+        console.log("error", error);
+      }
+    }
   };
 
   const handleDeleteClick = (id: GridRowId) => () => {
-    setRows(rows.filter((row: any) => row.id !== id));
+    // setRows(rows.filter((row: any) => row.id !== id));
+    handleclickDelete(id);
   };
-
-  const handleClickAddArticle = async (id: any) => {
-    router.push(`/materiels/commande/${id}/offre/article`);
+  const handleclickDelete = async (id: any) => {
+    confirm({
+      title: "Supprimer fichier",
+      description: "Voulez-vous vraiment supprimer cette Article ?",
+      cancellationText: "Annuler",
+      confirmationText: "Supprimer",
+      cancellationButtonProps: {
+        color: "warning",
+      },
+      confirmationButtonProps: {
+        color: "error",
+      },
+    })
+      .then(async () => {
+        await dispatch(deleteOfferOrderItem({ id }));
+        fetchOfferOrderItemList();
+      })
+      .catch(() => {});
   };
 
   const handleCancelClick = (id: GridRowId) => () => {
@@ -78,11 +165,41 @@ export default function ListArticleOffre() {
     if (editedRow!.isNew) {
       setRows(rows.filter((row: any) => row.id !== id));
     }
+    dispatch(cancelEdit());
   };
 
+  // const handleButtonArticle = async (id: any) => {
+  //   console.log(id);
+  //   router.push(`/materiels/commande/${commandeId}/offre/${id}/`);
+  // };
+
   const processRowUpdate = (newRow: GridRowModel) => {
+    // console.log("edit");
+
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row: any) => (row.id === newRow.id ? updatedRow : row)));
+    if (isEditing) {
+      // console.log(newRow);
+      const value: any = newRow;
+      try {
+        dispatch(
+          updateOfferOrderItem({
+            id: offerOrderItem.id,
+            offerOrderItem: {
+              designation: value.designation,
+              quantity: value.quantity,
+              unitPrice: value.unitPrice,
+              SKU: value.SKU,
+              otherInformation: value.otherInformation,
+              offerOrderId: offerId,
+            },
+          })
+        );
+        fetchOfferOrderItemList();
+      } catch (error) {
+        console.log("error", error);
+      }
+    }
     return updatedRow;
   };
 
@@ -93,46 +210,54 @@ export default function ListArticleOffre() {
   const columns: GridColumns = [
     {
       field: "designation",
-      headerName: "Désignation",
+      headerName: "Designation",
       editable: true,
       flex: 1,
       align: "left",
       headerAlign: "left",
     },
     {
-      field: "quantite",
+      field: "quantity",
       headerName: "Quantité",
-      type: "text",
+      editable: true,
+      flex: 1,
+      align: "left",
+      headerAlign: "left",
+      type: "number",
+    },
+    {
+      field: "unitPrice",
+      headerName: "Prix Unitaire",
+      type: "number",
       editable: true,
       flex: 1,
       align: "left",
       headerAlign: "left",
     },
     {
-      field: "prix_unitaire",
-      headerName: "Prix unitaire",
-      type: "text",
-      editable: true,
-      flex: 1,
-      align: "left",
-      headerAlign: "left",
-    },
-    {
-      field: "autre_info",
+      field: "otherInformation",
       headerName: "Autre inforamtion",
-      type: "text",
       editable: true,
+      type: "text",
       flex: 1,
       align: "left",
       headerAlign: "left",
     },
+    // {
+    //   field: "vat",
+    //   headerName: "TVA",
+    //   editable: true,
+    //   flex: 1,
+    //   align: "left",
+    //   headerAlign: "left",
+    // },
     {
       field: "actions",
       type: "actions",
       headerName: "",
       width: 200,
       cellClassName: "actions",
-      getActions: ({ id }) => {
+      getActions: ({ id, row }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
         if (isInEditMode) {
@@ -141,7 +266,7 @@ export default function ListArticleOffre() {
               key={`${id}-save`}
               icon={<CheckIcon color="info" />}
               label="Save"
-              onClick={handleSaveClick(id)}
+              onClick={() => handleSaveClick(id, row)}
             />,
             <GridActionsCellItem
               key={`${id}-cancel`}
@@ -160,7 +285,8 @@ export default function ListArticleOffre() {
             icon={<EditIcon color="primary" />}
             label="Edit"
             className="textPrimary"
-            onClick={handleEditClick(id)}
+            ref={refClickEdit}
+            onClick={() => handleEditClick(id)}
             color="inherit"
           />,
           <GridActionsCellItem

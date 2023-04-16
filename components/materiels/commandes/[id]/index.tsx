@@ -13,9 +13,6 @@ import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { getOrderEquipment } from "../../../../redux/features/orderEquipment";
 
-
-
-
 const DetailsOrderEquipement = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -48,11 +45,7 @@ const DetailsOrderEquipement = () => {
         sx={{ mb: 2 }}
       >
         <Link href="/materiels/commande">
-          <Button
-            color="info"
-            variant="text"
-            startIcon={<ArrowBackIcon />}
-          >
+          <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
             Retour
           </Button>
         </Link>
