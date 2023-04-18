@@ -9,8 +9,8 @@ export interface LogSuplyAndConsumableItem {
 }
 
 export interface LogSuplyAndConsumableInitialState {
-  logsuplyAndConsumableList: LogSuplyAndConsumableItem[];
-  logsuplyAndConsumable: LogSuplyAndConsumableItem;
+  logSuplyAndConsumableList: LogSuplyAndConsumableItem[];
+  logSuplyAndConsumable: LogSuplyAndConsumableItem;
   isEditing: boolean;
   loading: boolean;
   [key: string]: any;

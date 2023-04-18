@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
-import { getSuplyAndConsumableList } from "../../../redux/features/supply-and-consumable";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
+import { getSuplyAndConsumableList } from "../../../../redux/features/supply-and-consumable";
 
 const useFetchSuplyAndConsumableList = () => {
   const router = useRouter();

@@ -17,7 +17,7 @@ import { detenteurSlice } from "./features/detenteur/detenteurSlice";
 import { passengerSlice } from "./features/passenger/passengerSlice";
 import { orderFormSlice } from "./features/order-form/orderFormSlice";
 import { suplyAndConsumableSlice } from "./features/supply-and-consumable/supply-and-consumable";
-import { logsuplyAndConsumableSlice } from "./features/logSuplyAndConsumable/log-supply-and-consumableSlice";
+import { logSuplyAndConsumableSlice } from "./features/logSuplyAndConsumable/log-supply-and-consumableSlice";
 import { orderEquipmentItemSlice } from "./features/OrderEquipmentItem/orderEquipmentItemSlice";
 import { orderFormItemSlice } from "./features/orderFormItem/orderFormItemSlice";
 import { selectOfferOrderSlice } from "./features/selectOfferOrder/selectOfferOrderSlice";
@@ -44,12 +44,13 @@ export const store = configureStore({
     detenteur: detenteurSlice.reducer,
     passenger: passengerSlice.reducer,
     orderForm: orderFormSlice.reducer,
-    logSuplyAndConsumable: logsuplyAndConsumableSlice.reducer,
+    // logSuplyAndConsumable: logSuplyAndConsumableSlice.reducer,
     orderEquipmentItem: orderEquipmentItemSlice.reducer,
     orderFormItem: orderFormItemSlice.reducer,
     selectOfferOrder: selectOfferOrderSlice.reducer,
     offerOrder: offerOrderSlice.reducer,
     offerOrderItem: offerOrderItemSlice.reducer,
+    logSuplyAndConsumable: logSuplyAndConsumableSlice.reducer,
   },
 });
 

@@ -26,7 +26,7 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import AddIcon from "@mui/icons-material/Add";
 import Edit from "@mui/icons-material/Edit";
-import useFetchSuplyAndConsumableList from "./hooks/useFetchSupplyAndConsumables";
+import useFetchSuplyAndConsumableList from "./entreSortie/hooks/useFetchSupplyAndConsumables";
 import {
   deleteSuplyAndConsumable,
   editSuplyAndConsumable,
