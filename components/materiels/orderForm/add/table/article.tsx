@@ -313,7 +313,7 @@ export default function ListArticle() {
           })
         }
       />
-      <Stack
+      {/* <Stack
         direction="row"
         justifyContent="flex-start"
         alignItems="right"
@@ -323,7 +323,7 @@ export default function ListArticle() {
           <AttachFileIcon />
           Charger un pJ (TDR)
         </MyBoutton>
-      </Stack>
+      </Stack> */}
     </MyTableContainer>
   );
 }

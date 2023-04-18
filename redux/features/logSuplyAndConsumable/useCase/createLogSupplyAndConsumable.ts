@@ -4,21 +4,21 @@ import { enqueueSnackbar } from "../../notification/notificationSlice";
 import { LogSuplyAndConsumableItem } from "../log-supply-and-consumable.interface";
 
 /**
- * create a new Fiche de stock
+ * create a new logSuplyAndConsumble
  * @param LogSuplyAndConsumableItem
  * @param thunkAPI
  * @returns {Promise<void>}
  * @memberof useCase
- * @description :this function is used to create a new fiche de stock
+ * @description :this function is used to create a new logSuplyAndConsumble
  */
 
 export const createLogSuplyAndConsumable = createAsyncThunk(
-  "logsuplyAndConsumble/createLogSuplyAndConsumable",
-  async (logsuplyAndConsumable: LogSuplyAndConsumableItem, thunkAPI) => {
+  "logSuplyAndConsumble/createLogSuplyAndConsumable",
+  async (logSuplyAndConsumable: LogSuplyAndConsumableItem, thunkAPI) => {
     try {
       const response = await axios.post(
         "/logistique/log-supply-and-consumable",
-        logsuplyAndConsumable
+        logSuplyAndConsumable
       );
       thunkAPI.dispatch(
         enqueueSnackbar({

@@ -4,23 +4,23 @@ import { LogSuplyAndConsumableItem } from "../log-supply-and-consumable.interfac
 import { axios } from "../../../../lib/axios";
 
 /**
- * update a suplyAndConsumable
- * @param data : { id: string, suplyAndConsumable: SuplyAndConsumableItem } : the id of the article to update and the suplyAndConsumable data
+ * update a logSuplyAndConsumble
+ * @param data : { id: string, logSuplyAndConsumble: LogSuplyAndConsumableItem } : the id of the logSuplyAndConsumble to update and the logSuplyAndConsumble data
  * @param thunkAPI
  * @returns {Promise<void>}
  * @memberof useCases
- * @description : This function is used to update a suplyAndConsumable
+ * @description : This function is used to update a logSuplyAndConsumble
  */
 export const updateLogSuplyAndConsumable = createAsyncThunk(
-  "logsuplyAndConsumable/updateLogSuplyAndConsumable",
+  "logSuplyAndConsumable/updateLogSuplyAndConsumable",
   async (
-    data: { id: string; logsuplyAndConsumable: LogSuplyAndConsumableItem },
+    data: { id: string; logSuplyAndConsumable: LogSuplyAndConsumableItem },
     thunkAPI
   ) => {
     try {
       const response = await axios.patch(
         `/logistique/log-supply-and-consumable/${data.id}`,
-        data.logsuplyAndConsumable
+        data.logSuplyAndConsumable
       );
       thunkAPI.dispatch(
         enqueueSnackbar({

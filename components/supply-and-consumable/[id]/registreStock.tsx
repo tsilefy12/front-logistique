@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import Check from "@mui/icons-material/Check";
 import Close from "@mui/icons-material/Close";
-import { styled } from "@mui/material";
+import { FormControl, Radio, styled } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
@@ -18,17 +18,18 @@ import {
   createLogSuplyAndConsumable,
   updateLogSuplyAndConsumable,
 } from "../../../redux/features/logSuplyAndConsumable";
-import { Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { cancelEdit } from "../../../redux/features/logSuplyAndConsumable/log-supply-and-consumableSlice";
 import OSTextField from "../../shared/input/OSTextField";
 import OSDatePicker from "../../shared/date/OSDatePicker";
+import RadioGroup from "@mui/material/RadioGroup";
 
 const FormLogEntreSortie = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const ficheStock = router.query.id;
-  const { logsuplyAndConsumable, isEditing } = useAppSelector(
+  const { logSuplyAndConsumable, isEditing } = useAppSelector(
     (state) => state.logSuplyAndConsumable
   );
   const handleSubmit = async (values: any) => {
@@ -39,14 +40,14 @@ const FormLogEntreSortie = () => {
       if (isEditing) {
         await dispatch(
           updateLogSuplyAndConsumable({
-            id: logsuplyAndConsumable.id!,
-            logsuplyAndConsumable: values,
+            id: logSuplyAndConsumable.id!,
+            logSuplyAndConsumable: values,
           })
         );
       } else {
         await dispatch(createLogSuplyAndConsumable(values));
       }
-      router.push("/fournitures_et_consommables/fiche_de_stock");
+      router.push("/fournitures_et_consommables/entre_et_sortie");
     } catch (error) {
       console.log("error", error);
     }
@@ -58,23 +59,26 @@ const FormLogEntreSortie = () => {
         enableReinitialize
         initialValues={
           isEditing
-            ? logsuplyAndConsumable
+            ? logSuplyAndConsumable
             : {
-                date: isEditing ? logsuplyAndConsumable?.date : new Date(),
-                quantity: isEditing ? logsuplyAndConsumable?.quantity : "",
-                SKU: isEditing ? logsuplyAndConsumable?.SKU : "",
+                date: isEditing ? logSuplyAndConsumable?.date : new Date(),
+                quantity: isEditing ? logSuplyAndConsumable?.quantity : "",
+                SKU: isEditing ? logSuplyAndConsumable?.SKU : "",
                 OperationType: isEditing
-                  ? logsuplyAndConsumable?.OperationType
-                  : "INPUT",
-                unitPrice: isEditing ? logsuplyAndConsumable?.unitPrice : "",
+                  ? logSuplyAndConsumable?.OperationType
+                  : "",
+                unitPrice: isEditing ? logSuplyAndConsumable?.unitPrice : "",
                 inventoryValue: isEditing
-                  ? logsuplyAndConsumable?.inventoryValue
+                  ? logSuplyAndConsumable?.inventoryValue
                   : 0,
                 supplyAndConsumableId: ficheStock,
               }
         }
         validationSchema={Yup.object({
           quantity: Yup.number().required("Champ obligatoire"),
+          OperationType: Yup.string()
+            .oneOf(["INPUT", "OUTPUT"], "Veuillez choisier type d'operation")
+            .required("Veuillez choisir type d'operation "),
         })}
         onSubmit={(value: any, action: any) => {
           handleSubmit(value);
@@ -137,25 +141,19 @@ const FormLogEntreSortie = () => {
                   spacing={{ xs: 2, sm: 2, md: 1 }}
                 >
                   <OSDatePicker
-                    fullWidth
+                    // fullWidth
                     label="Date"
                     value={formikProps.values.date}
                   />
-                  <Stack
+                  {/* <Stack
+                    // flexDirection="row"
+                    display="flex"
                     direction="row"
                     justifyContent="center"
                     alignItems="center"
-                  >
-                    <FormControlLabel
-                      control={<Checkbox size="small" />}
-                      label="Entré"
-                      sx={{ ml: 20 }}
-                    />
-                    <FormControlLabel
-                      control={<Checkbox size="small" />}
-                      label="Sortie"
-                    />
-                  </Stack>
+                  > */}
+
+                  {/* </Stack> */}
                 </CustomStack>
                 <OSTextField
                   id="outlined-basic"
@@ -172,6 +170,22 @@ const FormLogEntreSortie = () => {
                   label="Valeur de stock"
                   name="SKU"
                 />
+                <FormControl>
+                  <Field as={RadioGroup} row name="OperationType">
+                    <FormControlLabel
+                      value="INPUT"
+                      control={<Radio />}
+                      label="Entré"
+                      name="OperationType"
+                    />
+                    <FormControlLabel
+                      value="OUTPUT"
+                      control={<Radio />}
+                      label="Sortie"
+                      name="OperationType"
+                    />
+                  </Field>
+                </FormControl>
               </FormContainer>
             </Form>
           );

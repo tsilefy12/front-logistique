@@ -2,13 +2,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axios } from "../../../../lib/axios";
 
 /**
- * @param data: { args?: any } : PRISMA arguments to filter getted suplyAndConsumable data
+ * @param data: { args?: any } : PRISMA arguments to filter getted logSuplyAndConsumble data
  * @param thunkAPI
  * @returns {Promise<void>}
- * @description : This function is used to get all suplyAndConsumable data
+ * @description : This function is used to get all logSuplyAndConsumble data
  */
-export const getLogSuplyAndConsumableList = createAsyncThunk(
-  "logsuplyAndConsumableList/getLogSuplyAndConsumableList",
+export const getLogSuplyAndConsumableListe = createAsyncThunk(
+  "logSuplyAndConsumable/getLogSuplyAndConsumableListe",
   async (data: { args?: any }, thunkAPI) => {
     try {
       const params = JSON.stringify(data.args);

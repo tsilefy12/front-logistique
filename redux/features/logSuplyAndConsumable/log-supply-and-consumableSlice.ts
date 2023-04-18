@@ -2,23 +2,23 @@ import { createSlice } from "@reduxjs/toolkit";
 import { LogSuplyAndConsumableInitialState } from "./log-supply-and-consumable.interface";
 import { createLogSuplyAndConsumable } from "./useCase/createLogSupplyAndConsumable";
 import { getLogSuplyAndConsumable } from "./useCase/getLogSupplyAndConsumable";
-import { getLogSuplyAndConsumableList } from "./useCase/getLogSupplyAndConsumables";
+import { getLogSuplyAndConsumableListe } from "./useCase/getLogSupplyAndConsumableList";
 import { updateLogSuplyAndConsumable } from "./useCase/updateSupplyAndConsumable";
 
-const logsuplyAndConsumableInitialState: LogSuplyAndConsumableInitialState = {
-  logsuplyAndConsumableList: [],
-  logsuplyAndConsumable: {},
+const logSuplyAndConsumableInitialState: LogSuplyAndConsumableInitialState = {
+  logSuplyAndConsumableList: [],
+  logSuplyAndConsumable: {},
   isEditing: false,
   loading: false,
   error: null,
 };
-export const logsuplyAndConsumableSlice = createSlice({
+export const logSuplyAndConsumableSlice = createSlice({
   name: "logSuplyAndConsumble",
-  initialState: logsuplyAndConsumableInitialState,
+  initialState: logSuplyAndConsumableInitialState,
   reducers: {
     cancelEdit: (state) => {
       state.isEditing = false;
-      state.suplyAndConsumable = {};
+      state.logSuplyAndConsumable = {};
     },
   },
   extraReducers: {
@@ -28,7 +28,7 @@ export const logsuplyAndConsumableSlice = createSlice({
     },
     [getLogSuplyAndConsumable.fulfilled.type]: (state, action) => {
       state.loading = false;
-      state.logsuplyAndConsumable = action.payload;
+      state.logSuplyAndConsumable = action.payload;
     },
     [getLogSuplyAndConsumable.rejected.type]: (state, action) => {
       state.loading = false;
@@ -36,14 +36,14 @@ export const logsuplyAndConsumableSlice = createSlice({
     },
 
     // get logsuplyAndConsumableList
-    [getLogSuplyAndConsumableList.pending.type]: (state) => {
+    [getLogSuplyAndConsumableListe.pending.type]: (state) => {
       state.loading = true;
     },
-    [getLogSuplyAndConsumableList.fulfilled.type]: (state, action) => {
+    [getLogSuplyAndConsumableListe.fulfilled.type]: (state, action) => {
       state.loading = false;
-      state.logsuplyAndConsumableList = action.payload;
+      state.logSuplyAndConsumableList = action.payload;
     },
-    [getLogSuplyAndConsumableList.rejected.type]: (state, action) => {
+    [getLogSuplyAndConsumableListe.rejected.type]: (state, action) => {
       state.loading = false;
       state.error = action.error;
     },
@@ -54,7 +54,7 @@ export const logsuplyAndConsumableSlice = createSlice({
     },
     [createLogSuplyAndConsumable.fulfilled.type]: (state, action) => {
       state.loading = false;
-      state.logsuplyAndConsumableList.push(action.payload);
+      state.logSuplyAndConsumableList.push(action.payload);
     },
     [createLogSuplyAndConsumable.rejected.type]: (state, action) => {
       state.loading = false;
@@ -67,7 +67,7 @@ export const logsuplyAndConsumableSlice = createSlice({
     },
     [updateLogSuplyAndConsumable.fulfilled.type]: (state, action) => {
       state.loading = false;
-      state.logsuplyAndConsumable = {};
+      state.logSuplyAndConsumable = {};
       state.isEditing = false;
     },
     [updateLogSuplyAndConsumable.rejected.type]: (state, action) => {
@@ -77,4 +77,4 @@ export const logsuplyAndConsumableSlice = createSlice({
   },
 });
 
-export const { cancelEdit } = logsuplyAndConsumableSlice.actions;
+export const { cancelEdit } = logSuplyAndConsumableSlice.actions;

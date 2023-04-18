@@ -61,6 +61,12 @@ const menu = [
         link: "/fournitures_et_consommables/commande",
         icon: "",
       },
+      {
+        id: 23,
+        name: "Entre et Sortie",
+        link: "/fournitures_et_consommables/entre_et_sortie",
+        icon: "",
+      },
     ],
   },
   {
