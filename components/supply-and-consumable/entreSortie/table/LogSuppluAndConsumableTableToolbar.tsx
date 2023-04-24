@@ -7,14 +7,17 @@ import { useRouter } from "next/router";
 import { useAppSelector } from "../../../../hooks/reduxHooks";
 import { TableLoading } from "../../../shared/loading";
 import { debounce } from "lodash";
+import { styled } from "@mui/material";
 
 const LogSupplyAndConsumableTableToolbar = () => {
   const { loading } = useAppSelector((state) => state.logSuplyAndConsumable);
-
-  const [key, setKey] = React.useState<any>("");
-
+  const [key, setKey] = React.useState<any>({
+    filtreEntre: "",
+    filtreSortie: "",
+  });
   const router = useRouter();
 
+  // console.log("entre", filtreEntre);
   // initialisation du champ de recherche
   React.useEffect(() => {
     if (router?.query?.search) {
@@ -36,6 +39,10 @@ const LogSupplyAndConsumableTableToolbar = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKey(event.target.value);
+    // const target = event.target;
+    // const name = target.name;
+    // const value = target.value;
+    // setKey({ ...key, [name]: value });
     debouncedSearch(event.target.value);
   };
 
@@ -58,6 +65,31 @@ const LogSupplyAndConsumableTableToolbar = () => {
           <Typography variant="h6" id="tableTitle" component="div">
             Liste Entre et Sortie
           </Typography>
+          {/* <CustomStack
+            direction={{ xs: "column", sm: "column", md: "row" }}
+            spacing={{ xs: 2, sm: 2, md: 1 }}
+          >
+            <TextField
+              fullWidth
+              id="filtreEntre"
+              variant="outlined"
+              label="Entre"
+              name="filtreEntre"
+              value={key.filtreEntre}
+              onChange={handleChange}
+              size="small"
+            />
+            <TextField
+              fullWidth
+              id="filtreSortie"
+              variant="outlined"
+              label="Sortie"
+              name="filtreSortie"
+              onChange={handleChange}
+              value={key.filtreSortie}
+              size="small"
+            />
+          </CustomStack> */}
         </Stack>
       </Toolbar>
       {loading && <TableLoading />}
@@ -66,3 +98,9 @@ const LogSupplyAndConsumableTableToolbar = () => {
 };
 
 export default LogSupplyAndConsumableTableToolbar;
+
+export const CustomStack = styled(Stack)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    flexwrap: "wrap",
+  },
+}));

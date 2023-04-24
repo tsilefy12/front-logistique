@@ -16,14 +16,13 @@ import TablePagination from "@mui/material/TablePagination";
 import TableCell from "@mui/material/TableCell";
 import Box from "@mui/material/Box";
 import TableRow from "@mui/material/TableRow";
-import IconButton from "@mui/material/IconButton";
+// import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import {
   labelRowsPerPage,
   defaultLabelDisplayedRows,
 } from "../../../config/table.config";
-// import Visibility from "@mui/icons-material/Visibility";
 import LogSupplyAndConsumableTableToolbar from "./table/LogSuppluAndConsumableTableToolbar";
 import LogSupplyAndConsumableTableHeader from "./table/LogSupplyAndConsumableHeader";
 import { LogSuplyAndConsumableItem } from "../../../redux/features/logSuplyAndConsumable/log-supply-and-consumable.interface";
@@ -44,6 +43,19 @@ export default function LogSupplyAndConsumableList() {
         break;
     }
   }
+  const getColorsText = (OperationType: string | undefined) => {
+    switch (OperationType) {
+      case "INPUT":
+        return "primary";
+        break;
+      case "OUTPUT":
+        return "info";
+        break;
+      default:
+        return "primary";
+        break;
+    }
+  };
 
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -116,7 +128,10 @@ export default function LogSupplyAndConsumableList() {
                           <TableCell align="left">{row.unitPrice}</TableCell>
 
                           <TableCell align="left">
-                            <Badge badgeContent={getText(row.OperationType)} />
+                            <Badge
+                              badgeContent={getText(row.OperationType)}
+                              color={getColorsText(row.OperationType)}
+                            />
                           </TableCell>
                         </TableRow>
                       );
