@@ -10,14 +10,14 @@ const useFetchLogSuplyAndConsumableList = () => {
     let args: any = {};
     if (router.query.search) {
       args.where = {
-        OR: [
-          // {
-          //   OperationType: {
-          //     contains: router.query.search,
-          //     mode: "insensitive",
-          //   },
-          // },
-        ],
+        // OR: [
+        //   {
+        //     OperationType: {
+        //       contains: router.query.search,
+        //       mode: "insensitive",
+        //     },
+        //   },
+        // ],
       };
     }
 
