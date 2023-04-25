@@ -35,7 +35,6 @@ import {
 import { useRouter } from "next/router";
 import useFetchOrderEquipement from "./hooks/useFetchOrderEquipment";
 import { useConfirm } from "material-ui-confirm";
-import { OrderEquipementTableProps } from "./table/orderEquipement.interface";
 import OrderEquipementTableHead from "./table/OrderEquipementTableHead";
 import { Delete, Edit } from "@mui/icons-material";
 import Moment from "react-moment";
@@ -50,7 +49,6 @@ const ListCommande = () => {
     (state) => state.orderEquipment
   );
   const router = useRouter();
-  // const { idFile }: any = router.query.id;
   const confirm = useConfirm();
 
   const fetchOrderEquipmentList = useFetchOrderEquipement();
@@ -61,6 +59,7 @@ const ListCommande = () => {
 
   const handleClickEdit = async (id: any) => {
     await dispatch(editOrderEquipment({ id }));
+    router.push(`/materiels/commande/${id}/edit`);
   };
 
   const getColorsStatus = (status: string | undefined) => {
@@ -243,15 +242,17 @@ const ListCommande = () => {
                                   Gérer Offres
                                 </Button>
                               </Link>
-                              <Link href={`/materiels/commande/${row.id}/edit`}>
-                                <IconButton
-                                  color="primary"
-                                  aria-label="Details"
-                                  component="span"
-                                >
-                                  <Edit />
-                                </IconButton>
-                              </Link>
+                              <IconButton
+                                color="primary"
+                                aria-label="Details"
+                                component="span"
+                                size="small"
+                                onClick={() => {
+                                  handleClickEdit(row.id);
+                                }}
+                              >
+                                <Edit />
+                              </IconButton>
                               <IconButton
                                 color="warning"
                                 aria-label="Supprimer"
