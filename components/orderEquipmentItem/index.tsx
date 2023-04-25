@@ -106,7 +106,7 @@ export default function OrderEquipmentItemList() {
               Ajouter
             </Button>
           </Link>
-          <Typography variant="h4"> Mes Commande </Typography>
+          <Typography variant="h4"> Mes Commandes </Typography>
         </SectionNavigation>
         {/* <Divider /> */}
       </NavigationContainer>

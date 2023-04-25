@@ -13,26 +13,29 @@ import { getOrderEquipment } from "../../../../../../redux/features/orderEquipme
 import DetailsOrderEquipement from "../../../[id]";
 import useFetchOrderEquipement from "../../../hooks/useFetchOrderEquipment";
 
-const Commande = () => {
+const Commande = (props: any) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { id }: any = router.query;
+  
+  const id: any = router.query.commandId;
   const { orderEquipment } = useAppSelector((state) => state.orderEquipment);
-
-  useEffect(() => {
-    if (id) {
-      getDetailsOrderEquipment();
-    }
-  }, [id]);
-
-  const getDetailsOrderEquipment = () => {
-    const args: any = {
-      include: {
-        designation: true,
-      },
+  
+  const detailsCommande = () => {
+    const args = {
+      include:{
+        designation : true,
+        applicant : true,
+        numberOfAuthorisedOffersPossible : true,
+        deadlineOfReception : true
+      }
     };
-    dispatch(getOrderEquipment({ id }));
-  };
+    dispatch(getOrderEquipment({id, args}));
+  }
+
+  React.useEffect(()=>{
+    detailsCommande();
+  },[id]);
+  
   return (
     <FormContainer spacing={2}>
       <Typography variant="h6">Commande</Typography>
@@ -41,18 +44,18 @@ const Commande = () => {
         <Grid item xs={12} md={6}>
           <KeyValue
             keyName="Demandeur"
-            // value={orderEquipment.applicant?.name}
+            value={orderEquipment?.applicant?.name}
           />
-          <KeyValue keyName="Designation" value={orderEquipment.designation} />
+          <KeyValue keyName="Designation" value={orderEquipment?.designation} />
         </Grid>
         <Grid item xs={12} md={6}>
           <KeyValue
             keyName="Quantité"
-            value={orderEquipment.numberOfAuthorisedOffersPossible}
+            value={orderEquipment?.numberOfAuthorisedOffersPossible}
           />
           <KeyValue
             keyName="Deadline de réception"
-            value={orderEquipment.deadlineOfReception}
+            value={orderEquipment?.deadlineOfReception}
           />
         </Grid>
       </Grid>

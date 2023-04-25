@@ -13,6 +13,8 @@ import Commande from "./form/Commande";
 import TableOffre from "./table/ListOffre";
 import FormulaireOffre from "./form/Formulaire";
 import { useRouter } from "next/router";
+import { useAppDispatch, useAppSelector } from "../../../../../hooks/reduxHooks";
+import { getOrderEquipment } from "../../../../../redux/features/orderEquipment";
 
 const ListFormCommandeOffre = () => {
   const router = useRouter();
@@ -55,7 +57,7 @@ const ListFormCommandeOffre = () => {
           justifyContent="flex-start"
           alignItems="flex-start"
         >
-          {/* <Commande /> */}
+          <Commande  />
           <TableOffre />
           <FormContainer spacing={2}>
             <Typography variant="h6">Offre retenu</Typography>
