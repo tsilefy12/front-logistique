@@ -29,7 +29,6 @@ import OSSelectField from "../../../shared/select/OSSelectField";
 import OSDatePicker from "../../../shared/date/OSDatePicker";
 import { useRouter } from "next/router";
 import { editOrderEquipment } from "../../../../redux/features/orderEquipment";
-// import { cancelEdit } from "../../../../redux/features/orderEquipment/orderEquipmentSlice";
 
 const FormCommande = () => {
   const [demandeur, setDemandeur] = React.useState("");
@@ -158,7 +157,10 @@ const FormCommande = () => {
                       Annuler
                     </Button>
                   </Stack>
-                  <Typography variant="h4">Créer(modifier) commande</Typography>
+                  <Typography variant="h4">
+                    {/* Créer(modifier) commande */}
+                    {isEditing ? "Modifier" : "Ajouter"} commande
+                  </Typography>
                 </SectionNavigation>
                 <Divider />
               </NavigationContainer>
