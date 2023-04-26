@@ -10,6 +10,8 @@ import {
 } from "../../../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { getOrderEquipment } from "../../../../../../redux/features/orderEquipment";
+import Moment from "react-moment";
+// import Moment from "react-moment";
 
 const Commande = (props: any) => {
   const router = useRouter();
