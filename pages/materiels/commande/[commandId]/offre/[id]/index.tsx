@@ -15,7 +15,7 @@ const GererArticleOffre = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <FormGestionArticle />
+        {/* <FormGestionArticle /> */}
       </Container>
     </BackOfficeLayout>
   );

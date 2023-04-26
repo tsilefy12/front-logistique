@@ -15,10 +15,12 @@ import { getOrderEquipment } from "../../../../redux/features/orderEquipment";
 
 const DetailsOrderEquipement = () => {
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  const { id }: any = router.query;
-  const { orderEquipment } = useAppSelector((state) => state.orderEquipment);
+  const id : any = router.query.commandId;
+  const { orderEquipment } = useAppSelector(
+    (state) => state.orderEquipment
+  );
 
+  const dispatch = useAppDispatch();
   useEffect(() => {
     getDetailsOrderEquipement();
   }, [id]);
@@ -34,7 +36,7 @@ const DetailsOrderEquipement = () => {
         status: true,
       },
     };
-    dispatch(getOrderEquipment({ id, args }));
+    dispatch(getOrderEquipment({ id,args }));
   };
 
   return (

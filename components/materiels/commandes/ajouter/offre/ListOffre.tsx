@@ -10,11 +10,12 @@ import Check from "@mui/icons-material/Check";
 import Close from "@mui/icons-material/Close";
 import { Grid, TextField, styled } from "@mui/material";
 import Commande from "./form/Commande";
-import TableOffre from "./table/ListOffre";
+// import TableOffre from "./table/ListOffre";
 import FormulaireOffre from "./form/Formulaire";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks/reduxHooks";
 import { getOrderEquipment } from "../../../../../redux/features/orderEquipment";
+import ListOffre from "./table/ListOffre";
 
 const ListFormCommandeOffre = () => {
   const router = useRouter();
@@ -58,7 +59,7 @@ const ListFormCommandeOffre = () => {
           alignItems="flex-start"
         >
           <Commande  />
-          <TableOffre />
+          <ListOffre />
           <FormContainer spacing={2}>
             <Typography variant="h6">Offre retenu</Typography>
             <TextField

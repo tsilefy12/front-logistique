@@ -10,31 +10,33 @@ import {
 } from "../../../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { getOrderEquipment } from "../../../../../../redux/features/orderEquipment";
-import DetailsOrderEquipement from "../../../[id]";
-import useFetchOrderEquipement from "../../../hooks/useFetchOrderEquipment";
 
 const Commande = (props: any) => {
   const router = useRouter();
-  const dispatch = useAppDispatch();
   
   const id: any = router.query.commandId;
-  const { orderEquipment } = useAppSelector((state) => state.orderEquipment);
+  const { orderEquipment } = useAppSelector(
+    (state) => state.orderEquipment
+    );
+  const dispatch = useAppDispatch();
   
-  const detailsCommande = () => {
-    const args = {
-      include:{
-        designation : true,
-        applicant : true,
-        numberOfAuthorisedOffersPossible : true,
-        deadlineOfReception : true
-      }
-    };
-    dispatch(getOrderEquipment({id, args}));
-  }
+  useEffect(() => {
+    getDetailsOrderEquipement();
+  }, [id]);
 
-  React.useEffect(()=>{
-    detailsCommande();
-  },[id]);
+  const getDetailsOrderEquipement = () => {
+    const args: any = {
+      include: {
+        designation: true,
+        reason: true,
+        deadlineOfReception: true,
+        numberOfAuthorisedOffersPossible: true,
+        applicantId: true,
+        status: true,
+      },
+    };
+    dispatch(getOrderEquipment({ id,args }));
+  };
   
   return (
     <FormContainer spacing={2}>
