@@ -159,7 +159,7 @@ export default function ListOffre() {
   };
 
   const handleButtonArticle = async (id: any) => {
-    console.log(id);
+    // console.log(id);
     router.push(`/materiels/commande/${commandId}/offre/${id}/`);
   };
 

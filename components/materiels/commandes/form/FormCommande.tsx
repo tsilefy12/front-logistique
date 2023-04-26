@@ -33,7 +33,8 @@ import { editOrderEquipment } from "../../../../redux/features/orderEquipment";
 const FormCommande = () => {
   const [demandeur, setDemandeur] = React.useState("");
   const router = useRouter();
-  const { id }: any = router.query;
+  const id: any = router.query.commandId;
+  // const { id }: any = router.query;
   const handleChange = (event: SelectChangeEvent) => {
     setDemandeur(event.target.value as string);
   };
