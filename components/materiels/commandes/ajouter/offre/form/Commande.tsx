@@ -10,18 +10,17 @@ import {
 } from "../../../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { getOrderEquipment } from "../../../../../../redux/features/orderEquipment";
-import Moment from "react-moment";
 // import Moment from "react-moment";
 
-const Commande = (props: any) => {
+const Commande = () => {
   const router = useRouter();
-  
+
   const id: any = router.query.commandId;
   const { orderEquipment } = useAppSelector(
-    (state) => state.orderEquipment
-    );
+    (state: any) => state.orderEquipment
+  );
   const dispatch = useAppDispatch();
-  
+
   useEffect(() => {
     getDetailsOrderEquipement();
   }, [id]);
@@ -37,9 +36,14 @@ const Commande = (props: any) => {
         status: true,
       },
     };
-    dispatch(getOrderEquipment({ id,args }));
+    dispatch(getOrderEquipment({ id, args }));
   };
-  
+
+  const formatDateToFr = (date: string) => {
+    const dateCommande = new Date(date).toLocaleDateString("fr");
+    return dateCommande;
+  };
+
   return (
     <FormContainer spacing={2}>
       <Typography variant="h6">Commande</Typography>
@@ -59,7 +63,7 @@ const Commande = (props: any) => {
           />
           <KeyValue
             keyName="Deadline de réception"
-            value={orderEquipment?.deadlineOfReception}
+            value={formatDateToFr(orderEquipment?.deadlineOfReception)}
           />
         </Grid>
       </Grid>
