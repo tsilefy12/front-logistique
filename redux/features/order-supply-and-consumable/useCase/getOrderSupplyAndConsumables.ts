@@ -26,17 +26,12 @@ export const getConsumables = createAsyncThunk(
         await Promise.all(
           response.data.map(async (cons: ConsumableItem) => {
             const employeeId = cons.applicantId;
-            // const suplyAndConsumableId = response?.data?.item;
-            // const detailSuplyAndConsumable = await thunkAPI
-            //   .dispatch(getSuplyAndConsumable({ suplyAndConsumableId }))
-            //   .unwrap();
             const detailEmployee = await thunkAPI
               .dispatch(getEmployee({ employeeId }))
               .unwrap();
             const oneCons = {
               id: cons.id,
               item: cons.item,
-              // item: detailSuplyAndConsumable,
               applicantId: cons.requestedQuantity,
               requestedQuantity: cons.requestedQuantity,
               deliveredQuantity: cons.deliveredQuantity,

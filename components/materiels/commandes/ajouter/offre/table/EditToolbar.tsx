@@ -34,7 +34,7 @@ export default function EditToolbar(props: EditToolbarProps) {
         ProformaNumber: "",
         vatRegime: "",
         vat: "",
-        // vendorId: "",
+        vendorId: "",
         isNew: true,
       },
     ]);

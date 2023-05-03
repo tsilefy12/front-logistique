@@ -40,6 +40,7 @@ import {
   defaultLabelDisplayedRows,
   labelRowsPerPage,
 } from "../../../../../../config/table.config";
+import useFetchVendors from "../../../../../vendor/hooks/useFetchVendors";
 
 export default function ListOffre() {
   const { isEditing, offerOrder, offerOrderListe } = useAppSelector(
@@ -52,11 +53,17 @@ export default function ListOffre() {
   const refClickEdit: any = React.useRef(null);
   // const refBtnArticle: any = React.useRef(null);
   const router = useRouter();
-  const commandeId: any = router.query.commandId;
+  // const commandeId: any = router.query.commandId;
   const { commandId }: any = router.query;
   const fetchOfferOrderList = useFetchOfferOrderListe();
+  const fetchVendorList = useFetchVendors();
   const dispatch = useAppDispatch();
   const confirm = useConfirm();
+  const { vendors } = useAppSelector((state) => state.vendor);
+
+  React.useEffect(() => {
+    fetchVendorList();
+  }, []);
 
   React.useEffect(() => {
     fetchOfferOrderList();
@@ -111,7 +118,8 @@ export default function ListOffre() {
             vatRegime: rows[rows.length - 1].vatRegime,
             vat: rows[rows.length - 1].vat,
             paymentMethod: rows[rows.length - 1].paymentMethod,
-            vendorId: commandeId,
+            // vendorId: commandeId,
+            vendorId: rows[rows.length - 1].vendorId,
           })
         );
         fetchOfferOrderList();
@@ -181,7 +189,8 @@ export default function ListOffre() {
               vatRegime: value.vatRegime,
               vat: value.vat,
               paymentMethod: value.paymentMethod,
-              vendorId: commandeId,
+              // vendorId: commandeId
+              vendorId: value.vendorId,
             },
           })
         );
@@ -228,6 +237,25 @@ export default function ListOffre() {
       headerName: "Régime TVA",
       editable: true,
       type: "text",
+      flex: 1,
+      align: "left",
+      headerAlign: "left",
+    },
+    {
+      field: "vendorId",
+      headerName: "Fournisseur",
+      editable: true,
+      type: "singleSelect",
+      valueOptions: vendors.map((vendor) => ({
+        value: vendor.id,
+        label: vendor?.name,
+      })),
+      valueGetter: (params) => {
+        const selectedOption = vendors.find(
+          (vendor) => vendor.id === params.value
+        );
+        return selectedOption ? `${selectedOption.name}` : "";
+      },
       flex: 1,
       align: "left",
       headerAlign: "left",
