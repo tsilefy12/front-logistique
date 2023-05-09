@@ -23,12 +23,19 @@ export const consumptionInvoiceHeadCells: readonly HeadCell[] = [
     id: "DepartureKilometrage",
     numeric: false,
     disablePadding: false,
-    label: "Km de départ",
+    label: "Kilométrage départ/Arrivé",
   },
   {
-    id: "arrivalKilometrage",
+    id: "consommation",
     numeric: false,
     disablePadding: false,
-    label: "Km arrivé",
+    label: "Consommation",
+  },
+
+  {
+    id: "amount",
+    numeric: false,
+    disablePadding: false,
+    label: "Montant",
   },
 ];
