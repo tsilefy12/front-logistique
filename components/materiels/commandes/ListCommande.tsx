@@ -54,6 +54,7 @@ const ListCommande = () => {
   const fetchOrderEquipmentList = useFetchOrderEquipement();
 
   useEffect(() => {
+    console.log("liste commande", orderEquipmentList);
     fetchOrderEquipmentList();
   }, [router.query]);
 

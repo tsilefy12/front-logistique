@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import  TextField from "@mui/material/TextField";
+import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -17,221 +17,253 @@ import { styled } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import useFetchCarVouchers from "../hooks/useFetchCarVouchers";
-import { Form, Formik } from "formik";
+import { Form, Formik, useFormikContext } from "formik";
 import * as Yup from "yup";
 import OSSelectField from "../../../shared/select/OSSelectField";
 import OSTextField from "../../../shared/input copy/OSTextField";
-import { createConsumptionInvoice, updateConsumptionInvoice } from "../../../../redux/features/consumption_invoice";
+import {
+  createConsumptionInvoice,
+  updateConsumptionInvoice,
+} from "../../../../redux/features/consumption_invoice";
 import { cancelEdit } from "../../../../redux/features/consumption_invoice/consumptionInvoiceSlice";
 
-
 const FormFactureConsommation = () => {
-    const route = useRouter();
-	const dispatch = useAppDispatch();
-    const fetchCarVouchers = useFetchCarVouchers();
+  const route = useRouter();
+  const dispatch = useAppDispatch();
+  const fetchCarVouchers = useFetchCarVouchers();
 
-    const { carvouchers, isEditing, consumptionInvoice } = useAppSelector(
-		(state) => state.consumptionInvoice
-	);
+  const { carvouchers, isEditing, consumptionInvoice } = useAppSelector(
+    (state) => state.consumptionInvoice
+  );
 
-    React.useEffect(() => {
-		fetchCarVouchers();
-	}, []);
+  const calculateAmount = (values: any) => {
+    const { DepartureKilometrage, consommation } = values;
+    const amount = DepartureKilometrage * consommation;
+    return amount;
+  };
+  const CalculatedField = (props: any) => {
+    const { values }: any = useFormikContext();
+    const amount = calculateAmount(values);
 
+    return <OSTextField {...props} value={amount} disabled />;
+  };
 
-    const handleSubmit = async (values: any) => {
-		try {
-			if (isEditing) {
-				await dispatch(
-					updateConsumptionInvoice({
-						id: consumptionInvoice.id!,
-						consumptionInvoice: values,
-					})
-				);
-			} else {
-				await dispatch(createConsumptionInvoice(values));
-			}
-			route.push("/materiel_de_transport/facture_de_consommation");
-		} catch (error) {
-			console.log("error", error);
-		}
-	};
+  React.useEffect(() => {
+    fetchCarVouchers();
+  }, []);
+
+  const handleSubmit = async (values: any) => {
+    try {
+      const amount = values.DepartureKilometrage * values.consommation;
+      if (isEditing) {
+        await dispatch(
+          updateConsumptionInvoice({
+            id: consumptionInvoice.id!,
+            consumptionInvoice: values,
+          })
+        );
+      } else {
+        await dispatch(createConsumptionInvoice({ ...values, amount }));
+      }
+      route.push("/materiel_de_transport/facture_de_consommation");
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   return (
     <Container maxWidth="xl">
-        <Formik
-             enableReinitialize
-             initialValues={{
-                 carVoucherId: isEditing ? consumptionInvoice?.carVoucherId : "",
-                 invoiceNumber: isEditing ? consumptionInvoice?.invoiceNumber : "",
-                 reason: isEditing ? consumptionInvoice?.reason : "",
-                 DepartureKilometrage: isEditing ? consumptionInvoice?.DepartureKilometrage : 0,
-                 arrivalKilometrage: isEditing ? consumptionInvoice?.arrivalKilometrage : 0,
-                 consommation: isEditing ? consumptionInvoice?.consommation : 0,
-                 SKU: isEditing ? consumptionInvoice?.SKU : "",
-                 unitPrice: isEditing ? consumptionInvoice?.unitPrice : 0,
-                 amount: isEditing ? consumptionInvoice?.amount : 0,
-             }}
-             validationSchema={Yup.object({
-                 carVoucherId: Yup.string().required("Veuillez sélectionner un Numéro BV"),
-                 invoiceNumber: Yup.string().required("Veuillez remplir le champ le numéro facture"),
-                 reason: Yup.string().required("Veuillez remplir le champ le motif de la course"),
-                 DepartureKilometrage: Yup.number().required("Veuillez remplir le champ KM de départ"),
-                 arrivalKilometrage: Yup.number().required("Veuillez remplir le champ KM d'arrivé"),
-                 consommation: Yup.number().required("Veuillez remplir le champ KM Consommation"),
-                 SKU: Yup.string().required("Veuillez remplir le champ KM unité"),
-                 unitPrice: Yup.number().required("Veuillez remplir le champ prix unitaire"),
-                 amount: Yup.number().required("Veuillez remplir le champ montant"),
-             })}
-             onSubmit={(value: any, action: any) => {
-                 handleSubmit(value);
-                 action.resetForm();
-             }}
-        >
-        {(formikProps) => {
-            return (
-                <Form>
-                    <NavigationContainer>
-                        <SectionNavigation>
-                            <Stack flexDirection={"row"}>
-                                <Link href="/materiel_de_transport/facture_de_consommation">
-                                <Button 
-                                    color="info" 
-                                    variant="text" 
-                                    startIcon={<ArrowBack />}
-                                    onClick={() => {
-                                        formikProps.resetForm();
-                                        dispatch(cancelEdit());
-                                    }}
-                                >
-                                    Retour
-                                </Button>
-                                </Link>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    size="small"
-                                    startIcon={<Check />}
-                                    sx={{ marginInline: 3 }}
-                                    type="submit"
-                                >
-                                    Enregistrer
-                                </Button>
-                                <Button
-                                    variant="text"
-                                    color="warning"
-                                    size="small"
-                                    startIcon={<Close />}
-                                    sx={{ marginInline: 3 }}
-                                    onClick={() => {
-                                        formikProps.resetForm();
-                                        dispatch(cancelEdit());
-                                    }}
-                                >
-                                    Annuler
-                                </Button>
-                            </Stack>
-                            <Typography variant="h4">{isEditing ?  "Modifier" : "Ajouter"} facture de consommation</Typography>
-                        </SectionNavigation>
-                         <Divider />
-                    </NavigationContainer>
-                    <FormContainer spacing={2}>
-                        <CustomStack
-                            direction={{ xs: "column", sm: "column", md: "row" }}
-                            spacing={{ xs: 2, sm: 2, md: 1 }}
-                        >
-                            <OSSelectField
-                                id="carVoucherId"
-                                label="Numéro BV"
-                                name="carVoucherId"
-                                options={carvouchers}
-                                dataKey="number"
-                                valueKey="id"
-                            />
-                             <OSTextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="Numéro facture"
-                                variant="outlined"
-                                name="invoiceNumber"
-                            />
-                        </CustomStack>
-                        <OSTextField
-                            fullWidth
-                            id="outlined-basic"
-                            label="Motif de la course"
-                            variant="outlined"
-                            name="reason"
-                        />
-                        <CustomStack
-                            direction={{ xs: "column", sm: "column", md: "row" }}
-                            spacing={{ xs: 2, sm: 2, md: 1 }}
-                        >
-                            <OSTextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="Kimomètre de départ"
-                                variant="outlined"
-                                name="DepartureKilometrage"
-                                type="number"
-                            />
-                            <OSTextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="Kimomètre d'arrivé"
-                                variant="outlined"
-                                name="arrivalKilometrage"
-                                type="number"
-                            />
-                        </CustomStack>
-                        <CustomStack
-                            direction={{ xs: "column", sm: "column", md: "row" }}
-                            spacing={{ xs: 2, sm: 2, md: 1 }}
-                        >
-                            <OSTextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="Consommation"
-                                variant="outlined"
-                                name="consommation"
-                                type="number"
-                            />
-                            <OSTextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="Unité"
-                                variant="outlined"
-                                name="SKU"
-                            />
-                        </CustomStack>
-                        <CustomStack
-                            direction={{ xs: "column", sm: "column", md: "row" }}
-                            spacing={{ xs: 2, sm: 2, md: 1 }}
-                        >
-                            <OSTextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="Prix unitaire"
-                                variant="outlined"
-                                name="unitPrice"
-                                type="number"
-                            />
-                            <OSTextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="Montant"
-                                variant="outlined"
-                                name="amount"
-                                type="number"
-                            />
-                        </CustomStack>
-                    </FormContainer>
-                </Form>
-            );
+      <Formik
+        enableReinitialize
+        initialValues={{
+          invoiceNumber: isEditing ? consumptionInvoice?.invoiceNumber : "",
+          reason: isEditing ? consumptionInvoice?.reason : "",
+          DepartureKilometrage: isEditing
+            ? consumptionInvoice?.DepartureKilometrage
+            : 0,
+          arrivalKilometrage: isEditing
+            ? consumptionInvoice?.arrivalKilometrage
+            : 0,
+          consommation: isEditing ? consumptionInvoice?.consommation : 0,
+          SKU: isEditing ? consumptionInvoice?.SKU : "",
+          unitPrice: isEditing ? consumptionInvoice?.unitPrice : 0,
+          carVoucherId: isEditing ? consumptionInvoice?.carVoucherId : "",
+          // amount: isEditing ? consumptionInvoice?.amount : 0,
+          amount: isEditing
+            ? consumptionInvoice?.amount
+            : calculateAmount({
+                DepartureKilometrage: isEditing
+                  ? consumptionInvoice?.DepartureKilometrage
+                  : 0,
+                consommation: isEditing ? consumptionInvoice?.consommation : 0,
+              }),
         }}
-            
-        </Formik>
-       
+        validationSchema={Yup.object({
+          invoiceNumber: Yup.string().required(
+            "Veuillez remplir le champ le numéro facture"
+          ),
+          carVoucherId: Yup.string().required(
+            "Veuillez sélectionner un Numéro BV"
+          ),
+        })}
+        onSubmit={(value: any, action: any) => {
+          handleSubmit(value);
+          console.log("valeur", value);
+          action.resetForm();
+        }}
+      >
+        {(formikProps) => {
+          return (
+            <Form>
+              <NavigationContainer>
+                <SectionNavigation>
+                  <Stack flexDirection={"row"}>
+                    <Link href="/materiel_de_transport/facture_de_consommation">
+                      <Button
+                        color="info"
+                        variant="text"
+                        startIcon={<ArrowBack />}
+                        onClick={() => {
+                          formikProps.resetForm();
+                          dispatch(cancelEdit());
+                        }}
+                      >
+                        Retour
+                      </Button>
+                    </Link>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      startIcon={<Check />}
+                      sx={{ marginInline: 3 }}
+                      type="submit"
+                    >
+                      Enregistrer
+                    </Button>
+                    <Button
+                      variant="text"
+                      color="warning"
+                      size="small"
+                      startIcon={<Close />}
+                      sx={{ marginInline: 3 }}
+                      onClick={() => {
+                        formikProps.resetForm();
+                        dispatch(cancelEdit());
+                      }}
+                    >
+                      Annuler
+                    </Button>
+                  </Stack>
+                  <Typography variant="h4">
+                    {isEditing ? "Modifier" : "Ajouter"} facture de consommation
+                  </Typography>
+                </SectionNavigation>
+                <Divider />
+              </NavigationContainer>
+              <FormContainer spacing={2}>
+                <CustomStack
+                  direction={{ xs: "column", sm: "column", md: "row" }}
+                  spacing={{ xs: 2, sm: 2, md: 1 }}
+                >
+                  <OSSelectField
+                    id="carVoucherId"
+                    label="Numéro BV"
+                    name="carVoucherId"
+                    options={carvouchers}
+                    dataKey="number"
+                    valueKey="id"
+                  />
+                  <OSTextField
+                    fullWidth
+                    id="outlined-basic"
+                    label="Numéro facture"
+                    variant="outlined"
+                    name="invoiceNumber"
+                  />
+                </CustomStack>
+                <OSTextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="Motif de la course"
+                  variant="outlined"
+                  name="reason"
+                />
+                <CustomStack
+                  direction={{ xs: "column", sm: "column", md: "row" }}
+                  spacing={{ xs: 2, sm: 2, md: 1 }}
+                >
+                  <OSTextField
+                    fullWidth
+                    id="outlined-basic"
+                    label="Kilométrage  départ/Arrivé "
+                    variant="outlined"
+                    name="DepartureKilometrage"
+                    type="number"
+                  />
+                  <OSTextField
+                    fullWidth
+                    id="outlined-basic"
+                    label="Kilométrage Consommé"
+                    variant="outlined"
+                    name="consommation"
+                    type="number"
+                  />
+                </CustomStack>
+                <CustomStack
+                  direction={{ xs: "column", sm: "column", md: "row" }}
+                  spacing={{ xs: 2, sm: 2, md: 1 }}
+                >
+                  {/* <OSTextField
+                    fullWidth
+                    id="outlined-basic"
+                    label="Consommation"
+                    variant="outlined"
+                    name="consommation"
+                    type="number"
+                  /> */}
+                  <OSTextField
+                    fullWidth
+                    id="outlined-basic"
+                    label="Unité"
+                    variant="outlined"
+                    name="SKU"
+                  />
+                </CustomStack>
+                <CustomStack
+                  direction={{ xs: "column", sm: "column", md: "row" }}
+                  spacing={{ xs: 2, sm: 2, md: 1 }}
+                >
+                  <OSTextField
+                    fullWidth
+                    id="outlined-basic"
+                    label="Prix unitaire"
+                    variant="outlined"
+                    name="unitPrice"
+                    type="number"
+                  />
+                  {/* <OSTextField
+                    fullWidth
+                    id="outlined-basic"
+                    label="Montant"
+                    variant="outlined"
+                    name="amount"
+                    value={amount}
+                    type="number"
+                  /> */}
+                  <CalculatedField
+                    fullWidth
+                    id="outlined-basic"
+                    label="Montant"
+                    variant="outlined"
+                    name="amount"
+                  />
+                </CustomStack>
+              </FormContainer>
+            </Form>
+          );
+        }}
+      </Formik>
     </Container>
   );
 };
