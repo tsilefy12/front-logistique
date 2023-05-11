@@ -210,11 +210,11 @@ const FormFactureConsommation = () => {
                     type="number"
                   />
                 </CustomStack>
-                <CustomStack
+                {/* <CustomStack
                   direction={{ xs: "column", sm: "column", md: "row" }}
                   spacing={{ xs: 2, sm: 2, md: 1 }}
-                >
-                  {/* <OSTextField
+                > */}
+                {/* <OSTextField
                     fullWidth
                     id="outlined-basic"
                     label="Consommation"
@@ -222,14 +222,7 @@ const FormFactureConsommation = () => {
                     name="consommation"
                     type="number"
                   /> */}
-                  <OSTextField
-                    fullWidth
-                    id="outlined-basic"
-                    label="Unité"
-                    variant="outlined"
-                    name="SKU"
-                  />
-                </CustomStack>
+                {/* </CustomStack> */}
                 <CustomStack
                   direction={{ xs: "column", sm: "column", md: "row" }}
                   spacing={{ xs: 2, sm: 2, md: 1 }}
@@ -237,11 +230,18 @@ const FormFactureConsommation = () => {
                   <OSTextField
                     fullWidth
                     id="outlined-basic"
+                    label="Unité"
+                    variant="outlined"
+                    name="SKU"
+                  />
+                  {/* <OSTextField
+                    fullWidth
+                    id="outlined-basic"
                     label="Prix unitaire"
                     variant="outlined"
                     name="unitPrice"
                     type="number"
-                  />
+                  /> */}
                   {/* <OSTextField
                     fullWidth
                     id="outlined-basic"

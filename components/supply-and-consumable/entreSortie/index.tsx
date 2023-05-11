@@ -57,6 +57,7 @@ export default function LogSupplyAndConsumableList() {
     }
   };
 
+  const articlee = ["Non de l'article"];
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -120,6 +121,7 @@ export default function LogSupplyAndConsumableList() {
                           <TableCell component="th" id={labelId} align="left">
                             <Moment format="DD/MM/YYYY">{row.date}</Moment>
                           </TableCell>
+                          <TableCell align="left">{articlee}</TableCell>
 
                           <TableCell align="left">{row.quantity}</TableCell>
 
@@ -127,7 +129,7 @@ export default function LogSupplyAndConsumableList() {
 
                           <TableCell align="left">{row.unitPrice}</TableCell>
 
-                          <TableCell align="left">
+                          <TableCell align="center">
                             <Badge
                               badgeContent={getText(row.OperationType)}
                               color={getColorsText(row.OperationType)}

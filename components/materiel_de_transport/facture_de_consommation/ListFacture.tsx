@@ -48,8 +48,6 @@ const ListFacture = () => {
     (state) => state.consumptionInvoice
   );
 
-  // console.log(consumptionInvoices);
-
   const calculateAmount = (depart: any, mation: any) => {
     return parseFloat(depart) * parseFloat(mation);
   };
@@ -64,11 +62,11 @@ const ListFacture = () => {
     router.push(`/materiel_de_transport/facture_de_consommation/${id}/edit`);
   };
 
-  const handleClickDetail = async (id: any) => {
-    router.push(`/materiel_de_transport/facture_de_consommation/${id}/detail`);
-    await dispatch(getConsumptionInvoice({ id }));
-    fetchConsumptionInvoices();
-  };
+  // const handleClickDetail = async (id: any) => {
+  //   router.push(`/materiel_de_transport/facture_de_consommation/${id}/detail`);
+  //   await dispatch(getConsumptionInvoice({ id }));
+  //   fetchConsumptionInvoices();
+  // };
 
   const handleClickDelete = async (id: any) => {
     confirm({
