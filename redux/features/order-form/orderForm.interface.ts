@@ -7,12 +7,13 @@ export interface OrderFormItem {
   GSEValidation?: boolean;
   DEValidation?: boolean;
   vendorId?: string;
-  vendor?: string;
+  vendor?: any;
 }
 
 export interface OrderFormInitialState {
   orderFormListe: OrderFormItem[];
   orderForm: OrderFormItem;
+  vendors: [];
   isEditing: boolean;
   loading: boolean;
   [key: string]: any;

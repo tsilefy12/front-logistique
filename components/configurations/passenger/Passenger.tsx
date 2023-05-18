@@ -6,13 +6,12 @@ import {
   Stack,
   Divider,
   styled,
+  Typography,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Link from "next/link";
 import PassengerForm from "./organism/PassengerForm";
 import PassengerListe from "./organism/table/PassengerList";
-
-
 
 const Passenger = () => {
   return (
@@ -28,6 +27,7 @@ const Passenger = () => {
               Retour
             </Button>
           </Link>
+          <Typography variant="h4"> Etat Materiel </Typography>
         </SectionNavigation>
         <Divider />
       </Stack>

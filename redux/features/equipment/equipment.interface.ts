@@ -5,20 +5,20 @@ export interface EquipmentItem {
   additionalInformation?: string;
   status?: string;
   ownerId?: string;
+  owner?: any;
   acquisitionDate?: string;
-  acquisitionValue?: string;
+  acquisitionValue?: number;
   imageUrl?: string;
   typeEquipmentId?: string;
-  applicant?: any;
   type?: any;
 }
 
 export interface EquipmentInitialState {
-    equipments: EquipmentItem[];
-    equipment: EquipmentItem;
-    typeequipment:[];
-    employees:[];
-    isEditing: boolean;
-    loading: boolean;
-    [key: string]: any;
+  equipments: EquipmentItem[];
+  equipment: EquipmentItem;
+  typeequipment: [];
+  employees: [];
+  isEditing: boolean;
+  loading: boolean;
+  [key: string]: any;
 }

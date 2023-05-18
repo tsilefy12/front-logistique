@@ -17,15 +17,11 @@ import React from "react";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { Check, Close, Save } from "@mui/icons-material";
 import { Form, Formik } from "formik";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import * as Yup from "yup";
 import OSSelectField from "../../../shared/select/OSSelectField";
 import OSTextField from "../../../shared/input copy/OSTextField";
 import OSDatePicker from "../../../shared/date/OSDatePicker";
-import OSTimePicker from "../../../shared/time/OSTimePicker";
 import useFetchTypeEquipment from "../hooks/useFetchTypeEquipment";
 import {
   createEquipment,
@@ -33,18 +29,21 @@ import {
 } from "../../../../redux/features/equipment";
 import { useRouter } from "next/router";
 import useFetchEmployes from "../hooks/useFetchEmployees";
+import { cancelEdit } from "../../../../redux/features/equipment/equipmentSlice";
+
 const AddArticleForm = () => {
   const fetchTypeEquipment = useFetchTypeEquipment();
   const fetchEmployes = useFetchEmployes();
   const dispatch = useAppDispatch();
   const etat = [
-    { name: "GOOD",french:"Bon etat" },
-    { name: "BAD",french:"Mauvais" },
-    { name: "BROKEN",french:"inutilisable" },
+    { name: "GOOD", french: "Bon etat" },
+    { name: "BAD", french: "Mauvais" },
+    { name: "BROKEN", french: "inutilisable" },
   ];
   const route = useRouter();
-  const { typeequipment, employees, isEditing, equipment } =
-    useAppSelector((state) => state.equipment);
+  const { typeequipment, employees, isEditing, equipment } = useAppSelector(
+    (state) => state.equipment
+  );
   console.log(employees);
   React.useEffect(() => {
     fetchTypeEquipment();
@@ -54,15 +53,7 @@ const AddArticleForm = () => {
   }, []);
 
   const handleSubmit = async (values: any) => {
-    values.acquisitionDate = new Date(
-      values?.acquisitionDate
-    ).toISOString();
-    Object.keys(values).forEach((key) => {
-      if (values[key] === "") {
-        values[key] = null;
-      }
-    });
-  
+    values.acquisitionDate = new Date(values?.acquisitionDate).toISOString();
     try {
       if (isEditing) {
         await dispatch(
@@ -74,7 +65,7 @@ const AddArticleForm = () => {
       } else {
         await dispatch(createEquipment(values));
       }
-      // route.push("/");
+      route.push("/materiels/informatiques");
     } catch (error) {
       console.log("error", error);
     }
@@ -88,33 +79,23 @@ const AddArticleForm = () => {
           additionalInformation: isEditing
             ? equipment?.additionalInformation
             : "",
-          acquisitionDate: isEditing
-            ? equipment?.acquisitionDate
-            : new Date(),
-          acquisitionValue: isEditing
-            ? equipment?.acquisitionValue
-            : "",
+          acquisitionDate: isEditing ? equipment?.acquisitionDate : new Date(),
+          acquisitionValue: isEditing ? equipment?.acquisitionValue : "",
           imageUrl: isEditing ? equipment?.imageUrl : "",
           designation: isEditing ? equipment?.designation : "",
           status: isEditing ? equipment?.status : "",
           ownerId: isEditing ? equipment?.ownerId : "",
-          typeEquipmentId: isEditing
-            ? equipment?.typeEquipmentId
-            : "",
+          typeEquipmentId: isEditing ? equipment?.typeEquipmentId : "",
         }}
         validationSchema={Yup.object({
-          numOptim: Yup.string().required(
-            "Veuillez sélectionner un numOptim"
-          ),
+          numOptim: Yup.string().required("Veuillez sélectionner un numOptim"),
           additionalInformation: Yup.string(),
           acquisitionDate: Yup.date(),
           acquisitionValue: Yup.number(),
           designation: Yup.string().required(
             "Veuillez remplir le champ designation"
           ),
-          status: Yup.string().required(
-            "Veuillez sélectionner un status"
-          ),
+          status: Yup.string().required("Veuillez sélectionner un status"),
           typeEquipmentId: Yup.string().required(
             "Veuillez sélectionner un type"
           ),
@@ -135,6 +116,10 @@ const AddArticleForm = () => {
                         color="info"
                         variant="text"
                         startIcon={<ArrowBack />}
+                        onClick={() => {
+                          formikProps.resetForm();
+                          dispatch(cancelEdit());
+                        }}
                       >
                         Retour
                       </Button>
@@ -155,13 +140,16 @@ const AddArticleForm = () => {
                       size="small"
                       startIcon={<Close />}
                       sx={{ marginInline: 3 }}
+                      onClick={() => {
+                        formikProps.resetForm();
+                        dispatch(cancelEdit());
+                      }}
                     >
                       Annuler
                     </Button>
                   </Stack>
                   <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"} materiel
-                    informatique
+                    {isEditing ? "Modifier" : "Ajouter"} materiel informatique
                   </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -225,10 +213,7 @@ const AddArticleForm = () => {
                     label="Date d'acquisition"
                     value={formikProps.values.acquisitionDate}
                     onChange={(value: any) =>
-                      formikProps.setFieldValue(
-                        "acquisitionDate",
-                        value
-                      )
+                      formikProps.setFieldValue("acquisitionDate", value)
                     }
                   />
                   <OSTextField

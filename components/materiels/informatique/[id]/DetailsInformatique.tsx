@@ -1,4 +1,5 @@
 import {
+  Badge,
   Button,
   Container,
   Grid,
@@ -11,37 +12,44 @@ import Link from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
-// import useFetchOrderFormListe from "../hooks/useFetchOrderFormListe";
-import Moment from "react-moment";
-import { getOrderForm } from "../../../../redux/features/order-form";
+import { getEquipment } from "../../../../redux/features/equipment/useCases/getEquipment";
 
-const DetailsOrderForm = () => {
+const DetailsInformatique = () => {
   const router = useRouter();
-  const { id }: any = router.query;
   const dispatch = useAppDispatch();
-  const { orderForm } = useAppSelector((state) => state.orderForm);
-  // const fetchOrderFormListe = useFetchOrderFormListe();
-
-  // useEffect(() => {
-  //   fetchOrderFormListe();
-  // }, []);
+  const { id }: any = router.query;
+  const { equipment } = useAppSelector((state) => state.equipment);
 
   useEffect(() => {
-    getDetailsOrderFormList();
+    getDetailInformatique();
   }, [id]);
 
-  const getDetailsOrderFormList = () => {
+  const getDetailInformatique = () => {
     const args: any = {
       include: {
-        number: true,
-        reference: true,
-        shippingMethod: true,
-        deliveryDate: true,
-        vendor: true,
+        typeEquipmentId: true,
+        ownerId: true,
       },
     };
-    dispatch(getOrderForm({ id, args }));
+    dispatch(getEquipment({ id, args }));
   };
+
+  function getText(etat: string) {
+    switch (etat) {
+      case "GOOD":
+        return "Bon_état";
+        break;
+      case "BAD":
+        return "mauvais";
+        break;
+      case "BROKEN":
+        return "Inutilisable";
+        break;
+
+      default:
+        break;
+    }
+  }
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
@@ -50,13 +58,13 @@ const DetailsOrderForm = () => {
         justifyContent="space-between"
         sx={{ mb: 2 }}
       >
-        <Link href="/materiels/bon_de_commande">
+        <Link href="/materiels/informatiques">
           <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
             Retour
           </Button>
         </Link>
         <Typography variant="h4" color="GrayText">
-          Detail Bon de commande
+          Details Equipement
         </Typography>
       </SectionNavigation>
       <DetailsContainer>
@@ -64,10 +72,10 @@ const DetailsOrderForm = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-                Numero :
+                N°Optim :
               </Typography>
               <Typography variant="body1" color="gray">
-                {orderForm.number}
+                {equipment.numOptim}
               </Typography>
             </InfoItems>
           </Grid>
@@ -76,10 +84,10 @@ const DetailsOrderForm = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-                Référence :
+                Type :
               </Typography>
               <Typography variant="body1" color="gray">
-                {orderForm.reference}
+                {equipment?.type?.type}
               </Typography>
             </InfoItems>
           </Grid>
@@ -88,10 +96,10 @@ const DetailsOrderForm = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-                Mode de livraison :
+                Utilisateur :
               </Typography>
               <Typography variant="body1" color="gray">
-                {orderForm.shippingMethod}
+                {equipment?.owner?.name}
               </Typography>
             </InfoItems>
           </Grid>
@@ -100,10 +108,10 @@ const DetailsOrderForm = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-                Date de livraison :
+                Designation :
               </Typography>
               <Typography variant="body1" color="gray">
-                <Moment format="DD/MM/YYYY">{orderForm.deliveryDate}</Moment>
+                {equipment.designation}
               </Typography>
             </InfoItems>
           </Grid>
@@ -112,10 +120,10 @@ const DetailsOrderForm = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-                Fournisseur :
+                Etat :
               </Typography>
               <Typography variant="body1" color="gray">
-                {orderForm?.vendor?.name}
+                {getText(equipment.status)}
               </Typography>
             </InfoItems>
           </Grid>
@@ -125,7 +133,7 @@ const DetailsOrderForm = () => {
   );
 };
 
-export default DetailsOrderForm;
+export default DetailsInformatique;
 
 export const InfoItems = styled(Stack)(({ theme }) => ({}));
 

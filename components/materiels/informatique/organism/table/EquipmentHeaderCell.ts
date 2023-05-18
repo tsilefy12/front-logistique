@@ -2,19 +2,19 @@ import { HeadCell } from "./HeadCell.interface";
 
 export const equipmentHeadCells: readonly HeadCell[] = [
   {
-    id: "num_optim",
+    id: "numOptim",
     numeric: false,
     disablePadding: false,
-    label: "N°Optim",
+    label: "N° OPTIM",
   },
   {
-    id: "type_materiel",
+    id: "typeEquipment",
     numeric: false,
     disablePadding: false,
     label: "Type",
   },
   {
-    id: "user",
+    id: "owner",
     numeric: false,
     disablePadding: false,
     label: "Utilisateur",
@@ -26,7 +26,7 @@ export const equipmentHeadCells: readonly HeadCell[] = [
     label: "Désignation",
   },
   {
-    id: "etat",
+    id: "status",
     numeric: false,
     disablePadding: false,
     label: "Etat",
