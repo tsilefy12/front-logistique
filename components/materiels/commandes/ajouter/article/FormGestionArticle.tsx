@@ -28,7 +28,7 @@ const FormGestionArticle = () => {
                   Retour
                 </Button>
               </Link>
-              <Button
+              {/* <Button
                 variant="contained"
                 color="primary"
                 size="small"
@@ -45,7 +45,7 @@ const FormGestionArticle = () => {
                 sx={{ marginInline: 3 }}
               >
                 Annuler
-              </Button>
+              </Button> */}
             </Stack>
             <Typography variant="h4">Gérer article pour un offre</Typography>
           </SectionNavigation>

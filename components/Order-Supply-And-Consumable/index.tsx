@@ -117,6 +117,28 @@ export default function ConsumableList() {
         break;
     }
   };
+  const getTextStatus = (status: string | undefined) => {
+    switch (status) {
+      case "PENDING":
+        return "En_attent";
+        break;
+      case "APPROVEDBYMANAGER":
+        return "Approuvé_Par_Directeur";
+        break;
+      case "APPROVED":
+        return "Approuvé";
+        break;
+      case "REJECTED":
+        return "Rejeté";
+        break;
+      case "CANCELLED":
+        return "Annulé";
+        break;
+      default:
+        return "primary";
+        break;
+    }
+  };
 
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
@@ -179,7 +201,8 @@ export default function ConsumableList() {
                             align="left"
                           >
                             <Badge
-                              badgeContent={row.status}
+                              // badgeContent={row.status}
+                              badgeContent={getTextStatus(row.status)}
                               color={getColorsStatus(row.status)}
                             />
                           </TableCell>

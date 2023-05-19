@@ -152,7 +152,7 @@ const ListInfo = () => {
                 rows.slice().sort(getComparator(order, orderBy)) */}
                   {equipments
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row: EquipmentItem | any, index) => {
+                    .map((row: EquipmentItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (
                         <TableRow hover tabIndex={-1} key={row.id}>
@@ -165,10 +165,8 @@ const ListInfo = () => {
                           >
                             {row.numOptim}
                           </TableCell>
-                          <TableCell align="left">{row.type?.type}</TableCell>
-                          <TableCell align="left">
-                            {row.applicant?.name}
-                          </TableCell>
+                          <TableCell align="left">{row?.type?.type}</TableCell>
+                          <TableCell align="left">{row.owner?.name}</TableCell>
                           <TableCell align="left">{row.designation}</TableCell>
                           <TableCell align="left">
                             <Badge
@@ -181,16 +179,20 @@ const ListInfo = () => {
                               direction="row"
                               justifyContent="center"
                             >
-                              <IconButton
-                                color="accent"
-                                aria-label="Details"
-                                component="span"
-                                onClick={() => {
-                                  alert("En cours de traitement ...");
-                                }}
+                              <Link
+                                href={`/materiels/informatiques/${row.id}/detail`}
                               >
-                                <VisibilityIcon />
-                              </IconButton>
+                                <IconButton
+                                  color="accent"
+                                  aria-label="Details"
+                                  component="span"
+                                  // onClick={() => {
+                                  //   alert("En cours de traitement ...");
+                                  // }}
+                                >
+                                  <VisibilityIcon />
+                                </IconButton>
+                              </Link>
                               <IconButton
                                 color="primary"
                                 aria-label="Modifier"

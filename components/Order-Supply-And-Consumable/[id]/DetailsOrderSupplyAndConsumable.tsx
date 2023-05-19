@@ -9,10 +9,7 @@ import {
 import React, { useEffect } from "react";
 import Link from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { getConsumable } from "../../../redux/features/order-supply-and-consumable";
 import Moment from "react-moment";
@@ -48,11 +45,7 @@ const DetailsConsumable = () => {
         sx={{ mb: 2 }}
       >
         <Link href="/fournitures_et_consommables/commande">
-          <Button
-            color="info"
-            variant="text"
-            startIcon={<ArrowBackIcon />}
-          >
+          <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
             Retour
           </Button>
         </Link>
@@ -65,7 +58,7 @@ const DetailsConsumable = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-              Article :
+                Article :
               </Typography>
               <Typography variant="body1" color="gray">
                 {consumable.item}
@@ -77,7 +70,7 @@ const DetailsConsumable = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-              Demandeur :
+                Demandeur :
               </Typography>
               <Typography variant="body1" color="gray">
                 {consumable.applicant?.name}
@@ -89,7 +82,7 @@ const DetailsConsumable = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-              Quantité démandée :
+                Quantité démandée :
               </Typography>
               <Typography variant="body1" color="gray">
                 {consumable.requestedQuantity}
@@ -101,7 +94,7 @@ const DetailsConsumable = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-              Quantité livrée :
+                Quantité livrée :
               </Typography>
               <Typography variant="body1" color="gray">
                 {consumable.deliveredQuantity}
@@ -113,12 +106,10 @@ const DetailsConsumable = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-              Date de livraison :
+                Date de livraison :
               </Typography>
               <Typography variant="body1" color="gray">
-                <Moment format="DD/MM/YYYY">
-                {consumable.deliveryDate}
-                </Moment>
+                <Moment format="DD/MM/YYYY">{consumable.deliveryDate}</Moment>
               </Typography>
             </InfoItems>
           </Grid>
@@ -127,7 +118,7 @@ const DetailsConsumable = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-              Statut :
+                Statut :
               </Typography>
               <Typography variant="body1" color="gray">
                 {consumable.status}

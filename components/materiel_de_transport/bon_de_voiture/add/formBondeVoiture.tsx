@@ -16,10 +16,7 @@ import * as React from "react";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { Check, Close } from "@mui/icons-material";
 import OSDatePicker from "../../../shared/date/OSDatePicker";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import OSTextField from "../../../shared/input copy/OSTextField";
 import OSTimePicker from "../../../shared/time/OSTimePicker";
 import {
@@ -32,17 +29,11 @@ const FormBonDeVoiture = () => {
   const route = useRouter();
   const dispatch = useAppDispatch();
 
-  const { isEditing, carVoucher } = useAppSelector(
-    (state) => state.carVoucher
-  );
+  const { isEditing, carVoucher } = useAppSelector((state) => state.carVoucher);
 
   const handleSubmit = async (values: any) => {
-    values.departureDate = new Date(
-      values?.departureDate
-    ).toISOString();
-    values.departureTime = new Date(
-      values?.departureTime
-    ).toISOString();
+    values.departureDate = new Date(values?.departureDate).toISOString();
+    values.departureTime = new Date(values?.departureTime).toISOString();
     values.arrivalDate = new Date(values?.arrivalDate).toISOString();
     values.arrivalTime = new Date(values?.arrivalTime).toISOString();
     try {
@@ -73,33 +64,19 @@ const FormBonDeVoiture = () => {
           reason: isEditing ? carVoucher?.reason : "",
           argument: isEditing ? carVoucher?.argument : "",
           itinerary: isEditing ? carVoucher?.itinerary : "",
-          departureDate: isEditing
-            ? carVoucher?.departureDate
-            : new Date(),
-          departureTime: isEditing
-            ? carVoucher?.departureTime
-            : new Date(),
-          arrivalDate: isEditing
-            ? carVoucher?.arrivalDate
-            : new Date(),
-          arrivalTime: isEditing
-            ? carVoucher?.arrivalTime
-            : new Date(),
+          departureDate: isEditing ? carVoucher?.departureDate : new Date(),
+          departureTime: isEditing ? carVoucher?.departureTime : new Date(),
+          arrivalDate: isEditing ? carVoucher?.arrivalDate : new Date(),
+          arrivalTime: isEditing ? carVoucher?.arrivalTime : new Date(),
           quantity: isEditing ? carVoucher?.quantity : 0,
         }}
         validationSchema={Yup.object({
-          number: Yup.string().required(
-            "Veuillez remplir le champ NumeroBV"
-          ),
+          number: Yup.string().required("Veuillez remplir le champ NumeroBV"),
           registration: Yup.string().required(
             "Veuillez remplir le champ Immatriculation"
           ),
-          type: Yup.string().required(
-            "Veuillez remplir le champ Type"
-          ),
-          reason: Yup.string().required(
-            "Veuillez remplir le champ Motif"
-          ),
+          type: Yup.string().required("Veuillez remplir le champ Type"),
+          reason: Yup.string().required("Veuillez remplir le champ Motif"),
           argument: Yup.string().required(
             "Veuillez remplir le champ Argumentaire"
           ),
@@ -171,7 +148,7 @@ const FormBonDeVoiture = () => {
                     </Button>
                   </Stack>
                   <Typography variant="h4">
-                    Ajouter un bon de voiture
+                    {isEditing ? "Modifier" : "Ajouter"} Bon de voiture
                   </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -244,10 +221,7 @@ const FormBonDeVoiture = () => {
                       label="Date départ"
                       value={formikProps.values.departureDate}
                       onChange={(value: any) =>
-                        formikProps.setFieldValue(
-                          "departureDate",
-                          value
-                        )
+                        formikProps.setFieldValue("departureDate", value)
                       }
                     />
                   </FormControl>
@@ -256,10 +230,7 @@ const FormBonDeVoiture = () => {
                       label="Heure de départ"
                       value={formikProps.values.departureTime}
                       onChange={(value: any) =>
-                        formikProps.setFieldValue(
-                          "departureTime",
-                          value
-                        )
+                        formikProps.setFieldValue("departureTime", value)
                       }
                     />
                   </FormControl>
@@ -276,10 +247,7 @@ const FormBonDeVoiture = () => {
                       label="Date retour"
                       value={formikProps.values.arrivalDate}
                       onChange={(value: any) =>
-                        formikProps.setFieldValue(
-                          "arrivalDate",
-                          value
-                        )
+                        formikProps.setFieldValue("arrivalDate", value)
                       }
                     />
                   </FormControl>
@@ -288,10 +256,7 @@ const FormBonDeVoiture = () => {
                       label="Heure de retour"
                       value={formikProps.values.arrivalTime}
                       onChange={(value: any) =>
-                        formikProps.setFieldValue(
-                          "arrivalTime",
-                          value
-                        )
+                        formikProps.setFieldValue("arrivalTime", value)
                       }
                     />
                   </FormControl>

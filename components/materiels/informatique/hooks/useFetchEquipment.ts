@@ -1,8 +1,5 @@
 import { useRouter } from "next/router";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { getEquipments } from "../../../../redux/features/equipment";
 
 const useFetchEquipment = () => {
@@ -13,15 +10,11 @@ const useFetchEquipment = () => {
     let args: any = {
       include: {
         type: true,
-        // employee: true,
       },
     };
 
     if (router.query.search) {
       console.log("search", router.query.search);
-      // implement here the search logic
-      // args.where = {
-      // };
       args.where = {
         OR: [
           {
@@ -35,13 +28,13 @@ const useFetchEquipment = () => {
           {
             numOptim: {
               contains: router.query.search,
-                mode: "insensitive",
+              mode: "insensitive",
             },
           },
           {
             designation: {
               contains: router.query.search,
-                mode: "insensitive",
+              mode: "insensitive",
             },
           },
         ],
@@ -51,8 +44,7 @@ const useFetchEquipment = () => {
       switch (router.query.orderBy) {
         case "num_optim":
           args.orderBy = {
-            numOptim: 
-              router.query.order,
+            numOptim: router.query.order,
           };
           break;
         default:
@@ -62,7 +54,7 @@ const useFetchEquipment = () => {
           break;
       }
     }
-    
+
     await dispatch(getEquipments({ args }));
   };
 };
