@@ -9,16 +9,7 @@ const useFetchLogSuplyAndConsumableList = () => {
   return async () => {
     let args: any = {};
     if (router.query.search) {
-      args.where = {
-        // OR: [
-        //   {
-        //     OperationType: {
-        //       contains: router.query.search,
-        //       mode: "insensitive",
-        //     },
-        //   },
-        // ],
-      };
+      args.where = {};
     }
 
     if (router.query.orderBy && router.query.order) {
@@ -30,6 +21,9 @@ const useFetchLogSuplyAndConsumableList = () => {
           break;
       }
     }
+    args.include = {
+      supplyAndConsumable: true,
+    };
     dispatch(getLogSuplyAndConsumableListe({ args }));
   };
 };

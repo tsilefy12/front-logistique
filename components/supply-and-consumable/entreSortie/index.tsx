@@ -121,7 +121,9 @@ export default function LogSupplyAndConsumableList() {
                           <TableCell component="th" id={labelId} align="left">
                             <Moment format="DD/MM/YYYY">{row.date}</Moment>
                           </TableCell>
-                          <TableCell align="left">{articlee}</TableCell>
+                          <TableCell align="left">
+                            {row.supplyAndConsumable?.designation}
+                          </TableCell>
 
                           <TableCell align="left">{row.quantity}</TableCell>
 

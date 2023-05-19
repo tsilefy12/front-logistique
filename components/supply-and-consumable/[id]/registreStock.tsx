@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
@@ -24,14 +24,26 @@ import { cancelEdit } from "../../../redux/features/logSuplyAndConsumable/log-su
 import OSTextField from "../../shared/input/OSTextField";
 import OSDatePicker from "../../shared/date/OSDatePicker";
 import RadioGroup from "@mui/material/RadioGroup";
+import useFetchSuplysAndConsumableList from "./useFetchSuplyAndConsumableList";
+import OSSelectField from "../../shared/select/OSSelectField";
+// import useFetchSuplysAndConsumableList from "../../Order-Supply-And-Consumable/hooks/useFetchSuplyAndConsumableList";
 
 const FormLogEntreSortie = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const ficheStock = router.query.id;
+  // const ficheStock = router.query.id;
   const { logSuplyAndConsumable, isEditing } = useAppSelector(
     (state) => state.logSuplyAndConsumable
   );
+  const { suplyAndConsumableList } = useAppSelector(
+    (state) => state.suplyAndConsumable
+  );
+  const fetchSuplyAndConsumableListe = useFetchSuplysAndConsumableList();
+
+  useEffect(() => {
+    fetchSuplyAndConsumableListe();
+  }, []);
+
   const handleSubmit = async (values: any) => {
     (values.quantity = +values.quantity),
       (values.unitPrice = +values.unitPrice),
@@ -71,7 +83,9 @@ const FormLogEntreSortie = () => {
                 inventoryValue: isEditing
                   ? logSuplyAndConsumable?.inventoryValue
                   : 0,
-                supplyAndConsumableId: ficheStock,
+                supplyAndConsumableId: isEditing
+                  ? logSuplyAndConsumable?.supplyAndConsumableId
+                  : "",
               }
         }
         validationSchema={Yup.object({
@@ -169,6 +183,14 @@ const FormLogEntreSortie = () => {
                   id="outlined-basic"
                   label="Valeur de stock"
                   name="SKU"
+                />
+                <OSSelectField
+                  id="outlined-basic"
+                  label="Article"
+                  name="supplyAndConsumableId"
+                  options={suplyAndConsumableList}
+                  dataKey="designation"
+                  valueKey="id"
                 />
                 <FormControl>
                   <Field as={RadioGroup} row name="OperationType">
