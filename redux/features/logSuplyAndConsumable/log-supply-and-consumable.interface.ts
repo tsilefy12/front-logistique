@@ -6,6 +6,8 @@ export interface LogSuplyAndConsumableItem {
   OperationType?: string;
   unitPrice?: number;
   inventoryValue?: number;
+  supplyAndConsumableId?: string;
+  supplyAndConsumable?: any;
 }
 
 export interface LogSuplyAndConsumableInitialState {
