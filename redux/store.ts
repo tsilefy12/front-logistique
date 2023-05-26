@@ -23,6 +23,7 @@ import { orderFormItemSlice } from "./features/orderFormItem/orderFormItemSlice"
 import { selectOfferOrderSlice } from "./features/selectOfferOrder/selectOfferOrderSlice";
 import { offerOrderSlice } from "./features/OfferOrder/offerOrderSlice";
 import { offerOrderItemSlice } from "./features/offerOrderItem/offerOrderItemSlice";
+import { holderSlice } from "./features/holder/holderSlice";
 
 export const store = configureStore({
   reducer: {
@@ -51,6 +52,7 @@ export const store = configureStore({
     offerOrder: offerOrderSlice.reducer,
     offerOrderItem: offerOrderItemSlice.reducer,
     logSuplyAndConsumable: logSuplyAndConsumableSlice.reducer,
+    holder: holderSlice.reducer,
   },
 });
 

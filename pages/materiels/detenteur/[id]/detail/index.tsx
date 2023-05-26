@@ -1,13 +1,13 @@
 import { Container } from "@mui/material";
 import type { NextPage } from "next";
-import BackOfficeLayout from "../../../../layouts/backOffice";
-import FormDetentionMateriel from "../../../../components/materiels/detenteur/ajouter/form/FormDetentionMateriel";
+import BackOfficeLayout from "../../../../../layouts/backOffice";
+import Details from "../../../../../components/materiels/detenteur/id/details";
 
 const Detenteur: NextPage = () => {
   return (
     <BackOfficeLayout>
       <Container maxWidth="xl">
-        <FormDetentionMateriel />
+        <Details />
       </Container>
     </BackOfficeLayout>
   );

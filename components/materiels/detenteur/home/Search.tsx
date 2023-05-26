@@ -7,13 +7,9 @@ import { useRouter } from "next/router";
 import { debounce } from "lodash";
 import { useAppSelector } from "../../../../hooks/reduxHooks";
 import { TableLoading } from "../../../shared/loading";
-// import { useAppSelector } from "../../../../../hooks/reduxHooks";
-// import { TableLoading } from "../../../../shared/loading";
 
 const SearchDetenteur = () => {
-  const { loading } = useAppSelector(
-    (state) => state.detenteur
-  );
+  const { loading } = useAppSelector((state) => state.holder);
 
   const [key, setKey] = React.useState<any>("");
 
@@ -38,9 +34,7 @@ const SearchDetenteur = () => {
     router.query,
   ]);
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKey(event.target.value);
     debouncedSearch(event.target.value);
   };
@@ -62,7 +56,7 @@ const SearchDetenteur = () => {
           }}
         >
           <Typography variant="h6" id="tableTitle" component="div">
-            Liste  des détenteurs de materiels
+            Liste des détenteurs de materiels
           </Typography>
           <TextField
             variant="outlined"
