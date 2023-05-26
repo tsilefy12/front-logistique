@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import Container from "@mui/material/Container";
 import {
   Divider,
@@ -9,30 +9,28 @@ import {
   Stack,
   Button,
   useTheme,
-  TextField,
+  // TextField,
 } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import AddIcon from "@mui/icons-material/Add";
-import CardEmploye from "../../CardEmploye";
 import Link from "next/link";
 import { useAppSelector } from "../../../hooks/reduxHooks";
-import useFetchDetenteurs from "./hooks/useFetchDetenteurs";
 import CardDetenteur from "./home/CardDetenteur";
 import SearchDetenteur from "./home/Search";
 import { useRouter } from "next/router";
+import useFetchDetenteurListe from "./hooks/useFetchDetenteurListe";
 
 const ListDetenteur = () => {
   const theme = useTheme();
-  const router = useRouter();
-  const { detenteurs } = useAppSelector((state) => state.detenteur);
 
-  const fetchDetenteurs = useFetchDetenteurs();
+  const router = useRouter();
+  const { holderListe } = useAppSelector((state) => state.holder);
+
+  const fetchDetenteurList = useFetchDetenteurListe();
 
   React.useEffect(() => {
-    fetchDetenteurs();
+    fetchDetenteurList();
   }, [router.query]);
-
-  const listEmpoyes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
   return (
     <Container maxWidth="xl">
@@ -91,7 +89,7 @@ const ListDetenteur = () => {
         </Grid>
         <Grid item xs={12} md={9}>
           <ContainerListEmploye>
-            <SearchDetenteur/>
+            <SearchDetenteur />
             <Divider />
             <ListEmployeContent>
               <CustomBtnAdd>
@@ -108,9 +106,9 @@ const ListDetenteur = () => {
                   </Button>
                 </Link>
               </CustomBtnAdd>
-              {detenteurs.map((detenteur, index) => (
+              {holderListe.map((holder, index) => (
                 <Fragment key={index}>
-                  <CardDetenteur detenteur={detenteur} />
+                  <CardDetenteur holder={holder} />
                 </Fragment>
               ))}
             </ListEmployeContent>
