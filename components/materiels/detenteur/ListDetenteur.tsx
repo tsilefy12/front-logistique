@@ -67,7 +67,6 @@ const ListDetenteur = () => {
     }
   };
 
-  // const fonctionListe = [
   const fonctionListe = [
     { id: "Communaute_et_Conservation", name: "Communaute_et_Conservation" },
     { id: "Espece_et_Conservation", name: "Espece_et_Conservation" },
