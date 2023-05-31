@@ -8,28 +8,69 @@ const useFetchDetenteurListe = () => {
 
   return async () => {
     let args: any = {};
-    if (router.query.search) {
+    let searchParams = router.query.search;
+    let filterParams = router.query.filter;
+    args.orderBy = {
+      id: "desc",
+    };
+    if (router.query.filter && router.query.search) {
+      args.where = {
+        AND: [
+          {
+            function: {
+              name: { contains: filterParams, mode: "insensitive" },
+            },
+          },
+          {
+            OR: [
+              {
+                lastName: { contains: searchParams, mode: "insensitive" },
+              },
+              {
+                firstName: {
+                  contains: searchParams,
+                  mode: "insensitive",
+                },
+              },
+              {
+                matricule: {
+                  contains: searchParams,
+                  mode: "insensitive",
+                },
+              },
+            ],
+          },
+        ],
+      };
+    } else if (
+      router.query.search &&
+      (router.query.filter === undefined || router.query.filter === "")
+    ) {
       args.where = {
         OR: [
-          {
-            lastName: {
-              contains: router.query.search,
-              mode: "insensitive",
-            },
-          },
+          { lastName: { contains: searchParams, mode: "insensitive" } },
           {
             firstName: {
-              contains: router.query.search,
+              contains: searchParams,
               mode: "insensitive",
             },
           },
+          { matricule: { contains: searchParams, mode: "insensitive" } },
           {
-            matricule: {
-              contains: router.query.search,
-              mode: "insensitive",
+            function: {
+              name: { contains: searchParams, mode: "insensitive" },
             },
           },
         ],
+      };
+    } else if (
+      router.query.filter &&
+      (router.query.search === undefined || router.query.search === "")
+    ) {
+      args.where = {
+        function: {
+          name: { contains: filterParams, mode: "insensitive" },
+        },
       };
     }
     if (router.query.orderBy && router.query.order) {

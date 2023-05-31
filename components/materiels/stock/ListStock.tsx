@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -17,67 +17,78 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
-import Data, { Order } from "./table/type-variable";
-import { rows } from "./table/constante";
-import EnhancedTableToolbar from "./table/EnhancedTableToolbar";
-import EnhancedTableHead from "./table/EnhancedTableHead";
-import { getColorStatus, getComparator, stableSort } from "./table/function";
+// import Data, { Order } from "./table/type-variable";
+// import { rows } from "./table/constante";
+// import EnhancedTableToolbar from "./table/EnhancedTableToolbar";
+// import EnhancedTableHead from "./table/EnhancedTableHead";
+// import { getColorStatus, getComparator, stableSort } from "./table/function";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Badge from "@mui/material/Badge";
+// import EditIcon from "@mui/icons-material/Edit";
+// import DeleteIcon from "@mui/icons-material/Delete";
+// import Badge from "@mui/material/Badge";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import Add from "@mui/icons-material/Add";
+// import Add from "@mui/icons-material/Add";
 import {
   defaultLabelDisplayedRows,
   labelRowsPerPage,
 } from "../../../config/table.config";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
+import EquipmentStockTableToolbar from "./table/EquipmentStockTableToolbar";
+import EquipmentStockTableHeader from "./table/EquipmentStockTableHeader";
+import { EquipmentStockItem } from "../../../redux/features/equipmentStock/equipmentStock.interface";
+import useFetchEquipmentStock from "./hooks/useFetchVendors";
 
 const ListStock = () => {
-  const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("article");
-  const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const dispatch = useAppDispatch();
+  const { equipmentStockList } = useAppSelector(
+    (state) => state.equipmentStock
+  );
+  const fetchEquipmentList = useFetchEquipmentStock();
 
-  const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
-    property: keyof Data
-  ) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
+  useEffect(() => {
+    fetchEquipmentList();
+  }, []);
 
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.article);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
+  // const handleRequestSort = (
+  //   event: React.MouseEvent<unknown>,
+  //   property: keyof Data
+  // ) => {
+  //   const isAsc = orderBy === property && order === "asc";
+  //   setOrder(isAsc ? "desc" : "asc");
+  //   setOrderBy(property);
+  // };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected: readonly string[] = [];
+  // const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.checked) {
+  //     const newSelecteds = rows.map((n) => n.article);
+  //     setSelected(newSelecteds);
+  //     return;
+  //   }
+  //   setSelected([]);
+  // };
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
+  // const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+  //   const selectedIndex = selected.indexOf(name);
+  //   let newSelected: readonly string[] = [];
 
-    setSelected(newSelected);
-  };
+  //   if (selectedIndex === -1) {
+  //     newSelected = newSelected.concat(selected, name);
+  //   } else if (selectedIndex === 0) {
+  //     newSelected = newSelected.concat(selected.slice(1));
+  //   } else if (selectedIndex === selected.length - 1) {
+  //     newSelected = newSelected.concat(selected.slice(0, -1));
+  //   } else if (selectedIndex > 0) {
+  //     newSelected = newSelected.concat(
+  //       selected.slice(0, selectedIndex),
+  //       selected.slice(selectedIndex + 1)
+  //     );
+  //   }
+
+  //   setSelected(newSelected);
+  // };
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -90,15 +101,17 @@ const ListStock = () => {
     setPage(0);
   };
 
-  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDense(event.target.checked);
-  };
+  // const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setDense(event.target.checked);
+  // };
 
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
+  // const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - equipmentStockList.length)
+      : 0;
 
   return (
     <Container maxWidth="xl">
@@ -118,39 +131,29 @@ const ListStock = () => {
       <SectionTable>
         <Box sx={{ width: "100%" }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <EnhancedTableToolbar numSelected={selected.length} />
+            <EquipmentStockTableToolbar />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
                 size="small"
               >
-                <EnhancedTableHead
-                  numSelected={selected.length}
-                  order={order}
-                  orderBy={orderBy}
-                  onSelectAllClick={handleSelectAllClick}
-                  onRequestSort={handleRequestSort}
-                  rowCount={rows.length}
-                />
+                <EquipmentStockTableHeader />
                 <TableBody>
                   {/* if you don't need to support IE11, you can replace the `stableSort` call with:
               rows.slice().sort(getComparator(order, orderBy)) */}
-                  {stableSort(rows, getComparator(order, orderBy))
+                  {equipmentStockList
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      const isItemSelected = isSelected(row.article);
+                    .map((row: EquipmentStockItem, index: any) => {
+                      // const isItemSelected = isSelected(row.article);
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
                         <TableRow
                           hover
                           //   onClick={(event) => handleClick(event, row.article)}
-                          role="checkbox"
-                          aria-checked={isItemSelected}
                           tabIndex={-1}
-                          key={row.article}
-                          selected={isItemSelected}
+                          key={row.id}
                         >
                           <TableCell
                             padding="normal"
@@ -159,11 +162,11 @@ const ListStock = () => {
                             scope="row"
                             align="left"
                           >
-                            {row.article}
+                            {row.type}
                           </TableCell>
-                          <TableCell align="left">{row.stock}</TableCell>
-                          <TableCell align="left">{row.utilisation}</TableCell>
-                          <TableCell align="left">{row.defectueux}</TableCell>
+                          <TableCell align="left">{row.inStock}</TableCell>
+                          <TableCell align="left">{row.inUse}</TableCell>
+                          <TableCell align="left">{row.isBroken}</TableCell>
                           <TableCell align="right">
                             <BtnActionContainer
                               direction="row"
@@ -198,7 +201,7 @@ const ListStock = () => {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={rows.length}
+              count={equipmentStockList.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

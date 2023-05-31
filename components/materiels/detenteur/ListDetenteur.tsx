@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import Container from "@mui/material/Container";
 import {
   Divider,
@@ -18,14 +18,66 @@ import { useAppSelector } from "../../../hooks/reduxHooks";
 import CardDetenteur from "./home/CardDetenteur";
 import SearchDetenteur from "./home/Search";
 import { useRouter } from "next/router";
+import { debounce } from "lodash";
 import useFetchDetenteurListe from "./hooks/useFetchDetenteurListe";
 
 const ListDetenteur = () => {
   const theme = useTheme();
-
+  const [key, setKey] = useState<any>("");
+  const [fonction, setFonction] = useState<any>("");
   const router = useRouter();
+
   const { holderListe } = useAppSelector((state) => state.holder);
 
+  useEffect(() => {
+    if (router?.query?.search) {
+      setKey(router.query.search);
+    }
+
+    if (router?.query?.filter) {
+      setFonction(router.query.filter);
+    }
+  }, [router.query.search, router.query.filter]);
+
+  const search = (key: string) => {
+    const query = { ...router.query, search: key };
+    router.push({
+      pathname: router.pathname,
+      query: query,
+    });
+  };
+
+  const filter = (fonction: string) => {
+    const query = { ...router.query, filter: fonction };
+    router.push({
+      pathname: router.pathname,
+      query: query,
+    });
+  };
+
+  const deboncedSearch = React.useCallback(debounce(search, 300), [
+    router.query,
+  ]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setKey(event.target.value);
+    deboncedSearch(event.target.value);
+    if (event.target.value === "") {
+      setKey("");
+    }
+  };
+
+  // const fonctionListe = [
+  const fonctionListe = [
+    { id: "Communaute_et_Conservation", name: "Communaute_et_Conservation" },
+    { id: "Espece_et_Conservation", name: "Espece_et_Conservation" },
+    { id: "Administration", name: "Administration" },
+    { id: "Suivi_et_Evaluation", name: "Suivi_et_Evaluation" },
+    { id: "RH", name: "RH" },
+    { id: "Prestataire", name: "Prestataire" },
+    { id: "Stagiaire", name: "Stagiaire" },
+    { id: "Autres", name: "Autres" },
+  ];
   const fetchDetenteurList = useFetchDetenteurListe();
 
   React.useEffect(() => {
@@ -39,50 +91,50 @@ const ListDetenteur = () => {
           <FilterContainer>
             <FilterTitle>
               <FilterAltIcon color="disabled" fontSize="small" />
-              <Typography variant="h4">Département</Typography>
+              <Typography variant="h4">Filtre</Typography>
             </FilterTitle>
             <Divider />
             <FilterContent>
-              <ContainerBnt>
-                <Button variant="text" size="small">
-                  tous
-                </Button>
-              </ContainerBnt>
-              <ContainerBnt>
-                <Button
-                  variant="text"
-                  size="small"
-                  sx={{ color: theme.palette.grey[500] }}
+              <ContainerBnt direction="column" spacing={2} alignItems="left">
+                <Typography
+                  variant={"body1"}
+                  color={
+                    fonction === "" ? theme.palette.primary.main : "initial"
+                  }
+                  component="span"
+                  onClick={() => {
+                    setFonction("");
+                    filter("");
+                  }}
+                  sx={{
+                    cursor: "pointer",
+                    textTransform: "none",
+                  }}
                 >
-                  Administration
-                </Button>
-              </ContainerBnt>
-              <ContainerBnt>
-                <Button
-                  variant="text"
-                  size="small"
-                  sx={{ color: theme.palette.grey[500] }}
-                >
-                  Management
-                </Button>
-              </ContainerBnt>
-              <ContainerBnt>
-                <Button
-                  variant="text"
-                  size="small"
-                  sx={{ color: theme.palette.grey[500] }}
-                >
-                  Services
-                </Button>
-              </ContainerBnt>
-              <ContainerBnt>
-                <Button
-                  variant="text"
-                  size="small"
-                  sx={{ color: theme.palette.grey[500] }}
-                >
-                  Recherche
-                </Button>
+                  Tous les Fonctions
+                </Typography>
+                {fonctionListe.map((currentFonction) => (
+                  <Typography
+                    key={currentFonction.name}
+                    variant="body1"
+                    component="span"
+                    className={`${fonction}`}
+                    color={
+                      currentFonction.name == fonction
+                        ? theme.palette.primary.main
+                        : "initial"
+                    }
+                    sx={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setFonction(currentFonction?.name!);
+                      filter(currentFonction?.name!);
+                    }}
+                  >
+                    {currentFonction.name}
+                  </Typography>
+                ))}
               </ContainerBnt>
             </FilterContent>
           </FilterContainer>
@@ -147,7 +199,7 @@ const ContainerListEmploye = styled(Paper)(({ theme }) => ({
   marginBottom: theme.spacing(2),
 }));
 
-const ContainerBnt = styled("div")(({ theme }) => ({}));
+const ContainerBnt = styled(Stack)(({ theme }) => ({}));
 
 const FilterContent = styled(Stack)(({ theme }) => ({
   display: "flex",
@@ -181,3 +233,7 @@ const FilterContainer = styled(Paper)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
 }));
+interface CurrentFonction {
+  id: string;
+  name: string;
+}

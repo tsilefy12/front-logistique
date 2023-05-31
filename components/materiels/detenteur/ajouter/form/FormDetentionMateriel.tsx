@@ -143,12 +143,6 @@ const FormDetentionMateriel = () => {
                 <Divider />
               </NavigationContainer>
               <FormContainer spacing={2}>
-                {/* <TextField
-                  fullWidth
-                  id="outlined-basic"
-                  label="Réference"
-                  variant="outlined"
-                /> */}
                 <OSTextField
                   id="outlined-basic"
                   label="Réference"
@@ -159,24 +153,12 @@ const FormDetentionMateriel = () => {
                 <Typography variant="h6">Detenteur</Typography>
 
                 <Stack spacing={2} direction="row">
-                  {/* <TextField
-                    fullWidth
-                    id="outlined-basic"
-                    label="Nom"
-                    variant="outlined"
-                  /> */}
                   <OSTextField
                     id="outlined-basic"
                     label="Nom"
                     name="lastName"
                     variant="outlined"
                   />
-                  {/* <TextField
-                    fullWidth
-                    id="outlined-basic"
-                    label="Prénoms"
-                    variant="outlined"
-                  /> */}
                   <OSTextField
                     id="outlined-basic"
                     label="Prénoms"
@@ -185,24 +167,12 @@ const FormDetentionMateriel = () => {
                   />
                 </Stack>
                 <Stack direction="row" spacing={2}>
-                  {/* <TextField
-                    fullWidth
-                    id="outlined-basic"
-                    label="Matricule"
-                    variant="outlined"
-                  /> */}
                   <OSTextField
                     id="outlined-basic"
                     label="Matricule"
                     name="matricule"
                     variant="outlined"
                   />
-                  {/* <TextField
-                    fullWidth
-                    id="outlined-basic"
-                    label="Fonction"
-                    variant="outlined"
-                  /> */}
                   <OSSelectField
                     id="outlined-basic"
                     label="Fonction"
