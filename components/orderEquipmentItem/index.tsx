@@ -136,7 +136,7 @@ export default function OrderEquipmentItemList() {
                           <TableCell align="left">{row.quantity}</TableCell>
 
                           <TableCell align="left">
-                            {row.orderEquipmentId}
+                            {row?.orderEquipment?.reason}
                           </TableCell>
 
                           <TableCell align="right" width={"150px"}>
