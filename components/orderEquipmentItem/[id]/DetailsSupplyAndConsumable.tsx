@@ -24,30 +24,18 @@ const DetailsOrderEquipmentItem = () => {
     (state) => state.orderEquipmentItem
   );
 
-  // useEffect(() => {
-  //   getDetailsOrderEquipmentList();
-  // }, [id]);
-
-  // const getDetailsOrderEquipmentList = () => {
-  //   const args: any = {
-  //     include: {
-  //       designation: true,
-  //       quantity: true,
-  //       orderEquipment: true,
-  //     },
-  //   };
-  //   dispatch(getOrderEquipmentItem({ id, args }));
-  // };
-  React.useEffect(() => {
-    if (id) {
-      const args = {
-        include: {
-          orderEquipment: true,
-        },
-      };
-      dispatch(getOrderEquipmentItem({ id, args }));
-    }
+  useEffect(() => {
+    getDetailsOrderEquipmentList();
   }, [id]);
+
+  const getDetailsOrderEquipmentList = () => {
+    const args: any = {
+      include: {
+        orderEquipment: true,
+      },
+    };
+    dispatch(getOrderEquipmentItem({ id, args }));
+  };
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
@@ -97,7 +85,9 @@ const DetailsOrderEquipmentItem = () => {
                 Commande :
               </Typography>
               <Typography variant="body1" color="gray">
-                {orderEquipmentItem.orderEquipment?.reason}
+                {orderEquipmentItem?.orderEquipment?.reason}
+                {/* {orderEquipmentItem?.orderEquipment?.reason ||
+                  "Valeur de commande non disponible"} */}
               </Typography>
             </InfoItems>
           </Grid>
