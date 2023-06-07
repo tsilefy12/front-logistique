@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axios } from "../../../../lib/axios";
 
-export const editSelectOfferOrder = createAsyncThunk(
-  "selectOfferOrder/editSelectOfferOrder",
-  async (data: { id: string }, thunkAPI) => {
+export const getSelectedOfferOrder = createAsyncThunk(
+  "selectedOfferOrder/getSelectedOfferOrder",
+  async (data: { id: string; args?: any }, thunkAPI) => {
     try {
       const response = await axios.get(
         `/logistique/selected-offer-order/${data.id}`

@@ -179,7 +179,7 @@ const FormDetentionMateriel = () => {
                     name="function"
                     options={fonctionListe}
                     dataKey="name"
-                    valueKey="id"
+                    valueKey="name"
                   />
                 </Stack>
               </FormContainer>

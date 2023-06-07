@@ -1,19 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axios } from "../../../../lib/axios";
 import { enqueueSnackbar } from "../../notification/notificationSlice";
-import { SelectOfferOrderItem } from "../selectOfferOrder.interface";
+import { SelectedOfferOrderItem } from "../selectedOfferOrder.interface";
 
-export const createSelectOfferOrder = createAsyncThunk(
-  "selectOfferOrder/createSelectOfferOrder",
-  async (selectOfferOrder: SelectOfferOrderItem, thunkAPI) => {
+export const createSelectedOfferOrder = createAsyncThunk(
+  "selectedOfferOrder/createSelectedOfferOrder",
+  async (selectedOfferOrder: SelectedOfferOrderItem, thunkAPI) => {
     try {
       const response = await axios.post(
         "/logistique/selected-offer-order",
-        selectOfferOrder
+        selectedOfferOrder
       );
       thunkAPI.dispatch(
         enqueueSnackbar({
-          message: "Comande d'offre created successfully",
+          message: "Commande Offre Selectionne created successfully",
           options: { variant: "success" },
         })
       );

@@ -12,30 +12,55 @@ import {
   Grid,
   Divider,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { Check, Close, Save } from "@mui/icons-material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import { useRouter } from "next/router";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../../../hooks/reduxHooks";
+import * as Yup from "yup";
+import OSTextFieldArea from "../../../../../shared/input/OSTextFieldArea";
+import OSSelectField from "../../../../../shared/select/OSSelectField";
+import useFetchOfferOrderListe from "../table/hooks/useFetchOfferOrder";
 
-const FormulaireOffre = () => {
+const FormulaireOffre = ({ formikProps }: any) => {
+  const router = useRouter();
+  const { id }: any = router.query;
+
+  const dispatch = useAppDispatch();
+  const { selectOfferOrder, isEditing } = useAppSelector(
+    (state) => state.selectOfferOrder
+  );
+  const { offerOrderListe, offerOrder } = useAppSelector(
+    (state) => state.offerOrder
+  );
+  const fetchOfferOderList = useFetchOfferOrderListe();
+  useEffect(() => {
+    fetchOfferOderList();
+  }, []);
   return (
     <FormContainer spacing={2}>
       <Typography variant="h6">Offre retenu</Typography>
-      <TextField
-        fullWidth
+      <OSSelectField
         id="outlined-basic"
         label="Offre retenu"
-        variant="outlined"
+        name="offerOrderId"
+        options={offerOrderListe}
+        dataKey="number"
+        valueKey="id"
       />
-      <TextField
+      <OSTextFieldArea
         fullWidth
-        id="outlined-argument"
-        multiline
-        rows={4}
-        label="Arguments"
+        id="outlined-basic"
+        label="Motif de refus"
         variant="outlined"
+        name="reasonRejected"
+        textarea
       />
     </FormContainer>
   );
