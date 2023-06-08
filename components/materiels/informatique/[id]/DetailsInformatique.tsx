@@ -29,6 +29,7 @@ const DetailsInformatique = () => {
       include: {
         typeEquipmentId: true,
         ownerId: true,
+        // type: true,
       },
     };
     dispatch(getEquipment({ id, args }));
@@ -99,7 +100,7 @@ const DetailsInformatique = () => {
                 Utilisateur :
               </Typography>
               <Typography variant="body1" color="gray">
-                {equipment?.owner?.name}
+                {equipment?.owner?.name} {equipment?.owner?.surname}
               </Typography>
             </InfoItems>
           </Grid>

@@ -191,7 +191,7 @@ export default function ConsumableForm() {
                   label="Demandeur"
                   name="applicantId"
                   options={employeeList}
-                  dataKey="name"
+                  dataKey={["name", "surname"]}
                   valueKey="id"
                   // type="string"
                 />

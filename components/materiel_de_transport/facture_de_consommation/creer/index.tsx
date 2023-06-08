@@ -36,15 +36,29 @@ const FormFactureConsommation = () => {
     (state) => state.consumptionInvoice
   );
 
+  const calculeteKilometrage = (values: any) => {
+    const { DepartureKilometrage, arrivalKilometrage } = values;
+    const consommation = arrivalKilometrage - DepartureKilometrage;
+    return consommation;
+  };
+  const CalculatedKilometrage = (props: any) => {
+    const { values }: any = useFormikContext();
+    const consommation = calculeteKilometrage(values);
+    return <OSTextField {...props} value={consommation} disabled />;
+  };
+
   const calculateAmount = (values: any) => {
-    const { DepartureKilometrage, consommation } = values;
-    const amount = DepartureKilometrage * consommation;
+    const { unitPrice } = values;
+    const consommation = calculeteKilometrage(values);
+    if (isNaN(unitPrice) || isNaN(consommation)) {
+      return 0;
+    }
+    const amount = unitPrice * consommation;
     return amount;
   };
   const CalculatedField = (props: any) => {
     const { values }: any = useFormikContext();
     const amount = calculateAmount(values);
-
     return <OSTextField {...props} value={amount} disabled />;
   };
 
@@ -53,8 +67,21 @@ const FormFactureConsommation = () => {
   }, []);
 
   const handleSubmit = async (values: any) => {
+    values.DepartureKilometrage = +values.DepartureKilometrage;
+    values.arrivalKilometrage = +values.arrivalKilometrage;
+    values.unitPrice = +values.unitPrice;
+    values.amount = +values.amount;
+    values.consommation = +values.consommation;
+    const consommation =
+      values.arrivalKilometrage - values.DepartureKilometrage;
+    const amount = values.unitPrice * consommation;
+    values.amount = amount;
+    values.consommation = consommation;
+
     try {
-      const amount = values.DepartureKilometrage * values.consommation;
+      const consommation =
+        values.arrivalKilometrage - values.DepartureKilometrage;
+      const amount = values.unitPrice * values.consommation;
       if (isEditing) {
         await dispatch(
           updateConsumptionInvoice({
@@ -63,7 +90,9 @@ const FormFactureConsommation = () => {
           })
         );
       } else {
-        await dispatch(createConsumptionInvoice({ ...values, amount }));
+        await dispatch(
+          createConsumptionInvoice({ ...values, amount, consommation })
+        );
       }
       route.push("/materiel_de_transport/facture_de_consommation");
     } catch (error) {
@@ -80,22 +109,30 @@ const FormFactureConsommation = () => {
           reason: isEditing ? consumptionInvoice?.reason : "",
           DepartureKilometrage: isEditing
             ? consumptionInvoice?.DepartureKilometrage
-            : 0,
+            : "",
           arrivalKilometrage: isEditing
             ? consumptionInvoice?.arrivalKilometrage
-            : 0,
-          consommation: isEditing ? consumptionInvoice?.consommation : 0,
+            : "",
+          // consommation: isEditing ? consumptionInvoice?.consommation : 0,
+          consommation: isEditing
+            ? consumptionInvoice?.consommation
+            : calculeteKilometrage({
+                DepartureKilometrage: isEditing
+                  ? consumptionInvoice?.DepartureKilometrage
+                  : "",
+                arrivalKilometrage: isEditing
+                  ? consumptionInvoice?.arrivalKilometrage
+                  : "",
+              }),
           SKU: isEditing ? consumptionInvoice?.SKU : "",
-          unitPrice: isEditing ? consumptionInvoice?.unitPrice : 0,
+          unitPrice: isEditing ? consumptionInvoice?.unitPrice : "",
           carVoucherId: isEditing ? consumptionInvoice?.carVoucherId : "",
           // amount: isEditing ? consumptionInvoice?.amount : 0,
           amount: isEditing
             ? consumptionInvoice?.amount
             : calculateAmount({
-                DepartureKilometrage: isEditing
-                  ? consumptionInvoice?.DepartureKilometrage
-                  : 0,
-                consommation: isEditing ? consumptionInvoice?.consommation : 0,
+                unitPrice: isEditing ? consumptionInvoice?.unitPrice : "",
+                consommation: isEditing ? consumptionInvoice?.consommation : "",
               }),
         }}
         validationSchema={Yup.object({
@@ -196,7 +233,7 @@ const FormFactureConsommation = () => {
                   <OSTextField
                     fullWidth
                     id="outlined-basic"
-                    label="Kilométrage  départ/Arrivé "
+                    label="Kilométrage de départ "
                     variant="outlined"
                     name="DepartureKilometrage"
                     type="number"
@@ -204,44 +241,38 @@ const FormFactureConsommation = () => {
                   <OSTextField
                     fullWidth
                     id="outlined-basic"
+                    label="Kilométrage d'arrivé "
+                    variant="outlined"
+                    name="arrivalKilometrage"
+                    type="number"
+                  />
+                  <CalculatedKilometrage
+                    fullWidth
+                    id="outlined-basic"
                     label="Kilométrage Consommé"
                     variant="outlined"
                     name="consommation"
-                    type="number"
                   />
                 </CustomStack>
-                {/* <CustomStack
-                  direction={{ xs: "column", sm: "column", md: "row" }}
-                  spacing={{ xs: 2, sm: 2, md: 1 }}
-                > */}
-                {/* <OSTextField
-                    fullWidth
-                    id="outlined-basic"
-                    label="Consommation"
-                    variant="outlined"
-                    name="consommation"
-                    type="number"
-                  /> */}
-                {/* </CustomStack> */}
                 <CustomStack
                   direction={{ xs: "column", sm: "column", md: "row" }}
                   spacing={{ xs: 2, sm: 2, md: 1 }}
                 >
-                  <OSTextField
+                  {/* <OSTextField
                     fullWidth
                     id="outlined-basic"
                     label="Unité"
                     variant="outlined"
                     name="SKU"
-                  />
-                  {/* <OSTextField
+                  /> */}
+                  <OSTextField
                     fullWidth
                     id="outlined-basic"
                     label="Prix unitaire"
                     variant="outlined"
                     name="unitPrice"
                     type="number"
-                  /> */}
+                  />
                   {/* <OSTextField
                     fullWidth
                     id="outlined-basic"
