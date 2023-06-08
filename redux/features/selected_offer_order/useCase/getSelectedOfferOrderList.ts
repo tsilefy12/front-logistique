@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axios } from "../../../../lib/axios";
 
-export const getSelectOfferOrderListe = createAsyncThunk(
-  "selectOfferOrder/getSelectOfferOrderListe",
+export const getSelectedOfferOrderListe = createAsyncThunk(
+  "selectedOfferOrder/getSelectedOfferOrderListe",
   async (data: { args?: any }, thunkAPI) => {
     try {
       const params = JSON.stringify(data.args);

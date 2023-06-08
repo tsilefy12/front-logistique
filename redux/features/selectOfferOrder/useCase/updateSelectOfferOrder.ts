@@ -3,14 +3,6 @@ import { enqueueSnackbar } from "../../notification/notificationSlice";
 import { SelectOfferOrderItem } from "../selectOfferOrder.interface";
 import { axios } from "../../../../lib/axios";
 
-/**
- * update a selectOfferOrder
- * @param data : { id: string, selectOfferOrder: SelectOfferOrderItem} : the id of the selectOfferOrder to update and the selectOfferOrder data
- * @param thunkAPI
- * @returns {Promise<void>}
- * @memberof useCases
- * @description : This function is used to update a selectOfferOrder
- */
 export const updateSelectOfferOrder = createAsyncThunk(
   "selectOfferOrder/updateSelectOfferOrder",
   async (

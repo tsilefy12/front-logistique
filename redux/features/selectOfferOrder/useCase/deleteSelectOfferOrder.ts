@@ -2,14 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { enqueueSnackbar } from "../../notification/notificationSlice";
 import { axios } from "../../../../lib/axios";
 
-/**
- * delete a selectOfferOrder
- * @param data
- * @param thunkAPI
- * @returns {Promise<void>}
- * @memberof useCases
- * @description : This function is used to delete a selectOfferOrder
- */
 export const deleteSelectOfferOrder = createAsyncThunk(
   "selectOfferOrder/deleteSelectOfferOrder",
   async (data: { id: string }, thunkAPI) => {
