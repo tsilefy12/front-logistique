@@ -47,9 +47,11 @@ const ListFacture = () => {
   const { consumptionInvoices } = useAppSelector(
     (state) => state.consumptionInvoice
   );
-
-  const calculateAmount = (depart: any, mation: any) => {
-    return parseFloat(depart) * parseFloat(mation);
+  const calculeConsommation = (depart: any, arrive: any) => {
+    return parseFloat(depart) - parseFloat(arrive);
+  };
+  const calculateAmount = (unitPrice: any, consommation: any) => {
+    return parseFloat(unitPrice) * parseFloat(consommation);
   };
 
   const fetchConsumptionInvoices = useFetchConsumptionInvoice();
@@ -149,16 +151,19 @@ const ListFacture = () => {
                           <TableCell align="left">{row.reason}</TableCell>
 
                           <TableCell align="left">
-                            {row.DepartureKilometrage}
+                            {"arrive="} {row.arrivalKilometrage} {"/"}{" "}
+                            {"depart="} {row.DepartureKilometrage}
                           </TableCell>
-                          <TableCell align="left">{row.consommation}</TableCell>
+                          <TableCell align="left">
+                            {calculeConsommation(
+                              row.arrivalKilometrage,
+                              row.DepartureKilometrage
+                            )}
+                          </TableCell>
 
                           <TableCell align="left">
                             {/* {row.arrivalKilometrage} */}
-                            {calculateAmount(
-                              row.DepartureKilometrage,
-                              row.consommation
-                            )}
+                            {calculateAmount(row.consommation, row.unitPrice)}
                           </TableCell>
 
                           <TableCell align="right" width={"150px"}>

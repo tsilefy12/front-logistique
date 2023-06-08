@@ -196,7 +196,7 @@ const AddArticleForm = () => {
                     label="Employé utilisateur"
                     name="ownerId"
                     options={employees}
-                    dataKey="name"
+                    dataKey={["name", "surname"]}
                     valueKey="id"
                   />
                 </FormControl>

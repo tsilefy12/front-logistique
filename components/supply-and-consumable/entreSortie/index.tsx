@@ -29,8 +29,10 @@ import { LogSuplyAndConsumableItem } from "../../../redux/features/logSuplyAndCo
 import useFetchLogSuplyAndConsumableList from "./hooks/useFetchLogSupplyAndConsumable";
 import Moment from "react-moment";
 import { Badge } from "@mui/material";
+import { ArrowBack } from "@mui/icons-material";
 
 export default function LogSupplyAndConsumableList() {
+  const dispatch = useAppDispatch();
   function getText(OperationType: string) {
     switch (OperationType) {
       case "INPUT":
@@ -95,6 +97,11 @@ export default function LogSupplyAndConsumableList() {
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
+          <Link href="/fournitures_et_consommables/fiche_de_stock">
+            <Button color="info" variant="text" startIcon={<ArrowBack />}>
+              Retour
+            </Button>
+          </Link>
           <Typography variant="h4"> Entre et Sortie </Typography>
         </SectionNavigation>
         {/* <Divider /> */}

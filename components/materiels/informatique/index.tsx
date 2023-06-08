@@ -166,7 +166,9 @@ const ListInfo = () => {
                             {row.numOptim}
                           </TableCell>
                           <TableCell align="left">{row?.type?.type}</TableCell>
-                          <TableCell align="left">{row.owner?.name}</TableCell>
+                          <TableCell align="left">
+                            {row.owner?.name} {row.owner?.surname}
+                          </TableCell>
                           <TableCell align="left">{row.designation}</TableCell>
                           <TableCell align="left">
                             <Badge

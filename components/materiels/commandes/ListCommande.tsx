@@ -210,7 +210,7 @@ const ListCommande = () => {
                             padding="normal"
                             align="left"
                           >
-                            {row.applicant?.name}
+                            {row.applicant?.name} {row.applicant?.surname}
                           </TableCell>
                           <TableCell
                             component="th"

@@ -177,7 +177,7 @@ export default function ConsumableList() {
                           </TableCell>
 
                           <TableCell align="left">
-                            {row.applicant?.name}
+                            {row.applicant?.name} {row.applicant?.surname}
                           </TableCell>
 
                           <TableCell align="left">

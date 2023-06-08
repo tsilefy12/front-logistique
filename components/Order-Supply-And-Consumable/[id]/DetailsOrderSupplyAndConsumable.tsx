@@ -73,7 +73,7 @@ const DetailsConsumable = () => {
                 Demandeur :
               </Typography>
               <Typography variant="body1" color="gray">
-                {consumable.applicant?.name}
+                {consumable.applicant?.name} {consumable.applicant?.surname}
               </Typography>
             </InfoItems>
           </Grid>
