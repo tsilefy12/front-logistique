@@ -68,14 +68,14 @@ const ListDetenteur = () => {
   };
 
   const fonctionListe = [
-    { id: "Communaute_et_Conservation", name: "Communaute_et_Conservation" },
-    { id: "Espece_et_Conservation", name: "Espece_et_Conservation" },
-    { id: "Administration", name: "Administration" },
-    { id: "Suivi_et_Evaluation", name: "Suivi_et_Evaluation" },
+    { id: "COMMUNAUTE_ET_CONSERVATION", name: "Communaute et Conservation" },
+    { id: "ESPECE_ET_CONSERVATION", name: "Espece et Conservation" },
+    { id: "ADMINISTRATION", name: "Administration" },
+    { id: "SUIVI_ET_EVALUATION", name: "Suivi et Evaluation" },
     { id: "RH", name: "RH" },
-    { id: "Prestataire", name: "Prestataire" },
-    { id: "Stagiaire", name: "Stagiaire" },
-    { id: "Autres", name: "Autres" },
+    { id: "PRESTATAIRE", name: "Prestataire" },
+    { id: "STAGIAIRE", name: "Stagiaire" },
+    { id: "AUTRES", name: "Autres" },
   ];
   const fetchDetenteurList = useFetchDetenteurListe();
 
@@ -127,8 +127,8 @@ const ListDetenteur = () => {
                       cursor: "pointer",
                     }}
                     onClick={() => {
-                      setFonction(currentFonction?.name!);
-                      filter(currentFonction?.name!);
+                      setFonction(currentFonction?.id!);
+                      filter(currentFonction?.id!);
                     }}
                   >
                     {currentFonction.name}

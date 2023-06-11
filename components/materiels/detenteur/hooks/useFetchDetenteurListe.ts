@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
-import { useAppDispatch } from "../../../../hooks/reduxHooks";
-import { getHolderListe } from "../../../../redux/features/holder";
+import { useRouter } from 'next/router';
+import { useAppDispatch } from '../../../../hooks/reduxHooks';
+import { getHolderListe } from '../../../../redux/features/holder';
 
 const useFetchDetenteurListe = () => {
   const router = useRouter();
@@ -11,24 +11,28 @@ const useFetchDetenteurListe = () => {
 
     if (router.query.search) {
       args.where = {
-        OR: [
+        AND: [
           {
-            lastName: { contains: router.query.search, mode: "insensitive" },
-          },
-          {
-            firstName: {
-              contains: router.query.search,
-              mode: "insensitive",
-            },
-          },
-          {
-            function: {
-              contains: router.query.search,
-              mode: "insensitive",
-            },
+            OR: [
+              {
+                lastName: { contains: router.query.search, mode: 'insensitive' },
+              },
+              {
+                firstName: {
+                  contains: router.query.search,
+                  mode: 'insensitive',
+                },
+              },
+            ],
           },
         ],
       };
+    }
+    if(router.query.filter){
+      args.where = {
+        ...args.wehere,
+        function: router.query.filter
+      }
     }
     if (router.query.orderBy && router.query.order) {
       args.orderBy = { [<string>router.query.orderBy]: router.query.order };
