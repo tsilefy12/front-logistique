@@ -118,10 +118,10 @@ const ListDetentionMateriel = () => {
           alignItems="center"
           sx={{ mt: 2 }}
         >
-          <Button size="small" color="info">
+         { /*<Button size="small" color="info">
             <AddIcon />
             Ajouter Article
-          </Button>
+            </Button>*/}
         </Stack>
       </TableContainer>
     </MyTableContainer>

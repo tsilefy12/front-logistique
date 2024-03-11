@@ -4,7 +4,8 @@ export default interface Data {
   demandeur: string,
   quantite_demander: number,
   quantite_livrer : number,
-  date_livraison : string
+  date_livraison : string,
+  approvision: string
 }
 
 export type Order = "asc" | "desc";

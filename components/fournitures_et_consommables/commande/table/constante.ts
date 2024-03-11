@@ -32,7 +32,12 @@ export const headCells: readonly HeadCell[] = [
     disablePadding: false,
     label: "Dete de livraison",
   },
-  
+  {
+    id: "approvision",
+    numeric: true,
+    disablePadding: false,
+    label: "Approvision",
+  },
 ];
 
 export const rows = [
@@ -42,7 +47,8 @@ export const rows = [
     "Employé 1",
     1,
     1,
-    "07/05/2016"
+    "07/05/2016",
+    "test"
   ),
   createData(
     "2",
@@ -50,7 +56,8 @@ export const rows = [
     "Employé 2",
     2,
     1,
-    "12/06/2020"
+    "12/06/2020",
+    "test"
   ),
   createData(
     "3",
@@ -58,7 +65,8 @@ export const rows = [
     "Employé 1",
     5,
     5,
-    "28/10/2020"
+    "28/10/2020",
+    "test"
   ),
   createData(
     "4",
@@ -66,7 +74,7 @@ export const rows = [
     "Employé 1",
     1,
     1,
-    "15/08/2020"
+    "15/08/2020",
+    "test"
   ),
-
 ];

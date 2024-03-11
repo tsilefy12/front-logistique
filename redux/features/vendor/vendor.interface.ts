@@ -5,6 +5,7 @@ export interface VendorItem{
     phone?: string;
     email?: string;
     website?: string;
+    nif?: string;
 }
 
 export interface VendorInitialState {

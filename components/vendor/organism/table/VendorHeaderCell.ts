@@ -26,9 +26,9 @@ export const vendorHeadCells: readonly HeadCell[] = [
 		label: "Email",
 	},
 	{
-		id: "website",
+		id: "stat",
 		numeric: false,
 		disablePadding: false,
-		label: "Web Site",
+		label: "Stat",
 	},
 ];

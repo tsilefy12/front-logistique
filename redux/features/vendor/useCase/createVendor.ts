@@ -16,6 +16,7 @@ export const createVendor = createAsyncThunk(
   "vendor/createVendor",
   async (vendor: VendorItem, thunkAPI) => {
     try {
+      console.log("vendor ", vendor);
       const response = await axios.post("/logistique/vendor", vendor);
       thunkAPI.dispatch(
         enqueueSnackbar({

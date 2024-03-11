@@ -83,7 +83,7 @@ const menu = [
       },
       {
         id: 32,
-        name: "Bon de voiture",
+        name: "Entretien",
         link: "/materiel_de_transport/bon_de_voiture",
         icon: "/materiel_de_transport",
       },
@@ -91,6 +91,12 @@ const menu = [
         id: 33,
         name: "Facture de consommation",
         link: "/materiel_de_transport/facture_de_consommation",
+        icon: "",
+      },
+      {
+        id: 34,
+        name: "Suivi carburant",
+        link: "/materiel_de_transport/suivi_carburant",
         icon: "",
       },
     ],
@@ -120,6 +126,24 @@ const menu = [
         link: "/configurations/type_materiel",
         icon: "",
       },
+      {
+        id: 53,
+        name: "Unité de stock",
+        link:"/configurations/unite_de_stock",
+        icon: ""
+      },
+      {
+        id: 54, 
+        name: "Catégorie",
+        link: "/configurations/categorie",
+        icon: ""
+      },
+      {
+        id: 55, 
+        name: "Type de produit",
+        link: "/configurations/type_produit",
+        icon: ""
+      }
     ],
   },
 ];

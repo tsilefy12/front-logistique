@@ -32,9 +32,15 @@ export const consumableHeadCells: readonly HeadCell[] = [
     label: "Date de livraison",
   },
   {
-    id: "status",
+    id: "approvision",
     numeric: false,
     disablePadding: false,
-    label: "Statut",
+    label: "Approvision",
+  },
+  {
+    id: "Observation",
+    numeric: false,
+    disablePadding: false,
+    label: "Observation",
   },
 ];

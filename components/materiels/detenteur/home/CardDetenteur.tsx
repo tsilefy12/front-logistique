@@ -34,6 +34,9 @@ const CardDetenteur = ({ holder }: any) => {
             <Typography variant="caption" color={theme.palette.grey[600]}>
               {holder?.function}
             </Typography>
+            <Typography variant="caption" color={theme.palette.grey[600]}>
+              {holder?.contact}
+            </Typography>
           </CardDesc>
         </CardContainer>
       </CustomCard>

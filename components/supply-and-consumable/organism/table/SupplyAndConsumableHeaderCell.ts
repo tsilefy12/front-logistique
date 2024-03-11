@@ -25,4 +25,10 @@ export const suplyAndConsumableHeadCells: readonly HeadCell[] = [
     disablePadding: false,
     label: "Unité de Gestion de Stock",
   },
+  {
+    id: "montant",
+    numeric: false,
+    disablePadding: false,
+    label: "Montant",
+  },
 ];

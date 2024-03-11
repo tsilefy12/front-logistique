@@ -80,7 +80,7 @@ const FormArticle = () => {
         <FormControl fullWidth>
           <TextField
             id="outlined-basic"
-            label="Prix Unitaire"
+            label="Prix Unitaireeee"
             variant="outlined"
           />
         </FormControl>

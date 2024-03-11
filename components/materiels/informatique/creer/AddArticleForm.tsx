@@ -70,6 +70,11 @@ const AddArticleForm = () => {
       console.log("error", error);
     }
   };
+
+  const FourniseurList = [
+    { id: "1", name: "1" },
+    { id: "2", name: "2" }
+  ]
   return (
     <Container maxWidth="xl" sx={{ pb: 5 }}>
       <Formik
@@ -208,6 +213,7 @@ const AddArticleForm = () => {
                   }}
                   spacing={{ xs: 2, sm: 2, md: 1 }}
                 >
+
                   <OSDatePicker
                     fullWidth
                     label="Date d'acquisition"
@@ -224,21 +230,72 @@ const AddArticleForm = () => {
                     variant="outlined"
                     type="number"
                   />
+                  <OSTextField
+                    name="additionalInformation"
+                    fullWidth
+                    id="outlined-basic"
+                    label="Information suplémentaire"
+                    variant="outlined"
+                  />
                 </CustomStack>
-                <OSTextField
-                  name="additionalInformation"
-                  fullWidth
-                  id="outlined-basic"
-                  label="Information suplémentaire"
-                  variant="outlined"
-                />
-                <OSTextField
-                  name="designation"
-                  fullWidth
-                  id="outlined-basic"
-                  label="Déscription"
-                  variant="outlined"
-                />
+
+                <Stack direction="row" spacing={3} >
+                  <OSTextField
+                    name="designation"
+                    fullWidth
+                    id="outlined-basic"
+                    label="Déscription"
+                    variant="outlined"
+                  />
+                  <OSTextField
+                    name="dureAmortissement"
+                    fullWidth
+                    id="outlined-basic"
+                    label="Durée d'amortissement"
+                    variant="outlined"
+                  />
+                  <OSDatePicker
+                    name="dateAmortissement"
+                    fullWidth
+                    id="outlined-basic"
+                    label="Date d'amortissement"
+                    variant="outlined"
+                  />
+                </Stack>
+
+                <Stack direction="row" spacing={3} >
+                  <OSSelectField
+                    name="fournisseur"
+                    fullWidth
+                    id="outlined-basic"
+                    label="Fournisseur"
+                    variant="outlined"
+                    options={FourniseurList}
+                    dataKey="name"
+                    valueKey="name"
+                  />
+                  <OSSelectField
+                    name="categoire"
+                    fullWidth
+                    id="outlined-basic"
+                    label="Catégorie"
+                    variant="outlined"
+                    options={FourniseurList}
+                    dataKey="name"
+                    valueKey="name"
+                  />
+                  <OSSelectField
+                    name="grant"
+                    fullWidth
+                    id="outlined-basic"
+                    label="Grant"
+                    variant="outlined"
+                    options={FourniseurList}
+                    dataKey="name"
+                    valueKey="name"
+                  />
+                </Stack>
+
               </FormContainer>
             </Form>
           );

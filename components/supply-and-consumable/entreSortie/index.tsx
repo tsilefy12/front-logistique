@@ -28,7 +28,7 @@ import LogSupplyAndConsumableTableHeader from "./table/LogSupplyAndConsumableHea
 import { LogSuplyAndConsumableItem } from "../../../redux/features/logSuplyAndConsumable/log-supply-and-consumable.interface";
 import useFetchLogSuplyAndConsumableList from "./hooks/useFetchLogSupplyAndConsumable";
 import Moment from "react-moment";
-import { Badge } from "@mui/material";
+import { Badge, RadioGroup, FormControlLabel,Radio } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 
 export default function LogSupplyAndConsumableList() {
@@ -97,12 +97,27 @@ export default function LogSupplyAndConsumableList() {
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
-          <Link href="/fournitures_et_consommables/fiche_de_stock">
-            <Button color="info" variant="text" startIcon={<ArrowBack />}>
-              Retour
-            </Button>
-          </Link>
-          <Typography variant="h4"> Entre et Sortie </Typography>
+          <Stack direction='row' spacing={3}>
+            <Link href="/fournitures_et_consommables/fiche_de_stock">
+              <Button color="info" variant="text" startIcon={<ArrowBack />}>
+                Retour
+              </Button>
+            </Link>
+            <Stack direction='row' spacing={2} width={200}>
+              <Stack direction="row" spacing={2} margin={4}>
+                <RadioGroup
+                  aria-label="choixEntreSortie"
+                  name="choixEntreSortie"
+                >
+                <Stack direction='row' spacing={4}>
+                 <FormControlLabel value="female" control={<Radio />} label="Entre" />
+                 <FormControlLabel value="male" control={<Radio />} label="Sortie" />
+                </Stack>
+                </RadioGroup>
+
+              </Stack>
+            </Stack>
+          </Stack>
         </SectionNavigation>
         {/* <Divider /> */}
       </NavigationContainer>
@@ -137,13 +152,14 @@ export default function LogSupplyAndConsumableList() {
                           <TableCell align="left">{row.SKU}</TableCell>
 
                           <TableCell align="left">{row.unitPrice}</TableCell>
+                          <TableCell align="left">12</TableCell>
 
-                          <TableCell align="center">
+                          {/*<TableCell align="center">
                             <Badge
                               badgeContent={getText(row.OperationType)}
                               color={getColorsText(row.OperationType)}
                             />
-                          </TableCell>
+                          </TableCell>*/}
                         </TableRow>
                       );
                     })}

@@ -29,6 +29,12 @@ export const fournisseurheadCells: readonly FournisseurHeadCell[] = [
     id: "site",
     numeric: false,
     disablePadding: false,
-    label: "Site Web",
+    label: "Stat",
+  },
+  {
+    id: "categorie",
+    numeric: false,
+    disablePadding: false,
+    label: "Catégorie",
   },
 ];

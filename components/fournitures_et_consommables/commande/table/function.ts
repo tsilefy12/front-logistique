@@ -6,7 +6,8 @@ export function createData(
   demandeur: string,
   quantite_demander: number,
   quantite_livrer : number,
-  date_livraison : string
+  date_livraison : string,
+  approvision: string,
 ): Data {
   return {
     id,
@@ -14,7 +15,9 @@ export function createData(
     demandeur,
     quantite_demander,
     quantite_livrer,
-    date_livraison
+    date_livraison,
+    approvision
+
   };
 }
 

@@ -22,6 +22,7 @@ import {
   updateVendor,
 } from "../../../redux/features/vendor";
 import { cancelEdit } from "../../../redux/features/vendor/vendorSlice";
+import OSSelectField from "../../shared/select/OSSelectField";
 
 export default function VendorForm() {
   const route = useRouter();
@@ -49,7 +50,20 @@ export default function VendorForm() {
       console.log("error", error);
     }
   };
-
+  const TypeProduitList = [
+    { id: "1", name: "1" },
+    { id: "2", name: "2" }
+  ];
+  const CategoryitList = [
+    { id: "Bien", name: "Bien" },
+    { id: "Service", name: "Service" }
+  ];
+  const EvaluationList = [
+    { id: "Fidèle", name: "Fidèle" },
+    { id: "Croissance", name: "Croissance" },
+    { id: "Dilemme", name: "Dilemme" },
+    { id: "Disqualifier", name: "Disqualifier" }
+  ]
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <Formik
@@ -58,12 +72,13 @@ export default function VendorForm() {
           isEditing
             ? vendor
             : {
-                name: isEditing ? vendor?.name : "",
-                address: isEditing ? vendor?.address : "",
-                phone: isEditing ? vendor?.address : "",
-                email: isEditing ? vendor?.email : "",
-                website: isEditing ? vendor?.website : "",
-              }
+              name: isEditing ? vendor?.name : "",
+              address: isEditing ? vendor?.address : "",
+              phone: isEditing ? vendor?.address : "",
+              email: isEditing ? vendor?.email : "",
+              website: isEditing ? vendor?.website : "",
+              nif: isEditing ? vendor?.nif : "",
+            }
         }
         validationSchema={Yup.object({
           name: Yup.string().required("Champ obligatoire"),
@@ -126,31 +141,67 @@ export default function VendorForm() {
               </NavigationContainer>
 
               <FormContainer spacing={2}>
-                <OSTextField
-                  id="outlined-basic"
-                  label="Nom"
-                  name="name"
-                />
+                <Stack direction="row" spacing={3} >
+                  <OSTextField
+                    id="outlined-basic"
+                    label="Fournisseur"
+                    name="name"
+                  />
+                  <OSTextField
+                    id="outlined-basic"
+                    label="Téléphone"
+                    name="phone"
+                  />
+                  <OSTextField
+                    id="outlined-basic"
+                    label="Email"
+                    name="email"
+                  />
+
+                </Stack>
                 <OSTextField
                   id="outlined-basic"
                   label="Adresse"
                   name="address"
                 />
-                <OSTextField
-                  id="outlined-basic"
-                  label="Téléphone"
-                  name="phone"
-                />
-                <OSTextField
-                  id="outlined-basic"
-                  label="Email"
-                  name="email"
-                />
-                <OSTextField
-                  id="outlined-basic"
-                  label="Site web"
-                  name="website"
-                />
+                <Stack direction="row" spacing={3} >
+                  <OSTextField
+                    id="outlined-basic"
+                    label="Nif"
+                    name="nif"
+                  />
+                  <OSTextField
+                    id="outlined-basic"
+                    label="Stat"
+                    name="website"
+                  />
+                </Stack>
+                <Stack direction="row" spacing={3} >
+                  <OSSelectField
+                    id="outlined-basic"
+                    label="Type de produit"
+                    name="typeProduit"
+                    options={TypeProduitList}
+                    dataKey="name"
+                    valueKey="name"
+                  />
+                  <OSSelectField
+                    id="outlined-basic"
+                    label="Catégorie"
+                    name="categorie"
+                    options={CategoryitList}
+                    dataKey="name"
+                    valueKey="name"
+                  />
+                  <OSSelectField
+                    id="outlined-basic"
+                    label="Evaluation"
+                    name="evaluation"
+                    options={EvaluationList}
+                    dataKey="name"
+                    valueKey="name"
+                  />
+                </Stack>
               </FormContainer>
             </Form>
           );

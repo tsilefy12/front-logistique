@@ -44,6 +44,12 @@ const useFetchVendors = () => {
               mode: "insensitive",
             },
           },
+          {
+            nif: {
+              contains: router.query.search,
+              mode: "insensitive",
+            },
+          },
         ],
       };
     }

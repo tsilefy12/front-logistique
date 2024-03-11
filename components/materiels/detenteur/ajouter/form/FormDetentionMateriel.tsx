@@ -78,6 +78,7 @@ const FormDetentionMateriel = () => {
           isEditing
             ? holder
             : {
+                contact: isEditing ? holder?.contact : "",
                 reference: isEditing ? holder?.reference : "",
                 firstName: isEditing ? holder?.firstName : "",
                 lastName: isEditing ? holder?.lastName : "",
@@ -86,6 +87,7 @@ const FormDetentionMateriel = () => {
               }
         }
         validationSchema={Yup.object({
+          contact: Yup.string().required("Champ obligatoire"),
           reference: Yup.string().required("Champ obligatoire"),
           firstName: Yup.string().required("champ obligatoire"),
           lastName: Yup.string().required("Champ obligatoire"),
@@ -171,6 +173,12 @@ const FormDetentionMateriel = () => {
                     id="outlined-basic"
                     label="Matricule"
                     name="matricule"
+                    variant="outlined"
+                  />
+                  <OSTextField
+                    id="outlined-basic"
+                    label="Contact"
+                    name="contact"
                     variant="outlined"
                   />
                   <OSSelectField

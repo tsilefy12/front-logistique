@@ -28,6 +28,7 @@ import { OrderFormItem } from "../../../redux/features/order-form/orderForm.inte
 import Moment from "react-moment";
 import OrderFormTableToolbar from "./organism/table/OrderFormTableToolbar";
 import OrderFormTableHeader from "./organism/table/OrderFormTableHeader";
+import { Print } from "@mui/icons-material";
 
 
 
@@ -72,7 +73,7 @@ export default function OrderFormList() {
         await dispatch(deleteOrderForm({ id }));
         fetchOrderFormListe();
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -96,15 +97,24 @@ export default function OrderFormList() {
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
-          <Link href={"/materiels/bon_de_commande/creer"}>
+          <Stack direction="row" spacing={2} width={200} >
+            <Link href={"/materiels/bon_de_commande/creer"}>
+              <Button
+                variant="contained"
+                startIcon={<Add />}
+                size="small"
+              >
+                Ajouter
+              </Button>
+            </Link>
             <Button
-              variant="contained"
-              startIcon={<Add />}
+            variant=""
+              startIcon={<Print />}
               size="small"
             >
-              Ajouter
+              Imprimer
             </Button>
-          </Link>
+          </Stack>
           <Typography variant="h4"> Bon de commande </Typography>
         </SectionNavigation>
         {/* <Divider /> */}
@@ -127,7 +137,7 @@ export default function OrderFormList() {
                       page * rowsPerPage,
                       page * rowsPerPage + rowsPerPage
                     )
-                    .map((row: OrderFormItem, index: any ) => {
+                    .map((row: OrderFormItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (
                         <TableRow hover tabIndex={-1} key={row.id}>
@@ -149,7 +159,7 @@ export default function OrderFormList() {
 
                           <TableCell align="left">
                             <Moment format="DD/MM/YYYY">
-                            {row.deliveryDate}
+                              {row.deliveryDate}
                             </Moment>
                           </TableCell>
 
@@ -168,22 +178,22 @@ export default function OrderFormList() {
                                   aria-label="Details"
                                   component="span"
                                   size="small"
-                                  // onClick={() => {
-                                  // 	handleClickDetail(row.id);
-                                  // }}
+                                // onClick={() => {
+                                // 	handleClickDetail(row.id);
+                                // }}
                                 >
                                   <Visibility />
                                 </IconButton>
                               </Link>
                               <Link href={`bon_de_commande/${row.id}/edit`}>
-                              <IconButton
-                                color="primary"
-                                aria-label="Modifier"
-                                component="span"
-                                size="small"
-                              >
-                                <Edit />
-                              </IconButton>
+                                <IconButton
+                                  color="primary"
+                                  aria-label="Modifier"
+                                  component="span"
+                                  size="small"
+                                >
+                                  <Edit />
+                                </IconButton>
                               </Link>
                               <IconButton
                                 color="warning"

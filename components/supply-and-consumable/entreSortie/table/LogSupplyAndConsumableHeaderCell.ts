@@ -32,9 +32,16 @@ export const logSuplyAndConsumableHeadCells: readonly HeadCell[] = [
     label: "Prix unitaire",
   },
   {
+    id: "reste",
+    numeric: false,
+    disablePadding: false,
+    label: "Reste",
+  },
+  /*{
     id: "OperationType",
     numeric: false,
     disablePadding: false,
     label: "Type d'opération",
-  },
+  },*/
+ 
 ];

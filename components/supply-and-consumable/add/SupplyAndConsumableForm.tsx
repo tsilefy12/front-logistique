@@ -4,21 +4,22 @@ import { useRouter } from "next/router";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import Check from "@mui/icons-material/Check";
 import Close from "@mui/icons-material/Close";
-import { styled } from "@mui/material";
+import { Stack, styled } from "@mui/material";
 import { Form, Formik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import * as Yup from "yup";
 import OSTextField from "../../shared/input copy/OSTextField";
+
 import {
   createSuplyAndConsumable,
   updateSuplyAndConsumable,
 } from "../../../redux/features/supply-and-consumable";
 import { cancelEdit } from "../../../redux/features/supply-and-consumable/supply-and-consumable";
+import OSSelectField from "../../shared/select/OSSelectField";
 
 export default function SuplyAndConsumableForm() {
   const route = useRouter();
@@ -46,7 +47,33 @@ export default function SuplyAndConsumableForm() {
       console.log("error", error);
     }
   };
+  const GrantList = [
+    { id: "1", name: "1" },
+    { id: "2", name: "2" },
+    { id: "3", name: "3" }
+  ];
+  const FounisseurList = [
+    { id: "1", name: "1"},
+    { id: "2", name: "2"},
+    { id: "3", name: "3"},
+    { id: "4", name: "4"}
+  ];
 
+  const UniteList = [
+    { id: "1", name: "1"},
+    { id: "2", name: "2"},
+    { id: "3", name: "3"},
+    { id: "4", name: "4"},
+    { id: "5", name: "5"}
+  ];
+ const CategoryList = [
+    { id: "1", name: "1"},
+    { id: "2", name: "2"},
+    { id: "3", name: "3"},
+    { id: "4", name: "4"},
+    { id: "5", name: "5"},
+    { id: "6", name: "6"}
+ ];
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <Formik
@@ -55,11 +82,11 @@ export default function SuplyAndConsumableForm() {
           isEditing
             ? suplyAndConsumable
             : {
-                designation: isEditing ? suplyAndConsumable?.designation : "",
-                quantity: isEditing ? suplyAndConsumable?.quantity : "",
-                unitPrice: isEditing ? suplyAndConsumable?.unitPrice : "",
-                SKU: isEditing ? suplyAndConsumable?.SKU : "",
-              }
+              designation: isEditing ? suplyAndConsumable?.designation : "",
+              quantity: isEditing ? suplyAndConsumable?.quantity : "",
+              unitPrice: isEditing ? suplyAndConsumable?.unitPrice : "",
+              SKU: isEditing ? suplyAndConsumable?.SKU : "",
+            }
         }
         validationSchema={Yup.object({
           designation: Yup.string().required("Champ obligatoire"),
@@ -141,11 +168,64 @@ export default function SuplyAndConsumableForm() {
                   name="unitPrice"
                   type="number"
                 />
-                <OSTextField
+                <OSSelectField
                   id="outlined-basic"
-                  label="Unité de Gestion de Stock"
-                  name="SKU"
+                  label="Unité de stock"
+                  name="unite"
+                  options={UniteList}
+                  dataKey="name"
+                  valueKey="name"
+                  type="text"
                 />
+                <Stack direction="row" spacing={3}>
+                <OSTextField
+                    id="outlined-basic"
+                    label="Montant"
+                    name="montant"
+                    type="number"
+                  />
+                  <OSTextField
+                    id="outlined-basic"
+                    label="Seuil"
+                    name="seuil"
+                    type="number"
+                  />
+                  <OSTextField
+                    id="outlined-basic"
+                    label="Mois de prevision"
+                    name="moisPrevision"
+                    type="text"
+                  />
+                </Stack>
+                <Stack direction="row" spacing={3}>
+                  <OSSelectField
+                    id="outlined-basic"
+                    label="Fournisseur"
+                    name="fournisseur"
+                    options={FounisseurList}
+                    dataKey="name"
+                    valueKey="name"
+                    type="text"
+                  />
+                     <OSSelectField
+                    id="outlined-basic"
+                    label="Catégorie"
+                    name="categorie"
+                    options={CategoryList}
+                    dataKey="name"
+                    valueKey="name"
+                    type="text"
+                  />
+                     <OSSelectField
+                    id="outlined-basic"
+                    label="Grant"
+                    name="grant"
+                    options={GrantList}
+                    dataKey="name"
+                    valueKey="name"
+                    type="text"
+                  />
+                </Stack>
               </FormContainer>
             </Form>
           );

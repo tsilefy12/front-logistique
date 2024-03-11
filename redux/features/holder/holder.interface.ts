@@ -1,5 +1,6 @@
 export interface HolderItem {
   id?: string;
+  contact? : string;
   reference?: string;
   lastName?: string;
   firstName?: string;

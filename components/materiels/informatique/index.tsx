@@ -185,6 +185,12 @@ const ListInfo = () => {
                                 href={`/materiels/informatiques/${row.id}/detail`}
                               >
                                 <IconButton
+                                 color="secondary"
+                                 aria-label="Add"
+                                 component="span"
+                                >
+                                </IconButton>
+                                <IconButton
                                   color="accent"
                                   aria-label="Details"
                                   component="span"
