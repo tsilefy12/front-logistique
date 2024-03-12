@@ -6,6 +6,9 @@ export interface VendorItem{
     email?: string;
     website?: string;
     nif?: string;
+    typeProduit: string;
+    categorieFournisseur: string;
+    evaluation: string;
 }
 
 export interface VendorInitialState {

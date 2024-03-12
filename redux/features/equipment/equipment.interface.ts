@@ -11,6 +11,11 @@ export interface EquipmentItem {
   imageUrl?: string;
   typeEquipmentId?: string;
   type?: any;
+  dureAmortissement: number;
+  dateAmortissement: Date;
+  fournisseur: string;
+  categorieMateriel: string;
+  grant: string;
 }
 
 export interface EquipmentInitialState {

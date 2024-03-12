@@ -78,6 +78,9 @@ export default function VendorForm() {
               email: isEditing ? vendor?.email : "",
               website: isEditing ? vendor?.website : "",
               nif: isEditing ? vendor?.nif : "",
+              typeProduit: isEditing ? vendor?.typeProduit: "",
+              categorieFournisseur: isEditing ? vendor?.categorieFournisseur: "",
+              evaluation: isEditing ? vendor?.evaluation: "",
             }
         }
         validationSchema={Yup.object({
@@ -188,7 +191,7 @@ export default function VendorForm() {
                   <OSSelectField
                     id="outlined-basic"
                     label="Catégorie"
-                    name="categorie"
+                    name="categorieFournisseur"
                     options={CategoryitList}
                     dataKey="name"
                     valueKey="name"
@@ -202,7 +205,7 @@ export default function VendorForm() {
                     valueKey="name"
                   />
                 </Stack>
-                
+
               </FormContainer>
             </Form>
           );
