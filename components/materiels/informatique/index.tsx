@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -38,6 +38,7 @@ import {
   getEmployee,
 } from "../../../redux/features/equipment";
 import { useConfirm } from "material-ui-confirm";
+import { axios } from "../../../lib/axios";
 
 const ListInfo = () => {
   function getColorStatus(etat: string) {
@@ -103,7 +104,7 @@ const ListInfo = () => {
         await dispatch(deleteEquipment({ id }));
         fetchEquipment();
       })
-      .catch(() => {});
+      .catch(() => { });
   };
   const handleClickEdit = async (id: any) => {
     await dispatch(editEquipment({ id }));
@@ -126,6 +127,17 @@ const ListInfo = () => {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - equipments.length) : 0;
 
+  const [donneMateriel, setDonneMateriel] = useState([]);
+  useEffect(() => {
+    const fetchMateriles = async () => {
+      await axios.get("http://192.168.1.100:3000/logistique/equipment",
+        { params: { args: JSON.stringify({ include: { owner: true } }) } }).then(({ data }) => {
+          setDonneMateriel(data);
+        })
+
+    }
+    fetchMateriles();
+  }, [])
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
@@ -147,97 +159,80 @@ const ListInfo = () => {
                 size="small"
               >
                 <EquipmentTableHeader />
-                <TableBody>
-                  {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                rows.slice().sort(getComparator(order, orderBy)) */}
-                  {equipments
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row: EquipmentItem, index: any) => {
-                      const labelId = `enhanced-table-checkbox-${index}`;
-                      return (
-                        <TableRow hover tabIndex={-1} key={row.id}>
-                          <TableCell
-                            component="th"
-                            id={labelId}
-                            scope="row"
-                            padding="normal"
-                            align="left"
+                {
+                  (donneMateriel.length > 0) && (
+                    donneMateriel.map((item: any, index: any) => (
+                      <TableBody key={index}>
+                        <TableCell align="left">{item.numOptim}</TableCell>
+                        <TableCell align="left">{item.typeEquipmentId}</TableCell>
+                        <TableCell align="left">{item.ownerId}</TableCell>
+                        <TableCell align="left">{item.designation}</TableCell>
+                        <TableCell align="left">{item.status}</TableCell>
+                        <TableCell align="right">
+                          <BtnActionContainer
+                            direction="row"
+                            justifyContent="center"
                           >
-                            {row.numOptim}
-                          </TableCell>
-                          <TableCell align="left">{row?.type?.type}</TableCell>
-                          <TableCell align="left">
-                            {row.owner?.name} {row.owner?.surname}
-                          </TableCell>
-                          <TableCell align="left">{row.designation}</TableCell>
-                          <TableCell align="left">
-                            <Badge
-                              badgeContent={getText(row.status)}
-                              color={getColorStatus(row.status)}
-                            />
-                          </TableCell>
-                          <TableCell align="right">
-                            <BtnActionContainer
-                              direction="row"
-                              justifyContent="center"
-                            >
-                              <Link
-                                href={`/materiels/informatiques/${row.id}/detail`}
+                            <Link href={`logistiaue/inventaire/creer/${item.id}`} >
+                              <IconButton
+                                color="info"
+                                aria-label="Add"
+                                component="span"
                               >
+                              </IconButton>
+                            </Link>
+                            <Link
+                              href={`/materiels/informatiques/${item.id}/detail`}
+                            >
+                              <Stack direction="row" spacing={2} >
                                 <IconButton
-                                 color="secondary"
-                                 aria-label="Add"
-                                 component="span"
+                                  color="secondary"
+                                  aria-label="Add"
+                                  component="span"
                                 >
                                 </IconButton>
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"
                                   component="span"
-                                  // onClick={() => {
-                                  //   alert("En cours de traitement ...");
-                                  // }}
+                                // onClick={() => {
+                                //   alert("En cours de traitement ...");
+                                // }}
                                 >
                                   <VisibilityIcon />
                                 </IconButton>
-                              </Link>
-                              <IconButton
-                                color="primary"
-                                aria-label="Modifier"
-                                component="span"
-                                size="small"
-                                onClick={() => {
-                                  handleClickEdit(row.id);
-                                }}
-                              >
-                                <EditIcon />
-                              </IconButton>
-                              <IconButton
-                                color="warning"
-                                aria-label="Supprimer"
-                                component="span"
-                                size="small"
-                                onClick={() => {
-                                  handleClickDelete(row.id);
-                                }}
-                              >
-                                <DeleteIcon />
-                              </IconButton>
-                            </BtnActionContainer>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  {emptyRows > 0 && (
-                    <TableRow
-                      style={{
-                        height: (dense ? 33 : 53) * emptyRows,
-                      }}
-                    >
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
+                              </Stack>
+                            </Link>
+                            <IconButton
+                              color="primary"
+                              aria-label="Modifier"
+                              component="span"
+                              size="small"
+                              onClick={() => {
+                                handleClickEdit(item.id);
+                              }}
+                            >
+                              <EditIcon />
+                            </IconButton>
+                            <IconButton
+                              color="warning"
+                              aria-label="Supprimer"
+                              component="span"
+                              size="small"
+                              onClick={() => {
+                                handleClickDelete(item.id);
+                              }}
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </BtnActionContainer>
+                        </TableCell>
+                      </TableBody>
+                    ))
+                  )
+                }
+
+
               </Table>
             </TableContainer>
             <TablePagination

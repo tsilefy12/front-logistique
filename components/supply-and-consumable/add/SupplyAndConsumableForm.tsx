@@ -20,15 +20,17 @@ import {
 } from "../../../redux/features/supply-and-consumable";
 import { cancelEdit } from "../../../redux/features/supply-and-consumable/supply-and-consumable";
 import OSSelectField from "../../shared/select/OSSelectField";
+import { any, number } from "prop-types";
 
 export default function SuplyAndConsumableForm() {
   const route = useRouter();
 
   const dispatch = useAppDispatch();
-
+  
   const { isEditing, suplyAndConsumable } = useAppSelector(
     (state) => state.suplyAndConsumable
   );
+
 
   const handleSubmit = async (values: any) => {
     try {
@@ -86,6 +88,13 @@ export default function SuplyAndConsumableForm() {
               quantity: isEditing ? suplyAndConsumable?.quantity : "",
               unitPrice: isEditing ? suplyAndConsumable?.unitPrice : "",
               SKU: isEditing ? suplyAndConsumable?.SKU : "",
+              montant: isEditing ? suplyAndConsumable?.montant: "",
+              seuil: isEditing ? suplyAndConsumable?.seuil: "",
+              moisPrevision: isEditing ? suplyAndConsumable.moisPrevision: "",
+              fournisseur: isEditing ? suplyAndConsumable.fournisseur: "",
+              categorieStock: isEditing ? suplyAndConsumable.categorieStock: "",
+              grant: isEditing ? suplyAndConsumable.grant: "",
+
             }
         }
         validationSchema={Yup.object({
@@ -100,6 +109,7 @@ export default function SuplyAndConsumableForm() {
         }}
       >
         {(formikProps) => {
+   
           return (
             <Form>
               <NavigationContainer>
@@ -171,7 +181,7 @@ export default function SuplyAndConsumableForm() {
                 <OSSelectField
                   id="outlined-basic"
                   label="Unité de stock"
-                  name="unite"
+                  name="SKU"
                   options={UniteList}
                   dataKey="name"
                   valueKey="name"
@@ -210,7 +220,7 @@ export default function SuplyAndConsumableForm() {
                      <OSSelectField
                     id="outlined-basic"
                     label="Catégorie"
-                    name="categorie"
+                    name="categorieStock"
                     options={CategoryList}
                     dataKey="name"
                     valueKey="name"

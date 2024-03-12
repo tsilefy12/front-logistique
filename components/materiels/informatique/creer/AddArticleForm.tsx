@@ -90,7 +90,13 @@ const AddArticleForm = () => {
           designation: isEditing ? equipment?.designation : "",
           status: isEditing ? equipment?.status : "",
           ownerId: isEditing ? equipment?.ownerId : "",
-          typeEquipmentId: isEditing ? equipment?.typeEquipmentId : "",
+          typeEquipmentId: isEditing ? equipment?.typeEquipmentId: "",
+          dureAmortissement: isEditing ? equipment?.dureAmortissement: "",
+          dateAmortissement: isEditing ? equipment?.dateAmortissement: "",
+          fournisseur: isEditing ? equipment?.fournisseur: "",
+          categorieMateriel: isEditing ? equipment?.categorieMateriel: "",
+          grant: isEditing ? equipment?.grant: "",
+
         }}
         validationSchema={Yup.object({
           numOptim: Yup.string().required("Veuillez sélectionner un numOptim"),
@@ -154,7 +160,7 @@ const AddArticleForm = () => {
                     </Button>
                   </Stack>
                   <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"} materiel informatique
+                    {isEditing ? "Modifier" : "Ajouter"} materiels
                   </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -171,7 +177,7 @@ const AddArticleForm = () => {
                   <OSTextField
                     fullWidth
                     id="outlined-basic"
-                    label="N° OPTIM"
+                    label="CODE"
                     variant="outlined"
                     name="numOptim"
                   />
@@ -180,9 +186,9 @@ const AddArticleForm = () => {
                       id="workplaceId"
                       label="Type"
                       name="typeEquipmentId"
-                      options={typeequipment}
-                      dataKey="type"
-                      valueKey="id"
+                      options={FourniseurList}
+                      dataKey="name"
+                      valueKey="name"
                     />
                   </FormControl>
                   <FormControl fullWidth>
@@ -200,9 +206,9 @@ const AddArticleForm = () => {
                   <OSSelectField
                     label="Employé utilisateur"
                     name="ownerId"
-                    options={employees}
-                    dataKey={["name", "surname"]}
-                    valueKey="id"
+                    options={FourniseurList}
+                    dataKey="name"
+                    valueKey="name"
                   />
                 </FormControl>
                 <CustomStack
@@ -275,7 +281,7 @@ const AddArticleForm = () => {
                     valueKey="name"
                   />
                   <OSSelectField
-                    name="categoire"
+                    name="categoireMateriel"
                     fullWidth
                     id="outlined-basic"
                     label="Catégorie"

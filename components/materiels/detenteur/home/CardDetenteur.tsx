@@ -24,7 +24,7 @@ const CardDetenteur = ({ holder }: any) => {
               // src={process.env.NEXT_PUBLIC_API_URL + holder?.photoURL}
             />
           </CardImg>
-          <CardDesc>
+          <CardDesc sx={{justifyContent: "space-between"}}>
             <Typography variant="h6" color="initial">
               {holder?.lastName} {holder?.firstName}
             </Typography>
@@ -33,7 +33,7 @@ const CardDetenteur = ({ holder }: any) => {
             </Typography>
             <Typography variant="caption" color={theme.palette.grey[600]}>
               {holder?.function}
-            </Typography>
+            </Typography><br></br>
             <Typography variant="caption" color={theme.palette.grey[600]}>
               {holder?.contact}
             </Typography>
