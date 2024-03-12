@@ -130,8 +130,7 @@ const ListInfo = () => {
   const [donneMateriel, setDonneMateriel] = useState([]);
   useEffect(() => {
     const fetchMateriles = async () => {
-      await axios.get("http://192.168.1.100:3000/logistique/equipment",
-        { params: { args: JSON.stringify({ include: { owner: true } }) } }).then(({ data }) => {
+      await axios.get("http://192.168.1.100:3000/logistique/equipment").then(({ data }) => {
           setDonneMateriel(data);
         })
 
@@ -173,24 +172,19 @@ const ListInfo = () => {
                             direction="row"
                             justifyContent="center"
                           >
-                            <Link href={`logistiaue/inventaire/creer/${item.id}`} >
+                            <Link href={`/materiels/inventaire/${item.id}`} color="primary">
                               <IconButton
-                                color="info"
+                                color="secondary"
                                 aria-label="Add"
                                 component="span"
                               >
+                                <Add />
                               </IconButton>
                             </Link>
                             <Link
                               href={`/materiels/informatiques/${item.id}/detail`}
                             >
                               <Stack direction="row" spacing={2} >
-                                <IconButton
-                                  color="secondary"
-                                  aria-label="Add"
-                                  component="span"
-                                >
-                                </IconButton>
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"
