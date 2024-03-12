@@ -110,10 +110,14 @@ const ListInfo = () => {
     await dispatch(editEquipment({ id }));
     router.push(`/materiels/informatiques/${id}/edit`);
   };
-  // const name = async (id: any) => {
+  const handleClickNewInventaire = async (id: any) => {
+    await dispatch(editEquipment({ id }));
+    router.push(`/inventaire/${id}/edit`);
+  };
+  //   const name = async (id: any) => {
   //   console.log(getEmployee({ id }));
-  //   await getEmployee({ id });
-  // };
+    //   await getEmployee({ id });
+    // };
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -173,14 +177,15 @@ const ListInfo = () => {
                             direction="row"
                             justifyContent="center"
                           >
-                            <Link href={`logistiaue/inventaire/creer/${item.id}`} >
                               <IconButton
                                 color="info"
                                 aria-label="Add"
                                 component="span"
+                                onClick={() => {
+                                  handleClickNewInventaire(item.id);
+                                }}
                               >
                               </IconButton>
-                            </Link>
                             <Link
                               href={`/materiels/informatiques/${item.id}/detail`}
                             >

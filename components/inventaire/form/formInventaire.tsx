@@ -37,25 +37,21 @@ import {
       { name: "BROKEN", french: "inutilisable" },
     ];
     const route = useRouter();
-    const { isEditing} = useAppSelector(
-      (state) => state.equipment
+    const { isEditing, equipment} = useAppSelector(
+        (state) => state.equipment
     );
    
     const handleSubmit = async (values: any) => {
-      values.acquisitionDate = new Date(values?.acquisitionDate).toISOString();
-      try {
-        if (isEditing) {
-        //   await dispatch(
-        //     updateInventaire({
-        //       id: equipment.id!,
-        //       equipment: values,
-        //     })
-        //   );
-        } else {
-          await dispatch(createInventaire(values));
-        }
-        route.push("/materiels/informatiques");
-      } catch (error) {
+        try {
+
+            if ( !isEditing) {
+                route.push("/materiels/informatiques");
+            }
+
+            await dispatch(createInventaire(values));
+            route.push("/inventaire");
+            
+        } catch (error) {
         console.log("error", error);
       }
     };
@@ -135,7 +131,7 @@ import {
                         </Button>
                         </Stack>
                         <Typography variant="h4">
-                        {isEditing ? "Modifier" : "Ajouter"} inventaire
+                            Ajouter inventaire
                         </Typography>
                     </SectionNavigation>
                     <Divider />

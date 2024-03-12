@@ -2,12 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
-import Add from "@mui/icons-material/Add";
-import Delete from "@mui/icons-material/Delete";
-import Edit from "@mui/icons-material/Edit";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
@@ -45,21 +41,7 @@ export default function InventaireList() {
         break;
     }
   }
-  const getColorsText = (OperationType: string | undefined) => {
-    switch (OperationType) {
-      case "INPUT":
-        return "primary";
-        break;
-      case "OUTPUT":
-        return "info";
-        break;
-      default:
-        return "primary";
-        break;
-    }
-  };
-
-  const articlee = ["Non de l'article"];
+  
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -98,7 +80,7 @@ export default function InventaireList() {
       <NavigationContainer>
         <SectionNavigation>
           <Stack direction='row' spacing={3}>
-            <Link href="/inventaire">
+            <Link href="/materiels/informatiques/">
               <Button color="info" variant="text" startIcon={<ArrowBack />}>
                 Retour
               </Button>
