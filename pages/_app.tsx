@@ -12,12 +12,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Provider store={store}>
             <ThemeProvider>
                 <ConfirmProvider>
-                    <AuthProvider>
+                    {/* <AuthProvider> */}
                         <SnackbarProvider>
                             <NotificationProvider></NotificationProvider>
                             <Component {...pageProps} />
                         </SnackbarProvider>
-                    </AuthProvider>
+                    {/* </AuthProvider> */}
                 </ConfirmProvider>
             </ThemeProvider>
         </Provider>
