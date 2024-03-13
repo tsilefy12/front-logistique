@@ -1,25 +1,25 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { axios } from "../../../../lib/axios";
-import { enqueueSnackbar } from "../../notification/notificationSlice";
-import { EquipmentItem } from "../equipment.interface";
+import { axios } from "../../../../../lib/axios";
+import { enqueueSnackbar } from "../../../notification/notificationSlice";
+import { UniteStockItem } from "../../uniteStock.interface";
 
 /**
  * Create a new timesheet
- * @param EquipementItem
+ * @param createUniteStock
  * @param thunkAPI
  * @returns {Promise<void>}
  * @memberof useCases
  * @description : This function is used to create a new timesheet
  */
-export const createEquipment = createAsyncThunk(
-    "equipment/createEquipment",
-    async (equipment: EquipmentItem, thunkAPI) => {
+export const createUniteStock = createAsyncThunk(
+    "typeProduit/createTypeProduit",
+    async (uniteStockItem: UniteStockItem, thunkAPI) => {
         try {
-            console.log(equipment);
-            const response = await axios.post("/logistique/equipment", equipment);
+            console.log(uniteStockItem);
+            const response = await axios.post("/logistique/", uniteStockItem);
             thunkAPI.dispatch(
                 enqueueSnackbar({
-                    message: "Equipment created successfully",
+                    message: "unité de stock créer avec succès",
                     options: { variant: "success" },
                 })
             );
@@ -28,7 +28,7 @@ export const createEquipment = createAsyncThunk(
             if (error.response) {
                 thunkAPI.dispatch(
                     enqueueSnackbar({
-                        message: "Equipment not created",
+                        message: "unité de stock non créer",
                         options: { variant: "error" },
                     })
                 );
