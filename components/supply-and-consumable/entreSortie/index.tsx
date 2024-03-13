@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
@@ -32,6 +32,7 @@ import { Badge, RadioGroup, FormControlLabel,Radio } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 
 export default function LogSupplyAndConsumableList() {
+  const [operate, setOperate] = useState<"INPUT" | "OUTPUT">("INPUT")
   const dispatch = useAppDispatch();
   function getText(OperationType: string) {
     switch (OperationType) {
@@ -110,8 +111,8 @@ export default function LogSupplyAndConsumableList() {
                   name="choixEntreSortie"
                 >
                 <Stack direction='row' spacing={4}>
-                 <FormControlLabel value="female" control={<Radio />} label="Entre" />
-                 <FormControlLabel value="male" control={<Radio />} label="Sortie" />
+                 <FormControlLabel value="INPUT" onChange={(e, c)=>c ? setOperate("INPUT") : setOperate("OUTPUT") } control={<Radio checked={operate === "INPUT"} />} label="Entre" />
+                 <FormControlLabel value="OUTPUT" onChange={(e, c)=>c ? setOperate("OUTPUT") : setOperate("INPUT") } control={<Radio checked={operate === "OUTPUT"} />} label="Sortie" />
                 </Stack>
                 </RadioGroup>
 
@@ -134,7 +135,7 @@ export default function LogSupplyAndConsumableList() {
               >
                 <LogSupplyAndConsumableTableHeader />
                 <TableBody>
-                  {logSuplyAndConsumableList
+                  {logSuplyAndConsumableList.filter(i=> i.OperationType === operate)
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row: LogSuplyAndConsumableItem | any, index) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
