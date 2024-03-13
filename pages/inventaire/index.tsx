@@ -1,12 +1,12 @@
 import { Container } from "@mui/material";
 import BackOfficeLayout from "../../layouts/backOffice";
-import LogSupplyAndConsumableList from "../../components/supply-and-consumable/entreSortie";
+import InventaireList from "../../components/inventaire";
 
 const Inventaire = () => {
   return (
     <BackOfficeLayout>
       <Container maxWidth="xl">
-        <LogSupplyAndConsumableList />
+        <InventaireList />
       </Container>
     </BackOfficeLayout>
   );

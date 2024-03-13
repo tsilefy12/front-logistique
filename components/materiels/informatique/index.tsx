@@ -40,6 +40,7 @@ import {
 import { useConfirm } from "material-ui-confirm";
 import { axios } from "../../../lib/axios";
 
+
 const ListInfo = () => {
   function getColorStatus(etat: string) {
     switch (etat) {
@@ -110,7 +111,11 @@ const ListInfo = () => {
     await dispatch(editEquipment({ id }));
     router.push(`/materiels/informatiques/${id}/edit`);
   };
-  // const name = async (id: any) => {
+  const handleClickNewInventaire = async (id: any) => {
+    await dispatch(editEquipment({ id }));
+    router.push(`/inventaire/${id}`);
+  };
+  //   const name = async (id: any) => {
   //   console.log(getEmployee({ id }));
   //   await getEmployee({ id });
   // };
@@ -131,12 +136,13 @@ const ListInfo = () => {
   useEffect(() => {
     const fetchMateriles = async () => {
       await axios.get("http://192.168.1.100:3000/logistique/equipment").then(({ data }) => {
-          setDonneMateriel(data);
-        })
+        setDonneMateriel(data);
+      })
 
     }
     fetchMateriles();
   }, [])
+  
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
@@ -172,15 +178,16 @@ const ListInfo = () => {
                             direction="row"
                             justifyContent="center"
                           >
-                            <Link href={`/materiels/inventaire/${item.id}`} color="primary">
-                              <IconButton
-                                color="secondary"
-                                aria-label="Add"
-                                component="span"
-                              >
-                                <Add />
-                              </IconButton>
-                            </Link>
+                            <IconButton
+                              color="secondary"
+                              aria-label="Add"
+                              component="span"
+                              onClick={() => {
+                                handleClickNewInventaire(item.id);
+                              }}
+                            >
+                              <Add />
+                            </IconButton>
                             <Link
                               href={`/materiels/informatiques/${item.id}/detail`}
                             >
@@ -220,15 +227,15 @@ const ListInfo = () => {
                               <DeleteIcon />
                             </IconButton>
                           </BtnActionContainer>
-                        </TableCell>
-                      </TableBody>
+                        </TableCell >
+                      </TableBody >
                     ))
                   )
                 }
 
 
-              </Table>
-            </TableContainer>
+              </Table >
+            </TableContainer >
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
@@ -240,14 +247,14 @@ const ListInfo = () => {
               labelRowsPerPage={labelRowsPerPage}
               labelDisplayedRows={defaultLabelDisplayedRows}
             />
-          </Paper>
+          </Paper >
           {/* <FormControlLabel
           control={<Switch checked={dense} onChange={handleChangeDense} />}
           label="Dense padding"
         /> */}
-        </Box>
-      </SectionTable>
-    </Container>
+        </Box >
+      </SectionTable >
+    </Container >
   );
 };
 

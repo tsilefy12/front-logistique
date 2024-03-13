@@ -3,8 +3,14 @@ import { axios } from "../../../lib/axios";
 import { AuthInitialState } from "./authSlice.interface";
 
 const initialState: AuthInitialState = {
-    isLogedIn: false,
-    user: null,
+    isLogedIn: true,
+    user: {
+        id: "65e5a15f372862ae189df8e6",
+        name: "Admin",
+        email: "admin@admin.com",
+        profileImageUrl: undefined,
+        employeeId: undefined,
+    },
     linkedEmployee: null,
 };
 
