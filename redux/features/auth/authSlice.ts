@@ -3,14 +3,8 @@ import { axios } from "../../../lib/axios";
 import { AuthInitialState } from "./authSlice.interface";
 
 const initialState: AuthInitialState = {
-    isLogedIn: true,
-    user: {
-        id: "65e5a15f372862ae189df8e6",
-        name: "Admin",
-        email: "admin@admin.com",
-        profileImageUrl: undefined,
-        employeeId: undefined,
-    },
+    isLogedIn: false,
+    user: null,
     linkedEmployee: null,
 };
 
@@ -44,6 +38,7 @@ export const fetchConnectedUser = createAsyncThunk(
                     })
                 );
             }
+            console.log(response.data)
             return response.data;
         } catch (error: any) {
             if (!error.response) {
