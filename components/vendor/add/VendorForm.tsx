@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Button from "@mui/material/Button";
@@ -23,6 +23,7 @@ import {
 } from "../../../redux/features/vendor";
 import { cancelEdit } from "../../../redux/features/vendor/vendorSlice";
 import OSSelectField from "../../shared/select/OSSelectField";
+import { getTypeProduits } from "../../../redux/features/configuration";
 
 export default function VendorForm() {
   const route = useRouter();
@@ -50,10 +51,17 @@ export default function VendorForm() {
       console.log("error", error);
     }
   };
-  const TypeProduitList = [
-    { id: "1", name: "1" },
-    { id: "2", name: "2" }
-  ];
+
+  const { typeProduits } = useAppSelector( (state) => state.typeProduit);
+  
+  const fetchUtilsData = () => {
+    dispatch(getTypeProduits({}));
+  };
+  
+  useEffect(() => {
+    fetchUtilsData();
+  }, []);
+  
   const CategoryitList = [
     { id: "Bien", name: "Bien" },
     { id: "Service", name: "Service" }
@@ -184,7 +192,7 @@ export default function VendorForm() {
                     id="outlined-basic"
                     label="Type de produit"
                     name="typeProduit"
-                    options={TypeProduitList}
+                    options={typeProduits ? typeProduits : [{ id: "", name: "Rien à aficher" }]}
                     dataKey="name"
                     valueKey="name"
                   />

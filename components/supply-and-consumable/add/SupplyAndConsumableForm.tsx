@@ -173,7 +173,7 @@ export default function SuplyAndConsumableForm() {
                   id="outlined-basic"
                   label="Unité de stock"
                   name="SKU"
-                  options={uniteStocks}
+                  options={uniteStocks ? uniteStocks : [{ id: "", name: "Rien à aficher" }]}
                   dataKey={["uniteStock"]}
                   valueKey="name"
                   type="text"
@@ -203,7 +203,7 @@ export default function SuplyAndConsumableForm() {
                     id="outlined-basic"
                     label="Fournisseur"
                     name="fournisseur"
-                    options={fournisseurList}
+                    options={fournisseurList ? fournisseurList :  [{ id: "", name: "Rien à aficher" }]}
                     dataKey={["name"]}
                     valueKey="name"
                     type="text"
@@ -212,7 +212,7 @@ export default function SuplyAndConsumableForm() {
                       id="outlined-basic"
                       label="Catégorie"
                       name="categorieStock"
-                      options={categorieStocks}
+                      options={categorieStocks ? categorieStocks: [{ id: "", name: "Rien à aficher" }]}
                       dataKey={["categorieStock"]}
                       valueKey="name"
                       type="text"
