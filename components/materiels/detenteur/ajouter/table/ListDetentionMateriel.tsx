@@ -46,9 +46,9 @@ const ListDetentionMateriel = () => {
     })
     const handleSubmint = async (values: any) => {
     };
-    const handleChange= async (values: any) => {
+    const handleChange= async () => {
         setInitialValue({
-            numOptim: values,
+            numOptim: "ssss",
             designation: "SSSSS",
             date: "12/12/12",
             valeur: "NEW"
@@ -102,9 +102,9 @@ const ListDetentionMateriel = () => {
                         enableReinitialize
                         initialValues={{ 
                             numOptim: "",
-                            designation: "SSSSS",
-                            date: "12/12/12",
-                            valeur: "NEW"}}
+                            designation: "",
+                            date: "",
+                            valeur: ""}}
                         validationSchema={Yup.object({
                             numOptim: Yup.string(),
                             designation: Yup.string(),
@@ -125,7 +125,7 @@ const ListDetentionMateriel = () => {
                                 options={status}
                                 value = {formikProps.values.numOptim}
                                 dataKey="name"
-                                onchange={handleChange}
+                                onChange={handleChange}
                                 sx={{ width: "100%" }}
                                 valueKey="id"
                             />
