@@ -57,7 +57,7 @@ const ListDetentionMateriel = () => {
     };
     return (
         <MyTableContainer>
-        <Typography variant="h5">Article à commander</Typography>
+        <Typography variant="h5">Matériel</Typography>
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="simple table">
                 <TableHead>
