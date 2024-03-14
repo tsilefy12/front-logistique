@@ -38,7 +38,7 @@ const ListeUniteStock = () => {
                             sx={{  padding: "20px"}}
                         />
                     </Stack>
-                    {uniteStocks
+                    {uniteStocks ? uniteStocks
                     .map((row: uniteStockItem, index: any) => {
                       return (
                         <Stack direction="row" spacing={2} sx={{
@@ -68,7 +68,18 @@ const ListeUniteStock = () => {
                                 <Delete />
                             </IconButton>
                         </Stack> );
-                    })}
+                    }): (<Stack direction="row" spacing={2} sx={{
+                        flex: "1 1 100%",
+                        justifyContent: "space-around",
+                        alignItems: "center",
+                        padding: "4px",
+                        width: "100%"
+                    }} >
+                    <Container>
+                        <FormLabel sx={{ padding: "10" }} > Rien à aficher</FormLabel>
+                    </Container>
+                    
+                </Stack> )}
                 </Paper>
             </Box>
         </TableSection>
