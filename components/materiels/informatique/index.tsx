@@ -36,8 +36,6 @@ import {
 } from "../../../redux/features/equipment";
 import { useConfirm } from "material-ui-confirm";
 import { axios } from "../../../lib/axios";
-
-
 const ListInfo = () => {
     function getColorStatus(etat: string) {
         switch (etat) {
@@ -128,17 +126,17 @@ const ListInfo = () => {
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - equipments.length) : 0;
 
-    const [donneMateriel, setDonneMateriel] = useState([]);
-    useEffect(() => {
-        const fetchMateriles = async () => {
-        await axios.get("http://192.168.1.100:3000/logistique/equipment",
-            { params: { args: JSON.stringify({ include: { owner: true } }) } }).then(({ data }) => {
-            setDonneMateriel(data);
-            })
+    // const [donneMateriel, setDonneMateriel] = useState([]);
+    // useEffect(() => {
+    //     const fetchMateriles = async () => {
+    //     await axios.get("http://192.168.1.100:3000/logistique/equipment",
+    //         { params: { args: JSON.stringify({ include: { owner: true } }) } }).then(({ data }) => {
+    //           setDonneMateriel(data);
+    //         })
 
-        }
-        fetchMateriles();
-    }, [])
+    //     }
+    //     fetchMateriles();
+    // }, [])
     return (
         <Container maxWidth="xl">
         <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
@@ -161,8 +159,8 @@ const ListInfo = () => {
                 >
                     <EquipmentTableHeader />
                     {
-                    (donneMateriel.length > 0) && (
-                        donneMateriel.map((item: any, index: any) => (
+                    (equipments.length > 0) && (
+                        equipments.map((item: any, index: any) => (
                         <TableBody key={index}>
                             <TableCell align="left">{item.numOptim}</TableCell>
                             <TableCell align="left">{item.typeEquipmentId}</TableCell>

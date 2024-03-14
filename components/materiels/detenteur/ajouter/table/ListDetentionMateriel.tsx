@@ -23,6 +23,7 @@ import { useEffect } from "react";
 
 const ListDetentionMateriel = () => {
     const { equipments } = useAppSelector((state) => state.equipment);
+    console.log(equipments)
     const router = useRouter();
     const dispatch = useAppDispatch();
 
