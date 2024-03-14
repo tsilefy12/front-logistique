@@ -21,13 +21,17 @@ import useFetchEquipment from "../../../informatique/hooks/useFetchEquipment";
 import { useRouter } from "next/router";
 import { Form, Formik } from "formik";
 import OSTextField from "../../../../shared/input/OSTextField";
+import { getEquipments } from "../../../../../redux/features/equipment";
+import { AsyncThunkAction } from "@reduxjs/toolkit";
 
 const ListDetentionMateriel = () => {
     const { equipments } = useAppSelector((state) => state.equipment);
-    const fetchEquipment = useFetchEquipment();
     const router = useRouter();
+    const fetchUtilsData = () => {
+        dispatch(getEquipments({}));
+    };
     React.useEffect(() => {
-        fetchEquipment();
+        fetchUtilsData();
     }, [router.query]);
     console.log(equipments)
 
@@ -114,9 +118,7 @@ const ListDetentionMateriel = () => {
                             key={row.id}
                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                         >
-                            <TableCell component="th" scope="row">
-                            {row.numero}
-                            </TableCell>
+                            <TableCell component="th" scope="row">{row.numero}</TableCell>
                             <TableCell align="left">{row.designation}</TableCell>
                             <TableCell align="left">{row.date_acquisition}</TableCell>
                             <TableCell align="left">{row.valeur_acquisition} Ar</TableCell>
@@ -153,3 +155,7 @@ const MyTableContainer = styled(Stack)(({ theme }) => ({
   width: "100%",
   marginBottom: theme.spacing(10),
 }));
+function dispatch(arg0: AsyncThunkAction<any, { args?: any; }, {}>) {
+    throw new Error("Function not implemented.");
+}
+
