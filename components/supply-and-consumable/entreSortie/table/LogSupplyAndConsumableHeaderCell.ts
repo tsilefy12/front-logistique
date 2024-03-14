@@ -5,25 +5,25 @@ export const logSuplyAndConsumableHeadCells: readonly HeadCell[] = [
     id: "date",
     numeric: false,
     disablePadding: false,
-    label: ["Date"],
+    label: "Date",
   },
   {
     id: "article",
     numeric: false,
     disablePadding: false,
-    label: ["Article"],
+    label: "Article",
   },
   {
     id: "quantity",
     numeric: false,
     disablePadding: false,
-    label: ["Quantité"],
+    label: "Quantity",
   },
   {
     id: "SKU",
     numeric: false,
     disablePadding: false,
-    label: ["Unite Gestion Stock"],
+    label: "Unite Gestion Stock",
   },
   {
     id: "unitPrice",
@@ -35,7 +35,7 @@ export const logSuplyAndConsumableHeadCells: readonly HeadCell[] = [
     id: "reste",
     numeric: false,
     disablePadding: false,
-    label: ["Reste"],
+    label: "Reste",
   },
   /*{
     id: "OperationType",
