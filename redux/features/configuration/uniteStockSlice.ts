@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UniteStockInitialState } from "./uniteStock.interface";
 import { createUniteStock } from "./useCase/uniteStock/createUniteStock";
+import { getUniteStocks } from "./useCase/uniteStock/getUniteStock";
 
 
 const uniteStockInitialState: UniteStockInitialState = {
@@ -22,6 +23,17 @@ export const UniteStockSLice = createSlice({
   },
   extraReducers: {
     // get uniteStock
+    [getUniteStocks.pending.type]: (state) => {
+      state.loading = true;
+    },
+    [getUniteStocks.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      state.uniteStocks = action.payload;
+    },
+    [getUniteStocks.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
     
     // create uniteStock
     [createUniteStock.pending.type]: (state) => {

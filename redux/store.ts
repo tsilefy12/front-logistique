@@ -28,6 +28,7 @@ import { equipmentStockSlice } from "./features/equipmentStock/equipmentStockSli
 import { categorieStockSlice } from "./features/configuration/categorieStockSlice";
 import { typeProduitSlice } from "./features/configuration/typeProduitSlice";
 import { UniteStockSLice } from "./features/configuration/uniteStockSlice";
+import { InventaireSlice } from "./features/inventaire/inventaireSlice";
 
 export const store = configureStore({
   reducer: {
@@ -61,6 +62,7 @@ export const store = configureStore({
     categorieStock: categorieStockSlice.reducer,
     uniteStock: UniteStockSLice.reducer,
     typeProduit: typeProduitSlice.reducer,
+    inventaire: InventaireSlice.reducer
   },
 });
 

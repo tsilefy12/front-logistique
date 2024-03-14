@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import Toolbar from "@mui/material/Toolbar";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -9,7 +9,10 @@ import { TableLoading } from "../../../shared/loading";
 import { debounce } from "lodash";
 import { styled } from "@mui/material";
 
-const LogSupplyAndConsumableTableToolbar = () => {
+interface PostConfig {
+  operation: any;
+}
+const LogSupplyAndConsumableTableToolbar: FunctionComponent<PostConfig>= ({operation}) => {
   const { loading } = useAppSelector((state) => state.logSuplyAndConsumable);
   const [key, setKey] = React.useState<any>({
     filtreEntre: "",
@@ -63,7 +66,7 @@ const LogSupplyAndConsumableTableToolbar = () => {
           }}
         >
           <Typography variant="h6" id="tableTitle" component="div">
-            Liste Entre et Sortie
+            Liste {operation}
           </Typography>
           {/* <CustomStack
             direction={{ xs: "column", sm: "column", md: "row" }}

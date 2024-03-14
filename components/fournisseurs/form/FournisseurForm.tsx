@@ -3,23 +3,15 @@ import {
   Container,
   styled,
   Typography,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Stack,
-  Grid,
   Divider,
 } from "@mui/material";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import ArrowBack from "@mui/icons-material/ArrowBack";
-import AttachFileIcon from "@mui/icons-material/AttachFile";
-import { Check, Close, Save } from "@mui/icons-material";
+import { Check, Close } from "@mui/icons-material";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import { cancelEdit } from "../../../redux/features/fournisseur/fournisseurSlice";
 import { createFournisseur } from "../../../redux/features/fournisseur";
 import { updateFournisseur } from "../../../redux/features/fournisseur";
 import useFetchFournisseur from "../hooks/useFetchFournisseur";
@@ -133,14 +125,6 @@ const FournisseurForm = () => {
               <OSTextField label="Téléphone" name="phone" />
               <OSTextField label="Email" name="email" />
               <OSTextField label="Site Web" name="website" />
-              {/* <Button
-                color="inherit"
-                fullWidth
-                variant="outlined"
-                startIcon={<AttachFileIcon />}
-              >
-                PJ : Contrat_rakoto_randria.jpeg
-              </Button> */}
             </FormContainer>
           </Form>
         )}

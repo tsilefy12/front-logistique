@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Button from "@mui/material/Button";
@@ -20,7 +20,8 @@ import {
 } from "../../../redux/features/supply-and-consumable";
 import { cancelEdit } from "../../../redux/features/supply-and-consumable/supply-and-consumable";
 import OSSelectField from "../../shared/select/OSSelectField";
-import { any, number } from "prop-types";
+import { getCategories, getUniteStocks } from "../../../redux/features/configuration";
+import { getFournisseurList } from "../../../redux/features/fournisseur";
 
 export default function SuplyAndConsumableForm() {
   const route = useRouter();
@@ -30,7 +31,19 @@ export default function SuplyAndConsumableForm() {
   const { isEditing, suplyAndConsumable } = useAppSelector(
     (state) => state.suplyAndConsumable
   );
-
+  const { categorieStocks } = useAppSelector((state) => state.categorieStock);
+  const { uniteStocks } = useAppSelector( (state) => state.uniteStock);
+  const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
+  
+  const fetchUtilsData = () => {
+    dispatch(getCategories({}));
+    dispatch(getUniteStocks({}));
+    dispatch(getFournisseurList({}));
+  };
+  
+  useEffect(() => {
+    fetchUtilsData();
+  }, []);
 
   const handleSubmit = async (values: any) => {
     try {
@@ -54,28 +67,6 @@ export default function SuplyAndConsumableForm() {
     { id: "2", name: "2" },
     { id: "3", name: "3" }
   ];
-  const FounisseurList = [
-    { id: "1", name: "1"},
-    { id: "2", name: "2"},
-    { id: "3", name: "3"},
-    { id: "4", name: "4"}
-  ];
-
-  const UniteList = [
-    { id: "1", name: "1"},
-    { id: "2", name: "2"},
-    { id: "3", name: "3"},
-    { id: "4", name: "4"},
-    { id: "5", name: "5"}
-  ];
- const CategoryList = [
-    { id: "1", name: "1"},
-    { id: "2", name: "2"},
-    { id: "3", name: "3"},
-    { id: "4", name: "4"},
-    { id: "5", name: "5"},
-    { id: "6", name: "6"}
- ];
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <Formik
@@ -182,8 +173,8 @@ export default function SuplyAndConsumableForm() {
                   id="outlined-basic"
                   label="Unité de stock"
                   name="SKU"
-                  options={UniteList}
-                  dataKey="name"
+                  options={uniteStocks}
+                  dataKey={["uniteStock"]}
                   valueKey="name"
                   type="text"
                 />
@@ -212,20 +203,20 @@ export default function SuplyAndConsumableForm() {
                     id="outlined-basic"
                     label="Fournisseur"
                     name="fournisseur"
-                    options={FounisseurList}
-                    dataKey="name"
+                    options={fournisseurList}
+                    dataKey={["name"]}
                     valueKey="name"
                     type="text"
                   />
                      <OSSelectField
-                    id="outlined-basic"
-                    label="Catégorie"
-                    name="categorieStock"
-                    options={CategoryList}
-                    dataKey="name"
-                    valueKey="name"
-                    type="text"
-                  />
+                      id="outlined-basic"
+                      label="Catégorie"
+                      name="categorieStock"
+                      options={categorieStocks}
+                      dataKey={["categorieStock"]}
+                      valueKey="name"
+                      type="text"
+                    />
                      <OSSelectField
                     id="outlined-basic"
                     label="Grant"

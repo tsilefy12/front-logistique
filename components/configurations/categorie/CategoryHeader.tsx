@@ -11,17 +11,20 @@ import OSTextField from "../../shared/input/OSTextField";
 import {
     cancelEdit
 } from "../../../redux/features/configuration/categorieStockSlice"
+import useFetchCategorieList from "./hooks/useFetchCategorie";
 const CategoryHeader = () => {
     const { isEditing, categorieStock } = useAppSelector(
         (state) => state.categorieStock
     );
     const dispatch = useAppDispatch();
     const route = useRouter();
+    const fetchCategorieList = useFetchCategorieList();
+    
     const handleSubmit = async (values: any) => {
         try {
           if ( !isEditing) {
             await dispatch(createCategorieStock(values));
-            route.push("/configurations/categorie");
+            fetchCategorieList();
           } 
     
         } catch (error) {

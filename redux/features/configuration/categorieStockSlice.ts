@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { categorieStockInitialState } from "./categorie.interface";
 import { createCategorieStock } from "./useCase/categorie/createCategorie";
+import { getCategories } from "./useCase/categorie/getCategories";
 
 
 const categorieInitialState: categorieStockInitialState = {
@@ -23,6 +24,17 @@ export const categorieStockSlice = createSlice({
   extraReducers: {
     // get categorieStock
     
+    [getCategories.pending.type]: (state) => {
+      state.loading = true;
+    },
+    [getCategories.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      state.categorieStocks = action.payload;
+    },
+    [getCategories.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
     // create categorieStock
     [createCategorieStock.pending.type]: (state) => {
       state.loading = true;
