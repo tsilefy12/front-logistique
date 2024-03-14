@@ -99,7 +99,12 @@ const ListDetentionMateriel = () => {
                 ))}
                 <Formik
                     enableReinitialize
-                    initialValues={initialValue}
+                    initialValues={
+                       { numOptim: "",
+                       designation: "SSSSS",
+                       date: "12/12/12",
+                       valeur: "NEW"}
+                    }
                     onSubmit={async (value: any, action) => {
                         await handleSubmint(value);
                         action.resetForm();
