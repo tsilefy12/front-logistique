@@ -21,6 +21,7 @@ import { useAppSelector } from "../../../../../hooks/reduxHooks";
 import useFetchEquipment from "../../../informatique/hooks/useFetchEquipment";
 import { useRouter } from "next/router";
 import { Form, Formik } from "formik";
+import OSTextField from "../../../../shared/input/OSTextField";
 
 const ListDetentionMateriel = () => {
     const { equipments } = useAppSelector((state) => state.equipment);
@@ -59,46 +60,108 @@ const ListDetentionMateriel = () => {
         <Typography variant="h5">Article à commander</Typography>
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="simple table">
-            <TableHead>
-                <TableRow>
-                <TableCell>N° OPTIM</TableCell>
-                <TableCell align="left">Désignation</TableCell>
-                <TableCell align="left">Date acquisition</TableCell>
-                <TableCell align="left">Valeur acquisition</TableCell>
-                <TableCell></TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {rows.map((row) => (
-                <TableRow
-                    key={row.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                    <TableCell component="th" scope="row">
-                    {row.numero}
-                    </TableCell>
-                    <TableCell align="left">{row.designation}</TableCell>
-                    <TableCell align="left">{row.date_acquisition}</TableCell>
-                    <TableCell align="left">{row.valeur_acquisition} Ar</TableCell>
+                <TableHead>
+                    <TableRow>
+                    <TableCell>N° OPTIM</TableCell>
+                    <TableCell align="left">Désignation</TableCell>
+                    <TableCell align="left">Date acquisition</TableCell>
+                    <TableCell align="left">Valeur acquisition</TableCell>
+                    <TableCell></TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {rows.map((row) => (
+                    <TableRow
+                        key={row.id}
+                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                        <TableCell component="th" scope="row">
+                        {row.numero}
+                        </TableCell>
+                        <TableCell align="left">{row.designation}</TableCell>
+                        <TableCell align="left">{row.date_acquisition}</TableCell>
+                        <TableCell align="left">{row.valeur_acquisition} Ar</TableCell>
 
-                    <TableCell
-                    align="center"
-                    sx={{ width: 150, background: "#F5F5F5" }}
-                    >
-                    <Stack
-                        direction="row"
-                        justifyContent="center"
-                        alignItems="center"
-                        spacing={2}
-                    >
-                        <EditIcon color="primary" />
-                        <DeleteIcon color="warning" />
-                    </Stack>
-                    </TableCell>
-                </TableRow>
-                ))} 
-            </TableBody>
+                        <TableCell
+                        align="center"
+                        sx={{ width: 150, background: "#F5F5F5" }}
+                        >
+                        <Stack
+                            direction="row"
+                            justifyContent="center"
+                            alignItems="center"
+                            spacing={2}
+                        >
+                            <EditIcon color="primary" />
+                            <DeleteIcon color="warning" />
+                        </Stack>
+                        </TableCell>
+                    </TableRow>
+                    ))} 
+                </TableBody>
             </Table>
+            <Formik
+            enableReinitialize
+            initialValues={initialValue}
+            validationSchema={Yup.object({
+                numOptim: Yup.string(),
+                designation: Yup.string(),
+                date: Yup.string(),
+                valeur: Yup.string()
+            })}
+            onSubmit={async (value: any, action) => {
+                await handleSubmint(value);
+                action.resetForm();
+            }}
+        >
+        {(formikProps) => (
+            <Form>
+                <OSSelectField
+                    id="contracType"
+                    name="codeOptim"
+                    label="Choisir un code d'OPTIM"
+                    options={status}
+                    value = {formikProps.values.numOptim}
+                    dataKey="name"
+                    onChange={handleChange}
+                    sx={{ width: "100%" }}
+                    valueKey="id"
+                />
+                <OSTextField
+                    id="filled-basic"
+                    name="designation"
+                    value = {formikProps.values.designation}
+                    label="Saisir désignation"
+                    variant="filled"
+                    sx={{ width: "100%" }}
+                />
+                <OSTextField
+                    id="filled-basic"
+                    name="date"
+                    value = {formikProps.values.date}
+                    label="Saisir date d'acquistion"
+                    variant="filled"
+                    sx={{ width: "100%" }}
+                />
+                <OSTextField
+                    id="filled-basic"
+                    name="valeur"
+                    value = {formikProps.values.valeur}
+                    label="Saisir valeur d'acquistion"
+                    variant="filled"
+                    sx={{ width: "100%" }}
+                />
+                <Stack
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                spacing={2}
+                >
+                <DoneIcon color="info" />
+                <CloseIcon color="warning" />
+                </Stack>
+            </Form>)}
+        </Formik>
 
             <Stack
             direction="row"
@@ -112,72 +175,7 @@ const ListDetentionMateriel = () => {
                 </Button>*/}
             </Stack>
         </TableContainer>
-        <Formik
-                        enableReinitialize
-                        initialValues={{ 
-                            numOptim: "",
-                            designation: "",
-                            date: "",
-                            valeur: ""}}
-                        validationSchema={Yup.object({
-                            numOptim: Yup.string(),
-                            designation: Yup.string(),
-                            date: Yup.string(),
-                            valeur: Yup.string()
-                        })}
-                        onSubmit={async (value: any, action) => {
-                            await handleSubmint(value);
-                            action.resetForm();
-                        }}
-                    >
-                    {(formikProps) => (
-                        <Form>
-                            <OSSelectField
-                                id="contracType"
-                                name="codeOptim"
-                                label="Choisir un code d'OPTIM"
-                                options={status}
-                                value = {formikProps.values.numOptim}
-                                dataKey="name"
-                                onChange={handleChange}
-                                sx={{ width: "100%" }}
-                                valueKey="id"
-                            />
-                            <TextField
-                                id="filled-basic"
-                                name="designation"
-                                value = {formikProps.values.designation}
-                                label="Saisir désignation"
-                                variant="filled"
-                                sx={{ width: "100%" }}
-                            />
-                            <TextField
-                                id="filled-basic"
-                                name="date"
-                                value = {formikProps.values.date}
-                                label="Saisir date d'acquistion"
-                                variant="filled"
-                                sx={{ width: "100%" }}
-                            />
-                            <TextField
-                                id="filled-basic"
-                                name="valeur"
-                                value = {formikProps.values.valeur}
-                                label="Saisir valeur d'acquistion"
-                                variant="filled"
-                                sx={{ width: "100%" }}
-                            />
-                            <Stack
-                            direction="row"
-                            justifyContent="center"
-                            alignItems="center"
-                            spacing={2}
-                            >
-                            <DoneIcon color="info" />
-                            <CloseIcon color="warning" />
-                            </Stack>
-                        </Form>)}
-                    </Formik>
+       
         </MyTableContainer>
     );
 };
