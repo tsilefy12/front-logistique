@@ -1,6 +1,13 @@
-import React from "react";
+import {
+  Box,
+  FormControlLabel,
+  Menu,
+  MenuItem,
+  Switch,
+  TextField,
+} from "@mui/material";
 import { useField, useFormikContext } from "formik";
-import { TextField, MenuItem } from "@mui/material";
+import React, { useEffect, useState } from "react";
 
 const OSSelectField = ({
   name,
@@ -18,22 +25,58 @@ const OSSelectField = ({
   [key: string]: any;
 }) => {
   const { setFieldValue } = useFormikContext();
-
+  const [search, setSearch] = useState<string>("");
+  const [filteredData, setFilterdData] = useState<any[]>(options);
+  const [activeSearch, setActiveSearch] = useState<boolean>(false);
   const [field, meta] = useField(name);
 
-  const handleChange = (event: any) => {
-    const { value } = event.target;
-    setFieldValue(name, value);
+  const initialValue = () => {
+    if (typeof dataKey === "string") {
+      const result = options.find((o) => o[valueKey] === field.value);
+      if (result) {
+        return result[dataKey];
+      }
+      return "";
+    }
+    let value = "";
+    dataKey.forEach((k, i) => {
+      const result = options.find((o) => o[valueKey] === field.value);
+      if (result) {
+        if (i === 0) {
+          value += result[k];
+        } else {
+          value += " " + result[k];
+        }
+      }
+    });
+    return value;
   };
+
+  const [valueInput, setValueInput] = useState<string>(
+    field.value && options.length !== 0 ? initialValue() : ""
+  );
+  const handleChange = (label: string, value: string) => {
+    setValueInput(label);
+    setFieldValue(name, value);
+    setAnchor(null);
+  };
+
+  const [anchor, setAnchor] = useState<any>(null);
 
   const configSelect: any = {
     ...field,
     ...otherProps,
-    select: true,
     variant: "outlined",
     fullWidth: true,
-    onChange: handleChange,
   };
+
+  useEffect(() => {
+    setValueInput(initialValue());
+  }, [field.value]);
+
+  useEffect(() => {
+    setFilterdData(options);
+  }, [options]);
 
   if (meta && meta.touched && meta.error) {
     configSelect.error = true;
@@ -41,27 +84,102 @@ const OSSelectField = ({
   }
   const selectOptions = () => {
     if (Array.isArray(dataKey)) {
-      return options.map((option: any, index) => {
+      return filteredData.map((option: any, index) => {
         const labelArray = dataKey.map((key: string) => option[key]);
         const label = labelArray.join(separator);
         return (
-          <MenuItem key={index} value={option[valueKey]}>
+          <MenuItem
+            key={index}
+            onClick={() => handleChange(label, option[valueKey])}
+          >
             {label}
           </MenuItem>
         );
       });
     }
-    return options.map((option: any, index) => {
+    return filteredData.map((option: any, index) => {
       const label = option[dataKey];
       return (
-        <MenuItem key={index} value={option[valueKey]}>
+        <MenuItem
+          key={index}
+          onClick={() => handleChange(label, option[valueKey])}
+          value={option[valueKey]}
+        >
           {label}
         </MenuItem>
       );
     });
   };
+  useEffect(() => {
+    if (search.length === 0) {
+      setFilterdData(options);
+      return;
+    }
+    setFilterdData((prev: any[]) => {
+      if (Array.isArray(dataKey)) {
+        return options.filter((option: any) => {
+          const labelArray = dataKey.map((key: string) => option[key]);
+          const label = labelArray.join(separator);
+          return label.toLowerCase().includes(search.toLowerCase());
+        });
+      }
+      return options.filter((option: any) => {
+        const label = option[dataKey];
+        return label.toLowerCase().includes(search.toLowerCase());
+      });
+    });
+  }, [search]);
 
-  return <TextField {...configSelect}>{selectOptions()}</TextField>;
+  return (
+    <>
+      <TextField
+        {...configSelect}
+        onClick={(e) => setAnchor(e.target)}
+        value={valueInput}
+      />
+      <Menu
+        open={Boolean(anchor)}
+        anchorEl={anchor}
+        onClose={() => {
+          setAnchor(null);
+        }}
+        PaperProps={{
+          sx: {
+            width: "80%",
+          },
+        }}
+      >
+        {activeSearch && (
+          <Box sx={{ padding: 2 }}>
+            <TextField
+              name="searchSelect"
+              value={search}
+              onKeyDown={(e) => e.stopPropagation()}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setSearch(e.target.value);
+              }}
+              label="Recherche"
+              variant="outlined"
+              fullWidth
+            />
+          </Box>
+        )}
+        <Box sx={{ paddingLeft: 1 }}>
+          <FormControlLabel
+            control={
+              <Switch
+                value={activeSearch}
+                onChange={(e, v) => setActiveSearch(v)}
+              />
+            }
+            label="Filtrer"
+          />
+        </Box>
+
+        {selectOptions()}
+      </Menu>
+    </>
+  );
 };
 
 // component default props
