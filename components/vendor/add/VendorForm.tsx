@@ -192,9 +192,9 @@ export default function VendorForm() {
                     id="outlined-basic"
                     label="Type de produit"
                     name="typeProduit"
-                    options={typeProduits ? typeProduits : [{ id: "", name: "Rien à aficher" }]}
-                    dataKey="name"
-                    valueKey="name"
+                    options={typeProduits ? typeProduits : [{ id: "id", typeProduct: "Rien à aficher" }]}
+                    dataKey="typeProduct"
+                    valueKey="id"
                   />
                   <OSSelectField
                     id="outlined-basic"
