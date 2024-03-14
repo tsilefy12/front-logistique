@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { enqueueSnackbar } from "../notification/notificationSlice";
 import {
   EmployeInitialState,
-  EmployeItem,
 } from "./employeeSlice.interface";
 import axios from "axios";
 

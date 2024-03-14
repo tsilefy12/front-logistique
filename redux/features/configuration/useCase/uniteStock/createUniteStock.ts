@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axios } from "../../../../../lib/axios";
 import { enqueueSnackbar } from "../../../notification/notificationSlice";
-import { UniteStockItem } from "../../uniteStock.interface";
+import { uniteStockItem } from "../../uniteStock.interface";
 
 /**
  * Create a new timesheet
@@ -13,10 +13,10 @@ import { UniteStockItem } from "../../uniteStock.interface";
  */
 export const createUniteStock = createAsyncThunk(
     "typeProduit/createTypeProduit",
-    async (uniteStockItem: UniteStockItem, thunkAPI) => {
+    async (uniteStockItem: uniteStockItem, thunkAPI) => {
         try {
             console.log(uniteStockItem);
-            const response = await axios.post("/logistique/", uniteStockItem);
+            const response = await axios.post("/logistique/unite-stock", uniteStockItem);
             thunkAPI.dispatch(
                 enqueueSnackbar({
                     message: "unité de stock créer avec succès",
