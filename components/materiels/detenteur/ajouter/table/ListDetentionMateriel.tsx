@@ -5,9 +5,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
+import Paper from "@mui/material/Paper";;
 import Stack from "@mui/material/Stack";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -15,117 +13,171 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
-import Container from "@mui/material/Container";
 import { rows } from "./constante";
 import { styled } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import * as Yup from "yup";
+import OSSelectField from "../../../../shared/select/OSSelectField";
+import { useAppSelector } from "../../../../../hooks/reduxHooks";
+import useFetchEquipment from "../../../informatique/hooks/useFetchEquipment";
+import { useRouter } from "next/router";
+import { Form, Formik } from "formik";
 
 const ListDetentionMateriel = () => {
-  return (
-    <MyTableContainer>
-      <Typography variant="h5">Article à commander</Typography>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>N° OPTIM</TableCell>
-              <TableCell align="left">Désignation</TableCell>
-              <TableCell align="left">Date acquisition</TableCell>
-              <TableCell align="left">Valeur acquisition</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.numero}
-                </TableCell>
-                <TableCell align="left">{row.designation}</TableCell>
-                <TableCell align="left">{row.date_acquisition}</TableCell>
-                <TableCell align="left">{row.valeur_acquisition} Ar</TableCell>
+    const { equipments } = useAppSelector((state) => state.equipment);
+    console.log(equipments);
+    const fetchEquipment = useFetchEquipment();
+    const router = useRouter();
+    React.useEffect(() => {
+        fetchEquipment();
+    }, [router.query]);
 
-                <TableCell
-                  align="center"
-                  sx={{ width: 150, background: "#F5F5F5" }}
+    const status = [
+        { id: "NEW", name: "NEW", desc: "Nouveau" },
+        { id: "INPROGRESS", name: "INPROGRESS", desc: "Encours" },
+        { id: "EXPIRED", name: "EXPIRED", desc: "Expiré" },
+        { id: "CANCELLED", name: "CANCELLED", desc: "Annuler" },
+    ];
+    
+    const [initialValue, setInitialValue] = React.useState({
+        numOptim: "",
+        designation: "",
+        date: "",
+        valeur: "NEW"
+    })
+    const handleSubmint = async (values: any) => {
+    };
+    const handleChange= async (values: any) => {
+        setInitialValue({
+            numOptim: values,
+            designation: "SSSSS",
+            date: "12/12/12",
+            valeur: "NEW"
+        })
+    };
+    return (
+        <MyTableContainer>
+        <Typography variant="h5">Article à commander</Typography>
+        <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 700 }} aria-label="simple table">
+            <TableHead>
+                <TableRow>
+                <TableCell>N° OPTIM</TableCell>
+                <TableCell align="left">Désignation</TableCell>
+                <TableCell align="left">Date acquisition</TableCell>
+                <TableCell align="left">Valeur acquisition</TableCell>
+                <TableCell></TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {rows.map((row) => (
+                <TableRow
+                    key={row.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <Stack
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                    spacing={2}
-                  >
-                    <EditIcon color="primary" />
-                    <DeleteIcon color="warning" />
-                  </Stack>
-                </TableCell>
-              </TableRow>
-            ))}
-            <TableRow>
-              <TableCell padding="none">
-                <TextField
-                  id="filled-basic"
-                  label="Saisir N°OPTIM"
-                  variant="filled"
-                  sx={{ width: "100%" }}
-                />
-              </TableCell>
-              <TableCell padding="none">
-                <TextField
-                  id="filled-basic"
-                  label="Saisir désignation"
-                  variant="filled"
-                  sx={{ width: "100%" }}
-                />
-              </TableCell>
-              <TableCell padding="none">
-                <TextField
-                  id="filled-basic"
-                  label="Saisir date d'acquistion"
-                  variant="filled"
-                  sx={{ width: "100%" }}
-                />
-              </TableCell>
-              <TableCell padding="none">
-                <TextField
-                  id="filled-basic"
-                  label="Saisir valeur d'acquistion"
-                  variant="filled"
-                  sx={{ width: "100%" }}
-                />
-              </TableCell>
-              <TableCell sx={{ background: "#F5F5F5" }}>
-                <Stack
-                  direction="row"
-                  justifyContent="center"
-                  alignItems="center"
-                  spacing={2}
-                >
-                  <DoneIcon color="info" />
-                  <CloseIcon color="warning" />
-                </Stack>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+                    <TableCell component="th" scope="row">
+                    {row.numero}
+                    </TableCell>
+                    <TableCell align="left">{row.designation}</TableCell>
+                    <TableCell align="left">{row.date_acquisition}</TableCell>
+                    <TableCell align="left">{row.valeur_acquisition} Ar</TableCell>
 
-        <Stack
-          direction="row"
-          justifyContent="flex-start"
-          alignItems="center"
-          sx={{ mt: 2 }}
-        >
-         { /*<Button size="small" color="info">
-            <AddIcon />
-            Ajouter Article
-            </Button>*/}
-        </Stack>
-      </TableContainer>
-    </MyTableContainer>
-  );
+                    <TableCell
+                    align="center"
+                    sx={{ width: 150, background: "#F5F5F5" }}
+                    >
+                    <Stack
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="center"
+                        spacing={2}
+                    >
+                        <EditIcon color="primary" />
+                        <DeleteIcon color="warning" />
+                    </Stack>
+                    </TableCell>
+                </TableRow>
+                ))}
+                <Formik
+                    enableReinitialize
+                    initialValues={initialValue}
+                    onSubmit={async (value: any, action) => {
+                        await handleSubmint(value);
+                        action.resetForm();
+                    }}
+                >
+                     {(formikProps) => (
+                        <Form>
+                             <TableRow>
+                                <TableCell padding="none">
+                                    <OSSelectField
+                                        id="contracType"
+                                        name="codeOptim"
+                                        label="Choisir un code d'OPTIM"
+                                        options={status}
+                                        dataKey="name"
+                                        onchange={handleChange}
+                                        sx={{ width: "100%" }}
+                                        valueKey="id"
+                                    />
+                                </TableCell>
+                                <TableCell padding="none">
+                                    <TextField
+                                        id="filled-basic"
+                                        name="designation"
+                                        label="Saisir désignation"
+                                        variant="filled"
+                                        sx={{ width: "100%" }}
+                                    />
+                                </TableCell>
+                                <TableCell padding="none">
+                                    <TextField
+                                        id="filled-basic"
+                                        name="date"
+                                        label="Saisir date d'acquistion"
+                                        variant="filled"
+                                        sx={{ width: "100%" }}
+                                    />
+                                </TableCell>
+                                <TableCell padding="none">
+                                    <TextField
+                                        id="filled-basic"
+                                        name="valeur"
+                                        label="Saisir valeur d'acquistion"
+                                        variant="filled"
+                                        sx={{ width: "100%" }}
+                                    />
+                                </TableCell>
+                                <TableCell sx={{ background: "#F5F5F5" }}>
+                                    <Stack
+                                    direction="row"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    spacing={2}
+                                    >
+                                    <DoneIcon color="info" />
+                                    <CloseIcon color="warning" />
+                                    </Stack>
+                                </TableCell>
+                            </TableRow>
+                        </Form>)}
+                </Formik>
+            </TableBody>
+            </Table>
+
+            <Stack
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="center"
+            sx={{ mt: 2 }}
+            >
+            { /*<Button size="small" color="info">
+                <AddIcon />
+                Ajouter Article
+                </Button>*/}
+            </Stack>
+        </TableContainer>
+        </MyTableContainer>
+    );
 };
 
 export default ListDetentionMateriel;
