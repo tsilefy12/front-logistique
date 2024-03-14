@@ -137,7 +137,7 @@ export default function LogSupplyAndConsumableList() {
                         aria-labelledby="tableTitle"
                         size="small"
                     >
-                        <LogSupplyAndConsumableTableHeader />
+                        <LogSupplyAndConsumableTableHeader operation={operate}/>
                         <TableBody>
                         {logSuplyAndConsumableList.filter(i=> i.OperationType === operate)
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -155,8 +155,12 @@ export default function LogSupplyAndConsumableList() {
                                 <TableCell align="left">{row.quantity}</TableCell>
 
                                 <TableCell align="left">{row.SKU}</TableCell>
-
-                                <TableCell align="left">{row.unitPrice}</TableCell>
+                                {
+                                    operate ==="INPUT" ? (
+                                        <TableCell align="left">{row.unitPrice}</TableCell>
+                                    ):(
+                                        <TableCell align="left">{row.unitPrice}</TableCell>
+                                )}
                                 <TableCell align="left">12</TableCell>
 
                                 {/*<TableCell align="center">

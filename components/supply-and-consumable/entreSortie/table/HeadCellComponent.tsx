@@ -5,9 +5,10 @@ import { HeadCell } from "./HeadCell.interface";
 
 const HeadCellComponent = ({
 	headCell,
-	children,
+	operation
 }: {
 	headCell: HeadCell;
+	operation: string;
 	[key: string]: any;
 }) => {
 	const [order, setOrder] = React.useState<any>("asc");
@@ -57,7 +58,7 @@ const HeadCellComponent = ({
 				direction={order}
 				onClick={(event) => handleClickOrder(event, headCell.id)}
 			>
-				{headCell.label}
+				{headCell.id === "unitPrice" && operation ==="INPUT" ? headCell.label[0] :headCell.label[1]}
 			</TableSortLabel>
 		</TableCell>
 	);

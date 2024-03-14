@@ -4,7 +4,7 @@ import { LogSuplyAndConsumableItem } from "../../../../redux/features/logSuplyAn
 export interface HeadCell {
   disablePadding: boolean;
   id: any;
-  label: string;
+  label: any;
   numeric: boolean;
 }
 
