@@ -146,14 +146,20 @@ const menu = [
       },
       {
         id: 54, 
-        name: "Catégorie",
+        name: "Catégorie de Stock",
         link: "/configurations/categorie",
         icon: ""
       },
       {
         id: 55, 
-        name: "Type de produit",
+        name: "Type de produit (Fournisseur)",
         link: "/configurations/type_produit",
+        icon: ""
+      },
+      {
+        id: 56, 
+        name: "Type de matériel (Transport)",
+        link: "/configurations/type_materiel_transport",
         icon: ""
       }
     ],

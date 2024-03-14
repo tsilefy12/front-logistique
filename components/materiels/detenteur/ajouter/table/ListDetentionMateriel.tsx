@@ -10,7 +10,6 @@ import Stack from "@mui/material/Stack";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 import { rows } from "./constante";
@@ -30,14 +29,8 @@ const ListDetentionMateriel = () => {
     React.useEffect(() => {
         fetchEquipment();
     }, [router.query]);
+    console.log(equipments)
 
-    const status = [
-        { id: "NEW", name: "NEW", desc: "Nouveau" },
-        { id: "INPROGRESS", name: "INPROGRESS", desc: "Encours" },
-        { id: "EXPIRED", name: "EXPIRED", desc: "Expiré" },
-        { id: "CANCELLED", name: "CANCELLED", desc: "Annuler" },
-    ];
-    
     const [initialValue, setInitialValue] = React.useState({
         numOptim: "",
         designation: "",
@@ -116,14 +109,14 @@ const ListDetentionMateriel = () => {
             {(formikProps) => (
                 <Form>
                     <Stack direction="row" spacing={2}>
-                        <Stack direction="row" spacing={2}>
+                        
                             <OSSelectField
                                 id="contracType"
                                 name="codeOptim"
                                 label="Choisir un code d'OPTIM"
                                 options={equipments}
                                 value = {formikProps.values.numOptim}
-                                dataKey="name"
+                                dataKey="numOptim"
                                 onChange={handleChange}
                                 sx={{ width: "100%" }}
                                 valueKey="id"
@@ -136,8 +129,6 @@ const ListDetentionMateriel = () => {
                                 variant="filled"
                                 sx={{ width: "100%" }}
                             />
-                        </Stack>
-                        <Stack direction="row" spacing={2}>
                             <OSTextField
                                 id="filled-basic"
                                 name="date"
@@ -154,16 +145,15 @@ const ListDetentionMateriel = () => {
                                 variant="filled"
                                 sx={{ width: "100%" }}
                             />
-                        </Stack>
-                        <Stack
-                            direction="row"
-                            justifyContent="center"
-                            alignItems="center"
-                            spacing={2}
-                        >
-                        <DoneIcon color="info" />
-                        <CloseIcon color="warning" />
-                        </Stack>
+                            <Stack
+                                direction="row"
+                                justifyContent="center"
+                                alignItems="center"
+                                spacing={2}
+                            >
+                                <DoneIcon color="info" />
+                                <CloseIcon color="warning" />
+                            </Stack>
                     </Stack>
                 </Form>)}
             </Formik>
