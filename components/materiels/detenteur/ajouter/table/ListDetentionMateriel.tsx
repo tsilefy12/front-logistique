@@ -37,10 +37,16 @@ const ListDetentionMateriel = () => {
         date: "",
         valeur: "NEW"
     })
+    const [form, setForm] = React.useState({
+        numOptim: "",
+        designation: "",
+        date: "",
+        valeur: "NEW"
+    })
     const handleSubmint = async (values: any) => {
     };
     const handleChange= async () => {
-        setInitialValue({
+        setForm({
             numOptim: "ssss",
             designation: "SSSSS",
             date: "12/12/12",
@@ -115,7 +121,6 @@ const ListDetentionMateriel = () => {
                                 name="codeOptim"
                                 label="Choisir un code d'OPTIM"
                                 options={equipments}
-                                value = {formikProps.values.numOptim}
                                 dataKey="numOptim"
                                 onChange={handleChange}
                                 sx={{ width: "100%" }}
@@ -124,7 +129,7 @@ const ListDetentionMateriel = () => {
                             <OSTextField
                                 id="filled-basic"
                                 name="designation"
-                                value = {formikProps.values.designation}
+                                value = {form.designation}
                                 label="Saisir désignation"
                                 variant="filled"
                                 sx={{ width: "100%" }}
@@ -132,7 +137,7 @@ const ListDetentionMateriel = () => {
                             <OSTextField
                                 id="filled-basic"
                                 name="date"
-                                value = {formikProps.values.date}
+                                value = {form.date}
                                 label="Saisir date d'acquistion"
                                 variant="filled"
                                 sx={{ width: "100%" }}
@@ -140,7 +145,7 @@ const ListDetentionMateriel = () => {
                             <OSTextField
                                 id="filled-basic"
                                 name="valeur"
-                                value = {formikProps.values.valeur}
+                                value = {form.valeur}
                                 label="Saisir valeur d'acquistion"
                                 variant="filled"
                                 sx={{ width: "100%" }}
