@@ -114,6 +114,7 @@ const ListDetentionMateriel = () => {
                                         name="codeOptim"
                                         label="Choisir un code d'OPTIM"
                                         options={status}
+                                        value = {formikProps.values.numOptim}
                                         dataKey="name"
                                         onchange={handleChange}
                                         sx={{ width: "100%" }}
@@ -124,6 +125,7 @@ const ListDetentionMateriel = () => {
                                     <TextField
                                         id="filled-basic"
                                         name="designation"
+                                        value = {formikProps.values.designation}
                                         label="Saisir désignation"
                                         variant="filled"
                                         sx={{ width: "100%" }}
@@ -133,6 +135,7 @@ const ListDetentionMateriel = () => {
                                     <TextField
                                         id="filled-basic"
                                         name="date"
+                                        value = {formikProps.values.date}
                                         label="Saisir date d'acquistion"
                                         variant="filled"
                                         sx={{ width: "100%" }}
@@ -142,6 +145,7 @@ const ListDetentionMateriel = () => {
                                     <TextField
                                         id="filled-basic"
                                         name="valeur"
+                                        value = {formikProps.values.valeur}
                                         label="Saisir valeur d'acquistion"
                                         variant="filled"
                                         sx={{ width: "100%" }}
