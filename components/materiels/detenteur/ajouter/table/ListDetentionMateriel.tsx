@@ -16,46 +16,30 @@ import { rows } from "./constante";
 import { styled } from "@mui/material";
 import * as Yup from "yup";
 import OSSelectField from "../../../../shared/select/OSSelectField";
-import { useAppSelector } from "../../../../../hooks/reduxHooks";
+import { useAppSelector ,useAppDispatch} from "../../../../../hooks/reduxHooks";
 import useFetchEquipment from "../../../informatique/hooks/useFetchEquipment";
 import { useRouter } from "next/router";
 import { Form, Formik } from "formik";
-import OSTextField from "../../../../shared/input/OSTextField";
 import { getEquipments } from "../../../../../redux/features/equipment";
-import { AsyncThunkAction } from "@reduxjs/toolkit";
+import { useEffect } from "react";
 
 const ListDetentionMateriel = () => {
     const { equipments } = useAppSelector((state) => state.equipment);
     const router = useRouter();
+    const dispatch = useAppDispatch();
+
     const fetchUtilsData = () => {
         dispatch(getEquipments({}));
     };
-    React.useEffect(() => {
+    
+    useEffect(() => {
         fetchUtilsData();
     }, [router.query]);
     console.log(equipments)
-
-    const [initialValue, setInitialValue] = React.useState({
-        numOptim: "",
-        designation: "",
-        date: "",
-        valeur: "NEW"
-    })
-    const [form, setForm] = React.useState({
-        numOptim: "",
-        designation: "",
-        date: "",
-        valeur: "NEW"
-    })
+  
     const handleSubmint = async (values: any) => {
     };
     const handleChange= async () => {
-        setForm({
-            numOptim: "ssss",
-            designation: "SSSSS",
-            date: "12/12/12",
-            valeur: "NEW"
-        })
     };
     return (
         <MyTableContainer>
@@ -72,7 +56,9 @@ const ListDetentionMateriel = () => {
                 </Typography>
                 <Formik
                         enableReinitialize
-                        initialValues={initialValue}
+                        initialValues={{
+                            numOption : ""
+                        }}
                         validationSchema={Yup.object({
                             numOptim: Yup.string(),
                             designation: Yup.string(),
@@ -155,7 +141,3 @@ const MyTableContainer = styled(Stack)(({ theme }) => ({
   width: "100%",
   marginBottom: theme.spacing(10),
 }));
-function dispatch(arg0: AsyncThunkAction<any, { args?: any; }, {}>) {
-    throw new Error("Function not implemented.");
-}
-
