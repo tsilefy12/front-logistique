@@ -29,7 +29,7 @@ export const logSuplyAndConsumableHeadCells: readonly HeadCell[] = [
     id: "unitPrice",
     numeric: false,
     disablePadding: false,
-    label: "Prix unitaire",
+    label: ["Prix unitaire","Utilisateur"],
   },
   {
     id: "reste",
