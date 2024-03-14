@@ -99,6 +99,18 @@ const menu = [
         link: "/materiel_de_transport/suivi_carburant",
         icon: "",
       },
+      {
+        id: 35,
+        name: "course ville",
+        link: "/materiel_de_transport/course_ville",
+        icon: "",
+      },
+      {
+        id: 36,
+        name: "mission",
+        link: "/materiel_de_transport/mission",
+        icon: "",
+      },
     ],
   },
   {
