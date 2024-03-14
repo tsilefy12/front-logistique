@@ -41,7 +41,7 @@ const AddArticleForm = () => {
     { name: "BROKEN", french: "inutilisable" },
   ];
   const route = useRouter();
-  const { typeequipment, employees, isEditing, equipment } = useAppSelector(
+  const { employees, isEditing, equipment } = useAppSelector(
     (state) => state.equipment
   );
   console.log(employees);
