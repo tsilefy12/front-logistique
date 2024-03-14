@@ -97,8 +97,22 @@ const ListDetentionMateriel = () => {
                     </TableCell>
                 </TableRow>
                 ))} 
-                 <TableRow>
-                    <Formik
+            </TableBody>
+            </Table>
+
+            <Stack
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="center"
+            sx={{ mt: 2 }}
+            >
+            { /*<Button size="small" color="info">
+                <AddIcon />
+                Ajouter Article
+                </Button>*/}
+            </Stack>
+        </TableContainer>
+        <Formik
                         enableReinitialize
                         initialValues={{ 
                             numOptim: "",
@@ -164,22 +178,6 @@ const ListDetentionMateriel = () => {
                             </Stack>
                         </Form>)}
                     </Formik>
-                </TableRow>
-            </TableBody>
-            </Table>
-
-            <Stack
-            direction="row"
-            justifyContent="flex-start"
-            alignItems="center"
-            sx={{ mt: 2 }}
-            >
-            { /*<Button size="small" color="info">
-                <AddIcon />
-                Ajouter Article
-                </Button>*/}
-            </Stack>
-        </TableContainer>
         </MyTableContainer>
     );
 };
