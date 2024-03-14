@@ -28,8 +28,6 @@ import { OrderFormItem } from "../../../redux/features/order-form/orderForm.inte
 import Moment from "react-moment";
 import OrderFormTableToolbar from "./organism/table/OrderFormTableToolbar";
 import OrderFormTableHeader from "./organism/table/OrderFormTableHeader";
-import { Print } from "@mui/icons-material";
-
 
 
 
@@ -92,7 +90,7 @@ export default function OrderFormList() {
     page > 0
       ? Math.max(0, (1 + page) * rowsPerPage - orderFormListe.length)
       : 0;
-
+     
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
@@ -107,20 +105,14 @@ export default function OrderFormList() {
                 Ajouter
               </Button>
             </Link>
-            <Button
-            variant=""
-              startIcon={<Print />}
-              size="small"
-            >
-              Imprimer
-            </Button>
+    
           </Stack>
           <Typography variant="h4"> Bon de commande </Typography>
         </SectionNavigation>
         {/* <Divider /> */}
       </NavigationContainer>
 
-      <SectionTable>
+      <SectionTable id="tableauPDF">
         <Box sx={{ width: "100%", mb: 2 }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
             <OrderFormTableToolbar />
