@@ -28,6 +28,7 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Badge from "@mui/material/Badge";
 import Add from "@mui/icons-material/Add";
+
 import {
   defaultLabelDisplayedRows,
   labelRowsPerPage,
@@ -99,7 +100,7 @@ const ListBc = () => {
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-
+    
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
@@ -110,7 +111,7 @@ const ListBc = () => {
         </Link>
         <Typography variant="h4">Liste des BC</Typography>
       </SectionNavigation>
-      <SectionTable>
+      <SectionTable id="tableauPDF">
         <Box sx={{ width: "100%" }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
             <EnhancedTableToolbar numSelected={selected.length} />

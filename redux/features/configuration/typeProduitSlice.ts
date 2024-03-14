@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { typeProduitInitialState } from "./typeProduit.interface";
 import { createTypeProduit } from "./useCase/typeProduit/createTypeProduit";
+import { getTypeProduits } from "./useCase/typeProduit/getTypeProduits";
 
 
 const typeProduitInitialState: typeProduitInitialState = {
@@ -22,6 +23,17 @@ export const typeProduitSlice = createSlice({
   },
   extraReducers: {
     // get TypeProduit
+    [getTypeProduits.pending.type]: (state) => {
+      state.loading = true;
+    },
+    [getTypeProduits.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      state.typeProduits = action.payload;
+    },
+    [getTypeProduits.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
     
     // create TypeProduit
     [createTypeProduit.pending.type]: (state) => {

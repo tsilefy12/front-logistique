@@ -48,8 +48,8 @@ export default function InventaireList() {
 
   const router = useRouter();
 
-  const { logSuplyAndConsumableList } = useAppSelector(
-    (state) => state.logSuplyAndConsumable
+  const {inventaireList} = useAppSelector(
+    (state) => state.inventaire
   );
 
   const fetchInventaireList = useFetchInventaireList();
@@ -102,26 +102,26 @@ export default function InventaireList() {
               >
                 <InventaireTableHeader />
                 <TableBody>
-                  {logSuplyAndConsumableList
+                  {inventaireList
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row: InventaireItem | any, index) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (
                         <TableRow hover tabIndex={-1} key={row.id}>
                           <TableCell component="th" id={labelId} align="left">
-                            <Moment format="DD/MM/YYYY">{row.materiel?.designation}</Moment>
+                            {row.materiel?.designation} {row.materiel?.numOptim}
                           </TableCell>
                           <TableCell component="th" id={labelId} align="left">
-                            <Moment format="DD/MM/YYYY">{row.date_inventaire}</Moment>
+                            <Moment format="DD/MM/YYYY">{row.dateInventaire}</Moment>
                           </TableCell>
                           <TableCell component="th" id={labelId} align="left">
-                            <Moment format="DD/MM/YYYY">{row.date_depreciation}</Moment>
+                            <Moment format="DD/MM/YYYY">{row.dateDepreciation}</Moment>
                           </TableCell>
                           <TableCell align="left">
-                            {row.duree_vie}
+                            {row.dureeDeVie}
                           </TableCell>
-
-                          <TableCell align="left">{row.etat_materiel}</TableCell>
+                          <TableCell align="left">{row.etat}</TableCell>
+                          <TableCell align="left">{row.valeurInventaire}</TableCell>
                         </TableRow>
                       );
                     })}
@@ -140,7 +140,7 @@ export default function InventaireList() {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={logSuplyAndConsumableList.length}
+              count={inventaireList.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

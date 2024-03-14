@@ -14,6 +14,8 @@ import { useRouter } from "next/router";
 // import useFetchOrderFormListe from "../hooks/useFetchOrderFormListe";
 import Moment from "react-moment";
 import { getOrderForm } from "../../../../redux/features/order-form";
+import { Print } from "@mui/icons-material";
+import html2pdf from 'html2pdf.js';
 
 const DetailsOrderForm = () => {
   const router = useRouter();
@@ -42,7 +44,10 @@ const DetailsOrderForm = () => {
     };
     dispatch(getOrderForm({ id, args }));
   };
-
+  const Imprimer = () => {
+    const element = document.getElementById("tableauPDF");
+    html2pdf(element);
+}
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
       <SectionNavigation
@@ -50,11 +55,21 @@ const DetailsOrderForm = () => {
         justifyContent="space-between"
         sx={{ mb: 2 }}
       >
-        <Link href="/materiels/bon_de_commande">
+      <Stack direction="row" spacing={2} >
+      <Link href="/materiels/bon_de_commande">
           <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
             Retour
           </Button>
         </Link>
+        <Button
+              variant="outlined"
+              startIcon={<Print />}
+              size="small"
+              onClick={Imprimer}
+            >
+              Imprimer
+            </Button>
+      </Stack>
         <Typography variant="h4" color="GrayText">
           Detail Bon de commande
         </Typography>

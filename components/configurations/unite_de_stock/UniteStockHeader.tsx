@@ -7,6 +7,7 @@ import { cancelEdit } from "../../../redux/features/configuration/uniteStockSlic
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import OSTextField from "../../shared/input/OSTextField";
+import useFetchUniteStockList from "./hooks/useFetchUniteStock";
 
 const UniteStockHeader = () => {
     const { isEditing, uniteStock } = useAppSelector(
@@ -14,11 +15,12 @@ const UniteStockHeader = () => {
     );
     const dispatch = useAppDispatch();
     const route = useRouter();
+    const fetchUniteStockList = useFetchUniteStockList();
     const handleSubmit = async (values: any) => {
         try {
             if ( !isEditing) {
                 await dispatch(createUniteStock(values));
-                route.push("/configurations/unite_de_stock");
+                fetchUniteStockList();
             } 
 
         } catch (error) {

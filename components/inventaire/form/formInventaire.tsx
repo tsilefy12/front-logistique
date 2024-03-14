@@ -24,7 +24,6 @@ import {
   import OSDatePicker from "../../shared/date/OSDatePicker";
   import {
     createInventaire,
-    updateInventaire,
   } from "../../../redux/features/inventaire";
   import { useRouter } from "next/router";
   import { cancelEdit } from "../../../redux/features/equipment/equipmentSlice";
@@ -37,20 +36,16 @@ import {
       { name: "BROKEN", french: "inutilisable" },
     ];
     const route = useRouter();
-    const { isEditing, equipment} = useAppSelector(
+    const { isEditing, equipment } = useAppSelector(
         (state) => state.equipment
     );
    
     const handleSubmit = async (values: any) => {
         try {
-
-            if ( !isEditing) {
-                route.push("/materiels/informatiques");
+            if (isEditing) {
+                await dispatch(createInventaire(values));
+                route.push("/inventaire");
             }
-
-            await dispatch(createInventaire(values));
-            route.push("/inventaire");
-            
         } catch (error) {
         console.log("error", error);
       }
@@ -65,8 +60,9 @@ import {
             <Formik
                 enableReinitialize
                 initialValues={{
-                    date_inventaire: new Date(),
-                    date_depreciation: new Date(),
+                    id_materiel:isEditing? equipment?.id : "",
+                    dateInventaire: new Date(),
+                    dateDepreciation: new Date(),
                     etat: "",
                     duree_vie: 0,
                     valeur_inventaire: 0,
@@ -137,24 +133,30 @@ import {
                     <Divider />
                     </NavigationContainer>
                     <FormContainer spacing={2}>
+                        <input name="id_materiel" value={formikProps.values.id_materiel} type="text" hidden/>
+                        <Typography variant="h6" id="materiel" component="div">
+                            {isEditing? equipment?.designation +" "+equipment?.numOptim : ""}
+                        </Typography>
                         <OSDatePicker
                             fullWidth
                             label="Date inventaire"
-                            value={formikProps.values.date_inventaire}
+                            name = "dateInventaire"
+                            value={formikProps.values.dateInventaire}
                             onChange={(value: any) =>
-                                formikProps.setFieldValue("date_inventaire", value)
+                                formikProps.setFieldValue("dateInventaire", value)
                             }
                         />
                         <OSDatePicker
                             fullWidth
+                            name="dateDepreciation"
                             label="Date dépréciation"
-                            value={formikProps.values.date_depreciation}
+                            value={formikProps.values.dateDepreciation}
                             onChange={(value: any) =>
-                                formikProps.setFieldValue("date_depreciation", value)
+                                formikProps.setFieldValue("dateDepreciation", value)
                             }
                         />
                         <OSTextField
-                            name="duree_vie"
+                            name="dureeDeVie"
                             fullWidth
                             id="outlined-basic"
                             label="Durée de vie"
@@ -162,7 +164,7 @@ import {
                             type="number"
                         />
                         <OSTextField
-                            name="valeur_inventaire"
+                            name="valeurInventaire"
                             fullWidth
                             id="outlined-basic"
                             label="Valeur inventaire"

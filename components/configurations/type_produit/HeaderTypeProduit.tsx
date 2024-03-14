@@ -7,17 +7,19 @@ import { cancelEdit } from "../../../redux/features/configuration/typeProduitSli
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import OSTextField from "../../shared/input/OSTextField";
+import useFetchTypeProduitList from "./hooks/useFetchTypeProduitList";
 const HeaderTypeProduit = () => {
     const { isEditing, typeProduit } = useAppSelector(
         (state) => state.typeProduit
     );
     const dispatch = useAppDispatch();
     const route = useRouter();
+    const fetchTypeProduitList = useFetchTypeProduitList();
     const handleSubmit = async (values: any) => {
         try {
             if ( !isEditing) {
                 await dispatch(createTypeProduit(values));
-                route.push("/configurations/categorie");
+                fetchTypeProduitList();
             } 
 
         } catch (error) {

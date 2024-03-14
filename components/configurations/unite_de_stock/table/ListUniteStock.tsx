@@ -2,9 +2,18 @@ import React from "react";
 import { Box, Paper, styled, Stack, Container, FormLabel, TextField, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import { Delete, Edit } from "@mui/icons-material";
+import { uniteStockItem } from "../../../../redux/features/configuration/uniteStock.interface";
+import { useAppSelector } from "../../../../hooks/reduxHooks";
+import { useRouter } from "next/router";
+import useFetchUniteStockList from "../hooks/useFetchUniteStock";
 
 const ListeUniteStock = () => {
-
+    const { uniteStocks } = useAppSelector((state) => state.uniteStock);
+    const fetchUniteStockList = useFetchUniteStockList();
+    const router = useRouter();
+    React.useEffect(() => {
+        fetchUniteStockList();
+    }, [router.query]);
     return (
         <TableSection>
             <Box sx={{ width: "100%" }}>
@@ -29,34 +38,37 @@ const ListeUniteStock = () => {
                             sx={{  padding: "20px"}}
                         />
                     </Stack>
-
-                    <Stack direction="row" spacing={2} sx={{
-                            flex: "1 1 100%",
-                            justifyContent: "space-around",
-                            alignItems: "center",
-                            padding: "4px",
-                            width: "100%"
-                        }} >
-                        <Container>
-                            <FormLabel sx={{ padding: "10" }} >Test</FormLabel>
-                        </Container>
-                        <IconButton
-                            color="accent"
-                            aria-label="Modifier"
-                            component="span"
-                            size="small"
-                        >
-                            <Edit />
-                        </IconButton>
-                        <IconButton
-                            color="secondary"
-                            aria-label="Supprimer"
-                            component="span"
-                            size="small"
-                        >
-                            <Delete />
-                        </IconButton>
-                    </Stack>
+                    {uniteStocks
+                    .map((row: uniteStockItem, index: any) => {
+                      return (
+                        <Stack direction="row" spacing={2} sx={{
+                                flex: "1 1 100%",
+                                justifyContent: "space-around",
+                                alignItems: "center",
+                                padding: "4px",
+                                width: "100%"
+                            }} >
+                            <Container>
+                                <FormLabel sx={{ padding: "10" }} >{row.uniteStock}</FormLabel>
+                            </Container>
+                            <IconButton
+                                color="accent"
+                                aria-label="Modifier"
+                                component="span"
+                                size="small"
+                            >
+                                <Edit />
+                            </IconButton>
+                            <IconButton
+                                color="secondary"
+                                aria-label="Supprimer"
+                                component="span"
+                                size="small"
+                            >
+                                <Delete />
+                            </IconButton>
+                        </Stack> );
+                    })}
                 </Paper>
             </Box>
         </TableSection>
