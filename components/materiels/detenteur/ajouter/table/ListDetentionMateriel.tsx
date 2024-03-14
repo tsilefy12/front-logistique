@@ -25,7 +25,6 @@ import OSTextField from "../../../../shared/input/OSTextField";
 
 const ListDetentionMateriel = () => {
     const { equipments } = useAppSelector((state) => state.equipment);
-    console.log(equipments);
     const fetchEquipment = useFetchEquipment();
     const router = useRouter();
     React.useEffect(() => {
@@ -101,67 +100,73 @@ const ListDetentionMateriel = () => {
                 </TableBody>
             </Table>
             <Formik
-            enableReinitialize
-            initialValues={initialValue}
-            validationSchema={Yup.object({
-                numOptim: Yup.string(),
-                designation: Yup.string(),
-                date: Yup.string(),
-                valeur: Yup.string()
-            })}
-            onSubmit={async (value: any, action) => {
-                await handleSubmint(value);
-                action.resetForm();
-            }}
-        >
-        {(formikProps) => (
-            <Form>
-                <OSSelectField
-                    id="contracType"
-                    name="codeOptim"
-                    label="Choisir un code d'OPTIM"
-                    options={status}
-                    value = {formikProps.values.numOptim}
-                    dataKey="name"
-                    onChange={handleChange}
-                    sx={{ width: "100%" }}
-                    valueKey="id"
-                />
-                <OSTextField
-                    id="filled-basic"
-                    name="designation"
-                    value = {formikProps.values.designation}
-                    label="Saisir désignation"
-                    variant="filled"
-                    sx={{ width: "100%" }}
-                />
-                <OSTextField
-                    id="filled-basic"
-                    name="date"
-                    value = {formikProps.values.date}
-                    label="Saisir date d'acquistion"
-                    variant="filled"
-                    sx={{ width: "100%" }}
-                />
-                <OSTextField
-                    id="filled-basic"
-                    name="valeur"
-                    value = {formikProps.values.valeur}
-                    label="Saisir valeur d'acquistion"
-                    variant="filled"
-                    sx={{ width: "100%" }}
-                />
-                <Stack
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-                spacing={2}
-                >
-                <DoneIcon color="info" />
-                <CloseIcon color="warning" />
-                </Stack>
-            </Form>)}
-        </Formik>
+                enableReinitialize
+                initialValues={initialValue}
+                validationSchema={Yup.object({
+                    numOptim: Yup.string(),
+                    designation: Yup.string(),
+                    date: Yup.string(),
+                    valeur: Yup.string()
+                })}
+                onSubmit={async (value: any, action) => {
+                    await handleSubmint(value);
+                    action.resetForm();
+                }}
+            >
+            {(formikProps) => (
+                <Form>
+                    <Stack direction="row" spacing={2}>
+                        <Stack direction="row" spacing={2}>
+                            <OSSelectField
+                                id="contracType"
+                                name="codeOptim"
+                                label="Choisir un code d'OPTIM"
+                                options={equipments}
+                                value = {formikProps.values.numOptim}
+                                dataKey="name"
+                                onChange={handleChange}
+                                sx={{ width: "100%" }}
+                                valueKey="id"
+                            />
+                            <OSTextField
+                                id="filled-basic"
+                                name="designation"
+                                value = {formikProps.values.designation}
+                                label="Saisir désignation"
+                                variant="filled"
+                                sx={{ width: "100%" }}
+                            />
+                        </Stack>
+                        <Stack direction="row" spacing={2}>
+                            <OSTextField
+                                id="filled-basic"
+                                name="date"
+                                value = {formikProps.values.date}
+                                label="Saisir date d'acquistion"
+                                variant="filled"
+                                sx={{ width: "100%" }}
+                            />
+                            <OSTextField
+                                id="filled-basic"
+                                name="valeur"
+                                value = {formikProps.values.valeur}
+                                label="Saisir valeur d'acquistion"
+                                variant="filled"
+                                sx={{ width: "100%" }}
+                            />
+                        </Stack>
+                        <Stack
+                            direction="row"
+                            justifyContent="center"
+                            alignItems="center"
+                            spacing={2}
+                        >
+                        <DoneIcon color="info" />
+                        <CloseIcon color="warning" />
+                        </Stack>
+                    </Stack>
+                </Form>)}
+            </Formik>
 
             <Stack
             direction="row"
