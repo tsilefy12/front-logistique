@@ -101,13 +101,13 @@ const menu = [
       },
       {
         id: 35,
-        name: "course ville",
+        name: "Course ville",
         link: "/materiel_de_transport/course_ville",
         icon: "",
       },
       {
         id: 36,
-        name: "mission",
+        name: "Mission",
         link: "/materiel_de_transport/mission",
         icon: "",
       },
