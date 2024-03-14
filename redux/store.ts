@@ -29,6 +29,8 @@ import { categorieStockSlice } from "./features/configuration/categorieStockSlic
 import { typeProduitSlice } from "./features/configuration/typeProduitSlice";
 import { UniteStockSLice } from "./features/configuration/uniteStockSlice";
 import { InventaireSlice } from "./features/inventaire/inventaireSlice";
+import { employeSlice } from "./features/employeStagiaire/employeeSlice";
+import { stagiaireSlice } from "./features/employeStagiaire/stagiaireSlice";
 
 export const store = configureStore({
   reducer: {
@@ -62,7 +64,9 @@ export const store = configureStore({
     categorieStock: categorieStockSlice.reducer,
     uniteStock: UniteStockSLice.reducer,
     typeProduit: typeProduitSlice.reducer,
-    inventaire: InventaireSlice.reducer
+    inventaire: InventaireSlice.reducer,
+    employe: employeSlice.reducer,
+    stagiaire : stagiaireSlice.reducer
   },
 });
 
