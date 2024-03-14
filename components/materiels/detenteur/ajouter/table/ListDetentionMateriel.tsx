@@ -55,127 +55,91 @@ const ListDetentionMateriel = () => {
     };
     return (
         <MyTableContainer>
-        <Typography variant="h5">Matériel</Typography>
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                    <TableCell>N° OPTIM</TableCell>
-                    <TableCell align="left">Désignation</TableCell>
-                    <TableCell align="left">Date acquisition</TableCell>
-                    <TableCell align="left">Valeur acquisition</TableCell>
-                    <TableCell></TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                    <TableRow
-                        key={row.id}
-                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                        <TableCell component="th" scope="row">
-                        {row.numero}
-                        </TableCell>
-                        <TableCell align="left">{row.designation}</TableCell>
-                        <TableCell align="left">{row.date_acquisition}</TableCell>
-                        <TableCell align="left">{row.valeur_acquisition} Ar</TableCell>
-
-                        <TableCell
-                        align="center"
-                        sx={{ width: 150, background: "#F5F5F5" }}
-                        >
-                        <Stack
-                            direction="row"
-                            justifyContent="center"
-                            alignItems="center"
-                            spacing={2}
-                        >
-                            <EditIcon color="primary" />
-                            <DeleteIcon color="warning" />
-                        </Stack>
-                        </TableCell>
-                    </TableRow>
-                    ))} 
-                </TableBody>
-            </Table>
-            <Formik
-                enableReinitialize
-                initialValues={initialValue}
-                validationSchema={Yup.object({
-                    numOptim: Yup.string(),
-                    designation: Yup.string(),
-                    date: Yup.string(),
-                    valeur: Yup.string()
-                })}
-                onSubmit={async (value: any, action) => {
-                    await handleSubmint(value);
-                    action.resetForm();
+            <Stack
+                direction="row"
+                sx={{
+                    flex: "1 1 100%",
+                    justifyContent: "space-between",
+                    alignItems: "center",
                 }}
-            >
-            {(formikProps) => (
-                <Form>
-                    <Stack direction="row" spacing={2}>
-                        
-                            <OSSelectField
-                                id="contracType"
-                                name="codeOptim"
-                                label="Choisir un code d'OPTIM"
-                                options={equipments}
-                                dataKey="numOptim"
-                                onChange={handleChange}
-                                sx={{ width: "100%" }}
-                                valueKey="id"
-                            />
-                            <OSTextField
-                                id="filled-basic"
-                                name="designation"
-                                value = {form.designation}
-                                label="Saisir désignation"
-                                variant="filled"
-                                sx={{ width: "100%" }}
-                            />
-                            <OSTextField
-                                id="filled-basic"
-                                name="date"
-                                value = {form.date}
-                                label="Saisir date d'acquistion"
-                                variant="filled"
-                                sx={{ width: "100%" }}
-                            />
-                            <OSTextField
-                                id="filled-basic"
-                                name="valeur"
-                                value = {form.valeur}
-                                label="Saisir valeur d'acquistion"
-                                variant="filled"
-                                sx={{ width: "100%" }}
-                            />
+                >
+                <Typography variant="h6" id="tableTitle" component="div">
+                    Matériel
+                </Typography>
+                <Formik
+                        enableReinitialize
+                        initialValues={initialValue}
+                        validationSchema={Yup.object({
+                            numOptim: Yup.string(),
+                            designation: Yup.string(),
+                            date: Yup.string(),
+                            valeur: Yup.string()
+                        })}
+                        onSubmit={async (value: any, action) => {
+                            await handleSubmint(value);
+                            action.resetForm();
+                        }}
+                    >
+                    {(formikProps) => (
+                        <Form>
+                            <Stack direction="row" spacing={2}>
+                                <OSSelectField
+                                    id="contracType"
+                                    name="codeOptim"
+                                    label="Choisir un code d'OPTIM"
+                                    options={equipments}
+                                    dataKey="numOptim"
+                                    onChange={handleChange}
+                                    sx={{ width: "100%" }}
+                                    valueKey="id"
+                                />
+                            </Stack>
+                        </Form>)}
+                </Formik>
+            </Stack>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                        <TableCell>N° OPTIM</TableCell>
+                        <TableCell align="left">Désignation</TableCell>
+                        <TableCell align="left">Date acquisition</TableCell>
+                        <TableCell align="left">Valeur acquisition</TableCell>
+                        <TableCell></TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows.map((row) => (
+                        <TableRow
+                            key={row.id}
+                            sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                        >
+                            <TableCell component="th" scope="row">
+                            {row.numero}
+                            </TableCell>
+                            <TableCell align="left">{row.designation}</TableCell>
+                            <TableCell align="left">{row.date_acquisition}</TableCell>
+                            <TableCell align="left">{row.valeur_acquisition} Ar</TableCell>
+
+                            <TableCell
+                            align="center"
+                            sx={{ width: 150, background: "#F5F5F5" }}
+                            >
                             <Stack
                                 direction="row"
                                 justifyContent="center"
                                 alignItems="center"
                                 spacing={2}
                             >
-                                <DoneIcon color="info" />
-                                <CloseIcon color="warning" />
+                                <EditIcon color="primary" />
+                                <DeleteIcon color="warning" />
                             </Stack>
-                    </Stack>
-                </Form>)}
-            </Formik>
-
-            <Stack
-            direction="row"
-            justifyContent="flex-start"
-            alignItems="center"
-            sx={{ mt: 2 }}
-            >
-            { /*<Button size="small" color="info">
-                <AddIcon />
-                Ajouter Article
-                </Button>*/}
-            </Stack>
-        </TableContainer>
-       
+                            </TableCell>
+                        </TableRow>
+                        ))} 
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </MyTableContainer>
     );
 };
