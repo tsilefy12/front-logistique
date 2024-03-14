@@ -46,8 +46,7 @@ const FormDetentionMateriel = () => {
     const { isEditing, holder } = useAppSelector((state) => state.holder);
     const { employees } = useAppSelector((state) => state.employe);
     const { interns } = useAppSelector((state) => state.stagiaire);
-    const { equipments } = useAppSelector((state) => state.equipment);
-    console.log(equipments)
+    
     const total = [...employees.map((i:any)=>{
         return {
         id : i.id, name: i.name +" "+ i.surname, type: "employe"
@@ -61,7 +60,6 @@ const FormDetentionMateriel = () => {
     const fetchUtilsData = () => {
         dispatch(getEmployes({}));
         dispatch(getInterns({}));
-        dispatch(getEquipments({}));
     };
     
     useEffect(() => {
