@@ -148,107 +148,107 @@ export default function BonCommandeInterneList() {
                     Ajouter
                 </Button>
             </Link>
-            <Typography variant="h4"> Liste des commandes </Typography>
+            <Typography variant="h4"> Liste de Bon des commandes Interne</Typography>
             </SectionNavigation>
             {/* <Divider /> */}
         </NavigationContainer>
         <SectionTable>
             <Box sx={{ width: "100%", mb: 2 }}>
-            <Paper sx={{ width: "100%", mb: 2 }}>
-                <BonCommandeInterneTableToolbar />
-                <TableContainer>
-                <Table
-                    sx={{ minWidth: 750 }}
-                    aria-labelledby="tableTitle"
-                    size="small"
-                >
-                    <BonCommandeInterneTableHeader />
-                    <TableBody>
-                    {bonCommandeInternes
-                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        .map((row: BonCommandeItem, index: any) => {
-                        const labelId = `enhanced-table-checkbox-${index}`;
-                        return (
-                            <TableRow hover tabIndex={-1} key={row.id}>
-                                <TableCell align="left">{row?.numBonCommande}</TableCell>
-                                <TableCell align="left">
-                                    <Moment format="DD/MM/YYYY">
-                                        {row?.dateBonCommande}
-                                    </Moment>
-                                </TableCell>
-                                <TableCell align="left">{row?.demandeur}</TableCell>
-                                <TableCell align="left">
-                                    {row?.montantTotal}
-                                </TableCell>
-                                <TableCell align="left">{row?.grant}</TableCell>
-                                <TableCell align="right" width={"150px"}>
-                                    <BtnActionContainer
-                                    direction="row"
-                                    justifyContent="right"
-                                    >
-                                    <Link
-                                        href={`/fournitures_et_consommables/commande/${row.id}/details`}
-                                    >
-                                        <IconButton
-                                        color="accent"
-                                        aria-label="Details"
-                                        component="span"
-                                        size="small"
+                <Paper sx={{ width: "100%", mb: 2 }}>
+                    <BonCommandeInterneTableToolbar />
+                    <TableContainer>
+                    <Table
+                        sx={{ minWidth: 750 }}
+                        aria-labelledby="tableTitle"
+                        size="small"
+                    >
+                        <BonCommandeInterneTableHeader />
+                        <TableBody>
+                        {bonCommandeInternes
+                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            .map((row: BonCommandeItem, index: any) => {
+                            const labelId = `enhanced-table-checkbox-${index}`;
+                            return (
+                                <TableRow hover tabIndex={-1} key={row.id}>
+                                    <TableCell align="left">{row?.numBonCommande}</TableCell>
+                                    <TableCell align="left">
+                                        <Moment format="DD/MM/YYYY">
+                                            {row?.dateBonCommande}
+                                        </Moment>
+                                    </TableCell>
+                                    <TableCell align="left">{row?.demandeur}</TableCell>
+                                    <TableCell align="left">
+                                        {row?.montantTotal}
+                                    </TableCell>
+                                    <TableCell align="left">{row?.grant}</TableCell>
+                                    <TableCell align="right" width={"150px"}>
+                                        <BtnActionContainer
+                                        direction="row"
+                                        justifyContent="right"
                                         >
-                                        <Visibility />
+                                        <Link
+                                            href={`/fournitures_et_consommables/commande/${row.id}/details`}
+                                        >
+                                            <IconButton
+                                            color="accent"
+                                            aria-label="Details"
+                                            component="span"
+                                            size="small"
+                                            >
+                                            <Visibility />
+                                            </IconButton>
+                                        </Link>
+                                        <IconButton
+                                            color="primary"
+                                            aria-label="Modifier"
+                                            component="span"
+                                            size="small"
+                                            onClick={() => {
+                                            handleClickEdit(row.id);
+                                            }}
+                                        >
+                                            <Edit />
                                         </IconButton>
-                                    </Link>
-                                    <IconButton
-                                        color="primary"
-                                        aria-label="Modifier"
-                                        component="span"
-                                        size="small"
-                                        onClick={() => {
-                                        handleClickEdit(row.id);
-                                        }}
-                                    >
-                                        <Edit />
-                                    </IconButton>
-                                    <IconButton
-                                        color="warning"
-                                        aria-label="Supprimer"
-                                        component="span"
-                                        size="small"
-                                        onClick={() => {
-                                        handleClickDelete(row.id);
-                                        }}
-                                    >
-                                        <Delete />
-                                    </IconButton>
-                                    </BtnActionContainer>
-                                </TableCell>
+                                        <IconButton
+                                            color="warning"
+                                            aria-label="Supprimer"
+                                            component="span"
+                                            size="small"
+                                            onClick={() => {
+                                            handleClickDelete(row.id);
+                                            }}
+                                        >
+                                            <Delete />
+                                        </IconButton>
+                                        </BtnActionContainer>
+                                    </TableCell>
+                                </TableRow>
+                            );
+                            })}
+                        {emptyRows > 0 && (
+                            <TableRow
+                            style={{
+                                height: (dense ? 33 : 53) * emptyRows,
+                            }}
+                            >
+                            <TableCell colSpan={6} />
                             </TableRow>
-                        );
-                        })}
-                    {emptyRows > 0 && (
-                        <TableRow
-                        style={{
-                            height: (dense ? 33 : 53) * emptyRows,
-                        }}
-                        >
-                        <TableCell colSpan={6} />
-                        </TableRow>
-                    )}
-                    </TableBody>
-                </Table>
-                </TableContainer>
-                <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={bonCommandeInternes.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                labelRowsPerPage={labelRowsPerPage}
-                labelDisplayedRows={defaultLabelDisplayedRows}
-                />
-            </Paper>
+                        )}
+                        </TableBody>
+                    </Table>
+                    </TableContainer>
+                    <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={bonCommandeInternes.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    labelRowsPerPage={labelRowsPerPage}
+                    labelDisplayedRows={defaultLabelDisplayedRows}
+                    />
+                </Paper>
             </Box>
         </SectionTable>
         </Container>
@@ -256,16 +256,16 @@ export default function BonCommandeInterneList() {
 }
 
 const NavigationContainer = styled(Stack)(({ theme }) => ({
-  flexDirection: "column",
-  marginBottom: "16px",
-  flex: 1,
-  width: "100%",
+    flexDirection: "column",
+    marginBottom: "16px",
+    flex: 1,
+    width: "100%",
 }));
 
 const SectionNavigation = styled(Stack)(({ theme }) => ({
-  flexDirection: "row",
-  justifyContent: "space-between",
-  paddingBottom: "5px",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingBottom: "5px",
 }));
 
 const BtnActionContainer = styled(Stack)(({ theme }) => ({}));

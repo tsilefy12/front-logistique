@@ -177,24 +177,16 @@ const ListInfo = () => {
                                     handleClickNewInventaire(item.id);
                                     }}
                                 >
+                                    <Add/>
                                 </IconButton>
                                 <Link
                                 href={`/materiels/informatiques/${item.id}/detail`}
                                 >
                                 <Stack direction="row" spacing={2} >
                                     <IconButton
-                                    color="secondary"
-                                    aria-label="Add"
-                                    component="span"
-                                    >
-                                    </IconButton>
-                                    <IconButton
                                     color="accent"
                                     aria-label="Details"
                                     component="span"
-                                    // onClick={() => {
-                                    //   alert("En cours de traitement ...");
-                                    // }}
                                     >
                                     <VisibilityIcon />
                                     </IconButton>
@@ -228,8 +220,6 @@ const ListInfo = () => {
                         ))
                     )
                     }
-
-
                 </Table>
                 </TableContainer>
                 <TablePagination
