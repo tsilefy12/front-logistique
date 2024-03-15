@@ -14,7 +14,6 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
@@ -78,17 +77,16 @@ const ListInfo = () => {
     const { equipments } = useAppSelector((state) => state.equipment);
     console.log(equipments);
     const fetchEquipment = useFetchEquipment();
-
-    React.useEffect(() => {
+    useEffect(() => {
         fetchEquipment();
     }, [router.query]);
     const handleClickDelete = async (id: any) => {
         confirm({
-        title: "Supprimer le materiel",
-        description: "Voulez-vous vraiment supprimer ce materiel ?",
-        cancellationText: "Annuler",
-        confirmationText: "Supprimer",
-        cancellationButtonProps: {
+          title: "Supprimer le materiel",
+          description: "Voulez-vous vraiment supprimer ce materiel ?",
+          cancellationText: "Annuler",
+          confirmationText: "Supprimer",
+          cancellationButtonProps: {
             color: "warning",
         },
         confirmationButtonProps: {
@@ -133,7 +131,6 @@ const ListInfo = () => {
     //         { params: { args: JSON.stringify({ include: { owner: true } }) } }).then(({ data }) => {
     //           setDonneMateriel(data);
     //         })
-
     //     }
     //     fetchMateriles();
     // }, [])
@@ -164,7 +161,7 @@ const ListInfo = () => {
                         <TableBody key={index}>
                             <TableCell align="left">{item.numOptim}</TableCell>
                             <TableCell align="left">{item.typeEquipmentId}</TableCell>
-                            <TableCell align="left">{item.ownerId}</TableCell>
+                            <TableCell align="left">{item.owner?.name+" "+item.owner?.surname}</TableCell>
                             <TableCell align="left">{item.designation}</TableCell>
                             <TableCell align="left">{item.status}</TableCell>
                             <TableCell align="right">

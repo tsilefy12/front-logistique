@@ -57,8 +57,8 @@ const menu = [
       },
       {
         id: 22,
-        name: "Commande",
-        link: "/fournitures_et_consommables/commande",
+        name: "Bon de commande interne",
+        link: "/fournitures_et_consommables/bon_commande_intern",
         icon: "",
       },
       {

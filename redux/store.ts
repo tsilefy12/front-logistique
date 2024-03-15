@@ -31,6 +31,7 @@ import { UniteStockSLice } from "./features/configuration/uniteStockSlice";
 import { InventaireSlice } from "./features/inventaire/inventaireSlice";
 import { employeSlice } from "./features/employeStagiaire/employeeSlice";
 import { stagiaireSlice } from "./features/employeStagiaire/stagiaireSlice";
+import { bonCommandeInterneSlice } from "./features/bon_commande_interne/bonCommandeInterneSlice";
 
 export const store = configureStore({
   reducer: {
@@ -66,7 +67,8 @@ export const store = configureStore({
     typeProduit: typeProduitSlice.reducer,
     inventaire: InventaireSlice.reducer,
     employe: employeSlice.reducer,
-    stagiaire : stagiaireSlice.reducer
+    stagiaire : stagiaireSlice.reducer,
+    bonCommandeInterne : bonCommandeInterneSlice.reducer
   },
 });
 

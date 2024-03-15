@@ -11,20 +11,20 @@ export const getEquipment = createAsyncThunk(
       const detailEmployee = await thunkAPI
         .dispatch(getEmployee({ employeeId }))
         .unwrap();
-      const oneCons = {
-        id: response.data?.id,
-        numOptim: response.data?.numOptim,
-        designation: response.data?.designation,
-        ownerId: response.data?.ownerId,
-        additionalInformation: response.data?.additionalInformation,
-        status: response.data?.status,
-        acquisitionDate: response.data?.acquisitionDate,
-        acquisitionValue: response.data?.acquisitionValue,
-        imageUrl: response.data?.imageUrl,
-        typeEquipmentId: response.data?.typeEquipmentId,
-        type: response.data?.type,
-        owner: detailEmployee,
-      };
+        const oneCons = {
+          id: response.data?.id,
+          numOptim: response.data?.numOptim,
+          designation: response.data?.designation,
+          ownerId: response.data?.ownerId,
+          additionalInformation: response.data?.additionalInformation,
+          status: response.data?.status,
+          acquisitionDate: response.data?.acquisitionDate,
+          acquisitionValue: response.data?.acquisitionValue,
+          imageUrl: response.data?.imageUrl,
+          typeEquipmentId: response.data?.typeEquipmentId,
+          type: response.data?.type,
+          owner: detailEmployee,
+        };
       return oneCons;
     } catch (error: any) {
       if (error.response) {

@@ -41,7 +41,6 @@ export default function ConsumableList() {
   // const { suplyAndConsumable } = useAppSelector(
   //   (state) => state.suplyAndConsumable
   // );
-
   const router = useRouter();
 
   const confirm = useConfirm();
