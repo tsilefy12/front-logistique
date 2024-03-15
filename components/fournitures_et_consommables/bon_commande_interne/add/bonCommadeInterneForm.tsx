@@ -190,8 +190,8 @@ export default function BonCommandeInterneForm() {
                                         >
                                         <FormControl fullWidth>
                                             <OSTextField
-                                            id="numberOfAuthorisedOffersPossible"
-                                            label=""
+                                            id="Demandeur"
+                                            label="Demandeur"
                                             name="Demandeur"
                                             type="number"
                                             />
@@ -238,7 +238,7 @@ export default function BonCommandeInterneForm() {
                     }}
                 </Formik>
             </Container>
-            <MyTableContainer>
+            <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
                 <Stack
                     direction="row"
                     sx={{
@@ -293,7 +293,7 @@ export default function BonCommandeInterneForm() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-            </MyTableContainer>
+            </Container>
         </>
     );
 }
@@ -322,12 +322,3 @@ const SectionNavigation = styled(Stack)(({ theme }) => ({
   justifyContent: "space-between",
   paddingBottom: "5px",
 }));
-
-const MyTableContainer = styled(Stack)(({ theme }) => ({
-    padding: 30,
-    borderRadius: 20,
-    background: "#fff",
-    width: "100%",
-    marginBottom: theme.spacing(10),
-}));
-  
