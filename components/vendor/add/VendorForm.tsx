@@ -64,7 +64,8 @@ export default function VendorForm() {
   
   const CategoryitList = [
     { id: "Bien", name: "Bien" },
-    { id: "Service", name: "Service" }
+    { id: "Service", name: "Service" },
+    { id: "Don", name: "Don" }
   ];
   const EvaluationList = [
     { id: "Fidèle", name: "Fidèle" },

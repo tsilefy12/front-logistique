@@ -2,34 +2,10 @@ import { HeadCell } from "./HeadCell.interface";
 
 export const BonCommandeInterneHeadCells: readonly HeadCell[] = [
     {
-        id: "numBon",
+        id: "numBonCommande",
         numeric: false,
         disablePadding: false,
-        label: "N° Bon commande interne",
-    },
-    {
-        id: "programme",
-        numeric: false,
-        disablePadding: false,
-        label: "Programme",
-    },
-    {
-        id: "grant",
-        numeric: false,
-        disablePadding: false,
-        label: "Grant",
-    },
-    {
-        id: "ligneBudgetaire",
-        numeric: false,
-        disablePadding: false,
-        label: "Ligne Budegétaire",
-    },
-    {
-        id: "demandeur",
-        numeric: false,
-        disablePadding: false,
-        label: "Demandeur",
+        label: "N° Bon Commande",
     },
     {
         id: "dateBonCommande",
@@ -38,9 +14,23 @@ export const BonCommandeInterneHeadCells: readonly HeadCell[] = [
         label: "Date Bon comamnde",
     },
     {
-        id: "numBonCommande",
+        id: "demandeur",
         numeric: false,
         disablePadding: false,
-        label: "N° Bon Commande",
-    }
+        label: "Demandeur",
+    },
+    {
+        id: "montantTotal",
+        numeric: false,
+        disablePadding: false,
+        label: "Montant total",
+    },
+    {
+        id: "grant",
+        numeric: false,
+        disablePadding: false,
+        label: "Grant",
+    },
+    
+    
 ];

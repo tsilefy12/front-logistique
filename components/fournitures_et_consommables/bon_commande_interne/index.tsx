@@ -171,63 +171,58 @@ export default function BonCommandeInterneList() {
                         const labelId = `enhanced-table-checkbox-${index}`;
                         return (
                             <TableRow hover tabIndex={-1} key={row.id}>
-                            <TableCell component="th" id={labelId} align="left">
-                                {row?.numBon}
-                            </TableCell>
-                            <TableCell align="left">{row?.programme}</TableCell>
-                            <TableCell align="left">{row?.grant}</TableCell>
-
-                            <TableCell align="left">
-                                {row?.ligneBudgetaire}
-                            </TableCell>
-                            <TableCell align="left">{row?.demandeur}</TableCell>
-                            <TableCell align="left">
-                                <Moment format="DD/MM/YYYY">
-                                    {row?.dateBonCommande}
-                                </Moment>
-                            </TableCell>
-                            <TableCell align="left">{row?.numBonCommande}</TableCell>
-                            <TableCell align="right" width={"150px"}>
-                                <BtnActionContainer
-                                direction="row"
-                                justifyContent="right"
-                                >
-                                <Link
-                                    href={`/fournitures_et_consommables/commande/${row.id}/details`}
-                                >
-                                    <IconButton
-                                    color="accent"
-                                    aria-label="Details"
-                                    component="span"
-                                    size="small"
+                                <TableCell align="left">{row?.numBonCommande}</TableCell>
+                                <TableCell align="left">
+                                    <Moment format="DD/MM/YYYY">
+                                        {row?.dateBonCommande}
+                                    </Moment>
+                                </TableCell>
+                                <TableCell align="left">{row?.demandeur}</TableCell>
+                                <TableCell align="left">
+                                    {row?.montantTotal}
+                                </TableCell>
+                                <TableCell align="left">{row?.grant}</TableCell>
+                                <TableCell align="right" width={"150px"}>
+                                    <BtnActionContainer
+                                    direction="row"
+                                    justifyContent="right"
                                     >
-                                    <Visibility />
+                                    <Link
+                                        href={`/fournitures_et_consommables/commande/${row.id}/details`}
+                                    >
+                                        <IconButton
+                                        color="accent"
+                                        aria-label="Details"
+                                        component="span"
+                                        size="small"
+                                        >
+                                        <Visibility />
+                                        </IconButton>
+                                    </Link>
+                                    <IconButton
+                                        color="primary"
+                                        aria-label="Modifier"
+                                        component="span"
+                                        size="small"
+                                        onClick={() => {
+                                        handleClickEdit(row.id);
+                                        }}
+                                    >
+                                        <Edit />
                                     </IconButton>
-                                </Link>
-                                <IconButton
-                                    color="primary"
-                                    aria-label="Modifier"
-                                    component="span"
-                                    size="small"
-                                    onClick={() => {
-                                    handleClickEdit(row.id);
-                                    }}
-                                >
-                                    <Edit />
-                                </IconButton>
-                                <IconButton
-                                    color="warning"
-                                    aria-label="Supprimer"
-                                    component="span"
-                                    size="small"
-                                    onClick={() => {
-                                    handleClickDelete(row.id);
-                                    }}
-                                >
-                                    <Delete />
-                                </IconButton>
-                                </BtnActionContainer>
-                            </TableCell>
+                                    <IconButton
+                                        color="warning"
+                                        aria-label="Supprimer"
+                                        component="span"
+                                        size="small"
+                                        onClick={() => {
+                                        handleClickDelete(row.id);
+                                        }}
+                                    >
+                                        <Delete />
+                                    </IconButton>
+                                    </BtnActionContainer>
+                                </TableCell>
                             </TableRow>
                         );
                         })}

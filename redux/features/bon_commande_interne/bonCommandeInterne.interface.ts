@@ -7,6 +7,7 @@ export interface BonCommandeItem {
     numBon?: string;
     dateBonCommande?: Date;
     numBonCommande?: string;
+    montantTotal?: string;
 }
   
 export interface BonCommandeInternInitialState {

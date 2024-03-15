@@ -185,8 +185,8 @@ const FormDetentionMateriel = () => {
                         options={total}
                         name="name"
                         variant="outlined" 
-                        valueKey={"name"} 
-                        dataKey={"id"}
+                        valueKey={"id"} 
+                        dataKey={"name"}
                         />
                     </Stack>
                     <Stack direction="row" spacing={2}>
