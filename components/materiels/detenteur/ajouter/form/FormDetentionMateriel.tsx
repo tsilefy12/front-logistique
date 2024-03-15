@@ -38,7 +38,6 @@ import OSSelectField from "../../../../shared/select/OSSelectField";
 import ListDetentionMateriel from "../table/ListDetentionMateriel";
 import { getEmployes } from "../../../../../redux/features/employeStagiaire/employeeSlice";
 import { getInterns } from "../../../../../redux/features/employeStagiaire/stagiaireSlice";
-import { getEquipments } from "../../../../../redux/features/equipment";
 
 const FormDetentionMateriel = () => {
     const router = useRouter();
@@ -57,6 +56,7 @@ const FormDetentionMateriel = () => {
         }
     })]
 
+    console.log(total)
     const fetchUtilsData = () => {
         dispatch(getEmployes({}));
         dispatch(getInterns({}));
