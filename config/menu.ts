@@ -38,13 +38,13 @@ const menu = [
       {
         id: 16,
         name: "Fiche détention materielle",
-        link: "/materiels/pvComparaison",
+        link: "/materiels/detenteur",
         icon: "",
       },
       {
         id: 17,
         name: "Pv de Comparaison",
-        link: "/materiels/detenteur",
+        link: "/materiels/pvComparaison",
         icon: "",
       },
       {

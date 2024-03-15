@@ -31,8 +31,6 @@ import useFetchpvComparaison from "./hooks/useFetchPvComparaisonFournisseur";
 import { deletePvComparaison } from "../../../redux/features/pvComparaison/pvComparaisonSlice";
 import PvComparaisonTableToolbar from "./table/pvComparaisonTableToolbar";
 import PvComparaisonTableHeader from "./table/pvComparaisonTableHeader";
-import Moment from "react-moment";
-import { Badge } from "@mui/material";
 
 export default function PvComparaisonList() {
     const [page, setPage] = React.useState(0);
@@ -143,7 +141,7 @@ export default function PvComparaisonList() {
         <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
         <NavigationContainer>
             <SectionNavigation>
-            <Link href={"/fournitures_et_consommables/bon_commande_intern/ajouter"}>
+            <Link href={"/materiels/pvComparaison/ajouter"}>
                 <Button variant="contained" startIcon={<Add />} size="small">
                     Ajouter
                 </Button>
@@ -155,14 +153,14 @@ export default function PvComparaisonList() {
         <SectionTable>
             <Box sx={{ width: "100%", mb: 2 }}>
                 <Paper sx={{ width: "100%", mb: 2 }}>
-                    <PvComparaisonTableHeader />
+                    <PvComparaisonTableToolbar />
                     <TableContainer>
                     <Table
                         sx={{ minWidth: 750 }}
                         aria-labelledby="tableTitle"
                         size="small"
                     >
-                        <PvComparaisonTableToolbar />
+                        <PvComparaisonTableHeader />
                         <TableBody>
                         {pvComparaisons
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
