@@ -238,6 +238,53 @@ export default function PvComparaisonForm() {
                     }}
                 </Formik>
             </Container>
+            <Formik
+      initialValues={initialValues}
+      onSubmit={(values) => {
+        console.log(values);
+      }}
+    >
+      {({ values }) => (
+        <Form>
+          <div>
+            <Field name="name" label="Name" as={TextField} />
+          </div>
+          <div>
+            <Field name="email" label="Email" as={TextField} />
+          </div>
+          <FieldArray name="items">
+            {({ push, remove }) => (
+              <div>
+                <TableContainer component={Paper}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Items</TableCell>
+                        <TableCell>Action</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {values.items.map((item, index) => (
+                        <TableRow key={index}>
+                          <TableCell>
+                            <Field name={`items.${index}`} as={TextField} />
+                          </TableCell>
+                          <TableCell>
+                            <Button type="button" onClick={() => remove(index)}>Remove</Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                <Button type="button" onClick={() => push('')}>Add Item</Button>
+              </div>
+            )}
+          </FieldArray>
+          <Button type="submit">Submit</Button>
+        </Form>
+      )}
+    </Formik>
             <FormContainer spacing={2}>
                 <Stack
                     direction="row"
