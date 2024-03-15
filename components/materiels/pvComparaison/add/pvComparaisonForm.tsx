@@ -11,7 +11,7 @@ import ArrowBack from "@mui/icons-material/ArrowBack";
 import Check from "@mui/icons-material/Check";
 import Close from "@mui/icons-material/Close";
 import { FormControl, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
-import { Form, Formik } from "formik";
+import { Field, FieldArray, Form, Formik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import * as Yup from "yup";
 import OSTextField from "../../../shared/input copy/OSTextField";
@@ -50,6 +50,11 @@ export default function PvComparaisonForm() {
         } catch (error) {
         console.log("error", error);
         }
+    };
+    const initialValues = {
+        name: '',
+        email: '',
+        items: ['item1', 'item2', 'item3']
     };
 
     return (
@@ -246,12 +251,6 @@ export default function PvComparaisonForm() {
     >
       {({ values }) => (
         <Form>
-          <div>
-            <Field name="name" label="Name" as={TextField} />
-          </div>
-          <div>
-            <Field name="email" label="Email" as={TextField} />
-          </div>
           <FieldArray name="items">
             {({ push, remove }) => (
               <div>
@@ -267,7 +266,7 @@ export default function PvComparaisonForm() {
                       {values.items.map((item, index) => (
                         <TableRow key={index}>
                           <TableCell>
-                            <Field name={`items.${index}`} as={TextField} />
+                            <Field name={`items.${index}`} />
                           </TableCell>
                           <TableCell>
                             <Button type="button" onClick={() => remove(index)}>Remove</Button>
