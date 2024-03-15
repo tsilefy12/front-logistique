@@ -14,13 +14,11 @@ const initialState: EmployeInitialState = {
 };
 
 
-export const getEmployes = createAsyncThunk(
-  "employe/getEmployes",
+export const getEmployees = createAsyncThunk(
+  "employee/getEmployees",
   async (data: { args?: any }, thunkAPI) => {
     try {
-      const params = {
-        args: JSON.stringify(data.args),
-      };
+      const params = JSON.stringify(data.args);
       const response = await axios.get("/rh/employee", { params });
       return response.data;
     } catch (error: any) {
@@ -42,16 +40,16 @@ export const employeSlice = createSlice({
         },
     },
     extraReducers: {
-        [getEmployes.pending.type]: (state) => {
-        state.loading = true;
+        [getEmployees.pending.type]: (state) => {
+          state.loading = true;
         },
-        [getEmployes.fulfilled.type]: (state, action) => {
-        state.loading = false;
-        state.employees = action.payload;
+        [getEmployees.fulfilled.type]: (state, action) => {
+          state.loading = false;
+          state.employees = action.payload;
         },
-        [getEmployes.rejected.type]: (state, action) => {
-        state.loading = false;
-        state.error = action.error;
+        [getEmployees.rejected.type]: (state, action) => {
+          state.loading = false;
+          state.error = action.error;
         },
     },
 });

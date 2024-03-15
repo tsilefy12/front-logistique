@@ -3,23 +3,14 @@ import {
   Container,
   styled,
   Typography,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Stack,
-  Grid,
   Divider,
   Box,
 } from "@mui/material";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import ArrowBack from "@mui/icons-material/ArrowBack";
-import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { Check, Close, Save } from "@mui/icons-material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
 import {
@@ -36,7 +27,7 @@ import { cancelEdit } from "../../../../../redux/features/holder/holderSlice";
 import OSTextField from "../../../../shared/input copy/OSTextField";
 import OSSelectField from "../../../../shared/select/OSSelectField";
 import ListDetentionMateriel from "../table/ListDetentionMateriel";
-import { getEmployes } from "../../../../../redux/features/employeStagiaire/employeeSlice";
+import { getEmployees } from "../../../../../redux/features/employeStagiaire/employeeSlice";
 import { getInterns } from "../../../../../redux/features/employeStagiaire/stagiaireSlice";
 
 const FormDetentionMateriel = () => {
@@ -45,7 +36,7 @@ const FormDetentionMateriel = () => {
     const { isEditing, holder } = useAppSelector((state) => state.holder);
     const { employees } = useAppSelector((state) => state.employe);
     const { interns } = useAppSelector((state) => state.stagiaire);
-    
+    console.log(employees)
     const total = [...employees.map((i:any)=>{
         return {
         id : i.id, name: i.name +" "+ i.surname, type: "employe"
@@ -55,10 +46,8 @@ const FormDetentionMateriel = () => {
         id : i.id, name: i.name +" "+ i.surname, type: "intern"
         }
     })]
-
-    console.log(total)
     const fetchUtilsData = () => {
-        dispatch(getEmployes({}));
+        dispatch(getEmployees({}));
         dispatch(getInterns({}));
     };
     
