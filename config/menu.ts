@@ -38,7 +38,19 @@ const menu = [
       {
         id: 16,
         name: "Fiche détention materielle",
+        link: "/materiels/pvComparaison",
+        icon: "",
+      },
+      {
+        id: 17,
+        name: "Pv de Comparaison",
         link: "/materiels/detenteur",
+        icon: "",
+      },
+      {
+        id: 18,
+        name: "Bon de Commende Externe (BCE)",
+        link: "/materiels/bon_commende_externe",
         icon: "",
       },
     ],
