@@ -143,7 +143,7 @@ export default function BonCommandeInterneList() {
         <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
         <NavigationContainer>
             <SectionNavigation>
-            <Link href={"/fournitures_et_consommables/bon_commande_interne/ajouter"}>
+            <Link href={"/fournitures_et_consommables/bon_commande_intern/ajouter"}>
                 <Button variant="contained" startIcon={<Add />} size="small">
                     Ajouter
                 </Button>
