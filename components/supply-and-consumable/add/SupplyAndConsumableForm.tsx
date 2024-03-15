@@ -173,9 +173,9 @@ export default function SuplyAndConsumableForm() {
                   id="outlined-basic"
                   label="Unité de stock"
                   name="SKU"
-                  options={uniteStocks ? uniteStocks : [{ id: "", name: "Rien à aficher" }]}
+                  options={uniteStocks ? uniteStocks : [{ id: "", uniteStock: "Rien à aficher" }]}
                   dataKey={["uniteStock"]}
-                  valueKey="name"
+                  valueKey="id"
                   type="text"
                 />
                 <Stack direction="row" spacing={3}>
@@ -205,27 +205,27 @@ export default function SuplyAndConsumableForm() {
                     name="fournisseur"
                     options={fournisseurList ? fournisseurList :  [{ id: "", name: "Rien à aficher" }]}
                     dataKey={["name"]}
-                    valueKey="name"
+                    valueKey="id"
                     type="text"
                   />
                      <OSSelectField
                       id="outlined-basic"
                       label="Catégorie"
                       name="categorieStock"
-                      options={categorieStocks ? categorieStocks: [{ id: "", name: "Rien à aficher" }]}
+                      options={categorieStocks ? categorieStocks: [{ id: "", categorieStock: "Rien à aficher" }]}
                       dataKey={["categorieStock"]}
+                      valueKey="id"
+                      type="text"
+                    />
+                    <OSSelectField
+                      id="outlined-basic"
+                      label="Grant"
+                      name="grant"
+                      options={GrantList}
+                      dataKey="name"
                       valueKey="name"
                       type="text"
                     />
-                     <OSSelectField
-                    id="outlined-basic"
-                    label="Grant"
-                    name="grant"
-                    options={GrantList}
-                    dataKey="name"
-                    valueKey="name"
-                    type="text"
-                  />
                 </Stack>
               </FormContainer>
             </Form>

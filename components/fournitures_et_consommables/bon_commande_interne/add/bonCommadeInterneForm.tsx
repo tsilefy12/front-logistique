@@ -237,62 +237,62 @@ export default function BonCommandeInterneForm() {
                         );
                     }}
                 </Formik>
-            </Container>
-            <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
-                <Stack
-                    direction="row"
-                    sx={{
-                        flex: "1 1 100%",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                    }}
-                    >
-                    <Typography variant="h6" id="tableTitle" component="div">
-                        Matériel
-                    </Typography>
-                </Stack>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 700 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                            <TableCell>Désignation</TableCell>
-                            <TableCell align="left">Caractéristique</TableCell>
-                            <TableCell align="left">Quantité</TableCell>
-                            <TableCell align="left">PU</TableCell>
-                            <TableCell align="left">Valeur(=Qte*PU)</TableCell>
-                            <TableCell></TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows.map((row) => (
-                                <TableRow
-                                    key={row.id}
-                                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                                >
-                                    <TableCell component="th" scope="row">{row.numero}</TableCell>
-                                    <TableCell align="left">{row.designation}</TableCell>
-                                    <TableCell align="left">{row.date_acquisition}</TableCell>
-                                    <TableCell align="left">{row.valeur_acquisition} Ar</TableCell>
-
-                                    <TableCell
-                                    align="center"
-                                    sx={{ width: 150, background: "#F5F5F5" }}
-                                    >
-                                    <Stack
-                                        direction="row"
-                                        justifyContent="center"
-                                        alignItems="center"
-                                        spacing={2}
-                                    >
-                                        {/* <EditIcon color="primary" />
-                                        <DeleteIcon color="warning" /> */}
-                                    </Stack>
-                                    </TableCell>
+                <FormContainer spacing={2}>
+                    <Stack
+                        direction="row"
+                        sx={{
+                            flex: "1 1 100%",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                        }}
+                        >
+                        <Typography variant="h6" id="tableTitle" component="div">
+                            Matériel
+                        </Typography>
+                    </Stack>
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 700 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                <TableCell>Désignation</TableCell>
+                                <TableCell align="left">Caractéristique</TableCell>
+                                <TableCell align="left">Quantité</TableCell>
+                                <TableCell align="left">PU</TableCell>
+                                <TableCell align="left">Valeur(=Qte*PU)</TableCell>
+                                <TableCell></TableCell>
                                 </TableRow>
-                            ))} 
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                            </TableHead>
+                            <TableBody>
+                                {rows.map((row) => (
+                                    <TableRow
+                                        key={row.id}
+                                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                    >
+                                        <TableCell component="th" scope="row">{row.numero}</TableCell>
+                                        <TableCell align="left">{row.designation}</TableCell>
+                                        <TableCell align="left">{row.date_acquisition}</TableCell>
+                                        <TableCell align="left">{row.valeur_acquisition} Ar</TableCell>
+
+                                        <TableCell
+                                        align="center"
+                                        sx={{ width: 150, background: "#F5F5F5" }}
+                                        >
+                                        <Stack
+                                            direction="row"
+                                            justifyContent="center"
+                                            alignItems="center"
+                                            spacing={2}
+                                        >
+                                            {/* <EditIcon color="primary" />
+                                            <DeleteIcon color="warning" /> */}
+                                        </Stack>
+                                        </TableCell>
+                                    </TableRow>
+                                ))} 
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </FormContainer>
             </Container>
         </>
     );
