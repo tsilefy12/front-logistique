@@ -14,7 +14,7 @@ export const getInventaire = createAsyncThunk(
     async (data: { id: string; args?: any }, thunkAPI) => {
         try {
         const response = await axios.get(
-            `/logistique/inventaire/${data.id}`
+            `/logistique/Inventaire/${data.id}`
         );
         return response.data;
         } catch (error: any) {

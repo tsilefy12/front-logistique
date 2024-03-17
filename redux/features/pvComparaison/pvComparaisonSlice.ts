@@ -4,7 +4,7 @@ import { enqueueSnackbar } from "../notification/notificationSlice";
 import {
      PvComparaisonInitialState, PvComparaisonItem
 } from "./pvComparaison.interface";
-import axios from "axios";
+import { axios } from "../../../lib/axios";
 
 const initialState: PvComparaisonInitialState = {
     pvComparaisons: [],
@@ -18,7 +18,7 @@ export const editPvComparaison = createAsyncThunk(
     "pvComparaison/editPvComparaison",
     async (data: { id: string }, thunkAPI) => {
         try {
-            const response = await axios.get(`/logistique/vendor/${data.id}`);
+            const response = await axios.get(`/logistique/pv-de-comparaison/${data.id}`);
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -33,7 +33,7 @@ export const createPvComparaison = createAsyncThunk(
     "PvComparaison/createPvComparaison",
     async (data: PvComparaisonItem, thunkAPI) => {
       try {
-        const response = await axios.post("/logistique/vendor", data);
+        const response = await axios.post("/logistique/pv-de-comparaison", data);
         thunkAPI.dispatch(
           enqueueSnackbar({
             message: "pv comparaison créé avec succès",
@@ -56,7 +56,7 @@ export const deletePvComparaison = createAsyncThunk(
     "pvComparaison/deletePvComparaison",
     async (data: { id: string }, thunkAPI) => {
       try {
-        const response = await axios.delete(`/logistique/vendor/${data.id}`);
+        const response = await axios.delete(`/logistique/pv-de-comparaison/${data.id}`);
         thunkAPI.dispatch(
           enqueueSnackbar({
             message: "pv comparaison supprimé avec succès",
@@ -82,7 +82,7 @@ export const getPvComparaisons = createAsyncThunk(
       const params = {
         args: JSON.stringify(data.args),
       };
-      const response = await axios.get("/rh/employee", { params });
+      const response = await axios.get("/logistique/pv-de-comparaison", { params });
       return response.data;
     } catch (error: any) {
       if (error.response) {

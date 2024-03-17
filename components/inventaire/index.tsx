@@ -115,12 +115,12 @@ export default function InventaireList() {
                             <Moment format="DD/MM/YYYY">{row.dateInventaire}</Moment>
                           </TableCell>
                           <TableCell component="th" id={labelId} align="left">
-                            <Moment format="DD/MM/YYYY">{row.dateDepreciation}</Moment>
+                            <Moment format="DD/MM/YYYY">{row.datePreciation}</Moment>
                           </TableCell>
                           <TableCell align="left">
-                            {row.dureeDeVie}
+                            {row.dureDeVie}
                           </TableCell>
-                          <TableCell align="left">{row.etat}</TableCell>
+                          <TableCell align="left">{row.etatMateriel}</TableCell>
                           <TableCell align="left">{row.valeurInventaire}</TableCell>
                         </TableRow>
                       );

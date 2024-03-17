@@ -4,7 +4,7 @@ export interface PvComparaisonFournisseurItem {
     modePaie?: string;
     offre?: string;
     designation?: string;
-    pvComparaisonId?:string;
+    pvComparaisonOffreId?:string;
 }
   
 export interface PvComparaisonFournisseurInitialState {

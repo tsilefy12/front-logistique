@@ -100,12 +100,12 @@ const FormDetentionMateriel = () => {
                 }
             }
             validationSchema={Yup.object({
-            contact: Yup.string().required("Champ obligatoire"),
-            reference: Yup.string().required("Champ obligatoire"),
-            firstName: Yup.string().required("champ obligatoire"),
-            lastName: Yup.string().required("Champ obligatoire"),
-            matricule: Yup.string().required("Champ obligatoire"),
-            function: Yup.string().required("Champ obligatoire"),
+                contact: Yup.string().required("Champ obligatoire"),
+                reference: Yup.string().required("Champ obligatoire"),
+                firstName: Yup.string().required("champ obligatoire"),
+                lastName: Yup.string().required("Champ obligatoire"),
+                matricule: Yup.string().required("Champ obligatoire"),
+                function: Yup.string().required("Champ obligatoire"),
             })}
             onSubmit={(value: any, action: any) => {
             handleSubmit(value);

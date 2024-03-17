@@ -13,7 +13,7 @@ export const getInventaireListe = createAsyncThunk(
         try {
         const params = JSON.stringify(data.args);
         const response = await axios.get(
-            "/logistique/inventaire",
+            "/logistique/Inventaire",
             {
             params: { args: params },
             }

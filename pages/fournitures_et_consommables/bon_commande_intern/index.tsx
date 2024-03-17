@@ -5,7 +5,7 @@ import BackOfficeLayout from "../../../layouts/backOffice";
 import useBasePath from "../../../hooks/useBasePath";
 import BonCommandeInterneList from "../../../components/fournitures_et_consommables/bon_commande_interne";
 
-const ListCommandeFournitureConsommable: NextPage = () => {
+const ListBonCommandeInterneConsommable: NextPage = () => {
   const basePath = useBasePath();
   return (
     <BackOfficeLayout>
@@ -21,4 +21,4 @@ const ListCommandeFournitureConsommable: NextPage = () => {
   );
 };
 
-export default ListCommandeFournitureConsommable;
+export default ListBonCommandeInterneConsommable;

@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { enqueueSnackbar } from "../notification/notificationSlice";
+import { axios } from "../../../lib/axios";
 
 import {
      BonCommandeInternInitialState, BonCommandeItem
 } from "./bonCommandeInterne.interface";
-import axios from "axios";
 
 const initialState: BonCommandeInternInitialState = {
     bonCommandeInternes: [],
@@ -21,7 +21,7 @@ export const editBonCommandeInterne = createAsyncThunk(
     "fourniture_consommable/editBonCommandeInterne",
     async (data: { id: string }, thunkAPI) => {
         try {
-            const response = await axios.get(`/logistique/vendor/${data.id}`);
+            const response = await axios.get(`/logistique/bon-de-commande-interne/${data.id}`);
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -36,7 +36,7 @@ export const createBonCommandeInterne = createAsyncThunk(
     "fourniture_consommable/createBonCommandeInterne",
     async (data: BonCommandeItem, thunkAPI) => {
       try {
-        const response = await axios.post("/logistique/vendor", data);
+        const response = await axios.post("/logistique/bon-de-commande-interne", data);
         thunkAPI.dispatch(
           enqueueSnackbar({
             message: "Bon commande interne créé avec succès",
@@ -59,7 +59,7 @@ export const deleteBonCommandeInterne = createAsyncThunk(
     "fourniture_consommable/deleteBonCommandeInterne",
     async (data: { id: string }, thunkAPI) => {
       try {
-        const response = await axios.delete(`/logistique/vendor/${data.id}`);
+        const response = await axios.delete(`/logistique/bon-de-commande-interne/${data.id}`);
         thunkAPI.dispatch(
           enqueueSnackbar({
             message: "Bon commande Interne supprimé avec succès",
@@ -85,7 +85,7 @@ export const getBonCommandeInternes = createAsyncThunk(
       const params = {
         args: JSON.stringify(data.args),
       };
-      const response = await axios.get("/rh/employee", { params });
+      const response = await axios.get("/logistique/bon-de-commande-interne", { params });
       return response.data;
     } catch (error: any) {
       if (error.response) {

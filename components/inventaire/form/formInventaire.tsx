@@ -45,31 +45,26 @@ import {
         console.log("error", error);
       }
     };
-  
-    const FourniseurList = [
-      { id: "1", name: "1" },
-      { id: "2", name: "2" }
-    ]
     return (
         <Container maxWidth="xl" sx={{ pb: 5 }}>
             <Formik
                 enableReinitialize
                 initialValues={{
-                    id_materiel:isEditing? equipment?.id : "",
+                    equipmentId:isEditing? equipment?.id : "",
                     dateInventaire: new Date(),
-                    dateDepreciation: new Date(),
-                    etat: "",
+                    datePreciation: new Date(),
+                    etatMateriel: "",
                     duree_vie: 0,
-                    valeur_inventaire: 0,
+                    valeurInventaire: 0,
                 }}
                 validationSchema={Yup.object({
-                    date_inventaire: Yup.date(),
-                    date_depreciation: Yup.date(),
-                    etat: Yup.string().required("Veuillez sélectionner un numOptim"),
-                    duree_vie: Yup.number().required(
+                    dateInventaire: Yup.date().required("Veuillez saisir une date"),
+                    datePreciation: Yup.date().required("Veuillez saisir une date"),
+                    etatMateriel: Yup.string().required("Veuillez sélectionner un eta matériel"),
+                    dureDeVie: Yup.number().required(
                         "Veuillez remplir le durée de vie"
                     ),
-                    valeur_inventaire: Yup.number().required(
+                    valeurInventaire: Yup.number().required(
                         "Veuillez remplir le valeur"
                     ),
                 })}
@@ -128,9 +123,9 @@ import {
                     <Divider />
                     </NavigationContainer>
                     <FormContainer spacing={2}>
-                        <input name="id_materiel" value={formikProps.values.id_materiel} type="text" hidden/>
+                        <input name="equipmentId" value={formikProps.values.equipmentId} type="text" hidden/>
                         <Typography variant="h6" id="materiel" component="div">
-                            {isEditing? equipment?.designation +" "+equipment?.numOptim : ""}
+                                Inventaire {isEditing? equipment?.designation +" "+equipment?.numOptim : ""}
                         </Typography>
                         <OSDatePicker
                             fullWidth
@@ -143,19 +138,19 @@ import {
                         />
                         <OSDatePicker
                             fullWidth
-                            name="dateDepreciation"
+                            name="datePreciation"
                             label="Date dépréciation"
-                            value={formikProps.values.dateDepreciation}
+                            value={formikProps.values.datePreciation}
                             onChange={(value: any) =>
                                 formikProps.setFieldValue("dateDepreciation", value)
                             }
                         />
                         <OSTextField
-                            name="dureeDeVie"
+                            name="dureDeVie"
                             fullWidth
                             id="outlined-basic"
-                            label="Durée de vie"
                             variant="outlined"
+                            label="Durée de vie"
                             type="number"
                         />
                         <OSTextField
@@ -168,9 +163,9 @@ import {
                         />
                         <FormControl fullWidth>
                         <OSSelectField
-                            id="etat_materiel"
+                            id="outlined-basic"
                             label="Etat matériel"
-                            name="status"
+                            name="etatMateriel"
                             options={etat}
                             dataKey="french"
                             valueKey="name"

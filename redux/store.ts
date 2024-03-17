@@ -34,6 +34,12 @@ import { stagiaireSlice } from "./features/employeStagiaire/stagiaireSlice";
 import { bonCommandeInterneSlice } from "./features/bon_commande_interne/bonCommandeInterneSlice";
 import { pvComparaisonSlice } from "./features/pvComparaison/pvComparaisonSlice";
 import { pvComparaisonFournisseurSlice } from "./features/pvComparaison/pvComparaisonFournisseurSlice";
+import { bonCommandeExterneSlice } from "./features/bon_commande_externe/bonCommandeExterneSlice";
+import { ArticleCommandeInterneSlice } from "./features/bon_commande_interne/articleCommandeSlice";
+import { bonReceptionSlice } from "./features/bon_reception/bonReceptionSlice";
+import { ArticleTransfertSlice } from "./features/bon_transfert/articleTransfertSlice";
+import { produitRecuSlice } from "./features/bon_reception/produitRecuSlice";
+import { bonTransfertSlice } from "./features/bon_transfert/bonTransfertSlice";
 
 export const store = configureStore({
   reducer: {
@@ -71,8 +77,14 @@ export const store = configureStore({
     employe: employeSlice.reducer,
     stagiaire : stagiaireSlice.reducer,
     bonCommandeInterne : bonCommandeInterneSlice.reducer,
+    articleCommandeInterne : ArticleCommandeInterneSlice.reducer,
     pvComparaison : pvComparaisonSlice.reducer,
-    pvComparaisonFournisseurs: pvComparaisonFournisseurSlice.reducer
+    pvComparaisonFournisseurs: pvComparaisonFournisseurSlice.reducer,
+    bonCommendeExterne: bonCommandeExterneSlice.reducer,
+    bonReceptions : bonReceptionSlice.reducer,
+    articleTransfert: ArticleTransfertSlice.reducer,
+    produiReçu: produitRecuSlice.reducer,
+    bonTransfert:bonTransfertSlice.reducer
   },
 });
 

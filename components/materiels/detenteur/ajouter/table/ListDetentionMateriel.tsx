@@ -78,7 +78,7 @@ const ListDetentionMateriel = () => {
                                     label="Choisir un code d'OPTIM"
                                     options={equipments}
                                     dataKey="numOptim"
-                                    onChange={handleChange}
+                                    onChange={handleChange()}
                                     sx={{ width: "100%" }}
                                     valueKey="id"
                                 />

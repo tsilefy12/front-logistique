@@ -9,7 +9,7 @@ import { TableLoading } from "../../../shared/loading";
 import { debounce } from "lodash";
 
 const BonCommandeInterneTableToolbar = () => {
-	const { loading } = useAppSelector((state) => state.vendor)
+	const { loading } = useAppSelector((state) => state.pvComparaison)
 
 	const [key, setKey] = React.useState<any>("");
 

@@ -19,7 +19,7 @@ export const updateInventaire = createAsyncThunk(
   ) => {
     try {
       const response = await axios.patch(
-        `/logistique/inventaire/${data.id}`,
+        `/logistique/Inventaire/${data.id}`,
         data.inventaire
       );
       thunkAPI.dispatch(

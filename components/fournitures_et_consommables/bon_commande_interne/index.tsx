@@ -62,7 +62,7 @@ export default function BonCommandeInterneList() {
     const handleClickDelete = async (id: any) => {
         confirm({
         title: "Supprimer le fournisseur",
-        description: "Voulez-vous vraiment supprimer ce fournisseur ?",
+        description: "Voulez-vous vraiment supprimer ce BCI ?",
         cancellationText: "Annuler",
         confirmationText: "Supprimer",
         cancellationButtonProps: {
@@ -204,7 +204,7 @@ export default function BonCommandeInterneList() {
                                             component="span"
                                             size="small"
                                             onClick={() => {
-                                            handleClickEdit(row.id);
+                                                handleClickEdit(row.id);
                                             }}
                                         >
                                             <Edit />
@@ -215,7 +215,7 @@ export default function BonCommandeInterneList() {
                                             component="span"
                                             size="small"
                                             onClick={() => {
-                                            handleClickDelete(row.id);
+                                                handleClickDelete(row.id);
                                             }}
                                         >
                                             <Delete />

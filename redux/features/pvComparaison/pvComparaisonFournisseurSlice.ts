@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { enqueueSnackbar } from "../notification/notificationSlice";
-import axios from "axios";
+import { axios } from "../../../lib/axios";
 import { PvComparaisonFournisseurInitialState, PvComparaisonFournisseurItem } from "./pvComparaisonFournisseur.interface.";
 
 const initialState: PvComparaisonFournisseurInitialState = {

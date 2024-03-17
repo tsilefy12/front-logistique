@@ -53,22 +53,18 @@ export default function PvComparaisonList() {
         fetchpvComparaison();
     }, [router.query]);
 
-    const handleClickEdit = async (id: any) => {
-        router.push(`/fournitures_et_consommables/commande/${id}/edit`);
-    };
-
     const handleClickDelete = async (id: any) => {
         confirm({
-        title: "Supprimer le fournisseur",
-        description: "Voulez-vous vraiment supprimer ce fournisseur ?",
-        cancellationText: "Annuler",
-        confirmationText: "Supprimer",
-        cancellationButtonProps: {
-            color: "warning",
-        },
-        confirmationButtonProps: {
-            color: "error",
-        },
+            title: "Supprimer le fournisseur",
+            description: "Voulez-vous vraiment supprimer ce pv de comparaison d'offre ?",
+            cancellationText: "Annuler",
+            confirmationText: "Supprimer",
+            cancellationButtonProps: {
+                color: "warning",
+            },
+            confirmationButtonProps: {
+                color: "error",
+            },
         })
         .then(async () => {
             await dispatch(deletePvComparaison({ id }));
@@ -141,7 +137,7 @@ export default function PvComparaisonList() {
         <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
         <NavigationContainer>
             <SectionNavigation>
-            <Link href={"/materiels/pvComparaison/ajouter"}>
+            <Link href={"/materiels/pv_comparaison/ajouter"}>
                 <Button variant="contained" startIcon={<Add />} size="small">
                     Ajouter
                 </Button>
@@ -192,23 +188,12 @@ export default function PvComparaisonList() {
                                             </IconButton>
                                         </Link>
                                         <IconButton
-                                            color="primary"
-                                            aria-label="Modifier"
-                                            component="span"
-                                            size="small"
-                                            onClick={() => {
-                                            handleClickEdit(row.id);
-                                            }}
-                                        >
-                                            <Edit />
-                                        </IconButton>
-                                        <IconButton
                                             color="warning"
                                             aria-label="Supprimer"
                                             component="span"
                                             size="small"
                                             onClick={() => {
-                                            handleClickDelete(row.id);
+                                                handleClickDelete(row.id);
                                             }}
                                         >
                                             <Delete />

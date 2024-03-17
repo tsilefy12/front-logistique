@@ -16,7 +16,7 @@ export const createCategorieStock = createAsyncThunk(
     async (categorie: categorieStockItem, thunkAPI) => {
         try {
             console.log(categorie);
-            const response = await axios.post("/logistique/categorie", categorie);
+            const response = await axios.post("/logistique/categorie-stock", categorie);
             thunkAPI.dispatch(
                 enqueueSnackbar({
                     message: "categorie stock créer avec succès",

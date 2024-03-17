@@ -17,7 +17,7 @@ export const createInventaire = createAsyncThunk(
     async (inventaire: InventaireItem, thunkAPI) => {
         try {
         const response = await axios.post(
-            "/logistique/inventaire",
+            "/logistique/Inventaire",
             inventaire
         );
         thunkAPI.dispatch(
@@ -32,7 +32,7 @@ export const createInventaire = createAsyncThunk(
             if (error.response.data.statusCode == 409) {
             thunkAPI.dispatch(
                 enqueueSnackbar({
-                message: "Cet Registre de Inventaire a déjà été enregistré",
+                message: "Cet Registre d'inventaire a déjà été enregistré",
                 options: { variant: "error" },
                 })
             );
