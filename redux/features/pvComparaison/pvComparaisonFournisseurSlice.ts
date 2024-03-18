@@ -15,7 +15,7 @@ export const editPvComparaisonFournisseur = createAsyncThunk(
     "pvComparaison/editPvComparaisonFournisseur",
     async (data: { id: string }, thunkAPI) => {
         try {
-            const response = await axios.get(`/logistique/vendor/${data.id}`);
+            const response = await axios.get(`/logistique/tableau-de-comparaison/${data.id}`);
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -30,7 +30,7 @@ export const createPvComparaisonFournisseur = createAsyncThunk(
     "PvComparaison/createPvComparaisonFournisseur",
     async (data: PvComparaisonFournisseurItem, thunkAPI) => {
       try {
-        const response = await axios.post("/logistique/vendor", data);
+        const response = await axios.post("/logistique/tableau-de-comparaison", data);
         thunkAPI.dispatch(
           enqueueSnackbar({
             message: "pv comparaison créé avec succès",
@@ -53,7 +53,7 @@ export const deletePvComparaisonFournisseur = createAsyncThunk(
     "pvComparaison/deletePvComparaisonFournisseur",
     async (data: { id: string }, thunkAPI) => {
       try {
-        const response = await axios.delete(`/logistique/vendor/${data.id}`);
+        const response = await axios.delete(`/logistique/tableau-de-comparaison/${data.id}`);
         thunkAPI.dispatch(
           enqueueSnackbar({
             message: "pv comparaison supprimé avec succès",
@@ -79,7 +79,7 @@ export const getPvComparaisonFournisseurs = createAsyncThunk(
       const params = {
         args: JSON.stringify(data.args),
       };
-      const response = await axios.get("/rh/employee", { params });
+      const response = await axios.get("/logistique/tableau-de-comparaison", { params });
       return response.data;
     } catch (error: any) {
       if (error.response) {

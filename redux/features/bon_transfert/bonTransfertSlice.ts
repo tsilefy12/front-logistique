@@ -18,7 +18,7 @@ export const editBonTransfert = createAsyncThunk(
     "fourniture_consommable/editBonTransfert",
     async (data: { id: string }, thunkAPI) => {
         try {
-            const response = await axios.get(`/logistique/bon-de-commande-interne/${data.id}`);
+            const response = await axios.get(`/logistique/bon-de-transfert/${data.id}`);
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -33,7 +33,7 @@ export const createBonTransfert = createAsyncThunk(
     "fourniture_consommable/createBonTransfert",
     async (data: bonTransfertItem, thunkAPI) => {
       try {
-        const response = await axios.post("/logistique/bon-de-commande-interne", data);
+        const response = await axios.post("/logistique/bon-de-transfert", data);
         thunkAPI.dispatch(
           enqueueSnackbar({
             message: "Bon  de Transfert créé avec succès",
@@ -56,10 +56,10 @@ export const deleteBonTransfert = createAsyncThunk(
     "fourniture_consommable/deleteBonTransfert",
     async (data: { id: string }, thunkAPI) => {
       try {
-        const response = await axios.delete(`/logistique/bon-de-commande-interne/${data.id}`);
+        const response = await axios.delete(`/logistique/bon-de-transfert/${data.id}`);
         thunkAPI.dispatch(
           enqueueSnackbar({
-            message: "Bon cde Transfert supprimé avec succès",
+            message: "Bon de Transfert supprimé avec succès",
             options: {
               variant: "success",
             },
@@ -82,7 +82,7 @@ export const getBonTransferts = createAsyncThunk(
       const params = {
         args: JSON.stringify(data.args),
       };
-      const response = await axios.get("/logistique/bon-de-commande-interne", { params });
+      const response = await axios.get("/logistique/bon-de-transfert", { params });
       return response.data;
     } catch (error: any) {
       if (error.response) {
@@ -94,12 +94,12 @@ export const getBonTransferts = createAsyncThunk(
 );
 
 export const bonTransfertSlice = createSlice({
-    name: "employe",
+    name: "bonTransfert",
     initialState: initialState,
     reducers: {
         cancelEdit: (state) => {
         state.isEditing = false;
-        state.employe = {};
+        state.bonTransfert = {};
         },
     },
     extraReducers: {

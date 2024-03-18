@@ -2,7 +2,7 @@ export interface PvComparaisonFournisseurItem {
     id?: string;
     fournisseur?: string;
     modePaie?: string;
-    offre?: string;
+    offre?: number;
     designation?: string;
     pvComparaisonOffreId?:string;
 }
