@@ -493,14 +493,6 @@ export default function PvComparaisonForm() {
                                                 valueKey="id"
                                                 type="text"
                                             />
-                                            <OSTextField
-                                                fullWidth
-                                                id="outlined-basic"
-                                                variant="outlined"
-                                                label="Offres Retenu"
-                                                name="offreRetenu"
-                                                type="text"
-                                            />
                                         </FormControl>
                                         <FormControl fullWidth>
                                         <OSTextField
