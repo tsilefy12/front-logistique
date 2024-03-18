@@ -8,6 +8,7 @@ export interface BonCommandeItem {
     dateBonCommande?: Date;
     numBonCommande?: string;
     montantTotal?: number;
+    ArticleCommande?:[];
 }
   
 export interface BonCommandeInternInitialState {
@@ -16,6 +17,7 @@ export interface BonCommandeInternInitialState {
     isEditing: boolean;
     loading: boolean;
     [key: string]: any;
+    ArticleCommande:[]
     grants: [];
     ligneBudgetaires: [];
     demandeurs: [];
