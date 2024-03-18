@@ -96,6 +96,24 @@ export const getBonCommandeInternes = createAsyncThunk(
   }
 );
 
+export const getBonCommandeInterne = createAsyncThunk(
+  "fourniture_consommable/getBonCommandeInterne",
+  async (data: { id: string , args?: any }, thunkAPI) => {
+    try {
+      const params = {
+        args: JSON.stringify(data.args),
+      };
+      const response = await axios.get(`/logistique/bon-de-commande-interne/${data.id}`, { params });
+      return response.data;
+    } catch (error: any) {
+      if (error.response) {
+        return thunkAPI.rejectWithValue(error);
+      }
+      throw error;
+    }
+  }
+);
+
 export const bonCommandeInterneSlice = createSlice({
     name: "employe",
     initialState: initialState,
