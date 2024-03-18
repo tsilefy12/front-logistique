@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import Moment from "react-moment";
 import { getOrderForm } from "../../../../redux/features/order-form";
 import { Print } from "@mui/icons-material";
-import html2pdf from 'html2pdf.js';
+// import html2pdf from 'html2pdf.js';
 
 const DetailsOrderForm = () => {
   const router = useRouter();
@@ -46,7 +46,7 @@ const DetailsOrderForm = () => {
   };
   const Imprimer = () => {
     const element = document.getElementById("tableauPDF");
-    html2pdf(element);
+    // html2pdf(element);
 }
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
