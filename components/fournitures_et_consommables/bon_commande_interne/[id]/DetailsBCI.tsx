@@ -25,18 +25,16 @@ const DetailsConsumable = () => {
   }, [id]);
 
   const getDetailsConsumable = () => {
-    const args: any = {
-      include: {
-        item: true,
-        applicantId: true,
-        requestedQuantity: true,
-        deliveredQuantity: true,
-        deliveryDate: true,
-      },
-    };
-    dispatch(getBonCommandeInterne({ id, args }));
+    dispatch(getBonCommandeInterne({ id,args:{
+      include:{
+        ArticleCommande:true
+      }
+    }}));
   };
 
+  useEffect(()=> {
+    console.log(bonCommandeInterne)
+  },[bonCommandeInterne])
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
       <SectionNavigation
@@ -54,78 +52,87 @@ const DetailsConsumable = () => {
         </Typography>
       </SectionNavigation>
       <DetailsContainer>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Article :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {/* {consumable.item} */}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Demandeur :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {/* {consumable.applicant?.name} {consumable.applicant?.surname} */}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Quantité démandée :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {/* {consumable.requestedQuantity} */}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Quantité livrée :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {/* {consumable.deliveredQuantity} */}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Date de livraison :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {/* <Moment format="DD/MM/YYYY">{consumable.deliveryDate}</Moment> */}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Statut :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {/* {consumable.status} */}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
+        <Stack
+            direction="row"
+            sx={{
+                flex: "1 1 100%",
+                justifyContent: "space-between",
+                alignItems: "center",
+            }}
+            >
+              <Grid container spacing={4} my={1}>
+              <Grid item xs={12} md={12}>
+                <InfoItems direction="row" spacing={2}>
+                  <Typography variant="body1" color="secondary">
+                    Article :
+                  </Typography>
+                  <Typography variant="body1" color="gray">
+                    {/* {consumable.item} */}
+                  </Typography>
+                </InfoItems>
+              </Grid>
+              </Grid>
+              <Grid container spacing={4} my={1}>
+                <Grid item xs={12} md={12}>
+                  <InfoItems direction="row" spacing={2}>
+                    <Typography variant="body1" color="secondary">
+                      Demandeur :
+                    </Typography>
+                    <Typography variant="body1" color="gray">
+                      {/* {consumable.applicant?.name} {consumable.applicant?.surname} */}
+                    </Typography>
+                  </InfoItems>
+                </Grid>
+              </Grid>
+              <Grid container spacing={4} my={1}>
+                <Grid item xs={12} md={12}>
+                  <InfoItems direction="row" spacing={2}>
+                    <Typography variant="body1" color="secondary">
+                      Quantité démandée :
+                    </Typography>
+                    <Typography variant="body1" color="gray">
+                      {/* {consumable.requestedQuantity} */}
+                    </Typography>
+                  </InfoItems>
+                </Grid>
+              </Grid>
+              <Grid container spacing={4} my={1}>
+                <Grid item xs={12} md={12}>
+                  <InfoItems direction="row" spacing={2}>
+                    <Typography variant="body1" color="secondary">
+                      Quantité livrée :
+                    </Typography>
+                    <Typography variant="body1" color="gray">
+                      {/* {consumable.deliveredQuantity} */}
+                    </Typography>
+                  </InfoItems>
+                </Grid>
+              </Grid>
+              <Grid container spacing={4} my={1}>
+                <Grid item xs={12} md={12}>
+                  <InfoItems direction="row" spacing={2}>
+                    <Typography variant="body1" color="secondary">
+                      Date de livraison :
+                    </Typography>
+                    <Typography variant="body1" color="gray">
+                      {/* <Moment format="DD/MM/YYYY">{consumable.deliveryDate}</Moment> */}
+                    </Typography>
+                  </InfoItems>
+                </Grid>
+              </Grid>
+              <Grid container spacing={4} my={1}>
+                <Grid item xs={12} md={12}>
+                  <InfoItems direction="row" spacing={2}>
+                    <Typography variant="body1" color="secondary">
+                      Statut :
+                    </Typography>
+                    <Typography variant="body1" color="gray">
+                      {/* {consumable.status} */}
+                    </Typography>
+                  </InfoItems>
+                </Grid>
+              </Grid>
+        </Stack>
       </DetailsContainer>
     </Container>
   );

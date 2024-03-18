@@ -187,7 +187,7 @@ export default function BonCommandeInterneList() {
                                         justifyContent="right"
                                         >
                                         <Link
-                                            href={`/fournitures_et_consommables/commande/${row.id}/details`}
+                                            href={`/fournitures_et_consommables/bon_commande_intern/${row.id}/details`}
                                         >
                                             <IconButton
                                             color="accent"
