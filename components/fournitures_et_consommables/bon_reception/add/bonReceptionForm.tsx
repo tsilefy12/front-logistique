@@ -23,13 +23,22 @@ import {
 } from "../../../../redux/features/bon_reception/produitRecuSlice";
 import { Delete } from "@mui/icons-material";
 import { createBonReception } from "../../../../redux/features/bon_reception/bonReceptionSlice";
+import { getBonCommandeExternes } from "../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
 
 export default function BonCommandeInterneForm() {
     const dispatch = useAppDispatch();
     const route = useRouter();
 
-    const { isEditing,bonReception } = useAppSelector((state) => state.bonReceptions);
+    const { isEditing } = useAppSelector((state) => state.bonReceptions);
+    const { bonCommandeExternes } = useAppSelector((state) => state.bonCommendeExterne);
     const valuesArticle :any[] =[]
+    const fetchUtilsData = () => {
+        dispatch(getBonCommandeExternes({}));
+    };
+    useEffect(() => {
+        fetchUtilsData();
+    }, []);
+
     const handleSubmit = async (values: any) => {
         try {
             const newDataBCI = {
@@ -128,11 +137,27 @@ export default function BonCommandeInterneForm() {
                                     <Divider />
                                 </NavigationContainer>
                                 <FormContainer spacing={2}>
+                                    <Stack
+                                        direction="row"
+                                        sx={{
+                                            flex: "1 1 100%",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                        }}
+                                        >
+                                        <Typography variant="h6" id="tableTitle" component="div">
+                                            Bon de reception
+                                        </Typography>
+                                    </Stack>
                                     <FormControl fullWidth>
-                                        <OSTextField
-                                            id="programme"
-                                            label="bce"
-                                            name="programme"
+                                        <OSSelectField
+                                            id="outlined-basic"
+                                            label="BCe"
+                                            name="bce"
+                                            options={bonCommandeExternes.length >0 ? bonCommandeExternes :  [{ id: "", name: "Aucun bon de commande externe" }]}
+                                            dataKey={["name"]}
+                                            valueKey="id"
+                                            type="text"
                                         />
                                     </FormControl>
                                     <FormControl fullWidth>
@@ -157,7 +182,7 @@ export default function BonCommandeInterneForm() {
                                                 }}
                                                 >
                                                 <Typography variant="h6" id="tableTitle" component="div">
-                                                    Article
+                                                    Produit reçu
                                                 </Typography>
                                             </Stack>
                                             <TableContainer component={Paper}>

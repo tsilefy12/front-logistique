@@ -23,13 +23,25 @@ import {
 } from "../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
 import { CheckBox, Delete } from "@mui/icons-material";
 import { createArticleCommandeExterne } from "../../../../redux/features/bon_commande_externe/articleBCESlice";
+import { getBonCommandeInternes } from "../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice";
+import { getFournisseurList } from "../../../../redux/features/fournisseur";
 
 export default function BonCommandeExterneForm() {
     const dispatch = useAppDispatch();
     const route = useRouter();
 
     const { isEditing,bonCommandeExterne } = useAppSelector((state) => state.bonCommendeExterne);
+    const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
+    const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
 
+    const fetchUtilsData = () => {
+        dispatch(getBonCommandeInternes({}));
+        dispatch(getFournisseurList({}));
+    };
+    
+    useEffect(() => {
+        fetchUtilsData();
+    }, []);
     const valuesArticle :any = []
     
 
@@ -161,6 +173,18 @@ export default function BonCommandeExterneForm() {
                                 <FormContainer spacing={2}>
                                     <Stack
                                         direction="row"
+                                        sx={{
+                                            flex: "1 1 100%",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                        }}
+                                        >
+                                        <Typography variant="h6" id="tableTitle" component="div">
+                                            Bon de commande externe
+                                        </Typography>
+                                    </Stack>
+                                    <Stack
+                                        direction="row"
                                         justifyContent="flex-start"
                                         alignItems="flex-start"
                                         spacing={2}
@@ -175,19 +199,25 @@ export default function BonCommandeExterneForm() {
                                             />
                                         </FormControl>
                                         <FormControl fullWidth>
-                                            <OSTextField
-                                                id="bci"
+                                            <OSSelectField
+                                                id="outlined-basic"
                                                 label="BCI"
                                                 name="bci"
+                                                options={bonCommandeInternes.length >0 ? bonCommandeInternes :  [{ id: "", name: "Aucun bon de commande interne" }]}
+                                                dataKey={["name"]}
+                                                valueKey="id"
+                                                type="text"
                                             />
                                         </FormControl>
                                     </Stack>
-                                    <OSTextField
-                                        fullWidth
+                                    <OSSelectField
                                         id="outlined-basic"
-                                        variant="outlined"
                                         label="Fournisseur"
                                         name="fournisseur"
+                                        options={fournisseurList.length >0 ? fournisseurList :  [{ id: "", name: "Aucun fournisseur" }]}
+                                        dataKey={["name"]}
+                                        valueKey="id"
+                                        type="text"
                                     />
                                     <Stack
                                         direction="row"
@@ -257,7 +287,7 @@ export default function BonCommandeExterneForm() {
                                                 }}
                                                 >
                                                 <Typography variant="h6" id="tableTitle" component="div">
-                                                    Article
+                                                    Article à Commander
                                                 </Typography>
                                             </Stack>
                                             <TableContainer component={Paper}>

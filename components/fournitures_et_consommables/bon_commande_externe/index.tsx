@@ -143,7 +143,7 @@ export default function BonCommandeExterneList() {
                     Ajouter
                 </Button>
             </Link>
-            <Typography variant="h4"> Liste de Bon des commandes externe</Typography>
+            <Typography variant="h4">Liste de Bon des commandes externe</Typography>
             </SectionNavigation>
             {/* <Divider /> */}
         </NavigationContainer>

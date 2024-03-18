@@ -30,6 +30,7 @@ export default function PvComparaisonForm() {
     const dispatch = useAppDispatch();
     const route = useRouter();
 
+    const valuesArticle: any= []
     const { isEditing,pvComparaison } = useAppSelector((state) => state.pvComparaison);
     const { pvComparaisonFournisseur } = useAppSelector((state) => state.pvComparaisonFournisseurs);
     
@@ -40,14 +41,20 @@ export default function PvComparaisonForm() {
 
     const total = [...bonCommandeExternes.map((i:any)=>{
         return {
-            id : i.id, name: i.reference , type: "bce"
+            id : i.id, name: i.reference, type: "BCE"
         }
     }),...bonCommandeInternes.map((i:any)=>{
         return {
-            id : i.id, name: i.numBon +" "+ i.surname, type: "bci"
+            id : i.id, name: i.numBon, type: "BCI"
         }
     })]
 
+    const offre = [...valuesArticle.map((i:any)=>{
+            return {
+                id :i.fournisseur, name: i.fournisseur
+            }
+        })
+    ]
     const ligneBudgetaireList = [
         {id : "test1",name : "TEST1"},
         {id : "test2",name : "TEST2"},
@@ -112,7 +119,6 @@ export default function PvComparaisonForm() {
         console.log("error", error);
         }
     };
-    const valuesArticle: any= []
     return (
         <>
             <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
@@ -204,6 +210,18 @@ export default function PvComparaisonForm() {
                                 <FormContainer spacing={2}>
                                     <Stack
                                         direction="row"
+                                        sx={{
+                                            flex: "1 1 100%",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                        }}
+                                        >
+                                        <Typography variant="h6" id="tableTitle" component="div">
+                                            PV de comparaison d'offre
+                                        </Typography>
+                                    </Stack>
+                                    <Stack
+                                        direction="row"
                                         justifyContent="flex-start"
                                         alignItems="flex-start"
                                         spacing={2}
@@ -223,7 +241,7 @@ export default function PvComparaisonForm() {
                                                 label="Ref BCI/BCE"
                                                 name="ref"
                                                 options={total.length > 0 ? total :  [{ id: "", name: "Rien à aficher" }]}
-                                                dataKey="name"
+                                                dataKey={["name","type"]}
                                                 valueKey="id"
                                                 type="text"
                                             />
@@ -254,7 +272,6 @@ export default function PvComparaisonForm() {
                                                 options={grantList.length > 0 ? ligneBudgetaireList :  [{ id: "", name: "Rien à aficher" }]}
                                                 dataKey="name"
                                                 valueKey="id"
-    
                                             />
                                         </FormControl>
                                     </Stack>
@@ -280,7 +297,7 @@ export default function PvComparaisonForm() {
                                             id="outlined-basic"
                                             label="Matériel"
                                             name="materiel"
-                                            options={equipments.length > 0 ? equipments :  [{ id: "", numOptim: "Rien à aficher" }]}
+                                            options={equipments.length > 0 ? equipments :  [{ id: "", numOptim: "Aucun matériel",designation: "" }]}
                                             dataKey={["numOptim","designation"]}
                                             valueKey="id"
                                             type="text"
@@ -355,15 +372,15 @@ export default function PvComparaisonForm() {
                                                             >
                                                                 <TableCell component="th" scope="row">
                                                                     <FormControl fullWidth>
-                                                                    <OSSelectField
-                                                                        id="outlined-basic"
-                                                                        label="Fournisseur"
-                                                                        name="fournisseur"
-                                                                        options={fournisseurList ? fournisseurList :  [{ id: "", name: "Rien à aficher" }]}
-                                                                        dataKey={["name"]}
-                                                                        valueKey="id"
-                                                                        type="text"
-                                                                    />
+                                                                        <OSSelectField
+                                                                            id="outlined-basic"
+                                                                            label="Fournisseur"
+                                                                            name="fournisseur"
+                                                                            options={fournisseurList.length >0 ? fournisseurList :  [{ id: "", name: "Rien à aficher" }]}
+                                                                            dataKey={["name"]}
+                                                                            valueKey="id"
+                                                                            type="text"
+                                                                        />
                                                                     </FormControl>
                                                                 </TableCell>
                                                                 <TableCell align="left">
@@ -450,11 +467,32 @@ export default function PvComparaisonForm() {
                                     <FormContainer spacing={2}>
                                         <Stack
                                             direction="row"
+                                            sx={{
+                                                flex: "1 1 100%",
+                                                justifyContent: "space-between",
+                                                alignItems: "center",
+                                            }}
+                                            >
+                                            <Typography variant="h6" id="tableTitle" component="div">
+                                                Synthèse
+                                            </Typography>
+                                        </Stack>
+                                        <Stack
+                                            direction="row"
                                             justifyContent="flex-start"
                                             alignItems="flex-start"
                                             spacing={2}
                                         >
                                         <FormControl fullWidth>
+                                            <OSSelectField
+                                                id="outlined-basic"
+                                                label="Offres Retenu"
+                                                name="offreRetenu"
+                                                options={offre.length>0 ? offre :  [{ id: "", name: "Aucun offre" }]}
+                                                dataKey={["name"]}
+                                                valueKey="id"
+                                                type="text"
+                                            />
                                             <OSTextField
                                                 fullWidth
                                                 id="outlined-basic"

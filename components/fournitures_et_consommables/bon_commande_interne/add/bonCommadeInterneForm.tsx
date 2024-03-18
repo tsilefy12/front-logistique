@@ -23,6 +23,7 @@ import {
 } from "../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice";
 import { Delete } from "@mui/icons-material";
 import { createArticleCommandeInterne } from "../../../../redux/features/bon_commande_interne/articleCommandeSlice";
+import { getEmployees } from "../../../../redux/features/employeStagiaire/employeeSlice";
 
 export default function BonCommandeInterneForm() {
     const dispatch = useAppDispatch();
@@ -30,6 +31,31 @@ export default function BonCommandeInterneForm() {
 
     const { isEditing,bonCommandeInterne } = useAppSelector((state) => state.bonCommandeInterne);
     const valuesArticle :any[] =[]
+    const { employees } = useAppSelector( (state) => state.employe);
+   
+    const ligneBudgetaireList = [
+        {id : "test1",name : "TEST1"},
+        {id : "test2",name : "TEST2"},
+        {id : "test3",name : "TEST3"}
+    ]
+    const grantList = [
+        {id : "test1",name : "TEST1"},
+        {id : "test2",name : "TEST2"},
+        {id : "test3",name : "TEST3"}
+    ]
+    const programmeList = [
+        {id : "test1",name : "TEST1"},
+        {id : "test2",name : "TEST2"},
+        {id : "test3",name : "TEST3"}
+    ]
+    
+    const fetchUtilsData = () => {
+        dispatch(getEmployees({}));
+    };
+    
+    useEffect(() => {
+        fetchUtilsData();
+    }, []);
     const handleSubmit = async (values: any) => {
         values.montantTotal = valuesArticle.reduce((acc:any, curr:any) => acc + curr.valeur, 0);
         try {
@@ -147,22 +173,41 @@ export default function BonCommandeInterneForm() {
                                 <FormContainer spacing={2}>
                                     <Stack
                                         direction="row"
+                                        sx={{
+                                            flex: "1 1 100%",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                        }}
+                                        >
+                                        <Typography variant="h6" id="tableTitle" component="div">
+                                            Bon de commande interne
+                                        </Typography>
+                                    </Stack>
+                                    <Stack
+                                        direction="row"
                                         justifyContent="flex-start"
                                         alignItems="flex-start"
                                         spacing={2}
                                         >
                                         <FormControl fullWidth>
-                                            <OSTextField
-                                                id="programme"
+                                            <OSSelectField
+                                            id="outlined-basic"
                                                 label="Programme/Projet"
                                                 name="programme"
+                                                options={programmeList.length > 0 ? programmeList :  [{ id: "", name: "Rien à aficher" }]}
+                                                dataKey="name"
+                                                valueKey="id"
+                                                type="text"
                                             />
                                         </FormControl>
                                         <FormControl fullWidth>
-                                            <OSTextField
-                                                id="grant"
+                                            <OSSelectField
+                                                id="outlined-basic"
                                                 label="Grant"
                                                 name="grant"
+                                                options={grantList.length > 0 ? grantList :  [{ id: "", name: "Rien à aficher" }]}
+                                                dataKey="name"
+                                                valueKey="id"
                                             />
                                         </FormControl>
                                     </Stack>
@@ -192,13 +237,13 @@ export default function BonCommandeInterneForm() {
                                         </FormControl>
                                     </Stack>
                                     <FormControl fullWidth>
-                                        <OSTextField
-                                            fullWidth
+                                        <OSSelectField
                                             id="outlined-basic"
-                                            variant="outlined"
                                             label="Demandeur"
                                             name="demandeur"
-                                            type="text"
+                                            options={employees.length > 0 ? employees :  [{ id: "", name: "Aucun demandeur" }]}
+                                            dataKey={["name","surname"]}
+                                            valueKey="id"
                                         />
                                     </FormControl>
                                     <Stack
@@ -208,13 +253,13 @@ export default function BonCommandeInterneForm() {
                                     spacing={2}
                                     >
                                         <FormControl fullWidth>
-                                            <OSTextField
-                                                fullWidth
+                                            <OSSelectField
                                                 id="outlined-basic"
-                                                variant="outlined"
                                                 label="Ligne budgétaire"
                                                 name="ligneBudgetaire"
-                                                type="text"
+                                                options={ligneBudgetaireList.length > 0 ? ligneBudgetaireList :  [{ id: "", name: "Rien à aficher" }]}
+                                                dataKey="name"
+                                                valueKey="id"
                                             />
                                         </FormControl>
                                         <FormControl fullWidth>
@@ -240,7 +285,7 @@ export default function BonCommandeInterneForm() {
                                                 }}
                                                 >
                                                 <Typography variant="h6" id="tableTitle" component="div">
-                                                    Article
+                                                    Article à commander
                                                 </Typography>
                                             </Stack>
                                             <TableContainer component={Paper}>

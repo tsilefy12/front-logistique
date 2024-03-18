@@ -23,12 +23,34 @@ import {
 } from "../../../../redux/features/bon_transfert/bonTransfertSlice";
 import { Delete } from "@mui/icons-material";
 import { createArticleTransfert } from "../../../../redux/features/bon_transfert/articleTransfertSlice";
+import { getInterns } from "../../../../redux/features/employeStagiaire/stagiaireSlice";
+import { getEmployees } from "../../../../redux/features/employeStagiaire/employeeSlice";
 
 export default function BonTransfertForm() {
     const dispatch = useAppDispatch();
     const route = useRouter();
 
     const { isEditing,bonTransfert } = useAppSelector((state) => state.bonTransfert);
+    const { employees } = useAppSelector((state) => state.employe);
+    const { interns } = useAppSelector((state) => state.stagiaire);
+    const total = [...employees.map((i:any)=>{
+        return {
+        id : i.id, name: i.name +" "+ i.surname, type: "employe"
+        }
+    }),...interns.map((i:any)=>{
+        return {
+        id : i.id, name: i.name +" "+ i.surname, type: "intern"
+        }
+    })]
+    const fetchUtilsData = () => {
+        dispatch(getEmployees({}));
+        dispatch(getInterns({}));
+    };
+    const grantList = [
+        {id : "test1",name : "TEST1"},
+        {id : "test2",name : "TEST2"},
+        {id : "test3",name : "TEST3"}
+    ]
     const valuesArticle :any[] =[]
     const handleSubmit = async (values: any) => {
         values.montantTotal = valuesArticle.reduce((acc:any, curr:any) => acc + curr.valeur, 0);
@@ -142,22 +164,52 @@ export default function BonTransfertForm() {
                                 <FormContainer spacing={2}>
                                     <Stack
                                         direction="row"
+                                        sx={{
+                                            flex: "1 1 100%",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                        }}
+                                        >
+                                        <Typography variant="h6" id="tableTitle" component="div">
+                                            Bon de transfert
+                                        </Typography>
+                                    </Stack>
+                                    <Stack
+                                        direction="row"
+                                        sx={{
+                                            flex: "1 1 100%",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                        }}
+                                        >
+                                        <Typography variant="h6" id="tableTitle" component="div">
+                                            Bon de transfert
+                                        </Typography>
+                                    </Stack>
+                                    <Stack
+                                        direction="row"
                                         justifyContent="flex-start"
                                         alignItems="flex-start"
                                         spacing={2}
                                         >
                                         <FormControl fullWidth>
-                                            <OSTextField
-                                                id="expediteur"
+                                            <OSSelectField
+                                                id="outlined-basic"
                                                 label="Expediteur"
                                                 name="expediteur"
+                                                options={employees.length > 0 ? employees :  [{ id: "", name: "Aucun expediteur" }]}
+                                                dataKey={["name","surname"]}
+                                                valueKey="id"
                                             />
                                         </FormControl>
                                         <FormControl fullWidth>
-                                            <OSTextField
-                                                id="destination"
+                                            <OSSelectField
+                                                id="outlined-basic"
                                                 label="Destination"
                                                 name="destination"
+                                                options={total.length > 0 ? total :  [{ id: "", name: "Aucun expediteur" }]}
+                                                dataKey={["name"]}
+                                                valueKey="id"
                                             />
                                         </FormControl>
                                     </Stack>
@@ -204,53 +256,124 @@ export default function BonTransfertForm() {
                                             />
                                         </FormControl>
                                         <FormControl fullWidth>
-                                        <OSTextField
-                                            fullWidth
-                                            id="outlined-basic"
-                                            variant="outlined"
-                                            label="Grant"
-                                            name="grant"
-                                            type="text"
-                                        />
+                                            <OSSelectField
+                                                id="outlined-basic"
+                                                label="Grant"
+                                                name="grant"
+                                                options={grantList.length > 0 ? grantList :  [{ id: "", name: "Aucun grant" }]}
+                                                dataKey={["name"]}
+                                                valueKey="id"
+                                            />
                                     </FormControl>
                                     </Stack>
                                 </FormContainer>
                                 <Box>
                                     <FormContainer spacing={2}>
-                                            <Stack
-                                                direction="row"
-                                                sx={{
-                                                    flex: "1 1 100%",
-                                                    justifyContent: "space-between",
-                                                    alignItems: "center",
-                                                }}
-                                                >
-                                                <Typography variant="h6" id="tableTitle" component="div">
-                                                    Article
-                                                </Typography>
-                                            </Stack>
-                                            <TableContainer component={Paper}>
-                                                <Table sx={{ minWidth: 700 }} aria-label="simple table">
-                                                    <TableHead>
-                                                        <TableRow>
-                                                            <TableCell>Designation</TableCell>
-                                                            <TableCell align="left">Quantité commander</TableCell>
-                                                            <TableCell align="left">Quantité expedié</TableCell>
-                                                            <TableCell align="left">Observation</TableCell>
-                                                            <TableCell></TableCell>
-                                                        </TableRow>
-                                                    </TableHead>
-                                                    <TableBody>
-                                                        {valuesArticle.map((item:any , index:any) => (
-                                                            <TableRow
-                                                                key={index}
-                                                                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                        <Stack
+                                            direction="row"
+                                            sx={{
+                                                flex: "1 1 100%",
+                                                justifyContent: "space-between",
+                                                alignItems: "center",
+                                            }}
+                                            >
+                                            <Typography variant="h6" id="tableTitle" component="div">
+                                                Article à commander
+                                            </Typography>
+                                        </Stack>
+                                        <TableContainer component={Paper}>
+                                            <Table sx={{ minWidth: 700 }} aria-label="simple table">
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell>Designation</TableCell>
+                                                        <TableCell align="left">Quantité commander</TableCell>
+                                                        <TableCell align="left">Quantité expedié</TableCell>
+                                                        <TableCell align="left">Observation</TableCell>
+                                                        <TableCell></TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    {valuesArticle.map((item:any , index:any) => (
+                                                        <TableRow
+                                                            key={index}
+                                                            sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                                        >
+                                                            <TableCell component="th" scope="row">{item.designation}</TableCell>
+                                                            <TableCell align="left">{item.quantiteCommander}</TableCell>
+                                                            <TableCell align="left">{item.quantiteExpedie}</TableCell>
+                                                            <TableCell align="left">{item.observation}</TableCell>
+                                                            <TableCell
+                                                            align="center"
+                                                            sx={{ width: 150, background: "#F5F5F5" }}
                                                             >
-                                                                <TableCell component="th" scope="row">{item.designation}</TableCell>
-                                                                <TableCell align="left">{item.quantiteCommander}</TableCell>
-                                                                <TableCell align="left">{item.quantiteExpedie}</TableCell>
-                                                                <TableCell align="left">{item.observation}</TableCell>
-                                                                <TableCell
+                                                            <Stack
+                                                                direction="row"
+                                                                justifyContent="center"
+                                                                alignItems="center"
+                                                                spacing={2}
+                                                            >
+                                                                <IconButton
+                                                                        color="warning"
+                                                                        aria-label="Supprimer"
+                                                                        component="span"
+                                                                        size="small"
+                                                                        onClick={() => {
+                                                                            valuesArticle.splice(index, 1)
+                                                                        }}
+                                                                    >
+                                                                    <Delete />
+                                                                </IconButton>
+                                                                {/* <EditIcon color="primary" />
+                                                                <DeleteIcon color="warning" /> */}
+                                                            </Stack>
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                    <TableRow
+                                                            key="index"
+                                                            sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                                        >
+                                                            <TableCell component="th" scope="row">
+                                                                <FormControl fullWidth>
+                                                                    <OSTextField
+                                                                        id="designation"
+                                                                        label="Désignation"
+                                                                        name="designation"
+                                                                        type="text"
+                                                                    />
+                                                                </FormControl>
+                                                            </TableCell>
+                                                            <TableCell align="left">
+                                                                <FormControl fullWidth>
+                                                                    <OSTextField
+                                                                        id="quantiteCommander"
+                                                                        label="Quantité commander"
+                                                                        name="quantiteCommander"
+                                                                        type="text"
+                                                                    />
+                                                                </FormControl>
+                                                            </TableCell>
+                                                            <TableCell align="left">
+                                                                <FormControl fullWidth>
+                                                                    <OSTextField
+                                                                        id="quantiteExpedie"
+                                                                        label="Quantité expedié"
+                                                                        name="quantiteExpedie"
+                                                                        type="number"
+                                                                    />
+                                                                </FormControl>
+                                                            </TableCell>
+                                                            <TableCell align="left">
+                                                                <FormControl fullWidth>
+                                                                    <OSTextField
+                                                                        id="observation"
+                                                                        label="observation"
+                                                                        name="observation"
+                                                                        type="text"
+                                                                    />
+                                                                </FormControl>
+                                                            </TableCell>
+                                                            <TableCell
                                                                 align="center"
                                                                 sx={{ width: 150, background: "#F5F5F5" }}
                                                                 >
@@ -261,118 +384,47 @@ export default function BonTransfertForm() {
                                                                     spacing={2}
                                                                 >
                                                                     <IconButton
-                                                                            color="warning"
-                                                                            aria-label="Supprimer"
-                                                                            component="span"
-                                                                            size="small"
-                                                                            onClick={() => {
-                                                                                valuesArticle.splice(index, 1)
-                                                                            }}
-                                                                        >
-                                                                        <Delete />
-                                                                    </IconButton>
-                                                                    {/* <EditIcon color="primary" />
-                                                                    <DeleteIcon color="warning" /> */}
-                                                                </Stack>
-                                                                </TableCell>
-                                                            </TableRow>
-                                                        ))}
-                                                        <TableRow
-                                                                key="index"
-                                                                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                                                            >
-                                                                <TableCell component="th" scope="row">
-                                                                    <FormControl fullWidth>
-                                                                        <OSTextField
-                                                                            id="designation"
-                                                                            label="Désignation"
-                                                                            name="designation"
-                                                                            type="text"
-                                                                        />
-                                                                    </FormControl>
-                                                                </TableCell>
-                                                                <TableCell align="left">
-                                                                    <FormControl fullWidth>
-                                                                        <OSTextField
-                                                                            id="quantiteCommander"
-                                                                            label="Quantité commander"
-                                                                            name="quantiteCommander"
-                                                                            type="text"
-                                                                        />
-                                                                    </FormControl>
-                                                                </TableCell>
-                                                                <TableCell align="left">
-                                                                    <FormControl fullWidth>
-                                                                        <OSTextField
-                                                                            id="quantiteExpedie"
-                                                                            label="Quantité expedié"
-                                                                            name="quantiteExpedie"
-                                                                            type="number"
-                                                                        />
-                                                                    </FormControl>
-                                                                </TableCell>
-                                                                <TableCell align="left">
-                                                                    <FormControl fullWidth>
-                                                                        <OSTextField
-                                                                            id="observation"
-                                                                            label="observation"
-                                                                            name="observation"
-                                                                            type="text"
-                                                                        />
-                                                                    </FormControl>
-                                                                </TableCell>
-                                                                <TableCell
-                                                                    align="center"
-                                                                    sx={{ width: 150, background: "#F5F5F5" }}
-                                                                    >
-                                                                    <Stack
-                                                                        direction="row"
-                                                                        justifyContent="center"
-                                                                        alignItems="center"
-                                                                        spacing={2}
-                                                                    >
-                                                                        <IconButton
-                                                                            type="button"
-                                                                            onClick={() => {
-                                                                                const designation = formikProps.values.designation;
-                                                                                const quantiteCommander = formikProps.values.quantiteCommander;
-                                                                                const quantiteExpedie = formikProps.values.quantiteExpedie;
-                                                                                const observation = formikProps.values.observation;
-                                                                                 // Vérifier si les champs sont vides
-                                                                                 if (designation.trim() !== '' && observation.trim() !== '') {
-                                                                                    valuesArticle.push({
-                                                                                        designation: designation,
-                                                                                        quantiteCommander: quantiteCommander,
-                                                                                        quantiteExpedie: quantiteExpedie,
-                                                                                        observation: observation,
-                                                                                    });
-                                                                                    formikProps.setFieldValue('designation', '');
-                                                                                    formikProps.setFieldValue('quantiteCommander', '');
-                                                                                    formikProps.setFieldValue('quantiteExpedie', '');
-                                                                                    formikProps.setFieldValue('observation', '');
-                                                                                }
-                                                                               
-                                                                            }}
-                                                                        >
-                                                                            <Check color="primary"/>
-                                                                        </IconButton>
-                                                                        <IconButton
-                                                                            type="button"
-                                                                            onClick={() => {
+                                                                        type="button"
+                                                                        onClick={() => {
+                                                                            const designation = formikProps.values.designation;
+                                                                            const quantiteCommander = formikProps.values.quantiteCommander;
+                                                                            const quantiteExpedie = formikProps.values.quantiteExpedie;
+                                                                            const observation = formikProps.values.observation;
+                                                                                // Vérifier si les champs sont vides
+                                                                                if (designation.trim() !== '' && observation.trim() !== '') {
+                                                                                valuesArticle.push({
+                                                                                    designation: designation,
+                                                                                    quantiteCommander: quantiteCommander,
+                                                                                    quantiteExpedie: quantiteExpedie,
+                                                                                    observation: observation,
+                                                                                });
                                                                                 formikProps.setFieldValue('designation', '');
                                                                                 formikProps.setFieldValue('quantiteCommander', '');
                                                                                 formikProps.setFieldValue('quantiteExpedie', '');
                                                                                 formikProps.setFieldValue('observation', '');
-                                                                            }}
-                                                                            >
-                                                                            <Close />
-                                                                        </IconButton>
-                                                                    </Stack>
-                                                                </TableCell>
-                                                        </TableRow>
-                                                    </TableBody>
-                                                </Table>
-                                            </TableContainer>
+                                                                            }
+                                                                            
+                                                                        }}
+                                                                    >
+                                                                        <Check color="primary"/>
+                                                                    </IconButton>
+                                                                    <IconButton
+                                                                        type="button"
+                                                                        onClick={() => {
+                                                                            formikProps.setFieldValue('designation', '');
+                                                                            formikProps.setFieldValue('quantiteCommander', '');
+                                                                            formikProps.setFieldValue('quantiteExpedie', '');
+                                                                            formikProps.setFieldValue('observation', '');
+                                                                        }}
+                                                                        >
+                                                                        <Close />
+                                                                    </IconButton>
+                                                                </Stack>
+                                                            </TableCell>
+                                                    </TableRow>
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
                                     </FormContainer>
                                 </Box>
                             </Form>

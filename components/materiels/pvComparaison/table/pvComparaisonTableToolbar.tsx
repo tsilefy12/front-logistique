@@ -56,7 +56,7 @@ const BonCommandeInterneTableToolbar = () => {
 					}}
 				>
 					<Typography variant="h6" id="tableTitle" component="div">
-						Liste Pv des comparaisons offres
+						Liste PV des comparaisons d'offres
 					</Typography>
 					<TextField
 						variant="outlined"
