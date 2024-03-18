@@ -21,10 +21,10 @@ const DetailsConsumable = () => {
   const { bonCommandeInterne } = useAppSelector((state) => state.bonCommandeInterne);
 
   useEffect(() => {
-    getDetailsConsumable();
+    getDetailsBCI();
   }, [id]);
 
-  const getDetailsConsumable = () => {
+  const getDetailsBCI = () => {
     dispatch(getBonCommandeInterne({ id,args:{
       include:{
         ArticleCommande:true

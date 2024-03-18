@@ -135,6 +135,17 @@ export const bonCommandeInterneSlice = createSlice({
             state.loading = false;
             state.error = action.error;
         },
+        [getBonCommandeInterne.pending.type]: (state) => {
+          state.loading = true;
+        },
+        [getBonCommandeInterne.fulfilled.type]: (state, action) => {
+            state.loading = false;
+            state.bonCommandeInterne = action.payload;
+        },
+        [getBonCommandeInterne.rejected.type]: (state, action) => {
+            state.loading = false;
+            state.error = action.error;
+        },
         [createBonCommandeInterne.pending.type]: (state) => {
             state.loading = true;
         },
