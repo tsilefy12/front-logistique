@@ -18,7 +18,7 @@ export const editArticleCommandeExterne = createAsyncThunk(
     "fourniture_consommable/editArticleCommandeExterne",
     async (data: { id: string }, thunkAPI) => {
         try {
-            const response = await axios.get(`/logistique/article-commande/${data.id}`);
+            const response = await axios.get(`/logistique/article-commande-bce/${data.id}`);
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -33,7 +33,7 @@ export const createArticleCommandeExterne = createAsyncThunk(
     "fourniture_consommable/createArticleCommandeExterne",
     async (data: ArticleBCEItem, thunkAPI) => {
       try {
-        const response = await axios.post("/logistique/article-commande", data);
+        const response = await axios.post("/logistique/article-commande-bce", data);
         thunkAPI.dispatch(
           enqueueSnackbar({
             message: "Article BCE créé avec succès",
@@ -56,7 +56,7 @@ export const deleteArticleCommandeExterne = createAsyncThunk(
     "fourniture_consommable/deleteArticleCommandeExterne",
     async (data: { id: string }, thunkAPI) => {
       try {
-        const response = await axios.delete(`/logistique/article-commande/${data.id}`);
+        const response = await axios.delete(`/logistique/article-commande-bce/${data.id}`);
         thunkAPI.dispatch(
           enqueueSnackbar({
             message: "Article BCE supprimé avec succès",
@@ -82,7 +82,7 @@ export const getArticleCommandeExternes = createAsyncThunk(
       const params = {
         args: JSON.stringify(data.args),
       };
-      const response = await axios.get("/logistique/article-commande/", { params });
+      const response = await axios.get("/logistique/article-commande-bce/", { params });
       return response.data;
     } catch (error: any) {
       if (error.response) {
