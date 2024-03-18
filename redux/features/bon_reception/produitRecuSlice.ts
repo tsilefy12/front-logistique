@@ -18,7 +18,7 @@ export const editproduitRecu = createAsyncThunk(
     "fourniture_consommable/editproduitRecu",
     async (data: { id: string }, thunkAPI) => {
         try {
-            const response = await axios.get(`/logistique/bon-de-commande-interne/${data.id}`);
+            const response = await axios.get(`/logistique/produit-recu/${data.id}`);
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -33,7 +33,7 @@ export const createproduitRecu = createAsyncThunk(
     "fourniture_consommable/createproduitRecu",
     async (data: produitRecuItem, thunkAPI) => {
       try {
-        const response = await axios.post("/logistique/bon-de-commande-interne", data);
+        const response = await axios.post("/logistique/produit-recu", data);
         thunkAPI.dispatch(
           enqueueSnackbar({
             message: "Produit créé avec succès",
@@ -56,7 +56,7 @@ export const deleteproduitRecu = createAsyncThunk(
     "fourniture_consommable/deleteproduitRecu",
     async (data: { id: string }, thunkAPI) => {
       try {
-        const response = await axios.delete(`/logistique/bon-de-commande-interne/${data.id}`);
+        const response = await axios.delete(`/logistique/produit-recu/${data.id}`);
         thunkAPI.dispatch(
           enqueueSnackbar({
             message: "Produit Recu supprimé avec succès",
@@ -82,7 +82,7 @@ export const getproduitRecus = createAsyncThunk(
       const params = {
         args: JSON.stringify(data.args),
       };
-      const response = await axios.get("/logistique/bon-de-commande-interne", { params });
+      const response = await axios.get("/logistique/produit-recu", { params });
       return response.data;
     } catch (error: any) {
       if (error.response) {
