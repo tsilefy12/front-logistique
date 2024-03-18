@@ -197,7 +197,7 @@ export default function BonTransfertForm() {
                                                 id="outlined-basic"
                                                 label="Expediteur"
                                                 name="expediteur"
-                                                options={employees.length > 0 ? employees :  [{ id: "", name: "Aucun expediteur" }]}
+                                                options={employees}
                                                 dataKey={["name","surname"]}
                                                 valueKey="id"
                                             />
@@ -207,7 +207,7 @@ export default function BonTransfertForm() {
                                                 id="outlined-basic"
                                                 label="Destination"
                                                 name="destination"
-                                                options={total.length > 0 ? total :  [{ id: "", name: "Aucun expediteur" }]}
+                                                options={total}
                                                 dataKey={["name"]}
                                                 valueKey="id"
                                             />

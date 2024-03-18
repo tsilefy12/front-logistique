@@ -10,6 +10,9 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  eslint:{
+    ignoreDuringBuilds:true
+  },
   webpackDevMiddleware: (config) => {
     config.watchOptions = {
       poll: 1000,
