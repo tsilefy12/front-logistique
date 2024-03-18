@@ -17,9 +17,5 @@ export interface BonCommandeInternInitialState {
     isEditing: boolean;
     loading: boolean;
     [key: string]: any;
-    ArticleCommande:[]
-    grants: [];
-    ligneBudgetaires: [];
-    demandeurs: [];
 }
   

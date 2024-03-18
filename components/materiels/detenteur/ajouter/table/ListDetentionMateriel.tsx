@@ -75,7 +75,7 @@ const ListDetentionMateriel = () => {
                                 <OSSelectField
                                     id="contracType"
                                     name="codeOptim"
-                                    label="Choisir un code d'OPTIM"
+                                    label="Choisir un code d'optim"
                                     options={equipments}
                                     dataKey="numOptim"
                                     onChange={handleChange()}
@@ -90,7 +90,7 @@ const ListDetentionMateriel = () => {
                 <Table sx={{ minWidth: 700 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                        <TableCell>N° OPTIM</TableCell>
+                        <TableCell>Code optim</TableCell>
                         <TableCell align="left">Désignation</TableCell>
                         <TableCell align="left">Date acquisition</TableCell>
                         <TableCell align="left">Valeur acquisition</TableCell>

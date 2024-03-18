@@ -12,9 +12,6 @@ const initialState: BonCommandeInternInitialState = {
     isEditing: false,
     loading: false,
     error: null,
-    demandeurs:[],
-    grants: [],
-    ligneBudgetaires:[]
 };
 
 export const editBonCommandeInterne = createAsyncThunk(
