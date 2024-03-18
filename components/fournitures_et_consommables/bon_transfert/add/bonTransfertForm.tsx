@@ -176,18 +176,6 @@ export default function BonTransfertForm() {
                                     </Stack>
                                     <Stack
                                         direction="row"
-                                        sx={{
-                                            flex: "1 1 100%",
-                                            justifyContent: "space-between",
-                                            alignItems: "center",
-                                        }}
-                                        >
-                                        <Typography variant="h6" id="tableTitle" component="div">
-                                            Bon de transfert
-                                        </Typography>
-                                    </Stack>
-                                    <Stack
-                                        direction="row"
                                         justifyContent="flex-start"
                                         alignItems="flex-start"
                                         spacing={2}

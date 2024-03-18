@@ -128,12 +128,12 @@ export default function BonTransfertList() {
                                     <TableCell align="left">{row?.expediteur}</TableCell>
                                     <TableCell align="left">{row?.destination}</TableCell>
                                     <TableCell align="left">
-                                        {row?.expeditionVia}
-                                    </TableCell>
-                                    <TableCell align="left">
                                         <Moment format="DD/MM/YYYY">
                                             {row?.dateExp}
                                         </Moment>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        {row?.expeditionVia}
                                     </TableCell>
                                     <TableCell align="left">
                                         {row?.departement}
