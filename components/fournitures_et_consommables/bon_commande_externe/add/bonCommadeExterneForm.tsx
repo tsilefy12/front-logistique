@@ -203,7 +203,7 @@ export default function BonCommandeExterneForm() {
                                                 id="outlined-basic"
                                                 label="BCI"
                                                 name="bci"
-                                                options={bonCommandeInternes.length >0 ? bonCommandeInternes :  [{ id: "", name: "Aucun bon de commande interne" }]}
+                                                options={bonCommandeInternes}
                                                 dataKey={["name"]}
                                                 valueKey="id"
                                                 type="text"
@@ -214,7 +214,7 @@ export default function BonCommandeExterneForm() {
                                         id="outlined-basic"
                                         label="Fournisseur"
                                         name="fournisseur"
-                                        options={fournisseurList.length >0 ? fournisseurList :  [{ id: "", name: "Aucun fournisseur" }]}
+                                        options={fournisseurList}
                                         dataKey={["name"]}
                                         valueKey="id"
                                         type="text"

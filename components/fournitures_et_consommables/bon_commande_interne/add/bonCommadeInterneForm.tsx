@@ -241,7 +241,7 @@ export default function BonCommandeInterneForm() {
                                             id="outlined-basic"
                                             label="Demandeur"
                                             name="demandeur"
-                                            options={employees.length > 0 ? employees :  [{ id: "", name: "Aucun demandeur" }]}
+                                            options={employees}
                                             dataKey={["name","surname"]}
                                             valueKey="id"
                                         />

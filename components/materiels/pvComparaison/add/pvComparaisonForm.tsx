@@ -297,7 +297,7 @@ export default function PvComparaisonForm() {
                                             id="outlined-basic"
                                             label="Matériel"
                                             name="materiel"
-                                            options={equipments.length > 0 ? equipments :  [{ id: "", numOptim: "Aucun matériel",designation: "" }]}
+                                            options={equipments}
                                             dataKey={["numOptim","designation"]}
                                             valueKey="id"
                                             type="text"
@@ -488,7 +488,7 @@ export default function PvComparaisonForm() {
                                                 id="outlined-basic"
                                                 label="Offres Retenu"
                                                 name="offreRetenu"
-                                                options={offre.length>0 ? offre :  [{ id: "", name: "Aucun offre" }]}
+                                                options={offre}
                                                 dataKey={["name"]}
                                                 valueKey="id"
                                                 type="text"

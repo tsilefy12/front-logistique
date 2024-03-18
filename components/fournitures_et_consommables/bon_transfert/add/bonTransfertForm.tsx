@@ -260,7 +260,7 @@ export default function BonTransfertForm() {
                                                 id="outlined-basic"
                                                 label="Grant"
                                                 name="grant"
-                                                options={grantList.length > 0 ? grantList :  [{ id: "", name: "Aucun grant" }]}
+                                                options={grantList}
                                                 dataKey={["name"]}
                                                 valueKey="id"
                                             />

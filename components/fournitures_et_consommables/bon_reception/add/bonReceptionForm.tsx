@@ -154,7 +154,7 @@ export default function BonCommandeInterneForm() {
                                             id="outlined-basic"
                                             label="BCe"
                                             name="bce"
-                                            options={bonCommandeExternes.length >0 ? bonCommandeExternes :  [{ id: "", name: "Aucun bon de commande externe" }]}
+                                            options={bonCommandeExternes}
                                             dataKey={["name"]}
                                             valueKey="id"
                                             type="text"
