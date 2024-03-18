@@ -42,114 +42,119 @@ const DetailsConsumable = () => {
                 justifyContent="space-between"
                 sx={{ mb: 2 }}
             >
-                <Link href="/fournitures_et_consommables/commande">
-                <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
-                    Retour
-                </Button>
-                </Link>
+                <Stack flexDirection={"row"}>
+                    <Link href="/fournitures_et_consommables/bon_commande_intern">
+                        <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
+                            Retour
+                        </Button>
+                    </Link>
+                </Stack>
                 <Typography variant="h4" color="GrayText">
                     Details d'une bon de commande interne
                 </Typography>
             </SectionNavigation>
             <DetailsContainer>
-                <Stack
-                    direction="row"
-                    sx={{
-                        flex: "1 1 100%",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                    }}
-                    >
-                   <Grid container spacing={4} my={1}>
-                        <Grid item xs={12} md={12}>
-                            <InfoItems direction="row" spacing={2}>
-                                <Typography variant="body1" color="secondary">
-                                    N° Bon de commande
-                                </Typography>
-                                <Typography variant="body1" color="gray">
-                                {bonCommandeInterne.numBonCommande}
-                                </Typography>
-                            </InfoItems>
+                <Box>
+                    <FormContainer spacing={2}>
+                        <Stack
+                            direction="row"
+                            sx={{
+                                flex: "1 1 100%",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                            }}
+                            >
+                        <Grid container spacing={4} my={1}>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            N° Bon de commande
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                        {bonCommandeInterne.numBonCommande}
+                                        </Typography>
+                                    </InfoItems>
+                                    </Grid>
+                                    <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Demandeur
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                        {bonCommandeInterne.demandeur}
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Montant total
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            {bonCommandeInterne.montantTotal}
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} md={12}>
-                            <InfoItems direction="row" spacing={2}>
-                                <Typography variant="body1" color="secondary">
-                                    Demandeur
-                                </Typography>
-                                <Typography variant="body1" color="gray">
-                                {bonCommandeInterne.demandeur}
-                                </Typography>
-                            </InfoItems>
-                        </Grid>
-                        <Grid item xs={12} md={12}>
-                            <InfoItems direction="row" spacing={2}>
-                                <Typography variant="body1" color="secondary">
-                                    Montant total
-                                </Typography>
-                                <Typography variant="body1" color="gray">
-                                    {bonCommandeInterne.montantTotal}
-                                </Typography>
-                            </InfoItems>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={4} my={1}>
-                        <Grid item xs={12} md={12}>
-                            <InfoItems direction="row" spacing={2}>
-                                <Typography variant="body1" color="secondary">
-                                    N° Bon de commande interne
-                                </Typography>
-                                <Typography variant="body1" color="gray">
-                                {bonCommandeInterne.numBon}
-                                </Typography>
-                            </InfoItems>
+                            <Grid container spacing={4} my={1}>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            N° Bon de commande interne
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                        {bonCommandeInterne.numBon}
+                                        </Typography>
+                                    </InfoItems>
+                                    </Grid>
+                                    <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Grant
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                        {bonCommandeInterne.grant}
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Ligne budgétaire
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            {bonCommandeInterne.ligneBudgetaire}
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} md={12}>
-                            <InfoItems direction="row" spacing={2}>
-                                <Typography variant="body1" color="secondary">
-                                    Grant
-                                </Typography>
-                                <Typography variant="body1" color="gray">
-                                {bonCommandeInterne.grant}
-                                </Typography>
-                            </InfoItems>
-                        </Grid>
-                        <Grid item xs={12} md={12}>
-                            <InfoItems direction="row" spacing={2}>
-                                <Typography variant="body1" color="secondary">
-                                    Ligne budgétaire
-                                </Typography>
-                                <Typography variant="body1" color="gray">
-                                    {bonCommandeInterne.ligneBudgetaire}
-                                </Typography>
-                            </InfoItems>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={4} my={1}>
-                        <Grid item xs={12} md={12}>
-                            <InfoItems direction="row" spacing={2}>
-                                <Typography variant="body1" color="secondary">
-                                    Programme
-                                </Typography>
-                                <Typography variant="body1" color="gray">
-                                    {bonCommandeInterne.programme}
-                                </Typography>
-                            </InfoItems>
+                            <Grid container spacing={4} my={1}>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Programme
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            {bonCommandeInterne.programme}
+                                        </Typography>
+                                    </InfoItems>
+                                    </Grid>
+                                    <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Date
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            <Moment format="DD/MM/YYYY">
+                                                {bonCommandeInterne.dateBonCommande}
+                                            </Moment>
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} md={12}>
-                            <InfoItems direction="row" spacing={2}>
-                                <Typography variant="body1" color="secondary">
-                                    Date
-                                </Typography>
-                                <Typography variant="body1" color="gray">
-                                    <Moment format="DD/MM/YYYY">
-                                        {bonCommandeInterne.dateBonCommande}
-                                    </Moment>
-                                </Typography>
-                            </InfoItems>
-                        </Grid>
-                    </Grid>
-                </Stack>
-                
+                        </Stack>
+                    </FormContainer>
+                </Box>
                 <Box>
                     <FormContainer spacing={2}>
                             <Stack
@@ -194,71 +199,6 @@ const DetailsConsumable = () => {
                             </TableContainer>
                     </FormContainer>
                 </Box>
-                <Stack
-                    direction="row"
-                    sx={{
-                        flex: "1 1 100%",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                    }}
-                    >
-                    {bonCommandeInterne.ArticleCommande?.map((item:any) =>{
-                        return(
-                            <Grid container spacing={4} my={1}>
-                                <Grid item xs={12} md={12}>
-                                    <InfoItems direction="row" spacing={2}>
-                                        <Typography variant="body1" color="secondary">
-                                         Designation :
-                                        </Typography>
-                                        <Typography variant="body1" color="gray">
-                                            {item.designation}
-                                        </Typography>
-                                    </InfoItems>
-                                </Grid>
-                                <Grid item xs={12} md={12}>
-                                    <InfoItems direction="row" spacing={2}>
-                                        <Typography variant="body1" color="secondary">
-                                         Caractéristique :
-                                        </Typography>
-                                        <Typography variant="body1" color="gray">
-                                            {item.caracteristik}
-                                        </Typography>
-                                    </InfoItems>
-                                </Grid>
-                                <Grid item xs={12} md={12}>
-                                    <InfoItems direction="row" spacing={2}>
-                                        <Typography variant="body1" color="secondary">
-                                         Designation :
-                                        </Typography>
-                                        <Typography variant="body1" color="gray">
-                                            {item.caracteristik}
-                                        </Typography>
-                                    </InfoItems>
-                                </Grid>
-                                <Grid item xs={12} md={12}>
-                                    <InfoItems direction="row" spacing={2}>
-                                        <Typography variant="body1" color="secondary">
-                                         Quantité :
-                                        </Typography>
-                                        <Typography variant="body1" color="gray">
-                                            {item.quantite}
-                                        </Typography>
-                                    </InfoItems>
-                                </Grid>
-                                <Grid item xs={12} md={12}>
-                                    <InfoItems direction="row" spacing={2}>
-                                        <Typography variant="body1" color="secondary">
-                                         Prix unitaire :
-                                        </Typography>
-                                        <Typography variant="body1" color="gray">
-                                            {item.pu} ariary
-                                        </Typography>
-                                    </InfoItems>
-                                </Grid>
-                            </Grid>
-                        )
-                    })}
-                </Stack>
             </DetailsContainer>
         </Container>
     );
