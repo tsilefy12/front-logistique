@@ -3,6 +3,7 @@ const nextConfig = {
   basePath: "/logistique",
   assetPrefix: "/logistique/",
   reactStrictMode: true,
+  swcMinify: false,
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
@@ -10,8 +11,8 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
-  eslint:{
-    ignoreDuringBuilds:true
+  eslint: {
+    ignoreDuringBuilds: true,
   },
   webpackDevMiddleware: (config) => {
     config.watchOptions = {
@@ -23,4 +24,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig
+module.exports = nextConfig;
