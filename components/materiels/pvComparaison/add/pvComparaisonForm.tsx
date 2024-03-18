@@ -20,6 +20,11 @@ import Delete from "@mui/icons-material/Delete";
 import Edit from "@mui/icons-material/Edit";
 import { createPvComparaison } from "../../../../redux/features/pvComparaison/pvComparaisonSlice";
 import { createPvComparaisonFournisseur } from "../../../../redux/features/pvComparaison/pvComparaisonFournisseurSlice";
+import { getBonCommandeInternes } from "../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice";
+import { getBonCommandeExternes } from "../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
+import { getEquipments } from "../../../../redux/features/equipment";
+import { getFournisseurList } from "../../../../redux/features/fournisseur";
+import OSSelectField from "../../../shared/select/OSSelectField";
 
 export default function PvComparaisonForm() {
     const dispatch = useAppDispatch();
@@ -27,6 +32,48 @@ export default function PvComparaisonForm() {
 
     const { isEditing,pvComparaison } = useAppSelector((state) => state.pvComparaison);
     const { pvComparaisonFournisseur } = useAppSelector((state) => state.pvComparaisonFournisseurs);
+    
+    const { bonCommandeExternes } = useAppSelector((state) => state.bonCommendeExterne);
+    const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
+    const { equipments } = useAppSelector( (state) => state.equipment);
+    const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
+
+    const total = [...bonCommandeExternes.map((i:any)=>{
+        return {
+            id : i.id, name: i.reference , type: "bce"
+        }
+    }),...bonCommandeInternes.map((i:any)=>{
+        return {
+            id : i.id, name: i.numBon +" "+ i.surname, type: "bci"
+        }
+    })]
+
+    const ligneBudgetaireList = [
+        {id : "test1",name : "TEST1"},
+        {id : "test2",name : "TEST2"},
+        {id : "test3",name : "TEST3"}
+    ]
+    const grantList = [
+        {id : "test1",name : "TEST1"},
+        {id : "test2",name : "TEST2"},
+        {id : "test3",name : "TEST3"}
+    ]
+    const programmeList = [
+        {id : "test1",name : "TEST1"},
+        {id : "test2",name : "TEST2"},
+        {id : "test3",name : "TEST3"}
+    ]
+    
+    const fetchUtilsData = () => {
+        dispatch(getBonCommandeInternes({}));
+        dispatch(getBonCommandeExternes({}));
+        dispatch(getEquipments({}));
+        dispatch(getFournisseurList({}));
+    };
+    
+    useEffect(() => {
+        fetchUtilsData();
+    }, []);
     const handleSubmit = async (values: any) => {
         try {
             if (isEditing) {
@@ -101,7 +148,7 @@ export default function PvComparaisonForm() {
                     })}
                     onSubmit={(value: any, action: any) => {
                         handleSubmit(value);
-                        action.resetForm();
+                            action.resetForm();
                         }
                     }
                 >
@@ -171,12 +218,14 @@ export default function PvComparaisonForm() {
                                             />
                                         </FormControl>
                                         <FormControl fullWidth>
-                                            <OSTextField
-                                                fullWidth
+                                            <OSSelectField
                                                 id="outlined-basic"
-                                                variant="outlined"
                                                 label="Ref BCI/BCE"
                                                 name="ref"
+                                                options={total.length > 0 ? total :  [{ id: "", name: "Rien à aficher" }]}
+                                                dataKey="name"
+                                                valueKey="id"
+                                                type="text"
                                             />
                                         </FormControl>
                                     </Stack>
@@ -187,49 +236,55 @@ export default function PvComparaisonForm() {
                                         spacing={2}
                                         >
                                         <FormControl fullWidth>
-                                            <OSTextField
-                                                fullWidth
+                                            <OSSelectField
                                                 id="outlined-basic"
-                                                variant="outlined"
                                                 label="Programme/Projet"
                                                 name="programme"
-                                            />
-                                        </FormControl>
-                                        <FormControl fullWidth>
-                                            <OSTextField
-                                                fullWidth
-                                                id="outlined-basic"
-                                                variant="outlined"
-                                                label="Grant"
-                                                name="grant"
-                                            />
-                                        </FormControl>
-                                    </Stack>
-                                    <Stack
-                                        direction="row"
-                                        justifyContent="flex-start"
-                                        alignItems="flex-start"
-                                        spacing={2}
-                                        >
-                                        <FormControl fullWidth>
-                                            <OSTextField
-                                                fullWidth
-                                                id="outlined-basic"
-                                                variant="outlined"
-                                                label="Ligne Budgétaire"
-                                                name="ligneBudgetaire"
+                                                options={programmeList.length > 0 ? programmeList :  [{ id: "", name: "Rien à aficher" }]}
+                                                dataKey="name"
+                                                valueKey="id"
                                                 type="text"
                                             />
                                         </FormControl>
                                         <FormControl fullWidth>
-                                            <OSTextField
-                                                fullWidth
+                                            <OSSelectField
                                                 id="outlined-basic"
-                                                variant="outlined"
-                                                label="Matériel"
-                                                name="materiel"
-                                                type="number"
+                                                label="Grant"
+                                                name="grant"
+                                                options={grantList.length > 0 ? ligneBudgetaireList :  [{ id: "", name: "Rien à aficher" }]}
+                                                dataKey="name"
+                                                valueKey="id"
+    
                                             />
+                                        </FormControl>
+                                    </Stack>
+                                    <Stack
+                                        direction="row"
+                                        justifyContent="flex-start"
+                                        alignItems="flex-start"
+                                        spacing={2}
+                                        >
+                                        <FormControl fullWidth>
+                                            <OSSelectField
+                                                id="outlined-basic"
+                                                label="Ligne Budgétaire"
+                                                name="ligneBudgetaire"
+                                                options={ligneBudgetaireList.length > 0 ? ligneBudgetaireList :  [{ id: "", name: "Rien à aficher" }]}
+                                                dataKey="name"
+                                                valueKey="id"
+    
+                                            />
+                                        </FormControl>
+                                        <FormControl fullWidth>
+                                        <OSSelectField
+                                            id="outlined-basic"
+                                            label="Matériel"
+                                            name="materiel"
+                                            options={equipments.length > 0 ? equipments :  [{ id: "", numOptim: "Rien à aficher" }]}
+                                            dataKey={["numOptim","designation"]}
+                                            valueKey="id"
+                                            type="text"
+                                        />
                                         </FormControl>
                                     </Stack>
                                 </FormContainer>
@@ -300,11 +355,15 @@ export default function PvComparaisonForm() {
                                                             >
                                                                 <TableCell component="th" scope="row">
                                                                     <FormControl fullWidth>
-                                                                        <OSTextField
-                                                                            id=""
-                                                                            label="Fournisseur"
-                                                                            name="fournisseur"
-                                                                        />
+                                                                    <OSSelectField
+                                                                        id="outlined-basic"
+                                                                        label="Fournisseur"
+                                                                        name="fournisseur"
+                                                                        options={fournisseurList ? fournisseurList :  [{ id: "", name: "Rien à aficher" }]}
+                                                                        dataKey={["name"]}
+                                                                        valueKey="id"
+                                                                        type="text"
+                                                                    />
                                                                     </FormControl>
                                                                 </TableCell>
                                                                 <TableCell align="left">
@@ -344,7 +403,7 @@ export default function PvComparaisonForm() {
                                                                         alignItems="center"
                                                                         spacing={2}
                                                                     >
-                                                                        <Button
+                                                                        <IconButton
                                                                             type="button"
                                                                             onClick={() => {
                                                                                 const fournisseur = formikProps.values.fournisseur;
@@ -366,11 +425,19 @@ export default function PvComparaisonForm() {
                                                                                 }
                                                                                
                                                                             }}
-                                                                        >
-                                                                            Ajouter au tableau
-                                                                        </Button>
-                                                                        {/* <EditIcon color="primary" />
-                                                                        <DeleteIcon color="warning" /> */}
+                                                                        ><Check color="primary"/>
+                                                                        </IconButton>
+                                                                        <IconButton
+                                                                            type="button"
+                                                                            onClick={() => {
+                                                                                formikProps.setFieldValue('designation', '');
+                                                                                formikProps.setFieldValue('caracteristique', '');
+                                                                                formikProps.setFieldValue('pu', '');
+                                                                                formikProps.setFieldValue('quantite', '');
+                                                                            }}
+                                                                            >
+                                                                            <Close />
+                                                                        </IconButton>
                                                                     </Stack>
                                                                 </TableCell>
                                                         </TableRow>

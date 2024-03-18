@@ -249,8 +249,7 @@ export default function BonTransfertForm() {
                                                                 <TableCell component="th" scope="row">{item.designation}</TableCell>
                                                                 <TableCell align="left">{item.quantiteCommander}</TableCell>
                                                                 <TableCell align="left">{item.quantiteExpedie}</TableCell>
-                                                                <TableCell align="left">{item.observation} Ar</TableCell>
-                                                                <TableCell align="left">{item.valeur} Ar</TableCell>
+                                                                <TableCell align="left">{item.observation}</TableCell>
                                                                 <TableCell
                                                                 align="center"
                                                                 sx={{ width: 150, background: "#F5F5F5" }}
@@ -332,7 +331,7 @@ export default function BonTransfertForm() {
                                                                         alignItems="center"
                                                                         spacing={2}
                                                                     >
-                                                                        <Button
+                                                                        <IconButton
                                                                             type="button"
                                                                             onClick={() => {
                                                                                 const designation = formikProps.values.designation;
@@ -355,10 +354,19 @@ export default function BonTransfertForm() {
                                                                                
                                                                             }}
                                                                         >
-                                                                            Ajouter au tableau
-                                                                        </Button>
-                                                                        {/* <EditIcon color="primary" />
-                                                                            <DeleteIcon color="warning" /> */}
+                                                                            <Check color="primary"/>
+                                                                        </IconButton>
+                                                                        <IconButton
+                                                                            type="button"
+                                                                            onClick={() => {
+                                                                                formikProps.setFieldValue('designation', '');
+                                                                                formikProps.setFieldValue('quantiteCommander', '');
+                                                                                formikProps.setFieldValue('quantiteExpedie', '');
+                                                                                formikProps.setFieldValue('observation', '');
+                                                                            }}
+                                                                            >
+                                                                            <Close />
+                                                                        </IconButton>
                                                                     </Stack>
                                                                 </TableCell>
                                                         </TableRow>

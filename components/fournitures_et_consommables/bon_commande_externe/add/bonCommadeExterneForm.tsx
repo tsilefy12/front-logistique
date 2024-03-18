@@ -21,7 +21,7 @@ import { cancelEdit } from "../../../../redux/features/vendor/vendorSlice";
 import {
   createBonCommandeExterne,
 } from "../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
-import { Delete } from "@mui/icons-material";
+import { CheckBox, Delete } from "@mui/icons-material";
 import { createArticleCommandeExterne } from "../../../../redux/features/bon_commande_externe/articleBCESlice";
 
 export default function BonCommandeExterneForm() {
@@ -280,8 +280,8 @@ export default function BonCommandeExterneForm() {
                                                             >
                                                                 <TableCell component="th" scope="row">{item.designation}</TableCell>
                                                                 <TableCell align="left">{item.caracteristique}</TableCell>
-                                                                <TableCell align="left">{item.pu}</TableCell>
-                                                                <TableCell align="left">{item.quantite} Ar</TableCell>
+                                                                <TableCell align="left">{item.pu}Ar</TableCell>
+                                                                <TableCell align="left">{item.quantite} </TableCell>
                                                                 <TableCell align="left">{item.valeur} Ar</TableCell>
                                                                 <TableCell
                                                                 align="center"
@@ -336,8 +336,8 @@ export default function BonCommandeExterneForm() {
                                                                     <FormControl fullWidth>
                                                                         <OSTextField
                                                                             id="designation"
-                                                                            label="Quantité"
-                                                                            name="quanttite"
+                                                                            label="PU"
+                                                                            name="pu"
                                                                             type="number"
                                                                         />
                                                                     </FormControl>
@@ -346,8 +346,8 @@ export default function BonCommandeExterneForm() {
                                                                     <FormControl fullWidth>
                                                                         <OSTextField
                                                                             id="designation"
-                                                                            label="PU"
-                                                                            name="pu"
+                                                                            label="Quantité"
+                                                                            name="quantite"
                                                                             type="number"
                                                                         />
                                                                     </FormControl>
@@ -367,7 +367,7 @@ export default function BonCommandeExterneForm() {
                                                                         alignItems="center"
                                                                         spacing={2}
                                                                     >
-                                                                        <Button
+                                                                        <IconButton
                                                                             type="button"
                                                                             onClick={() => {
                                                                                 const designation = formikProps.values.designation;
@@ -391,10 +391,19 @@ export default function BonCommandeExterneForm() {
                                                                                
                                                                             }}
                                                                         >
-                                                                            Ajouter au tableau
-                                                                        </Button>
-                                                                        {/* <EditIcon color="primary" />
-                                                                        <DeleteIcon color="warning" /> */}
+                                                                            <Check color="primary"/>
+                                                                        </IconButton>
+                                                                        <IconButton
+                                                                            type="button"
+                                                                            onClick={() => {
+                                                                                formikProps.setFieldValue('designation', '');
+                                                                                    formikProps.setFieldValue('caracteristique', '');
+                                                                                    formikProps.setFieldValue('pu', '');
+                                                                                    formikProps.setFieldValue('quantite', '')
+                                                                            }}
+                                                                            >
+                                                                            <Close />
+                                                                        </IconButton>
                                                                     </Stack>
                                                                 </TableCell>
                                                         </TableRow>

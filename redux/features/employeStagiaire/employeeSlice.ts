@@ -3,7 +3,7 @@ import { enqueueSnackbar } from "../notification/notificationSlice";
 import {
   EmployeInitialState,
 } from "./employeeSlice.interface";
-import axios from "axios";
+import { axios } from "../../../lib/axios";
 
 const initialState: EmployeInitialState = {
   employees: [],

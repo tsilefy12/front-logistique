@@ -36,7 +36,6 @@ const FormDetentionMateriel = () => {
     const { isEditing, holder } = useAppSelector((state) => state.holder);
     const { employees } = useAppSelector((state) => state.employe);
     const { interns } = useAppSelector((state) => state.stagiaire);
-    console.log(employees)
     const total = [...employees.map((i:any)=>{
         return {
         id : i.id, name: i.name +" "+ i.surname, type: "employe"

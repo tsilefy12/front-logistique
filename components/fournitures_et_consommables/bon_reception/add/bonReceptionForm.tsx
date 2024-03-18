@@ -244,7 +244,7 @@ export default function BonCommandeInterneForm() {
                                                                         alignItems="center"
                                                                         spacing={2}
                                                                     >
-                                                                        <Button
+                                                                        <IconButton
                                                                             type="button"
                                                                             onClick={() => {
                                                                                 const designation = formikProps.values.designation;
@@ -261,10 +261,19 @@ export default function BonCommandeInterneForm() {
                                                                                
                                                                             }}
                                                                         >
-                                                                            Ajouter au tableau
-                                                                        </Button>
-                                                                        {/* <EditIcon color="primary" />
-                                                                        <DeleteIcon color="warning" /> */}
+                                                                          <Check color="primary"/>
+                                                                        </IconButton>
+                                                                        <IconButton
+                                                                            type="button"
+                                                                            onClick={() => {
+                                                                                formikProps.setFieldValue('designation', '');
+                                                                                    formikProps.setFieldValue('caracteristique', '');
+                                                                                    formikProps.setFieldValue('pu', '');
+                                                                                    formikProps.setFieldValue('quantite', '')
+                                                                            }}
+                                                                            >
+                                                                            <Close />
+                                                                        </IconButton>
                                                                     </Stack>
                                                                 </TableCell>
                                                         </TableRow>

@@ -263,8 +263,8 @@ export default function BonCommandeInterneForm() {
                                                             >
                                                                 <TableCell component="th" scope="row">{item.designation}</TableCell>
                                                                 <TableCell align="left">{item.caracteristique}</TableCell>
-                                                                <TableCell align="left">{item.pu}</TableCell>
-                                                                <TableCell align="left">{item.quantite} Ar</TableCell>
+                                                                <TableCell align="left">{item.pu}  Ar</TableCell>
+                                                                <TableCell align="left">{item.quantite}</TableCell>
                                                                 <TableCell align="left">{item.valeur} Ar</TableCell>
                                                                 <TableCell
                                                                 align="center"
@@ -320,16 +320,6 @@ export default function BonCommandeInterneForm() {
                                                                 <TableCell align="left">
                                                                     <FormControl fullWidth>
                                                                         <OSTextField
-                                                                            id="designation"
-                                                                            label="Quantité"
-                                                                            name="quantite"
-                                                                            type="number"
-                                                                        />
-                                                                    </FormControl>
-                                                                </TableCell>
-                                                                <TableCell align="left">
-                                                                    <FormControl fullWidth>
-                                                                        <OSTextField
                                                                             id="pu"
                                                                             label="PU"
                                                                             name="pu"
@@ -339,7 +329,16 @@ export default function BonCommandeInterneForm() {
                                                                 </TableCell>
                                                                 <TableCell align="left">
                                                                     <FormControl fullWidth>
-                                                                        
+                                                                        <OSTextField
+                                                                            id="designation"
+                                                                            label="Quantité"
+                                                                            name="quantite"
+                                                                            type="number"
+                                                                        />
+                                                                    </FormControl>
+                                                                </TableCell>
+                                                                <TableCell align="left">
+                                                                    <FormControl fullWidth>
                                                                     </FormControl>
                                                                 </TableCell>
                                                                 <TableCell
@@ -352,7 +351,7 @@ export default function BonCommandeInterneForm() {
                                                                         alignItems="center"
                                                                         spacing={2}
                                                                     >
-                                                                        <Button
+                                                                        <IconButton
                                                                             type="button"
                                                                             onClick={() => {
                                                                                 const designation = formikProps.values.designation;
@@ -376,10 +375,19 @@ export default function BonCommandeInterneForm() {
                                                                                
                                                                             }}
                                                                         >
-                                                                            Ajouter au tableau
-                                                                        </Button>
-                                                                        {/* <EditIcon color="primary" />
-                                                                        <DeleteIcon color="warning" /> */}
+                                                                            <Check color="primary"/>
+                                                                        </IconButton>
+                                                                        <IconButton
+                                                                            type="button"
+                                                                            onClick={() => {
+                                                                                formikProps.setFieldValue('designation', '');
+                                                                                formikProps.setFieldValue('caracteristique', '');
+                                                                                formikProps.setFieldValue('pu', '');
+                                                                                formikProps.setFieldValue('quantite', '');
+                                                                            }}
+                                                                            >
+                                                                            <Close />
+                                                                        </IconButton>
                                                                     </Stack>
                                                                 </TableCell>
                                                         </TableRow>
