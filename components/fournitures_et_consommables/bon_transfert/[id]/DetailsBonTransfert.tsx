@@ -43,7 +43,7 @@ const DetailsBonTransfert = () => {
                 sx={{ mb: 2 }}
             >
                 <Stack flexDirection={"row"}>
-                    <Link href="/fournitures_et_consommables/bon_commande_intern">
+                    <Link href="/fournitures_et_consommables/bon_transfert">
                         <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
                             Retour
                         </Button>

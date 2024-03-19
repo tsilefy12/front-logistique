@@ -179,12 +179,6 @@ const menu = [
         name: "Type de produit (Fournisseur)",
         link: "/configurations/type_produit",
         icon: ""
-      },
-      {
-        id: 56, 
-        name: "Type de matériel (Transport)",
-        link: "/configurations/type_materiel_transport",
-        icon: ""
       }
     ],
   },

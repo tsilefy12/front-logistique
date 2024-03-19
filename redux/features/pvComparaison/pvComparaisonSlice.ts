@@ -76,13 +76,30 @@ export const deletePvComparaison = createAsyncThunk(
 );
 
 export const getPvComparaisons = createAsyncThunk(
-  "pvComparaison/getPvComparaison",
+  "pvComparaison/getPvComparaisons",
   async (data: { args?: any }, thunkAPI) => {
     try {
       const params = {
         args: JSON.stringify(data.args),
       };
       const response = await axios.get("/logistique/pv-de-comparaison", { params });
+      return response.data;
+    } catch (error: any) {
+      if (error.response) {
+        return thunkAPI.rejectWithValue(error);
+      }
+      throw error;
+    }
+  }
+);
+export const getPvComparaison = createAsyncThunk(
+  "fourniture_consommable/getPvComparaison",
+  async (data: { id: string , args?: any }, thunkAPI) => {
+    try {
+      const params = {
+        args: JSON.stringify(data.args),
+      };
+      const response = await axios.get(`/logistique/pv-de-comparaison/${data.id}`, { params });
       return response.data;
     } catch (error: any) {
       if (error.response) {
@@ -111,6 +128,17 @@ export const pvComparaisonSlice = createSlice({
             state.pvComparaisons = action.payload;
         },
         [getPvComparaisons.rejected.type]: (state, action) => {
+            state.loading = false;
+            state.error = action.error;
+        },
+        [getPvComparaison.pending.type]: (state) => {
+          state.loading = true;
+        },
+        [getPvComparaison.fulfilled.type]: (state, action) => {
+            state.loading = false;
+            state.pvComparaison= action.payload;
+        },
+        [getPvComparaison.rejected.type]: (state, action) => {
             state.loading = false;
             state.error = action.error;
         },

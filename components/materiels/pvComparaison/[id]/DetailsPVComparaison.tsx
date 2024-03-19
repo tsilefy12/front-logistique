@@ -1,9 +1,9 @@
 import {
-    Button,
-    Container,
-    Grid,
-    Stack,
-    Typography,
+  Button,
+  Container,
+  Grid,
+  Stack,
+  Typography,
 } from "@mui/material";
 import React, { useEffect } from "react";
 import Paper from "@mui/material/Paper";
@@ -13,29 +13,28 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
-import { getBonCommandeExterne } from "../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
-
-const DetailsBCE = () => {
+import { getPvComparaison } from "../../../../redux/features/pvComparaison/pvComparaisonSlice";
+const DetailsPvComparaison = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { id }: any = router.query;
-    const { bonCommandeExterne } = useAppSelector((state) => state.bonCommendeExterne);
+    const { pvComparaison } = useAppSelector((state) => state.pvComparaison);
 
     useEffect(() => {
-        getDetailsBCE();
+        getDetailsPVComparaison();
     }, [id]);
-  
-    const getDetailsBCE = () => {
-        dispatch(getBonCommandeExterne({ id,args:{
+
+    const getDetailsPVComparaison = () => {
+        dispatch(getPvComparaison({ id,args:{
         include:{
-                ArticleCommandeBce:true
+            TableComparaison:true
         }
         }}));
     };
 
     useEffect(()=> {
-        console.log(bonCommandeExterne)
-    },[bonCommandeExterne])
+        console.log(pvComparaison)
+    },[pvComparaison])
     return (
         <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
             <SectionNavigation
@@ -44,14 +43,14 @@ const DetailsBCE = () => {
                 sx={{ mb: 2 }}
             >
                 <Stack flexDirection={"row"}>
-                    <Link href="/fournitures_et_consommables/bon_commande_externe">
+                    <Link href="/materiels/pv_comparaison">
                         <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
                             Retour
                         </Button>
                     </Link>
                 </Stack>
                 <Typography variant="h4" color="GrayText">
-                    Details d'une bon de commande externe
+                    Details d'une bon de pv de comparaison d'offre
                 </Typography>
             </SectionNavigation>
             <DetailsContainer>
@@ -69,94 +68,99 @@ const DetailsBCE = () => {
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                        Réference
+                                            Reference
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                        {bonCommandeExterne.ref}
+                                            {pvComparaison.ref}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
                                 <Grid item xs={12} md={12}>
-                                <InfoItems direction="row" spacing={2}>
-                                    <Typography variant="body1" color="secondary">
-                                        Fournisseur
-                                    </Typography>
-                                    <Typography variant="body1" color="gray">
-                                    {bonCommandeExterne.fournisseur}
-                                    </Typography>
-                                </InfoItems>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Objet
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                        {pvComparaison.objet}
+                                        </Typography>
+                                    </InfoItems>
+                                    </Grid>
+                                    <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Materiel
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            {pvComparaison.materiel}
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
+                                
+                            </Grid>
+                            <Grid container spacing={4} my={1}>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                           Programme
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            {pvComparaison.programme}
+                                        </Typography>
+                                    </InfoItems>
+                                    </Grid>
+                                    <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Grant
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                        {pvComparaison.grant}
+                                        </Typography>
+                                    </InfoItems>
                                 </Grid>
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                            Condition de livraison
+                                            Ligne budgétaire
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                            {bonCommandeExterne.conditionLivraison}
+                                            {pvComparaison.ligneBudgetaire}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
                             </Grid>
                             <Grid container spacing={4} my={1}>
-                                    <Grid item xs={12} md={12}>
-                                        <InfoItems direction="row" spacing={2}>
-                                            <Typography variant="body1" color="secondary">
-                                                N° bon de commande interne
-                                            </Typography>
-                                            <Typography variant="body1" color="gray">
-                                            {bonCommandeExterne.bci}
-                                            </Typography>
-                                        </InfoItems>
-                                        </Grid>
-                                        <Grid item xs={12} md={12}>
-                                        <InfoItems direction="row" spacing={2}>
-                                            <Typography variant="body1" color="secondary">
-                                                Date commande 
-                                            </Typography>
-                                            <Typography variant="body1" color="gray">
-                                            <Moment format="DD/MM/YYYY">
-                                                {bonCommandeExterne.dateCommande}
-                                            </Moment>
-                                            </Typography>
-                                        </InfoItems>
-                                    </Grid>
-                                    <Grid item xs={12} md={12}>
-                                        <InfoItems direction="row" spacing={2}>
-                                            <Typography variant="body1" color="secondary">
-                                                Date de livraison
-                                            </Typography>
-                                            <Typography variant="body1" color="gray">
-                                            <Moment format="DD/MM/YYYY">
-                                                {bonCommandeExterne.dateLivraison}
-                                            </Moment>
-                                            </Typography>
-                                        </InfoItems>
-                                    </Grid>
-                            </Grid>
-                                <Grid container spacing={4} my={1}>
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                            Mode de paiement
+                                            Offre retenu
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                            {bonCommandeExterne.modePaiement}
+                                            {pvComparaison.offreRetenu}
                                         </Typography>
                                     </InfoItems>
                                     </Grid>
                                     <Grid item xs={12} md={12}>
-                                    <InfoItems direction="row" spacing={2}>
-                                        <Typography variant="body1" color="secondary">
-                                            Date de la commande
-                                        </Typography>
-                                        <Typography variant="body1" color="gray">
-                                            <Moment format="DD/MM/YYYY">
-                                                {bonCommandeExterne.dateCommande}
-                                            </Moment>
-                                        </Typography>
-                                    </InfoItems>
+                                        <InfoItems direction="row" spacing={2}>
+                                            <Typography variant="body1" color="secondary">
+                                                Justification
+                                            </Typography>
+                                            <Typography variant="body1" color="gray">
+                                                {pvComparaison.justification}
+                                            </Typography>
+                                        </InfoItems>
+                                    </Grid>
+                                    <Grid item xs={12} md={12}>
+                                        <InfoItems direction="row" spacing={2}>
+                                            <Typography variant="body1" color="secondary">
+                                                Argument
+                                            </Typography>
+                                            <Typography variant="body1" color="gray">
+                                                {pvComparaison.argument}
+                                            </Typography>
+                                        </InfoItems>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
                         </Stack>
                     </FormContainer>
                 </Box>
@@ -171,32 +175,30 @@ const DetailsBCE = () => {
                                 }}
                                 >
                                 <Typography variant="h6" id="tableTitle" component="div">
-                                    Liste des articles
+                                    Liste des fournisseurs
                                 </Typography>
                             </Stack>
                             <TableContainer component={Paper}>
                                 <Table sx={{ minWidth: 700 }} aria-label="simple table">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Designation</TableCell>
-                                            <TableCell align="left">Caractéristique</TableCell>
-                                            <TableCell align="left">PU</TableCell>
-                                            <TableCell align="left">Quantité</TableCell>
-                                            <TableCell align="left">Valeur</TableCell>
+                                            <TableCell>Fournisseur</TableCell>
+                                            <TableCell align="left">Mode de Paie</TableCell>
+                                            <TableCell align="left">Offres</TableCell>
+                                            <TableCell align="left">Désignation</TableCell>             
                                             <TableCell></TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {bonCommandeExterne.ArticleCommandeBce?.map((item:any , index:any) => (
+                                        {pvComparaison.TableComparaison?.map((item:any , index:any) => (
                                             <TableRow
                                                 key={index}
                                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                             >
-                                                <TableCell component="th" scope="row">{item.designation}</TableCell>
-                                                <TableCell align="left">{item.caracteristik}</TableCell>
-                                                <TableCell align="left">{item.pu}Ar</TableCell>
-                                                <TableCell align="left">{item.quantite} </TableCell>
-                                                <TableCell align="left">{item.valeur} Ar</TableCell>
+                                                <TableCell component="th" scope="row">{item.fournisseur}</TableCell>
+                                                <TableCell align="left">{item.modePaie}</TableCell>
+                                                <TableCell align="left">{item.offre}</TableCell>
+                                                <TableCell align="left">{item.designation} Ar</TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
@@ -208,17 +210,17 @@ const DetailsBCE = () => {
         </Container>
     );
 };
-  
-export default DetailsBCE;
+
+export default DetailsPvComparaison;
 
 export const InfoItems = styled(Stack)(({ theme }) => ({}));
 
 export const SectionNavigation = styled(Stack)(({ theme }) => ({}));
 
 const DetailsContainer = styled("div")(({ theme }) => ({
-padding: 30,
-border: "1px solid #E0E0E0",
-borderRadius: 20,
+  padding: 30,
+  border: "1px solid #E0E0E0",
+  borderRadius: 20,
 }));
 
 const FormContainer = styled(Stack)(({ theme }) => ({

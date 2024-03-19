@@ -55,23 +55,23 @@ export const createArticleCommandeExterne = createAsyncThunk(
 export const deleteArticleCommandeExterne = createAsyncThunk(
     "fourniture_consommable/deleteArticleCommandeExterne",
     async (data: { id: string }, thunkAPI) => {
-      try {
-        const response = await axios.delete(`/logistique/article-commande-bce/${data.id}`);
-        thunkAPI.dispatch(
-          enqueueSnackbar({
-            message: "Article BCE supprimé avec succès",
-            options: {
-              variant: "success",
-            },
-          })
-        );
-        return response.data;
-      } catch (error: any) {
-        if (error.response) {
-          return thunkAPI.rejectWithValue(error);
+        try {
+          const response = await axios.delete(`/logistique/article-commande-bce/${data.id}`);
+          thunkAPI.dispatch(
+            enqueueSnackbar({
+              message: "Article BCE supprimé avec succès",
+              options: {
+                variant: "success",
+              },
+            })
+          );
+          return response.data;
+        } catch (error: any) {
+          if (error.response) {
+            return thunkAPI.rejectWithValue(error);
+          }
+          throw error;
         }
-        throw error;
-      }
     }
 );
 

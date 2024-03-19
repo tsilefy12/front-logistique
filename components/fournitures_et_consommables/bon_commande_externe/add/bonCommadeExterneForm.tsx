@@ -79,7 +79,7 @@ export default function BonCommandeExterneForm() {
                 dispatch(createArticleCommandeExterne(newData));
             });
         }
-            route.push("/fournitures_et_consommables/bon_commende_externe");
+            route.push("/fournitures_et_consommables/bon_commande_externe/");
         } catch (error) {
             console.log("error", error);
         }

@@ -56,6 +56,11 @@ const MaterielTransportForm = () => {
     }
   };
 
+  const type = [
+    { id:"Moto", name:"Moto"},
+    { id:"Voiture", name:"Voiture"},
+    { id:"Pirogue", name:"Pirogue"},
+  ]
   return (
     <Container maxWidth="xl" sx={{ pb: 5 }}>
       <Formik
@@ -142,10 +147,13 @@ const MaterielTransportForm = () => {
                   name="registration"
                 />
                 <FormControl fullWidth>
-                  <OSTextField
+                  <OSSelectField
                     id="outlined-basic"
                     label="Type"
                     variant="outlined"
+                    options={type}
+                    dataKey="name"
+                    valueKey="id"
                     name="type"
                   />
                 </FormControl>

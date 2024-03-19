@@ -3,9 +3,9 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import BackOfficeLayout from "../../../../../layouts/backOffice";
 import useBasePath from "../../../../../hooks/useBasePath";
-import DetailsConsumable from "../../../../../components/Order-Supply-And-Consumable/[id]/DetailsOrderSupplyAndConsumable";
+import DetailsPVComparaison from "../../../../../components/materiels/pvComparaison/[id]/DetailsPVComparaison";
 
-const CommandePage: NextPage = () => {
+const DetailsPVComparaisonPage: NextPage = () => {
   const basePath = useBasePath();
   return (
     <BackOfficeLayout>
@@ -15,10 +15,10 @@ const CommandePage: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <DetailsConsumable />
+        <DetailsPVComparaison />
       </Container>
     </BackOfficeLayout>
   );
 };
 
-export default CommandePage;
+export default DetailsPVComparaisonPage;
