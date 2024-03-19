@@ -15,7 +15,6 @@ import { styled } from "@mui/material";
 import * as Yup from "yup";
 import OSSelectField from "../../../../shared/select/OSSelectField";
 import { useAppSelector ,useAppDispatch} from "../../../../../hooks/reduxHooks";
-import useFetchEquipment from "../../../informatique/hooks/useFetchEquipment";
 import { useRouter } from "next/router";
 import { Form, Formik } from "formik";
 import { getEquipments } from "../../../../../redux/features/equipment";
@@ -75,7 +74,7 @@ const ListDetentionMateriel = () => {
                                 <OSSelectField
                                     id="contracType"
                                     name="codeOptim"
-                                    label="Choisir un code d'optim"
+                                    label="Choisir un code"
                                     options={equipments}
                                     dataKey="numOptim"
                                     onChange={handleChange()}
@@ -90,7 +89,7 @@ const ListDetentionMateriel = () => {
                 <Table sx={{ minWidth: 700 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                        <TableCell>Code optim</TableCell>
+                        <TableCell>Code</TableCell>
                         <TableCell align="left">Désignation</TableCell>
                         <TableCell align="left">Date acquisition</TableCell>
                         <TableCell align="left">Valeur acquisition</TableCell>
