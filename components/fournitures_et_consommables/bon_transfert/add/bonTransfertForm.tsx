@@ -89,7 +89,7 @@ export default function BonTransfertForm() {
                         {
                             expediteur:"",
                             destination: "",
-                            dateExp:"",
+                            dateExp: new Date(),
                             expeditionVia: "",
                             departement:"",
                             grant: "",

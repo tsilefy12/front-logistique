@@ -99,7 +99,7 @@ export const getBonCommandeExterne = createAsyncThunk(
       const params = {
         args: JSON.stringify(data.args),
       };
-      const response = await axios.get(`/logistique//logistique/bon-de-commande-externe/${data.id}`, { params });
+      const response = await axios.get(`/logistique/logistique/bon-de-commande-externe/${data.id}`, { params });
       return response.data;
     } catch (error: any) {
       if (error.response) {

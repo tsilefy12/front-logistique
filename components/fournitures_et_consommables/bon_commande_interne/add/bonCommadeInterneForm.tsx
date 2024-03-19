@@ -117,8 +117,8 @@ export default function BonCommandeInterneForm() {
                         numBonCommande:Yup.string().required("Champ obligatoire"),
                     })}
                     onSubmit={(value: any, action: any) => {
-                    handleSubmit(value);
-                    action.resetForm();
+                        handleSubmit(value);
+                        action.resetForm();
                     }}
                 >
                     {(formikProps) => {
@@ -141,12 +141,12 @@ export default function BonCommandeInterneForm() {
                                         </Button>
                                         </Link>
                                         <Button
-                                        variant="contained"
-                                        color="primary"
-                                        size="small"
-                                        startIcon={<Check />}
-                                        sx={{ marginInline: 3 }}
-                                        type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                            size="small"
+                                            startIcon={<Check />}
+                                            sx={{ marginInline: 3 }}
+                                            type="submit"
                                         >
                                         Enregistrer
                                         </Button>

@@ -30,7 +30,7 @@ export default function BonCommandeExterneForm() {
     const dispatch = useAppDispatch();
     const route = useRouter();
 
-    const { isEditing,bonCommandeExterne } = useAppSelector((state) => state.bonCommendeExterne);
+    const { isEditing } = useAppSelector((state) => state.bonCommendeExterne)
     const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
     const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
 
@@ -64,7 +64,9 @@ export default function BonCommandeExterneForm() {
                 conditionLivraison: values.conditionLivraison,
                 dateLivraison: values.dateLivraison,
             }
+            console.log(newDataBCE)
             const response = await dispatch(createBonCommandeExterne(newDataBCE));
+            console.log(response)
             valuesArticle.forEach((element:any, index:any) => {
                 const newData = {
                     designation: element.designation,
@@ -79,7 +81,7 @@ export default function BonCommandeExterneForm() {
         }
             route.push("/fournitures_et_consommables/bon_commende_externe");
         } catch (error) {
-        console.log("error", error);
+            console.log("error", error);
         }
     };
 
@@ -88,33 +90,27 @@ export default function BonCommandeExterneForm() {
             <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
                 <Formik
                     enableReinitialize
-                    initialValues={
-                        {
-                            ref: "",
-                            dateCommande: "",
-                            fournisseur: "",
-                            bci: "",
-                            modePaiement: "",
-                            conditionLivraison: "",
-                            dateLivraison: "",
-                            designation :"",
-                            caracteristique:"",
-                            pu:0,
-                            quantite:0,
-                        }
-                    }
+                    initialValues={{
+                        ref: "",
+                        dateCommande: new Date(),
+                        fournisseur: "",
+                        bci: "",
+                        modePaiement: "",
+                        conditionLivraison: "",
+                        dateLivraison: new Date(),
+                        designation :"",
+                        caracteristique:"",
+                        pu:0,
+                        quantite:0,
+                    }}
                     validationSchema={Yup.object({
                         ref: Yup.string().required("Champ obligatoire"),
                         bci: Yup.string().required("Champ obligatoire"),
                         fournisseur: Yup.string().required("Champ obligatoire"),
-                        modePaiement: Yup.string().required("Champ obligatoire"),
-                        dateCommande: Yup.date().required(
-                            "Veuillez choisir la date de livraison"
-                        ),
+                        modePaiement : Yup.string().required("Champ obligatoire"),
+                        dateCommande : Yup.date().required("Champ obligatoire"),
                         conditionLivraison: Yup.string().required("Champ obligatoire"),
-                        dateLivraison: Yup.date().required(
-                            "Veuillez choisir la date de livraison"
-                        )
+                        dateLivraison: Yup.date().required("Champ obligatoire"),
                     })}
                     onSubmit={(value: any, action: any) => {
                         handleSubmit(value);
@@ -148,7 +144,7 @@ export default function BonCommandeExterneForm() {
                                             sx={{ marginInline: 3 }}
                                             type="submit"
                                         >
-                                        Enregistrer
+                                            Enregistrer
                                         </Button>
                                         <Button
                                             variant="text"
@@ -161,7 +157,7 @@ export default function BonCommandeExterneForm() {
                                                 dispatch(cancelEdit());
                                         }}
                                         >
-                                        Annuler
+                                            Annuler
                                         </Button>
                                     </Stack>
                                     <Typography variant="h4">
@@ -241,7 +237,6 @@ export default function BonCommandeExterneForm() {
                                                 id="outlined-basic"
                                                 variant="outlined"
                                                 label="Date de commande"
-                                                // value={formikProps.values.dateCommande}
                                                 onChange={(value: any) =>
                                                     formikProps.setFieldValue("dateCommande", value)
                                                 }
