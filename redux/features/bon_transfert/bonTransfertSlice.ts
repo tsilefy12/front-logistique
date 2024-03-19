@@ -92,6 +92,23 @@ export const getBonTransferts = createAsyncThunk(
     }
   }
 );
+export const getBonTransfert = createAsyncThunk(
+  "fourniture_consommable/getBonTransfert",
+  async (data: { id: string , args?: any }, thunkAPI) => {
+    try {
+      const params = {
+        args: JSON.stringify(data.args),
+      };
+      const response = await axios.get(`/logistique/bon-de-transfert/${data.id}`, { params });
+      return response.data;
+    } catch (error: any) {
+      if (error.response) {
+        return thunkAPI.rejectWithValue(error);
+      }
+      throw error;
+    }
+  }
+);
 
 export const bonTransfertSlice = createSlice({
     name: "bonTransfert",
@@ -111,6 +128,17 @@ export const bonTransfertSlice = createSlice({
             state.bonTransferts = action.payload;
         },
         [getBonTransferts.rejected.type]: (state, action) => {
+            state.loading = false;
+            state.error = action.error;
+        },
+        [getBonTransfert.pending.type]: (state) => {
+          state.loading = true;
+        },
+        [getBonTransfert.fulfilled.type]: (state, action) => {
+            state.loading = false;
+            state.bonTransfert = action.payload;
+        },
+        [getBonTransfert.rejected.type]: (state, action) => {
             state.loading = false;
             state.error = action.error;
         },

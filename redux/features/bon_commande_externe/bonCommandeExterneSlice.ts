@@ -92,6 +92,23 @@ export const getBonCommandeExternes = createAsyncThunk(
     }
   }
 );
+export const getBonCommandeExterne = createAsyncThunk(
+  "fourniture_consommable/getBonCommandeExterne",
+  async (data: { id: string , args?: any }, thunkAPI) => {
+    try {
+      const params = {
+        args: JSON.stringify(data.args),
+      };
+      const response = await axios.get(`/logistique//logistique/bon-de-commande-externe/${data.id}`, { params });
+      return response.data;
+    } catch (error: any) {
+      if (error.response) {
+        return thunkAPI.rejectWithValue(error);
+      }
+      throw error;
+    }
+  }
+);
 
 export const bonCommandeExterneSlice = createSlice({
     name: "employe",
@@ -111,6 +128,17 @@ export const bonCommandeExterneSlice = createSlice({
             state.bonCommandeExternes = action.payload;
         },
         [getBonCommandeExternes.rejected.type]: (state, action) => {
+            state.loading = false;
+            state.error = action.error;
+        },
+        [getBonCommandeExterne.pending.type]: (state) => {
+          state.loading = true;
+        },
+        [getBonCommandeExterne.fulfilled.type]: (state, action) => {
+            state.loading = false;
+            state.bonCommandeExterne = action.payload;
+        },
+        [getBonCommandeExterne.rejected.type]: (state, action) => {
             state.loading = false;
             state.error = action.error;
         },

@@ -5,6 +5,7 @@ export interface PvComparaisonFournisseurItem {
     offre?: number;
     designation?: string;
     pvComparaisonOffreId?:string;
+    TableComparaison?:any
 }
   
 export interface PvComparaisonFournisseurInitialState {

@@ -5,7 +5,7 @@ import BackOfficeLayout from "../../../../../layouts/backOffice";
 import useBasePath from "../../../../../hooks/useBasePath";
 import DetailsBCI from "../../../../../components/fournitures_et_consommables/bon_commande_interne/[id]/DetailsBCI";
 
-const CommandePage: NextPage = () => {
+const DetailsBCIPage: NextPage = () => {
   const basePath = useBasePath();
   return (
     <BackOfficeLayout>
@@ -21,4 +21,4 @@ const CommandePage: NextPage = () => {
   );
 };
 
-export default CommandePage;
+export default DetailsBCIPage;

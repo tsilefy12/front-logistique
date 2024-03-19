@@ -56,7 +56,11 @@ export default function BonReceptionList() {
     }, [router.query]);
 
     const handleClickEdit = async (id: any) => {
-        router.push(`/fournitures_et_consommables/commande/${id}/edit`);
+        router.push(`/fournitures_et_consommables/bon_reception/${id}/edit`);
+    };
+
+    const handleClickDetails = async (id: any) => {
+        router.push(`/fournitures_et_consommables/bon_reception/${id}/details`);
     };
 
     const handleClickDelete = async (id: any) => {
@@ -181,18 +185,18 @@ export default function BonReceptionList() {
                                         direction="row"
                                         justifyContent="right"
                                         >
-                                        <Link
-                                            href={`/fournitures_et_consommables/commande/${row.id}/details`}
-                                        >
-                                            <IconButton
+                                        
+                                        <IconButton
                                             color="accent"
                                             aria-label="Details"
                                             component="span"
                                             size="small"
+                                            onClick={() => {
+                                                handleClickDetails(row.id);
+                                            }}
                                             >
                                             <Visibility />
-                                            </IconButton>
-                                        </Link>
+                                        </IconButton>
                                         <IconButton
                                             color="primary"
                                             aria-label="Modifier"

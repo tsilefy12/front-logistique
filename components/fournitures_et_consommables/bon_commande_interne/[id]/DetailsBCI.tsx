@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { getBonCommandeInterne } from "../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice";
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
-const DetailsConsumable = () => {
+const DetailsBCI = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { id }: any = router.query;
@@ -204,7 +204,7 @@ const DetailsConsumable = () => {
     );
 };
 
-export default DetailsConsumable;
+export default DetailsBCI;
 
 export const InfoItems = styled(Stack)(({ theme }) => ({}));
 

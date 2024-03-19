@@ -2,6 +2,7 @@ export interface bonReceptionItem {
     id?: string;
     bce?: string;
     dateReception?: string;
+    ProduitRecu?: any;
 }
   
 export interface bonReceptionInitialState {

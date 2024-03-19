@@ -204,7 +204,7 @@ export default function BonCommandeExterneForm() {
                                                 label="BCI"
                                                 name="bci"
                                                 options={bonCommandeInternes}
-                                                dataKey={["name"]}
+                                                dataKey={["numBon"]}
                                                 valueKey="id"
                                                 type="text"
                                             />

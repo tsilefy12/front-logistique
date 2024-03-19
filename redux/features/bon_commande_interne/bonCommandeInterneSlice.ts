@@ -112,12 +112,12 @@ export const getBonCommandeInterne = createAsyncThunk(
 );
 
 export const bonCommandeInterneSlice = createSlice({
-    name: "employe",
+    name: "bonCommandeInterne",
     initialState: initialState,
     reducers: {
         cancelEdit: (state) => {
         state.isEditing = false;
-        state.employe = {};
+        state.bonCommandeInterne = {};
         },
     },
     extraReducers: {

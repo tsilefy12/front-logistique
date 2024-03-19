@@ -6,6 +6,7 @@ export interface bonTransfertItem {
     expeditionVia?: string;
     departement?:string;
     grant?: string;
+    ArticleTransfert?: any;
 }
   
 export interface bonTransfertInitialState {

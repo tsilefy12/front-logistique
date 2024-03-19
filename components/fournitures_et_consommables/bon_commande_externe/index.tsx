@@ -85,54 +85,13 @@ export default function BonCommandeExterneList() {
         setPage(0);
     };
 
+    const handleClickDetails = async (id: any) => {
+        router.push(`/fournitures_et_consommables/bon_commande_externe/${id}/details`);
+    };
+
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - bonCommandeExternes.length) : 0;
-
-    const getColorsStatus = (status: string | undefined) => {
-        switch (status) {
-        case "PENDING":
-            return "primary";
-            break;
-        case "APPROVEDBYMANAGER":
-            return "success";
-            break;
-        case "APPROVED":
-            return "info";
-            break;
-        case "REJECTED":
-            return "error";
-            break;
-        case "CANCELLED":
-            return "warning";
-            break;
-        default:
-            return "primary";
-            break;
-        }
-    };
-    const getTextStatus = (status: string | undefined) => {
-        switch (status) {
-        case "PENDING":
-            return "En_attent";
-            break;
-        case "APPROVEDBYMANAGER":
-            return "Approuvé_Par_Directeur";
-            break;
-        case "APPROVED":
-            return "Approuvé";
-            break;
-        case "REJECTED":
-            return "Rejeté";
-            break;
-        case "CANCELLED":
-            return "Annulé";
-            break;
-        default:
-            return "primary";
-            break;
-        }
-    };
 
     return (
         <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
@@ -186,18 +145,17 @@ export default function BonCommandeExterneList() {
                                         direction="row"
                                         justifyContent="right"
                                         >
-                                        <Link
-                                            href={`/fournitures_et_consommables/bon_commende_externe/${row.id}/details`}
+                                        <IconButton
+                                            color="accent"
+                                            aria-label="Details"
+                                            component="span"
+                                            size="small"
+                                            onClick={() => {
+                                                handleClickDetails(row.id);
+                                            }}
                                         >
-                                            <IconButton
-                                                color="accent"
-                                                aria-label="Details"
-                                                component="span"
-                                                size="small"
-                                            >
                                             <Visibility />
-                                            </IconButton>
-                                        </Link>
+                                        </IconButton>
                                         <IconButton
                                             color="warning"
                                             aria-label="Supprimer"

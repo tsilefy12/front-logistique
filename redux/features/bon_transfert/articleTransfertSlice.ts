@@ -93,6 +93,8 @@ export const getArticleTransferts = createAsyncThunk(
   }
 );
 
+
+
 export const ArticleTransfertSlice = createSlice({
     name: "articleTransfert",
     initialState: initialState,

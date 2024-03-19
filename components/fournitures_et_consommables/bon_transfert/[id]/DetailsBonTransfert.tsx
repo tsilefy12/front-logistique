@@ -1,9 +1,9 @@
 import {
-    Button,
-    Container,
-    Grid,
-    Stack,
-    Typography,
+  Button,
+  Container,
+  Grid,
+  Stack,
+  Typography,
 } from "@mui/material";
 import React, { useEffect } from "react";
 import Paper from "@mui/material/Paper";
@@ -13,29 +13,28 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
-import { getBonReception } from "../../../../redux/features/bon_reception/bonReceptionSlice";
-
-const DetailsBonReception = () => {
+import { getBonTransfert } from "../../../../redux/features/bon_transfert/bonTransfertSlice";
+const DetailsBonTransfert = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { id }: any = router.query;
-    const { bonReception } = useAppSelector((state) => state.bonReceptions);
+    const { bonTransfert } = useAppSelector((state) => state.bonTransfert);
 
     useEffect(() => {
-        getDetailsBonReception();
+        getDetailsBonTransfert();
     }, [id]);
-  
-    const getDetailsBonReception = () => {
-        dispatch(getBonReception({ id,args:{
-            include:{
-                ProduitRecu:true
-            }
+
+    const getDetailsBonTransfert = () => {
+        dispatch(getBonTransfert({ id,args:{
+        include:{
+            ArticleTransfert:true
+        }
         }}));
     };
 
     useEffect(()=> {
-        console.log(bonReception)
-    },[bonReception])
+        console.log(bonTransfert)
+    },[bonTransfert])
     return (
         <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
             <SectionNavigation
@@ -51,7 +50,7 @@ const DetailsBonReception = () => {
                     </Link>
                 </Stack>
                 <Typography variant="h4" color="GrayText">
-                    Details d'une bon de reception
+                    Details d'une bon de transfert
                 </Typography>
             </SectionNavigation>
             <DetailsContainer>
@@ -65,30 +64,71 @@ const DetailsBonReception = () => {
                                 alignItems: "center",
                             }}
                             >
-                            <Grid container spacing={4} my={1}>
+                        <Grid container spacing={4} my={1}>
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                        Bon de commande externe
+                                            Expediteur
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                            {bonReception.bce}
+                                        {bonTransfert.expediteur}
+                                        </Typography>
+                                    </InfoItems>
+                                    </Grid>
+                                    <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Destination
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                        {bonTransfert.destination}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
                                 <Grid item xs={12} md={12}>
-                                <InfoItems direction="row" spacing={2}>
-                                    <Typography variant="body1" color="secondary">
-                                        Date de reception
-                                    </Typography>
-                                    <Typography variant="body1" color="gray">
-                                        <Moment format="DD/MM/YYYY">
-                                            {bonReception.dateReception}
-                                        </Moment>
-                                    </Typography>
-                                </InfoItems>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Date expediée
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            <Moment format="DD/MM/YYYY">
+                                                {bonTransfert.dateExp}
+                                            </Moment>
+                                        </Typography>
+                                    </InfoItems>
                                 </Grid>
-                                
+                            </Grid>
+                            <Grid container spacing={4} my={1}>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            ExpeditionVia
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                        {bonTransfert.expeditionVia}
+                                        </Typography>
+                                    </InfoItems>
+                                    </Grid>
+                                    <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Departement
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                        {bonTransfert.departement}
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Grant
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            {bonTransfert.grant}
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
                             </Grid>
                         </Stack>
                     </FormContainer>
@@ -112,17 +152,21 @@ const DetailsBonReception = () => {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>Designation</TableCell>
-                                            <TableCell align="left">Quantité</TableCell>
+                                            <TableCell align="left">Quantité commander</TableCell>
+                                            <TableCell align="left">Quantité expedié</TableCell>
+                                            <TableCell align="left">Observation</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {bonReception.ProduitRecu?.map((item:any , index:any) => (
+                                        {bonTransfert.ArticleTransfert?.map((item:any , index:any) => (
                                             <TableRow
                                                 key={index}
                                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                             >
                                                 <TableCell component="th" scope="row">{item.designation}</TableCell>
-                                                <TableCell align="left">{item.quantite}</TableCell>
+                                                <TableCell align="left">{item.quantiteCommander}</TableCell>
+                                                <TableCell align="left">{item.quantiteExpedie}</TableCell>
+                                                <TableCell align="left">{item.observation}</TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
@@ -134,17 +178,17 @@ const DetailsBonReception = () => {
         </Container>
     );
 };
-  
-export default DetailsBonReception;
+
+export default DetailsBonTransfert;
 
 export const InfoItems = styled(Stack)(({ theme }) => ({}));
 
 export const SectionNavigation = styled(Stack)(({ theme }) => ({}));
 
 const DetailsContainer = styled("div")(({ theme }) => ({
-    padding: 30,
-    border: "1px solid #E0E0E0",
-    borderRadius: 20,
+  padding: 30,
+  border: "1px solid #E0E0E0",
+  borderRadius: 20,
 }));
 
 const FormContainer = styled(Stack)(({ theme }) => ({

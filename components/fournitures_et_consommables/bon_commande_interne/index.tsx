@@ -56,8 +56,12 @@ export default function BonCommandeInterneList() {
     }, [router.query]);
 
     const handleClickEdit = async (id: any) => {
-        router.push(`/fournitures_et_consommables/commande/${id}/edit`);
+        router.push(`/fournitures_et_consommables/bon_commande_intern/${id}/edit`);
     };
+    const handleClickDetails = async (id: any) => {
+        router.push(`/fournitures_et_consommables/bon_commande_intern/${id}/details`);
+    };
+
 
     const handleClickDelete = async (id: any) => {
         confirm({
@@ -186,18 +190,18 @@ export default function BonCommandeInterneList() {
                                         direction="row"
                                         justifyContent="right"
                                         >
-                                        <Link
-                                            href={`/fournitures_et_consommables/bon_commande_intern/${row.id}/details`}
-                                        >
-                                            <IconButton
+                                       
+                                        <IconButton
                                             color="accent"
                                             aria-label="Details"
                                             component="span"
                                             size="small"
-                                            >
+                                            onClick={() => {
+                                                handleClickDetails(row.id);
+                                            }}
+                                        >
                                             <Visibility />
-                                            </IconButton>
-                                        </Link>
+                                        </IconButton>
                                         <IconButton
                                             color="primary"
                                             aria-label="Modifier"
