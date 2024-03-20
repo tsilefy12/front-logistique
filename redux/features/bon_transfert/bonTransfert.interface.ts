@@ -7,6 +7,7 @@ export interface bonTransfertItem {
     departement?:string;
     grant?: string;
     ArticleTransfert?: any;
+    type?:any;
 }
   
 export interface bonTransfertInitialState {

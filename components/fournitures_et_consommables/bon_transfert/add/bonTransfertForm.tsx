@@ -30,7 +30,7 @@ export default function BonTransfertForm() {
     const dispatch = useAppDispatch();
     const route = useRouter();
 
-    const { isEditing,bonTransfert } = useAppSelector((state) => state.bonTransfert);
+    const { isEditing } = useAppSelector((state) => state.bonTransfert);
     const { employees } = useAppSelector((state) => state.employe);
     const { interns } = useAppSelector((state) => state.stagiaire);
     const total = [...employees.map((i:any)=>{
@@ -39,7 +39,7 @@ export default function BonTransfertForm() {
         }
     }),...interns.map((i:any)=>{
         return {
-        id : i.id, name: i.name +" "+ i.surname, type: "intern"
+            id : i.id, name: i.name +" "+ i.surname, type: "intern"
         }
     })]
     const fetchUtilsData = () => {
@@ -63,7 +63,7 @@ export default function BonTransfertForm() {
                 expeditionVia: values.expeditionVia,
                 departement:values.departement,
                 grant: values.grant,
-                type:""
+                type:"intern"
             }
             const response = await dispatch(createBonTransfert(newDataBT));
             valuesArticle.forEach((element:any, index:any) => {
