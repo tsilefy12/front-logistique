@@ -24,7 +24,7 @@ import {
   import { cancelEdit } from "../../../redux/features/equipment/equipmentSlice";
   
   const AddInventaireForm = () => {
-    const dispatch = useAppDispatch();
+    const dispatch:any = useAppDispatch();
     const etat = [
       { name: "GOOD", french: "Bon etat" },
       { name: "BAD", french: "Mauvais" },
