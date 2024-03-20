@@ -306,6 +306,15 @@ const AddArticleForm = () => {
                     <Stack direction="row" spacing={3} >
                         <OSSelectField
                             id="outlined-basic"
+                            name="grant"
+                            label="Grant"
+                            options={GrantList}
+                            dataKey={["name"]}
+                            valueKey="id"
+                            type="text"
+                        />
+                        <OSSelectField
+                            id="outlined-basic"
                             name="ligneBudgetaire"
                             label="Ligne budgétaire"
                             options={LigneBudgetaireList}
@@ -318,15 +327,6 @@ const AddArticleForm = () => {
                             name="categorieMateriel"
                             label="Catégorie Matériel"
                             options={categorie}
-                            dataKey={["name"]}
-                            valueKey="id"
-                            type="text"
-                        />
-                        <OSSelectField
-                            id="outlined-basic"
-                            name="grant"
-                            label="Grant"
-                            options={GrantList}
                             dataKey={["name"]}
                             valueKey="id"
                             type="text"

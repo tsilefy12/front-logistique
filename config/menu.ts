@@ -5,24 +5,24 @@ const menu = [
     link: "/",
     icon: "inventory_2",
     items: [
-      {
-        id: 11,
-        name: "Commande",
-        link: "/materiels/commande",
-        icon: "",
-      },
-      {
-        id: 12,
-        name: "Mes commandes",
-        link: "/materiels/mes_commandes",
-        icon: "",
-      },
-      {
-        id: 13,
-        name: "Bon de commande",
-        link: "/materiels/bon_de_commande",
-        icon: "",
-      },
+      // {
+      //   id: 11,
+      //   name: "Commande",
+      //   link: "/materiels/commande",
+      //   icon: "",
+      // },
+      // {
+      //   id: 12,
+      //   name: "Mes commandes",
+      //   link: "/materiels/mes_commandes",
+      //   icon: "",
+      // },
+      // {
+      //   id: 13,
+      //   name: "Bon de commande",
+      //   link: "/materiels/bon_de_commande",
+      //   icon: "",
+      // },
       {
         id: 14,
         name: "Liste des materiels",

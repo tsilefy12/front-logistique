@@ -63,6 +63,7 @@ export default function BonTransfertForm() {
                 expeditionVia: values.expeditionVia,
                 departement:values.departement,
                 grant: values.grant,
+                type:""
             }
             const response = await dispatch(createBonTransfert(newDataBT));
             valuesArticle.forEach((element:any, index:any) => {
@@ -71,7 +72,7 @@ export default function BonTransfertForm() {
                     quantiteCommande: element.quantiteCommander,
                     quantiteExpedie:element.quantiteExpedie,
                     observation: element.observation,
-                    bonDeTransfertId: response.payload.id
+                    bonDeTransfertId: response.payload.id,
                 };
                 dispatch(createArticleTransfert(newData));
             });

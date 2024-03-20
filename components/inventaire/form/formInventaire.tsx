@@ -54,7 +54,7 @@ import {
                     dateInventaire: new Date(),
                     datePreciation: new Date(),
                     etatMateriel: "",
-                    duree_vie: 0,
+                    dureDeVie: 0,
                     valeurInventaire: 0,
                 }}
                 validationSchema={Yup.object({
