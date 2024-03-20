@@ -58,7 +58,7 @@ export default function BonTransfertForm() {
         try {
             const newDataBT = {
                 expediteur: values.expediteur,
-                destination: values.destination,
+                designation: values.destination,
                 dateExp:values.dateExp,
                 expeditionVia: values.expeditionVia,
                 departement:values.departement,
@@ -68,15 +68,15 @@ export default function BonTransfertForm() {
             valuesArticle.forEach((element:any, index:any) => {
                 const newData = {
                     designation: element.designation,
-                    quantiteCommander: element.quantiteCommander,
+                    quantiteCommande: element.quantiteCommander,
                     quantiteExpedie:element.quantiteExpedie,
                     observation: element.observation,
-                    bonTransfertId: response.payload.id
+                    bonDeTransfertId: response.payload.id
                 };
                 dispatch(createArticleTransfert(newData));
             });
         
-            route.push("/fournitures_et_consommables/bon_commande_intern");
+            route.push("/fournitures_et_consommables/bon_transfert");
         } catch (error) {
         console.log("error", error);
         }
@@ -341,7 +341,7 @@ export default function BonTransfertForm() {
                                                                         id="quantiteCommander"
                                                                         label="Quantité commander"
                                                                         name="quantiteCommander"
-                                                                        type="text"
+                                                                        type="number"
                                                                     />
                                                                 </FormControl>
                                                             </TableCell>

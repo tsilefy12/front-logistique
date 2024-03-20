@@ -1,7 +1,7 @@
 export interface bonTransfertItem {
     id?: string;
     expediteur?: string;
-    destination?: string;
+    designation?: string;
     dateExp?:Date;
     expeditionVia?: string;
     departement?:string;

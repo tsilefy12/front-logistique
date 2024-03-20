@@ -1,10 +1,10 @@
 export interface articleTransfertItem {
     id?: string;
     designation?: string;
-    quantiteCommander?: number;
-    quantiteExpedie?: string;
+    quantiteCommande?: number;
+    quantiteExpedie?: number;
     observation?: string;
-    bonTransfertId?: string;
+    bonDeTransfertId?: string;
 }
   
 export interface articleTransfertInitialState {
