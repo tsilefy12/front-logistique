@@ -72,7 +72,7 @@ const ListInfo = () => {
     };
     const handleClickNewInventaire = async (id: any) => {
         await dispatch(editEquipment({ id }));
-        router.push(`/inventaire/${id}`);
+        router.push(`/materiels/inventaire/${id}`);
     };
     //   const name = async (id: any) => {
     //   console.log(getEmployee({ id }));
@@ -139,16 +139,18 @@ const ListInfo = () => {
                                 direction="row"
                                 justifyContent="center"
                             >
-                                <IconButton
-                                    color="info"
-                                    aria-label="Add"
-                                    component="span"
-                                    onClick={() => {
+                                <Button
+                                  variant="outlined"
+                                  size="small"
+                                  startIcon={<Add />}
+                                  color="info"
+                                  sx={{ mr: 1 }}
+                                  onClick={() => {
                                     handleClickNewInventaire(item.id);
                                     }}
                                 >
-                                    <Add/>
-                                </IconButton>
+                                  Gérer inventaire
+                                </Button>
                                 <Link
                                 href={`/materiels/informatiques/${item.id}/detail`}
                                 >

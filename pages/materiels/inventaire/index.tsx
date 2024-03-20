@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
-import BackOfficeLayout from "../../layouts/backOffice";
-import InventaireList from "../../components/inventaire";
+import BackOfficeLayout from "../../../layouts/backOffice";
+import InventaireList from "../../../components/materiels/inventaire";
 
 const Inventaire = () => {
   return (

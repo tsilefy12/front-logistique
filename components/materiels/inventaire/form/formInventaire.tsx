@@ -12,16 +12,16 @@ import {
   import ArrowBack from "@mui/icons-material/ArrowBack";
   import { Check, Close, Save } from "@mui/icons-material";
   import { Form, Formik } from "formik";
-  import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
+  import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
   import * as Yup from "yup";
-  import OSSelectField from "../../shared/select/OSSelectField";
-  import OSTextField from "../../shared/input copy/OSTextField";
-  import OSDatePicker from "../../shared/date/OSDatePicker";
+  import OSSelectField from "../../../shared/select/OSSelectField";
+  import OSTextField from "../../../shared/input copy/OSTextField";
+  import OSDatePicker from "../../../shared/date/OSDatePicker";
   import {
     createInventaire,
-  } from "../../../redux/features/inventaire";
+  } from "../../../../redux/features/inventaire";
   import { useRouter } from "next/router";
-  import { cancelEdit } from "../../../redux/features/equipment/equipmentSlice";
+  import { cancelEdit } from "../../../../redux/features/equipment/equipmentSlice";
   
   const AddInventaireForm = () => {
     const dispatch:any = useAppDispatch();
@@ -35,15 +35,17 @@ import {
         (state) => state.equipment
     );
    
+    const dureAmortissement = isEditing ? equipment?.dureAmortissement : null;
+    const acquisitionValue = isEditing ? equipment?.acquisitionValue : null;
     const handleSubmit = async (values: any) => {
         try {
             if (isEditing) {
                 await dispatch(createInventaire(values));
-                route.push("/inventaire");
+                route.push("/materiels/inventaire");
             }
         } catch (error) {
-        console.log("error", error);
-      }
+            console.log("error", error);
+        }
     };
     return (
         <Container maxWidth="xl" sx={{ pb: 5 }}>
@@ -156,6 +158,13 @@ import {
                         <OSTextField
                             name="valeurInventaire"
                             fullWidth
+                            value = { 
+                                dureAmortissement && acquisitionValue ? (
+                                    (formikProps.values.dureDeVie > dureAmortissement ) ? (
+                                        null
+                                    ):( acquisitionValue - (formikProps.values.dureDeVie * acquisitionValue / dureAmortissement))
+                                ):0
+                            }
                             id="outlined-basic"
                             label="Valeur inventaire"
                             variant="outlined"

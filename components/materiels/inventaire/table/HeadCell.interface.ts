@@ -1,5 +1,5 @@
-import { Order } from "../../../config/table.config";
-import { InventaireItem } from "../../../redux/features/inventaire/inventaire.interface";
+import { Order } from "../../../../config/table.config";
+import { InventaireItem } from "../../../../redux/features/inventaire/inventaire.interface";
 
 export interface HeadCell {
   disablePadding: boolean;

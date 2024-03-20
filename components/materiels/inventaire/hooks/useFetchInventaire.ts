@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { useAppDispatch } from "../../../hooks/reduxHooks";
-import { getInventaireListe } from "../../../redux/features/inventaire";
+import { useAppDispatch } from "../../../../hooks/reduxHooks";
+import { getInventaireListe } from "../../../../redux/features/inventaire";
 
 const useFetchInventaireList = () => {
   const router = useRouter();

@@ -14,14 +14,14 @@ import Box from "@mui/material/Box";
 import TableRow from "@mui/material/TableRow";
 // import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import {
   labelRowsPerPage,
   defaultLabelDisplayedRows,
-} from "../../config/table.config";
+} from "../../../config/table.config";
 import InventaireTableToolbar from "./table/InventaireTableToolbar";
 import InventaireTableHeader from "./table/InventaireHeader";
-import { InventaireItem } from "../../redux/features/inventaire/inventaire.interface";
+import { InventaireItem } from "../../../redux/features/inventaire/inventaire.interface";
 import useFetchInventaireList from "./hooks/useFetchInventaire";
 import Moment from "react-moment";
 import { Badge, RadioGroup, FormControlLabel,Radio } from "@mui/material";
