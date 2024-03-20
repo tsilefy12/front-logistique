@@ -19,12 +19,12 @@ import OSTextField from "../../../shared/input copy/OSTextField";
 import OSDatePicker from "../../../shared/date/OSDatePicker";
 import {
   createEquipment,
+  getEmployees,
   updateEquipment,
 } from "../../../../redux/features/equipment";
 import { useRouter } from "next/router";
 import { cancelEdit } from "../../../../redux/features/equipment/equipmentSlice";
 import { getFournisseurList } from "../../../../redux/features/fournisseur/useCase/getFournisseurListe";
-import { getEmployees } from "../../../../redux/features/equipment";
 import { getTypeEquipmentList } from "../../../../redux/features/typeEquipment";
 
 const AddArticleForm = () => {
@@ -62,6 +62,10 @@ const AddArticleForm = () => {
         {id :"test2",name:"test2"},
         {id :"test3",name:"test3"}
     ]
+    const categorie = [
+        {id :"Informatique",name:"Informatique"},
+        {id :"Eléctronique",name:"Eléctronique"}
+    ]
     const handleSubmit = async (values: any) => {
       values.acquisitionDate = new Date(values?.acquisitionDate).toISOString();
       try {
@@ -90,13 +94,13 @@ const AddArticleForm = () => {
                     ? equipment?.additionalInformation
                     : "",
                 acquisitionDate: isEditing ? equipment?.acquisitionDate : new Date(),
-                acquisitionValue: isEditing ? equipment?.acquisitionValue : "",
+                acquisitionValue: isEditing ? equipment?.acquisitionValue : 0,
                 designation: isEditing ? equipment?.designation : "",
                 status: isEditing ? equipment?.status : "",
                 ownerId: isEditing ? equipment?.ownerId : "",
                 typeEquipmentId: isEditing ? equipment?.typeEquipmentId: "",
-                dureAmortissement: isEditing ? equipment?.dureAmortissement: "",
-                dateAmortissement: isEditing ? equipment?.dateAmortissement: "",
+                dureAmortissement: isEditing ? equipment?.dureAmortissement: 0,
+                dateAmortissement: isEditing ? equipment?.dateAmortissement: new Date(),
                 fournisseur: isEditing ? equipment?.fournisseur: "",
                 categorieMateriel: isEditing ? equipment?.categorieMateriel: "",
                 grant: isEditing ? equipment?.grant: "",
@@ -222,7 +226,7 @@ const AddArticleForm = () => {
                             label="Employé utilisateur"
                             name="ownerId"
                             options={employees}
-                            dataKey={["name","surname"]}
+                            dataKey={["id","name","surname"]}
                             valueKey="id"
                             type="text"
                         />
@@ -251,7 +255,7 @@ const AddArticleForm = () => {
                     <OSDatePicker
                         fullWidth
                         label="Date d'acquisition"
-                        value={formikProps.values.acquisitionDate}
+                        name="acquisitionDate"
                         onChange={(value: any) =>
                             formikProps.setFieldValue("acquisitionDate", value)
                         }
@@ -286,6 +290,7 @@ const AddArticleForm = () => {
                             id="outlined-basic"
                             label="Durée d'amortissement"
                             variant="outlined"
+                            type="number"
                         />
                         <OSDatePicker
                             name="dateAmortissement"
@@ -293,6 +298,9 @@ const AddArticleForm = () => {
                             id="outlined-basic"
                             label="Date d'amortissement"
                             variant="outlined"
+                            onChange={(value: any) =>
+                                formikProps.setFieldValue("dateAmortissement", value)
+                            }
                         />
                     </Stack>
                     <Stack direction="row" spacing={3} >
@@ -309,7 +317,7 @@ const AddArticleForm = () => {
                             id="outlined-basic"
                             name="categorieMateriel"
                             label="Catégorie Matériel"
-                            options={LigneBudgetaireList}
+                            options={categorie}
                             dataKey={["name"]}
                             valueKey="id"
                             type="text"
@@ -356,7 +364,7 @@ const NavigationContainer = styled(Stack)(({ theme }) => ({
 }));
 
 const SectionNavigation = styled(Stack)(({ theme }) => ({
-  flexDirection: "row",
-  justifyContent: "space-between",
-  paddingBottom: "5px",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingBottom: "5px",
 }));

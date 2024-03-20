@@ -64,9 +64,9 @@ export default function BonCommandeExterneForm() {
                 conditionLivraison: values.conditionLivraison,
                 dateLivraison: values.dateLivraison,
             }
-            console.log(newDataBCE)
+            
             const response = await dispatch(createBonCommandeExterne(newDataBCE));
-            console.log(response)
+            console.log(valuesArticle)
             valuesArticle.forEach((element:any, index:any) => {
                 const newData = {
                     designation: element.designation,
@@ -74,7 +74,7 @@ export default function BonCommandeExterneForm() {
                     quantite:element.quantite,
                     pu: element.pu,
                     valueArticle: element.valeur,
-                    bondeCommandeInterneId: response.payload.id
+                    bonDeCommandeExterneId: response.payload.id
                 };
                 dispatch(createArticleCommandeExterne(newData));
             });
@@ -200,7 +200,7 @@ export default function BonCommandeExterneForm() {
                                                 label="BCI"
                                                 name="bci"
                                                 options={bonCommandeInternes}
-                                                dataKey={["numBon"]}
+                                                dataKey="numBon"
                                                 valueKey="id"
                                                 type="text"
                                             />

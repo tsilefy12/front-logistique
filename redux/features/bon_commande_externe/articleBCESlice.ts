@@ -32,23 +32,30 @@ export const editArticleCommandeExterne = createAsyncThunk(
 export const createArticleCommandeExterne = createAsyncThunk(
     "fourniture_consommable/createArticleCommandeExterne",
     async (data: ArticleBCEItem, thunkAPI) => {
-      try {
-        const response = await axios.post("/logistique/article-commande-bce", data);
-        thunkAPI.dispatch(
-          enqueueSnackbar({
-            message: "Article BCE créé avec succès",
-            options: {
-              variant: "success",
-            },
-          })
-        );
-        return response.data;
-      } catch (error: any) {
-        if (error.response) {
-          return thunkAPI.rejectWithValue(error);
+        try {
+            console.log(data);
+            const response = await axios.post("/logistique/article-commande-bce", data);
+            thunkAPI.dispatch(
+                enqueueSnackbar({
+                    message: "Article BCE créer avec succès",
+                    options: { variant: "success" },
+                })
+            );
+            return response.data;
+        } catch (error: any) {
+            if (error.response) {
+                console.log(error.response)
+                thunkAPI.dispatch(
+                    enqueueSnackbar({
+                        message: "Equipment not created",
+                        options: { variant: "error" },
+                    })
+                );
+                return thunkAPI.rejectWithValue(error);
+                
+            }
+            return error;
         }
-        throw error;
-      }
     }
 );
   

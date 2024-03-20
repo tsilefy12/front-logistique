@@ -9,6 +9,7 @@ export interface BonCommandeItem {
     numBonCommande?: string;
     montantTotal?: number;
     ArticleCommande?:[];
+    owner?:any;
 }
   
 export interface BonCommandeInternInitialState {

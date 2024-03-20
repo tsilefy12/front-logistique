@@ -5,7 +5,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Moment from "react-moment";
 import Link from "next/link";
@@ -14,11 +14,13 @@ import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { getBonCommandeInterne } from "../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice";
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
+import PDFButton from "./pdfBCI";
 const DetailsBCI = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { id }: any = router.query;
     const { bonCommandeInterne } = useAppSelector((state) => state.bonCommandeInterne);
+    const [pdfData, setPdfData] = useState<any>();
 
     useEffect(() => {
         getDetailsBCI();
@@ -26,10 +28,11 @@ const DetailsBCI = () => {
 
     const getDetailsBCI = () => {
         dispatch(getBonCommandeInterne({ id,args:{
-        include:{
-            ArticleCommande:true
-        }
+            include:{
+                ArticleCommande:true
+            }
         }}));
+        setPdfData(bonCommandeInterne)
     };
 
     useEffect(()=> {
@@ -48,6 +51,7 @@ const DetailsBCI = () => {
                             Retour
                         </Button>
                     </Link>
+                    <PDFButton data={pdfData} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">
                     Details d'une bon de commande interne

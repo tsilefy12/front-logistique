@@ -11,11 +11,11 @@ export const getEquipments = createAsyncThunk(
       const response = await axios.get("/logistique/equipment", {
         params: { args: params },
       });
-      console.log(response)
       let newData: any = [];
       if (response.data.length > 0) {
         await Promise.all(
           response.data.map(async (cons: EquipmentItem) => {
+            
             const employeeId = cons.ownerId;
             const detailEmployee = await thunkAPI
               .dispatch(getEmployee({ employeeId }))

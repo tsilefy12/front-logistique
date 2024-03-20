@@ -74,17 +74,12 @@ export default function BonCommandeInterneForm() {
                         }
                     }
                     validationSchema={Yup.object({
-                        programme: Yup.string().required("Champ obligatoire"),
-                        grant: Yup.string().required("Champ obligatoire"),
-                        ligneBudgetaire: Yup.string().required("Champ obligatoire"),
-                        demandeur: Yup.string().required("Champ obligatoire"),
-                        numBon: Yup.string().required("Champ obligatoire"),
-                        dateBonCommande: Yup.date().required("Champ obligatoire"),
-                        numBonCommande:Yup.string().required("Champ obligatoire"),
+                        bce: Yup.string().required("Champ obligatoire"),
+                        dateReception: Yup.date().required("Champ obligatoire"),
                     })}
                     onSubmit={(value: any, action: any) => {
-                    handleSubmit(value);
-                    action.resetForm();
+                        handleSubmit(value);
+                        action.resetForm();
                     }}
                 >
                     {(formikProps) => {
@@ -94,17 +89,17 @@ export default function BonCommandeInterneForm() {
                                     <SectionNavigation>
                                     <Stack flexDirection={"row"}>
                                         <Link href="/fournitures_et_consommables/bon_reception">
-                                        <Button
-                                            color="info"
-                                            variant="text"
-                                            startIcon={<ArrowBack />}
-                                            onClick={() => {
-                                            formikProps.resetForm();
-                                            dispatch(cancelEdit());
-                                            }}
-                                        >
-                                            Retour
-                                        </Button>
+                                            <Button
+                                                color="info"
+                                                variant="text"
+                                                startIcon={<ArrowBack />}
+                                                onClick={() => {
+                                                formikProps.resetForm();
+                                                dispatch(cancelEdit());
+                                                }}
+                                            >
+                                                Retour
+                                            </Button>
                                         </Link>
                                         <Button
                                         variant="contained"
@@ -155,7 +150,7 @@ export default function BonCommandeInterneForm() {
                                             label="BCe"
                                             name="bce"
                                             options={bonCommandeExternes}
-                                            dataKey={["name"]}
+                                            dataKey={["ref"]}
                                             valueKey="id"
                                             type="text"
                                         />

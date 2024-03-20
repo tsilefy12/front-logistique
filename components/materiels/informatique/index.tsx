@@ -36,39 +36,6 @@ import {
 import { useConfirm } from "material-ui-confirm";
 import { axios } from "../../../lib/axios";
 const ListInfo = () => {
-    function getColorStatus(etat: string) {
-        switch (etat) {
-        case "GOOD":
-            return "info";
-            break;
-        case "BAD":
-            return "warning";
-            break;
-        case "BROKEN":
-            return "error";
-            break;
-
-        default:
-            break;
-        }
-    }
-    function getText(etat: string) {
-        switch (etat) {
-        case "GOOD":
-            return "Bon_état";
-            break;
-        case "BAD":
-            return "mauvais";
-            break;
-        case "BROKEN":
-            return "Inutilisable";
-            break;
-
-        default:
-            break;
-        }
-    }
-
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const router = useRouter();
@@ -136,14 +103,17 @@ const ListInfo = () => {
     // }, [])
     return (
         <Container maxWidth="xl">
-        <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-            <Link href="informatiques/creer">
-            <Button variant="contained" size="small" startIcon={<Add />}>
-                Creer
-            </Button>
+        <NavigationContainer>
+            <SectionNavigation>
+            <Link href={"/materiels/informatiques/creer"}>
+                <Button variant="contained" startIcon={<Add />} size="small">
+                    Ajouter
+                </Button>
             </Link>
             <Typography variant="h4">Liste des matériels</Typography>
-        </SectionNavigation>
+            </SectionNavigation>
+            {/* <Divider /> */}
+        </NavigationContainer>
         <SectionTable>
             <Box sx={{ width: "100%" }}>
             <Paper sx={{ width: "100%", mb: 2 }}>
@@ -160,7 +130,7 @@ const ListInfo = () => {
                         equipments.map((item: any, index: any) => (
                         <TableBody key={index}>
                             <TableCell align="left">{item.numOptim}</TableCell>
-                            <TableCell align="left">{item.typeEquipmentId}</TableCell>
+                            <TableCell align="left">{item.type?.type}</TableCell>
                             <TableCell align="left">{item.owner?.name+" "+item.owner?.surname}</TableCell>
                             <TableCell align="left">{item.designation}</TableCell>
                             <TableCell align="left">{item.status}</TableCell>
@@ -247,5 +217,16 @@ const ListInfo = () => {
 export default ListInfo;
 
 export const BtnActionContainer = styled(Stack)(({ theme }) => ({}));
-export const SectionNavigation = styled(Stack)(({ theme }) => ({}));
 const SectionTable = styled("div")(({ theme }) => ({}));
+const SectionNavigation = styled(Stack)(({ theme }) => ({
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingBottom: "5px",
+}));
+
+const NavigationContainer = styled(Stack)(({ theme }) => ({
+    flexDirection: "column",
+    marginBottom: "16px",
+    flex: 1,
+    width: "100%",
+}));

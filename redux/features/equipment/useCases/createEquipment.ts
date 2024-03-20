@@ -26,6 +26,7 @@ export const createEquipment = createAsyncThunk(
             return response.data;
         } catch (error: any) {
             if (error.response) {
+                console.log(error.response)
                 thunkAPI.dispatch(
                     enqueueSnackbar({
                         message: "Equipment not created",

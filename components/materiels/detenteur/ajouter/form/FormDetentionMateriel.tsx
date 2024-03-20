@@ -6,6 +6,12 @@ import {
   Stack,
   Divider,
   Box,
+  TableContainer,
+  Table,
+  TableHead,
+  TableCell,
+  TableBody,
+  TableRow,
 } from "@mui/material";
 import Link from "next/link";
 import React, { useEffect } from "react";
@@ -13,11 +19,13 @@ import ArrowBack from "@mui/icons-material/ArrowBack";
 import { Check, Close, Save } from "@mui/icons-material";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
+import Paper from "@mui/material/Paper";
 import {
   useAppDispatch,
   useAppSelector,
 } from "../../../../../hooks/reduxHooks";
-import useFetchDetenteurListe from "../../hooks/useFetchDetenteurListe";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   createHolder,
   updateHolder,
@@ -29,6 +37,8 @@ import OSSelectField from "../../../../shared/select/OSSelectField";
 import ListDetentionMateriel from "../table/ListDetentionMateriel";
 import { getEmployees } from "../../../../../redux/features/employeStagiaire/employeeSlice";
 import { getInterns } from "../../../../../redux/features/employeStagiaire/stagiaireSlice";
+import { getEquipments } from "../../../../../redux/features/equipment";
+import { getEquipment } from "../../../../../redux/features/equipment/useCases/getEquipment";
 
 const FormDetentionMateriel = () => {
     const router = useRouter();
@@ -45,7 +55,24 @@ const FormDetentionMateriel = () => {
         id : i.id, name: i.name +" "+ i.surname, type: "intern"
         }
     })]
+    const { equipments,equipment} = useAppSelector((state) => state.equipment);
+    
+    const valuesMateriel:any = []
+    const handleChange =  async (id: any) => {
+        dispatch(getEquipment({ id }));
+        console.log(equipment)
+        const newVal = {
+            numOptim :equipment.numOptim,
+            designation:equipment.designation,
+            acquisitionValue:equipment.acquisitionValue,
+            acquisitionDate:equipment.acquisitionDate
+        }
+        valuesMateriel.push(newVal)
+    };
+    const handleSubmint = async (values: any) => {
+    };
     const fetchUtilsData = () => {
+        dispatch(getEquipments({}));
         dispatch(getEmployees({}));
         dispatch(getInterns({}));
     };
@@ -53,6 +80,7 @@ const FormDetentionMateriel = () => {
     useEffect(() => {
         fetchUtilsData();
     }, []);
+   
 
     const handleSubmit = async (values: any) => {
         try {
@@ -205,7 +233,74 @@ const FormDetentionMateriel = () => {
             }}
         </Formik>
         <Box>
-            <ListDetentionMateriel />
+            <MyTableContainer>
+                <Stack
+                    direction="row"
+                    sx={{
+                        flex: "1 1 100%",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                    }}
+                    >
+                    <Typography variant="h6" id="tableTitle" component="div">
+                        Matériel
+                    </Typography>
+                    <Stack direction="row" spacing={2}>
+                        <OSSelectField
+                            id="contracType"
+                            name="codeOptim"
+                            label="Choisir un code"
+                            options={equipments}
+                            dataKey="numOptim"
+                            onChange={(value:any,action:any)=>{
+                                handleChange(value)
+                            }}
+                            sx={{ width: "100%" }}
+                            valueKey="id"
+                        />
+                    </Stack>
+                </Stack>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 700 }} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Code</TableCell>
+                                <TableCell align="left">Désignation</TableCell>
+                                <TableCell align="left">Date acquisition</TableCell>
+                                <TableCell align="left">Valeur acquisition</TableCell>
+                                <TableCell></TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {valuesMateriel.map((row:any) => (
+                                <TableRow
+                                    key={row.id}
+                                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                >
+                                    <TableCell component="th" scope="row">{row.numOptim}</TableCell>
+                                    <TableCell align="left">{row.designation}</TableCell>
+                                    <TableCell align="left">{row.dateAcquisation}</TableCell>
+                                    <TableCell align="left">{row.valueAcquisition} Ar</TableCell>
+                                    <TableCell
+                                    align="center"
+                                    sx={{ width: 150, background: "#F5F5F5" }}
+                                    >
+                                    <Stack
+                                        direction="row"
+                                        justifyContent="center"
+                                        alignItems="center"
+                                        spacing={2}
+                                    >
+                                        <EditIcon color="primary" />
+                                        <DeleteIcon color="warning" />
+                                    </Stack>
+                                    </TableCell>
+                                </TableRow>
+                            ))} 
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </MyTableContainer>
         </Box>
         </Container>
     );
@@ -239,3 +334,12 @@ const SectionNavigation = styled(Stack)(({ theme }) => ({
   justifyContent: "space-between",
   paddingBottom: "5px",
 }));
+
+const MyTableContainer = styled(Stack)(({ theme }) => ({
+    padding: 30,
+    borderRadius: 20,
+    background: "#fff",
+    width: "100%",
+    marginBottom: theme.spacing(10),
+}));
+  

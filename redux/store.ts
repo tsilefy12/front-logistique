@@ -40,6 +40,7 @@ import { bonReceptionSlice } from "./features/bon_reception/bonReceptionSlice";
 import { ArticleTransfertSlice } from "./features/bon_transfert/articleTransfertSlice";
 import { produitRecuSlice } from "./features/bon_reception/produitRecuSlice";
 import { bonTransfertSlice } from "./features/bon_transfert/bonTransfertSlice";
+import { ArticleCommandeExterneSlice } from "./features/bon_commande_externe/articleBCESlice";
 
 export const store = configureStore({
   reducer: {
@@ -84,7 +85,8 @@ export const store = configureStore({
     bonReceptions : bonReceptionSlice.reducer,
     articleTransfert: ArticleTransfertSlice.reducer,
     produiReçu: produitRecuSlice.reducer,
-    bonTransfert:bonTransfertSlice.reducer
+    bonTransfert:bonTransfertSlice.reducer,
+    articleCommandeBce: ArticleCommandeExterneSlice.reducer
   },
 });
 

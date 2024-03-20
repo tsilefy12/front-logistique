@@ -16,7 +16,7 @@ export interface EquipmentItem {
   fournisseur?: string;
   categorieMateriel?: string;
   grant?: string;
-  ligneBudgetaire:string;
+  ligneBudgetaire?:string;
 }
 
 export interface EquipmentInitialState {

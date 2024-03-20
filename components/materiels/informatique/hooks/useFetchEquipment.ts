@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
+import { useAppDispatch } from "../../../../hooks/reduxHooks";
 import { getEquipments } from "../../../../redux/features/equipment";
 
 const useFetchEquipment = () => {

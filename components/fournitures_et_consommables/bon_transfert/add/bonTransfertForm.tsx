@@ -46,6 +46,7 @@ export default function BonTransfertForm() {
         dispatch(getEmployees({}));
         dispatch(getInterns({}));
     };
+
     const grantList = [
         {id : "test1",name : "TEST1"},
         {id : "test2",name : "TEST2"},
@@ -80,6 +81,9 @@ export default function BonTransfertForm() {
         console.log("error", error);
         }
     };
+    useEffect(() => {
+        fetchUtilsData();
+    }, []);
     return (
         <>
             <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>

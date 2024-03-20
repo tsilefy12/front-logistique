@@ -5,6 +5,7 @@ import { axios } from "../../../lib/axios";
 import {
      BonCommandeInternInitialState, BonCommandeItem
 } from "./bonCommandeInterne.interface";
+import { getEmployee } from "../equipment";
 
 const initialState: BonCommandeInternInitialState = {
     bonCommandeInternes: [],
@@ -83,7 +84,35 @@ export const getBonCommandeInternes = createAsyncThunk(
         args: JSON.stringify(data.args),
       };
       const response = await axios.get("/logistique/bon-de-commande-interne", { params });
-      return response.data;
+      let newData: any = [];
+      if (response.data.length > 0) {
+        await Promise.all(
+          response.data.map(async (cons: BonCommandeItem) => {
+            const employeeId = cons.demandeur;
+            const detailEmployee = await thunkAPI
+              .dispatch(getEmployee({ employeeId }))
+              .unwrap();
+              const oneCons = {
+                id: cons.id,
+                dateBonCommande: cons.dateBonCommande,
+                numBon: cons.numBon,
+                numBonCommande: cons.numBonCommande,
+                programme: cons.programme,
+                montantTotal: cons.montantTotal,
+                grant: cons.grant,
+                ligneBudgetaire: cons.ligneBudgetaire,
+                ArticleCommande: cons.ArticleCommande,
+                demandeur: cons.demandeur,
+                owner: detailEmployee,
+              };
+              newData.push(oneCons);
+          })
+        );
+        return newData;
+      } else {
+        return response.data;
+      }
+    return newData;
     } catch (error: any) {
       if (error.response) {
         return thunkAPI.rejectWithValue(error);
