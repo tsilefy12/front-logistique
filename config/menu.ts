@@ -46,7 +46,31 @@ const menu = [
         name: "Pv de Comparaison",
         link: "/materiels/pv_comparaison",
         icon: "",
-      }
+      },
+      {
+        id: 18,
+        name: "Bon de commande interne (BCI)",
+        link: "/fournitures_et_consommables/bon_commande_intern",
+        icon: "",
+      },
+      {
+        id: 19,
+        name: "Bon de Commende Externe (BCE)",
+        link: "/fournitures_et_consommables/bon_commande_externe",
+        icon: "",
+      },
+      {
+        id: 111,
+        name: "Bon de reception",
+        link: "/fournitures_et_consommables/bon_reception",
+        icon: "",
+      },
+      {
+        id: 112,
+        name: "Bon de transfert",
+        link: "/fournitures_et_consommables/bon_transfert",
+        icon: "",
+      },
     ],
   },
   {
@@ -63,30 +87,6 @@ const menu = [
       },
       {
         id: 22,
-        name: "Bon de commande interne (BCI)",
-        link: "/fournitures_et_consommables/bon_commande_intern",
-        icon: "",
-      },
-      {
-        id: 23,
-        name: "Bon de Commende Externe (BCE)",
-        link: "/fournitures_et_consommables/bon_commande_externe",
-        icon: "",
-      },
-      {
-        id: 24,
-        name: "Bon de reception",
-        link: "/fournitures_et_consommables/bon_reception",
-        icon: "",
-      },
-      {
-        id: 25,
-        name: "Bon de transfert",
-        link: "/fournitures_et_consommables/bon_transfert",
-        icon: "",
-      },
-      {
-        id: 26,
         name: "Entre et Sortie",
         link: "/fournitures_et_consommables/entre_et_sortie",
         icon: "",
