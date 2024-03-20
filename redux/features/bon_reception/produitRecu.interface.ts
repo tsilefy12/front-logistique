@@ -2,7 +2,7 @@ export interface produitRecuItem {
     id?: string;
     designation?: string;
     quantite?: string;
-    bonReceptionId?: string;
+    bonDeReceptionId?: string;
 }
   
 export interface produitRecuInitialState {

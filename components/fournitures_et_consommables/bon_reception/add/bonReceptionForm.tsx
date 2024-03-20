@@ -50,7 +50,7 @@ export default function BonCommandeInterneForm() {
                 const newData = {
                     designation: element.designation,
                     quantite:element.quantite,
-                    bonReceptionId: response.payload.id
+                    bonDeReceptionId: response.payload.id
                 };
                 dispatch(createproduitRecu(newData));
             });
@@ -186,7 +186,6 @@ export default function BonCommandeInterneForm() {
                                                         <TableRow>
                                                             <TableCell>Designation</TableCell>
                                                             <TableCell align="left">Quantité</TableCell>
-                                                            <TableCell></TableCell>
                                                         </TableRow>
                                                     </TableHead>
                                                     <TableBody>

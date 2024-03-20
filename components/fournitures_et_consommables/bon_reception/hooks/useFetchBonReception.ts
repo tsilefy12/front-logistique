@@ -11,6 +11,11 @@ const useFetchBonReception = () => {
 
     return async () => {
         let args: any = {};
+        // let args: any = {
+        //     include: {
+        //       type: true,
+        //     },
+        //   };
         if (router.query.search) {
             args.where = {};
         }

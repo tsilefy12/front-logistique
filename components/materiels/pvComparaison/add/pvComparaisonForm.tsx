@@ -376,7 +376,7 @@ export default function PvComparaisonForm() {
                                                                             id="outlined-basic"
                                                                             label="Fournisseur"
                                                                             name="fournisseur"
-                                                                            options={fournisseurList.length >0 ? fournisseurList :  [{ id: "", name: "Rien à aficher" }]}
+                                                                            options={fournisseurList}
                                                                             dataKey={["name"]}
                                                                             valueKey="id"
                                                                             type="text"
@@ -447,10 +447,10 @@ export default function PvComparaisonForm() {
                                                                         <IconButton
                                                                             type="button"
                                                                             onClick={() => {
+                                                                                formikProps.setFieldValue('fournisseur', '');
+                                                                                formikProps.setFieldValue('offre', '');
+                                                                                formikProps.setFieldValue('modePaie', '');
                                                                                 formikProps.setFieldValue('designation', '');
-                                                                                formikProps.setFieldValue('caracteristique', '');
-                                                                                formikProps.setFieldValue('pu', '');
-                                                                                formikProps.setFieldValue('quantite', '');
                                                                             }}
                                                                             >
                                                                             <Close />
@@ -488,9 +488,9 @@ export default function PvComparaisonForm() {
                                                 id="outlined-basic"
                                                 label="Offres Retenu"
                                                 name="offreRetenu"
-                                                options={offre}
-                                                dataKey={["name"]}
-                                                valueKey="id"
+                                                options={valuesArticle}
+                                                dataKey={["fournisseur"]}
+                                                valueKey="fournisseur"
                                                 type="text"
                                             />
                                         </FormControl>
