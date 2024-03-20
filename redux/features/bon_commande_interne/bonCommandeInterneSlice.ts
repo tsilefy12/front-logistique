@@ -56,6 +56,7 @@ export const createBonCommandeInterne = createAsyncThunk(
 export const deleteBonCommandeInterne = createAsyncThunk(
     "fourniture_consommable/deleteBonCommandeInterne",
     async (data: { id: string }, thunkAPI) => {
+      console.log("data.id" + data.id)
       try {
         const response = await axios.delete(`/logistique/bon-de-commande-interne/${data.id}`);
         thunkAPI.dispatch(
@@ -91,21 +92,22 @@ export const getBonCommandeInternes = createAsyncThunk(
             const employeeId = cons.demandeur;
             const detailEmployee = await thunkAPI
               .dispatch(getEmployee({ employeeId }))
-              .unwrap();
-              const oneCons = {
-                id: cons.id,
-                dateBonCommande: cons.dateBonCommande,
-                numBon: cons.numBon,
-                numBonCommande: cons.numBonCommande,
-                programme: cons.programme,
-                montantTotal: cons.montantTotal,
-                grant: cons.grant,
-                ligneBudgetaire: cons.ligneBudgetaire,
-                ArticleCommande: cons.ArticleCommande,
-                demandeur: cons.demandeur,
-                owner: detailEmployee,
-              };
-              newData.push(oneCons);
+                if(detailEmployee){
+                  const oneCons = {
+                    id: cons.id,
+                    dateBonCommande: cons.dateBonCommande,
+                    numBon: cons.numBon,
+                    numBonCommande: cons.numBonCommande,
+                    programme: cons.programme,
+                    montantTotal: cons.montantTotal,
+                    grant: cons.grant,
+                    ligneBudgetaire: cons.ligneBudgetaire,
+                    ArticleCommande: cons.ArticleCommande,
+                    demandeur: cons.demandeur,
+                    owner: detailEmployee.payload.id ? detailEmployee.payload :{ id:employeeId, name:"Employée n'existe plus",surname:""},
+                  };
+                  newData.push(oneCons);
+                }
           })
         );
         return newData;

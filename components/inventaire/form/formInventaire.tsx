@@ -50,7 +50,7 @@ import {
             <Formik
                 enableReinitialize
                 initialValues={{
-                    equipmentId:isEditing? equipment?.id : "",
+                    equipmentId: isEditing? equipment?.id : "",
                     dateInventaire: new Date(),
                     datePreciation: new Date(),
                     etatMateriel: "",

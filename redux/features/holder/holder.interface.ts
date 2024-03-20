@@ -6,6 +6,7 @@ export interface HolderItem {
   firstName?: string;
   matricule?: string;
   function?: string;
+  numOption?:string;
 }
 
 export interface HolderInitialState {

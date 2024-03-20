@@ -32,15 +32,12 @@ import { deleteBonCommandeInterne} from "../../../redux/features/bon_commande_in
 import BonCommandeInterneTableToolbar from "./table/BonCommandeInterneTableToolbar";
 import BonCommandeInterneTableHeader from "./table/BonCommandeInterneTableHeader";
 import Moment from "react-moment";
-import { Badge } from "@mui/material";
 
 export default function BonCommandeInterneList() {
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    // const { suplyAndConsumable } = useAppSelector(
-    //   (state) => state.suplyAndConsumable
-    // );
+
     const router = useRouter();
 
     const confirm = useConfirm();
@@ -49,7 +46,9 @@ export default function BonCommandeInterneList() {
 
     const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
 
-    const fetchBonCommandeInterne= useFetchBonCommandeInterne();
+    console.log(bonCommandeInternes)
+
+    const fetchBonCommandeInterne = useFetchBonCommandeInterne();
 
     React.useEffect(() => {
         fetchBonCommandeInterne();
@@ -64,19 +63,21 @@ export default function BonCommandeInterneList() {
 
 
     const handleClickDelete = async (id: any) => {
+        console.log("id:"+id)
         confirm({
-        title: "Supprimer le fournisseur",
-        description: "Voulez-vous vraiment supprimer ce BCI ?",
-        cancellationText: "Annuler",
-        confirmationText: "Supprimer",
-        cancellationButtonProps: {
-            color: "warning",
-        },
-        confirmationButtonProps: {
-            color: "error",
-        },
+            title: "Supprimer le BCI",
+            description: "Voulez-vous vraiment supprimer ce BCI ?",
+            cancellationText: "Annuler",
+            confirmationText: "Supprimer",
+            cancellationButtonProps: {
+                color: "warning",
+            },
+            confirmationButtonProps: {
+                color: "error",
+            },
         })
         .then(async () => {
+            console.log("idnn:"+id)
             await dispatch(deleteBonCommandeInterne({ id }));
             fetchBonCommandeInterne();
         })
@@ -152,7 +153,7 @@ export default function BonCommandeInterneList() {
                                             component="span"
                                             size="small"
                                             onClick={() => {
-                                                handleClickDetails(row.id);
+                                                handleClickDetails(row?.id);
                                             }}
                                         >
                                             <Visibility />
@@ -163,7 +164,7 @@ export default function BonCommandeInterneList() {
                                             component="span"
                                             size="small"
                                             onClick={() => {
-                                                handleClickEdit(row.id);
+                                                handleClickEdit(row?.id);
                                             }}
                                         >
                                             <Edit />
@@ -174,7 +175,8 @@ export default function BonCommandeInterneList() {
                                             component="span"
                                             size="small"
                                             onClick={() => {
-                                                handleClickDelete(row.id);
+                                                console.log(row?.id)
+                                                handleClickDelete(row?.id);
                                             }}
                                         >
                                             <Delete />
