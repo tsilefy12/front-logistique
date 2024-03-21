@@ -29,7 +29,7 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
      console.log(pdfData)
      return (
           <Document>
-               <Page style={{ paddingHorizontal: 40 }}>
+               <Page style={{ padding:15 }}>
                     <View style={styles.table}>
                          <View style={[styles.row, styles.bold, styles.header]}>
                               <Text style={styles.row1}>
@@ -69,6 +69,8 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                               <View style={[styles.rowBodyTitle]}>
                                    <Text style={styles.title}>Nom du Demandeur</Text>
                                    <Text style={styles.val}>{pdfData?.demandeur}</Text>
+                                   <Text style={styles.title}></Text>
+                                   <Text style={styles.val}></Text>
                               </View>
                          </View>
                     </View>
@@ -90,7 +92,7 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                                              <Text style={styles.tr}>{element?.caracteristik}</Text>
                                              <Text style={styles.tr}>{element?.quantite}</Text>
                                              <Text style={styles.tr}>{element?.pu}</Text>
-                                             <Text style={styles.tr}>{element?.valeur}</Text>
+                                             <Text style={styles.tr}>{element?.valueArticle}</Text>
                                         </View>
                                    </View>
                               )
@@ -109,22 +111,27 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                     </View>
                     <View style={{width: "100%",}}>
                          <View style={[styles.rowBody]}>
-                              <Text style={{width: "100%"}}>Dates et Signature</Text>
+                              <Text style={{width: "30%",paddingTop:2,textDecoration:"underline"}}>Dates et Signature</Text>
                               <View style={[styles.rowBody]}>
-                                   <Text style={{width: "23%",border:"1px solid #000",textAlign:"left"}}>Demande</Text>
+                                   <Text style={{width: "23%",border:"1px solid #000",textAlign:"left",paddingTop: 2,paddingBottom: 8}}>Demande</Text>
                                    <Text style={{width: "23%",border:"1px solid #000",textAlign:"left"}}>Vérification</Text>
-                                   <Text style={{width: "23%",border:"1px solid #000",textAlign:"left"}}>Validation</Text>
-                                   <Text style={{width: "23%",border:"1px solid #000",textAlign:"left"}}>Autre</Text>
+                                   <Text style={{width: "23%",border:"1px solid #000",textAlign:"left",paddingTop: 2,paddingBottom: 8}}>Validation</Text>
+                                   <Text style={{width: "23%",border:"1px solid #000",textAlign:"left",paddingTop: 2,paddingBottom: 8}}>Autre</Text>
                               </View>
                          </View>
                     </View>
                     <View style={{width: "100%"}}>
                          <View style={[styles.rowBody]}>
-                              <Text style={styles.tr}>Date Commande</Text>
-                              <Text style={styles.tr}>Fournisseur /Prestataire</Text>
-                              <Text style={styles.tr}>Date réception</Text>
-                              <Text style={styles.tr}>Date facture</Text>
-                              <Text style={styles.tr}>Montant</Text>
+                              <Text style={{width: "23%",border:"1px solid #000",textAlign:"left",paddingTop: 2,paddingBottom: 8}}>Date Commande</Text>
+                              <Text style={{width: "23%",border:"1px solid #000",textAlign:"left",paddingTop: 2,paddingBottom: 8}}>Fournisseur /Prestataire</Text>2
+                              <Text style={{width: "23%",border:"1px solid #000",textAlign:"left",paddingTop: 2,paddingBottom: 8}}>Date réception</Text>
+                              <Text style={{width: "23%",border:"1px solid #000",textAlign:"left",paddingTop: 2,paddingBottom: 8}}>Date facture</Text>
+                              <Text style={{width: "23%",border:"1px solid #000",textAlign:"left",paddingTop: 2,paddingBottom: 8}}>Montant</Text>
+                         </View>
+                    </View>
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody]}>
+                              <Text style={{width: "100%",textAlign:"left",paddingTop: 2,paddingBottom:4}}>Observation</Text>
                          </View>
                     </View>
                </Page>
@@ -133,18 +140,15 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
 }
 
 const styles = StyleSheet.create({
-     page: {
-     padding: 15,
-     },
      table: {
-     width: "100%",
-     marginTop: 15,
+          width: "100%",
+          marginTop: 15,
      },
      row: {
-     display: "flex",
-     flexDirection: "row",
-     border: "1px solid #000",
-     fontSize: 11,
+          display: "flex",
+          flexDirection: "row",
+          border: "1px solid #000",
+          fontSize: 11,
      },
      rowBodyTitle:{
           display: "flex",
@@ -172,7 +176,7 @@ const styles = StyleSheet.create({
           fontSize: 10,
      },
      val:{
-          width: "23%",
+          width: "30%",
           textAlign: "left",
           paddingTop: 2,
           paddingBottom: 2,
@@ -206,7 +210,7 @@ const styles = StyleSheet.create({
           fontSize: 10,
      },
      title1:{
-          width: "30%",
+          width: "35%",
           textAlign: "left",
           paddingLeft: 5,
           paddingVertical: 2,
