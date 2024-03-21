@@ -100,8 +100,8 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                     )} 
                     <View style={{width: "100%",}}>
                          <View style={[styles.rowBody]}>
-                              <Text style={{width: "70%",textAlign: "center"}}>TOTAL COMMANDE</Text>
-                              <Text style={{width: "23%",}}>{pdfData?.montantTotal}</Text>
+                              <Text style={{width: "80%",textAlign: "center"}}>TOTAL COMMANDE</Text>
+                              <Text style={{width: "20%"}}>{pdfData?.montantTotal}</Text>
                          </View>
                     </View>
                     <View style={{width: "100%",}}>
