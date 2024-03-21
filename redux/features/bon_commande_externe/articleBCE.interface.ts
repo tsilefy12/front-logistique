@@ -5,7 +5,7 @@ export interface ArticleBCEItem {
     quantite?: number;
     pu?: number;
     valueArticle?: number;
-    bonDeCommandeExterneId?: string;
+    bonDeCommandeExterneId?: string
 }
   
 export interface ArticleBCEInitialState {

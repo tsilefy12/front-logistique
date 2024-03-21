@@ -103,10 +103,12 @@ export const getBonCommandeExterne = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       if (error.response) {
-        return thunkAPI.rejectWithValue(error);
+          console.log(error)
+          return thunkAPI.rejectWithValue(error);
       }
       throw error;
     }
+ 
   }
 );
 

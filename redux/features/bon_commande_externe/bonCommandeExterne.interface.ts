@@ -7,7 +7,7 @@ export interface BonCommandeExterneItem {
     modePaiement?: string;
     conditionLivraison?: string;
     dateLivraison?: Date;
-    ArticleCommandeBce?:any
+    ArticleCommandeBce?:any;
 }
   
 export interface BonCommandeExternInitialState {

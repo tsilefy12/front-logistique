@@ -22,10 +22,6 @@ const DetailsBCI = () => {
     const { bonCommandeInterne } = useAppSelector((state) => state.bonCommandeInterne);
     const [pdfData, setPdfData] = useState<any>();
 
-    useEffect(() => {
-        getDetailsBCI();
-    }, [id]);
-
     const getDetailsBCI = () => {
         dispatch(getBonCommandeInterne({ id,args:{
             include:{
@@ -36,8 +32,9 @@ const DetailsBCI = () => {
     };
 
     useEffect(()=> {
+        getDetailsBCI();
         console.log(bonCommandeInterne)
-    },[bonCommandeInterne])
+    },[id,bonCommandeInterne])
     return (
         <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
             <SectionNavigation

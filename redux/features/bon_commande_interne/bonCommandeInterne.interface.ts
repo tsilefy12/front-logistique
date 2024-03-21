@@ -8,7 +8,7 @@ export interface BonCommandeItem {
     dateBonCommande?: Date;
     numBonCommande?: string;
     montantTotal?: number;
-    ArticleCommande?:[];
+    ArticleCommande?:any;
     owner?:any;
 }
   

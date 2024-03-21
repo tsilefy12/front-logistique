@@ -160,13 +160,11 @@ import {
                             fullWidth
                             value = { 
                                 dureAmortissement && acquisitionValue ? (
-                                    (formikProps.values.dureDeVie > dureAmortissement ) ? (
-                                        null
-                                    ):( acquisitionValue - (formikProps.values.dureDeVie * acquisitionValue / dureAmortissement))
+                                    (formikProps.values.dureDeVie > dureAmortissement ) ? null : Math.round( acquisitionValue - (formikProps.values.dureDeVie * acquisitionValue / dureAmortissement))
                                 ):0
                             }
                             id="outlined-basic"
-                            label="Valeur inventaire"
+                            label={ dureAmortissement+" "+acquisitionValue }
                             variant="outlined"
                             type="number"
                         />

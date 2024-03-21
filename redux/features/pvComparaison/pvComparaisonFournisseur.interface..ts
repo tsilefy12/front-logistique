@@ -1,11 +1,10 @@
 export interface PvComparaisonFournisseurItem {
     id?: string;
-    fournisseur?: string;
-    modePaie?: string;
-    offre?: number;
-    designation?: string;
-    pvComparaisonOffreId?:string;
-    TableComparaison?:any
+    fournisseur?: string,
+    modePaie?: string,
+    offre?: number,
+    designation?: string,
+    pvComparaisonOffreId?: string
 }
   
 export interface PvComparaisonFournisseurInitialState {

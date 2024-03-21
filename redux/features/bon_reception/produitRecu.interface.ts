@@ -1,7 +1,7 @@
 export interface produitRecuItem {
     id?: string;
     designation?: string;
-    quantite?: string;
+    quantite?: number;
     bonDeReceptionId?: string;
 }
   

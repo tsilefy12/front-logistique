@@ -1,6 +1,6 @@
-import { useRouter } from "next/router"
+import { useRouter } from "next/router";
 
-export default function useBasePath(): string{
+export default function useBasePath(): string {
   const router = useRouter();
-  return router.basePath;
+  return router?.basePath;
 }

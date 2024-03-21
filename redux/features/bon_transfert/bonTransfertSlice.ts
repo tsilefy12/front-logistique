@@ -83,6 +83,7 @@ export const getBonTransferts = createAsyncThunk(
         args: JSON.stringify(data.args),
       };
       const response = await axios.get("/logistique/bon-de-transfert", { params });
+      console.log(response)
       return response.data;
     } catch (error: any) {
       if (error.response) {

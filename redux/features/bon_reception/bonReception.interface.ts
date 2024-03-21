@@ -1,7 +1,7 @@
 export interface bonReceptionItem {
     id?: string;
     bce?: string;
-    dateReception?: string;
+    dateReception?: Date;
     ProduitRecu?: any;
 }
   

@@ -71,7 +71,7 @@ export default function BonCommandeExterneForm() {
                 const newData = {
                     designation: element.designation,
                     caracteristik: element.caracteristique,
-                    quantite:element.quantite,
+                    quantite: element.quantite,
                     pu: element.pu,
                     valueArticle: element.valeur,
                     bonDeCommandeExterneId: response.payload.id
@@ -410,8 +410,8 @@ export default function BonCommandeExterneForm() {
                                                                                     });
                                                                                     formikProps.setFieldValue('designation', '');
                                                                                     formikProps.setFieldValue('caracteristique', '');
-                                                                                    formikProps.setFieldValue('pu', '');
-                                                                                    formikProps.setFieldValue('quantite', '');
+                                                                                    formikProps.setFieldValue('pu', 0);
+                                                                                    formikProps.setFieldValue('quantite', 0);
                                                                                 }
                                                                                
                                                                             }}
@@ -422,9 +422,9 @@ export default function BonCommandeExterneForm() {
                                                                             type="button"
                                                                             onClick={() => {
                                                                                 formikProps.setFieldValue('designation', '');
-                                                                                    formikProps.setFieldValue('caracteristique', '');
-                                                                                    formikProps.setFieldValue('pu', '');
-                                                                                    formikProps.setFieldValue('quantite', '')
+                                                                                formikProps.setFieldValue('caracteristique', '');
+                                                                                formikProps.setFieldValue('pu', 0);
+                                                                                formikProps.setFieldValue('quantite', 0)
                                                                             }}
                                                                             >
                                                                             <Close />

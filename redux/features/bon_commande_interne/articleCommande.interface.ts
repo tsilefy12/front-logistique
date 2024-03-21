@@ -2,10 +2,10 @@ export interface ArticleCommandeItem {
     id?: string;
     designation?: string;
     caracteristik?: string;
-    quantite?: string;
-    pu?: string;
-    valueArticle?: string;
-    bondeCommandeInterneId?: string;
+    quantite?: number;
+    pu?: number;
+    valueArticle?: number;
+    bondeCommandeInterneId?: string
 }
   
 export interface ArticleCommandeInitialState {

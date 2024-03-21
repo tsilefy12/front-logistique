@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 // import Badge from "@mui/material";
@@ -49,9 +49,11 @@ export default function BonTransfertList() {
 
     const { bonTransferts } = useAppSelector((state) => state.bonTransfert);
 
-    const fetchBonTransfert= useFetchBonTransfert();
+    const fetchBonTransfert = useFetchBonTransfert();
+    
+    console.log(bonTransferts)
 
-    React.useEffect(() => {
+    useEffect(() => {
         fetchBonTransfert();
     }, [router.query]);
 
@@ -64,16 +66,16 @@ export default function BonTransfertList() {
 
     const handleClickDelete = async (id: any) => {
         confirm({
-        title: "Supprimer le fournisseur",
-        description: "Voulez-vous vraiment supprimer ce bon de transfert ?",
-        cancellationText: "Annuler",
-        confirmationText: "Supprimer",
-        cancellationButtonProps: {
-            color: "warning",
-        },
-        confirmationButtonProps: {
-            color: "error",
-        },
+            title: "Supprimer le bon de transfert",
+            description: "Voulez-vous vraiment supprimer ce bon de transfert ?",
+            cancellationText: "Annuler",
+            confirmationText: "Supprimer",
+            cancellationButtonProps: {
+                color: "warning",
+            },
+            confirmationButtonProps: {
+                color: "error",
+            },
         })
         .then(async () => {
             await dispatch(deleteBonTransfert({ id }));
@@ -85,7 +87,7 @@ export default function BonTransfertList() {
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
-
+    
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {

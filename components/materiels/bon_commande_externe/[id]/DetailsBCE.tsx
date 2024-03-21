@@ -27,9 +27,9 @@ const DetailsBCE = () => {
   
     const getDetailsBCE = () => {
         dispatch(getBonCommandeExterne({ id , args:{
-        include:{
+            include:{
                 ArticleCommandeBce:true
-        }
+            }
         }}));
     };
 

@@ -287,8 +287,8 @@ export default function BonCommandeInterneForm() {
                                                                             onClick={() => {
                                                                                 formikProps.setFieldValue('designation', '');
                                                                                     formikProps.setFieldValue('caracteristique', '');
-                                                                                    formikProps.setFieldValue('pu', '');
-                                                                                    formikProps.setFieldValue('quantite', '')
+                                                                                    formikProps.setFieldValue('pu', 0);
+                                                                                    formikProps.setFieldValue('quantite', 0)
                                                                             }}
                                                                             >
                                                                             <Close />

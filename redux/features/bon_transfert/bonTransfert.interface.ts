@@ -2,12 +2,12 @@ export interface bonTransfertItem {
     id?: string;
     expediteur?: string;
     designation?: string;
-    dateExp?:Date;
+    dateExp?: Date;
     expeditionVia?: string;
-    departement?:string;
+    departement?: string;
     grant?: string;
+    type?: string;
     ArticleTransfert?: any;
-    type?:any;
 }
   
 export interface bonTransfertInitialState {

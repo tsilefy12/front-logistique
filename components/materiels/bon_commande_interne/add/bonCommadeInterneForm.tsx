@@ -74,7 +74,7 @@ export default function BonCommandeInterneForm() {
                 const newData = {
                     designation: element.designation,
                     caracteristik: element.caracteristique,
-                    quantite:element.quantite,
+                    quantite: element.quantite,
                     pu: element.pu,
                     valueArticle: element.valeur,
                     bondeCommandeInterneId: response.payload.id
@@ -82,7 +82,7 @@ export default function BonCommandeInterneForm() {
                 dispatch(createArticleCommandeInterne(newData));
             });
         
-            route.push("/materiels/bon_commande_intern");
+            route.push("/materiels/bon_commande_interne");
         } catch (error) {
         console.log("error", error);
         }
@@ -414,8 +414,8 @@ export default function BonCommandeInterneForm() {
                                                                                     });
                                                                                     formikProps.setFieldValue('designation', '');
                                                                                     formikProps.setFieldValue('caracteristique', '');
-                                                                                    formikProps.setFieldValue('pu', '');
-                                                                                    formikProps.setFieldValue('quantite', '');
+                                                                                    formikProps.setFieldValue('pu', 0);
+                                                                                    formikProps.setFieldValue('quantite', 0);
                                                                                 }
                                                                                
                                                                             }}
@@ -427,8 +427,8 @@ export default function BonCommandeInterneForm() {
                                                                             onClick={() => {
                                                                                 formikProps.setFieldValue('designation', '');
                                                                                 formikProps.setFieldValue('caracteristique', '');
-                                                                                formikProps.setFieldValue('pu', '');
-                                                                                formikProps.setFieldValue('quantite', '');
+                                                                                formikProps.setFieldValue('pu', 0);
+                                                                                formikProps.setFieldValue('quantite', 0);
                                                                             }}
                                                                             >
                                                                             <Close />

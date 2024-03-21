@@ -100,7 +100,7 @@ export default function BonTransfertForm() {
                             grant: "",
                             designation: "",
                             quantiteCommander: 0,
-                            quantiteExpedie:"",
+                            quantiteExpedie:0,
                             observation: "",
                         }
                     }
@@ -392,8 +392,8 @@ export default function BonTransfertForm() {
                                                                                     observation: observation,
                                                                                 });
                                                                                 formikProps.setFieldValue('designation', '');
-                                                                                formikProps.setFieldValue('quantiteCommander', '');
-                                                                                formikProps.setFieldValue('quantiteExpedie', '');
+                                                                                formikProps.setFieldValue('quantiteCommander', 0);
+                                                                                formikProps.setFieldValue('quantiteExpedie', 0);
                                                                                 formikProps.setFieldValue('observation', '');
                                                                             }
                                                                             
@@ -405,8 +405,8 @@ export default function BonTransfertForm() {
                                                                         type="button"
                                                                         onClick={() => {
                                                                             formikProps.setFieldValue('designation', '');
-                                                                            formikProps.setFieldValue('quantiteCommander', '');
-                                                                            formikProps.setFieldValue('quantiteExpedie', '');
+                                                                            formikProps.setFieldValue('quantiteCommander', 0);
+                                                                            formikProps.setFieldValue('quantiteExpedie', 0);
                                                                             formikProps.setFieldValue('observation', '');
                                                                         }}
                                                                         >
