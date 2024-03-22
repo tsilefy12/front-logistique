@@ -32,15 +32,14 @@ function PrintBonReception({ pdfData }: { pdfData: any }) {
                     </View>
                     <View style={styles.table}>
                          <View style={{width:'100%',alignItems:"center"}}>
-                              <Text style={{width:'100%',fontSize:16}}>Association Madagasikara voakajy</Text>
+                              <Text style={{width:'100%',fontSize:14,textAlign:"center"}}>Association Madagasikara voakajy</Text>
                          </View>
                     </View>
                     <View style={{width: "100%",}}>
                          <View style={{width: "100%",display: "flex",flexDirection: "column",marginTop:10}}>
-                              <Text style={{width: "100%",textAlign:"left",fontWeight:"bold",fontSize:10}}>LOT IIf14P Bis A Andraharo</Text>
-                              <Text style={{width: "100%",textAlign:"left",fontSize:10}}>BP 5281,101 Antananarivo</Text>
-                              <Text style={{width: "100%",textAlign:"left",fontSize:10}}>Contact: +261 342515523</Text>
-                              <Text style={{width: "100%",textAlign:"left",fontSize:10}}>{pdfData?.numBon}</Text>
+                              <Text style={{width: "100%",textAlign:"left",fontWeight:"bold",fontSize:10,paddingBottom:5}}>LOT IIf14P Bis A Andraharo</Text>
+                              <Text style={{width: "100%",textAlign:"left",fontSize:10,paddingBottom:5}}>BP 5281,101 Antananarivo</Text>
+                              <Text style={{width: "100%",textAlign:"left",fontSize:10,paddingBottom:5}}>Contact: +261 342515523</Text>
                          </View>
                     </View>
 
@@ -138,7 +137,7 @@ const styles = StyleSheet.create({
           width: "50%",
           display: "flex",
           alignItems: "center",
-          fontSize: 30,
+          fontSize: 20,
           justifyContent: "center",
      },
      logo: {
