@@ -2,13 +2,13 @@ import React from "react";
 import { TextField } from "@mui/material";
 import { useField } from "formik";
 
-const OSDateTimePicker = ({ type, name, ...otherProps }: any) => {
+const OSDateTimePicker = ({ name, ...otherProps }: any) => {
   const [field, meta] = useField(name);
 
   const configDateTimePicker = {
     ...field,
     ...otherProps,
-    type: type,
+    type: "date",
     variant: "outlined",
     placeholder: "dd/mm/yyyy",
     fullWidth: true,

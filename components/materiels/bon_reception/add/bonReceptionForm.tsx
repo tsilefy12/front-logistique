@@ -46,7 +46,7 @@ export default function BonCommandeInterneForm() {
                     initialValues={
                         {
                             bce: "",
-                            dateReception: new Date(),
+                            dateReception: new Date().toISOString(),
                             designation :"",
                             quantite:0,
                         }

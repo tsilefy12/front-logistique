@@ -196,13 +196,8 @@ const FormBCE = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                     </FormControl>
                     <FormControl fullWidth>
                         <OSDateTimePicker
-                            fullWidth
-                            id="outlined-basic"
-                            variant="outlined"
                             label="Date de commande"
-                            onChange={(value: any) =>
-                                formikProps.setFieldValue("dateCommande", value)
-                            }
+                            name="dateCommande"
                         />
                     </FormControl>
                 </Stack>

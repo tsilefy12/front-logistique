@@ -76,7 +76,7 @@ export default function BonCommandeExterneForm() {
                     enableReinitialize
                     initialValues={{
                         ref: "",
-                        dateCommande: new Date(),
+                        dateCommande: new Date().toISOString(),
                         fournisseur: "",
                         bci: "",
                         demandeur:"",

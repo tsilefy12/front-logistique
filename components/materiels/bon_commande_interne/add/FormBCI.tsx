@@ -167,12 +167,8 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                     </FormControl>
                     <FormControl fullWidth>
                         <OSDateTimePicker
-                            fullWidth
                             label="Date bon de commande interne"
-                            value={formikProps.values.dateBonCommande}
-                            onChange={(value: any) =>
-                                formikProps.setFieldValue("dateBonCommande", value)
-                            }
+                            name="dateBonCommande"
                         />
                     </FormControl>
                 </Stack>

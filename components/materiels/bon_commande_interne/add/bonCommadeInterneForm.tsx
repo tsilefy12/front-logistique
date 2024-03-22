@@ -79,7 +79,7 @@ export default function BonCommandeInterneForm() {
                             ligneBudgetaire: "",
                             demandeur: "",
                             numBon: "",
-                            dateBonCommande: new Date(),
+                            dateBonCommande: new Date().toISOString(),
                             numBonCommande: "",
                             designation :"",
                             caracteristique:"",

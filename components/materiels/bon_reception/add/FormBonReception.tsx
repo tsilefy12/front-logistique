@@ -113,14 +113,10 @@ const FormBonReception = ({formikProps,valuesArticle}: {formikProps: FormikProps
                     />
                 </FormControl>
                 <FormControl fullWidth>
-                <OSDateTimePicker
-                    fullWidth
-                    label="Date bon de reception"
-                    value={formikProps.values.dateReception}
-                    onChange={(value: any) =>
-                        formikProps.setFieldValue("dateBonCommande", value)
-                    }
-                />
+                    <OSDateTimePicker
+                        label="Date bon de reception"
+                        name="dateBonCommande"
+                    />
                 </FormControl>
             </FormContainer>
             <Box>

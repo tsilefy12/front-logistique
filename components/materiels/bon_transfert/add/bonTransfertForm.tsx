@@ -55,7 +55,7 @@ export default function BonTransfertForm() {
                         {
                             expediteur:"",
                             destination: "",
-                            dateExp: new Date(),
+                            dateExp: new Date().toISOString(),
                             expeditionVia: "",
                             departement:"",
                             grant: "",

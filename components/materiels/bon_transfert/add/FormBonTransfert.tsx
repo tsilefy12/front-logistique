@@ -154,12 +154,8 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                     </FormControl>
                     <FormControl fullWidth>
                         <OSDateTimePicker
-                            fullWidth
                             label="Date expedition"
-                            value={formikProps.values.dateExp}
-                            onChange={(value: any) =>
-                                formikProps.setFieldValue("dateExp", value)
-                            }
+                            name="dateExp"
                         />
                     </FormControl>
                 </Stack>
