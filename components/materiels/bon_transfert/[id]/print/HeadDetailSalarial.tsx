@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     textDecoration: "underline",
     fontWeight: "bold",
     fontSize: 10,
-    fontFamily: "Open Sans",
+    
   },
   row11: {
     width: "8%",
@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
     textDecoration: "underline",
     fontWeight: "bold",
     fontSize: 10,
-    fontFamily: "Open Sans",
+    
+    
   },
   row12: {
     width: "23%",
@@ -66,7 +67,8 @@ const styles = StyleSheet.create({
     textDecoration: "underline",
     fontWeight: "bold",
     fontSize: 10,
-    fontFamily: "Open Sans",
+    
+    
   },
   row13: {
     width: "23%",
@@ -77,7 +79,8 @@ const styles = StyleSheet.create({
     textDecoration: "underline",
     fontWeight: "bold",
     fontSize: 10,
-    fontFamily: "Open Sans",
+    
+    
   },
   row14: {
     width: "23%",
@@ -88,7 +91,8 @@ const styles = StyleSheet.create({
     textDecoration: "underline",
     fontWeight: "bold",
     fontSize: 10,
-    fontFamily: "Open Sans",
+    
+    
   },
   row15: {
     width: "23%",
@@ -99,7 +103,8 @@ const styles = StyleSheet.create({
     textDecoration: "underline",
     fontWeight: "bold",
     fontSize: 10,
-    fontFamily: "Open Sans",
+    
+    
   },
 });
 

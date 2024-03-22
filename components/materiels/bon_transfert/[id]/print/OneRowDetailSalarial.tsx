@@ -57,7 +57,6 @@ const OneRowDetailSalarial = ({
       textDecoration: "underline",
       fontWeight: "bold",
       fontSize: 9,
-      fontFamily: "Open Sans",
     },
     row11: {
       width: "8%",
@@ -67,7 +66,6 @@ const OneRowDetailSalarial = ({
 
       fontWeight: isTitle1 ? "bold" : "normal",
       fontSize: isTitle1 ? 10 : 9,
-      fontFamily: "Open Sans",
       backgroundColor: isTitle1 ? "#D5D8DC" : "#fff",
     },
     row12: {
@@ -79,7 +77,6 @@ const OneRowDetailSalarial = ({
 
       fontWeight: isTitle2 ? "bold" : "normal",
       fontSize: isTitle2 ? 10 : 9,
-      fontFamily: "Open Sans",
       backgroundColor: isTitle2 ? "#D5D8DC" : "#fff",
     },
     row13: {
@@ -91,7 +88,6 @@ const OneRowDetailSalarial = ({
 
       fontWeight: isTitle3 ? "bold" : "normal",
       fontSize: isTitle3 ? 10 : 9,
-      fontFamily: "Open Sans",
       backgroundColor: isTitle3 ? "#D5D8DC" : "#fff",
     },
     row14: {
@@ -103,7 +99,6 @@ const OneRowDetailSalarial = ({
 
       fontWeight: isTitle4 ? "bold" : "normal",
       fontSize: isTitle4 ? 10 : 9,
-      fontFamily: "Open Sans",
       backgroundColor: isTitle4 ? "#D5D8DC" : "#fff",
     },
     row15: {
@@ -115,7 +110,6 @@ const OneRowDetailSalarial = ({
 
       fontWeight: isTitle5 ? "bold" : "normal",
       fontSize: isTitle5 ? 10 : 9,
-      fontFamily: "Open Sans",
       backgroundColor: isTitle5 ? "#D5D8DC" : "#fff",
     },
   });

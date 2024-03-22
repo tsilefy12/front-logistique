@@ -1,14 +1,9 @@
 import React from "react";
 import { useAppDispatch } from "../../../../../hooks/reduxHooks";
 import {
-  usePDF,
-  Document,
-  Page,
   StyleSheet,
   View,
   Text,
-  Canvas,
-  Image,
   Font,
 } from "@react-pdf/renderer";
 
@@ -57,7 +52,6 @@ const styles = StyleSheet.create({
     textDecoration: "underline",
     fontWeight: "bold",
     fontSize: 10,
-    fontFamily: "Open Sans",
   },
   row2: {
     width: "45%",

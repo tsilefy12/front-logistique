@@ -76,8 +76,8 @@ function PrintBonReception({ pdfData }: { pdfData: any }) {
                     )} 
                     <View style={{width: "100%",marginTop:20}}>
                          <View style={{width:"100%",display:"flex",flexDirection:"row",alignItems:"center"}}>
-                              <Text style={{width: "50%",textAlign:"center",paddingTop: 2,paddingBottom:4}}>Fournisseur</Text>
-                              <Text style={{width: "50%",textAlign:"center",paddingTop: 2,paddingBottom:4}}>Client</Text>
+                              <Text style={{width: "50%",textAlign:"center",fontSize:12,paddingTop: 2,paddingBottom:4}}>Fournisseur</Text>
+                              <Text style={{width: "50%",textAlign:"center",fontSize:12,paddingTop: 2,paddingBottom:4}}>Client</Text>
                          </View>
                     </View>
                </Page>

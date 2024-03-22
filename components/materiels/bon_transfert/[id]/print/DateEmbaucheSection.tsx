@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
     textDecoration: "underline",
     fontWeight: "bold",
     fontSize: 10,
-    fontFamily: "Open Sans",
   },
   row2: {
     width: "17%",
@@ -62,7 +61,6 @@ const styles = StyleSheet.create({
     textDecoration: "underline",
     fontWeight: "bold",
     fontSize: 10,
-    fontFamily: "Open Sans",
   },
   row4: {
     width: "10%",
