@@ -13,6 +13,7 @@ import Close from '@mui/icons-material/Close';
 import OSSelectField from '../../../shared/select/OSSelectField';
 import OSDatePicker from '../../../shared/date/OSDatePicker';
 import { ArrowBack } from '@mui/icons-material';
+import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 
 const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any}) => {
     const dispatch = useAppDispatch();
@@ -68,7 +69,7 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
             <NavigationContainer>
                 <SectionNavigation>
                 <Stack flexDirection={"row"}>
-                    <Link href="/materiels/bon_commande_intern">
+                    <Link href="/materiels/bon_commande_interne">
                     <Button
                         color="info"
                         variant="text"
@@ -165,7 +166,7 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                         />
                     </FormControl>
                     <FormControl fullWidth>
-                        <OSDatePicker
+                        <OSDateTimePicker
                             fullWidth
                             label="Date bon de commande interne"
                             value={formikProps.values.dateBonCommande}

@@ -132,6 +132,26 @@ export const getBonCommandeInterne = createAsyncThunk(
         args: JSON.stringify(data.args),
       };
       const response = await axios.get(`/logistique/bon-de-commande-interne/${data.id}`, { params });
+
+      const employeeId = response.data.demandeur;
+      const detailEmployee = await thunkAPI
+        .dispatch(getEmployee({ employeeId }))
+          if(detailEmployee){
+            const oneCons = {
+              id:  response.data.id,
+              dateBonCommande:  response.data.dateBonCommande,
+              numBon:  response.data.numBon,
+              numBonCommande:  response.data.numBonCommande,
+              programme:  response.data.programme,
+              montantTotal:  response.data.montantTotal,
+              grant:  response.data.grant,
+              ligneBudgetaire:  response.data.ligneBudgetaire,
+              ArticleCommande:  response.data.ArticleCommande,
+              demandeur:  response.data.demandeur,
+              owner: detailEmployee.payload.id ? detailEmployee.payload :{ id:employeeId, name:"Employée n'existe plus",surname:""},
+            };
+            return oneCons
+          }
       return response.data;
     } catch (error: any) {
       if (error.response) {

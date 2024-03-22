@@ -11,6 +11,7 @@ import Close from '@mui/icons-material/Close';
 import OSSelectField from '../../../shared/select/OSSelectField';
 import OSDatePicker from '../../../shared/date/OSDatePicker';
 import { getBonCommandeExterne, getBonCommandeExternes } from "../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
+import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 
 const FormBonReception = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any}) => {
     const dispatch = useAppDispatch();
@@ -112,7 +113,7 @@ const FormBonReception = ({formikProps,valuesArticle}: {formikProps: FormikProps
                     />
                 </FormControl>
                 <FormControl fullWidth>
-                <OSDatePicker
+                <OSDateTimePicker
                     fullWidth
                     label="Date bon de reception"
                     value={formikProps.values.dateReception}

@@ -21,7 +21,7 @@ export default function BonCommandeInterneForm() {
         try {
             const newDataBCI = {
                 bce: values.bce,
-                dateReception: values.dateReception,
+                dateReception: new Date(values.dateReception)
             }
             const response = await dispatch(createBonReception(newDataBCI));
             valuesArticle.forEach((element:any, index:any) => {

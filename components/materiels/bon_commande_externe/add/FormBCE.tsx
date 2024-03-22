@@ -10,12 +10,12 @@ import { Box ,Button,Divider,FormControl,IconButton,Link,Stack,Table,TableBody,T
 import OSTextField from '../../../shared/input/OSTextField';
 import OSSelectField from '../../../shared/select/OSSelectField';
 import Paper from "@mui/material/Paper";
-import OSDatePicker from '../../../shared/date/OSDatePicker';
 import OSFileUpload from '../../../shared/input/OSFileUpload';
 import Check from '@mui/icons-material/Check';
 import Close from '@mui/icons-material/Close';
 import Delete from '@mui/icons-material/Delete';
 import { ArrowBack } from '@mui/icons-material';
+import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 
 const FormBCE = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any}) => {
     const dispatch = useAppDispatch();
@@ -195,7 +195,7 @@ const FormBCE = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                         />
                     </FormControl>
                     <FormControl fullWidth>
-                        <OSDatePicker
+                        <OSDateTimePicker
                             fullWidth
                             id="outlined-basic"
                             variant="outlined"

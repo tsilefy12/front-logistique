@@ -23,7 +23,7 @@ export default function BonTransfertForm() {
             const newDataBT = {
                 expediteur: values.expediteur,
                 designation: values.destination,
-                dateExp:values.dateExp,
+                dateExp:new Date(values.dateExp),
                 expeditionVia: values.expeditionVia,
                 departement:values.departement,
                 grant: values.grant,

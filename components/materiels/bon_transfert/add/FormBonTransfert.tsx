@@ -12,6 +12,7 @@ import Close from '@mui/icons-material/Close';
 import OSSelectField from '../../../shared/select/OSSelectField';
 import OSDatePicker from '../../../shared/date/OSDatePicker';
 import ArrowBack from '@mui/icons-material/ArrowBack';
+import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 
 const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any}) => {
     const dispatch = useAppDispatch();
@@ -152,7 +153,7 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                         />
                     </FormControl>
                     <FormControl fullWidth>
-                        <OSDatePicker
+                        <OSDateTimePicker
                             fullWidth
                             label="Date expedition"
                             value={formikProps.values.dateExp}

@@ -45,7 +45,7 @@ export default function BonCommandeInterneForm() {
                 numBon: values.numBon,
                 fournisseur:values.fournisseur,
                 type:values.type,
-                dateBonCommande: values.dateBonCommande,
+                dateBonCommande: new Date(values.dateBonCommande),
                 numBonCommande: values.numBonCommande,
                 montantTotal : valuesArticle.reduce((acc:any, curr:any) => acc + curr.valeur, 0)
             }

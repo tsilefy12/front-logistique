@@ -40,7 +40,7 @@ export default function BonCommandeExterneForm() {
         }
         const newDataBCE = {
             ref: values.ref,
-            dateCommande: values.dateCommande,
+            dateCommande: new Date(values.dateCommande),
             fournisseur: values.fournisseur,
             bci: values.bci,
             demandeur:values.demandeur,

@@ -51,8 +51,8 @@ function PrintBonReception({ pdfData }: { pdfData: any }) {
                     </View>
                     <View style={{width: "100%"}}>
                          <View style={[styles.rowBody]}>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}>Nom:</Text>
+                              <Text style={styles.tr}>{pdfData.dateReception}</Text>
+                              <Text style={styles.tr}>Nom: {pdfData.bonCommandeExterne?.vendor?.name}</Text>
                          </View>
                     </View>
 

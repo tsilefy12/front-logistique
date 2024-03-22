@@ -82,7 +82,7 @@ const DetailsBCI = () => {
                                             Demandeur
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                        {bonCommandeInterne.demandeur}
+                                            {bonCommandeInterne.owner?.name} {bonCommandeInterne.owner?.surname}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
