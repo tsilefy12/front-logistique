@@ -114,7 +114,7 @@ export const getBonCommandeInternes = createAsyncThunk(
       } else {
         return response.data;
       }
-    return newData;
+      return newData;
     } catch (error: any) {
       if (error.response) {
         return thunkAPI.rejectWithValue(error);

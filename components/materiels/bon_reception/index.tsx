@@ -174,7 +174,7 @@ export default function BonReceptionList() {
                             const labelId = `enhanced-table-checkbox-${index}`;
                             return (
                                 <TableRow hover tabIndex={-1} key={row.id}>
-                                    <TableCell align="left">{row?.bce}</TableCell>
+                                    <TableCell align="left">{row.bonDeCommandeExterne?.ref}</TableCell>
                                     <TableCell align="left">
                                         <Moment format="DD/MM/YYYY">
                                             {row?.dateReception}

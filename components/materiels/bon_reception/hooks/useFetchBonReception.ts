@@ -10,12 +10,11 @@ const useFetchBonReception = () => {
     const dispatch = useAppDispatch();
 
     return async () => {
-        let args: any = {};
-        // let args: any = {
-        //     include: {
-        //       type: true,
-        //     },
-        //   };
+        let args: any = {
+            include: {
+                bonDeCommandeExterne: true,
+            },
+        };
         if (router.query.search) {
             args.where = {};
         }

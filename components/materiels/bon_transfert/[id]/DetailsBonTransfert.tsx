@@ -5,7 +5,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Moment from "react-moment";
 import Link from "next/link";
@@ -14,27 +14,30 @@ import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
 import { getBonTransfert } from "../../../../redux/features/bon_transfert/bonTransfertSlice";
+import PDFButton from "./PrintBonTransfert";
 const DetailsBonTransfert = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { id }: any = router.query;
     const { bonTransfert } = useAppSelector((state) => state.bonTransfert);
+    // const [pdfData, setPdfData] = useState<any>();
 
-    useEffect(() => {
-        getDetailsBonTransfert();
-    }, [id]);
 
     const getDetailsBonTransfert = () => {
         dispatch(getBonTransfert({ id,args:{
-        include:{
-            ArticleTransfert:true
-        }
+            include:{
+                articleTransfert:true
+            }
         }}));
+        // setPdfData(bonTransfert)
+
     };
 
     useEffect(()=> {
+        getDetailsBonTransfert();
         console.log(bonTransfert)
-    },[bonTransfert])
+    },[id,bonTransfert])
+
     return (
         <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
             <SectionNavigation
@@ -48,6 +51,7 @@ const DetailsBonTransfert = () => {
                             Retour
                         </Button>
                     </Link>
+                    <PDFButton data={bonTransfert} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">
                     Details d'une bon de transfert
@@ -71,7 +75,7 @@ const DetailsBonTransfert = () => {
                                             Expediteur
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                        {bonTransfert.expediteur}
+                                            {bonTransfert.expediteurData?.name} {bonTransfert.expediteurData?.surname}
                                         </Typography>
                                     </InfoItems>
                                     </Grid>
@@ -81,7 +85,7 @@ const DetailsBonTransfert = () => {
                                             Destination
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                        {bonTransfert.designation}
+                                            {bonTransfert?.destination?.name} {bonTransfert?.destination?.surname}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
@@ -144,7 +148,7 @@ const DetailsBonTransfert = () => {
                                 }}
                                 >
                                 <Typography variant="h6" id="tableTitle" component="div">
-                                    Liste des articles
+                                    Liste des articles à transferer
                                 </Typography>
                             </Stack>
                             <TableContainer component={Paper}>
@@ -158,13 +162,13 @@ const DetailsBonTransfert = () => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {bonTransfert.ArticleTransfert?.map((item:any , index:any) => (
+                                        {bonTransfert.articleTransfert?.map((item:any , index:any) => (
                                             <TableRow
                                                 key={index}
                                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                             >
                                                 <TableCell component="th" scope="row">{item.designation}</TableCell>
-                                                <TableCell align="left">{item.quantiteCommander}</TableCell>
+                                                <TableCell align="left">{item.quantiteCommande}</TableCell>
                                                 <TableCell align="left">{item.quantiteExpedie}</TableCell>
                                                 <TableCell align="left">{item.observation}</TableCell>
                                             </TableRow>

@@ -8,7 +8,7 @@ import {
   Divider,
 } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { Check, Close } from "@mui/icons-material";
 import { Form, Formik } from "formik";
@@ -26,6 +26,7 @@ import { useRouter } from "next/router";
 import { cancelEdit } from "../../../../redux/features/equipment/equipmentSlice";
 import { getFournisseurList } from "../../../../redux/features/fournisseur/useCase/getFournisseurListe";
 import { getTypeEquipmentList } from "../../../../redux/features/typeEquipment";
+import { getBonCommandeInternes } from "../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice";
 
 const AddArticleForm = () => {
   const dispatch = useAppDispatch();
@@ -41,14 +42,16 @@ const AddArticleForm = () => {
     );
     const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
     const { typeEquipmentList } = useAppSelector( (state) => state.typeEquipment);
-
+    const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
+    
     const fetchUtilsData = () => {
         dispatch(getFournisseurList({}));
         dispatch(getEmployees({}));
         dispatch(getTypeEquipmentList({}));
+        dispatch(getBonCommandeInternes({}));
     };
-    
-    React.useEffect(() => {
+
+    useEffect(() => {
         fetchUtilsData();
     }, []);
     
@@ -108,15 +111,15 @@ const AddArticleForm = () => {
 
             }}
             validationSchema={Yup.object({
-            numOptim: Yup.string().required("Veuillez sélectionner un numOptim"),
-            additionalInformation: Yup.string(),
-            acquisitionDate: Yup.date(),
-            acquisitionValue: Yup.number(),
-            designation: Yup.string().required(
-                "Veuillez remplir le champ designation"
-            ),
-            status: Yup.string().required("Veuillez sélectionner un status"),
-            typeEquipmentId: Yup.string().required(
+                numOptim: Yup.string().required("Veuillez sélectionner un numOptim"),
+                additionalInformation: Yup.string(),
+                acquisitionDate: Yup.date(),
+                acquisitionValue: Yup.number(),
+                designation: Yup.string().required(
+                    "Veuillez remplir le champ designation"
+                ),
+                status: Yup.string().required("Veuillez sélectionner un status"),
+                typeEquipmentId: Yup.string().required(
                 "Veuillez sélectionner un type"
             ),
             })}
@@ -268,13 +271,22 @@ const AddArticleForm = () => {
                         variant="outlined"
                         type="number"
                     />
-                    <OSTextField
+                    <OSSelectField
+                        id="outlined-basic"
+                        label="BCI"
+                        name="bci"
+                        options={bonCommandeInternes}
+                        dataKey="numBon"
+                        valueKey="id"
+                        type="text"
+                    />
+                    {/* <OSTextField
                         name="additionalInformation"
                         fullWidth
                         id="outlined-basic"
                         label="Information suplémentaire"
                         variant="outlined"
-                    />
+                    /> */}
                     </CustomStack>
                     <Stack direction="row" spacing={3} >
                         <OSTextField

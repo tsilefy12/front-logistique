@@ -28,7 +28,7 @@ const DetailsBCE = () => {
     const getDetailsBCE = () => {
         dispatch(getBonCommandeExterne({ id , args:{
             include:{
-                ArticleCommandeBce:true
+                articleCommandeBce:true
             }
         }}));
     };
@@ -123,12 +123,12 @@ const DetailsBCE = () => {
                                     <Grid item xs={12} md={12}>
                                         <InfoItems direction="row" spacing={2}>
                                             <Typography variant="body1" color="secondary">
-                                                Date de livraison
+                                                Pièce Jointe
                                             </Typography>
                                             <Typography variant="body1" color="gray">
-                                            <Moment format="DD/MM/YYYY">
-                                                {bonCommandeExterne.dateLivraison}
-                                            </Moment>
+                                            {/* <Moment format="DD/MM/YYYY">
+                                                {bonCommandeExterne.pieceJointe}
+                                            </Moment> */}
                                             </Typography>
                                         </InfoItems>
                                     </Grid>

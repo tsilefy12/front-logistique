@@ -130,8 +130,8 @@ export default function BonTransfertList() {
                             const labelId = `enhanced-table-checkbox-${index}`;
                             return (
                                 <TableRow hover tabIndex={-1} key={row.id}>
-                                    <TableCell align="left">{row?.expediteur}</TableCell>
-                                    <TableCell align="left">{row?.designation}</TableCell>
+                                    <TableCell align="left">{row.expediteurData?.name} {row.expediteurData?.surname}</TableCell>
+                                    <TableCell align="left">{row.destination?.name} {row.destination?.surname}</TableCell>
                                     <TableCell align="left">
                                         <Moment format="DD/MM/YYYY">
                                             {row?.dateExp}

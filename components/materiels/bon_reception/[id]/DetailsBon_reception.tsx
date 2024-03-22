@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
 import { getBonReception } from "../../../../redux/features/bon_reception/bonReceptionSlice";
+import PDFButton from "./pdfBonReception";
 
 const DetailsBonReception = () => {
     const router = useRouter();
@@ -28,7 +29,8 @@ const DetailsBonReception = () => {
     const getDetailsBonReception = () => {
         dispatch(getBonReception({ id,args:{
             include:{
-                ProduitRecu:true
+                produitRecu:true,
+                bonDeCommandeExterne:true
             }
         }}));
     };
@@ -49,6 +51,7 @@ const DetailsBonReception = () => {
                             Retour
                         </Button>
                     </Link>
+                    <PDFButton data={bonReception} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">
                     Details d'une bon de reception
@@ -72,7 +75,7 @@ const DetailsBonReception = () => {
                                         Bon de commande externe
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                            {bonReception.bce}
+                                            {bonReception.bonDeCommandeExterne?.ref}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
@@ -116,7 +119,7 @@ const DetailsBonReception = () => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {bonReception.ProduitRecu?.map((item:any , index:any) => (
+                                        {bonReception.produitRecu?.map((item:any , index:any) => (
                                             <TableRow
                                                 key={index}
                                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

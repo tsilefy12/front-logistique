@@ -71,6 +71,12 @@ const menu = [
         link: "/materiels/bon_transfert",
         icon: "",
       },
+      {
+        id: 113,
+        name: "Inventaire",
+        link: "/materiels/inventaire",
+        icon: "",
+      },
     ],
   },
   {

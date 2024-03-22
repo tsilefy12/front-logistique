@@ -1,11 +1,12 @@
 export interface InventaireItem {
     id?: string;
-    dateInventaire: string,
-    datePreciation: Date,
-    dureDeVie: number,
-    etatMateriel: string,
-    valeurInventaire: number,
-    equipmentId: string
+    dateInventaire?: string;
+    datePreciation?: Date;
+    dureDeVie?: number;
+    etatMateriel?: string;
+    valeurInventaire?: number;
+    equipmentId?: string;
+    equipment?:any;
 }
   
 export interface InventaireItemInitialState {

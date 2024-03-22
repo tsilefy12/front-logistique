@@ -3,10 +3,12 @@ export interface BonCommandeExterneItem {
     ref?: string;
     dateCommande?: Date;
     fournisseur?: string;
+    demandeur?:string;
     bci?: string;
+    type?:string;
     modePaiement?: string;
     conditionLivraison?: string;
-    dateLivraison?: Date;
+    pieceJointe?: string;
     ArticleCommandeBce?:any;
 }
   

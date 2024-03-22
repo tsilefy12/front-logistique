@@ -109,7 +109,7 @@ export default function InventaireList() {
                       return (
                         <TableRow hover tabIndex={-1} key={row.id}>
                           <TableCell component="th" id={labelId} align="left">
-                            {row.materiel?.designation} {row.materiel?.numOptim}
+                            {row.equipment?.designation} {row.equipment?.numOptim}
                           </TableCell>
                           <TableCell component="th" id={labelId} align="left">
                             <Moment format="DD/MM/YYYY">{row.dateInventaire}</Moment>

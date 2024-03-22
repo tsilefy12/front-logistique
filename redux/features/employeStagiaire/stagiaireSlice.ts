@@ -28,6 +28,23 @@ export const getInterns = createAsyncThunk(
 		}
 	}
 );
+export const getIntern = createAsyncThunk(
+    "interns/getIntern",
+    async (data: { id?: string , args?: any }, thunkAPI) => {
+      try {
+        const params = {
+          args: JSON.stringify(data.args),
+        };
+        const response = await axios.get(`/rh/intern/${data.id}`, { params });
+        return response.data;
+      } catch (error: any) {
+        if (error.response) {
+          return thunkAPI.rejectWithValue(error);
+        }
+        throw error;
+      }
+    }
+);
   
 export const stagiaireSlice = createSlice({
     name: "intern",

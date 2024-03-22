@@ -5,7 +5,9 @@ export interface ArticleCommandeItem {
     quantite?: number;
     pu?: number;
     valueArticle?: number;
-    bondeCommandeInterneId?: string
+    bondeCommandeInterneId?: string;
+    fournisseur?:string;
+    type?:string;
 }
   
 export interface ArticleCommandeInitialState {

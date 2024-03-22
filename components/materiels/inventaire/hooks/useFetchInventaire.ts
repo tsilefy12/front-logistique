@@ -11,7 +11,6 @@ const useFetchInventaireList = () => {
     if (router.query.search) {
       args.where = {};
     }
-
     if (router.query.orderBy && router.query.order) {
       switch (router.query.orderBy) {
         default:
@@ -22,7 +21,7 @@ const useFetchInventaireList = () => {
       }
     }
     args.include = {
-      inventaire: true,
+      equipment: true,
     };
     dispatch(getInventaireListe({ args }));
   };
