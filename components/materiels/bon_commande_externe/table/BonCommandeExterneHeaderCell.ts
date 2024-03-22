@@ -14,12 +14,6 @@ export const BonCommandeExterneHeadCells: readonly HeadCell[] = [
         label: "Date de bon comamnde",
     },
     {
-        id: "dateLivraison",
-        numeric: false,
-        disablePadding: false,
-        label: "Date de Livraison",
-    },
-    {
         id: "conditionLivraison",
         numeric: false,
         disablePadding: false,

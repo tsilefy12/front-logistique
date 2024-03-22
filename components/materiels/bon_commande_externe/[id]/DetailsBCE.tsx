@@ -27,9 +27,11 @@ const DetailsBCE = () => {
   
     const getDetailsBCE = () => {
         dispatch(getBonCommandeExterne({ id , args:{
-            include:{
+            include: {
+                bonCommandeInterne: true,
+                vendor:true,
                 articleCommandeBce:true
-            }
+            }  
         }}));
     };
 
@@ -59,11 +61,11 @@ const DetailsBCE = () => {
                     <FormContainer spacing={2}>
                         <Stack
                             direction="row"
-                            sx={{
-                                flex: "1 1 100%",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                            }}
+                                sx={{
+                                    flex: "1 1 100%",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                }}
                             >
                             <Grid container spacing={4} my={1}>
                                 <Grid item xs={12} md={12}>
@@ -82,9 +84,31 @@ const DetailsBCE = () => {
                                         Fournisseur
                                     </Typography>
                                     <Typography variant="body1" color="gray">
-                                    {bonCommandeExterne.fournisseur}
+                                    {bonCommandeExterne.vendor?.name}
                                     </Typography>
                                 </InfoItems>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            N° bon de commande interne
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            {bonCommandeExterne.bonCommandeInterne?.numBon}
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={4} my={1}>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Mode de paiement
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            {bonCommandeExterne.modePaiement}
+                                        </Typography>
+                                    </InfoItems>
                                 </Grid>
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
@@ -96,63 +120,15 @@ const DetailsBCE = () => {
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
-                            </Grid>
-                            <Grid container spacing={4} my={1}>
-                                    <Grid item xs={12} md={12}>
-                                        <InfoItems direction="row" spacing={2}>
-                                            <Typography variant="body1" color="secondary">
-                                                N° bon de commande interne
-                                            </Typography>
-                                            <Typography variant="body1" color="gray">
-                                            {bonCommandeExterne.bci}
-                                            </Typography>
-                                        </InfoItems>
-                                        </Grid>
-                                        <Grid item xs={12} md={12}>
-                                        <InfoItems direction="row" spacing={2}>
-                                            <Typography variant="body1" color="secondary">
-                                                Date commande 
-                                            </Typography>
-                                            <Typography variant="body1" color="gray">
-                                            <Moment format="DD/MM/YYYY">
-                                                {bonCommandeExterne.dateCommande}
-                                            </Moment>
-                                            </Typography>
-                                        </InfoItems>
-                                    </Grid>
-                                    <Grid item xs={12} md={12}>
-                                        <InfoItems direction="row" spacing={2}>
-                                            <Typography variant="body1" color="secondary">
-                                                Pièce Jointe
-                                            </Typography>
-                                            <Typography variant="body1" color="gray">
-                                            {/* <Moment format="DD/MM/YYYY">
-                                                {bonCommandeExterne.pieceJointe}
-                                            </Moment> */}
-                                            </Typography>
-                                        </InfoItems>
-                                    </Grid>
-                            </Grid>
-                                <Grid container spacing={4} my={1}>
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                            Mode de paiement
+                                            Date commande 
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                            {bonCommandeExterne.modePaiement}
-                                        </Typography>
-                                    </InfoItems>
-                                    </Grid>
-                                    <Grid item xs={12} md={12}>
-                                    <InfoItems direction="row" spacing={2}>
-                                        <Typography variant="body1" color="secondary">
-                                            Date de la commande
-                                        </Typography>
-                                        <Typography variant="body1" color="gray">
-                                            <Moment format="DD/MM/YYYY">
-                                                {bonCommandeExterne.dateCommande}
-                                            </Moment>
+                                        <Moment format="DD/MM/YYYY">
+                                            {bonCommandeExterne.dateCommande}
+                                        </Moment>
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
@@ -187,7 +163,7 @@ const DetailsBCE = () => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {bonCommandeExterne.ArticleCommandeBce?.map((item:any , index:any) => (
+                                        {bonCommandeExterne.articleCommandeBce?.map((item:any , index:any) => (
                                             <TableRow
                                                 key={index}
                                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

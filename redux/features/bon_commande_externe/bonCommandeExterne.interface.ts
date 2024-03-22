@@ -9,7 +9,9 @@ export interface BonCommandeExterneItem {
     modePaiement?: string;
     conditionLivraison?: string;
     pieceJointe?: string;
-    ArticleCommandeBce?:any;
+    bonCommandeInterne?:any;
+    vendor?:any;
+    articleCommandeBce?:any;
 }
   
 export interface BonCommandeExternInitialState {
