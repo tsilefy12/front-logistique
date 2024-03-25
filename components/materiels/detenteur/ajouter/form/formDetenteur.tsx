@@ -24,11 +24,11 @@ const FormDetenteur = (props:any) =>{
     const { interns } = useAppSelector((state) => state.stagiaire);
     const total = [...employees.map((i:any)=>{
         return {
-        id : i.id, name: i.name +" "+ i.surname, type: "employe"
+        id : i.id, name:i.matricule +" "+ i.name +" "+ i.surname, type: "employe"
         }
     }),...interns.map((i:any)=>{
         return {
-        id : i.id, name: i.name +" "+ i.surname, type: "intern"
+        id : i.id, name:i.matricule +" "+ i.name +" "+ i.surname, type: "intern"
         }
     })]
 

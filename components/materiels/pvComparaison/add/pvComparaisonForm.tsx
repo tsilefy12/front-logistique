@@ -41,7 +41,7 @@ export default function PvComparaisonForm() {
 
     const total = [...bonCommandeExternes.map((i:any)=>{
         return {
-            id : i.id, name: i.reference, type: "BCE"
+            id : i.id, name: i.ref, type: "BCE"
         }
     }),...bonCommandeInternes.map((i:any)=>{
         return {
