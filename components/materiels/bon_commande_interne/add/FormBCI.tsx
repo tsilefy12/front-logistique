@@ -69,18 +69,17 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
             <NavigationContainer>
                 <SectionNavigation>
                 <Stack flexDirection={"row"}>
-                    <Link href="/materiels/bon_commande_interne">
-                    <Button
+                     <Button
                         color="info"
                         variant="text"
                         startIcon={<ArrowBack />}
                         onClick={() => {
+                            route.back()
                             formikProps.resetForm();
                         }}
                     >
                         Retour
                     </Button>
-                    </Link>
                     <Button
                         variant="contained"
                         color="primary"

@@ -9,15 +9,13 @@ import {
      Text,
      View,
 } from "@react-pdf/renderer";
-import { bonReceptionItem } from "../../../../redux/features/bon_reception/bonReception.interface";
+import { ficheDotationItem } from "../../../../redux/features/fiche_dotation/ficheDotation.interface";
 import { format } from "date-fns";
 
-
-function PrintBonReception({ pdfData }: { pdfData: any }) {
-     console.log(pdfData)
+function PrintFicheDotation({ pdfData }: { pdfData: any }) {
      return (
-          <Document>
-               <Page style={{ padding:15 }}>
+          <Document >
+               <Page style={{ padding:15 }} orientation="landscape">
                     <View style={styles.table}>
                          <View style={[styles.row, styles.bold]}>
                               <Text style={styles.row1}>
@@ -27,60 +25,54 @@ function PrintBonReception({ pdfData }: { pdfData: any }) {
                                    />
                               </Text>
                               <View style={styles.row2}>
-                                   <Text>Bon de Réception</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10}}>ASSOCIATION MADAGASIKARA VOAKAY</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10}}>Lot II F 72 H Bis A Andraisora</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10}}>BP 5181, 101 Antananarivo</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10}}>+261 34 25 155 23</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10}}>voakajy@vokajy.mg</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:12,marginTop:10}}>FICHE DE DOTATION</Text>
                               </View>
                          </View>
                     </View>
                     <View style={styles.table}>
-                         <View style={{width:'100%',alignItems:"center"}}>
-                              <Text style={{width:'100%',fontSize:14,textAlign:"center"}}>Association Madagasikara voakajy</Text>
+                         <View style={{width: "100%", border:"1px solid #000" ,display: "flex",flexDirection: "row"}}>
+                              <Text style={{width: "40%",padding:2,fontSize:10}}>Date: {pdfData.date ? format(new Date(pdfData.date),"dd/MM/yyyy") :""}</Text>
+                              <Text style={{width: "40%",padding:2,fontSize:10}}>Région:  {pdfData.region}</Text>
+                              <Text style={{width: "40%",padding:2,fontSize:10}}>District  {pdfData.district}</Text>
+                         </View>
+                         <View style={{width: "100%",display: "flex",border:"1px solid #000",borderTop:"none",flexDirection: "row"}}>
+                              <Text style={{width: "50%",padding:2,fontSize:10}}>Commune:  {pdfData.commune}</Text>
+                              <Text style={{width: "50%",padding:2,fontSize:10}}>Fokontany:  {pdfData.fokontany}</Text>
+                         </View>
+                         <View style={{width: "100%",border:"1px solid #000",borderTop:"none",display: "flex",flexDirection: "row"}}>
+                              <Text style={{width: "50%",padding:2,fontSize:10}}>Grant:  {pdfData.grant}</Text>
+                              <Text style={{width: "50%",padding:2,fontSize:10}}>Ligne budgétaire:  {pdfData.ligneBudgetaire}</Text>
                          </View>
                     </View>
-                    <View style={{width: "100%",}}>
-                         <View style={{width: "100%",display: "flex",flexDirection: "column",marginTop:10}}>
-                              <Text style={{width: "100%",textAlign:"left",fontWeight:"bold",fontSize:10,paddingBottom:5}}>LOT IIf14P Bis A Andraharo</Text>
-                              <Text style={{width: "100%",textAlign:"left",fontSize:10,paddingBottom:5}}>BP 5281,101 Antananarivo</Text>
-                              <Text style={{width: "100%",textAlign:"left",fontSize:10,paddingBottom:5}}>Contact: +261 342515523</Text>
-                         </View>
-                    </View>
-
                     <View style={{width: "100%",marginTop:20,}}>
                          <View style={[styles.rowBody]}>
-                              <Text style={styles.th}>Date</Text>
-                              <Text style={styles.th}>Tiers: Fournisseurs</Text>
+                              <Text style={styles.th}>Nom et Prénom</Text>
+                              <Text style={styles.th}>CIN</Text>
+                              <Text style={styles.th}>Fonction</Text>
+                              <Text style={styles.th}>Désignation</Text>
+                              <Text style={styles.th}>Signature</Text>
                          </View>
                     </View>
-                    <View style={{width: "100%"}}>
-                         <View style={[styles.rowBody]}>
-                              <Text style={styles.tr}>{pdfData.dateReception ? format(new Date(pdfData.dateReception),"dd/MM/yyyy") :""}</Text>
-                              <Text style={styles.tr}>Nom: {pdfData.bonDeCommandeExterne?.vendor?.name}</Text>
-                         </View>
-                    </View>
-
-                    <View style={{width: "100%",marginTop:20,}}>
-                         <View style={[styles.rowBody]}>
-                              <Text style={styles.th}>Desination</Text>
-                              <Text style={styles.th}>Quantité</Text>
-                         </View>
-                    </View>
-                    {pdfData && pdfData.produitRecu?.map(
+                    {pdfData && pdfData.personneConcerne?.map(
                          (element:any, index: any) => {
                               return (
                                    <View style={{width: "100%"}}>
                                         <View style={[styles.rowBody]}>
+                                             <Text style={styles.tr}>{element?.nomPrenom}</Text>
+                                             <Text style={styles.tr}>{element?.cin}</Text>
+                                             <Text style={styles.tr}>{element?.fonction}</Text>
                                              <Text style={styles.tr}>{element?.designation}</Text>
-                                             <Text style={styles.tr}>{element?.quantite}</Text>
+                                             <Text style={styles.tr}></Text>
                                         </View>
                                    </View>
                               )
                          }
                     )} 
-                    <View style={{width: "100%",marginTop:20}}>
-                         <View style={{width:"100%",display:"flex",flexDirection:"row",alignItems:"center"}}>
-                              <Text style={{width: "50%",textAlign:"center",fontSize:12,paddingTop: 2,paddingBottom:4}}>Fournisseur</Text>
-                              <Text style={{width: "50%",textAlign:"center",fontSize:12,paddingTop: 2,paddingBottom:4}}>Client</Text>
-                         </View>
-                    </View>
                </Page>
           </Document>
      );
@@ -94,14 +86,19 @@ const styles = StyleSheet.create({
      row: {
           display: "flex",
           flexDirection: "row",
-          border: "1px solid #000",
           fontSize: 11,
+     },
+     footer:{
+          width: "50%",
+          alignItems:"center",
+          display: "flex",
+          flexDirection: "column",
      },
      rowBody: {
           display: "flex",
           flexDirection: "row",
           fontSize: 11,
-          border: "1px solid #000",
+          border:"1px solid #000"
      },
      th:{
           width: "50%",
@@ -110,7 +107,6 @@ const styles = StyleSheet.create({
           paddingTop: 2,
           paddingBottom: 2,
           paddingLeft:2,
-          textDecoration: "underline",
           fontWeight: "bold",
           fontSize: 10,
      },
@@ -118,6 +114,7 @@ const styles = StyleSheet.create({
           width: "50%",
           textAlign: "left",
           borderLeft: "1px solid #000",
+          borderTop:"none",
           paddingTop: 2,
           paddingBottom: 2,
           paddingLeft:2,
@@ -142,15 +139,15 @@ const styles = StyleSheet.create({
           justifyContent: "center",
      },
      logo: {
-          width: 100,
-          height: 90,
+          width: 80,
+          height: 70,
      },
 });
-export default function PDFButton({ data }: { data: bonReceptionItem }) {
+export default function PDFButton({ data }: { data: ficheDotationItem }) {
      return (
           <PDFDownloadLink
-               document={<PrintBonReception pdfData={data} />}
-               fileName="bon_reception.pdf"
+               document={<PrintFicheDotation pdfData={data} />}
+               fileName="fiche_dotation.pdf"
           >
                {({ blob, url, loading, error }) =>
                loading ? (

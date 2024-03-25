@@ -12,29 +12,31 @@ import Link from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
-import { getBonCommandeInterne } from "../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice";
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
-import PDFButton from "./PrintBci";
-const DetailsBCI = () => {
+import { getFicheDotation } from "../../../../redux/features/fiche_dotation/ficheDotationSlice";
+import PDFButton from "./PrintFicheDotation";
+const DetailsFicheDotation = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { id }: any = router.query;
-    const { bonCommandeInterne } = useAppSelector((state) => state.bonCommandeInterne);
+    const { ficheDotation } = useAppSelector((state) => state.ficheDeDotation);
     // const [pdfData, setPdfData] = useState<any>();
 
-    const getDetailsBCI = () => {
-        dispatch(getBonCommandeInterne({ id,args:{
+    const getDetailsFicheDotation = () => {
+        dispatch(getFicheDotation({ id,args:{
             include:{
-                ArticleCommande:true
+                personneConcerne:true
             }
         }}));
-        // setPdfData(bonCommandeInterne)
+        // setPdfData(ficheDotation)
+
     };
 
     useEffect(()=> {
-        getDetailsBCI();
-        console.log(bonCommandeInterne)
-    },[id,bonCommandeInterne])
+        getDetailsFicheDotation();
+        console.log(ficheDotation)
+    },[id,ficheDotation])
+
     return (
         <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
             <SectionNavigation
@@ -43,15 +45,16 @@ const DetailsBCI = () => {
                 sx={{ mb: 2 }}
             >
                 <Stack flexDirection={"row"}>
-                    <Link href="/materiels/bon_commande_intern">
-                        <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
-                            Retour
-                        </Button>
-                    </Link>
-                    <PDFButton data={bonCommandeInterne} />
+                    <Button color="info" variant="text" onClick={()=>{
+                        router.back()
+                    }}startIcon={<ArrowBackIcon />
+                    }>
+                        Retour
+                    </Button>
+                    <PDFButton data={ficheDotation} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">
-                    Details d'une bon de commande interne
+                    Details d'une fiche de dotation
                 </Typography>
             </SectionNavigation>
             <DetailsContainer>
@@ -65,89 +68,77 @@ const DetailsBCI = () => {
                                 alignItems: "center",
                             }}
                             >
-                        <Grid container spacing={4} my={1}>
+                            <Grid container spacing={4} my={1}>
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                            N° Bon de commande
+                                            Region
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                        {bonCommandeInterne.numBonCommande}
-                                        </Typography>
-                                    </InfoItems>
-                                    </Grid>
-                                    <Grid item xs={12} md={12}>
-                                    <InfoItems direction="row" spacing={2}>
-                                        <Typography variant="body1" color="secondary">
-                                            Demandeur
-                                        </Typography>
-                                        <Typography variant="body1" color="gray">
-                                            {bonCommandeInterne.owner?.name} {bonCommandeInterne.owner?.surname}
+                                            {ficheDotation?.region}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                            Montant total
+                                            District
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                            {bonCommandeInterne.montantTotal}
+                                            {ficheDotation.district}
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Commune
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            {ficheDotation.commune}
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Fokontany
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            {ficheDotation.fokontany}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
                             </Grid>
                             <Grid container spacing={4} my={1}>
-                                <Grid item xs={12} md={12}>
-                                    <InfoItems direction="row" spacing={2}>
-                                        <Typography variant="body1" color="secondary">
-                                            N° Bon de commande interne
-                                        </Typography>
-                                        <Typography variant="body1" color="gray">
-                                        {bonCommandeInterne.numBon}
-                                        </Typography>
-                                    </InfoItems>
-                                    </Grid>
-                                    <Grid item xs={12} md={12}>
-                                    <InfoItems direction="row" spacing={2}>
-                                        <Typography variant="body1" color="secondary">
-                                            Grant
-                                        </Typography>
-                                        <Typography variant="body1" color="gray">
-                                        {bonCommandeInterne.grant}
-                                        </Typography>
-                                    </InfoItems>
-                                </Grid>
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
                                             Ligne budgétaire
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                            {bonCommandeInterne.ligneBudgetaire}
+                                            {ficheDotation.ligneBudgetaire}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
-                            </Grid>
-                            <Grid container spacing={4} my={1}>
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                            Programme
+                                            Grant
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                            {bonCommandeInterne.programme}
+                                            {ficheDotation.grant}
                                         </Typography>
                                     </InfoItems>
-                                    </Grid>
-                                    <Grid item xs={12} md={12}>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
                                             Date
                                         </Typography>
                                         <Typography variant="body1" color="gray">
                                             <Moment format="DD/MM/YYYY">
-                                                {bonCommandeInterne.dateBonCommande}
+                                                {ficheDotation.date}
                                             </Moment>
                                         </Typography>
                                     </InfoItems>
@@ -167,32 +158,29 @@ const DetailsBCI = () => {
                                 }}
                                 >
                                 <Typography variant="h6" id="tableTitle" component="div">
-                                    Liste des articles
+                                    Liste des personnes concernés
                                 </Typography>
                             </Stack>
                             <TableContainer component={Paper}>
                                 <Table sx={{ minWidth: 700 }} aria-label="simple table">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Designation</TableCell>
-                                            <TableCell align="left">Caractéristique</TableCell>
-                                            <TableCell align="left">PU</TableCell>
-                                            <TableCell align="left">Quantité</TableCell>
-                                            <TableCell align="left">Valeur</TableCell>
-                                            <TableCell></TableCell>
+                                            <TableCell>Nom et Prénom</TableCell>
+                                            <TableCell align="left">CIN</TableCell>
+                                            <TableCell align="left">Fonction</TableCell>
+                                            <TableCell align="left">Désignation</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {bonCommandeInterne.ArticleCommande?.map((item:any , index:any) => (
+                                        {ficheDotation.personneConcerne?.map((item:any , index:any) => (
                                             <TableRow
                                                 key={index}
                                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                             >
-                                                <TableCell component="th" scope="row">{item.designation}</TableCell>
-                                                <TableCell align="left">{item.caracteristik}</TableCell>
-                                                <TableCell align="left">{item.quantite}</TableCell>
-                                                <TableCell align="left">{item.pu}  Ar</TableCell>
-                                                <TableCell align="left">{item.valueArticle} Ar</TableCell>
+                                                <TableCell component="th" scope="row">{item.nomPrenom}</TableCell>
+                                                <TableCell align="left">{item.cin}</TableCell>
+                                                <TableCell align="left">{item.fonction}</TableCell>
+                                                <TableCell align="left">{item.designation}</TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
@@ -205,7 +193,7 @@ const DetailsBCI = () => {
     );
 };
 
-export default DetailsBCI;
+export default DetailsFicheDotation;
 
 export const InfoItems = styled(Stack)(({ theme }) => ({}));
 

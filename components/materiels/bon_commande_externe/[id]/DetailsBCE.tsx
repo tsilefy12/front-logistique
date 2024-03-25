@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
 import { getBonCommandeExterne } from "../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
+import PDFButton from "./printBCE";
 
 const DetailsBCE = () => {
     const router = useRouter();
@@ -46,11 +47,12 @@ const DetailsBCE = () => {
                 sx={{ mb: 2 }}
             >
                 <Stack flexDirection={"row"}>
-                    <Link href="/materiels/bon_commande_externe">
-                        <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
-                            Retour
-                        </Button>
-                    </Link>
+                    <Button color="info"
+                        onClick={()=> router.back()}
+                     variant="text" startIcon={<ArrowBackIcon />}>
+                        Retour
+                    </Button>
+                    <PDFButton data={bonCommandeExterne} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">
                     Details d'une bon de commande externe

@@ -9,12 +9,14 @@ import { cancelEdit } from '../../../../redux/features/bon_reception/bonReceptio
 import Check from '@mui/icons-material/Check';
 import Close from '@mui/icons-material/Close';
 import OSSelectField from '../../../shared/select/OSSelectField';
-import OSDatePicker from '../../../shared/date/OSDatePicker';
 import { getBonCommandeExterne, getBonCommandeExternes } from "../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
 import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
+import { useRouter } from 'next/router';
 
 const FormBonReception = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any}) => {
     const dispatch = useAppDispatch();
+    const route = useRouter();
+    
     const { isEditing } = useAppSelector((state) => state.bonReceptions);
     const { bonCommandeExternes } = useAppSelector((state) => state.bonCommendeExterne);
     const fetchUtilsData = () => {
@@ -45,19 +47,18 @@ const FormBonReception = ({formikProps,valuesArticle}: {formikProps: FormikProps
             <NavigationContainer>
                 <SectionNavigation>
                 <Stack flexDirection={"row"}>
-                    <Link href="/materiels/bon_reception">
-                        <Button
-                            color="info"
-                            variant="text"
-                            startIcon={<ArrowBack />}
-                            onClick={() => {
+                    <Button
+                        color="info"
+                        variant="text"
+                        startIcon={<ArrowBack />}
+                        onClick={() => {
+                            route.back()
                             formikProps.resetForm();
-                                dispatch(cancelEdit());
-                            }}
-                        >
-                            Retour
-                        </Button>
-                    </Link>
+                            dispatch(cancelEdit());
+                        }}
+                    >
+                        Retour
+                    </Button>
                     <Button
                         variant="contained"
                         color="primary"

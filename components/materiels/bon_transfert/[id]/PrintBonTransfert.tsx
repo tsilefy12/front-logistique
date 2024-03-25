@@ -10,8 +10,10 @@ import {
      View,
 } from "@react-pdf/renderer";
 import { bonTransfertItem } from "../../../../redux/features/bon_transfert/bonTransfert.interface";
+import { format } from "date-fns";
 
 function PrintBonTransfert({ pdfData }: { pdfData: any }) {
+     console.log(pdfData.dateExp)
      return (
           <Document>
                <Page style={{ padding:15 }}>
@@ -44,7 +46,7 @@ function PrintBonTransfert({ pdfData }: { pdfData: any }) {
                                         <Text style={{width: "100%",border:"1px solid #000",textAlign:"left",fontSize:10,paddingBottom:5}}>VIA</Text>
                                    </View>
                                    <View style={{width: "50%",display: "flex",flexDirection: "column"}}>
-                                        <Text style={{width: "100%",border:"1px solid #000",textAlign:"left",fontWeight:"bold",fontSize:10,paddingBottom:5}}>{pdfData?.dateExp}</Text>
+                                        <Text style={{width: "100%",border:"1px solid #000",textAlign:"left",fontWeight:"bold",fontSize:10,paddingBottom:5}}>{pdfData.dateExp ? format(new Date(pdfData.dateExp),"dd/MM/yyyy"):""}</Text>
                                         <Text style={{width: "100%",border:"1px solid #000",textAlign:"left",fontSize:10,paddingBottom:5}}>{pdfData?.expeditionVia}</Text>
                                    </View>
                               </View>

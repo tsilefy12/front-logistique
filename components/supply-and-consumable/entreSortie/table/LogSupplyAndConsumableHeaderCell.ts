@@ -17,7 +17,7 @@ export const logSuplyAndConsumableHeadCells: readonly HeadCell[] = [
     id: "quantity",
     numeric: false,
     disablePadding: false,
-    label: "Quantity",
+    label: "Quantité",
   },
   {
     id: "SKU",

@@ -13,10 +13,10 @@ import OSSelectField from '../../../shared/select/OSSelectField';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 
-const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any}) => {
+const FormFicheDotation = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any}) => {
     const dispatch = useAppDispatch();
 
-    const { isEditing } = useAppSelector((state) => state.bonTransfert);
+    const { isEditing } = useAppSelector((state) => state.ficheDeDotation);
     const route = useRouter();
     
     const { employees } = useAppSelector((state) => state.employe);
@@ -45,11 +45,11 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
         fetchUtilsData();
     }, []);
 
-    useEffect(() => {
-        const Val:any = total.find((e:any)=> e.id === formikProps.values.destination)
-        formikProps.setFieldValue("type", Val?.type)
-        console.log(formikProps.values.type)
-    }, [formikProps.values.destination]);
+    // useEffect(() => {
+    //     const Val:any = total.find((e:any)=> e.id === formikProps.values.destination)
+    //     formikProps.setFieldValue("type", Val?.type)
+    //     console.log(formikProps.values.type)
+    // }, [formikProps.values.destination]);
 
     return (
         <Form>
@@ -93,7 +93,7 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                     </Button>
                 </Stack>
                 <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"} Bon de transfert
+                    {isEditing ? "Modifier" : "Ajouter"} Fiche de dotation
                 </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -108,9 +108,15 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                     }}
                     >
                     <Typography variant="h6" id="tableTitle" component="div">
-                        Bon de transfert
+                        Fiche de dotation
                     </Typography>
                 </Stack>
+                <FormControl fullWidth>
+                    <OSDateTimePicker
+                        label="Date"
+                        name="date"
+                    />
+                </FormControl>
                 <Stack
                     direction="row"
                     justifyContent="flex-start"
@@ -118,23 +124,21 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                     spacing={2}
                     >
                     <FormControl fullWidth>
-                        <OSSelectField
+                        <OSTextField
+                            fullWidth
                             id="outlined-basic"
-                            label="Expediteur"
-                            name="expediteur"
-                            options={employees}
-                            dataKey={["name","surname"]}
-                            valueKey="id"
+                            variant="outlined"
+                            label="Région"
+                            name="region"
                         />
                     </FormControl>
                     <FormControl fullWidth>
-                        <OSSelectField
+                        <OSTextField
+                            fullWidth
                             id="outlined-basic"
-                            label="Destination"
-                            name="destination"
-                            options={total}
-                            dataKey={["name"]}
-                            valueKey="id"
+                            variant="outlined"
+                            label="District"
+                            name="district"
                         />
                     </FormControl>
                 </Stack>
@@ -149,14 +153,17 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                             fullWidth
                             id="outlined-basic"
                             variant="outlined"
-                            label="Expedition via"
-                            name="expeditionVia"
+                            label="Commune"
+                            name="commune"
                         />
                     </FormControl>
                     <FormControl fullWidth>
-                        <OSDateTimePicker
-                            label="Date expedition"
-                            name="dateExp"
+                        <OSTextField
+                            fullWidth
+                            id="outlined-basic"
+                            variant="outlined"
+                            label="Fokotany"
+                            name="fokontany"
                         />
                     </FormControl>
                 </Stack>
@@ -167,13 +174,13 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                     spacing={2}
                 >
                     <FormControl fullWidth>
-                        <OSTextField
-                            fullWidth
+                        <OSSelectField
                             id="outlined-basic"
-                            variant="outlined"
-                            label="Departement"
-                            name="departement"
-                            type="text"
+                            label="Ligne budgétaire"
+                            name="ligneBudgetaire"
+                            options={grantList}
+                            dataKey={["name"]}
+                            valueKey="id"
                         />
                     </FormControl>
                     <FormControl fullWidth>
@@ -185,7 +192,7 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                             dataKey={["name"]}
                             valueKey="id"
                         />
-                </FormControl>
+                    </FormControl>
                 </Stack>
             </FormContainer>
             <Box>
@@ -199,18 +206,17 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                         }}
                         >
                         <Typography variant="h6" id="tableTitle" component="div">
-                            Article à Transferer
+                            Personne concerné
                         </Typography>
                     </Stack>
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 700 }} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Designation</TableCell>
-                                    <TableCell align="left">Quantité commander</TableCell>
-                                    <TableCell align="left">Quantité expedié</TableCell>
-                                    <TableCell align="left">Observation</TableCell>
-                                    <TableCell></TableCell>
+                                    <TableCell>Nom et Prénom</TableCell>
+                                    <TableCell align="left">CIN</TableCell>
+                                    <TableCell align="left">Fonction</TableCell>
+                                    <TableCell align="left">Désignation</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -219,10 +225,10 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                                         key={index}
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                     >
-                                        <TableCell component="th" scope="row">{item.designation}</TableCell>
-                                        <TableCell align="left">{item.quantiteCommander}</TableCell>
-                                        <TableCell align="left">{item.quantiteExpedie}</TableCell>
-                                        <TableCell align="left">{item.observation}</TableCell>
+                                        <TableCell component="th" scope="row">{item.nomPrenom}</TableCell>
+                                        <TableCell align="left">{item.cin}</TableCell>
+                                        <TableCell align="left">{item.fonction}</TableCell>
+                                        <TableCell align="left">{item.designation}</TableCell>
                                         <TableCell
                                         align="center"
                                         sx={{ width: 150, background: "#F5F5F5" }}
@@ -257,9 +263,27 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                                         <TableCell component="th" scope="row">
                                             <FormControl fullWidth>
                                                 <OSTextField
-                                                    id="designation"
-                                                    label="Désignation"
-                                                    name="designation"
+                                                    id="cin"
+                                                    label="Nom et Prénom"
+                                                    name="nomPrenom"
+                                                    type="text"
+                                                />
+                                            </FormControl>
+                                            {/* <OSSelectField
+                                                id="outlined-basic"
+                                                label="Nom et Prénom"
+                                                name="nomPrenom"
+                                                options={total}
+                                                dataKey={["name"]}
+                                                valueKey="id"
+                                            /> */}
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            <FormControl fullWidth>
+                                                <OSTextField
+                                                    id="cin"
+                                                    label="CIN"
+                                                    name="cin"
                                                     type="text"
                                                 />
                                             </FormControl>
@@ -267,29 +291,19 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                                         <TableCell align="left">
                                             <FormControl fullWidth>
                                                 <OSTextField
-                                                    id="quantiteCommander"
-                                                    label="Quantité commander"
-                                                    name="quantiteCommander"
-                                                    type="number"
+                                                    id="fonction"
+                                                    label="Fonction"
+                                                    name="fonction"
+                                                    type="text"
                                                 />
                                             </FormControl>
                                         </TableCell>
                                         <TableCell align="left">
                                             <FormControl fullWidth>
                                                 <OSTextField
-                                                    id="quantiteExpedie"
-                                                    label="Quantité expedié"
-                                                    name="quantiteExpedie"
-                                                    type="number"
-                                                />
-                                            </FormControl>
-                                        </TableCell>
-                                        <TableCell align="left">
-                                            <FormControl fullWidth>
-                                                <OSTextField
-                                                    id="observation"
-                                                    label="observation"
-                                                    name="observation"
+                                                    id="designation"
+                                                    label="Désignation"
+                                                    name="designation"
                                                     type="text"
                                                 />
                                             </FormControl>
@@ -307,22 +321,22 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                                                 <IconButton
                                                     type="button"
                                                     onClick={() => {
+                                                        const nomPrenom = formikProps.values.nomPrenom;
+                                                        const cin = formikProps.values.cin;
+                                                        const fonction = formikProps.values.fonction;
                                                         const designation = formikProps.values.designation;
-                                                        const quantiteCommander = formikProps.values.quantiteCommander;
-                                                        const quantiteExpedie = formikProps.values.quantiteExpedie;
-                                                        const observation = formikProps.values.observation;
                                                             // Vérifier si les champs sont vides
-                                                            if (designation.trim() !== '' && observation.trim() !== '') {
-                                                            valuesArticle.push({
-                                                                designation: designation,
-                                                                quantiteCommander: quantiteCommander,
-                                                                quantiteExpedie: quantiteExpedie,
-                                                                observation: observation,
-                                                            });
+                                                            if (designation.trim() !== '' && fonction.trim() !== '') {
+                                                                valuesArticle.push({
+                                                                    nomPrenom: nomPrenom,
+                                                                    cin: cin,
+                                                                    fonction: fonction,
+                                                                    designation: designation,
+                                                                });
+                                                            formikProps.setFieldValue('nomPrenom', '');
+                                                            formikProps.setFieldValue('cin', "");
+                                                            formikProps.setFieldValue('fonction', "");
                                                             formikProps.setFieldValue('designation', '');
-                                                            formikProps.setFieldValue('quantiteCommander', 0);
-                                                            formikProps.setFieldValue('quantiteExpedie', 0);
-                                                            formikProps.setFieldValue('observation', '');
                                                         }
                                                         
                                                     }}
@@ -332,10 +346,10 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                                                 <IconButton
                                                     type="button"
                                                     onClick={() => {
+                                                        formikProps.setFieldValue('nomPrenom', '');
+                                                        formikProps.setFieldValue('cin', "");
+                                                        formikProps.setFieldValue('fonction', "");
                                                         formikProps.setFieldValue('designation', '');
-                                                        formikProps.setFieldValue('quantiteCommander', 0);
-                                                        formikProps.setFieldValue('quantiteExpedie', 0);
-                                                        formikProps.setFieldValue('observation', '');
                                                     }}
                                                     >
                                                     <Close />
@@ -352,7 +366,7 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
     )
 }
 
-export default FormBonTransfert
+export default FormFicheDotation
 const FormContainer = styled(Stack)(({ theme }) => ({
     padding: 30,
     borderRadius: 20,

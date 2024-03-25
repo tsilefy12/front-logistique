@@ -15,10 +15,10 @@ const initialState: ficheDotationItemInitialState = {
 };
 
 export const editFicheDotation = createAsyncThunk(
-    "fourniture_consommable/editFicheDotation",
+    "materiels/editFicheDotation",
     async (data: { id: string }, thunkAPI) => {
         try {
-            const response = await axios.get(`/logistique/bon-de-transfert/${data.id}`);
+            const response = await axios.get(`/logistique/fiche-de-dotation/${data.id}`);
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -30,13 +30,13 @@ export const editFicheDotation = createAsyncThunk(
 );
 
 export const createFicheDotation = createAsyncThunk(
-    "fourniture_consommable/createFicheDotation",
+    "materiels/createFicheDotation",
     async (data: ficheDotationItem, thunkAPI) => {
       try {
-        const response = await axios.post("/logistique/bon-de-transfert", data);
+        const response = await axios.post("/logistique/fiche-de-dotation", data);
         thunkAPI.dispatch(
           enqueueSnackbar({
-            message: "Bon  de Transfert créé avec succès",
+            message: "Fiche de dotation créé avec succès",
             options: {
               variant: "success",
             },
@@ -53,13 +53,13 @@ export const createFicheDotation = createAsyncThunk(
 );
   
 export const deleteFicheDotation = createAsyncThunk(
-    "fourniture_consommable/deleteFicheDotation",
+    "materiels/deleteFicheDotation",
     async (data: { id: string }, thunkAPI) => {
       try {
-        const response = await axios.delete(`/logistique/bon-de-transfert/${data.id}`);
+        const response = await axios.delete(`/logistique/fiche-de-dotation/${data.id}`);
         thunkAPI.dispatch(
           enqueueSnackbar({
-            message: "Bon de Transfert supprimé avec succès",
+            message: "Fiche de dotation supprimé avec succès",
             options: {
               variant: "success",
             },
@@ -75,13 +75,13 @@ export const deleteFicheDotation = createAsyncThunk(
     }
 );
 export const getFicheDotations = createAsyncThunk(
-  "fourniture_consommable/getFicheDotations",
+  "materiels/getFicheDotations",
   async (data: { args?: any }, thunkAPI) => {
     try {
       const params = {
         args: JSON.stringify(data.args),
       };
-      const response = await axios.get("/logistique/bon-de-transfert", { params });
+      const response = await axios.get("/logistique/fiche-de-dotation", { params });
       return response.data;
     } catch (error: any) {
       if (error.response) {
@@ -92,13 +92,13 @@ export const getFicheDotations = createAsyncThunk(
   }
 );
 export const getFicheDotation = createAsyncThunk(
-  "fourniture_consommable/getFicheDotation",
+  "materiels/getFicheDotation",
   async (data: { id: string , args?: any }, thunkAPI) => {
     try {
       const params = {
         args: JSON.stringify(data.args),
       };
-      const response = await axios.get(`/logistique/bon-de-transfert/${data.id}`, { params });
+      const response = await axios.get(`/logistique/fiche-de-dotation/${data.id}`, { params });
       return response.data
     } catch (error: any) {
       if (error.response) {

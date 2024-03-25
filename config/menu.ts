@@ -73,6 +73,12 @@ const menu = [
       },
       {
         id: 113,
+        name: "Fiche de dotation",
+        link: "/materiels/fiche_dotation",
+        icon: "",
+      },
+      {
+        id: 114,
         name: "Inventaire",
         link: "/materiels/inventaire",
         icon: "",

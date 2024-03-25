@@ -8,28 +8,14 @@ import {
      StyleSheet,
      Text,
      View,
-     Font,
 } from "@react-pdf/renderer";
 import { BonCommandeItem } from "../../../../redux/features/bon_commande_interne/bonCommandeInterne.interface";
-
-Font.register({
-  family: "Open Sans",
-  fonts: [
-    {
-      src: "https://cdn.jsdelivr.net/npm/open-sans-all@0.1.3/fonts/open-sans-regular.ttf",
-    },
-    {
-      src: "https://cdn.jsdelivr.net/npm/open-sans-all@0.1.3/fonts/open-sans-600.ttf",
-      fontWeight: 600,
-    },
-  ],
-});
 
 function PrintBCI({ pdfData }: { pdfData: any }) {
      console.log(pdfData)
      return (
           <Document>
-               <Page style={{ padding:15 }}>
+               <Page style={{ padding:15 }} orientation="landscape">
                     <View style={styles.table}>
                          <View style={[styles.row, styles.bold, styles.header]}>
                               <Text style={styles.row1}>

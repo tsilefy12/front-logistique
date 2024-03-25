@@ -236,7 +236,7 @@ export default function ListArticleOffre() {
     },
     {
       field: "otherInformation",
-      headerName: "Autre inforamtion",
+      headerName: "Autre information",
       editable: true,
       type: "text",
       flex: 1,

@@ -5,7 +5,7 @@ import { getEmployees } from '../../../../redux/features/employeStagiaire/employ
 import { getFournisseurList } from '../../../../redux/features/fournisseur';
 import { getBonCommandeInternes } from '../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import { Box ,Button,Divider,FormControl,IconButton,Link,Stack,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Typography,styled} from '@mui/material';
 import OSTextField from '../../../shared/input/OSTextField';
 import OSSelectField from '../../../shared/select/OSSelectField';
@@ -59,18 +59,17 @@ const FormBCE = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
             <NavigationContainer>
                 <SectionNavigation>
                 <Stack flexDirection={"row"}>
-                    <Link href="/materiels/bon_commande_externe">
                     <Button
                         color="info"
                         variant="text"
                         startIcon={<ArrowBack />}
                         onClick={() => {
+                            route.back()
                             formikProps.resetForm();
                         }}
                     >
                         Retour
                     </Button>
-                    </Link>
                     <Button
                         variant="contained"
                         color="primary"

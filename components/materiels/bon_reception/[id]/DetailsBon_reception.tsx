@@ -30,7 +30,9 @@ const DetailsBonReception = () => {
         dispatch(getBonReception({ id,args:{
             include:{
                 produitRecu:true,
-                bonDeCommandeExterne:true
+                bonDeCommandeExterne:{
+                    vendor:true
+                }
             }
         }}));
     };

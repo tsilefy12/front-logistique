@@ -18,6 +18,7 @@ import { createFile } from "../../../../redux/features/file/fileSlice";
 export default function BonCommandeExterneForm() {
     const dispatch = useAppDispatch();
     const route = useRouter();
+    
     const valuesArticle:any = []
 
     const { isEditing } = useAppSelector((state) => state.bonCommendeExterne)

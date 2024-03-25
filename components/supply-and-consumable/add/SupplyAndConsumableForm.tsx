@@ -193,7 +193,7 @@ export default function SuplyAndConsumableForm() {
                   />
                   <OSTextField
                     id="outlined-basic"
-                    label="Mois de prevision"
+                    label="Mois de provision"
                     name="moisPrevision"
                     type="text"
                   />
