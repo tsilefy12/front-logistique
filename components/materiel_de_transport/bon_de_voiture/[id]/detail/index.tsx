@@ -21,6 +21,7 @@ import {
   useAppSelector,
 } from "../../../../../hooks/reduxHooks";
 import { getCarVoucher } from "../../../../../redux/features/car-voucher";
+import { format } from "date-fns";
 //   import { getTransportationEquipment } from "../../../../redux/features/transportation_equipment";
 
 const DetailBonDeVoiture = () => {
@@ -59,7 +60,7 @@ const DetailBonDeVoiture = () => {
             </Button>
           </Link>
           <Typography variant="h4" color="GrayText">
-            Details bon de voiture
+            Details d'entretien
           </Typography>
         </SectionNavigation>
         <Divider />
@@ -69,10 +70,10 @@ const DetailBonDeVoiture = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-                Numéro BV :
+                Matériel :
               </Typography>
               <Typography variant="body1" color="gray">
-                {carVoucher.number}
+                {carVoucher.materiel}
               </Typography>
             </InfoItems>
           </Grid>
@@ -81,10 +82,10 @@ const DetailBonDeVoiture = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-                Immatriculation :
+                Date :
               </Typography>
               <Typography variant="body1" color="gray">
-                {carVoucher.registration}
+              <Moment format="DD/MM/YYYY">{carVoucher.date}</Moment>
               </Typography>
             </InfoItems>
           </Grid>
@@ -93,88 +94,40 @@ const DetailBonDeVoiture = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-                Type :
+                Montant total :
               </Typography>
               <Typography variant="body1" color="gray">
-                {carVoucher.type}
+                {carVoucher.montantTotal}
               </Typography>
             </InfoItems>
           </Grid>
         </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Motif :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {carVoucher.reason}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Argumentaire :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {carVoucher.argument}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Itineraire :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {carVoucher.itinerary}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
+        {    /*    <Grid container spacing={4} my={1}>
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
                 Date et heure de départ :
               </Typography>
-              <Typography variant="body1" color="gray">
+             <Typography variant="body1" color="gray">
                 <Moment format="DD/MM/YYYY">{carVoucher.departureDate}</Moment>{" "}
                 à <Moment format="HH:mm">{carVoucher.departureTime}</Moment>
-              </Typography>
+  </Typography>
             </InfoItems>
           </Grid>
         </Grid>
-        <Grid container spacing={4} my={1}>
+  <Grid container spacing={4} my={1}>
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
                 Date et heure de départ :
               </Typography>
-              <Typography variant="body1" color="gray">
+              {/*<Typography variant="body1" color="gray">
                 <Moment format="DD/MM/YYYY">{carVoucher.arrivalDate}</Moment> à{" "}
                 <Moment format="HH:mm">{carVoucher.arrivalTime}</Moment>
-              </Typography>
+</Typography>
             </InfoItems>
           </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Quantité :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {carVoucher.quantity}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
+        </Grid>*/}
       </DetailsContainer>
     </Container>
   );

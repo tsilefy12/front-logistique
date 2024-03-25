@@ -27,6 +27,7 @@ import {
   createTransportEquipment,
   updateTransportationEquipment,
 } from "../../../redux/features/transportation_equipment";
+import OSDatePicker from "../../shared/date/OSDatePicker";
 
 const MaterielTransportForm = () => {
   const route = useRouter();
@@ -72,6 +73,12 @@ const MaterielTransportForm = () => {
           otherInformation: isEditing
             ? transportationEquipment?.otherInformation
             : "",
+          status: isEditing ? transportationEquipment.status:"",
+          dateAcquisition: isEditing ? transportationEquipment.dateAcquisition: new Date(),
+          kilometrageInitial: isEditing ? transportationEquipment.kilometrageInitial: "",
+          reservoir: isEditing ? transportationEquipment.reservoir: "",
+          consommation: isEditing ? transportationEquipment.consommation: "",
+          fournisseur: isEditing ? transportationEquipment.fournisseur : "",
         }}
         validationSchema={Yup.object({
           registration: Yup.string().required(
@@ -81,6 +88,24 @@ const MaterielTransportForm = () => {
           brand: Yup.string().required("Veuillez remplir le champ brand"),
           otherInformation: Yup.string().required(
             "Veuillez remplir le champ otherInformation"
+          ),
+          status: Yup.string().required(
+            "Veuillez remplir le champ status"
+          ),
+          dateAcquisition: Yup.string().required(
+            "Veuillez remplir le champ date d'acquisition"
+          ),
+          kilometrageInitial: Yup.string().required(
+            "Veuillez remplir le champ kilometrage initial"
+          ),
+          reservoir: Yup.string().required(
+            "Veuillez remplir le champ reservoir"
+          ),
+          consommation: Yup.string().required(
+            "Veuillez remplir le champ consommation"
+          ),
+          fournisseur: Yup.string().required(
+            "Veuillez remplir le champ fournisseur"
           ),
         })}
         onSubmit={(value: any, action: any) => {
@@ -139,6 +164,7 @@ const MaterielTransportForm = () => {
               </NavigationContainer>
 
               <FormContainer spacing={2}>
+                <Stack direction="row" spacing={3} margin={2}>
                 <OSTextField
                   fullWidth
                   id="outlined-basic"
@@ -146,7 +172,6 @@ const MaterielTransportForm = () => {
                   variant="outlined"
                   name="registration"
                 />
-                <FormControl fullWidth>
                   <OSSelectField
                     id="outlined-basic"
                     label="Type"
@@ -156,23 +181,65 @@ const MaterielTransportForm = () => {
                     valueKey="id"
                     name="type"
                   />
-                </FormControl>
-                <FormControl fullWidth>
                   <OSTextField
                     id="outlined-basic"
                     label="Marque"
                     variant="outlined"
                     name="brand"
                   />
-                </FormControl>
-                <FormControl fullWidth>
+                </Stack>
+                <Stack direction="row" spacing={2} margin={2}>
+                <OSTextField
+                    id="outlined-basic"
+                    label="Status"
+                    variant="outlined"
+                    name="status"
+                  />
+                  <OSDatePicker
+                    id="outlined-basic"
+                    label="Date d'acquisition"
+                    variant="outlined"
+                    value={formikProps.values.dateAcquisition}
+                    onChange={(value: any) =>formikProps.setFieldValue("dateAcquisition", value)}
+                  />
+                </Stack>
+                <Stack direction="row" spacing={3} margin={2}>
+                <OSTextField
+                    id="outlined-basic"
+                    label="Kilometrage initial"
+                    variant="outlined"
+                    name="kilometrageInitial"
+                    type="number"
+                  />
+                <OSTextField
+                    id="outlined-basic"
+                    label="Reservoir"
+                    variant="outlined"
+                    name="reservoir"
+                    type="number"
+                  />
                   <OSTextField
+                    id="outlined-basic"
+                    label="Consommation"
+                    variant="outlined"
+                    name="consommation"
+                    type="number"
+                  />
+                </Stack>
+                <Stack direction="row" spacing={2} margin={2}>
+                <OSTextField
                     id="outlined-basic"
                     label="Autre information"
                     variant="outlined"
                     name="otherInformation"
                   />
-                </FormControl>
+                <OSTextField
+                    id="outlined-basic"
+                    label="fournisseur"
+                    variant="outlined"
+                    name="fournisseur"
+                  />
+                </Stack>
               </FormContainer>
             </Form>
           );

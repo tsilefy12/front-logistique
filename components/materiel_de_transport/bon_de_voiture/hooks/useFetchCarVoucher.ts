@@ -1,3 +1,4 @@
+
 import { useRouter } from "next/router";
 import { useAppDispatch } from "../../../../hooks/reduxHooks";
 import { getCarVouchers } from "../../../../redux/features/car-voucher";
@@ -15,57 +16,57 @@ const useFetchCarVouchers = () => {
         let args: any = {};
         if (router.query.search) {
             args.where = {
-                OR : [
+                OR: [
                     {
-                        number: {
+                        materiel: {
                             contains: router.query.search,
                             mode: "insensitive",
                         },
-                    }, 
+                    },
                     {
-                        registration: {
+                        date: {
                             contains: router.query.search,
                             mode: "insensitive",
                         },
-                    }, 
+                    },
                     {
-                        type: {
+                        montantTotal: {
                             contains: router.query.search,
                             mode: "insensitive",
                         },
-                    },          
+                    },
                 ],
-            }      
+            }
         }
 
         if (router.query.orderBy && router.query.order) {
             switch (router.query.orderBy) {
-                case "number":
+                case "materiel":
                     args.orderBy = {
-                        number: router.query.order
-                    };
-                    break;
-      
-                case "registration":
-                    args.orderBy = {
-                        registration:router.query.order
+                        materiel: router.query.order
                     };
                     break;
 
-                case "type":
+                case "date":
                     args.orderBy = {
-                        type: router.query.order
+                        date: router.query.order
                     };
                     break;
-                
-      
-              default:
-                args.orderBy = {
-                  [<string>router.query.orderBy]: router.query.order,
-                };
-                break;
+
+                case "montantTotal":
+                    args.orderBy = {
+                        montantTotal: router.query.order
+                    };
+                    break;
+
+
+                default:
+                    args.orderBy = {
+                        [<string>router.query.orderBy]: router.query.order,
+                    };
+                    break;
             }
-          }
+        }
         await dispatch(getCarVouchers({ args }));
     };
 };

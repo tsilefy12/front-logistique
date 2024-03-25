@@ -33,11 +33,12 @@ import {
   labelRowsPerPage,
 } from "../../shared/table/tableFeature";
 import Moment from "react-moment";
+import { format } from "date-fns";
 
 const ListTransport = () => {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const confirm = useConfirm();
   const router = useRouter();
@@ -98,7 +99,7 @@ const ListTransport = () => {
               Ajouter
             </Button>
           </Link>
-          <Typography variant="h4">Tous les bons de voitures</Typography>
+          <Typography variant="h4">Tous les entretiens</Typography>
         </SectionNavigation>
         {/* <Divider /> */}
       </NavigationContainer>
@@ -122,28 +123,12 @@ const ListTransport = () => {
                       return (
                         <TableRow hover tabIndex={-1} key={row.id}>
                           <TableCell component="th" id={labelId} align="left">
-                            {row.number}
+                            {row.materiel}
                           </TableCell>
 
-                          <TableCell align="left">{row.registration}</TableCell>
+                          <TableCell align="left">{format(new Date(row.date), "dd/MM/yyyy")}</TableCell>
 
-                          <TableCell align="left">{row.type}</TableCell>
-
-                          <TableCell align="left">
-                            <Moment format="DD/MM/YYYY">
-                              {row.departureDate}
-                            </Moment>{" "}
-                            à{" "}
-                            <Moment format="HH:mm">{row.departureTime}</Moment>
-                          </TableCell>
-
-                          <TableCell align="left">
-                            <Moment format="DD/MM/YYYY">
-                              {row.arrivalDate}
-                            </Moment>{" "}
-                            à <Moment format="HH:mm">{row.arrivalTime}</Moment>
-                          </TableCell>
-
+                          <TableCell align="left">{row.montantTotal}</TableCell>
                           <TableCell align="right" width={"150px"}>
                             <BtnActionContainer
                               direction="row"
