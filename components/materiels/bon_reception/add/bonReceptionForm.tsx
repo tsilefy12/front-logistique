@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
@@ -13,7 +13,7 @@ import FormBonReception from "./FormBonReception";
 import { styled } from "@mui/material";
 
 export default function BonCommandeInterneForm() {
-    const valuesArticle :any[] =[]
+    const [valuesArticle, setValuesArticle] = useState < any[]> ([])
     const dispatch = useAppDispatch();
     const route = useRouter();
 
@@ -21,6 +21,7 @@ export default function BonCommandeInterneForm() {
         try {
             const newDataBCI = {
                 bce: values.bce,
+                reference: values.reference,
                 dateReception: new Date(values.dateReception)
             }
             const response = await dispatch(createBonReception(newDataBCI));
@@ -46,6 +47,7 @@ export default function BonCommandeInterneForm() {
                     initialValues={
                         {
                             bce: "",
+                            reference:"",
                             dateReception: new Date().toISOString(),
                             designation :"",
                             quantite:0,
@@ -53,6 +55,7 @@ export default function BonCommandeInterneForm() {
                     }
                     validationSchema={Yup.object({
                         bce: Yup.string().required("Champ obligatoire"),
+                        reference: Yup.string().required("Champ obligatoire"),
                         dateReception: Yup.date().required("Champ obligatoire"),
                     })}
                     onSubmit={(value: any, action: any) => {
@@ -60,7 +63,7 @@ export default function BonCommandeInterneForm() {
                         action.resetForm();
                     }}
                 >
-                    {(formikProps) => <FormBonReception formikProps={formikProps} valuesArticle={valuesArticle} />}
+                    {(formikProps) => <FormBonReception formikProps={formikProps} valuesArticle={valuesArticle} setValuesArticle={setValuesArticle} />}
                 </Formik>
             </Container>
         </>

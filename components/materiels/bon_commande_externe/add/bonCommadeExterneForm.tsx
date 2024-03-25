@@ -42,7 +42,6 @@ export default function BonCommandeExterneForm() {
         const newDataBCE = {
             ref: values.ref,
             dateCommande: new Date(values.dateCommande),
-            fournisseur: values.fournisseur,
             bci: values.bci,
             demandeur:values.demandeur,
             type:values.type,
@@ -56,6 +55,7 @@ export default function BonCommandeExterneForm() {
                 const newData = {
                     designation: element.designation,
                     caracteristik: element.caracteristique,
+                    fournisseur: element.fournisseur,
                     quantite: element.quantite,
                     pu: element.pu,
                     valueArticle: element.valeur,
@@ -93,7 +93,6 @@ export default function BonCommandeExterneForm() {
                     validationSchema={Yup.object({
                         ref: Yup.string().required("Champ obligatoire"),
                         bci: Yup.string().required("Champ obligatoire"),
-                        fournisseur: Yup.string().required("Champ obligatoire"),
                         modePaiement : Yup.string().required("Champ obligatoire"),
                         dateCommande : Yup.date().required("Champ obligatoire"),
                         demandeur: Yup.string().required("Champ obligatoire"),

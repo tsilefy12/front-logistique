@@ -15,7 +15,7 @@ import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 import { getGrantList } from '../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice';
 import { getBudgetLineList } from '../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice';
 
-const FormFicheDotation = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any}) => {
+const FormFicheDotation = ({formikProps}: {formikProps: FormikProps<any>}) => {
     const dispatch = useAppDispatch();
 
     const { isEditing } = useAppSelector((state) => state.ficheDotation);
@@ -177,16 +177,6 @@ const FormFicheDotation = ({formikProps,valuesArticle}: {formikProps: FormikProp
                     <FormControl fullWidth>
                         <OSSelectField
                             id="outlined-basic"
-                            label="Ligne budgétaire"
-                            name="ligneBudgetaire"
-                            options={budgetLineList}
-                            dataKey={["name"]}
-                            valueKey="id"
-                        />
-                    </FormControl>
-                    <FormControl fullWidth>
-                        <OSSelectField
-                            id="outlined-basic"
                             label="Grant"
                             name="grant"
                             options={grantList}
@@ -194,175 +184,19 @@ const FormFicheDotation = ({formikProps,valuesArticle}: {formikProps: FormikProp
                             valueKey="id"
                         />
                     </FormControl>
+                    <FormControl fullWidth>
+                        <OSSelectField
+                            id="outlined-basic"
+                            label="Ligne budgétaire"
+                            name="ligneBudgetaire"
+                            options={budgetLineList}
+                            dataKey={["code"]}
+                            valueKey="id"
+                        />
+                    </FormControl>
+                    
                 </Stack>
             </FormContainer>
-            <Box>
-                <FormContainer spacing={2}>
-                    <Stack
-                        direction="row"
-                        sx={{
-                            flex: "1 1 100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                        }}
-                        >
-                        <Typography variant="h6" id="tableTitle" component="div">
-                            Personne concerné
-                        </Typography>
-                    </Stack>
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 700 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Nom et Prénom</TableCell>
-                                    <TableCell align="left">CIN</TableCell>
-                                    <TableCell align="left">Fonction</TableCell>
-                                    <TableCell align="left">Désignation</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {valuesArticle.map((item:any , index:any) => (
-                                    <TableRow
-                                        key={index}
-                                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                                    >
-                                        <TableCell component="th" scope="row">{item.nomPrenom}</TableCell>
-                                        <TableCell align="left">{item.cin}</TableCell>
-                                        <TableCell align="left">{item.fonction}</TableCell>
-                                        <TableCell align="left">{item.designation}</TableCell>
-                                        <TableCell
-                                        align="center"
-                                        sx={{ width: 150, background: "#F5F5F5" }}
-                                        >
-                                        <Stack
-                                            direction="row"
-                                            justifyContent="center"
-                                            alignItems="center"
-                                            spacing={2}
-                                        >
-                                            <IconButton
-                                                color="warning"
-                                                aria-label="Supprimer"
-                                                component="span"
-                                                size="small"
-                                                onClick={() => {
-                                                    valuesArticle.splice(index, 1)
-                                                }}
-                                                >
-                                                <Delete />
-                                            </IconButton>
-                                            {/* <EditIcon color="primary" />
-                                            <DeleteIcon color="warning" /> */}
-                                        </Stack>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                                <TableRow
-                                        key="index"
-                                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                                    >
-                                        <TableCell component="th" scope="row">
-                                            <FormControl fullWidth>
-                                                <OSTextField
-                                                    id="cin"
-                                                    label="Nom et Prénom"
-                                                    name="nomPrenom"
-                                                    type="text"
-                                                />
-                                            </FormControl>
-                                            {/* <OSSelectField
-                                                id="outlined-basic"
-                                                label="Nom et Prénom"
-                                                name="nomPrenom"
-                                                options={total}
-                                                dataKey={["name"]}
-                                                valueKey="id"
-                                            /> */}
-                                        </TableCell>
-                                        <TableCell align="left">
-                                            <FormControl fullWidth>
-                                                <OSTextField
-                                                    id="cin"
-                                                    label="CIN"
-                                                    name="cin"
-                                                    type="text"
-                                                />
-                                            </FormControl>
-                                        </TableCell>
-                                        <TableCell align="left">
-                                            <FormControl fullWidth>
-                                                <OSTextField
-                                                    id="fonction"
-                                                    label="Fonction"
-                                                    name="fonction"
-                                                    type="text"
-                                                />
-                                            </FormControl>
-                                        </TableCell>
-                                        <TableCell align="left">
-                                            <FormControl fullWidth>
-                                                <OSTextField
-                                                    id="designation"
-                                                    label="Désignation"
-                                                    name="designation"
-                                                    type="text"
-                                                />
-                                            </FormControl>
-                                        </TableCell>
-                                        <TableCell
-                                            align="center"
-                                            sx={{ width: 150, background: "#F5F5F5" }}
-                                            >
-                                            <Stack
-                                                direction="row"
-                                                justifyContent="center"
-                                                alignItems="center"
-                                                spacing={2}
-                                            >
-                                                <IconButton
-                                                    type="button"
-                                                    onClick={() => {
-                                                        const nomPrenom = formikProps.values.nomPrenom;
-                                                        const cin = formikProps.values.cin;
-                                                        const fonction = formikProps.values.fonction;
-                                                        const designation = formikProps.values.designation;
-                                                            // Vérifier si les champs sont vides
-                                                            if (designation.trim() !== '' && fonction.trim() !== '') {
-                                                                valuesArticle.push({
-                                                                    nomPrenom: nomPrenom,
-                                                                    cin: cin,
-                                                                    fonction: fonction,
-                                                                    designation: designation,
-                                                                });
-                                                            formikProps.setFieldValue('nomPrenom', '');
-                                                            formikProps.setFieldValue('cin', "");
-                                                            formikProps.setFieldValue('fonction', "");
-                                                            formikProps.setFieldValue('designation', '');
-                                                        }
-                                                        
-                                                    }}
-                                                >
-                                                    <Check color="primary"/>
-                                                </IconButton>
-                                                <IconButton
-                                                    type="button"
-                                                    onClick={() => {
-                                                        formikProps.setFieldValue('nomPrenom', '');
-                                                        formikProps.setFieldValue('cin', "");
-                                                        formikProps.setFieldValue('fonction', "");
-                                                        formikProps.setFieldValue('designation', '');
-                                                    }}
-                                                    >
-                                                    <Close />
-                                                </IconButton>
-                                            </Stack>
-                                        </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </FormContainer>
-            </Box>
         </Form>
     )
 }

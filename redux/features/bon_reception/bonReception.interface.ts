@@ -1,6 +1,7 @@
 export interface bonReceptionItem {
     id?: string;
     bce?: string;
+    reference?: string;
     dateReception?: Date;
     produitRecu?: any;
     bonDeCommandeExterne?:any;

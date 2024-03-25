@@ -27,6 +27,8 @@ import { cancelEdit } from "../../../../redux/features/equipment/equipmentSlice"
 import { getFournisseurList } from "../../../../redux/features/fournisseur/useCase/getFournisseurListe";
 import { getTypeEquipmentList } from "../../../../redux/features/typeEquipment";
 import { getBonCommandeInternes } from "../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice";
+import { getGrantList } from "../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
+import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
 
 const AddArticleForm = () => {
   const dispatch = useAppDispatch();
@@ -43,28 +45,22 @@ const AddArticleForm = () => {
     const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
     const { typeEquipmentList } = useAppSelector( (state) => state.typeEquipment);
     const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
-    
+    const { grantList } = useAppSelector( (state) => state.grant);
+    const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
+
     const fetchUtilsData = () => {
         dispatch(getFournisseurList({}));
         dispatch(getEmployees({}));
         dispatch(getTypeEquipmentList({}));
         dispatch(getBonCommandeInternes({}));
+        dispatch(getGrantList({}));
+        dispatch(getBudgetLineList({}));
     };
 
     useEffect(() => {
         fetchUtilsData();
     }, []);
     
-    const LigneBudgetaireList = [
-        {id :"test1",name:"test1"},
-        {id :"test2",name:"test2"},
-        {id :"test3",name:"test3"}
-    ]
-    const GrantList = [
-        {id :"test1",name:"test1"},
-        {id :"test2",name:"test2"},
-        {id :"test3",name:"test3"}
-    ]
     const categorie = [
         {id :"Informatique",name:"Informatique"},
         {id :"Eléctronique",name:"Eléctronique"}
@@ -321,8 +317,8 @@ const AddArticleForm = () => {
                             id="outlined-basic"
                             name="grant"
                             label="Grant"
-                            options={GrantList}
-                            dataKey={["name"]}
+                            options={grantList}
+                            dataKey={["code"]}
                             valueKey="id"
                             type="text"
                         />
@@ -330,8 +326,8 @@ const AddArticleForm = () => {
                             id="outlined-basic"
                             name="ligneBudgetaire"
                             label="Ligne budgétaire"
-                            options={LigneBudgetaireList}
-                            dataKey={["name"]}
+                            options={budgetLineList}
+                            dataKey={["code"]}
                             valueKey="id"
                             type="text"
                         />

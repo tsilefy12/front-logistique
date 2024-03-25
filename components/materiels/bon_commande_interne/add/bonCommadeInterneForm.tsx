@@ -90,7 +90,6 @@ export default function BonCommandeInterneForm() {
                         grant: Yup.string().required("Champ obligatoire"),
                         ligneBudgetaire: Yup.string().required("Champ obligatoire"),
                         demandeur: Yup.string().required("Champ obligatoire"),
-                        fournisseur: Yup.string().required("Champ obligatoire"),
                         numBon: Yup.string().required("Champ obligatoire"),
                         dateBonCommande: Yup.date().required("Champ obligatoire"),
                         numBonCommande:Yup.string().required("Champ obligatoire"),

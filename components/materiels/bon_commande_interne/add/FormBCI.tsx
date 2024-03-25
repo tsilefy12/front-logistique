@@ -187,19 +187,19 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                     <FormControl fullWidth>
                         <OSSelectField
                             id="outlined-basic"
-                            label="Ligne budgétaire"
-                            name="ligneBudgetaire"
-                            options={budgetLineList}
-                            dataKey="name"
+                            label="Grant"
+                            name="grant"
+                            options={grantList}
+                            dataKey="code"
                             valueKey="id"
                         />
                     </FormControl>
                     <FormControl fullWidth>
                         <OSSelectField
                             id="outlined-basic"
-                            label="Grant"
-                            name="grant"
-                            options={grantList}
+                            label="Ligne budgétaire"
+                            name="ligneBudgetaire"
+                            options={budgetLineList}
                             dataKey="code"
                             valueKey="id"
                         />

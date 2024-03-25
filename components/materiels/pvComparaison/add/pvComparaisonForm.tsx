@@ -252,10 +252,10 @@ export default function PvComparaisonForm() {
                                         <FormControl fullWidth>
                                             <OSSelectField
                                                 id="outlined-basic"
-                                                label="Programme/Projet"
-                                                name="programme"
-                                                options={programmeList}
-                                                dataKey="name"
+                                                label="Matériel"
+                                                name="materiel"
+                                                options={equipments}
+                                                dataKey={["numOptim","designation"]}
                                                 valueKey="id"
                                                 type="text"
                                             />
@@ -263,11 +263,12 @@ export default function PvComparaisonForm() {
                                         <FormControl fullWidth>
                                             <OSSelectField
                                                 id="outlined-basic"
-                                                label="Grant"
-                                                name="grant"
-                                                options={grantList}
-                                                dataKey="code"
+                                                label="Programme/Projet"
+                                                name="programme"
+                                                options={programmeList}
+                                                dataKey="name"
                                                 valueKey="id"
+                                                type="text"
                                             />
                                         </FormControl>
                                     </Stack>
@@ -280,24 +281,22 @@ export default function PvComparaisonForm() {
                                         <FormControl fullWidth>
                                             <OSSelectField
                                                 id="outlined-basic"
-                                                label="Ligne Budgétaire"
-                                                name="ligneBudgetaire"
-                                                options={budgetLineList}
-                                                dataKey="name"
+                                                label="Grant"
+                                                name="grant"
+                                                options={grantList}
+                                                dataKey="code"
                                                 valueKey="id"
-    
                                             />
                                         </FormControl>
                                         <FormControl fullWidth>
-                                        <OSSelectField
-                                            id="outlined-basic"
-                                            label="Matériel"
-                                            name="materiel"
-                                            options={equipments}
-                                            dataKey={["numOptim","designation"]}
-                                            valueKey="id"
-                                            type="text"
-                                        />
+                                            <OSSelectField
+                                                id="outlined-basic"
+                                                label="Ligne Budgétaire"
+                                                name="ligneBudgetaire"
+                                                options={budgetLineList}
+                                                dataKey="code"
+                                                valueKey="id"
+                                            />
                                         </FormControl>
                                     </Stack>
                                 </FormContainer>

@@ -58,7 +58,97 @@ function PrintFicheDotation({ pdfData }: { pdfData: any }) {
                               <Text style={styles.th}>Signature</Text>
                          </View>
                     </View>
-                    {pdfData && pdfData.personneConcerne?.map(
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody]}>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                         </View>
+                    </View>
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody]}>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                         </View>
+                    </View>
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody]}>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                         </View>
+                    </View>
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody]}>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                         </View>
+                    </View>
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody]}>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                         </View>
+                    </View>
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody]}>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                         </View>
+                    </View>
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody]}>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                         </View>
+                    </View>
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody]}>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                         </View>
+                    </View>
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody]}>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                         </View>
+                    </View>
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody]}>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                         </View>
+                    </View>
+                    {/* {pdfData && pdfData.personneConcerne?.map(
                          (element:any, index: any) => {
                               return (
                                    <View style={{width: "100%"}}>
@@ -72,7 +162,7 @@ function PrintFicheDotation({ pdfData }: { pdfData: any }) {
                                    </View>
                               )
                          }
-                    )} 
+                    )}  */}
                </Page>
           </Document>
      );

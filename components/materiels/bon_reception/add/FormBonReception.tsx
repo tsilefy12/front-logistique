@@ -13,7 +13,7 @@ import { getBonCommandeExterne, getBonCommandeExternes } from "../../../../redux
 import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 import { useRouter } from 'next/router';
 
-const FormBonReception = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any}) => {
+const FormBonReception = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any}) => {
     const dispatch = useAppDispatch();
     const route = useRouter();
     
@@ -22,24 +22,31 @@ const FormBonReception = ({formikProps,valuesArticle}: {formikProps: FormikProps
     const fetchUtilsData = () => {
         dispatch(getBonCommandeExternes({}));
     };
-    
+    const handleFech = async (id: any) => {
+        try { 
+            const Val = await dispatch(getBonCommandeExterne({ id , args:{
+                include:{
+                    articleCommandeBce:true
+                }
+            }}));
+            console.log(Val)
+            setValuesArticle((prev:any[])=>{
+                console.log(prev)
+                prev = Val.payload.articleCommandeBce
+                return prev
+            })
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
     useEffect(() => {
         fetchUtilsData();
     }, []);
     useEffect(() => {
         const id = formikProps.values.bce
-        const Val:any = dispatch(getBonCommandeExterne({ id , args:{
-            include:{
-                articleCommandeBce:true
-            }
-        }}));
-        Val.articleCommandeBce?.forEach((element:any, index:any) => {
-            const newData = {
-                designation: element.designation,
-                quantite:element.quantite,
-            };
-            valuesArticle.push(newData)
-        });
+        if(id){
+            handleFech(id)
+        }
     }, [formikProps.values.bce]);
     
     return (
@@ -102,6 +109,15 @@ const FormBonReception = ({formikProps,valuesArticle}: {formikProps: FormikProps
                         Bon de reception
                     </Typography>
                 </Stack>
+                <FormControl fullWidth>
+                    <OSTextField
+                        fullWidth
+                        id="outlined-basic"
+                        variant="outlined"
+                        label="Réference"
+                        name="reference"
+                    />
+                </FormControl>
                 <FormControl fullWidth>
                     <OSSelectField
                         id="outlined-basic"
@@ -166,7 +182,12 @@ const FormBonReception = ({formikProps,valuesArticle}: {formikProps: FormikProps
                                                         component="span"
                                                         size="small"
                                                         onClick={() => {
-                                                            valuesArticle.splice(index, 1)
+                                                            setValuesArticle((prev:any[])=>{
+                                                                let temp = [...prev]
+                                                                temp.splice(index,1)
+                                                                return temp
+                                                            })
+                                                            
                                                         }}
                                                     >
                                                     <Delete />
@@ -202,11 +223,6 @@ const FormBonReception = ({formikProps,valuesArticle}: {formikProps: FormikProps
                                                     />
                                                 </FormControl>
                                             </TableCell>
-                                            <TableCell align="left">
-                                                <FormControl fullWidth>
-                                                    
-                                                </FormControl>
-                                            </TableCell>
                                             <TableCell
                                                 align="center"
                                                 sx={{ width: 150, background: "#F5F5F5" }}
@@ -224,10 +240,14 @@ const FormBonReception = ({formikProps,valuesArticle}: {formikProps: FormikProps
                                                             const quantite = formikProps.values.quantite;
                                                                 // Vérifier si les champs sont vides
                                                                 if (designation.trim() !== '') {
-                                                                valuesArticle.push({
-                                                                    designation: designation,
-                                                                    quantite: quantite
-                                                                });
+                                                                    setValuesArticle((prev:any[])=>{
+                                                                        let temp = [...prev]
+                                                                        temp.push({
+                                                                            designation: designation,
+                                                                            quantite: quantite
+                                                                        })
+                                                                        return temp
+                                                                    })
                                                                 formikProps.setFieldValue('designation', '')
                                                                 formikProps.setFieldValue('quantite', '');
                                                             }
