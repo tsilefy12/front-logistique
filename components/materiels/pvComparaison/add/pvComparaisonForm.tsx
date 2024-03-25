@@ -25,6 +25,8 @@ import { getBonCommandeExternes } from "../../../../redux/features/bon_commande_
 import { getEquipments } from "../../../../redux/features/equipment";
 import { getFournisseurList } from "../../../../redux/features/fournisseur";
 import OSSelectField from "../../../shared/select/OSSelectField";
+import { getGrantList } from "../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
+import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
 
 export default function PvComparaisonForm() {
     const dispatch = useAppDispatch();
@@ -38,6 +40,8 @@ export default function PvComparaisonForm() {
     const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
     const { equipments } = useAppSelector( (state) => state.equipment);
     const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
+    const { grantList } = useAppSelector( (state) => state.grant);
+    const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
 
     const total = [...bonCommandeExternes.map((i:any)=>{
         return {
@@ -55,16 +59,6 @@ export default function PvComparaisonForm() {
             }
         })
     ]
-    const ligneBudgetaireList = [
-        {id : "test1",name : "TEST1"},
-        {id : "test2",name : "TEST2"},
-        {id : "test3",name : "TEST3"}
-    ]
-    const grantList = [
-        {id : "test1",name : "TEST1"},
-        {id : "test2",name : "TEST2"},
-        {id : "test3",name : "TEST3"}
-    ]
     const programmeList = [
         {id : "test1",name : "TEST1"},
         {id : "test2",name : "TEST2"},
@@ -76,6 +70,8 @@ export default function PvComparaisonForm() {
         dispatch(getBonCommandeExternes({}));
         dispatch(getEquipments({}));
         dispatch(getFournisseurList({}));
+        dispatch(getGrantList({}));
+        dispatch(getBudgetLineList({}));
     };
     
     useEffect(() => {
@@ -240,7 +236,7 @@ export default function PvComparaisonForm() {
                                                 id="outlined-basic"
                                                 label="Ref BCI/BCE"
                                                 name="ref"
-                                                options={total.length > 0 ? total :  [{ id: "", name: "Rien à aficher" }]}
+                                                options={total}
                                                 dataKey={["name","type"]}
                                                 valueKey="id"
                                                 type="text"
@@ -258,7 +254,7 @@ export default function PvComparaisonForm() {
                                                 id="outlined-basic"
                                                 label="Programme/Projet"
                                                 name="programme"
-                                                options={programmeList.length > 0 ? programmeList :  [{ id: "", name: "Rien à aficher" }]}
+                                                options={programmeList}
                                                 dataKey="name"
                                                 valueKey="id"
                                                 type="text"
@@ -269,8 +265,8 @@ export default function PvComparaisonForm() {
                                                 id="outlined-basic"
                                                 label="Grant"
                                                 name="grant"
-                                                options={grantList.length > 0 ? ligneBudgetaireList :  [{ id: "", name: "Rien à aficher" }]}
-                                                dataKey="name"
+                                                options={grantList}
+                                                dataKey="code"
                                                 valueKey="id"
                                             />
                                         </FormControl>
@@ -286,7 +282,7 @@ export default function PvComparaisonForm() {
                                                 id="outlined-basic"
                                                 label="Ligne Budgétaire"
                                                 name="ligneBudgetaire"
-                                                options={ligneBudgetaireList.length > 0 ? ligneBudgetaireList :  [{ id: "", name: "Rien à aficher" }]}
+                                                options={budgetLineList}
                                                 dataKey="name"
                                                 valueKey="id"
     

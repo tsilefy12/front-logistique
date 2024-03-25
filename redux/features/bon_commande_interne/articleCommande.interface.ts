@@ -7,6 +7,7 @@ export interface ArticleCommandeItem {
     valueArticle?: number;
     bondeCommandeInterneId?: string;
     fournisseur?:string;
+    vendor?:any;
     type?:string;
 }
   

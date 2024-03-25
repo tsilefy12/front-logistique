@@ -12,6 +12,8 @@ import Close from '@mui/icons-material/Close';
 import OSSelectField from '../../../shared/select/OSSelectField';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
+import { getGrantList } from '../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice';
+import { getBudgetLineList } from '../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice';
 
 const FormFicheDotation = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any}) => {
     const dispatch = useAppDispatch();
@@ -21,25 +23,24 @@ const FormFicheDotation = ({formikProps,valuesArticle}: {formikProps: FormikProp
     
     const { employees } = useAppSelector((state) => state.employe);
     const { interns } = useAppSelector((state) => state.stagiaire);
-    const total = [...employees.map((i:any)=>{
-        return {
-        id : i.id, name: i.name +" "+ i.surname, type: "employe"
-        }
-    }),...interns.map((i:any)=>{
-        return {
-            id : i.id, name: i.name +" "+ i.surname, type: "intern"
-        }
-    })]
+    const { grantList } = useAppSelector( (state) => state.grant);
+    const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
+
+    // const total = [...employees.map((i:any)=>{
+    //     return {
+    //     id : i.id, name: i.name +" "+ i.surname, type: "employe"
+    //     }
+    // }),...interns.map((i:any)=>{
+    //     return {
+    //         id : i.id, name: i.name +" "+ i.surname, type: "intern"
+    //     }
+    // })]
     const fetchUtilsData = () => {
         dispatch(getEmployees({}));
         dispatch(getInterns({}));
+        dispatch(getGrantList({}));
+        dispatch(getBudgetLineList({}));
     };
-
-    const grantList = [
-        {id : "test1",name : "TEST1"},
-        {id : "test2",name : "TEST2"},
-        {id : "test3",name : "TEST3"}
-    ]
 
     useEffect(() => {
         fetchUtilsData();
@@ -178,7 +179,7 @@ const FormFicheDotation = ({formikProps,valuesArticle}: {formikProps: FormikProp
                             id="outlined-basic"
                             label="Ligne budgétaire"
                             name="ligneBudgetaire"
-                            options={grantList}
+                            options={budgetLineList}
                             dataKey={["name"]}
                             valueKey="id"
                         />
@@ -189,7 +190,7 @@ const FormFicheDotation = ({formikProps,valuesArticle}: {formikProps: FormikProp
                             label="Grant"
                             name="grant"
                             options={grantList}
-                            dataKey={["name"]}
+                            dataKey={["code"]}
                             valueKey="id"
                         />
                     </FormControl>

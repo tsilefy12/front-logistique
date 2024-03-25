@@ -43,6 +43,8 @@ import { bonTransfertSlice } from "./features/bon_transfert/bonTransfertSlice";
 import { ArticleCommandeExterneSlice } from "./features/bon_commande_externe/articleBCESlice";
 import { fileSlice } from "./features/file/fileSlice";
 import { ficheDotationSlice } from "./features/fiche_dotation/ficheDotationSlice";
+import { grantSlice } from "./features/grant_ligneBudgétaire_programme/grantSlice";
+import { budgetLineSlice } from "./features/grant_ligneBudgétaire_programme/budgeteLineSlice";
 
 export const store = configureStore({
   reducer: {
@@ -90,7 +92,9 @@ export const store = configureStore({
     bonTransfert:bonTransfertSlice.reducer,
     articleCommandeBce: ArticleCommandeExterneSlice.reducer,
     file: fileSlice.reducer,
-    ficheDeDotation: ficheDotationSlice.reducer
+    ficheDeDotation: ficheDotationSlice.reducer,
+    grant : grantSlice.reducer,
+    lineBugetaire : budgetLineSlice.reducer
   },
 });
 

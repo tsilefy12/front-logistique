@@ -193,7 +193,7 @@ export default function VendorForm() {
                     id="outlined-basic"
                     label="Type de produit"
                     name="typeProduit"
-                    options={typeProduits ? typeProduits : [{ id: "id", typeProduct: "Rien à aficher" }]}
+                    options={typeProduits}
                     dataKey="typeProduct"
                     valueKey="id"
                   />

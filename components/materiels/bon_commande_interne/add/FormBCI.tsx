@@ -14,6 +14,8 @@ import OSSelectField from '../../../shared/select/OSSelectField';
 import OSDatePicker from '../../../shared/date/OSDatePicker';
 import { ArrowBack } from '@mui/icons-material';
 import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
+import { getGrantList } from '../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice';
+import { getBudgetLineList } from '../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice';
 
 const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any}) => {
     const dispatch = useAppDispatch();
@@ -21,18 +23,11 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
     const { employees } = useAppSelector( (state) => state.employe);
     const { interns } = useAppSelector( (state) => state.stagiaire);
     const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
-    const { isEditing,bonCommandeInterne } = useAppSelector((state) => state.bonCommandeInterne);
-
-    const ligneBudgetaireList = [
-        {id : "test1",name : "TEST1"},
-        {id : "test2",name : "TEST2"},
-        {id : "test3",name : "TEST3"}
-    ]
-    const grantList = [
-        {id : "test1",name : "TEST1"},
-        {id : "test2",name : "TEST2"},
-        {id : "test3",name : "TEST3"}
-    ]
+    const { grantList } = useAppSelector( (state) => state.grant);
+    const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
+    
+    const { isEditing } = useAppSelector((state) => state.bonCommandeInterne);
+    
     const programmeList = [
         {id : "test1",name : "TEST1"},
         {id : "test2",name : "TEST2"},
@@ -53,6 +48,8 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
         dispatch(getInterns({}));
         dispatch(getEmployees({}));
         dispatch(getFournisseurList({}));
+        dispatch(getGrantList({}));
+        dispatch(getBudgetLineList({}));
     };
     
     useEffect(() => {
@@ -158,7 +155,7 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                         id="outlined-basic"
                             label="Programme/Projet"
                             name="programme"
-                            options={programmeList.length > 0 ? programmeList :  [{ id: "", name: "Rien à aficher" }]}
+                            options={programmeList}
                             dataKey="name"
                             valueKey="id"
                             type="text"
@@ -171,34 +168,16 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                         />
                     </FormControl>
                 </Stack>
-                <Stack
-                direction="row"
-                justifyContent="flex-start"
-                alignItems="flex-start"
-                spacing={2}
-                >
-                    <FormControl fullWidth>
-                        <OSSelectField
-                            id="outlined-basic"
-                            label="Demandeur"
-                            name="demandeur"
-                            options={total}
-                            dataKey={["name"]}
-                            valueKey="id"
-                        />
-                    </FormControl>
-                    <FormControl fullWidth>
-                        <OSSelectField
-                            id="outlined-basic"
-                            name="fournisseur"
-                            label="Fournisseur"
-                            options={fournisseurList}
-                            dataKey={["name"]}
-                            valueKey="id"
-                            type="text"
-                        />
-                    </FormControl>
-                </Stack>
+                <FormControl fullWidth>
+                    <OSSelectField
+                        id="outlined-basic"
+                        label="Demandeur"
+                        name="demandeur"
+                        options={total}
+                        dataKey={["name"]}
+                        valueKey="id"
+                    />
+                </FormControl>
                 <Stack
                 direction="row"
                 justifyContent="flex-start"
@@ -210,7 +189,7 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                             id="outlined-basic"
                             label="Ligne budgétaire"
                             name="ligneBudgetaire"
-                            options={ligneBudgetaireList.length > 0 ? ligneBudgetaireList :  [{ id: "", name: "Rien à aficher" }]}
+                            options={budgetLineList}
                             dataKey="name"
                             valueKey="id"
                         />
@@ -220,8 +199,8 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                             id="outlined-basic"
                             label="Grant"
                             name="grant"
-                            options={grantList.length > 0 ? grantList :  [{ id: "", name: "Rien à aficher" }]}
-                            dataKey="name"
+                            options={grantList}
+                            dataKey="code"
                             valueKey="id"
                         />
                     </FormControl>
@@ -249,6 +228,7 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                         <TableCell align="left">Caractéristique</TableCell>
                                         <TableCell align="left">PU</TableCell>
                                         <TableCell align="left">Quantité</TableCell>
+                                        <TableCell align="left">Fournisseur</TableCell>
                                         <TableCell align="left">Valeur</TableCell>
                                         <TableCell></TableCell>
                                     </TableRow>
@@ -263,6 +243,7 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                             <TableCell align="left">{item.caracteristique}</TableCell>
                                             <TableCell align="left">{item.pu}  Ar</TableCell>
                                             <TableCell align="left">{item.quantite}</TableCell>
+                                            <TableCell align="left">{item.fournisseur} Ar</TableCell>
                                             <TableCell align="left">{item.valeur} Ar</TableCell>
                                             <TableCell
                                             align="center"
@@ -337,6 +318,19 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                             </TableCell>
                                             <TableCell align="left">
                                                 <FormControl fullWidth>
+                                                    <OSSelectField
+                                                        id="outlined-basic"
+                                                        name="fournisseur"
+                                                        label="Fournisseur"
+                                                        options={fournisseurList}
+                                                        dataKey={["name"]}
+                                                        valueKey="id"
+                                                        type="text"
+                                                    />
+                                                </FormControl>
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                <FormControl fullWidth>
                                                 </FormControl>
                                             </TableCell>
                                             <TableCell
@@ -356,6 +350,7 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                                             const caracteristique = formikProps.values.caracteristique;
                                                             const pu = formikProps.values.pu;
                                                             const quantite = formikProps.values.quantite;
+                                                            const fournisseur = formikProps.values.fournisseur;
                                                             // Vérifier si les champs sont vides
                                                             if (designation.trim() !== '' && caracteristique.trim() !== '') {
                                                                 valuesArticle.push({
@@ -364,11 +359,13 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                                                     pu: pu,
                                                                     quantite: quantite,
                                                                     valeur: quantite * pu,
+                                                                    fournisseur:fournisseur
                                                                 });
                                                                 formikProps.setFieldValue('designation', '');
                                                                 formikProps.setFieldValue('caracteristique', '');
                                                                 formikProps.setFieldValue('pu', 0);
                                                                 formikProps.setFieldValue('quantite', 0);
+                                                                formikProps.setFieldValue('fournisseur', '');
                                                             }
                                                         
                                                         }}

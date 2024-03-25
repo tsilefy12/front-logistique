@@ -22,6 +22,7 @@ import { cancelEdit } from "../../../redux/features/supply-and-consumable/supply
 import OSSelectField from "../../shared/select/OSSelectField";
 import { getCategories, getUniteStocks } from "../../../redux/features/configuration";
 import { getFournisseurList } from "../../../redux/features/fournisseur";
+import { getGrantList } from "../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
 
 export default function SuplyAndConsumableForm() {
   const route = useRouter();
@@ -34,11 +35,13 @@ export default function SuplyAndConsumableForm() {
   const { categorieStocks } = useAppSelector((state) => state.categorieStock);
   const { uniteStocks } = useAppSelector( (state) => state.uniteStock);
   const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
+  const { grantList } = useAppSelector( (state) => state.grant);
   
   const fetchUtilsData = () => {
     dispatch(getCategories({}));
     dispatch(getUniteStocks({}));
     dispatch(getFournisseurList({}));
+    dispatch(getGrantList({}));
   };
   
   useEffect(() => {
@@ -62,11 +65,6 @@ export default function SuplyAndConsumableForm() {
       console.log("error", error);
     }
   };
-  const GrantList = [
-    { id: "1", name: "1" },
-    { id: "2", name: "2" },
-    { id: "3", name: "3" }
-  ];
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <Formik
@@ -173,7 +171,7 @@ export default function SuplyAndConsumableForm() {
                   id="outlined-basic"
                   label="Unité de stock"
                   name="SKU"
-                  options={uniteStocks ? uniteStocks : [{ id: "", uniteStock: "Rien à aficher" }]}
+                  options={uniteStocks}
                   dataKey={["uniteStock"]}
                   valueKey="id"
                   type="text"
@@ -203,7 +201,7 @@ export default function SuplyAndConsumableForm() {
                     id="outlined-basic"
                     label="Fournisseur"
                     name="fournisseur"
-                    options={fournisseurList ? fournisseurList :  [{ id: "", name: "Rien à aficher" }]}
+                    options={fournisseurList}
                     dataKey={["name"]}
                     valueKey="id"
                     type="text"
@@ -212,7 +210,7 @@ export default function SuplyAndConsumableForm() {
                       id="outlined-basic"
                       label="Catégorie"
                       name="categorieStock"
-                      options={categorieStocks ? categorieStocks: [{ id: "", categorieStock: "Rien à aficher" }]}
+                      options={categorieStocks}
                       dataKey={["categorieStock"]}
                       valueKey="id"
                       type="text"
@@ -221,9 +219,9 @@ export default function SuplyAndConsumableForm() {
                       id="outlined-basic"
                       label="Grant"
                       name="grant"
-                      options={GrantList}
-                      dataKey="name"
-                      valueKey="name"
+                      options={grantList}
+                      dataKey="code"
+                      valueKey="id"
                       type="text"
                     />
                 </Stack>

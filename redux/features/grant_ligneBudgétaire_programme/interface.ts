@@ -1,36 +1,28 @@
 export interface GrantItem {
     id?: string;
-    dateGrant?: string;
-    datePreciation?: Date;
-    dureDeVie?: number;
-    etatMateriel?: string;
-    valeurGrant?: number;
-    equipmentId?: string;
-    equipment?:any;
+    code?: string;
+    postAnalyticId?: number;
+    [x: string]: any;
 }
   
-export interface GrantItemInitialState {
-    inventaireList: GrantItem[];
-    inventaire: GrantItem;
+export interface GrantInitialState {
+    grantList: GrantItem[];
+    grant: GrantItem;
     isEditing: boolean;
     loading: boolean;
     [key: string]: any;
 }
 
-export interface LigneBudgetaireItem {
+export interface BudgetLineItem {
     id?: string;
-    dateLigneBudgetaire?: string;
-    datePreciation?: Date;
-    dureDeVie?: number;
-    etatMateriel?: string;
-    valeurLigneBudgetaire?: number;
-    equipmentId?: string;
-    equipment?:any;
+    code?: string;
+    grantId?: number;
+    [x: string]: any;
 }
   
-export interface LigneBudgetaireItemInitialState {
-    inventaireList: LigneBudgetaireItem[];
-    inventaire: LigneBudgetaireItem;
+export interface BudgetLineInitialState {
+    budgetLineList: BudgetLineItem[];
+    budgetLine: BudgetLineItem;
     isEditing: boolean;
     loading: boolean;
     [key: string]: any;

@@ -21,11 +21,7 @@ import { cancelEdit } from "../../../../redux/features/vendor/vendorSlice";
 import {
   createBonCommandeInterne,
 } from "../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice";
-import { Delete } from "@mui/icons-material";
 import { createArticleCommandeInterne } from "../../../../redux/features/bon_commande_interne/articleCommandeSlice";
-import { getEmployees } from "../../../../redux/features/employeStagiaire/employeeSlice";
-import { getFournisseurList } from "../../../../redux/features/fournisseur";
-import { getInterns } from "../../../../redux/features/employeStagiaire/stagiaireSlice";
 import FormBCI from "./FormBCI";
 
 export default function BonCommandeInterneForm() {
@@ -43,7 +39,6 @@ export default function BonCommandeInterneForm() {
                 ligneBudgetaire: values.ligneBudgetaire,
                 demandeur: values.demandeur,
                 numBon: values.numBon,
-                fournisseur:values.fournisseur,
                 type:values.type,
                 dateBonCommande: new Date(values.dateBonCommande),
                 numBonCommande: values.numBonCommande,
@@ -55,6 +50,7 @@ export default function BonCommandeInterneForm() {
                     designation: element.designation,
                     caracteristik: element.caracteristique,
                     quantite: element.quantite,
+                    fournisseur:element.fournisseur,
                     pu: element.pu,
                     valueArticle: element.valeur,
                     bondeCommandeInterneId: response.payload.id

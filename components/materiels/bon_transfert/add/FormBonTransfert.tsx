@@ -12,6 +12,7 @@ import Close from '@mui/icons-material/Close';
 import OSSelectField from '../../../shared/select/OSSelectField';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
+import { getGrantList } from '../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice';
 
 const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any}) => {
     const dispatch = useAppDispatch();
@@ -21,6 +22,8 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
     
     const { employees } = useAppSelector((state) => state.employe);
     const { interns } = useAppSelector((state) => state.stagiaire);
+    const { grantList } = useAppSelector( (state) => state.grant);
+    
     const total = [...employees.map((i:any)=>{
         return {
         id : i.id, name: i.matricule +" "+i.name +" "+ i.surname, type: "employe"
@@ -33,13 +36,8 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
     const fetchUtilsData = () => {
         dispatch(getEmployees({}));
         dispatch(getInterns({}));
+        dispatch(getGrantList({}));
     };
-
-    const grantList = [
-        {id : "test1",name : "TEST1"},
-        {id : "test2",name : "TEST2"},
-        {id : "test3",name : "TEST3"}
-    ]
 
     useEffect(() => {
         fetchUtilsData();
@@ -182,7 +180,7 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                             label="Grant"
                             name="grant"
                             options={grantList}
-                            dataKey={["name"]}
+                            dataKey={["code"]}
                             valueKey="id"
                         />
                 </FormControl>
