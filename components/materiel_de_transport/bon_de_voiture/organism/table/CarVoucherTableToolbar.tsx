@@ -60,7 +60,7 @@ const CarVoucherTableToolbar = () => {
           }}
         >
           <Typography variant="h6" id="tableTitle" component="div">
-            Liste des bons de voitures
+            Liste des entretiens
           </Typography>
           <TextField
             variant="outlined"

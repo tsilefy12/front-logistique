@@ -71,18 +71,6 @@ const menu = [
         link: "/materiels/bon_transfert",
         icon: "",
       },
-      {
-        id: 113,
-        name: "Fiche de dotation",
-        link: "/materiels/fiche_dotation",
-        icon: "",
-      },
-      {
-        id: 114,
-        name: "Inventaire",
-        link: "/materiels/inventaire",
-        icon: "",
-      },
     ],
   },
   {
@@ -137,8 +125,8 @@ const menu = [
       },
       {
         id: 35,
-        name: "Course ville",
-        link: "/materiel_de_transport/course_ville",
+        name: "Location",
+        link: "/materiel_de_transport/location",
         icon: "",
       },
       {

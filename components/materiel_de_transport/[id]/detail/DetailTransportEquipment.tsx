@@ -16,6 +16,7 @@ import {
 } from "../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { getTransportationEquipment } from "../../../../redux/features/transportation_equipment";
+import Moment from "react-moment";
 
 const DetailTransportEquipment = () => {
   const router = useRouter();
@@ -32,6 +33,12 @@ const DetailTransportEquipment = () => {
         type: true,
         brand: true,
         otherInformation: true,
+        status: true,
+        dateAcquisition: true,
+        kilometrageInitial: true,
+        reservoir: true,
+        consommation: true,
+        fournisseur: true,
       },
     };
     dispatch(getTransportationEquipment({ id, args }));
@@ -65,6 +72,8 @@ const DetailTransportEquipment = () => {
         <Divider />
       </NavigationContainer>
       <DetailsContainer>
+        <Stack direction="row" spacing={25}>
+        <Stack>
         <Grid container spacing={4} my={1}>
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
@@ -105,6 +114,70 @@ const DetailTransportEquipment = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
+                Status :
+              </Typography>
+              <Typography variant="body1" color="gray">
+                {transportationEquipment.status}
+              </Typography>
+            </InfoItems>
+          </Grid>
+        </Grid>
+        </Stack>
+        <Stack>
+        <Grid container spacing={4} my={1}>
+          <Grid item xs={12} md={12}>
+            <InfoItems direction="row" spacing={2}>
+              <Typography variant="body1" color="secondary">
+                Date d'acquisition :
+              </Typography>
+              <Typography variant="body1" color="gray">
+                <Moment format="DD/MM/YYYY">{transportationEquipment.dateAcquisition}</Moment>
+              </Typography>
+            </InfoItems>
+          </Grid>
+        </Grid>
+        <Grid container spacing={4} my={1}>
+          <Grid item xs={12} md={12}>
+            <InfoItems direction="row" spacing={2}>
+              <Typography variant="body1" color="secondary">
+                Kilometrage initial :
+              </Typography>
+              <Typography variant="body1" color="gray">
+                {transportationEquipment.kilometrageInitial}
+              </Typography>
+            </InfoItems>
+          </Grid>
+        </Grid>
+        <Grid container spacing={4} my={1}>
+          <Grid item xs={12} md={12}>
+            <InfoItems direction="row" spacing={2}>
+              <Typography variant="body1" color="secondary">
+                Reservoir :
+              </Typography>
+              <Typography variant="body1" color="gray">
+                {transportationEquipment.reservoir}
+              </Typography>
+            </InfoItems>
+          </Grid>
+        </Grid>
+        <Grid container spacing={4} my={1}>
+          <Grid item xs={12} md={12}>
+            <InfoItems direction="row" spacing={2}>
+              <Typography variant="body1" color="secondary">
+                Consommation :
+              </Typography>
+              <Typography variant="body1" color="gray">
+                {transportationEquipment.consommation}
+              </Typography>
+            </InfoItems>
+          </Grid>
+        </Grid>
+        </Stack>
+        <Stack>
+        <Grid container spacing={4} my={1}>
+          <Grid item xs={12} md={12}>
+            <InfoItems direction="row" spacing={2}>
+              <Typography variant="body1" color="secondary">
                 Autre information :
               </Typography>
               <Typography variant="body1" color="gray">
@@ -113,6 +186,20 @@ const DetailTransportEquipment = () => {
             </InfoItems>
           </Grid>
         </Grid>
+        <Grid container spacing={4} my={1}>
+          <Grid item xs={12} md={12}>
+            <InfoItems direction="row" spacing={2}>
+              <Typography variant="body1" color="secondary">
+                Fournisseur :
+              </Typography>
+              <Typography variant="body1" color="gray">
+                {transportationEquipment.fournisseur}
+              </Typography>
+            </InfoItems>
+          </Grid>
+        </Grid>
+        </Stack>
+        </Stack>
       </DetailsContainer>
     </Container>
   );

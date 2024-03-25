@@ -21,21 +21,24 @@ import OSTextField from "../../../shared/input copy/OSTextField";
 import OSTimePicker from "../../../shared/time/OSTimePicker";
 import {
   createCarVoucher,
+  editCarVoucher,
   updateCarVoucher,
 } from "../../../../redux/features/car-voucher";
 import { cancelEdit } from "../../../../redux/features/car-voucher/carVoucherSlice";
+import useFetchCarVouchers from "../hooks/useFetchCarVoucher";
 
 const FormBonDeVoiture = () => {
   const route = useRouter();
   const dispatch = useAppDispatch();
-
+  const fetchCarVouchers = useFetchCarVouchers();
+  const { id }: any = route.query;
   const { isEditing, carVoucher } = useAppSelector((state) => state.carVoucher);
-
+  React.useEffect(() => {
+    if (id) {
+      dispatch(editCarVoucher({ id }));
+    }
+  }, [id]);
   const handleSubmit = async (values: any) => {
-    values.departureDate = new Date(values?.departureDate).toISOString();
-    values.departureTime = new Date(values?.departureTime).toISOString();
-    values.arrivalDate = new Date(values?.arrivalDate).toISOString();
-    values.arrivalTime = new Date(values?.arrivalTime).toISOString();
     try {
       if (isEditing) {
         await dispatch(
@@ -47,6 +50,7 @@ const FormBonDeVoiture = () => {
       } else {
         await dispatch(createCarVoucher(values));
       }
+      fetchCarVouchers()
       route.push("/materiel_de_transport/bon_de_voiture");
     } catch (error) {
       console.log("error", error);
@@ -58,46 +62,16 @@ const FormBonDeVoiture = () => {
       <Formik
         enableReinitialize
         initialValues={{
-          number: isEditing ? carVoucher?.number : "",
-          registration: isEditing ? carVoucher?.registration : "",
-          type: isEditing ? carVoucher?.type : "",
-          reason: isEditing ? carVoucher?.reason : "",
-          argument: isEditing ? carVoucher?.argument : "",
-          itinerary: isEditing ? carVoucher?.itinerary : "",
-          departureDate: isEditing ? carVoucher?.departureDate : new Date(),
-          departureTime: isEditing ? carVoucher?.departureTime : new Date(),
-          arrivalDate: isEditing ? carVoucher?.arrivalDate : new Date(),
-          arrivalTime: isEditing ? carVoucher?.arrivalTime : new Date(),
-          quantity: isEditing ? carVoucher?.quantity : 0,
+          materiel: isEditing ? carVoucher?.materiel : "",
+          date: isEditing ? carVoucher?.date : new Date(),
+          montantTotal: isEditing ? carVoucher?.montantTotal : "",
         }}
         validationSchema={Yup.object({
-          number: Yup.string().required("Veuillez remplir le champ NumeroBV"),
-          registration: Yup.string().required(
-            "Veuillez remplir le champ Immatriculation"
+          materiel: Yup.string().required("Veuillez remplir le champ matériel"),
+          date: Yup.string().required(
+            "Veuillez remplir le champ date"
           ),
-          type: Yup.string().required("Veuillez remplir le champ Type"),
-          reason: Yup.string().required("Veuillez remplir le champ Motif"),
-          argument: Yup.string().required(
-            "Veuillez remplir le champ Argumentaire"
-          ),
-          itinerary: Yup.string().required(
-            "Veuillez remplir le champ Itinéraire"
-          ),
-          departureDate: Yup.string().required(
-            "Veuillez choisir le date de départ"
-          ),
-          departureTime: Yup.string().required(
-            "Veuillez choisir heure de départ"
-          ),
-          arrivalDate: Yup.string().required(
-            "Veuillez choisir le date de retour"
-          ),
-          arrivalTime: Yup.string().required(
-            "Veuillez choisir heure de retour"
-          ),
-          quantity: Yup.number()
-            .positive("Quantité doit être positive")
-            .required("Veuillez remplir le champ Quantité"),
+          montantTotal: Yup.string().required("Veuillez remplir le champ montant total"),
         })}
         onSubmit={(value: any, action: any) => {
           handleSubmit(value);
@@ -148,7 +122,7 @@ const FormBonDeVoiture = () => {
                     </Button>
                   </Stack>
                   <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"} Bon de voiture
+                    {isEditing ? "Modifier" : "Ajouter"} Entretien
                   </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -163,111 +137,26 @@ const FormBonDeVoiture = () => {
                   <OSTextField
                     fullWidth
                     id="outlined-basic"
-                    label="NumeroBV"
+                    label="matériel"
                     variant="outlined"
-                    name="number"
+                    name="materiel"
                   />
-                  <OSTextField
+                  <OSDatePicker
                     fullWidth
                     id="outlined-basic"
-                    label="Immatriculation"
+                    label="Date"
                     variant="outlined"
-                    name="registration"
+                    value = {formikProps.values.date}
+                    onChange = {(value: any) =>formikProps.setFieldValue("date", value)}
                   />
                 </Stack>
                 <FormControl fullWidth>
                   <OSTextField
                     id="outlined-basic"
-                    label="Type"
+                    label="Montant total"
                     variant="outlined"
-                    name="type"
-                  />
-                </FormControl>
-                <FormControl fullWidth>
-                  <OSTextField
-                    id="outlined-basic"
-                    label="Motif"
-                    rows={4}
-                    multiline
-                    name="reason"
-                  />
-                </FormControl>
-                <FormControl fullWidth>
-                  <OSTextField
-                    id="outlined-basic"
-                    label="Argumentaire"
-                    rows={4}
-                    multiline
-                    name="argument"
-                  />
-                </FormControl>
-                <FormControl fullWidth>
-                  <OSTextField
-                    id="outlined-basic"
-                    label="Itineraire"
-                    variant="outlined"
-                    name="itinerary"
-                  />
-                </FormControl>
-                <Stack
-                  direction="row"
-                  justifyContent="center"
-                  alignItems="center"
-                  spacing={2}
-                >
-                  <FormControl fullWidth>
-                    <OSDatePicker
-                      fullWidth
-                      label="Date départ"
-                      value={formikProps.values.departureDate}
-                      onChange={(value: any) =>
-                        formikProps.setFieldValue("departureDate", value)
-                      }
-                    />
-                  </FormControl>
-                  <FormControl fullWidth>
-                    <OSTimePicker
-                      label="Heure de départ"
-                      value={formikProps.values.departureTime}
-                      onChange={(value: any) =>
-                        formikProps.setFieldValue("departureTime", value)
-                      }
-                    />
-                  </FormControl>
-                </Stack>
-                <Stack
-                  direction="row"
-                  justifyContent="center"
-                  alignItems="center"
-                  spacing={2}
-                >
-                  <FormControl fullWidth>
-                    <OSDatePicker
-                      fullWidth
-                      label="Date retour"
-                      value={formikProps.values.arrivalDate}
-                      onChange={(value: any) =>
-                        formikProps.setFieldValue("arrivalDate", value)
-                      }
-                    />
-                  </FormControl>
-                  <FormControl fullWidth>
-                    <OSTimePicker
-                      label="Heure de retour"
-                      value={formikProps.values.arrivalTime}
-                      onChange={(value: any) =>
-                        formikProps.setFieldValue("arrivalTime", value)
-                      }
-                    />
-                  </FormControl>
-                </Stack>
-                <FormControl fullWidth>
-                  <OSTextField
-                    id="outlined-basic"
-                    label="QuAntité"
-                    variant="outlined"
+                    name="montantTotal"
                     type="number"
-                    name="quantity"
                   />
                 </FormControl>
               </FormContainer>

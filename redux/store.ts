@@ -41,7 +41,9 @@ import { ArticleTransfertSlice } from "./features/bon_transfert/articleTransfert
 import { produitRecuSlice } from "./features/bon_reception/produitRecuSlice";
 import { bonTransfertSlice } from "./features/bon_transfert/bonTransfertSlice";
 import { ArticleCommandeExterneSlice } from "./features/bon_commande_externe/articleBCESlice";
-import { fileSlice } from "./features/file/fileSlice";
+import { missionTransportSlice } from "./features/mission_transport/missionTransportSlice";
+import { locationSlice } from "./features/location/locationSlice";
+import { suiviCarburantSlice } from "./features/suivi_carburant/suiviCarburantSlice";
 import { ficheDotationSlice } from "./features/fiche_dotation/ficheDotationSlice";
 import { grantSlice } from "./features/grant_ligneBudgétaire_programme/grantSlice";
 import { budgetLineSlice } from "./features/grant_ligneBudgétaire_programme/budgeteLineSlice";
@@ -91,8 +93,10 @@ export const store = configureStore({
     produiReçu: produitRecuSlice.reducer,
     bonTransfert:bonTransfertSlice.reducer,
     articleCommandeBce: ArticleCommandeExterneSlice.reducer,
-    file: fileSlice.reducer,
-    ficheDeDotation: ficheDotationSlice.reducer,
+    suiviCarburant: suiviCarburantSlice.reducer,
+    missionDeTransport: missionTransportSlice.reducer,
+    locationDeTransport: locationSlice.reducer,
+    ficheDotation: ficheDotationSlice.reducer,,
     grant : grantSlice.reducer,
     lineBugetaire : budgetLineSlice.reducer
   },
