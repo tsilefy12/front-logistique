@@ -96,7 +96,7 @@ export const store = configureStore({
     suiviCarburant: suiviCarburantSlice.reducer,
     missionDeTransport: missionTransportSlice.reducer,
     locationDeTransport: locationSlice.reducer,
-    ficheDotation: ficheDotationSlice.reducer,,
+    ficheDotation: ficheDotationSlice.reducer,
     grant : grantSlice.reducer,
     lineBugetaire : budgetLineSlice.reducer
   },
