@@ -12,7 +12,7 @@ import {
   Divider,
 } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { Check, Close, Save } from "@mui/icons-material";
@@ -28,15 +28,22 @@ import {
   updateTransportationEquipment,
 } from "../../../redux/features/transportation_equipment";
 import OSDatePicker from "../../shared/date/OSDatePicker";
+import useFetchVendors from "../../vendor/hooks/useFetchVendors";
+
 
 const MaterielTransportForm = () => {
   const route = useRouter();
   const dispatch = useAppDispatch();
+  const { vendors } = useAppSelector((state) => state.vendor);
+  console.log("fournisseur ", vendors);
+  const fetchVendor = useFetchVendors();
+  useEffect(() => {
+    fetchVendor();
+  }, [route.query])
 
   const { isEditing, transportationEquipment } = useAppSelector(
     (state) => state.transportationEquipment
   );
-
   const { linkedEmployee } = useAppSelector((state) => state.auth);
 
   const handleSubmit = async (values: any) => {
@@ -58,9 +65,13 @@ const MaterielTransportForm = () => {
   };
 
   const type = [
-    { id:"Moto", name:"Moto"},
-    { id:"Voiture", name:"Voiture"},
-    { id:"Pirogue", name:"Pirogue"},
+    { id: "Moto", name: "Moto" },
+    { id: "Voiture", name: "Voiture" },
+    { id: "Pirogue", name: "Pirogue" },
+  ]
+  const ListStatus = [
+    { id: "Location", name: "Location" },
+    { id: "Externe", name: "Externe" }
   ]
   return (
     <Container maxWidth="xl" sx={{ pb: 5 }}>
@@ -73,11 +84,11 @@ const MaterielTransportForm = () => {
           otherInformation: isEditing
             ? transportationEquipment?.otherInformation
             : "",
-          status: isEditing ? transportationEquipment.status:"",
-          dateAcquisition: isEditing ? transportationEquipment.dateAcquisition: new Date(),
-          kilometrageInitial: isEditing ? transportationEquipment.kilometrageInitial: "",
-          reservoir: isEditing ? transportationEquipment.reservoir: "",
-          consommation: isEditing ? transportationEquipment.consommation: "",
+          status: isEditing ? transportationEquipment.status : "",
+          dateAcquisition: isEditing ? transportationEquipment.dateAcquisition : new Date(),
+          kilometrageInitial: isEditing ? transportationEquipment.kilometrageInitial : "",
+          reservoir: isEditing ? transportationEquipment.reservoir : "",
+          consommation: isEditing ? transportationEquipment.consommation : "",
           fournisseur: isEditing ? transportationEquipment.fournisseur : "",
         }}
         validationSchema={Yup.object({
@@ -165,13 +176,13 @@ const MaterielTransportForm = () => {
 
               <FormContainer spacing={2}>
                 <Stack direction="row" spacing={3} margin={2}>
-                <OSTextField
-                  fullWidth
-                  id="outlined-basic"
-                  label="Immatriculation/Reference"
-                  variant="outlined"
-                  name="registration"
-                />
+                  <OSTextField
+                    fullWidth
+                    id="outlined-basic"
+                    label="Immatriculation/Reference"
+                    variant="outlined"
+                    name="registration"
+                  />
                   <OSSelectField
                     id="outlined-basic"
                     label="Type"
@@ -189,10 +200,13 @@ const MaterielTransportForm = () => {
                   />
                 </Stack>
                 <Stack direction="row" spacing={2} margin={2}>
-                <OSTextField
+                  <OSSelectField
                     id="outlined-basic"
                     label="Status"
                     variant="outlined"
+                    options={ListStatus}
+                    dataKey="name"
+                    valueKey="id"
                     name="status"
                   />
                   <OSDatePicker
@@ -200,44 +214,48 @@ const MaterielTransportForm = () => {
                     label="Date d'acquisition"
                     variant="outlined"
                     value={formikProps.values.dateAcquisition}
-                    onChange={(value: any) =>formikProps.setFieldValue("dateAcquisition", value)}
+                    onChange={(value: any) => formikProps.setFieldValue("dateAcquisition", value)}
                   />
                 </Stack>
                 <Stack direction="row" spacing={3} margin={2}>
-                <OSTextField
+                  <OSTextField
                     id="outlined-basic"
                     label="Kilometrage initial"
                     variant="outlined"
                     name="kilometrageInitial"
                     type="number"
                   />
-                <OSTextField
+                  <OSTextField
                     id="outlined-basic"
-                    label="Reservoir"
+                    label="Remplissage"
                     variant="outlined"
                     name="reservoir"
                     type="number"
                   />
                   <OSTextField
                     id="outlined-basic"
-                    label="Consommation"
+                    label="Consommation au 100"
                     variant="outlined"
                     name="consommation"
                     type="number"
                   />
                 </Stack>
                 <Stack direction="row" spacing={2} margin={2}>
-                <OSTextField
+                  <OSTextField
                     id="outlined-basic"
                     label="Autre information"
                     variant="outlined"
                     name="otherInformation"
                   />
-                <OSTextField
+                  <OSSelectField
                     id="outlined-basic"
-                    label="fournisseur"
+                    label="Fournisseur"
                     variant="outlined"
+                    options={vendors}
+                    dataKey={["name"]}
+                    valueKey="id"
                     name="fournisseur"
+                    type="text"
                   />
                 </Stack>
               </FormContainer>

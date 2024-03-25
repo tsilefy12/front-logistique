@@ -25,7 +25,6 @@ const DetailTransportEquipment = () => {
   const { transportationEquipment } = useAppSelector(
     (state) => state.transportationEquipment
   );
-  console.log(id);
   const getDetailTransportationEquipment = () => {
     const args: any = {
       include: {

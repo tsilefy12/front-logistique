@@ -310,6 +310,7 @@ const AddArticleForm = () => {
                             id="outlined-basic"
                             label="Date d'amortissement"
                             variant="outlined"
+                            value={formikProps.values.dateAmortissement}
                             onChange={(value: any) =>
                                 formikProps.setFieldValue("dateAmortissement", value)
                             }

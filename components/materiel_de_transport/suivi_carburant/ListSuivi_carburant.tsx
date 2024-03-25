@@ -46,8 +46,9 @@ import { format } from "date-fns";
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { suiviCarburants } = useAppSelector((state) => state.suiviCarburant);
+    console.log("suivi ", suiviCarburants);
+    
     const fetchSuiviCarburant = useFetchSuiviCarburants();
-   
     React.useEffect(() => {
       fetchSuiviCarburant();
       
