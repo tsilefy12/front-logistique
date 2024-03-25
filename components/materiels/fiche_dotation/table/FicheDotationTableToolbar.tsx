@@ -9,7 +9,7 @@ import { TableLoading } from "../../../shared/loading";
 import { debounce } from "lodash";
 
 const FicheDotationTableToolbar = () => {
-	const { loading } = useAppSelector((state) => state.ficheDeDotation)
+	const { loading } = useAppSelector((state) => state.ficheDotation)
 
 	const [key, setKey] = React.useState<any>("");
 

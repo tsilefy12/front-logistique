@@ -46,7 +46,7 @@ export default function FicheDotationList() {
 
     const dispatch = useAppDispatch();
 
-    const { ficheDotations } = useAppSelector((state) => state.ficheDeDotation);
+    const { ficheDotations } = useAppSelector((state) => state.ficheDotation);
 
     const fetchFicheDotation = useFetchFicheDeDotation();
     

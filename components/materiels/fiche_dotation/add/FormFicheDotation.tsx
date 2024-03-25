@@ -18,7 +18,7 @@ import { getBudgetLineList } from '../../../../redux/features/grant_ligneBudgét
 const FormFicheDotation = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any}) => {
     const dispatch = useAppDispatch();
 
-    const { isEditing } = useAppSelector((state) => state.ficheDeDotation);
+    const { isEditing } = useAppSelector((state) => state.ficheDotation);
     const route = useRouter();
     
     const { employees } = useAppSelector((state) => state.employe);

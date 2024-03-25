@@ -19,7 +19,7 @@ const DetailsFicheDotation = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { id }: any = router.query;
-    const { ficheDotation } = useAppSelector((state) => state.ficheDeDotation);
+    const { ficheDotation } = useAppSelector((state) => state.ficheDotation);
     // const [pdfData, setPdfData] = useState<any>();
 
     const getDetailsFicheDotation = () => {
