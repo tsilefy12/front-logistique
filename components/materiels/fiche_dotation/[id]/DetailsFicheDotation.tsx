@@ -147,7 +147,7 @@ const DetailsFicheDotation = () => {
                         </Stack>
                     </FormContainer>
                 </Box>
-                <Box>
+                {/* <Box>
                     <FormContainer spacing={2}>
                             <Stack
                                 direction="row"
@@ -187,7 +187,7 @@ const DetailsFicheDotation = () => {
                                 </Table>
                             </TableContainer>
                     </FormContainer>
-                </Box>
+                </Box> */}
             </DetailsContainer>
         </Container>
     );

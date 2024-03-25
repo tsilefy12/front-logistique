@@ -46,11 +46,11 @@ const DetailsBonTransfert = () => {
                 sx={{ mb: 2 }}
             >
                 <Stack flexDirection={"row"}>
-                    <Link href="/materiels/bon_transfert">
-                        <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
-                            Retour
-                        </Button>
-                    </Link>
+                    <Button color="info" variant="text" 
+                    onClick={()=> router.back()}
+                    startIcon={<ArrowBackIcon />}>
+                        Retour
+                    </Button>
                     <PDFButton data={bonTransfert} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">

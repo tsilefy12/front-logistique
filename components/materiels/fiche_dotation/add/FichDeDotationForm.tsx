@@ -7,16 +7,14 @@ import * as Yup from "yup";
 import { useAppDispatch } from "../../../../hooks/reduxHooks";
 import { styled } from "@mui/material";
 import { createFicheDotation } from "../../../../redux/features/fiche_dotation/ficheDotationSlice";
-import { createPersonneConcerner } from "../../../../redux/features/fiche_dotation/personneConcernerSlice";
 import FormFicheDotation from "./FormFicheDotation";
 
 export default function FichDotationForm() {
     const dispatch = useAppDispatch();
     const route = useRouter();
-    const valuesArticle :any[] =[]
+    // const valuesArticle :any[] =[]
 
     const handleSubmit = async (values: any) => {
-        values.montantTotal = valuesArticle.reduce((acc:any, curr:any) => acc + curr.valeur, 0);
         try {
             const newDataBT = {
                 date:new Date(values.date),
@@ -27,20 +25,7 @@ export default function FichDotationForm() {
                 ligneBudgetaire: values.ligneBudgetaire,
                 fokontany:values.fokontany
             }
-            const response = await dispatch(createFicheDotation(newDataBT));
-            valuesArticle.forEach((element:any, index:any) => {
-                const newData = {
-                    
-                    nomPrenom: element.nomPrenom,
-                    cin:element.cin,
-                    fonction: element.fonction,
-                    designation: element.designation,
-                    ficheDotationId: response.payload.id,
-
-                };
-                dispatch(createPersonneConcerner(newData));
-            });
-        
+            await dispatch(createFicheDotation(newDataBT));
             route.push("/materiels/fiche_dotation");
         } catch (error) {
             console.log("error", error);
@@ -60,10 +45,6 @@ export default function FichDotationForm() {
                             fokontany:"",
                             grant: "",
                             ligneBudgetaire:"",
-                            nomPrenom: "",
-                            cin:"",
-                            fonction: "",
-                            designation: "",
                         }
                     }
                     validationSchema={Yup.object({
@@ -80,7 +61,7 @@ export default function FichDotationForm() {
                         action.resetForm();
                     }}
                 >
-                    {(formikProps) => <FormFicheDotation formikProps={formikProps} valuesArticle={valuesArticle} />}
+                    {(formikProps) => <FormFicheDotation formikProps={formikProps}/>}
                 </Formik>
             </Container>
         </>

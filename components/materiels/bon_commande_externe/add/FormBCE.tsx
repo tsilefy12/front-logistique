@@ -139,34 +139,16 @@ const FormBCE = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                         />
                     </FormControl>
                 </Stack>
-                <Stack
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="flex-start"
-                    spacing={2}
-                    >
-                    <FormControl fullWidth>
-                        <OSSelectField
-                            id="outlined-basic"
-                            label="Demandeur"
-                            name="demandeur"
-                            options={total}
-                            dataKey={["name"]}
-                            valueKey="id"
-                        />
-                    </FormControl>
-                    <FormControl fullWidth>
-                        <OSSelectField
-                            id="outlined-basic"
-                            label="Fournisseur"
-                            name="fournisseur"
-                            options={fournisseurList}
-                            dataKey={["name"]}
-                            valueKey="id"
-                            type="text"
-                        />
-                    </FormControl>
-                </Stack>
+                <FormControl fullWidth>
+                    <OSSelectField
+                        id="outlined-basic"
+                        label="Demandeur"
+                        name="demandeur"
+                        options={total}
+                        dataKey={["name"]}
+                        valueKey="id"
+                    />
+                </FormControl>
                 <Stack
                     direction="row"
                     justifyContent="flex-start"
@@ -224,6 +206,7 @@ const FormBCE = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                     <TableRow>
                                         <TableCell>Designation</TableCell>
                                         <TableCell align="left">Caractéristique</TableCell>
+                                        <TableCell align="left">Fournisseur</TableCell>
                                         <TableCell align="left">PU</TableCell>
                                         <TableCell align="left">Quantité</TableCell>
                                         <TableCell align="left">Valeur</TableCell>
@@ -238,6 +221,7 @@ const FormBCE = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                         >
                                             <TableCell component="th" scope="row">{item.designation}</TableCell>
                                             <TableCell align="left">{item.caracteristique}</TableCell>
+                                            <TableCell align="left">{item.fournisseur} </TableCell>
                                             <TableCell align="left">{item.pu}Ar</TableCell>
                                             <TableCell align="left">{item.quantite} </TableCell>
                                             <TableCell align="left">{item.valeur} Ar</TableCell>
@@ -292,6 +276,19 @@ const FormBCE = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                             </TableCell>
                                             <TableCell align="left">
                                                 <FormControl fullWidth>
+                                                    <OSSelectField
+                                                        id="outlined-basic"
+                                                        label="Fournisseur"
+                                                        name="fournisseur"
+                                                        options={fournisseurList}
+                                                        dataKey={["name"]}
+                                                        valueKey="id"
+                                                        type="text"
+                                                    />
+                                                </FormControl>
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                <FormControl fullWidth>
                                                     <OSTextField
                                                         id="designation"
                                                         label="PU"
@@ -307,6 +304,19 @@ const FormBCE = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                                         label="Quantité"
                                                         name="quantite"
                                                         type="number"
+                                                    />
+                                                </FormControl>
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                <FormControl fullWidth>
+                                                    <OSSelectField
+                                                        id="outlined-basic"
+                                                        label="Fournisseur"
+                                                        name="fournisseur"
+                                                        options={fournisseurList}
+                                                        dataKey={["name"]}
+                                                        valueKey="id"
+                                                        type="text"
                                                     />
                                                 </FormControl>
                                             </TableCell>
@@ -332,6 +342,7 @@ const FormBCE = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                                             const caracteristique = formikProps.values.caracteristique;
                                                             const pu = formikProps.values.pu;
                                                             const quantite = formikProps.values.quantite;
+                                                            const fournisseur = formikProps.values.fournisseur;
                                                             // Vérifier si les champs sont vides
                                                             if (designation.trim() !== '' && caracteristique.trim() !== '') {
                                                                 valuesArticle.push({
@@ -339,10 +350,12 @@ const FormBCE = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                                                     caracteristique: caracteristique,
                                                                     pu: pu,
                                                                     quantite: quantite,
+                                                                    fournisseur: fournisseur,
                                                                     valeur: quantite * pu,
                                                                 });
                                                                 formikProps.setFieldValue('designation', '');
                                                                 formikProps.setFieldValue('caracteristique', '');
+                                                                formikProps.setFieldValue('fournisseur', '');
                                                                 formikProps.setFieldValue('pu', 0);
                                                                 formikProps.setFieldValue('quantite', 0);
                                                             }
@@ -356,6 +369,7 @@ const FormBCE = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                                         onClick={() => {
                                                             formikProps.setFieldValue('designation', '');
                                                             formikProps.setFieldValue('caracteristique', '');
+                                                            formikProps.setFieldValue('fournisseur', '');
                                                             formikProps.setFieldValue('pu', 0);
                                                             formikProps.setFieldValue('quantite', 0)
                                                         }}

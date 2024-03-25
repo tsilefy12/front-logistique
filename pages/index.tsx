@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 import Head from "next/head";
 import BackOfficeLayout from "../layouts/backOffice";
 import useBasePath from "../hooks/useBasePath";
-import ListCommande from "../components/materiels/commandes/ListCommande";
+import ListMateriels from "../components/materiels/informatique";
 // import ListCommandeDesEmployerConnecter from "../components/materiels/mes_commandes/ListCommandesEmployeConnecter";
 
 const Home: NextPage = () => {
@@ -17,8 +17,7 @@ const Home: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        {/* <ListCommandeDesEmployerConnecter /> */}
-        <ListCommande />
+        <ListMateriels />
       </Container>
     </BackOfficeLayout>
   );
