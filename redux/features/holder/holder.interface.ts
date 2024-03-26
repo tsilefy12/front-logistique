@@ -2,11 +2,11 @@ export interface HolderItem {
   id?: string;
   contact? : string;
   reference?: string;
-  lastName?: string;
-  firstName?: string;
+  name?: string;
+  type?: string;
   matricule?: string;
   function?: string;
-  numOption?:string;
+  holderEquipment?:any;
 }
 
 export interface HolderInitialState {

@@ -124,7 +124,6 @@ export default function BonCommandeExterneList() {
                             const labelId = `enhanced-table-checkbox-${index}`;
                             return (
                                 <TableRow hover tabIndex={-1} key={row.id}>
-                                    <TableCell align="left">{row?.vendor?.name}</TableCell>
                                     <TableCell align="left">
                                         <Moment format="DD/MM/YYYY">
                                             {row?.dateCommande}

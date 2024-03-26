@@ -29,6 +29,32 @@ export const editFicheDotation = createAsyncThunk(
     }
 );
 
+export const updateFicheDotation = createAsyncThunk(
+  "FicheDotation/updateFicheDotation",
+  async (data: { id: string; updateData: ficheDotationItem }, thunkAPI) => {
+    try {
+      const response = await axios.patch(
+        `/logistique/fiche-de-dotation/${data.id}`,
+        data.updateData
+      );
+      thunkAPI.dispatch(
+        enqueueSnackbar({
+          message: "Fiche de dotation mis à jour avec succès",
+          options: {
+            variant: "success",
+          },
+        })
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response) {
+        return thunkAPI.rejectWithValue(error);
+      }
+      throw error;
+    }
+  }
+);
+
 export const createFicheDotation = createAsyncThunk(
     "materiels/createFicheDotation",
     async (data: ficheDotationItem, thunkAPI) => {
@@ -172,6 +198,20 @@ export const ficheDotationSlice = createSlice({
         [editFicheDotation.rejected.type]: (state, action) => {
             state.error = action.error;
             state.loading = false;
+        },
+
+        // update fiche de dotation
+        [updateFicheDotation.pending.type]: (state) => {
+          state.loading = true;
+        },
+        [updateFicheDotation.fulfilled.type]: (state, action) => {
+          state.loading = false;
+          state.ficheDotation = {};
+          state.isEditing = false;
+        },
+        [updateFicheDotation.rejected.type]: (state, action) => {
+          state.loading = false;
+          state.error = action.error;
         },
     },
 });

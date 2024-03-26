@@ -3,42 +3,99 @@ import { useRouter } from "next/router";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import { Formik } from "formik";
-import { useAppDispatch } from "../../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import * as Yup from "yup";
 import {
-  createproduitRecu,
+  createproduitRecu, deleteproduitRecu, updateProduiRecu,
 } from "../../../../redux/features/bon_reception/produitRecuSlice";
-import { createBonReception } from "../../../../redux/features/bon_reception/bonReceptionSlice";
+import { createBonReception, editBonReception, updateBonReception } from "../../../../redux/features/bon_reception/bonReceptionSlice";
 import FormBonReception from "./FormBonReception";
 import { styled } from "@mui/material";
 
-export default function BonCommandeInterneForm() {
+export default function BonReceptionForm() {
     const [valuesArticle, setValuesArticle] = useState < any[]> ([])
+    const [ idDelete,setIdDelete] = useState < any[]> ([])
     const dispatch = useAppDispatch();
     const route = useRouter();
+    const { id }: any = route.query;
+    const { isEditing ,bonReception } = useAppSelector((state) => state.bonReceptions);
 
     const handleSubmit = async (values: any) => {
         try {
-            const newDataBCI = {
-                bce: values.bce,
-                reference: values.reference,
-                dateReception: new Date(values.dateReception)
+            if(isEditing){
+                const updateDataBR = {
+                    bce: values.bce,
+                    reference: values.reference,
+                    dateReception: new Date(values.dateReception)
+                }
+                const response = await dispatch(updateBonReception({id,updateDataBR}));
+                valuesArticle?.forEach((element:any, index:any) => {
+                    const id = element.id
+                    if(id){
+                        const updateProduitRecu = {
+                            designation: element.designation,
+                            quantite:element.quantite,
+                            bonDeReceptionId: response.payload.id
+                        };
+                        dispatch(updateProduiRecu({id,updateProduitRecu}));
+                    }else{
+                        const newData = {
+                            designation: element.designation,
+                            quantite:element.quantite,
+                            bonDeReceptionId: response.payload.id
+                        };
+                        dispatch(createproduitRecu(newData));
+                    }
+                });
+                idDelete?.forEach((element:any, index:any) =>{
+                    const id = element.id
+                    dispatch(deleteproduitRecu({id}));
+                })
+            }else{
+                const newDataBR = {
+                    bce: values.bce,
+                    reference: values.reference,
+                    dateReception: new Date(values.dateReception)
+                }
+                const response = await dispatch(createBonReception(newDataBR));
+                valuesArticle.forEach((element:any, index:any) => {
+                    const newData = {
+                        designation: element.designation,
+                        quantite:element.quantite,
+                        bonDeReceptionId: response.payload.id
+                    };
+                    dispatch(createproduitRecu(newData));
+                });
             }
-            const response = await dispatch(createBonReception(newDataBCI));
-            valuesArticle.forEach((element:any, index:any) => {
-                const newData = {
-                    designation: element.designation,
-                    quantite:element.quantite,
-                    bonDeReceptionId: response.payload.id
-                };
-                dispatch(createproduitRecu(newData));
-            });
-        
             route.push("/materiels/bon_reception");
         } catch (error) {
         console.log("error", error);
         }
     };
+
+    const handleFech = async (id: any) => {
+        try { 
+            const Val = await dispatch(editBonReception({ id , args:{
+                include:{
+                    produitRecu:true,
+                }
+            }}));
+            console.log(Val)
+            setValuesArticle((prev:any[])=>{
+                console.log(prev)
+                prev = Val.payload.produitRecu
+                return prev
+            })
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        if (id) {
+          handleFech(id)
+        }
+    }, [id]);
     return (
         <>
             <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
@@ -46,9 +103,9 @@ export default function BonCommandeInterneForm() {
                     enableReinitialize
                     initialValues={
                         {
-                            bce: "",
-                            reference:"",
-                            dateReception: new Date().toISOString(),
+                            bce: isEditing && bonReception ? bonReception.bce:"",
+                            reference:isEditing && bonReception ? bonReception.reference:"",
+                            dateReception: isEditing && bonReception.dateReception ? new Date(bonReception.dateReception).toISOString(): new Date().toISOString(),
                             designation :"",
                             quantite:0,
                         }
@@ -63,7 +120,7 @@ export default function BonCommandeInterneForm() {
                         action.resetForm();
                     }}
                 >
-                    {(formikProps) => <FormBonReception formikProps={formikProps} valuesArticle={valuesArticle} setValuesArticle={setValuesArticle} />}
+                    {(formikProps) => <FormBonReception formikProps={formikProps} valuesArticle={valuesArticle} setValuesArticle={setValuesArticle} setIdDelete={setIdDelete}/>}
                 </Formik>
             </Container>
         </>

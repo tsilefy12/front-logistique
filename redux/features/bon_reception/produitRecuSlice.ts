@@ -93,6 +93,32 @@ export const getproduitRecus = createAsyncThunk(
   }
 );
 
+export const updateProduiRecu = createAsyncThunk(
+  "ProduiRecu/updateProduiRecu",
+  async (data: { id: string; updateProduitRecu: produitRecuItem }, thunkAPI) => {
+    try {
+      const response = await axios.patch(
+        `/logistique/produit-recu/${data.id}`,
+        data.updateProduitRecu
+      );
+      thunkAPI.dispatch(
+        enqueueSnackbar({
+          message: "Produit mis à jour avec succès",
+          options: {
+            variant: "success",
+          },
+        })
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response) {
+        return thunkAPI.rejectWithValue(error);
+      }
+      throw error;
+    }
+  }
+);
+
 export const produitRecuSlice = createSlice({
     name: "produiReçu",
     initialState: initialState,
@@ -145,6 +171,20 @@ export const produitRecuSlice = createSlice({
         [editproduitRecu.rejected.type]: (state, action) => {
             state.error = action.error;
             state.loading = false;
+        },
+
+        // update produit recu
+        [updateProduiRecu.pending.type]: (state) => {
+          state.loading = true;
+        },
+        [updateProduiRecu.fulfilled.type]: (state, action) => {
+          state.loading = false;
+          state.produitRecu = {};
+          state.isEditing = false;
+        },
+        [updateProduiRecu.rejected.type]: (state, action) => {
+          state.loading = false;
+          state.error = action.error;
         },
     },
 });

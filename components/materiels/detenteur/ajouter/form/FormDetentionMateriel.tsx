@@ -14,7 +14,7 @@ import {
   TableRow,
 } from "@mui/material";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { Check, Close, Save } from "@mui/icons-material";
 import * as Yup from "yup";
@@ -32,19 +32,14 @@ import {
 } from "../../../../../redux/features/holder";
 import { Form, Formik } from "formik";
 import { cancelEdit } from "../../../../../redux/features/holder/holderSlice";
-import OSTextField from "../../../../shared/input copy/OSTextField";
-import OSSelectField from "../../../../shared/select/OSSelectField";
-import ListDetentionMateriel from "../table/ListDetentionMateriel";
-import { getEmployees } from "../../../../../redux/features/employeStagiaire/employeeSlice";
-import { getInterns } from "../../../../../redux/features/employeStagiaire/stagiaireSlice";
-import { getEquipments } from "../../../../../redux/features/equipment";
-import { getEquipment } from "../../../../../redux/features/equipment/useCases/getEquipment";
 import FormDetenteur from "./formDetenteur";
+import { createHolderEquipement } from "../../../../../redux/features/holder/holderEquipementSlice";
 
 const FormDetentionMateriel = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { isEditing, holder } = useAppSelector((state) => state.holder);
+    const [valuesArticle, setValuesArticle] = useState < any[]> ([])
 
     const handleSubmit = async (values: any) => {
         try {
@@ -56,7 +51,22 @@ const FormDetentionMateriel = () => {
             })
             );
         } else {
-            await dispatch(createHolder(values));
+            const newDataHolder = {
+                reference: values.reference,
+                contact: values.contact,
+                name:values.name,
+                type:values.type,
+                matricule: values.matricule,
+                function: values.function,
+            }
+            const response = await dispatch(createHolder(newDataHolder));
+            valuesArticle.forEach((element:any, index:any) => {
+                const newData = {
+                    equipmentId: element.equipmentId,
+                    holderId: response.payload.id
+                };
+                dispatch(createHolderEquipement(newData))
+            })
         }
         router.push("/materiels/detenteur");
         } catch (error) {
@@ -69,30 +79,29 @@ const FormDetentionMateriel = () => {
             <Formik
                 enableReinitialize
                 initialValues={
-                {
+                    {
                         numOptim:  "",
                         contact: "",
                         reference: "",
-                        firstName: "",
-                        lastName: "",
+                        name: "",
                         matricule:  "",
                         function:"",
+                        type:"",
                     }
                 }
                 validationSchema={Yup.object({
                     contact: Yup.string().required("Champ obligatoire"),
                     reference: Yup.string().required("Champ obligatoire"),
-                    firstName: Yup.string().required("champ obligatoire"),
-                    lastName: Yup.string().required("Champ obligatoire"),
+                    name: Yup.string().required("champ obligatoire"),
                     matricule: Yup.string().required("Champ obligatoire"),
                     function: Yup.string().required("Champ obligatoire"),
                 })}
                 onSubmit={(value: any, action: any) => {
-                handleSubmit(value);
-                action.resetForm();
+                    handleSubmit(value);
+                    action.resetForm();
                 }}
             >
-                {(formikProps) => <FormDetenteur isEditing={isEditing} formikProps={formikProps}/>}
+                {(formikProps) => <FormDetenteur formikProps={formikProps} valuesArticle={valuesArticle} setValuesArticle={setValuesArticle}/>}
             </Formik>
         </Container>
     );

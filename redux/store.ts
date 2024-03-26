@@ -47,6 +47,7 @@ import { suiviCarburantSlice } from "./features/suivi_carburant/suiviCarburantSl
 import { ficheDotationSlice } from "./features/fiche_dotation/ficheDotationSlice";
 import { grantSlice } from "./features/grant_ligneBudgétaire_programme/grantSlice";
 import { budgetLineSlice } from "./features/grant_ligneBudgétaire_programme/budgeteLineSlice";
+import { holderEquipementSlice } from "./features/holder/holderEquipementSlice";
 
 export const store = configureStore({
   reducer: {
@@ -98,7 +99,8 @@ export const store = configureStore({
     locationDeTransport: locationSlice.reducer,
     ficheDotation: ficheDotationSlice.reducer,
     grant : grantSlice.reducer,
-    lineBugetaire : budgetLineSlice.reducer
+    lineBugetaire : budgetLineSlice.reducer,
+    holderEquipment : holderEquipementSlice.reducer
   },
 });
 

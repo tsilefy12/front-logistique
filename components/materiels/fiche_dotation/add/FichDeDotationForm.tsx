@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import {  Formik } from "formik";
 import * as Yup from "yup";
-import { useAppDispatch } from "../../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { styled } from "@mui/material";
-import { createFicheDotation } from "../../../../redux/features/fiche_dotation/ficheDotationSlice";
+import { createFicheDotation, editFicheDotation, updateFicheDotation } from "../../../../redux/features/fiche_dotation/ficheDotationSlice";
 import FormFicheDotation from "./FormFicheDotation";
 
 export default function FichDotationForm() {
@@ -14,9 +14,13 @@ export default function FichDotationForm() {
     const route = useRouter();
     // const valuesArticle :any[] =[]
 
+    const { id }: any = route.query;
+    const { isEditing,ficheDotation } = useAppSelector((state) => state.ficheDotation);
+
     const handleSubmit = async (values: any) => {
         try {
-            const newDataBT = {
+            const updateData = {
+                reference: values.reference,
                 date:new Date(values.date),
                 region: values.region,
                 district: values.district,
@@ -25,12 +29,31 @@ export default function FichDotationForm() {
                 ligneBudgetaire: values.ligneBudgetaire,
                 fokontany:values.fokontany
             }
-            await dispatch(createFicheDotation(newDataBT));
+            if(isEditing){
+                await dispatch(updateFicheDotation({id,updateData}));
+            }else{
+                await dispatch(createFicheDotation(updateData));
+            }
             route.push("/materiels/fiche_dotation");
         } catch (error) {
             console.log("error", error);
         }
     };
+
+    const handleFech = async (id: any) => {
+        try { 
+            await dispatch(editFicheDotation({ id }));
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        if (id) {
+          handleFech(id)
+        }
+    }, [id]);
+
     return (
         <>
             <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
@@ -38,16 +61,18 @@ export default function FichDotationForm() {
                     enableReinitialize
                     initialValues={
                         {
-                            date:new Date().toISOString(),
-                            region: "",
-                            district:"",
-                            commune: "",
-                            fokontany:"",
-                            grant: "",
-                            ligneBudgetaire:"",
+                            date:isEditing && ficheDotation.date ? new Date(ficheDotation.date):new Date().toISOString(),
+                            reference:isEditing ? ficheDotation.reference :"",
+                            region:isEditing ? ficheDotation.region : "",
+                            district:isEditing ? ficheDotation.district :"",
+                            commune: isEditing ? ficheDotation.commune :"",
+                            fokontany:isEditing ? ficheDotation.fokontany :"",
+                            grant:isEditing ? ficheDotation.grant : "",
+                            ligneBudgetaire:isEditing ? ficheDotation.ligneBudgetaire :"",
                         }
                     }
                     validationSchema={Yup.object({
+                        reference:Yup.string().required("Champ obligatoire"),
                         region: Yup.string().required("Champ obligatoire"),
                         district: Yup.string().required("Champ obligatoire"),
                         date:Yup.date().required("Champ obligatoire"),

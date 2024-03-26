@@ -21,8 +21,8 @@ const FormFicheDotation = ({formikProps}: {formikProps: FormikProps<any>}) => {
     const { isEditing } = useAppSelector((state) => state.ficheDotation);
     const route = useRouter();
     
-    const { employees } = useAppSelector((state) => state.employe);
-    const { interns } = useAppSelector((state) => state.stagiaire);
+    // const { employees } = useAppSelector((state) => state.employe);
+    // const { interns } = useAppSelector((state) => state.stagiaire);
     const { grantList } = useAppSelector( (state) => state.grant);
     const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
 
@@ -78,7 +78,7 @@ const FormFicheDotation = ({formikProps}: {formikProps: FormikProps<any>}) => {
                     sx={{ marginInline: 3 }}
                     type="submit"
                     >
-                    Enregistrer
+                        Enregistrer
                     </Button>
                     <Button
                     variant="text"
@@ -124,6 +124,15 @@ const FormFicheDotation = ({formikProps}: {formikProps: FormikProps<any>}) => {
                     alignItems="flex-start"
                     spacing={2}
                     >
+                    <FormControl fullWidth>
+                        <OSTextField
+                            fullWidth
+                            id="outlined-basic"
+                            variant="outlined"
+                            label="Réference"
+                            name="reference"
+                        />
+                    </FormControl>
                     <FormControl fullWidth>
                         <OSTextField
                             fullWidth

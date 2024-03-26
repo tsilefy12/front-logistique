@@ -4,6 +4,8 @@ export interface BonCommandeItem {
     grant?: string;
     ligneBudgetaire?: string;
     demandeur?: string;
+    reference?:string;
+    type?:string;
     numBon?: string;
     dateBonCommande?: Date;
     numBonCommande?: string;

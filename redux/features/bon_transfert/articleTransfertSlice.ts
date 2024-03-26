@@ -93,7 +93,31 @@ export const getArticleTransferts = createAsyncThunk(
   }
 );
 
-
+export const updateArticleTransfert = createAsyncThunk(
+  "ArticleTransfert/updateArticleTransfert",
+  async (data: { id: string; updateData: articleTransfertItem }, thunkAPI) => {
+    try {
+      const response = await axios.patch(
+        `/logistique/article-transfert/${data.id}`,
+        data.updateData
+      );
+      thunkAPI.dispatch(
+        enqueueSnackbar({
+          message: "Article mis à jour avec succès",
+          options: {
+            variant: "success",
+          },
+        })
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response) {
+        return thunkAPI.rejectWithValue(error);
+      }
+      throw error;
+    }
+  }
+);
 
 export const ArticleTransfertSlice = createSlice({
     name: "articleTransfert",
@@ -147,6 +171,20 @@ export const ArticleTransfertSlice = createSlice({
         [editArticleTransfert.rejected.type]: (state, action) => {
             state.error = action.error;
             state.loading = false;
+        },
+
+        // update article de bon de transfert
+        [updateArticleTransfert.pending.type]: (state) => {
+          state.loading = true;
+        },
+        [updateArticleTransfert.fulfilled.type]: (state, action) => {
+          state.loading = false;
+          state.articleTransfert = {};
+          state.isEditing = false;
+        },
+        [updateArticleTransfert.rejected.type]: (state, action) => {
+          state.loading = false;
+          state.error = action.error;
         },
     },
 });

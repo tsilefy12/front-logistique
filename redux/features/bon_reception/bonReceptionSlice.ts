@@ -16,9 +16,12 @@ const initialState: bonReceptionInitialState = {
 
 export const editBonReception = createAsyncThunk(
     "fourniture_consommable/editBonReception",
-    async (data: { id: string }, thunkAPI) => {
-        try {
-            const response = await axios.get(`/logistique/bon-de-reception/${data.id}`);
+    async (data: { id: string , args?: any }, thunkAPI) => {
+       try {
+          const params = {
+            args: JSON.stringify(data.args),
+          };
+            const response = await axios.get(`/logistique/bon-de-reception/${data.id}`, { params });
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -51,6 +54,33 @@ export const createBonReception = createAsyncThunk(
       }
     }
 );
+
+export const updateBonReception = createAsyncThunk(
+  "BonReception/updateBonReception",
+  async (data: { id: string; updateDataBR: bonReceptionItem }, thunkAPI) => {
+    try {
+      const response = await axios.patch(
+        `/logistique/bon-de-reception/${data.id}`,
+        data.updateDataBR
+      );
+      thunkAPI.dispatch(
+        enqueueSnackbar({
+          message: "BonReception mis à jour avec succès",
+          options: {
+            variant: "success",
+          },
+        })
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response) {
+        return thunkAPI.rejectWithValue(error);
+      }
+      throw error;
+    }
+  }
+);
+
   
 export const deleteBonReception = createAsyncThunk(
     "fourniture_consommable/deleteBonReception",
@@ -120,6 +150,7 @@ export const bonReceptionSlice = createSlice({
         },
     },
     extraReducers: {
+        //getAll bon de réception
         [getBonReceptions.pending.type]: (state) => {
             state.loading = true;
         },
@@ -131,6 +162,8 @@ export const bonReceptionSlice = createSlice({
             state.loading = false;
             state.error = action.error;
         },
+
+        // get bon de réception
         [getBonReception.pending.type]: (state) => {
           state.loading = true;
         },
@@ -142,6 +175,8 @@ export const bonReceptionSlice = createSlice({
             state.loading = false;
             state.error = action.error;
         },
+
+        // create bon de réception
         [createBonReception.pending.type]: (state) => {
             state.loading = true;
         },
@@ -152,6 +187,8 @@ export const bonReceptionSlice = createSlice({
             state.error = action.error;
             state.loading = false;
         },
+
+        // delete bon de reception
         [deleteBonReception.pending.type]: (state) => {
             state.loading = true;
         },
@@ -162,6 +199,8 @@ export const bonReceptionSlice = createSlice({
             state.error = action.error;
             state.loading = false;
         },
+
+        // edit bon de reception
         [editBonReception.pending.type]: (state) => {
             state.loading = true;
         },
@@ -173,6 +212,20 @@ export const bonReceptionSlice = createSlice({
         [editBonReception.rejected.type]: (state, action) => {
             state.error = action.error;
             state.loading = false;
+        },
+
+        // update bon de réception
+        [updateBonReception.pending.type]: (state) => {
+          state.loading = true;
+        },
+        [updateBonReception.fulfilled.type]: (state, action) => {
+          state.loading = false;
+          state.bonReception = {};
+          state.isEditing = false;
+        },
+        [updateBonReception.rejected.type]: (state, action) => {
+          state.loading = false;
+          state.error = action.error;
         },
     },
 });
