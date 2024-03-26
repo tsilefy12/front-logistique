@@ -11,7 +11,7 @@ const useFetchLocationDeTransport = () => {
       args.where = {
         OR: [
           {
-            materiel: {
+            responsable: {
               contains: router.query.search,
               mode: "insensitive",
             },

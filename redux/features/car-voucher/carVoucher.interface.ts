@@ -1,16 +1,16 @@
   export interface CarVoucherItem {
     id?: string;
-    number?: string;
-    registration?: string;
-    type?: string;
-    reason?: string;
+    materiel?: string;
+    date?: Date;
+    montantTotal?: string;
+    /*reason?: string;
     argument?: string;
     itinerary?: string;
     departureDate?: string;
     departureTime?: string;
     arrivalDate?: string;
     arrivalTime?: string;
-    quantity?: number;
+    quantity?: number;*/
   } 
 
   export interface CarVoucherInitialState {

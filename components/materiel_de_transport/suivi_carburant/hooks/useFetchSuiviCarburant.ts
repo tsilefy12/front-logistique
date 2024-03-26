@@ -13,12 +13,60 @@ const useFetchSuiviCarburants = () => {
     return async () => {
         let args: any = {};
         if (router.query.search) {
-            args.where = {};
+            args.where = {
+                OR: [
+                    {
+                        materiel: {
+                            contains: router.query.search,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        grant: {
+                            contains: router.query.search,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        ligneBudgetaire: {
+                            contains: router.query.search,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        modePaiement: {
+                            contains: router.query.search,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        itineraire: {
+                            contains: router.query.search,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        personnelTransporte: {
+                            contains: router.query.search,
+                            mode: "insensitive",
+                        },
+                    },
+                ]
+            };
         }
         if (router.query.orderBy && router.query.order) {
-            args.orderBy = {
-                [<string>router.query.orderBy]: router.query.order,
-            };
+            switch (router.query.orderBy) {
+                case "materiel":
+                    args.orderBy = {
+                        materiel: router.query.order,
+                    };
+                    break;
+                default:
+                    args.orderBy = {
+                        [<string>router.query.orderBy]: router.query.order,
+                    };
+                    break;
+            }
         }
         await dispatch(getSuiviCarburantList({ args }));
     };

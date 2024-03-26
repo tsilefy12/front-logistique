@@ -16,12 +16,42 @@ const useFetchMissionTransport = () => {
             args.where = {
                 OR: [
                     {
-                      materiel: {
-                        contains: router.query.search,
-                        mode: "insensitive",
-                      },
+                        materiel: {
+                            contains: router.query.search,
+                            mode: "insensitive",
+                        },
                     },
-                  ],
+                    {
+                        pj: {
+                            contains: router.query.search,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        libelle: {
+                            contains: router.query.search,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        utilisateur: {
+                            contains: router.query.search,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        grant: {
+                            contains: router.query.search,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        ligneBudgetaire: {
+                            contains: router.query.search,
+                            mode: "insensitive",
+                        },
+                    },
+                ],
             };
         }
         if (router.query.orderBy && router.query.order) {

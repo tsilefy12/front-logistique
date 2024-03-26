@@ -51,7 +51,6 @@ import { format } from "date-fns";
     const fetchSuiviCarburant = useFetchSuiviCarburants();
     React.useEffect(() => {
       fetchSuiviCarburant();
-      
     }, [router.query]);
    
     const handleClickEdit = async (id: any) => {

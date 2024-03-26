@@ -39,7 +39,7 @@ const useFetchVendors = () => {
             },
           },
           {
-            website: {
+           website: {
               contains: router.query.search,
               mode: "insensitive",
             },

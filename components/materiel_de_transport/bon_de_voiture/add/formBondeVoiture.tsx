@@ -71,7 +71,7 @@ const FormBonDeVoiture = () => {
           date: Yup.string().required(
             "Veuillez remplir le champ date"
           ),
-          montantTotal: Yup.string().required("Veuillez remplir le champ montant total"),
+          //montantTotal: Yup.string().required("Veuillez remplir le champ montant total"),
         })}
         onSubmit={(value: any, action: any) => {
           handleSubmit(value);
@@ -150,7 +150,7 @@ const FormBonDeVoiture = () => {
                     onChange = {(value: any) =>formikProps.setFieldValue("date", value)}
                   />
                 </Stack>
-                <FormControl fullWidth>
+              <FormControl fullWidth sx={{display: "none"}}>
                   <OSTextField
                     id="outlined-basic"
                     label="Montant total"
