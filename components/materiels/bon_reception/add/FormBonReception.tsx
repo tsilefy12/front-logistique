@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { Form, FormikProps } from 'formik';
 import { Box, Button, Divider, FormControl, IconButton, Link, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from '@mui/material';
@@ -12,11 +12,13 @@ import OSSelectField from '../../../shared/select/OSSelectField';
 import { getBonCommandeExterne, getBonCommandeExternes } from "../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
 import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 import { useRouter } from 'next/router';
+import EditIcon from "@mui/icons-material/Edit";
 
-const FormBonReception = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any}) => {
+const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) => {
     const dispatch = useAppDispatch();
     const route = useRouter();
-    
+    const [idValues ,setIdValues] = useState<any>()
+
     const { isEditing } = useAppSelector((state) => state.bonReceptions);
     const { bonCommandeExternes } = useAppSelector((state) => state.bonCommendeExterne);
     const fetchUtilsData = () => {
@@ -74,7 +76,7 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle}: {formikP
                         sx={{ marginInline: 3 }}
                         type="submit"
                     >
-                        Enregistrer
+                        {isEditing ? "Modifier" : "Enregistrer"}
                     </Button>
                     <Button
                         variant="text"
@@ -159,7 +161,7 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle}: {formikP
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {valuesArticle.map((item:any , index:any) => (
+                                    {valuesArticle && valuesArticle?.map((item:any , index:any) => (
                                         <TableRow
                                             key={index}
                                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -182,6 +184,26 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle}: {formikP
                                                         component="span"
                                                         size="small"
                                                         onClick={() => {
+                                                            formikProps.setFieldValue('designation', item.designation)
+                                                            formikProps.setFieldValue('quantite', item.quantite)
+                                                            setIdValues(item.id)
+                                                        }}
+                                                    >
+                                                    <EditIcon color="primary" />
+                                                </IconButton>
+                                                <IconButton
+                                                        color="warning"
+                                                        aria-label="Supprimer"
+                                                        component="span"
+                                                        size="small"
+                                                        onClick={() => {
+                                                            setIdDelete((prev:any[])=>{
+                                                                let temp = [...prev]
+                                                                temp.push({
+                                                                    id: item.id
+                                                                })
+                                                                return temp
+                                                            })
                                                             setValuesArticle((prev:any[])=>{
                                                                 let temp = [...prev]
                                                                 temp.splice(index,1)
@@ -192,8 +214,6 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle}: {formikP
                                                     >
                                                     <Delete />
                                                 </IconButton>
-                                                {/* <EditIcon color="primary" />
-                                                <DeleteIcon color="warning" /> */}
                                             </Stack>
                                             </TableCell>
                                         </TableRow>
@@ -240,16 +260,32 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle}: {formikP
                                                             const quantite = formikProps.values.quantite;
                                                                 // Vérifier si les champs sont vides
                                                                 if (designation.trim() !== '') {
-                                                                    setValuesArticle((prev:any[])=>{
-                                                                        let temp = [...prev]
-                                                                        temp.push({
-                                                                            designation: designation,
-                                                                            quantite: quantite
+                                                                    if(idValues){
+                                                                        setValuesArticle((prev:any[])=>{
+                                                                            let temp = [...prev.map((ValId)=>{
+                                                                                if(ValId.id === idValues){
+                                                                                    return {
+                                                                                        id:idValues,
+                                                                                        designation,
+                                                                                        quantite
+                                                                                    }
+                                                                                }
+                                                                                return ValId
+                                                                            })]
+                                                                            return temp
                                                                         })
-                                                                        return temp
-                                                                    })
+                                                                    } else{
+                                                                        setValuesArticle((prev:any[])=>{
+                                                                            let temp = [...prev]
+                                                                            temp.push({
+                                                                                designation: designation,
+                                                                                quantite: quantite
+                                                                            })
+                                                                            return temp
+                                                                        })
+                                                                    }
                                                                 formikProps.setFieldValue('designation', '')
-                                                                formikProps.setFieldValue('quantite', '');
+                                                                formikProps.setFieldValue('quantite', 0);
                                                             }
                                                             
                                                         }}
@@ -259,10 +295,8 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle}: {formikP
                                                     <IconButton
                                                         type="button"
                                                         onClick={() => {
-                                                            formikProps.setFieldValue('designation', '');
-                                                                formikProps.setFieldValue('caracteristique', '');
-                                                                formikProps.setFieldValue('pu', 0);
-                                                                formikProps.setFieldValue('quantite', 0)
+                                                            formikProps.setFieldValue('designation', '')
+                                                            formikProps.setFieldValue('quantite', 0);
                                                         }}
                                                         >
                                                         <Close />

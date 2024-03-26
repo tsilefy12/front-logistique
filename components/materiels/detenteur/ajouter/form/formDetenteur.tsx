@@ -1,5 +1,5 @@
-import { Box, Button, Divider, Link, Stack, Table, TableBody, TableCell, TableContainer ,TableHead,TableRow,Typography,styled} from '@mui/material';
-import { Form } from 'formik';
+import { Box, Button, Divider, IconButton, Link, Stack, Table, TableBody, TableCell, TableContainer ,TableHead,TableRow,Typography,styled} from '@mui/material';
+import { Form, FormikProps } from 'formik';
 import React, {  useEffect } from 'react'
 import Paper from "@mui/material/Paper";
 import OSSelectField from '../../../../shared/select/OSSelectField';
@@ -13,12 +13,12 @@ import { useAppDispatch, useAppSelector } from '../../../../../hooks/reduxHooks'
 import { getEquipment } from '../../../../../redux/features/equipment/useCases/getEquipment';
 import { getEmployees, getEquipments } from '../../../../../redux/features/equipment';
 import { getInterns } from '../../../../../redux/features/employeStagiaire/stagiaireSlice';
+import Moment from 'react-moment';
 
-const FormDetenteur = (props:any) =>{
-    const { formikProps,isEditing } = props
-
-    const valuesMateriel:any = []
+const FormDetenteur = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any}) => {
     
+    const { isEditing, holder } = useAppSelector((state) => state.holder);
+
     const dispatch = useAppDispatch();
     const { employees } = useAppSelector((state) => state.employe);
     const { interns } = useAppSelector((state) => state.stagiaire);
@@ -57,19 +57,32 @@ const FormDetenteur = (props:any) =>{
     
     const handleChange =  async (id: string) => {
         const response:any = await dispatch(getEquipment({ id }));
-        const newVal = {
-            numOptim : response.payload.numOptim,
-            designation: response.payload.designation,
-            acquisitionValue:response.payload.acquisitionValue,
-            acquisitionDate:response.payload.acquisitionDate
-        }
-        valuesMateriel.push(newVal)
-        console.log(valuesMateriel)
+        setValuesArticle((prev:any[])=>{
+            let temp = [...prev]
+            temp.push({
+                equipmentId: response.payload.id,
+                numOptim : response.payload.numOptim,
+                designation: response.payload.designation,
+                acquisitionValue:response.payload.acquisitionValue,
+                acquisitionDate:response.payload.acquisitionDate
+            })
+            return temp
+        })
     };
 
     useEffect(() => {
-        handleChange(formikProps.values.numOptim)
+        if(formikProps.values.numOptim){
+            handleChange(formikProps.values.numOptim)
+        }
     }, [formikProps.values.numOptim]);
+
+    useEffect(() => {
+        if(formikProps.values.name){
+            const Val:any = total.find((e:any)=> e.id === formikProps.values.name)
+            formikProps.setFieldValue("type", Val?.type)
+            console.log(formikProps.values.type)
+        }
+    }, [formikProps.values.name]);
     return (
         <Form>
             <NavigationContainer>
@@ -125,13 +138,13 @@ const FormDetenteur = (props:any) =>{
 
                 <Stack spacing={2} direction="row">
                 <OSSelectField
-                    id="outlined-basic"
-                    label="Nom et Prénom"
-                    options={total}
-                    name="name"
-                    variant="outlined" 
-                    valueKey={"id"} 
-                    dataKey={"name"}
+                        id="outlined-basic"
+                        label="Nom et Prénom"
+                        options={total}
+                        name="name"
+                        variant="outlined" 
+                        valueKey={"id"} 
+                        dataKey={"name"}
                     />
                 </Stack>
                 <Stack direction="row" spacing={2}>
@@ -194,15 +207,17 @@ const FormDetenteur = (props:any) =>{
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {valuesMateriel.map((row:any) => (
+                                {valuesArticle.map((row:any, index:any) => (
                                     <TableRow
-                                        key={row.id}
+                                        key={index}
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                     >
                                         <TableCell component="th" scope="row">{row.numOptim}</TableCell>
                                         <TableCell align="left">{row.designation}</TableCell>
-                                        <TableCell align="left">{row.acquisitionValue}</TableCell>
-                                        <TableCell align="left">{row.acquisitionDate}</TableCell>
+                                        <TableCell align="left"><Moment format="DD/MM/YYYY">{row.acquisitionDate}</Moment></TableCell>
+                                        <TableCell align="left">
+                                            {row.acquisitionValue}
+                                        </TableCell>
                                         <TableCell
                                         align="center"
                                         sx={{ width: 150, background: "#F5F5F5" }}
@@ -214,7 +229,22 @@ const FormDetenteur = (props:any) =>{
                                             spacing={2}
                                         >
                                             <EditIcon color="primary" />
-                                            <DeleteIcon color="warning" />
+                                                <IconButton
+                                                        color="warning"
+                                                        aria-label="Supprimer"
+                                                        component="span"
+                                                        size="small"
+                                                        onClick={() => {
+                                                            setValuesArticle((prev:any[])=>{
+                                                                let temp = [...prev]
+                                                                temp.splice(index,1)
+                                                                return temp
+                                                            })
+                                                            
+                                                        }}
+                                                    >
+                                                     <DeleteIcon color="warning" />
+                                                </IconButton>
                                         </Stack>
                                         </TableCell>
                                     </TableRow>

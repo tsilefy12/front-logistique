@@ -92,6 +92,31 @@ export const getArticleCommandeInternes = createAsyncThunk(
     }
   }
 );
+export const updateArticleCommande = createAsyncThunk(
+  "ArticleCommande/updateArticleCommande",
+  async (data: { id: string; updateData: ArticleCommandeItem }, thunkAPI) => {
+    try {
+      const response = await axios.patch(
+        `/logistique/article-commande/${data.id}`,
+        data.updateData
+      );
+      thunkAPI.dispatch(
+        enqueueSnackbar({
+          message: "Article mis à jour avec succès",
+          options: {
+            variant: "success",
+          },
+        })
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response) {
+        return thunkAPI.rejectWithValue(error);
+      }
+      throw error;
+    }
+  }
+);
 
 export const ArticleCommandeInterneSlice = createSlice({
     name: "employe",
@@ -145,6 +170,20 @@ export const ArticleCommandeInterneSlice = createSlice({
         [editArticleCommandeInterne.rejected.type]: (state, action) => {
             state.error = action.error;
             state.loading = false;
+        },
+
+        // update article commande interne
+        [updateArticleCommande.pending.type]: (state) => {
+          state.loading = true;
+        },
+        [updateArticleCommande.fulfilled.type]: (state, action) => {
+          state.loading = false;
+          state.articleCommandeInterne = {};
+          state.isEditing = false;
+        },
+        [updateArticleCommande.rejected.type]: (state, action) => {
+          state.loading = false;
+          state.error = action.error;
         },
     },
 });

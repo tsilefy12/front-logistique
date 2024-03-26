@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "@mui/material/Container";
 import {
   Avatar,
@@ -35,14 +35,18 @@ const Details = () => {
 
   const confirm = useConfirm();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (id) {
-      const args: any = {};
-      args.include = {
-        // internshipType: true,
-        // position: true,
-      };
-      dispatch(getHolder({ id, args }));
+      dispatch(getHolder({ id, args:{
+        include:{
+          holderEquipment:{
+            include:{
+              equipment:true
+            }
+          }
+        }
+      }}));
+      console.log(holder)
     }
   }, [router.query]);
 

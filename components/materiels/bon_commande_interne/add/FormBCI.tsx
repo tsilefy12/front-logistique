@@ -1,25 +1,27 @@
 import { Form, FormikProps } from 'formik';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { getInterns } from '../../../../redux/features/employeStagiaire/stagiaireSlice';
 import { getEmployees } from '../../../../redux/features/employeStagiaire/employeeSlice';
 import { getFournisseurList } from '../../../../redux/features/fournisseur';
-import { Box, Button, Divider, FormControl, IconButton, Link, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from '@mui/material';
+import { Box, Button, Divider, FormControl, IconButton, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from '@mui/material';
 import Delete from '@mui/icons-material/Delete';
 import OSTextField from '../../../shared/input/OSTextField';
 import Check from '@mui/icons-material/Check';
 import Close from '@mui/icons-material/Close';
 import OSSelectField from '../../../shared/select/OSSelectField';
-import OSDatePicker from '../../../shared/date/OSDatePicker';
 import { ArrowBack } from '@mui/icons-material';
 import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 import { getGrantList } from '../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice';
 import { getBudgetLineList } from '../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice';
+import EditIcon from "@mui/icons-material/Edit";
 
-const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any}) => {
+const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) => {
     const dispatch = useAppDispatch();
     const route = useRouter();
+    const [idValues ,setIdValues] = useState<any>()
+
     const { employees } = useAppSelector( (state) => state.employe);
     const { interns } = useAppSelector( (state) => state.stagiaire);
     const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
@@ -57,9 +59,11 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
     }, []);
 
     useEffect(() => {
-        const Val:any = total.find((e:any)=> e.id === formikProps.values.demandeur)
-        formikProps.setFieldValue("type", Val?.type)
-        console.log(formikProps.values.type)
+        if(formikProps.values.demandeur){
+            const Val:any = total.find((e:any)=> e.id === formikProps.values.demandeur)
+            formikProps.setFieldValue("type", Val?.type)
+            console.log(formikProps.values.type)
+        }
     }, [formikProps.values.demandeur]);
     return (
         <Form>
@@ -85,7 +89,7 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                         sx={{ marginInline: 3 }}
                         type="submit"
                     >
-                    Enregistrer
+                        {isEditing ? "Modifier" : "Enregistrer"}
                     </Button>
                     <Button
                     variant="text"
@@ -97,7 +101,7 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                         formikProps.resetForm();
                     }}
                     >
-                    Annuler
+                        Annuler
                     </Button>
                 </Stack>
                 <Typography variant="h4">
@@ -125,6 +129,15 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                     alignItems="flex-start"
                     spacing={2}
                     >
+                    <FormControl fullWidth>
+                        <OSTextField
+                            fullWidth
+                            id="outlined-basic"
+                            variant="outlined"
+                            label="Réference"
+                            name="reference"
+                        />
+                    </FormControl>
                     <FormControl fullWidth>
                         <OSTextField
                             fullWidth
@@ -240,11 +253,11 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                         >
                                             <TableCell component="th" scope="row">{item.designation}</TableCell>
-                                            <TableCell align="left">{item.caracteristique}</TableCell>
+                                            <TableCell align="left">{item.caracteristik}</TableCell>
                                             <TableCell align="left">{item.pu}  Ar</TableCell>
                                             <TableCell align="left">{item.quantite}</TableCell>
-                                            <TableCell align="left">{item.fournisseur} Ar</TableCell>
-                                            <TableCell align="left">{item.valeur} Ar</TableCell>
+                                            <TableCell align="left">{item.fournisseurId}</TableCell>
+                                            <TableCell align="left">{item.valueArticle} Ar</TableCell>
                                             <TableCell
                                             align="center"
                                             sx={{ width: 150, background: "#F5F5F5" }}
@@ -261,13 +274,38 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                                         component="span"
                                                         size="small"
                                                         onClick={() => {
-                                                            valuesArticle.splice(index, 1)
+                                                            formikProps.setFieldValue('designation', item.designation);
+                                                            formikProps.setFieldValue('caracteristik', item.caracteristik);
+                                                            formikProps.setFieldValue('pu', item.pu);
+                                                            formikProps.setFieldValue('quantite', item.quantite);
+                                                            formikProps.setFieldValue('fournisseurId', item.fournisseurId);
+                                                            setIdValues(item.id)
+                                                        }}
+                                                    >
+                                                    <EditIcon color="primary" />
+                                                </IconButton>
+                                                <IconButton
+                                                        color="warning"
+                                                        aria-label="Supprimer"
+                                                        component="span"
+                                                        size="small"
+                                                        onClick={() => {
+                                                            setIdDelete((prev:any[])=>{
+                                                                let temp = [...prev]
+                                                                temp.push({
+                                                                    id: item.id
+                                                                })
+                                                                return temp
+                                                            })
+                                                            setValuesArticle((prev:any[])=>{
+                                                                let temp = [...prev]
+                                                                temp.splice(index,1)
+                                                                return temp
+                                                            })
                                                         }}
                                                     >
                                                     <Delete />
                                                 </IconButton>
-                                                {/* <EditIcon color="primary" />
-                                                <DeleteIcon color="warning" /> */}
                                             </Stack>
                                             </TableCell>
                                         </TableRow>
@@ -289,9 +327,9 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                             <TableCell align="left">
                                                 <FormControl fullWidth>
                                                     <OSTextField
-                                                        id="caracteristique"
+                                                        id="caracteristik"
                                                         label="Caractéristique"
-                                                        name="caracteristique"
+                                                        name="caracteristik"
                                                         type="text"
                                                     />
                                                 </FormControl>
@@ -320,7 +358,7 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                                 <FormControl fullWidth>
                                                     <OSSelectField
                                                         id="outlined-basic"
-                                                        name="fournisseur"
+                                                        name="fournisseurId"
                                                         label="Fournisseur"
                                                         options={fournisseurList}
                                                         dataKey={["name"]}
@@ -347,25 +385,49 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                                         type="button"
                                                         onClick={() => {
                                                             const designation = formikProps.values.designation;
-                                                            const caracteristique = formikProps.values.caracteristique;
+                                                            const caracteristik = formikProps.values.caracteristik;
                                                             const pu = formikProps.values.pu;
                                                             const quantite = formikProps.values.quantite;
-                                                            const fournisseur = formikProps.values.fournisseur;
-                                                            // Vérifier si les champs sont vides
-                                                            if (designation.trim() !== '' && caracteristique.trim() !== '') {
-                                                                valuesArticle.push({
-                                                                    designation: designation,
-                                                                    caracteristique: caracteristique,
-                                                                    pu: pu,
-                                                                    quantite: quantite,
-                                                                    valeur: quantite * pu,
-                                                                    fournisseur:fournisseur
-                                                                });
+                                                            const fournisseurId = formikProps.values.fournisseurId;
+
+                                                            if (designation.trim() !== '' && caracteristik.trim() !== '') {
+                                                                if(idValues){
+                                                                    setValuesArticle((prev:any[])=>{
+                                                                        let temp = [...prev.map((ValId)=>{
+                                                                            if(ValId.id === idValues){
+                                                                                return {
+                                                                                    id:idValues,
+                                                                                    designation,
+                                                                                    caracteristik,
+                                                                                    pu,
+                                                                                    quantite,
+                                                                                    valueArticle: pu*quantite,
+                                                                                    fournisseurId
+                                                                                }
+                                                                            }
+                                                                            return ValId
+                                                                        })]
+                                                                        return temp
+                                                                    })
+                                                                }else{
+                                                                    setValuesArticle((prev:any[])=>{
+                                                                        let temp = [...prev]
+                                                                        temp.push({
+                                                                            designation: designation,
+                                                                            caracteristik: caracteristik,
+                                                                            pu: pu,
+                                                                            quantite: quantite,
+                                                                            valueArticle: quantite * pu,
+                                                                            fournisseurId:fournisseurId
+                                                                        })
+                                                                        return temp
+                                                                    })
+                                                                }
                                                                 formikProps.setFieldValue('designation', '');
-                                                                formikProps.setFieldValue('caracteristique', '');
+                                                                formikProps.setFieldValue('caracteristik', '');
                                                                 formikProps.setFieldValue('pu', 0);
                                                                 formikProps.setFieldValue('quantite', 0);
-                                                                formikProps.setFieldValue('fournisseur', '');
+                                                                formikProps.setFieldValue('fournisseurId', '');
                                                             }
                                                         
                                                         }}
@@ -376,7 +438,7 @@ const FormBCI = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                                         type="button"
                                                         onClick={() => {
                                                             formikProps.setFieldValue('designation', '');
-                                                            formikProps.setFieldValue('caracteristique', '');
+                                                            formikProps.setFieldValue('caracteristik', '');
                                                             formikProps.setFieldValue('pu', 0);
                                                             formikProps.setFieldValue('quantite', 0);
                                                         }}

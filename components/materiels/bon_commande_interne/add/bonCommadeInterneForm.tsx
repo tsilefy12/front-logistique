@@ -1,40 +1,34 @@
-import React, { useEffect } from "react";
-import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import Divider from "@mui/material/Divider";
-import ArrowBack from "@mui/icons-material/ArrowBack";
-import Check from "@mui/icons-material/Check";
-import Close from "@mui/icons-material/Close";
-import { Box, FormControl, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import * as Yup from "yup";
-import OSTextField from "../../../shared/input copy/OSTextField";
-import OSSelectField from "../../../shared/select/OSSelectField";
-import OSDatePicker from "../../../shared/date/OSDatePicker";
-import { cancelEdit } from "../../../../redux/features/vendor/vendorSlice";
 import {
-  createBonCommandeInterne,
+  createBonCommandeInterne, editBonCommandeInterne,cancelEdit, updateBonCommandeInterne
 } from "../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice";
-import { createArticleCommandeInterne } from "../../../../redux/features/bon_commande_interne/articleCommandeSlice";
+import { createArticleCommandeInterne, deleteArticleCommandeInterne, updateArticleCommande } from "../../../../redux/features/bon_commande_interne/articleCommandeSlice";
 import FormBCI from "./FormBCI";
+import { styled } from "@mui/material";
 
 export default function BonCommandeInterneForm() {
     const dispatch = useAppDispatch();
     const route = useRouter();
-    const valuesArticle :any[] =[]
+    const { id }: any = route.query;
+
+
+    const [valuesArticle, setValuesArticle] = useState < any[]> ([])
+    const [ idDelete,setIdDelete] = useState < any[]> ([])
 
     const { isEditing,bonCommandeInterne } = useAppSelector((state) => state.bonCommandeInterne);
+
     const handleSubmit = async (values: any) => {
-        values.montantTotal = valuesArticle.reduce((acc:any, curr:any) => acc + curr.valeur, 0);
+        values.montantTotal = valuesArticle.reduce((acc:any, curr:any) => acc + curr.valueArticle, 0);
         try {
-            const newDataBCI = {
+            const updateData = {
                 programme: values.programme,
+                reference:values.reference,
                 grant: values.grant,
                 ligneBudgetaire: values.ligneBudgetaire,
                 demandeur: values.demandeur,
@@ -42,27 +36,76 @@ export default function BonCommandeInterneForm() {
                 type:values.type,
                 dateBonCommande: new Date(values.dateBonCommande),
                 numBonCommande: values.numBonCommande,
-                montantTotal : valuesArticle.reduce((acc:any, curr:any) => acc + curr.valeur, 0)
+                montantTotal : valuesArticle.reduce((acc:any, curr:any) => acc + curr.valueArticle, 0)
             }
-            const response = await dispatch(createBonCommandeInterne(newDataBCI));
-            valuesArticle.forEach((element:any, index:any) => {
-                const newData = {
-                    designation: element.designation,
-                    caracteristik: element.caracteristique,
-                    quantite: element.quantite,
-                    fournisseur:element.fournisseur,
-                    pu: element.pu,
-                    valueArticle: element.valeur,
-                    bondeCommandeInterneId: response.payload.id
-                };
-                dispatch(createArticleCommandeInterne(newData));
-            });
-        
+
+            if(isEditing){
+                const response = await dispatch(updateBonCommandeInterne({id,updateData}));
+                valuesArticle?.forEach((element:any, index:any) => {
+                    const id = element.id
+                    const updateData = {
+                        designation: element.designation,
+                        caracteristik: element.caracteristik,
+                        quantite: element.quantite,
+                        fournisseurId:element.fournisseurId,
+                        pu: element.pu,
+                        valueArticle: element.valueArticle,
+                        bondeCommandeInterneId: response.payload.id
+                    };
+                    if(id){
+                        dispatch(updateArticleCommande({id,updateData}));
+                    }else{
+                        dispatch(createArticleCommandeInterne(updateData));
+                    }
+                });
+                idDelete?.forEach((element:any, index:any) =>{
+                    const id = element.id
+                    dispatch(deleteArticleCommandeInterne({id}));
+                })
+            }else{
+                const response = await dispatch(createBonCommandeInterne(updateData));
+                valuesArticle.forEach((element:any, index:any) => {
+                    const newData = {
+                        designation: element.designation,
+                        caracteristik: element.caracteristik,
+                        quantite: element.quantite,
+                        fournisseurId:element.fournisseurId,
+                        pu: element.pu,
+                        valueArticle: element.valueArticle,
+                        bondeCommandeInterneId: response.payload.id
+                    };
+                    dispatch(createArticleCommandeInterne(newData));
+                });
+            }
             route.push("/materiels/bon_commande_interne");
         } catch (error) {
         console.log("error", error);
         }
     };
+
+    const handleFech = async (id: any) => {
+        try { 
+            const Val = await dispatch(editBonCommandeInterne({ id , args:{
+                include:{
+                    ArticleCommande:true
+                }
+            }}));
+            console.log(Val)
+            setValuesArticle((prev:any[])=>{
+                console.log(prev)
+                prev = Val.payload.ArticleCommande
+                return prev
+            })
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        if (id) {
+          handleFech(id)
+        }
+    }, [id]);
     return (
         <>
             <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
@@ -70,22 +113,24 @@ export default function BonCommandeInterneForm() {
                     enableReinitialize
                     initialValues={
                         {
-                            programme: "",
-                            grant: "",
-                            ligneBudgetaire: "",
-                            demandeur: "",
-                            numBon: "",
-                            dateBonCommande: new Date().toISOString(),
-                            numBonCommande: "",
+                            programme: isEditing ? bonCommandeInterne.programme: "",
+                            grant: isEditing ? bonCommandeInterne.grant: "",
+                            ligneBudgetaire: isEditing ? bonCommandeInterne.ligneBudgetaire: "",
+                            demandeur: isEditing ? bonCommandeInterne.demandeur: "",
+                            numBon: isEditing ? bonCommandeInterne.numBon:"",
+                            reference: isEditing ? bonCommandeInterne.reference:"",
+                            dateBonCommande: isEditing && bonCommandeInterne?.dateBonCommande ? new Date(bonCommandeInterne?.dateBonCommande).toISOString() : new Date().toISOString(),
+                            numBonCommande: isEditing ? bonCommandeInterne.numBonCommande :"",
+                            type:isEditing ? bonCommandeInterne.type :"",
                             designation :"",
-                            caracteristique:"",
+                            caracteristik:"",
                             pu:0,
-                            type:"",
-                            fournisseur:"",
+                            fournisseurId:"",
                             quantite:0,
                         }
                     }
                     validationSchema={Yup.object({
+                        reference:Yup.string().required("Champ obligatoire"),
                         programme: Yup.string().required("Champ obligatoire"),
                         grant: Yup.string().required("Champ obligatoire"),
                         ligneBudgetaire: Yup.string().required("Champ obligatoire"),
@@ -99,7 +144,7 @@ export default function BonCommandeInterneForm() {
                         action.resetForm();
                     }}
                 >
-                    {(formikProps) => <FormBCI formikProps={formikProps} valuesArticle={valuesArticle} />}
+                    {(formikProps) => <FormBCI setIdDelete={setIdDelete} formikProps={formikProps} valuesArticle={valuesArticle} setValuesArticle={setValuesArticle} />}
                 </Formik>
             </Container>
         </>

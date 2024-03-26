@@ -1,5 +1,5 @@
 import { Form, FormikProps } from 'formik';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { useRouter } from 'next/router';
 import { getEmployees } from '../../../../redux/features/employeStagiaire/employeeSlice';
@@ -13,8 +13,9 @@ import OSSelectField from '../../../shared/select/OSSelectField';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 import { getGrantList } from '../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice';
+import EditIcon from "@mui/icons-material/Edit";
 
-const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any}) => {
+const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) =>  {
     const dispatch = useAppDispatch();
 
     const { isEditing } = useAppSelector((state) => state.bonTransfert);
@@ -23,7 +24,8 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
     const { employees } = useAppSelector((state) => state.employe);
     const { interns } = useAppSelector((state) => state.stagiaire);
     const { grantList } = useAppSelector( (state) => state.grant);
-    
+    const [idValues ,setIdValues] = useState<any>()
+
     const total = [...employees.map((i:any)=>{
         return {
         id : i.id, name: i.matricule +" "+i.name +" "+ i.surname, type: "employe"
@@ -75,7 +77,7 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                     sx={{ marginInline: 3 }}
                     type="submit"
                     >
-                    Enregistrer
+                        {isEditing ? "Modifier" : "Enregistrer"}
                     </Button>
                     <Button
                     variant="text"
@@ -115,6 +117,15 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                     alignItems="flex-start"
                     spacing={2}
                     >
+                    <FormControl fullWidth>
+                        <OSTextField
+                            fullWidth
+                            id="outlined-basic"
+                            variant="outlined"
+                            label="Réference"
+                            name="reference"
+                        />
+                    </FormControl>
                     <FormControl fullWidth>
                         <OSSelectField
                             id="outlined-basic"
@@ -218,7 +229,7 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                     >
                                         <TableCell component="th" scope="row">{item.designation}</TableCell>
-                                        <TableCell align="left">{item.quantiteCommander}</TableCell>
+                                        <TableCell align="left">{item.quantiteCommande}</TableCell>
                                         <TableCell align="left">{item.quantiteExpedie}</TableCell>
                                         <TableCell align="left">{item.observation}</TableCell>
                                         <TableCell
@@ -232,18 +243,42 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                                             spacing={2}
                                         >
                                             <IconButton
+                                                    color="warning"
+                                                    aria-label="Supprimer"
+                                                    component="span"
+                                                    size="small"
+                                                    onClick={() => {
+                                                        formikProps.setFieldValue('designation', item.designation);
+                                                        formikProps.setFieldValue('quantiteCommande', item.quantiteCommande);
+                                                        formikProps.setFieldValue('quantiteExpedie', item.quantiteExpedie);
+                                                        formikProps.setFieldValue('observation', item.observation);
+                                                        setIdValues(item.id)
+                                                    }}
+                                                >
+                                                <EditIcon color="primary" />
+                                            </IconButton>
+                                            <IconButton
                                                 color="warning"
                                                 aria-label="Supprimer"
                                                 component="span"
                                                 size="small"
                                                 onClick={() => {
-                                                    valuesArticle.splice(index, 1)
+                                                    setIdDelete((prev:any[])=>{
+                                                        let temp = [...prev]
+                                                        temp.push({
+                                                            id: item.id
+                                                        })
+                                                        return temp
+                                                    })
+                                                    setValuesArticle((prev:any[])=>{
+                                                        let temp = [...prev]
+                                                        temp.splice(index,1)
+                                                        return temp
+                                                    })
                                                 }}
                                                 >
                                                 <Delete />
                                             </IconButton>
-                                            {/* <EditIcon color="primary" />
-                                            <DeleteIcon color="warning" /> */}
                                         </Stack>
                                         </TableCell>
                                     </TableRow>
@@ -265,9 +300,9 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                                         <TableCell align="left">
                                             <FormControl fullWidth>
                                                 <OSTextField
-                                                    id="quantiteCommander"
+                                                    id="quantiteCommande"
                                                     label="Quantité commander"
-                                                    name="quantiteCommander"
+                                                    name="quantiteCommande"
                                                     type="number"
                                                 />
                                             </FormControl>
@@ -306,19 +341,41 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                                                     type="button"
                                                     onClick={() => {
                                                         const designation = formikProps.values.designation;
-                                                        const quantiteCommander = formikProps.values.quantiteCommander;
+                                                        const quantiteCommande = formikProps.values.quantiteCommande;
                                                         const quantiteExpedie = formikProps.values.quantiteExpedie;
                                                         const observation = formikProps.values.observation;
                                                             // Vérifier si les champs sont vides
                                                             if (designation.trim() !== '' && observation.trim() !== '') {
-                                                            valuesArticle.push({
-                                                                designation: designation,
-                                                                quantiteCommander: quantiteCommander,
-                                                                quantiteExpedie: quantiteExpedie,
-                                                                observation: observation,
-                                                            });
+                                                                if(idValues){
+                                                                    setValuesArticle((prev:any[])=>{
+                                                                        let temp = [...prev.map((ValId)=>{
+                                                                            if(ValId.id === idValues){
+                                                                                return {
+                                                                                    id:idValues,
+                                                                                    designation,
+                                                                                    quantiteCommande,
+                                                                                    quantiteExpedie,
+                                                                                    observation
+                                                                                }
+                                                                            }
+                                                                            return ValId
+                                                                        })]
+                                                                        return temp
+                                                                    })
+                                                                } else{
+                                                                    setValuesArticle((prev:any[])=>{
+                                                                        let temp = [...prev]
+                                                                        temp.push({
+                                                                            designation: designation,
+                                                                            quantiteCommande: quantiteCommande,
+                                                                            quantiteExpedie: quantiteExpedie,
+                                                                            observation: observation,
+                                                                        })
+                                                                        return temp
+                                                                    })
+                                                                }
                                                             formikProps.setFieldValue('designation', '');
-                                                            formikProps.setFieldValue('quantiteCommander', 0);
+                                                            formikProps.setFieldValue('quantiteCommande', 0);
                                                             formikProps.setFieldValue('quantiteExpedie', 0);
                                                             formikProps.setFieldValue('observation', '');
                                                         }
@@ -331,7 +388,7 @@ const FormBonTransfert = ({formikProps,valuesArticle}: {formikProps: FormikProps
                                                     type="button"
                                                     onClick={() => {
                                                         formikProps.setFieldValue('designation', '');
-                                                        formikProps.setFieldValue('quantiteCommander', 0);
+                                                        formikProps.setFieldValue('quantiteCommande', 0);
                                                         formikProps.setFieldValue('quantiteExpedie', 0);
                                                         formikProps.setFieldValue('observation', '');
                                                     }}

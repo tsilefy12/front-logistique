@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
 import type { NextPage } from "next";
 import BackOfficeLayout from "../../../../../layouts/backOffice";
-import Details from "../../../../../components/materiels/detenteur/id/details";
+import Details from "../../../../../components/materiels/detenteur/[id]/details";
 
 const Detenteur: NextPage = () => {
   return (

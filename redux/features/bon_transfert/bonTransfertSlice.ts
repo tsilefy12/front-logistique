@@ -18,9 +18,12 @@ const initialState: bonTransfertInitialState = {
 
 export const editBonTransfert = createAsyncThunk(
     "fourniture_consommable/editBonTransfert",
-    async (data: { id: string }, thunkAPI) => {
-        try {
-            const response = await axios.get(`/logistique/bon-de-transfert/${data.id}`);
+    async (data: { id: string , args?: any }, thunkAPI) => {
+      try {
+        const params = {
+          args: JSON.stringify(data.args),
+        };
+            const response = await axios.get(`/logistique/bon-de-transfert/${data.id}`,{params});
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -214,6 +217,31 @@ export const getBonTransfert = createAsyncThunk(
   }
 );
 
+export const updateBonTransfert = createAsyncThunk(
+  "BonTransfert/updateBonTransfert",
+  async (data: { id: string; updateData: bonTransfertItem }, thunkAPI) => {
+    try {
+      const response = await axios.patch(
+        `/logistique/bon-de-transfert/${data.id}`,
+        data.updateData
+      );
+      thunkAPI.dispatch(
+        enqueueSnackbar({
+          message: "Bon de transfert mis à jour avec succès",
+          options: {
+            variant: "success",
+          },
+        })
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response) {
+        return thunkAPI.rejectWithValue(error);
+      }
+      throw error;
+    }
+  }
+);
 export const bonTransfertSlice = createSlice({
     name: "bonTransfert",
     initialState: initialState,
@@ -277,6 +305,19 @@ export const bonTransfertSlice = createSlice({
         [editBonTransfert.rejected.type]: (state, action) => {
             state.error = action.error;
             state.loading = false;
+        },
+        // update bon de transfert
+        [updateBonTransfert.pending.type]: (state) => {
+          state.loading = true;
+        },
+        [updateBonTransfert.fulfilled.type]: (state, action) => {
+          state.loading = false;
+          state.bonTransfert = {};
+          state.isEditing = false;
+        },
+        [updateBonTransfert.rejected.type]: (state, action) => {
+          state.loading = false;
+          state.error = action.error;
         },
     },
 });

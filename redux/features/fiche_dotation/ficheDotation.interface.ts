@@ -3,6 +3,7 @@ export interface ficheDotationItem {
     date?: Date;
     region?: string;
     district?: string;
+    reference?:string;
     commune?: string;
     grant?: string;
     ligneBudgetaire?: string;

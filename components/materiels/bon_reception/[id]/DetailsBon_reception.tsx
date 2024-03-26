@@ -31,7 +31,9 @@ const DetailsBonReception = () => {
             include:{
                 produitRecu:true,
                 bonDeCommandeExterne:{
-                    vendor:true
+                    include:{
+                        vendor:true
+                    }
                 }
             }
         }}));

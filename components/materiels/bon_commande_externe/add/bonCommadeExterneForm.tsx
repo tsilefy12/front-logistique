@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
@@ -19,7 +19,7 @@ export default function BonCommandeExterneForm() {
     const dispatch = useAppDispatch();
     const route = useRouter();
     
-    const valuesArticle:any = []
+    const [valuesArticle, setValuesArticle] = useState < any[]> ([])
 
     const { isEditing } = useAppSelector((state) => state.bonCommendeExterne)
     
@@ -103,7 +103,7 @@ export default function BonCommandeExterneForm() {
                         action.resetForm();
                     }}
                 >
-                    {(formikProps) => <FormBCE formikProps={formikProps} valuesArticle={valuesArticle} />}
+                    {(formikProps) => <FormBCE formikProps={formikProps} valuesArticle={valuesArticle} setValuesArticle={setValuesArticle}/>}
                 </Formik>
             </Container>
         </>

@@ -17,7 +17,7 @@ import Delete from '@mui/icons-material/Delete';
 import { ArrowBack } from '@mui/icons-material';
 import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 
-const FormBCE = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any}) => {
+const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any}) =>  {
     const dispatch = useAppDispatch();
     const route = useRouter();
 
@@ -241,7 +241,12 @@ const FormBCE = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                                         component="span"
                                                         size="small"
                                                         onClick={() => {
-                                                            valuesArticle.splice(index, 1)
+                                                            setValuesArticle((prev:any[])=>{
+                                                                let temp = [...prev]
+                                                                temp.splice(index,1)
+                                                                return temp
+                                                            })
+                                                            
                                                         }}
                                                     >
                                                     <Delete />
@@ -345,14 +350,18 @@ const FormBCE = ({formikProps,valuesArticle}: {formikProps: FormikProps<any>,val
                                                             const fournisseur = formikProps.values.fournisseur;
                                                             // Vérifier si les champs sont vides
                                                             if (designation.trim() !== '' && caracteristique.trim() !== '') {
-                                                                valuesArticle.push({
-                                                                    designation: designation,
-                                                                    caracteristique: caracteristique,
-                                                                    pu: pu,
-                                                                    quantite: quantite,
-                                                                    fournisseur: fournisseur,
-                                                                    valeur: quantite * pu,
-                                                                });
+                                                                setValuesArticle((prev:any[])=>{
+                                                                    let temp = [...prev]
+                                                                    temp.push({
+                                                                        designation: designation,
+                                                                        caracteristique: caracteristique,
+                                                                        pu: pu,
+                                                                        quantite: quantite,
+                                                                        fournisseur: fournisseur,
+                                                                        valeur: quantite * pu,
+                                                                    })
+                                                                    return temp
+                                                                })
                                                                 formikProps.setFieldValue('designation', '');
                                                                 formikProps.setFieldValue('caracteristique', '');
                                                                 formikProps.setFieldValue('fournisseur', '');

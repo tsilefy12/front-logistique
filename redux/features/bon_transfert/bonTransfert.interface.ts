@@ -4,6 +4,7 @@ export interface bonTransfertItem {
     expediteurData?:any;
     designation?: string;
     destination?:any;
+    reference?:string;
     dateExp?: Date;
     expeditionVia?: string;
     departement?: string;

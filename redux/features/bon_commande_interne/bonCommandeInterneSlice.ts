@@ -17,9 +17,14 @@ const initialState: BonCommandeInternInitialState = {
 
 export const editBonCommandeInterne = createAsyncThunk(
     "fourniture_consommable/editBonCommandeInterne",
-    async (data: { id: string }, thunkAPI) => {
+    async (data: { id: string , args?: any }, thunkAPI) => {
         try {
-            const response = await axios.get(`/logistique/bon-de-commande-interne/${data.id}`);
+          
+            const params = {
+              args: JSON.stringify(data.args),
+            };
+
+            const response = await axios.get(`/logistique/bon-de-commande-interne/${data.id}`, { params });
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -162,6 +167,32 @@ export const getBonCommandeInterne = createAsyncThunk(
   }
 );
 
+export const updateBonCommandeInterne = createAsyncThunk(
+  "BonCommandeInterne/updateBonCommandeInterne",
+  async (data: { id: string; updateData: BonCommandeItem }, thunkAPI) => {
+    try {
+      const response = await axios.patch(
+        `/logistique/bon-de-commande-interne/${data.id}`,
+        data.updateData
+      );
+      thunkAPI.dispatch(
+        enqueueSnackbar({
+          message: "Bon commande interne mis à jour avec succès",
+          options: {
+            variant: "success",
+          },
+        })
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response) {
+        return thunkAPI.rejectWithValue(error);
+      }
+      throw error;
+    }
+  }
+);
+
 export const bonCommandeInterneSlice = createSlice({
     name: "bonCommandeInterne",
     initialState: initialState,
@@ -226,6 +257,21 @@ export const bonCommandeInterneSlice = createSlice({
             state.error = action.error;
             state.loading = false;
         },
+
+        // update bon de commande interne
+        [updateBonCommandeInterne.pending.type]: (state) => {
+          state.loading = true;
+        },
+        [updateBonCommandeInterne.fulfilled.type]: (state, action) => {
+          state.loading = false;
+          state.bonCommandeInterne = {};
+          state.isEditing = false;
+        },
+        [updateBonCommandeInterne.rejected.type]: (state, action) => {
+          state.loading = false;
+          state.error = action.error;
+        },
+
     },
 });
 
