@@ -1,5 +1,6 @@
 export interface ActivityItem {
     id?: string,
+    activite?:string,
     nombre?: number,
     pu?: number,
     montant?: number,

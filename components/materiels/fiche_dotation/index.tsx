@@ -65,7 +65,7 @@ export default function FicheDotationList() {
 
     const handleClickDelete = async (id: any) => {
         confirm({
-            title: "Supprimer le bon de dotation",
+            title: "Supprimer le fiche de dotation",
             description: "Voulez-vous vraiment supprimer ce fiche de dotation ?",
             cancellationText: "Annuler",
             confirmationText: "Supprimer",
