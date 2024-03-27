@@ -36,12 +36,13 @@ export default function PvComparaisonForm() {
     const { isEditing,pvComparaison } = useAppSelector((state) => state.pvComparaison);
     const { pvComparaisonFournisseur } = useAppSelector((state) => state.pvComparaisonFournisseurs);
     
-    const { bonCommandeExternes } = useAppSelector((state) => state.bonCommendeExterne);
-    const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
+   
     const { equipments } = useAppSelector( (state) => state.equipment);
     const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
     const { grantList } = useAppSelector( (state) => state.grant);
     const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
+    const { bonCommandeExternes } = useAppSelector((state) => state.bonCommendeExterne);
+    const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
 
     const total = [...bonCommandeExternes.map((i:any)=>{
         return {

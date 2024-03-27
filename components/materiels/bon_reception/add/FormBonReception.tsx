@@ -13,6 +13,7 @@ import { getBonCommandeExterne, getBonCommandeExternes } from "../../../../redux
 import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 import { useRouter } from 'next/router';
 import EditIcon from "@mui/icons-material/Edit";
+import { getBonCommandeInterne, getBonCommandeInternes } from '../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice';
 
 const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) => {
     const dispatch = useAppDispatch();
@@ -21,22 +22,50 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
 
     const { isEditing } = useAppSelector((state) => state.bonReceptions);
     const { bonCommandeExternes } = useAppSelector((state) => state.bonCommendeExterne);
+    const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
+
+    const total = [...bonCommandeExternes.map((i:any)=>{
+        return {
+            id : i.id, name: i.ref, type: "BCE"
+        }
+    }),...bonCommandeInternes.map((i:any)=>{
+        return {
+            id : i.id, name: i.numBon, type: "BCI"
+        }
+    })]
+
     const fetchUtilsData = () => {
         dispatch(getBonCommandeExternes({}));
+        dispatch(getBonCommandeInternes({}));
     };
     const handleFech = async (id: any) => {
         try { 
-            const Val = await dispatch(getBonCommandeExterne({ id , args:{
-                include:{
-                    articleCommandeBce:true
-                }
-            }}));
-            console.log(Val)
-            setValuesArticle((prev:any[])=>{
-                console.log(prev)
-                prev = Val.payload.articleCommandeBce
-                return prev
-            })
+            const response:any = total.find((e:any)=> e.id === id)
+            if(response?.type === "BCE"){
+                const Val = await dispatch(getBonCommandeExterne({ id , args:{
+                    include:{
+                        articleCommandeBce:true
+                    }
+                }}));
+                console.log(Val)
+                setValuesArticle((prev:any[])=>{
+                    console.log(prev)
+                    prev = Val.payload.articleCommandeBce
+                    return prev
+                })
+            }else{
+                const Val = await dispatch(getBonCommandeInterne({ id , args:{
+                    include:{
+                        ArticleCommande:true
+                    }
+                }}));
+                console.log(Val)
+                setValuesArticle((prev:any[])=>{
+                    console.log(prev)
+                    prev = Val.payload.ArticleCommande
+                    return prev
+                })
+            }
         } catch (error) {
             console.log("error", error);
         }
@@ -123,10 +152,10 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                 <FormControl fullWidth>
                     <OSSelectField
                         id="outlined-basic"
-                        label="BCE"
+                        label="Ref BCI/BCE"
                         name="bce"
-                        options={bonCommandeExternes}
-                        dataKey={["ref"]}
+                        options={total}
+                        dataKey={["name","type"]}
                         valueKey="id"
                         type="text"
                     />
