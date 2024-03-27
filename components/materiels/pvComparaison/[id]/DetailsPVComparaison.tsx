@@ -7,13 +7,12 @@ import {
 } from "@mui/material";
 import React, { useEffect } from "react";
 import Paper from "@mui/material/Paper";
-import Moment from "react-moment";
-import Link from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
 import { getPvComparaison } from "../../../../redux/features/pvComparaison/pvComparaisonSlice";
+import PDFButton from "./PrintPV";
 const DetailsPvComparaison = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
@@ -31,7 +30,6 @@ const DetailsPvComparaison = () => {
         }
         }}));
     };
-
     useEffect(()=> {
         console.log(pvComparaison)
     },[pvComparaison])
@@ -43,11 +41,11 @@ const DetailsPvComparaison = () => {
                 sx={{ mb: 2 }}
             >
                 <Stack flexDirection={"row"}>
-                    <Link href="/materiels/pv_comparaison">
-                        <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
-                            Retour
-                        </Button>
-                    </Link>
+                    <Button color="info" variant="text" onClick={()=> router.back()} startIcon={<ArrowBackIcon />}>
+                        Retour
+                    </Button>
+                    
+                    <PDFButton data={pvComparaison} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">
                     Details d'une bon de pv de comparaison d'offre

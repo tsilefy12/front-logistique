@@ -1,98 +1,35 @@
-import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { Form, FormikProps } from 'formik';
-import { Box, Button, Divider, FormControl, IconButton, Link, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from '@mui/material';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react'
+import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
+import { Box, Button, Divider, FormControl, IconButton, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from '@mui/material';
 import Delete from '@mui/icons-material/Delete';
 import OSTextField from '../../../shared/input/OSTextField';
-import ArrowBack from '@mui/icons-material/ArrowBack';
-import { cancelEdit } from '../../../../redux/features/bon_reception/bonReceptionSlice';
 import Check from '@mui/icons-material/Check';
 import Close from '@mui/icons-material/Close';
-import OSSelectField from '../../../shared/select/OSSelectField';
-import { getBonCommandeExterne, getBonCommandeExternes } from "../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
-import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
-import { useRouter } from 'next/router';
+import { ArrowBack } from '@mui/icons-material';
 import EditIcon from "@mui/icons-material/Edit";
-import { getBonCommandeInterne, getBonCommandeInternes } from '../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice';
+import OSDatePicker from '../../../shared/date/OSDatePicker';
 
-const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) => {
+const FormBonVoiture  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) => {
     const dispatch = useAppDispatch();
     const route = useRouter();
     const [idValues ,setIdValues] = useState<any>()
 
-    const { isEditing } = useAppSelector((state) => state.bonReceptions);
-    const { bonCommandeExternes } = useAppSelector((state) => state.bonCommendeExterne);
-    const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
-
-    const total = [...bonCommandeExternes.map((i:any)=>{
-        return {
-            id : i.id, name: i.ref, type: "BCE"
-        }
-    }),...bonCommandeInternes.map((i:any)=>{
-        return {
-            id : i.id, name: i.numBon, type: "BCI"
-        }
-    })]
-
-    const fetchUtilsData = () => {
-        dispatch(getBonCommandeExternes({}));
-        dispatch(getBonCommandeInternes({}));
-    };
-    const handleFech = async (id: any) => {
-        try { 
-            const response:any = total.find((e:any)=> e.id === id)
-            if(response?.type === "BCE"){
-                const Val = await dispatch(getBonCommandeExterne({ id , args:{
-                    include:{
-                        articleCommandeBce:true
-                    }
-                }}));
-                console.log(Val)
-                setValuesArticle((prev:any[])=>{
-                    console.log(prev)
-                    prev = Val.payload.articleCommandeBce
-                    return prev
-                })
-            }else{
-                const Val = await dispatch(getBonCommandeInterne({ id , args:{
-                    include:{
-                        ArticleCommande:true
-                    }
-                }}));
-                console.log(Val)
-                setValuesArticle((prev:any[])=>{
-                    console.log(prev)
-                    prev = Val.payload.ArticleCommande
-                    return prev
-                })
-            }
-        } catch (error) {
-            console.log("error", error);
-        }
-    }
-    useEffect(() => {
-        fetchUtilsData();
-    }, []);
-    useEffect(() => {
-        const id = formikProps.values.bce
-        if(id){
-            handleFech(id)
-        }
-    }, [formikProps.values.bce]);
+    const { isEditing } = useAppSelector((state) => state.bonCommandeInterne);
     
     return (
         <Form>
             <NavigationContainer>
                 <SectionNavigation>
                 <Stack flexDirection={"row"}>
-                    <Button
+                     <Button
                         color="info"
                         variant="text"
                         startIcon={<ArrowBack />}
                         onClick={() => {
                             route.back()
                             formikProps.resetForm();
-                            dispatch(cancelEdit());
                         }}
                     >
                         Retour
@@ -108,21 +45,20 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                         {isEditing ? "Modifier" : "Enregistrer"}
                     </Button>
                     <Button
-                        variant="text"
-                        color="warning"
-                        size="small"
-                        type="reset"
-                        startIcon={<Close />}
-                        onClick={() => {
-                            formikProps.resetForm();
-                            dispatch(cancelEdit());
-                        }}
+                    variant="text"
+                    color="warning"
+                    size="small"
+                    type="reset"
+                    startIcon={<Close />}
+                    onClick={() => {
+                        formikProps.resetForm();
+                    }}
                     >
                         Annuler
                     </Button>
                 </Stack>
                 <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"} Bon de reception
+                    {isEditing ? "Modifier" : "Ajouter"} Entretien
                 </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -137,35 +73,33 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                     }}
                     >
                     <Typography variant="h6" id="tableTitle" component="div">
-                        Bon de reception
+                        Bon de commande interne
                     </Typography>
                 </Stack>
-                <FormControl fullWidth>
-                    <OSTextField
-                        fullWidth
-                        id="outlined-basic"
-                        variant="outlined"
-                        label="Réference"
-                        name="reference"
-                    />
-                </FormControl>
-                <FormControl fullWidth>
-                    <OSSelectField
-                        id="outlined-basic"
-                        label="Ref BCI/BCE"
-                        name="bce"
-                        options={total}
-                        dataKey={["name","type"]}
-                        valueKey="id"
-                        type="text"
-                    />
-                </FormControl>
-                <FormControl fullWidth>
-                    <OSDateTimePicker
-                        label="Date bon de reception"
-                        name="dateBonCommande"
-                    />
-                </FormControl>
+                <FormContainer spacing={2}>
+                    <Stack
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="center"
+                        spacing={2}
+                    >
+                        <OSTextField
+                            fullWidth
+                            id="outlined-basic"
+                            label="matériel"
+                            variant="outlined"
+                            name="materiel"
+                        />
+                        <OSDatePicker
+                            fullWidth
+                            id="outlined-basic"
+                            label="Date"
+                            variant="outlined"
+                            value = {formikProps.values.date}
+                            onChange = {(value: any) =>formikProps.setFieldValue("date", value)}
+                        />
+                    </Stack>
+                </FormContainer>
             </FormContainer>
             <Box>
                 <FormContainer spacing={2}>
@@ -178,25 +112,30 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                             }}
                             >
                             <Typography variant="h6" id="tableTitle" component="div">
-                                Produit reçu
+                                Article à commander
                             </Typography>
                         </Stack>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 700 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Designation</TableCell>
-                                        <TableCell align="left">Quantité</TableCell>
+                                        <TableCell align="left">Activité</TableCell>
+                                        <TableCell>Nombre</TableCell>
+                                        <TableCell align="left">PU</TableCell>
+                                        <TableCell align="left">Montant</TableCell>
+                                        <TableCell></TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {valuesArticle && valuesArticle?.map((item:any , index:any) => (
+                                    {valuesArticle.map((item:any , index:any) => (
                                         <TableRow
                                             key={index}
                                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                         >
-                                            <TableCell component="th" scope="row">{item.designation}</TableCell>
-                                            <TableCell align="left">{item.quantite}</TableCell>
+                                            <TableCell component="th" scope="row">{item.activite}</TableCell>
+                                            <TableCell align="left">{item.nombre}</TableCell>
+                                            <TableCell align="left">{item.pu}  Ar</TableCell>
+                                            <TableCell align="left">{item.montant}</TableCell>
                                             <TableCell
                                             align="center"
                                             sx={{ width: 150, background: "#F5F5F5" }}
@@ -213,8 +152,10 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                                         component="span"
                                                         size="small"
                                                         onClick={() => {
-                                                            formikProps.setFieldValue('designation', item.designation)
-                                                            formikProps.setFieldValue('quantite', item.quantite)
+                                                            formikProps.setFieldValue('activite', item.activite);
+                                                            formikProps.setFieldValue('nombre', item.nombre);
+                                                            formikProps.setFieldValue('pu', item.pu);
+                                                            formikProps.setFieldValue('montant', item.montant);
                                                             setIdValues(item.id)
                                                         }}
                                                     >
@@ -238,7 +179,6 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                                                 temp.splice(index,1)
                                                                 return temp
                                                             })
-                                                            
                                                         }}
                                                     >
                                                     <Delete />
@@ -254,22 +194,45 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                             <TableCell component="th" scope="row">
                                                 <FormControl fullWidth>
                                                     <OSTextField
-                                                        id="designation"
-                                                        label="Désignation"
-                                                        name="designation"
+                                                        id="activite"
+                                                        label="Activité"
+                                                        name="activite"
                                                         type="text"
                                                     />
                                                 </FormControl>
                                             </TableCell>
-                                            
                                             <TableCell align="left">
                                                 <FormControl fullWidth>
                                                     <OSTextField
-                                                        id="designation"
-                                                        label="Quantité"
-                                                        name="quantite"
+                                                        id="nombre"
+                                                        label="Nombre"
+                                                        name="nombre"
                                                         type="number"
                                                     />
+                                                </FormControl>
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                <FormControl fullWidth>
+                                                    <OSTextField
+                                                        id="pu"
+                                                        label="PU"
+                                                        name="pu"
+                                                        type="number"
+                                                    />
+                                                </FormControl>
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                <FormControl fullWidth>
+                                                    <OSTextField
+                                                        id="montant"
+                                                        label="Montant"
+                                                        name="montant"
+                                                        type="number"
+                                                    />
+                                                </FormControl>
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                <FormControl fullWidth>
                                                 </FormControl>
                                             </TableCell>
                                             <TableCell
@@ -285,38 +248,46 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                                     <IconButton
                                                         type="button"
                                                         onClick={() => {
-                                                            const designation = formikProps.values.designation;
-                                                            const quantite = formikProps.values.quantite;
-                                                                // Vérifier si les champs sont vides
-                                                                if (designation.trim() !== '') {
-                                                                    if(idValues){
-                                                                        setValuesArticle((prev:any[])=>{
-                                                                            let temp = [...prev.map((ValId)=>{
-                                                                                if(ValId.id === idValues){
-                                                                                    return {
-                                                                                        id:idValues,
-                                                                                        designation,
-                                                                                        quantite
-                                                                                    }
-                                                                                }
-                                                                                return ValId
-                                                                            })]
-                                                                            return temp
-                                                                        })
-                                                                    } else{
-                                                                        setValuesArticle((prev:any[])=>{
-                                                                            let temp = [...prev]
-                                                                            temp.push({
-                                                                                designation: designation,
-                                                                                quantite: quantite
-                                                                            })
-                                                                            return temp
-                                                                        })
-                                                                    }
-                                                                formikProps.setFieldValue('designation', '')
-                                                                formikProps.setFieldValue('quantite', 0);
-                                                            }
+                                                            const activite = formikProps.values.activite;
+                                                            const nombre = formikProps.values.nombre;
+                                                            const pu = formikProps.values.pu;
+                                                            const montant = formikProps.values.montant;
                                                             
+                                                            if (activite.trim() !== '') {
+                                                                if(idValues){
+                                                                    setValuesArticle((prev:any[])=>{
+                                                                        let temp = [...prev.map((ValId)=>{
+                                                                            if(ValId.id === idValues){
+                                                                                return {
+                                                                                    id:idValues,
+                                                                                    activite,
+                                                                                    pu,
+                                                                                    nombre,
+                                                                                    montant
+                                                                                }
+                                                                            }
+                                                                            return ValId
+                                                                        })]
+                                                                        return temp
+                                                                    })
+                                                                }else{
+                                                                    setValuesArticle((prev:any[])=>{
+                                                                        let temp = [...prev]
+                                                                        temp.push({
+                                                                            activite,
+                                                                            nombre,
+                                                                            pu,
+                                                                            montant
+                                                                        })
+                                                                        return temp
+                                                                    })
+                                                                }
+                                                                formikProps.setFieldValue('activite', '');
+                                                                formikProps.setFieldValue('nombre', 0);
+                                                                formikProps.setFieldValue('pu', 0);
+                                                                formikProps.setFieldValue('montant', 0);
+                                                            }
+                                                        
                                                         }}
                                                     >
                                                         <Check color="primary"/>
@@ -324,8 +295,10 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                                     <IconButton
                                                         type="button"
                                                         onClick={() => {
-                                                            formikProps.setFieldValue('designation', '')
-                                                            formikProps.setFieldValue('quantite', 0);
+                                                            formikProps.setFieldValue('activite', '');
+                                                            formikProps.setFieldValue('nombre', 0);
+                                                            formikProps.setFieldValue('pu', 0);
+                                                            formikProps.setFieldValue('montant', 0);
                                                         }}
                                                         >
                                                         <Close />
@@ -341,7 +314,8 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
         </Form>
     )
 }
-export default FormBonReception;
+
+export default FormBonVoiture;
 
 const FormContainer = styled(Stack)(({ theme }) => ({
     padding: 30,
