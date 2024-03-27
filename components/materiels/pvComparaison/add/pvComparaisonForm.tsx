@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Button from "@mui/material/Button";
@@ -10,7 +10,7 @@ import Divider from "@mui/material/Divider";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import Check from "@mui/icons-material/Check";
 import Close from "@mui/icons-material/Close";
-import { Box, FormControl, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
+import { Box, FormControl, FormControlLabel, IconButton, Radio, RadioGroup, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
 import { Form, Formik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import * as Yup from "yup";
@@ -43,6 +43,9 @@ export default function PvComparaisonForm() {
     const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
     const { bonCommandeExternes } = useAppSelector((state) => state.bonCommendeExterne);
     const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
+
+    const [operate, setOperate] = useState<"INPUT" | "OUTPUT">("INPUT")
+    const [operationLabel, setOperationLabel] = useState<"Entrée" | "Sortie">("Entrée")
 
     const total = [...bonCommandeExternes.map((i:any)=>{
         return {
@@ -264,7 +267,7 @@ export default function PvComparaisonForm() {
                                         <FormControl fullWidth>
                                             <OSSelectField
                                                 id="outlined-basic"
-                                                label="Programme/Projet"
+                                                label="Programme"
                                                 name="programme"
                                                 options={programmeList}
                                                 dataKey="name"
@@ -321,7 +324,6 @@ export default function PvComparaisonForm() {
                                                         <TableRow>
                                                             <TableCell>Fournisseur</TableCell>
                                                             <TableCell align="left">Mode de Paie</TableCell>
-                                                            <TableCell align="left">Offres</TableCell>
                                                             <TableCell align="left">Désignation</TableCell>
                                                             <TableCell></TableCell>
                                                         </TableRow>
@@ -334,7 +336,6 @@ export default function PvComparaisonForm() {
                                                             >
                                                                 <TableCell component="th" scope="row">{element.fournisseur}</TableCell>
                                                                 <TableCell align="left">{element.modePaie}</TableCell>
-                                                                <TableCell align="left">{element.offre}</TableCell>
                                                                 <TableCell align="left">{element.designation} Ar</TableCell>
 
                                                                 <TableCell
@@ -389,15 +390,6 @@ export default function PvComparaisonForm() {
                                                                     </FormControl>
                                                                 </TableCell>
                                                                 <TableCell align="left">
-                                                                    <FormControl fullWidth>
-                                                                        <OSTextField
-                                                                            id="designation"
-                                                                            label="Offres"
-                                                                            name="offre"
-                                                                        />
-                                                                    </FormControl>
-                                                                    </TableCell>
-                                                                <TableCell align="left">
                                                                 <FormControl fullWidth>
                                                                     <OSTextField
                                                                         id="designation"
@@ -420,19 +412,16 @@ export default function PvComparaisonForm() {
                                                                             type="button"
                                                                             onClick={() => {
                                                                                 const fournisseur = formikProps.values.fournisseur;
-                                                                                const offre = formikProps.values.offre;
                                                                                 const modePaie = formikProps.values.modePaie;
                                                                                 const designation = formikProps.values.designation;
                                                                                  // Vérifier si les champs sont vides
-                                                                                 if (fournisseur.trim() !== '' && offre.trim() !== '' && modePaie.trim() !== '' && designation.trim() !== '') {
+                                                                                 if (fournisseur.trim() !== ''  && modePaie.trim() !== '' && designation.trim() !== '') {
                                                                                     valuesArticle.push({
                                                                                         fournisseur: fournisseur,
-                                                                                        offre: offre,
                                                                                         modePaie: modePaie,
                                                                                         designation: designation,
                                                                                     });
                                                                                     formikProps.setFieldValue('fournisseur', '');
-                                                                                    formikProps.setFieldValue('offre', '');
                                                                                     formikProps.setFieldValue('modePaie', '');
                                                                                     formikProps.setFieldValue('designation', '');
                                                                                 }
@@ -501,14 +490,28 @@ export default function PvComparaisonForm() {
                                             />
                                         </FormControl>
                                         </Stack>
-                                        <OSTextField
-                                            fullWidth
-                                            id="outlined-basic"
-                                            variant="outlined"
-                                            label="Justification"
-                                            name="justification"
-                                            type="text"
-                                        />
+                                        <Stack direction="row" spacing={2} margin={4}>
+                                            <Typography variant="h6" id="tableTitle" component="div">
+                                                Motif de Retenu :
+                                            </Typography>
+                                            <RadioGroup
+                                            aria-label="choixEntreSortie"
+                                            name="choixEntreSortie"
+                                            >
+                                            <Stack direction='row' spacing={4}>
+                                            <FormControlLabel value="INPUT" onChange={(e, c)=>{
+                                                if (!c) { setOperate("OUTPUT")} 
+                                                setOperate("INPUT")
+                                                setOperationLabel("Entrée")
+                                            }} control={<Radio checked={operate === "INPUT"} />} label="Moins distant" />
+                                            <FormControlLabel value="OUTPUT" onChange={(e, c)=>{
+                                                if (!c) { setOperate("INPUT") } 
+                                                setOperate("OUTPUT")
+                                                setOperationLabel("Sortie")
+                                            }} control={<Radio checked={operate === "OUTPUT"} />} label="Conforme aux besoin" />
+                                            </Stack>
+                                            </RadioGroup>
+                                        </Stack>
                                     </FormContainer>
                                 </Box>
                             </Form>

@@ -42,8 +42,9 @@ export default function BonCommandeExterneForm() {
         const newDataBCE = {
             ref: values.ref,
             dateCommande: new Date(values.dateCommande),
-            bci: values.bci,
+            objet: values.objet,
             demandeur:values.demandeur,
+            beneficiaire:values.beneficiaire,
             type:values.type,
             modePaiement: values.modePaiement,
             conditionLivraison: values.conditionLivraison,
@@ -77,9 +78,10 @@ export default function BonCommandeExterneForm() {
                     enableReinitialize
                     initialValues={{
                         ref: "",
-                        dateCommande: new Date().toISOString(),
+                        dateCommande: new Date(),
                         fournisseur: "",
-                        bci: "",
+                        objet: "",
+                        beneficiaire:"",
                         demandeur:"",
                         modePaiement: "",
                         conditionLivraison: "",
@@ -92,7 +94,8 @@ export default function BonCommandeExterneForm() {
                     }}
                     validationSchema={Yup.object({
                         ref: Yup.string().required("Champ obligatoire"),
-                        bci: Yup.string().required("Champ obligatoire"),
+                        objet: Yup.string().required("Champ obligatoire"),
+                        beneficiaire: Yup.string().required("Champ obligatoire"),
                         modePaiement : Yup.string().required("Champ obligatoire"),
                         dateCommande : Yup.date().required("Champ obligatoire"),
                         demandeur: Yup.string().required("Champ obligatoire"),

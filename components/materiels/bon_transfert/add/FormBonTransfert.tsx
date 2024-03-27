@@ -35,6 +35,18 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
             id : i.id, name:i.matricule +" "+ i.name +" "+ i.surname, type: "intern"
         }
     })]
+
+    const ExpeditionVia = [
+        {id : "1",name : "Voie terrestre"},
+        {id : "2",name : "Voie aerienne"},
+        {id : "3",name : "Vie ferovierre"},
+        {id : "4",name : "Vie maritime"}
+    ]
+    const programmeList = [
+        {id : "test1",name : "TEST1"},
+        {id : "test2",name : "TEST2"},
+        {id : "test3",name : "TEST3"}
+    ]
     const fetchUtilsData = () => {
         dispatch(getEmployees({}));
         dispatch(getInterns({}));
@@ -129,11 +141,11 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                     <FormControl fullWidth>
                         <OSSelectField
                             id="outlined-basic"
-                            label="Expediteur"
-                            name="expediteur"
-                            options={employees}
-                            dataKey={["matricule","name","surname"]}
-                            valueKey="id"
+                            label="Expedition via"
+                            name="expeditionVia"
+                            options={ExpeditionVia}
+                            dataKey={["name"]}
+                            valueKey="name"
                         />
                     </FormControl>
                     <FormControl fullWidth>
@@ -176,13 +188,13 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                     spacing={2}
                 >
                     <FormControl fullWidth>
-                        <OSTextField
-                            fullWidth
+                        <OSSelectField
                             id="outlined-basic"
-                            variant="outlined"
-                            label="Departement"
-                            name="departement"
-                            type="text"
+                            label="Programme"
+                            name="programme"
+                            options={programmeList}
+                            dataKey={["name"]}
+                            valueKey="name"
                         />
                     </FormControl>
                     <FormControl fullWidth>

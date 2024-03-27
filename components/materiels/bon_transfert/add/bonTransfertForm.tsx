@@ -30,7 +30,7 @@ export default function BonTransfertForm() {
                 designation: values.destination,
                 dateExp:new Date(values.dateExp),
                 expeditionVia: values.expeditionVia,
-                departement:values.departement,
+                programme:values.programme,
                 grant: values.grant,
                 type:values.type
             }
@@ -113,10 +113,10 @@ export default function BonTransfertForm() {
                         {
                             reference: isEditing && bonTransfert ? bonTransfert.reference:"",
                             expediteur:isEditing && bonTransfert ? bonTransfert.expediteur:"",
-                            destination:isEditing && bonTransfert ? bonTransfert.destination: "",
+                            destination:isEditing && bonTransfert ? bonTransfert.designation: "",
                             dateExp:isEditing && bonTransfert.dateExp ? new Date(bonTransfert.dateExp).toISOString(): new Date().toISOString(),
                             expeditionVia: isEditing && bonTransfert ? bonTransfert.expeditionVia:"",
-                            departement:isEditing && bonTransfert ? bonTransfert.departement:"",
+                            programme:isEditing && bonTransfert ? bonTransfert.programme:"",
                             grant:isEditing && bonTransfert ? bonTransfert.grant: "",
                             type:isEditing && bonTransfert ? bonTransfert.type:"",
                             designation: "",
@@ -131,7 +131,7 @@ export default function BonTransfertForm() {
                         destination: Yup.string().required("Champ obligatoire"),
                         dateExp:Yup.date().required("Champ obligatoire"),
                         expeditionVia:Yup.string().required("Champ obligatoire"),
-                        departement:Yup.string().required("Champ obligatoire"),
+                        programme:Yup.string().required("Champ obligatoire"),
                         grant: Yup.string().required("Champ obligatoire"),
                     })}
                     onSubmit={(value: any, action: any) => {
