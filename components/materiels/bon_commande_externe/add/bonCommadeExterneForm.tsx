@@ -44,6 +44,8 @@ export default function BonCommandeExterneForm() {
             dateCommande: new Date(values.dateCommande),
             objet: values.objet,
             demandeur:values.demandeur,
+            grant:values.grant,
+            ligneBudgetaire:values.ligneBudgetaire,
             beneficiaire:values.beneficiaire,
             type:values.type,
             modePaiement: values.modePaiement,
@@ -56,7 +58,7 @@ export default function BonCommandeExterneForm() {
                 const newData = {
                     designation: element.designation,
                     caracteristik: element.caracteristique,
-                    fournisseur: element.fournisseur,
+                    fournisseurId: element.fournisseurId,
                     quantite: element.quantite,
                     pu: element.pu,
                     valueArticle: element.valeur,
@@ -79,7 +81,9 @@ export default function BonCommandeExterneForm() {
                     initialValues={{
                         ref: "",
                         dateCommande: new Date(),
-                        fournisseur: "",
+                        ligneBudgetaire:0,
+                        grant:0,
+                        fournisseurId: "",
                         objet: "",
                         beneficiaire:"",
                         demandeur:"",
