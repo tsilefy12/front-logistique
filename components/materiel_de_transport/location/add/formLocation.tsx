@@ -21,6 +21,10 @@ import { cancelEdit } from "../../../../redux/features/location/locationSlice";
 import OSTextField from "../../../shared/input copy/OSTextField";
 import OSDatePicker from "../../../shared/date/OSDatePicker";
 import useFetchLocationDeTransport from "../hooks/useFetchLocationDeTransport";
+import useFetchGrant from "../../suivi_carburant/hooks/useFetchGrant";
+import useFetchLigneBudgetaire from "../../suivi_carburant/hooks/useFetchLigneBudgetaire";
+import OSSelectField from "../../../shared/select/OSSelectField";
+import useFetchVendors from "../../../vendor/hooks/useFetchVendors";
 
 const FormLocation = () => {
     const route = useRouter();
@@ -28,12 +32,24 @@ const FormLocation = () => {
     const { id }: any = route.query;
     const fetchLocationTransport = useFetchLocationDeTransport()
     const { isEditing, locationDeTransport } = useAppSelector((state) => state.locationDeTransport);
-  
+    const fetchGrant = useFetchGrant();
+    const fetchLigneBudgetaire = useFetchLigneBudgetaire()
+    const { grantList } = useAppSelector((state) =>state.grant);
+    const { budgetLineList} = useAppSelector((state) =>state.lineBugetaire) 
+    const { vendors} = useAppSelector((state) =>state.vendor)
+    const fetchVendors = useFetchVendors();
+
     React.useEffect(() => {
+        fetchGrant();
+        fetchLigneBudgetaire();
+        fetchVendors();
         if (id) {
           dispatch(editLocation({ id }));
         }
       }, [id]);
+
+      console.log("vendor :", vendors);
+
     const handleSubmit = async (values: any) => {
 
         try {
@@ -216,16 +232,22 @@ const FormLocation = () => {
                                 </FormControl>
                             </Stack>
                             <Stack direction="row" spacing={2} margin={2}>
-                                <OSTextField
+                                <OSSelectField
                                     id="outlined-basic"
                                     label="Nif"
                                     variant="outlined"
+                                    options={vendors}
+                                    dataKey={["nif"]}
+                                    valueKey="id"
                                     name="nif"
                                 />
-                                <OSTextField
+                                <OSSelectField
                                     id="outlined-basic"
                                     label="stat"
                                     variant="outlined"
+                                    options={vendors}
+                                    dataKey={["website"]}
+                                    valueKey="id"
                                     name="stat"
                                 />
 
@@ -235,16 +257,22 @@ const FormLocation = () => {
                                 spacing={3}
                                 margin={2}
                             >
-                                <OSTextField
+                                <OSSelectField
                                     id="outlined-basic"
                                     label="Grant"
                                     variant="outlined"
+                                    options={grantList}
+                                    dataKey={["code"]}
+                                    valueKey="id"
                                     name="grant"
                                 />
-                                <OSTextField
+                                <OSSelectField
                                     id="outlined-basic"
                                     label="Ligne budgetaire"
                                     variant="outlined"
+                                    options={budgetLineList}
+                                    dataKey={["code"]}
+                                    valueKey="id"
                                     name="ligneBudgetaire"
                                     type="text"
                                 />

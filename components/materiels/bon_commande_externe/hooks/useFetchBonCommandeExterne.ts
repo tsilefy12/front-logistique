@@ -17,7 +17,40 @@ const useFetchBonCommandeExterne = () => {
             },
         };
         if (router.query.search) {
-            args.where = {};
+            args.where = {
+                OR:[
+                    {
+                        ref:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        modePaiement:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        conditionLivraison:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        type:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        demandeur:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                ]
+            };
         }
         if (router.query.orderBy && router.query.order) {
             args.orderBy = {

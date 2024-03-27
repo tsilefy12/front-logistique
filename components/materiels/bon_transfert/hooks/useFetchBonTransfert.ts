@@ -12,7 +12,40 @@ const useFetchBonTransfert = () => {
     return async () => {
         let args: any = {};
         if (router.query.search) {
-            args.where = {};
+            args.where = {
+                OR:[
+                    {
+                        expediteur:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        reference:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        departement:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        grant:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        type:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                ]
+            };
         }
         if (router.query.orderBy && router.query.order) {
             args.orderBy = {

@@ -40,7 +40,7 @@ import Visibility from "@mui/icons-material/Visibility";
 export default function VendorList() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const router = useRouter();
 

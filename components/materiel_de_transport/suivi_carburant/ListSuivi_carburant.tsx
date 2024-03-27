@@ -36,6 +36,7 @@ import { deleteSuiviCarburant } from "../../../redux/features/suivi_carburant/su
 import SuiviCarburantTableToolbar from "./organisme/table/SuiviCarburantTableToolbar";
 import SuiviCarburantTableHeader from "./organisme/table/SuiviCarburantTableHeader";
 import { format } from "date-fns";
+import useFetchGrant from "./hooks/useFetchGrant";
   
     const ListSuiviCarburant = () => {
     const [page, setPage] = React.useState(0);
@@ -49,10 +50,10 @@ import { format } from "date-fns";
     console.log("suivi ", suiviCarburants);
     
     const fetchSuiviCarburant = useFetchSuiviCarburants();
+
     React.useEffect(() => {
-      fetchSuiviCarburant();
+      fetchSuiviCarburant();    
     }, [router.query]);
-   
     const handleClickEdit = async (id: any) => {
       router.push(`/materiel_de_transport/suivi_carburant/${id}/edit`);
     };

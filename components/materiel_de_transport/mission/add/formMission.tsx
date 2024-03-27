@@ -21,6 +21,9 @@ import {
   import { cancelEdit, editMissionDeTransport } from "../../../../redux/features/mission_transport/missionTransportSlice";
 import { createMissionDeTransport, updateMissionDeTransport } from "../../../../redux/features/mission_transport/missionTransportSlice";
 import useFetchMissionTransport from "../hooks/useFectMission";
+import useFetchGrant from "../../suivi_carburant/hooks/useFetchGrant";
+import useFetchLigneBudgetaire from "../../suivi_carburant/hooks/useFetchLigneBudgetaire";
+import OSSelectField from "../../../shared/select/OSSelectField";
   
   const FormMission = () => {
     const route = useRouter();
@@ -28,8 +31,14 @@ import useFetchMissionTransport from "../hooks/useFectMission";
     const { id }: any = route.query;
     const {isEditing, missionTransport} = useAppSelector((state) =>state.missionDeTransport);
     const fetchMissionTransport = useFetchMissionTransport()
+    const fetchGrant = useFetchGrant();
+    const fetchLigneBudgetaire = useFetchLigneBudgetaire()
+    const { grantList } = useAppSelector((state) =>state.grant);
+    const { budgetLineList} = useAppSelector((state) =>state.lineBugetaire) 
     React.useEffect(() => {
-      console.log("data :", fetchMissionTransport())
+       fetchGrant();
+       fetchLigneBudgetaire();
+       fetchMissionTransport();
       if (id) {
         dispatch(editMissionDeTransport({ id }));
       }
@@ -212,18 +221,24 @@ import useFetchMissionTransport from "../hooks/useFectMission";
                     margin={2}
                   >
                     <FormControl fullWidth>
-                      <OSTextField
+                      <OSSelectField
                         id="outlined-basic"
                         label="Grant"
                         variant="outlined"
+                        options={grantList}
+                        dataKey={["code"]}
+                        valueKey="id"
                         name="grant"
                       />
                     </FormControl>
                     <FormControl fullWidth>
-                      <OSTextField
+                      <OSSelectField
                         id="outlined-basic"
                         label="Ligne budgetaire"
                         variant="outlined"
+                        options={budgetLineList}
+                        dataKey={["code"]}
+                        valueKey="id"
                         name="ligneBudgetaire"
                         type="text"
                       />

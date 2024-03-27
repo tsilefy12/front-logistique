@@ -12,7 +12,46 @@ const useFetchBonCommandeInterne = () => {
     return async () => {
         let args: any = {};
         if (router.query.search) {
-            args.where = {};
+            args.where = {
+                OR: [
+                    {
+                        grant: {
+                            contains: router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        programme: {
+                            contains: router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        ligneBudgetaire: {
+                            contains: router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        demandeur: {
+                            contains: router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        reference: {
+                            contains: router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        type: {
+                            contains: router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                ]
+            };
         }
         if (router.query.orderBy && router.query.order) {
             args.orderBy = {

@@ -23,6 +23,9 @@ import {
   import { cancelEdit } from "../../../../redux/features/car-voucher/carVoucherSlice";
 import { createSuiviCarburant, editSuiviCarburant, updateSuiviCarburant } from "../../../../redux/features/suivi_carburant/suiviCarburantSlice";
 import useFetchSuiviCarburants from "../hooks/useFetchSuiviCarburant";
+import useFetchGrant from "../hooks/useFetchGrant";
+import OSSelectField from "../../../shared/select/OSSelectField";
+import useFetchLigneBudgetaire from "../hooks/useFetchLigneBudgetaire";
   
   const FormSuiviCarburant = () => {
     const route = useRouter();
@@ -30,12 +33,20 @@ import useFetchSuiviCarburants from "../hooks/useFetchSuiviCarburant";
     const { id }: any = route.query;
     const fetchSuiviCarburant = useFetchSuiviCarburants()
     const {isEditing, suiviCarburant} = useAppSelector((state) =>state.suiviCarburant);
-    console.log("dataEdit :", suiviCarburant)
+
+    const fetchGrant = useFetchGrant();
+    const fetchLigneBudgetaire = useFetchLigneBudgetaire()
+    const { grantList } = useAppSelector((state) =>state.grant);
+    const { budgetLineList} = useAppSelector((state) =>state.lineBugetaire) 
     React.useEffect(() => {
+      fetchLigneBudgetaire();
+      fetchGrant();
       if (id) {
         dispatch(editSuiviCarburant({ id }));
       }
     }, [id]);
+    console.log("grant list :", grantList);
+    console.log("ligne budgetaire :", budgetLineList)
     const handleSubmit = async (values: any) => {
  
       try {
@@ -215,18 +226,24 @@ import useFetchSuiviCarburants from "../hooks/useFetchSuiviCarburant";
                     margin={2}
                   >
                     <FormControl fullWidth>
-                      <OSTextField
+                      <OSSelectField
                         id="outlined-basic"
                         label="Grant"
                         variant="outlined"
+                        options={grantList}
+                        dataKey={["code"]}
+                        valueKey="id"
                         name="grant"
                       />
                     </FormControl>
                     <FormControl fullWidth>
-                      <OSTextField
+                      <OSSelectField
                         id="outlined-basic"
                         label="Ligne budgetaire"
                         variant="outlined"
+                        options={budgetLineList}
+                        dataKey={["code"]}
+                        valueKey="id"
                         name="ligneBudgetaire"
                         type="text"
                       />

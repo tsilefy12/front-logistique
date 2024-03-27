@@ -16,7 +16,16 @@ const useFetchBonReception = () => {
             },
         };
         if (router.query.search) {
-            args.where = {};
+            args.where = {
+                OR:[
+                    {
+                        reference:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                ]
+            };
         }
         if (router.query.orderBy && router.query.order) {
             args.orderBy = {

@@ -12,7 +12,46 @@ const useFetchFicheDeDotation = () => {
     return async () => {
         let args: any = {};
         if (router.query.search) {
-            args.where = {};
+            args.where = {
+                OR:[
+                    {
+                        region:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        district:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        commune:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        grant:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        ligneBudgetaire:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    },
+                    {
+                        fokontany:{
+                            contains:router.query.search,
+                            mode: "insensitive"
+                        }
+                    }
+                ]
+            };
         }
         if (router.query.orderBy && router.query.order) {
             args.orderBy = {

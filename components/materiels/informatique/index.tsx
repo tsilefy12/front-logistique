@@ -37,7 +37,7 @@ import { useConfirm } from "material-ui-confirm";
 import { axios } from "../../../lib/axios";
 const ListInfo = () => {
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const router = useRouter();
     const confirm = useConfirm();
     const dispatch = useAppDispatch();
