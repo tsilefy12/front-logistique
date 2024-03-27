@@ -136,7 +136,7 @@ export default function BonCommandeExterneList() {
                                         {row?.modePaiement}
                                     </TableCell>
                                     <TableCell align="left">{row?.ref}</TableCell>
-                                    <TableCell align="left">{row?.bonCommandeInterne?.numBon}</TableCell>
+                                    <TableCell align="left">{row?.objet}</TableCell>
                                     <TableCell align="right" width={"150px"}>
                                         <BtnActionContainer
                                         direction="row"

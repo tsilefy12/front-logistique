@@ -10,12 +10,7 @@ const useFetchBonCommandeExterne = () => {
     const dispatch = useAppDispatch();
 
     return async () => {
-        let args: any = {
-            include: {
-                bonCommandeInterne: true,
-                vendor:true
-            },
-        };
+        let args: any = {};
         if (router.query.search) {
             args.where = {
                 OR:[

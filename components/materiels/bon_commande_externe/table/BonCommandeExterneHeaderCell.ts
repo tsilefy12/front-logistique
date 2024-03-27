@@ -1,12 +1,7 @@
 import { HeadCell } from "./HeadCell.interface";
 
 export const BonCommandeExterneHeadCells: readonly HeadCell[] = [
-    {
-        id: "fournisseur",
-        numeric: false,
-        disablePadding: false,
-        label: "Fournisseur",
-    },
+   
     {
         id: "dateCommande",
         numeric: false,
@@ -32,10 +27,10 @@ export const BonCommandeExterneHeadCells: readonly HeadCell[] = [
         label: "Réference",
     },
     {
-        id: "bci",
+        id: "objer",
         numeric: false,
         disablePadding: false,
-        label: "BCI",
+        label: "OBJET",
     },
     
     
