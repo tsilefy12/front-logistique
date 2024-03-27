@@ -16,6 +16,7 @@ import Close from '@mui/icons-material/Close';
 import Delete from '@mui/icons-material/Delete';
 import { ArrowBack } from '@mui/icons-material';
 import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
+import OSDatePicker from '../../../shared/date/OSDatePicker';
 
 const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any}) =>  {
     const dispatch = useAppDispatch();
@@ -128,27 +129,42 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
                         />
                     </FormControl>
                     <FormControl fullWidth>
-                        <OSSelectField
+                        <OSTextField
+                            fullWidth
                             id="outlined-basic"
-                            label="BCI"
-                            name="bci"
-                            options={bonCommandeInternes}
-                            dataKey="numBon"
-                            valueKey="id"
-                            type="text"
+                            variant="outlined"
+                            label="Objet"
+                            name="objet"
                         />
                     </FormControl>
                 </Stack>
-                <FormControl fullWidth>
-                    <OSSelectField
-                        id="outlined-basic"
-                        label="Demandeur"
-                        name="demandeur"
-                        options={total}
-                        dataKey={["name"]}
-                        valueKey="id"
-                    />
-                </FormControl>
+                <Stack
+                    direction="row"
+                    justifyContent="flex-start"
+                    alignItems="flex-start"
+                    spacing={2}
+                    >
+                    <FormControl fullWidth>
+                        <OSSelectField
+                            id="outlined-basic"
+                            label="Demandeur"
+                            name="demandeur"
+                            options={total}
+                            dataKey={["name"]}
+                            valueKey="id"
+                        />
+                    </FormControl>
+                    <FormControl fullWidth>
+                            <OSTextField
+                                fullWidth
+                                id="outlined-basic"
+                                variant="outlined"
+                                label="Béneficiaire"
+                                name="beneficiaire"
+                                type="text"
+                            />
+                    </FormControl>
+                </Stack>
                 <Stack
                     direction="row"
                     justifyContent="flex-start"
@@ -176,9 +192,13 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
                         />
                     </FormControl>
                     <FormControl fullWidth>
-                        <OSDateTimePicker
-                            label="Date de commande"
-                            name="dateCommande"
+                        <OSDatePicker
+                            fullWidth
+                            id="outlined-basic"
+                            label="Date du commande"
+                            variant="outlined"
+                            value = {formikProps.values.dateCommande}
+                            onChange = {(value: any) =>formikProps.setFieldValue("dateCommande", value)}
                         />
                     </FormControl>
                 </Stack>
@@ -309,19 +329,6 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
                                                         label="Quantité"
                                                         name="quantite"
                                                         type="number"
-                                                    />
-                                                </FormControl>
-                                            </TableCell>
-                                            <TableCell align="left">
-                                                <FormControl fullWidth>
-                                                    <OSSelectField
-                                                        id="outlined-basic"
-                                                        label="Fournisseur"
-                                                        name="fournisseur"
-                                                        options={fournisseurList}
-                                                        dataKey={["name"]}
-                                                        valueKey="id"
-                                                        type="text"
                                                     />
                                                 </FormControl>
                                             </TableCell>

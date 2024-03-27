@@ -16,7 +16,7 @@ const FormBonVoiture  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete
     const route = useRouter();
     const [idValues ,setIdValues] = useState<any>()
 
-    const { isEditing } = useAppSelector((state) => state.bonCommandeInterne);
+    const { isEditing } = useAppSelector((state) => state.carVoucher);
     
     return (
         <Form>
@@ -73,7 +73,7 @@ const FormBonVoiture  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete
                     }}
                     >
                     <Typography variant="h6" id="tableTitle" component="div">
-                        Bon de commande interne
+                        Entretien
                     </Typography>
                 </Stack>
                 <FormContainer spacing={2}>
@@ -229,10 +229,6 @@ const FormBonVoiture  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete
                                                         name="montant"
                                                         type="number"
                                                     />
-                                                </FormControl>
-                                            </TableCell>
-                                            <TableCell align="left">
-                                                <FormControl fullWidth>
                                                 </FormControl>
                                             </TableCell>
                                             <TableCell

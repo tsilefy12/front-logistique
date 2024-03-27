@@ -143,15 +143,6 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
                             fullWidth
                             id="outlined-basic"
                             variant="outlined"
-                            label="N° bon commende interne"
-                            name="numBon"
-                        />
-                    </FormControl>
-                    <FormControl fullWidth>
-                        <OSTextField
-                            fullWidth
-                            id="outlined-basic"
-                            variant="outlined"
                             label="N° Bon Commande"
                             name="numBonCommande"
                         />
@@ -191,6 +182,13 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
                         valueKey="id"
                     />
                 </FormControl>
+                <OSTextField
+                    fullWidth
+                    id="outlined-basic"
+                    variant="outlined"
+                    label="Observation"
+                    name="observation"
+                />
                 <Stack
                 direction="row"
                 justifyContent="flex-start"

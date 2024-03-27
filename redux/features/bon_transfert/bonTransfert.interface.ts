@@ -7,7 +7,7 @@ export interface bonTransfertItem {
     reference?:string;
     dateExp?: Date;
     expeditionVia?: string;
-    departement?: string;
+    programme?: string;
     grant?: string;
     type?: string;
     articleTransfert?: any;

@@ -92,7 +92,7 @@ function PrintBCE({ pdfData }: { pdfData: any }) {
                                 Validateur
                             </Text>
                             <Text style={styles.headerCadre}>
-                                Autre
+                                   Logisticien
                             </Text>
                         </View>
                         <View
