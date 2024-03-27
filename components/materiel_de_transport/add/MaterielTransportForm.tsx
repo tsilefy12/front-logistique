@@ -71,7 +71,7 @@ const MaterielTransportForm = () => {
   ]
   const ListStatus = [
     { id: "Location", name: "Location" },
-    { id: "Externe", name: "Externe" }
+    { id: "Interne", name: "Interne" }
   ]
   return (
     <Container maxWidth="xl" sx={{ pb: 5 }}>
