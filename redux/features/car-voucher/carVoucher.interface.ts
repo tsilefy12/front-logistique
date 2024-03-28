@@ -3,8 +3,8 @@
     materiel?: string;
     date?: Date;
     montantTotal?: string;
-    /*reason?: string;
-    argument?: string;
+    reference?: string;
+    /*argument?: string;
     itinerary?: string;
     departureDate?: string;
     departureTime?: string;

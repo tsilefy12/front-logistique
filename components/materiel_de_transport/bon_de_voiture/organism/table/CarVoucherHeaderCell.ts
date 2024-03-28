@@ -14,6 +14,12 @@ export const carVoucherHeadCells: readonly HeadCell[] = [
     label: "Date",
   },
   {
+    id: "reference",
+    numeric: false,
+    disablePadding: false,
+    label: "Référence",
+  },
+  {
     id: "montantTotal",
     numeric: false,
     disablePadding: false,

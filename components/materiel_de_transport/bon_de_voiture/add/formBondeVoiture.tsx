@@ -36,7 +36,8 @@ const FormBonDeVoiture = () => {
             const data = {
                 materiel: values.materiel,
                 date: new Date(values.date),
-                montantTotal : valuesArticle.reduce((acc:any, curr:any) => acc + curr.montant, 0)
+                montantTotal : valuesArticle.reduce((acc:any, curr:any) => acc + curr.montant, 0),
+                reference: values.reference
             }
             if (isEditing) {
                 await dispatch(
@@ -72,6 +73,7 @@ const FormBonDeVoiture = () => {
             initialValues={{
                 materiel: isEditing ? carVoucher?.materiel : "",
                 date: isEditing ? carVoucher?.date : new Date(),
+                reference: isEditing ? carVoucher?.reference: "",
                 activite:"",
                 nombre:"",
                 pu:"",
@@ -83,6 +85,7 @@ const FormBonDeVoiture = () => {
                 date: Yup.string().required(
                     "Veuillez remplir le champ date"
                 ),
+                reference: Yup.string().required("Veuillez remplir le champ référence"),
             })}
             onSubmit={(value: any, action: any) => {
                 handleSubmit(value);

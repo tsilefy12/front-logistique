@@ -106,14 +106,16 @@ import useFetchTransportationEquipments from "../hooks/useFetchTransportationEqu
            }
         })
     });
-    var MaterielValue = "";
-    transportationEquipments.forEach((element:any) => {
-      locationDeTransports.forEach((item:any) =>{
-           if (element?.id === item["materiel"]) {
-              MaterielValue = element?.registration;
-           }
-        })
-    });
+      var MaterielValue = "";
+      transportationEquipments.forEach((element:any) => {
+        
+        locationDeTransports.forEach((item:any) =>{
+             if (element?.id === item["materiel"]) {
+                MaterielValue = element?.registration;
+             }
+          })
+      });
+    
     return (
       <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
         <NavigationContainer>
@@ -147,7 +149,7 @@ import useFetchTransportationEquipments from "../hooks/useFetchTransportationEqu
                         const labelId = `enhanced-table-checkbox-${index}`;
                         return (
                           <TableRow hover tabIndex={-1} key={row.id}>
-                            <TableCell component="th" id={labelId} align="left">
+                            <TableCell component="th" id={labelId} align="left" className="gogo">
                               {MaterielValue}
                             </TableCell>
 
