@@ -254,11 +254,11 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
                                             <TableCell align="left">{item.caracteristik}</TableCell>
                                             <TableCell align="left">{item.pu}  Ar</TableCell>
                                             <TableCell align="left">{item.quantite}</TableCell>
-                                            <TableCell align="left">{item.fournisseurId}</TableCell>
+                                            <TableCell align="left">{fournisseurList.find((e:any)=> e.id === item.fournisseurId)?.name}</TableCell>
                                             <TableCell align="left">{item.valueArticle} Ar</TableCell>
                                             <TableCell
-                                            align="center"
-                                            sx={{ width: 150, background: "#F5F5F5" }}
+                                                align="center"
+                                                sx={{ width: 150, background: "#F5F5F5" }}
                                             >
                                             <Stack
                                                 direction="row"

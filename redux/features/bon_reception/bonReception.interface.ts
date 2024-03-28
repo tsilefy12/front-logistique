@@ -1,10 +1,12 @@
 export interface bonReceptionItem {
     id?: string;
     bce?: string;
+    bci?: string;
     reference?: string;
     dateReception?: Date;
     produitRecu?: any;
     bonDeCommandeExterne?:any;
+    bonDeCommandeInterne?:any;
 }
   
 export interface bonReceptionInitialState {

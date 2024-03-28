@@ -5,11 +5,12 @@ export interface BonCommandeExterneItem {
     demandeur?:string;
     objet?: string;
     type?:string;
+    grant?:number;
+    ligneBudgetaire?:number;
     beneficiaire?:string;
     modePaiement?: string;
     conditionLivraison?: string;
     pieceJointe?: string;
-    bonCommandeInterne?:any;
     articleCommandeBce?:any;
 }
   

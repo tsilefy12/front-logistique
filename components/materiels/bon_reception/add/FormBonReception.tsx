@@ -10,10 +10,10 @@ import Check from '@mui/icons-material/Check';
 import Close from '@mui/icons-material/Close';
 import OSSelectField from '../../../shared/select/OSSelectField';
 import { getBonCommandeExterne, getBonCommandeExternes } from "../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
-import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 import { useRouter } from 'next/router';
 import EditIcon from "@mui/icons-material/Edit";
 import { getBonCommandeInterne, getBonCommandeInternes } from '../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice';
+import OSDatePicker from '../../../shared/date/OSDatePicker';
 
 const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) => {
     const dispatch = useAppDispatch();
@@ -41,6 +41,7 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
     const handleFech = async (id: any) => {
         try { 
             const response:any = total.find((e:any)=> e.id === id)
+            formikProps.setFieldValue("type", response?.type)
             if(response?.type === "BCE"){
                 const Val = await dispatch(getBonCommandeExterne({ id , args:{
                     include:{
@@ -158,12 +159,17 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                         dataKey={["name","type"]}
                         valueKey="id"
                         type="text"
+                       
                     />
                 </FormControl>
                 <FormControl fullWidth>
-                    <OSDateTimePicker
+                    <OSDatePicker
+                        fullWidth
+                        id="outlined-basic"
                         label="Date bon de reception"
-                        name="dateBonCommande"
+                        variant="outlined"
+                        value = {formikProps.values.dateReception}
+                        onChange = {(value: any) =>formikProps.setFieldValue("dateReception", value)}
                     />
                 </FormControl>
             </FormContainer>

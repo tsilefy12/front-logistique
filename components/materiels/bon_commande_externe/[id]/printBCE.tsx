@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { Print } from "@mui/icons-material";
 import { Button, CircularProgress } from "@mui/material";
 import {
@@ -42,19 +43,19 @@ function PrintBCE({ pdfData }: { pdfData: any }) {
                               <Text style={{width: "50%",padding:2,fontSize:10}}>Date: {pdfData.dateCommande ? format(new Date(pdfData.dateCommande),"dd/MM/yyyy") :""}</Text>
                          </View>
                          <View style={{width: "100%",display: "flex",borderTop:"none",flexDirection: "column"}}>
-                              <Text style={{padding:2,fontSize:10}}>Grants:  {pdfData.grant}</Text>
-                              <Text style={{padding:2,fontSize:10}}>Ligne budgétaire:  {pdfData.ligneBudgetaire}</Text>
-                              <Text style={{padding:2,fontSize:10}}>Nom du démandeur:  </Text>
+                              <Text style={{padding:2,fontSize:10}}>Grants:  {pdfData?.grant}</Text>
+                              <Text style={{padding:2,fontSize:10}}>Ligne budgétaire:  {pdfData?.ligneBudgetaire}</Text>
+                              <Text style={{padding:2,fontSize:10}}>Nom du démandeur:  {pdfData?.demandeur}</Text>
                               <Text style={{padding:2,fontSize:10}}>Objet:  {pdfData.objet}</Text>
                          </View>
                     </View>
                     <View style={{width: "100%",marginTop:20,}}>
                          <View style={[styles.rowBody]}>
+                              <Text style={styles.th}>Fournisseur</Text>
                               <Text style={styles.th}>Designation</Text>
                               <Text style={styles.th}>Caractéristique</Text>
                               <Text style={styles.th}>Quantité</Text>
                               <Text style={styles.th}>PU</Text>
-                              <Text style={styles.th}>Valeur</Text>
                          </View>
                     </View>
                     {pdfData && pdfData.articleCommandeBce?.map(
@@ -62,11 +63,11 @@ function PrintBCE({ pdfData }: { pdfData: any }) {
                               return (
                                    <View style={{width: "100%"}}>
                                         <View style={[styles.rowBody]}>
+                                             <Text style={styles.tr}>{element?.vendor?.name}</Text>
                                              <Text style={styles.tr}>{element?.designation}</Text>
                                              <Text style={styles.tr}>{element?.caracteristik}</Text>
                                              <Text style={styles.tr}>{element?.quantite}</Text>
                                              <Text style={styles.tr}>{element?.pu} ar</Text>
-                                             <Text style={styles.tr}>{element?.valueArticle} ar</Text>
                                         </View>
                                    </View>
                               )
@@ -75,25 +76,25 @@ function PrintBCE({ pdfData }: { pdfData: any }) {
                     <View style={styles.table}>
                          <View style={{width: "100%",display: "flex",flexDirection: "column"}}>
                               <Text style={{padding:10,fontSize:10,textDecoration:"underline"}}>Montant en lettre: </Text>
-                              <Text style={{padding:10,fontSize:10 ,textDecoration:"underline"}}>Béneficiaire:  </Text>
+                              <Text style={{padding:10,fontSize:10 ,textDecoration:"underline"}}>Béneficiaire: {pdfData?.beneficiaire} </Text>
                               <Text style={{padding:10,fontSize:10 ,textDecoration:"underline"}}>Pièces jointe:  </Text>
                          </View>
                     </View>
                     <View style={{width:"100%"}}>
-                        <View style={{width: "100%",border:"1px solid #000",borderBottom:"none",display:"flex",flexDirection:"row",fontSize:"10"}}>
-                            <Text style={styles.headerCadre1}>Date</Text>
-                            <Text style={styles.headerCadre}>
-                                Demandeur
-                            </Text>
-                            <Text style={styles.headerCadre}>
-                                Verificateur
-                            </Text>
-                            <Text style={styles.headerCadre}>
-                                Validateur
-                            </Text>
-                            <Text style={styles.headerCadre}>
-                                   Logisticien
-                            </Text>
+                         <View style={{width: "100%",border:"1px solid #000",borderBottom:"none",display:"flex",flexDirection:"row",fontSize:"10"}}>
+                              <Text style={styles.headerCadre1}>Date</Text>
+                              <Text style={styles.headerCadre}>
+                                   Demandeur
+                              </Text>
+                              <Text style={styles.headerCadre}>
+                                   Verificateur
+                              </Text>
+                              <Text style={styles.headerCadre}>
+                                   Validateur
+                              </Text>
+                              <Text style={styles.headerCadre}>
+                                        Logisticien
+                              </Text>
                         </View>
                         <View
                         style={[
@@ -141,6 +142,7 @@ const styles = StyleSheet.create({
           textAlign: "center",
           borderLeft: "1px solid #000",
           paddingTop: 2,
+          backgroundColor:"#D5D8DC",
           paddingBottom: 2,
           paddingLeft:2,
           fontWeight: "bold",

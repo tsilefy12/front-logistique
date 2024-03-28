@@ -101,8 +101,6 @@ export const getBonCommandeInternes = createAsyncThunk(
                   const oneCons = {
                     id: cons.id,
                     dateBonCommande: cons.dateBonCommande,
-                    fournisseurId: cons.fournisseurId,
-                    vendor:cons.vendor,
                     observation:cons.observation,
                     numBonCommande: cons.numBonCommande,
                     programme: cons.programme,

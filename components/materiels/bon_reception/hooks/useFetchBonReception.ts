@@ -13,6 +13,7 @@ const useFetchBonReception = () => {
         let args: any = {
             include: {
                 bonDeCommandeExterne: true,
+                bonDeCommandeInterne:true
             },
         };
         if (router.query.search) {

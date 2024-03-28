@@ -4,7 +4,7 @@ export interface ArticleBCEItem {
     caracteristik?: string;
     quantite?: number;
     pu?: number;
-    fournisseur?: string;
+    fournisseurId?: string;
     vendor?:any;
     valueArticle?: number;
     bonDeCommandeExterneId?: string

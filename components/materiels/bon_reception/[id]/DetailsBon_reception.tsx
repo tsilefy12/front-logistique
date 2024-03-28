@@ -5,7 +5,7 @@ import {
     Stack,
     Typography,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Moment from "react-moment";
 import Link from "next/link";
@@ -21,6 +21,7 @@ const DetailsBonReception = () => {
     const dispatch = useAppDispatch();
     const { id }: any = router.query;
     const { bonReception } = useAppSelector((state) => state.bonReceptions);
+    const [ pdf,setPdf ] = useState<any>({})
 
     useEffect(() => {
         getDetailsBonReception();
@@ -28,19 +29,22 @@ const DetailsBonReception = () => {
   
     const getDetailsBonReception = () => {
         dispatch(getBonReception({ id,args:{
-            include:{
+            include: {
                 produitRecu:true,
-                bonDeCommandeExterne:{
-                    include:{
-                        vendor:true
-                    }
-                }
+                bonDeCommandeExterne: true,
+                bonDeCommandeInterne:true
             }
         }}));
     };
-
     useEffect(()=> {
-        console.log(bonReception)
+        const data = {
+            bce: bonReception.bce ? bonReception.bonDeCommandeExterne?.ref+"(BCE)" :null,
+            bci: bonReception.bci ? bonReception.bonDeCommandeInterne?.reference+"(BCI)" :null,
+            reference: bonReception.reference,
+            dateReception: bonReception.dateReception,
+            produitRecu: bonReception.produitRecu
+        }
+        setPdf(data)
     },[bonReception])
     return (
         <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
@@ -50,12 +54,10 @@ const DetailsBonReception = () => {
                 sx={{ mb: 2 }}
             >
                 <Stack flexDirection={"row"}>
-                    <Link href="/materiels/bon_reception">
-                        <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
-                            Retour
-                        </Button>
-                    </Link>
-                    <PDFButton data={bonReception} />
+                    <Button color="info" variant="text" onClick={()=> router.back()} startIcon={<ArrowBackIcon />}>
+                        Retour
+                    </Button>
+                    <PDFButton data={pdf} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">
                     Details d'une bon de reception
@@ -76,10 +78,20 @@ const DetailsBonReception = () => {
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                        Bon de commande externe
+                                            Réference
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                            {bonReception.bonDeCommandeExterne?.ref}
+                                            {bonReception.reference}
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Réference BCI / BCE
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            {bonReception.bce? bonReception.bonDeCommandeExterne?.ref+"(BCE)" :bonReception.bonDeCommandeInterne?.reference+"(BCI)"}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
@@ -95,7 +107,6 @@ const DetailsBonReception = () => {
                                     </Typography>
                                 </InfoItems>
                                 </Grid>
-                                
                             </Grid>
                         </Stack>
                     </FormContainer>

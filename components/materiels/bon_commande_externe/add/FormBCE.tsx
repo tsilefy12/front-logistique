@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Form, FormikProps } from "formik";
 import { getInterns } from '../../../../redux/features/employeStagiaire/stagiaireSlice';
 import { getEmployees } from '../../../../redux/features/employeStagiaire/employeeSlice';
@@ -6,7 +6,7 @@ import { getFournisseurList } from '../../../../redux/features/fournisseur';
 import { getBonCommandeInternes } from '../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { Router, useRouter } from 'next/router';
-import { Box ,Button,Divider,FormControl,IconButton,Link,Stack,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Typography,styled} from '@mui/material';
+import { Box ,Button,Divider,FormControl,IconButton,Stack,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Typography,styled} from '@mui/material';
 import OSTextField from '../../../shared/input/OSTextField';
 import OSSelectField from '../../../shared/select/OSSelectField';
 import Paper from "@mui/material/Paper";
@@ -15,19 +15,21 @@ import Check from '@mui/icons-material/Check';
 import Close from '@mui/icons-material/Close';
 import Delete from '@mui/icons-material/Delete';
 import { ArrowBack } from '@mui/icons-material';
-import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 import OSDatePicker from '../../../shared/date/OSDatePicker';
+import { getGrantList } from '../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice';
+import { getBudgetLineList } from '../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice';
 
 const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any}) =>  {
     const dispatch = useAppDispatch();
     const route = useRouter();
 
     const { isEditing } = useAppSelector((state) => state.bonCommendeExterne)
-    const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
     const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
     const { employees } = useAppSelector( (state) => state.employe);
     const { interns } = useAppSelector( (state) => state.stagiaire);
-    
+    const { grantList } = useAppSelector( (state) => state.grant);
+    const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
+
     const total = [...employees.map((i:any)=>{
         return {
             id : i.id, name: i.matricule +" "+i.name +" "+ i.surname, type: "employe"
@@ -37,12 +39,14 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
             id : i.id, name:i.matricule +" "+ i.name +" "+ i.surname, type: "intern"
         }
     })]
-
+    
     const fetchUtilsData = () => {
         dispatch(getInterns({}));
         dispatch(getEmployees({}));
         dispatch(getBonCommandeInternes({}));
         dispatch(getFournisseurList({}));
+        dispatch(getGrantList({}));
+        dispatch(getBudgetLineList({}));
     };
 
     useEffect(() => {
@@ -202,6 +206,33 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
                         />
                     </FormControl>
                 </Stack>
+                <Stack
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="flex-start"
+                spacing={2}
+                >
+                    <FormControl fullWidth>
+                        <OSSelectField
+                            id="outlined-basic"
+                            label="Grant"
+                            name="grant"
+                            options={grantList}
+                            dataKey="code"
+                            valueKey="id"
+                        />
+                    </FormControl>
+                    <FormControl fullWidth>
+                        <OSSelectField
+                            id="outlined-basic"
+                            label="Ligne budgétaire"
+                            name="ligneBudgetaire"
+                            options={budgetLineList}
+                            dataKey="code"
+                            valueKey="id"
+                        />
+                    </FormControl>
+                </Stack>
                 <FormControl fullWidth>
                     <OSFileUpload label="Pièce jointe" name="pieceJointe" />
                 </FormControl>
@@ -241,7 +272,7 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
                                         >
                                             <TableCell component="th" scope="row">{item.designation}</TableCell>
                                             <TableCell align="left">{item.caracteristique}</TableCell>
-                                            <TableCell align="left">{item.fournisseur} </TableCell>
+                                            <TableCell align="left">{fournisseurList.find((e:any)=> e.id === item.fournisseurId)?.name} </TableCell>
                                             <TableCell align="left">{item.pu}Ar</TableCell>
                                             <TableCell align="left">{item.quantite} </TableCell>
                                             <TableCell align="left">{item.valeur} Ar</TableCell>
@@ -304,7 +335,7 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
                                                     <OSSelectField
                                                         id="outlined-basic"
                                                         label="Fournisseur"
-                                                        name="fournisseur"
+                                                        name="fournisseurId"
                                                         options={fournisseurList}
                                                         dataKey={["name"]}
                                                         valueKey="id"
@@ -354,7 +385,7 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
                                                             const caracteristique = formikProps.values.caracteristique;
                                                             const pu = formikProps.values.pu;
                                                             const quantite = formikProps.values.quantite;
-                                                            const fournisseur = formikProps.values.fournisseur;
+                                                            const fournisseurId = formikProps.values.fournisseurId;
                                                             // Vérifier si les champs sont vides
                                                             if (designation.trim() !== '' && caracteristique.trim() !== '') {
                                                                 setValuesArticle((prev:any[])=>{
@@ -364,14 +395,14 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
                                                                         caracteristique: caracteristique,
                                                                         pu: pu,
                                                                         quantite: quantite,
-                                                                        fournisseur: fournisseur,
+                                                                        fournisseurId: fournisseurId,
                                                                         valeur: quantite * pu,
                                                                     })
                                                                     return temp
                                                                 })
                                                                 formikProps.setFieldValue('designation', '');
                                                                 formikProps.setFieldValue('caracteristique', '');
-                                                                formikProps.setFieldValue('fournisseur', '');
+                                                                formikProps.setFieldValue('fournisseurId', '');
                                                                 formikProps.setFieldValue('pu', 0);
                                                                 formikProps.setFieldValue('quantite', 0);
                                                             }
@@ -385,7 +416,7 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
                                                         onClick={() => {
                                                             formikProps.setFieldValue('designation', '');
                                                             formikProps.setFieldValue('caracteristique', '');
-                                                            formikProps.setFieldValue('fournisseur', '');
+                                                            formikProps.setFieldValue('fournisseurId', '');
                                                             formikProps.setFieldValue('pu', 0);
                                                             formikProps.setFieldValue('quantite', 0)
                                                         }}
