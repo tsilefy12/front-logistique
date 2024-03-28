@@ -110,7 +110,6 @@ export default function BonCommandeInterneForm() {
         <>
             <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
                 <Formik
-                    enableReinitialize
                     initialValues={
                         {
                             programme: isEditing ? bonCommandeInterne.programme: "",

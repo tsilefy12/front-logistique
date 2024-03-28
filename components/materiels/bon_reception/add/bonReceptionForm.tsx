@@ -8,7 +8,7 @@ import * as Yup from "yup";
 import {
   createproduitRecu, deleteproduitRecu, updateProduiRecu,
 } from "../../../../redux/features/bon_reception/produitRecuSlice";
-import { createBonReception, editBonReception, updateBonReception } from "../../../../redux/features/bon_reception/bonReceptionSlice";
+import { createBonReception, editBonReception, getBonReception, updateBonReception } from "../../../../redux/features/bon_reception/bonReceptionSlice";
 import FormBonReception from "./FormBonReception";
 import { styled } from "@mui/material";
 
@@ -18,13 +18,14 @@ export default function BonReceptionForm() {
     const dispatch = useAppDispatch();
     const route = useRouter();
     const { id }: any = route.query;
-    const { isEditing ,bonReception } = useAppSelector((state) => state.bonReceptions);
-
+    const {isEditing ,bonReception } = useAppSelector((state) => state.bonReceptions);
+     
     const handleSubmit = async (values: any) => {
         try {
             if(isEditing){
                 const updateDataBR = {
-                    bce: values.bce,
+                    bce: values.type ==="BCE" ? values.bce : null,
+                    bci: values.type ==="BCI" ? values.bce : null,
                     reference: values.reference,
                     dateReception: new Date(values.dateReception)
                 }
@@ -53,7 +54,8 @@ export default function BonReceptionForm() {
                 })
             }else{
                 const newDataBR = {
-                    bce: values.bce,
+                    bce: values.type ==="BCE" ? values.bce : null,
+                    bci: values.type ==="BCI" ? values.bce : null,
                     reference: values.reference,
                     dateReception: new Date(values.dateReception)
                 }
@@ -80,10 +82,9 @@ export default function BonReceptionForm() {
                     produitRecu:true,
                 }
             }}));
-            console.log(Val)
+            console.log(Val?.payload)
             setValuesArticle((prev:any[])=>{
-                console.log(prev)
-                prev = Val.payload.produitRecu
+                prev = Val?.payload?.produitRecu
                 return prev
             })
         } catch (error) {
@@ -100,12 +101,12 @@ export default function BonReceptionForm() {
         <>
             <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
                 <Formik
-                    enableReinitialize
                     initialValues={
                         {
-                            bce: isEditing && bonReception ? bonReception.bce:"",
-                            reference:isEditing && bonReception ? bonReception.reference:"",
-                            dateReception: isEditing && bonReception.dateReception ? new Date(bonReception.dateReception).toISOString(): new Date().toISOString(),
+                            bce: (isEditing && bonReception.bce ) ? bonReception.bce :(isEditing && bonReception.bci ) ? bonReception.bci:"",
+                            reference : isEditing && bonReception.reference ? bonReception.reference:"",
+                            dateReception : isEditing && bonReception.dateReception ? new Date(bonReception.dateReception): new Date(),
+                            type: "",
                             designation :"",
                             quantite:0,
                         }

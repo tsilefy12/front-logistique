@@ -6,8 +6,6 @@ export interface BonCommandeItem {
     demandeur?: string;
     reference?:string;
     type?:string;
-    fournisseurId?:string;
-    vendor?:any;
     observation?:string;
     dateBonCommande?: Date;
     numBonCommande?: string;

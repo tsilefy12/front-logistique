@@ -108,7 +108,6 @@ export default function BonTransfertForm() {
         <>
             <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
                 <Formik
-                    enableReinitialize
                     initialValues={
                         {
                             reference: isEditing && bonTransfert ? bonTransfert.reference:"",
