@@ -34,6 +34,7 @@ import {
 } from "../../shared/table/tableFeature";
 import Moment from "react-moment";
 import { format } from "date-fns";
+import useFetchTransportationEquipments from "../hooks/useFetchTransportationEquipments";
 
 const ListTransport = () => {
   const [page, setPage] = React.useState(0);
@@ -46,10 +47,22 @@ const ListTransport = () => {
   const { carVouchers } = useAppSelector((state) => state.carVoucher);
 
   const fetchCarVouchers = useFetchCarVouchers();
+  const fetchTransportationEquipment = useFetchTransportationEquipments();
+  const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment);
 
   React.useEffect(() => {
     fetchCarVouchers();
+    fetchTransportationEquipment();
   }, [router.query]);
+
+  var MaterielValue = "";
+    transportationEquipments.forEach((element:any) => {
+      carVouchers.forEach((item:any) =>{
+           if (element?.id === item["materiel"]) {
+              MaterielValue = element?.registration;
+           }
+        })
+    });
 
   const handleClickEdit = async (id: any) => {
     router.push(`/materiel_de_transport/bon_de_voiture/${id}/edit`);
@@ -123,7 +136,7 @@ const ListTransport = () => {
                       return (
                         <TableRow hover tabIndex={-1} key={row.id}>
                           <TableCell component="th" id={labelId} align="left">
-                            {row.materiel}
+                            {MaterielValue}
                           </TableCell>
 
                           <TableCell align="left">{format(new Date(row.date), "dd/MM/yyyy")}</TableCell>

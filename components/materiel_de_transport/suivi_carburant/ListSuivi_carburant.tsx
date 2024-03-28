@@ -37,6 +37,7 @@ import SuiviCarburantTableToolbar from "./organisme/table/SuiviCarburantTableToo
 import SuiviCarburantTableHeader from "./organisme/table/SuiviCarburantTableHeader";
 import { format } from "date-fns";
 import useFetchGrant from "./hooks/useFetchGrant";
+import useFetchTransportationEquipments from "../hooks/useFetchTransportationEquipments";
   
     const ListSuiviCarburant = () => {
     const [page, setPage] = React.useState(0);
@@ -50,10 +51,23 @@ import useFetchGrant from "./hooks/useFetchGrant";
     console.log("suivi ", suiviCarburants);
     
     const fetchSuiviCarburant = useFetchSuiviCarburants();
+    const fetchTransportationEquipment = useFetchTransportationEquipments();
+    const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment)
 
     React.useEffect(() => {
       fetchSuiviCarburant();    
+      fetchTransportationEquipment();
     }, [router.query]);
+
+    var MaterielValue = "";
+    transportationEquipments.forEach((element:any) => {
+      suiviCarburants.forEach((item:any) =>{
+           if (element?.id === item["materiel"]) {
+              MaterielValue = element?.registration;
+           }
+        })
+    });
+
     const handleClickEdit = async (id: any) => {
       router.push(`/materiel_de_transport/suivi_carburant/${id}/edit`);
     };
@@ -127,7 +141,7 @@ import useFetchGrant from "./hooks/useFetchGrant";
                         return (
                           <TableRow hover tabIndex={-1} key={row.id}>
                             <TableCell component="th" id={labelId} align="left">
-                              {row.materiel}
+                              {MaterielValue}
                             </TableCell>
   
                             <TableCell align="left">{format(new Date(row.date), "dd/MM/yyyy")}</TableCell>

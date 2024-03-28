@@ -17,6 +17,8 @@ import {
 import { useRouter } from "next/router";
 import { getTransportationEquipment } from "../../../../redux/features/transportation_equipment";
 import Moment from "react-moment";
+import useFetchTransportationEquipments from "../../hooks/useFetchTransportationEquipments";
+import useFetchVendors from "../../../vendor/hooks/useFetchVendors";
 
 const DetailTransportEquipment = () => {
   const router = useRouter();
@@ -25,6 +27,10 @@ const DetailTransportEquipment = () => {
   const { transportationEquipment } = useAppSelector(
     (state) => state.transportationEquipment
   );
+  const {transportationEquipments} = useAppSelector((state) =>state.transportationEquipment)
+  const fetchTransportEquipement = useFetchTransportationEquipments();
+  const { vendors } = useAppSelector((state) =>state.vendor)
+  const fetchVendor = useFetchVendors();
   const getDetailTransportationEquipment = () => {
     const args: any = {
       include: {
@@ -45,8 +51,19 @@ const DetailTransportEquipment = () => {
 
   useEffect(() => {
     getDetailTransportationEquipment();
+    fetchTransportEquipement();
+    fetchVendor();
   }, [id]);
 
+  var nomFournisseur = "";
+ // var bool = false;
+  transportationEquipments.forEach((element:any) => {
+      vendors.forEach((item:any) =>{
+         if (element?.fournisseur === item["id"]) {
+          nomFournisseur = item?.name;
+         }
+      })
+  });
   return (
     <Container maxWidth="xl" sx={{ pb: 5 }}>
       <NavigationContainer>
@@ -192,7 +209,7 @@ const DetailTransportEquipment = () => {
                 Fournisseur :
               </Typography>
               <Typography variant="body1" color="gray">
-                {transportationEquipment.fournisseur}
+                {nomFournisseur}
               </Typography>
             </InfoItems>
           </Grid>

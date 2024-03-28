@@ -26,6 +26,7 @@ import useFetchSuiviCarburants from "../hooks/useFetchSuiviCarburant";
 import useFetchGrant from "../hooks/useFetchGrant";
 import OSSelectField from "../../../shared/select/OSSelectField";
 import useFetchLigneBudgetaire from "../hooks/useFetchLigneBudgetaire";
+import useFetchTransportationEquipments from "../../hooks/useFetchTransportationEquipments";
   
   const FormSuiviCarburant = () => {
     const route = useRouter();
@@ -38,15 +39,32 @@ import useFetchLigneBudgetaire from "../hooks/useFetchLigneBudgetaire";
     const fetchLigneBudgetaire = useFetchLigneBudgetaire()
     const { grantList } = useAppSelector((state) =>state.grant);
     const { budgetLineList} = useAppSelector((state) =>state.lineBugetaire) 
+    const fetchMateriels = useFetchTransportationEquipments();
+    const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment)
+
     React.useEffect(() => {
       fetchLigneBudgetaire();
       fetchGrant();
+      fetchMateriels();
       if (id) {
         dispatch(editSuiviCarburant({ id }));
       }
     }, [id]);
-    console.log("grant list :", grantList);
-    console.log("ligne budgetaire :", budgetLineList)
+   
+    const ListMateriel: { id: string, name: string }[] = []; 
+
+    if (transportationEquipments.length > 0) {
+        transportationEquipments.forEach((element:any) => {
+            if (element["status"] === "Interne") {
+                console.log("id :", element["id"]);
+                console.log("materiel ", element["registration"]);
+                ListMateriel.push({ id: element.id, name: element.registration }); 
+            }
+        });
+    }else{
+        console.log("Rien")
+    }
+
     const handleSubmit = async (values: any) => {
  
       try {
@@ -164,11 +182,14 @@ import useFetchLigneBudgetaire from "../hooks/useFetchLigneBudgetaire";
                     spacing={2}
                     margin={2}
                   >
-                    <OSTextField
+                    <OSSelectField
                       fullWidth
                       id="outlined-basic"
                       label="Matériel"
                       variant="outlined"
+                      options={ListMateriel}
+                      dataKey="name"
+                      valueKey="id"
                       name="materiel"
                     />
                     <OSDatePicker
