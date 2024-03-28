@@ -14,6 +14,7 @@ import ArrowBack from '@mui/icons-material/ArrowBack';
 import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 import { getGrantList } from '../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice';
 import { getBudgetLineList } from '../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice';
+import OSDatePicker from '../../../shared/date/OSDatePicker';
 
 const FormFicheDotation = ({formikProps}: {formikProps: FormikProps<any>}) => {
     const dispatch = useAppDispatch();
@@ -113,9 +114,13 @@ const FormFicheDotation = ({formikProps}: {formikProps: FormikProps<any>}) => {
                     </Typography>
                 </Stack>
                 <FormControl fullWidth>
-                    <OSDateTimePicker
+                    <OSDatePicker
+                        fullWidth
+                        id="outlined-basic"
                         label="Date"
-                        name="date"
+                        variant="outlined"
+                        value = {formikProps.values.date}
+                        onChange = {(value: any) =>formikProps.setFieldValue("date", value)}
                     />
                 </FormControl>
                 <Stack

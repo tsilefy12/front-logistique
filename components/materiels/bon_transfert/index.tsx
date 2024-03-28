@@ -56,7 +56,7 @@ export default function BonTransfertList() {
     
     const total = [...employees.map((i:any)=>{
         return {
-            id : i.id, name: i.matricule +" "+i.name +" "+ i.surname, type: "employe"
+            id : i.id, name:i.name +" "+ i.surname, type: "employe"
         }
     }),...interns.map((i:any)=>{
         return {
@@ -151,7 +151,7 @@ export default function BonTransfertList() {
                                     <TableCell align="left">
                                         {row?.reference}
                                     </TableCell>
-                                    <TableCell align="left">{row?.expediteur}</TableCell>
+                                    <TableCell align="left">{total.find((e:any)=> e.id === row?.expediteur)?.name}</TableCell>
                                     <TableCell align="left">{total.find((e:any)=> e.id === row?.designation)?.name}</TableCell>
                                     <TableCell align="left">
                                         <Moment format="DD/MM/YYYY">

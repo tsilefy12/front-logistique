@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
           paddingTop: 2,
           paddingBottom: 2,
           paddingLeft:2,
-          height:10
+          height:20
      },
      header: {
           border: "1px solid #000",

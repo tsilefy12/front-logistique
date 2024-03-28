@@ -14,6 +14,7 @@ import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 import { getGrantList } from '../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice';
 import EditIcon from "@mui/icons-material/Edit";
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
+import OSDatePicker from '../../../shared/date/OSDatePicker';
 
 const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) =>  {
     const dispatch = useAppDispatch();
@@ -176,9 +177,13 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                         />
                     </FormControl>
                     <FormControl fullWidth>
-                        <OSDateTimePicker
+                        <OSDatePicker
+                            fullWidth
+                            id="outlined-basic"
                             label="Date expedition"
-                            name="dateExp"
+                            variant="outlined"
+                            value = {formikProps.values.dateExp}
+                            onChange = {(value: any) =>formikProps.setFieldValue("dateExp", value)}
                         />
                     </FormControl>
                 </Stack>

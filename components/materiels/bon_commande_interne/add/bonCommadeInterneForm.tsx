@@ -118,7 +118,7 @@ export default function BonCommandeInterneForm() {
                             demandeur: isEditing ? bonCommandeInterne.demandeur: "",
                             observation:isEditing ? bonCommandeInterne.observation :"",
                             reference: isEditing ? bonCommandeInterne.reference:"",
-                            dateBonCommande: isEditing && bonCommandeInterne?.dateBonCommande ? new Date(bonCommandeInterne?.dateBonCommande).toISOString() : new Date().toISOString(),
+                            dateBonCommande: isEditing && bonCommandeInterne?.dateBonCommande ? new Date(bonCommandeInterne?.dateBonCommande): new Date(),
                             numBonCommande: isEditing ? bonCommandeInterne.numBonCommande :"",
                             type:isEditing ? bonCommandeInterne.type :"",
                             designation :"",

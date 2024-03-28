@@ -15,12 +15,16 @@ import { useRouter } from "next/router";
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
 import { getFicheDotation } from "../../../../redux/features/fiche_dotation/ficheDotationSlice";
 import PDFButton from "./PrintFicheDotation";
+import { getGrantList } from "../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
+import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
 const DetailsFicheDotation = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { id }: any = router.query;
     const { ficheDotation } = useAppSelector((state) => state.ficheDotation);
-    // const [pdfData, setPdfData] = useState<any>();
+    const { grantList } = useAppSelector( (state) => state.grant);
+    const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
+    const [ pdf,setPdf ] = useState<any>({})
 
     const getDetailsFicheDotation = () => {
         dispatch(getFicheDotation({ id,args:{
@@ -28,13 +32,25 @@ const DetailsFicheDotation = () => {
                 personneConcerne:true
             }
         }}));
+        dispatch(getGrantList({}));
+        dispatch(getBudgetLineList({}));
         // setPdfData(ficheDotation)
 
     };
 
     useEffect(()=> {
         getDetailsFicheDotation();
-        console.log(ficheDotation)
+        const data = {
+            date: ficheDotation.date,
+            region: ficheDotation.region,
+            district: ficheDotation.district,
+            reference:ficheDotation.reference,
+            commune: ficheDotation.commune,
+            grant: grantList.find((e:any)=> e.id === ficheDotation?.grant)?.code,
+            ligneBudgetaire: budgetLineList.find((e:any)=> e.id === ficheDotation?.ligneBudgetaire)?.code,
+            fokontany: ficheDotation.fokontany,
+        }
+        setPdf(data)
     },[id,ficheDotation])
 
     return (
@@ -51,7 +67,7 @@ const DetailsFicheDotation = () => {
                     }>
                         Retour
                     </Button>
-                    <PDFButton data={ficheDotation} />
+                    <PDFButton data={pdf} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">
                     Details d'une fiche de dotation
@@ -72,6 +88,16 @@ const DetailsFicheDotation = () => {
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
+                                            Réference
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            {ficheDotation?.reference}
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
                                             Region
                                         </Typography>
                                         <Typography variant="body1" color="gray">
@@ -89,6 +115,8 @@ const DetailsFicheDotation = () => {
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
+                            </Grid>
+                            <Grid container spacing={4} my={1}>
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
@@ -109,28 +137,6 @@ const DetailsFicheDotation = () => {
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
-                            </Grid>
-                            <Grid container spacing={4} my={1}>
-                                <Grid item xs={12} md={12}>
-                                    <InfoItems direction="row" spacing={2}>
-                                        <Typography variant="body1" color="secondary">
-                                            Ligne budgétaire
-                                        </Typography>
-                                        <Typography variant="body1" color="gray">
-                                            {ficheDotation.ligneBudgetaire}
-                                        </Typography>
-                                    </InfoItems>
-                                </Grid>
-                                <Grid item xs={12} md={12}>
-                                    <InfoItems direction="row" spacing={2}>
-                                        <Typography variant="body1" color="secondary">
-                                            Grant
-                                        </Typography>
-                                        <Typography variant="body1" color="gray">
-                                            {ficheDotation.grant}
-                                        </Typography>
-                                    </InfoItems>
-                                </Grid>
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
@@ -140,6 +146,28 @@ const DetailsFicheDotation = () => {
                                             <Moment format="DD/MM/YYYY">
                                                 {ficheDotation.date}
                                             </Moment>
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={4} my={1}>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Grant
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            {grantList.find((e:any)=> e.id === ficheDotation?.grant)?.code}
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Ligne budgétaire
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            {budgetLineList.find((e:any)=> e.id === ficheDotation?.ligneBudgetaire)?.code}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
