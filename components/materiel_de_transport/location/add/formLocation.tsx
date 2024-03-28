@@ -25,6 +25,7 @@ import useFetchGrant from "../../suivi_carburant/hooks/useFetchGrant";
 import useFetchLigneBudgetaire from "../../suivi_carburant/hooks/useFetchLigneBudgetaire";
 import OSSelectField from "../../../shared/select/OSSelectField";
 import useFetchVendors from "../../../vendor/hooks/useFetchVendors";
+import useFetchTransportationEquipments from "../../hooks/useFetchTransportationEquipments";
 
 const FormLocation = () => {
     const route = useRouter();
@@ -38,18 +39,34 @@ const FormLocation = () => {
     const { budgetLineList} = useAppSelector((state) =>state.lineBugetaire) 
     const { vendors} = useAppSelector((state) =>state.vendor)
     const fetchVendors = useFetchVendors();
+    const fetchMateriels = useFetchTransportationEquipments();
+    const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment)
 
     React.useEffect(() => {
         fetchGrant();
         fetchLigneBudgetaire();
         fetchVendors();
+        fetchMateriels();
         if (id) {
           dispatch(editLocation({ id }));
         }
       }, [id]);
 
-      console.log("vendor :", vendors);
+    console.log("materiel :", transportationEquipments);
 
+    const listMateriel: { id: string, name: string }[] = []; 
+
+    if (transportationEquipments.length > 0) {
+        transportationEquipments.forEach((element:any) => {
+            if (element["status"] === "Location") {
+                console.log("id :", element["id"]);
+                console.log("materiel ", element["registration"]);
+                listMateriel.push({ id: element.id, name: element.registration }); 
+            }
+        });
+    }else{
+        console.log("Rien")
+    }
     const handleSubmit = async (values: any) => {
 
         try {
@@ -179,11 +196,14 @@ const FormLocation = () => {
                                 spacing={2}
                                 margin={2}
                             >
-                                <OSTextField
+                                <OSSelectField
                                     fullWidth
                                     id="outlined-basic"
                                     label="Matériel"
                                     variant="outlined"
+                                    options={listMateriel}
+                                    dataKey="name"
+                                    valueKey="id"
                                     name="materiel"
                                 />
                                 <OSTextField

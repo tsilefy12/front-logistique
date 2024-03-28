@@ -10,6 +10,8 @@ import Close from '@mui/icons-material/Close';
 import { ArrowBack } from '@mui/icons-material';
 import EditIcon from "@mui/icons-material/Edit";
 import OSDatePicker from '../../../shared/date/OSDatePicker';
+import useFetchTransportationEquipments from '../../hooks/useFetchTransportationEquipments';
+import OSSelectField from '../../../shared/select/OSSelectField';
 
 const FormBonVoiture  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) => {
     const dispatch = useAppDispatch();
@@ -17,7 +19,22 @@ const FormBonVoiture  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete
     const [idValues ,setIdValues] = useState<any>()
 
     const { isEditing } = useAppSelector((state) => state.carVoucher);
+    const fetchTransportEquipment = useFetchTransportationEquipments()
+    const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment)
     
+    const listMateriel: { id: string, name: string }[] = []; 
+
+    if (transportationEquipments.length > 0) {
+        transportationEquipments.forEach((element:any) => {
+            if (element["status"] === "Interne") {
+                console.log("id :", element["id"]);
+                console.log("materiel ", element["registration"]);
+                listMateriel.push({ id: element.id, name: element.registration }); 
+            }
+        });
+    }else{
+        console.log("Rien")
+    }
     return (
         <Form>
             <NavigationContainer>
@@ -83,11 +100,14 @@ const FormBonVoiture  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete
                         alignItems="center"
                         spacing={2}
                     >
-                        <OSTextField
+                        <OSSelectField
                             fullWidth
                             id="outlined-basic"
                             label="matériel"
                             variant="outlined"
+                            options={listMateriel}
+                            dataKey={["name"]}
+                            valueKey="id"
                             name="materiel"
                         />
                         <OSDatePicker

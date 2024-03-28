@@ -7,7 +7,7 @@ import {
     Typography,
   } from "@mui/material";
   import Link from "next/link";
-  import React from "react";
+  import React, { useState } from "react";
   import Box from "@mui/material/Box";
   import Table from "@mui/material/Table";
   import TableBody from "@mui/material/TableBody";
@@ -29,6 +29,8 @@ import { LocationItem } from "../../../redux/features/location/location.interfac
 import { format } from "date-fns";
 import { defaultLabelDisplayedRows, labelRowsPerPage } from "../../../config/table.config";
 import useFetchLocationDeTransport from "./hooks/useFetchLocationDeTransport";
+import useFetchVendors from "../../vendor/hooks/useFetchVendors";
+import useFetchTransportationEquipments from "../hooks/useFetchTransportationEquipments";
 
     const ListLocation = () => {
     const [page, setPage] = React.useState(0);
@@ -40,10 +42,16 @@ import useFetchLocationDeTransport from "./hooks/useFetchLocationDeTransport";
     const dispatch = useAppDispatch();
     const { locationDeTransports } = useAppSelector((state) => state.locationDeTransport);
     const fetchLocationTransport = useFetchLocationDeTransport();
+    const fetchVendor = useFetchVendors();
+    const {vendors } = useAppSelector((state) =>state.vendor)
+    const fetchTransportationEquipment = useFetchTransportationEquipments();
+    const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment)
+
    
     React.useEffect(() => {
       fetchLocationTransport();
-      
+      fetchVendor();
+      fetchTransportationEquipment();
     }, [router.query]);
    
     const handleClickEdit = async (id: any) => {
@@ -84,7 +92,28 @@ import useFetchLocationDeTransport from "./hooks/useFetchLocationDeTransport";
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
       page > 0 ? Math.max(0, (1 + page) * rowsPerPage - locationDeTransports.length) : 0;
-  
+    
+    var nifValue = "";
+    var stateValue = "";
+    locationDeTransports.forEach((element:any) => {
+        vendors.forEach((item:any) =>{
+           if (element?.nif === item["id"]) {
+              nifValue = item?.nif;
+              stateValue = item?.website;
+           }else{
+              nifValue  = ""
+              stateValue= ""
+           }
+        })
+    });
+    var MaterielValue = "";
+    transportationEquipments.forEach((element:any) => {
+      locationDeTransports.forEach((item:any) =>{
+           if (element?.id === item["materiel"]) {
+              MaterielValue = element?.registration;
+           }
+        })
+    });
     return (
       <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
         <NavigationContainer>
@@ -119,7 +148,7 @@ import useFetchLocationDeTransport from "./hooks/useFetchLocationDeTransport";
                         return (
                           <TableRow hover tabIndex={-1} key={row.id}>
                             <TableCell component="th" id={labelId} align="left">
-                              {row.materiel}
+                              {MaterielValue}
                             </TableCell>
 
                             <TableCell align="left">{format(new Date(row.date), "dd/MM/yyyy")}</TableCell>
@@ -134,10 +163,10 @@ import useFetchLocationDeTransport from "./hooks/useFetchLocationDeTransport";
                             </TableCell>
 
                             <TableCell align="left">
-                                {row.nif}
+                                {nifValue}
                             </TableCell>
                             <TableCell align="left">
-                                {row.stat}
+                                {stateValue}
                             </TableCell>
                             <TableCell align="left">
                                 {row.montant}

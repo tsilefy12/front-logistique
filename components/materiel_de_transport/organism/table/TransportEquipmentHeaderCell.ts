@@ -25,4 +25,10 @@ export const transportEquipmentHeadCells: readonly HeadCell[] = [
     disablePadding: false,
     label: "Autre information",
   },
+  {
+    id: "status",
+    numeric: false,
+    disablePadding: false,
+    label: "Status",
+  },
 ];

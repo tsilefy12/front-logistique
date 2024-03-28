@@ -170,6 +170,10 @@ const ListTransport = () => {
                               {row.otherInformation}
                             </TableCell>
 
+                            <TableCell align="left">
+                              {row.status}
+                            </TableCell>
+
                             <TableCell align="right" width={"150px"}>
                               <BtnActionContainer
                                 direction="row"

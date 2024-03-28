@@ -24,6 +24,7 @@ import useFetchMissionTransport from "../hooks/useFectMission";
 import useFetchGrant from "../../suivi_carburant/hooks/useFetchGrant";
 import useFetchLigneBudgetaire from "../../suivi_carburant/hooks/useFetchLigneBudgetaire";
 import OSSelectField from "../../../shared/select/OSSelectField";
+import useFetchTransportationEquipments from "../../hooks/useFetchTransportationEquipments";
   
   const FormMission = () => {
     const route = useRouter();
@@ -35,14 +36,33 @@ import OSSelectField from "../../../shared/select/OSSelectField";
     const fetchLigneBudgetaire = useFetchLigneBudgetaire()
     const { grantList } = useAppSelector((state) =>state.grant);
     const { budgetLineList} = useAppSelector((state) =>state.lineBugetaire) 
+    const fetchMateriels = useFetchTransportationEquipments();
+    const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment)
+
     React.useEffect(() => {
        fetchGrant();
        fetchLigneBudgetaire();
        fetchMissionTransport();
+       fetchMateriels();
       if (id) {
         dispatch(editMissionDeTransport({ id }));
       }
     }, [id]);
+
+    const ListMateriel: { id: string, name: string }[] = []; 
+
+    if (transportationEquipments.length > 0) {
+        transportationEquipments.forEach((element:any) => {
+            if (element["status"] === "Interne") {
+                console.log("id :", element["id"]);
+                console.log("materiel ", element["registration"]);
+                ListMateriel.push({ id: element.id, name: element.registration }); 
+            }
+        });
+    }else{
+        console.log("Rien")
+    }
+
     const handleSubmit = async (values: any) => {
  
       try {
@@ -160,11 +180,14 @@ import OSSelectField from "../../../shared/select/OSSelectField";
                     spacing={2}
                     margin={2}
                   >
-                    <OSTextField
+                    <OSSelectField
                       fullWidth
                       id="outlined-basic"
                       label="Matériel"
                       variant="outlined"
+                      options={ListMateriel}
+                      dataKey="name"
+                      valueKey="id"
                       name="materiel"
                     />
                     <OSTextField
