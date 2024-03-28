@@ -118,6 +118,13 @@ const FormBonVoiture  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete
                             value = {formikProps.values.date}
                             onChange = {(value: any) =>formikProps.setFieldValue("date", value)}
                         />
+                        <OSTextField 
+                          fullWidth
+                          id="outlined-basic"
+                          label="Référence"
+                          variant="outlined"
+                          name="reference"
+                        />
                     </Stack>
                 </FormContainer>
             </FormContainer>
