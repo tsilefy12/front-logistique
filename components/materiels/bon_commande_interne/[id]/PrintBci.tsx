@@ -38,7 +38,7 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                                 <Text style={{padding:4,fontSize:10}}>Programme / Projet:  {pdfData.programme}</Text>
                                 <Text style={{padding:4,fontSize:10}}>Grants:  {pdfData.grant}</Text>
                                 <Text style={{padding:4,fontSize:10}}>Ligne budgétaire:  {pdfData.ligneBudgetaire}</Text>
-                                <Text style={{padding:4,fontSize:10}}>Nom du démandeur: {pdfData.owner?.name} {pdfData.owner?.surname} </Text>
+                                <Text style={{padding:4,fontSize:10}}>Nom du démandeur: {pdfData.demandeur} </Text>
                             </View>
                             <View style={{width: "100%",display: "flex",flexDirection: "column",borderLeft:"1px solid #000"}}>
                                 <Text style={{padding:4,fontSize:10}}>Date:  {pdfData.dateBonCommande ? format(new Date(pdfData.dateBonCommande),"dd/MM/yyyy") :""}</Text>

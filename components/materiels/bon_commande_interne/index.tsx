@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 // import Badge from "@mui/material";
@@ -32,6 +32,10 @@ import { deleteBonCommandeInterne} from "../../../redux/features/bon_commande_in
 import BonCommandeInterneTableToolbar from "./table/BonCommandeInterneTableToolbar";
 import BonCommandeInterneTableHeader from "./table/BonCommandeInterneTableHeader";
 import Moment from "react-moment";
+import { getInterns } from "../../../redux/features/employeStagiaire/stagiaireSlice";
+import { getEmployees } from "../../../redux/features/orderEquipment";
+import { getGrantList } from "../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
+import { getBudgetLineList } from "../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
 
 export default function BonCommandeInterneList() {
     const [page, setPage] = React.useState(0);
@@ -49,9 +53,25 @@ export default function BonCommandeInterneList() {
     console.log(bonCommandeInternes)
 
     const fetchBonCommandeInterne = useFetchBonCommandeInterne();
+    const { employees } = useAppSelector( (state) => state.employe);
+    const { interns } = useAppSelector( (state) => state.stagiaire);
+    const { grantList } = useAppSelector( (state) => state.grant);
+    
+    const total = [...employees.map((i:any)=>{
+        return {
+            id : i.id, name: i.matricule +" "+i.name +" "+ i.surname, type: "employe"
+        }
+    }),...interns.map((i:any)=>{
+        return {
+            id : i.id, name: i.name +" "+ i.surname, type: "intern"
+        }
+    })]
 
     React.useEffect(() => {
         fetchBonCommandeInterne();
+        dispatch(getInterns({}));
+        dispatch(getEmployees({}));
+        dispatch(getGrantList({}));
     }, [router.query]);
 
     const handleClickEdit = async (id: any) => {
@@ -130,17 +150,18 @@ export default function BonCommandeInterneList() {
                             const labelId = `enhanced-table-checkbox-${index}`;
                             return (
                                 <TableRow hover tabIndex={-1} key={row.id}>
+                                    <TableCell align="left">{row?.reference}</TableCell>
                                     <TableCell align="left">{row?.numBonCommande}</TableCell>
                                     <TableCell align="left">
                                         <Moment format="DD/MM/YYYY">
                                             {row?.dateBonCommande}
                                         </Moment>
                                     </TableCell>
-                                    <TableCell align="left">{row.owner?.name+" "+row.owner?.surname}</TableCell>
+                                    <TableCell align="left">{total.find((e:any)=> e.id === row?.demandeur)?.name}</TableCell>
                                     <TableCell align="left">
                                         {row?.montantTotal}
                                     </TableCell>
-                                    <TableCell align="left">{row?.grant}</TableCell>
+                                    <TableCell align="left">{grantList.find((e:any)=> e.id === row?.grant)?.code}</TableCell>
                                     <TableCell align="right" width={"150px"}>
                                         <BtnActionContainer
                                         direction="row"

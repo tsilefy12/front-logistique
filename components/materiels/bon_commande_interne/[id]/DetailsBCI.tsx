@@ -15,12 +15,30 @@ import { useRouter } from "next/router";
 import { getBonCommandeInterne } from "../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice";
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
 import PDFButton from "./PrintBci";
+import { getInterns } from "../../../../redux/features/employeStagiaire/stagiaireSlice";
+import { getGrantList } from "../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
+import { getEmployees } from "../../../../redux/features/orderEquipment";
+import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
 const DetailsBCI = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { id }: any = router.query;
     const { bonCommandeInterne } = useAppSelector((state) => state.bonCommandeInterne);
-    // const [pdfData, setPdfData] = useState<any>();
+    const { employees } = useAppSelector( (state) => state.employe);
+    const { interns } = useAppSelector( (state) => state.stagiaire);
+    const { grantList } = useAppSelector( (state) => state.grant);
+    const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
+    const [ pdf,setPdf ] = useState<any>({})
+
+    const total = [...employees.map((i:any)=>{
+        return {
+            id : i.id, name: i.matricule +" "+i.name +" "+ i.surname, type: "employe"
+        }
+    }),...interns.map((i:any)=>{
+        return {
+            id : i.id, name: i.name +" "+ i.surname, type: "intern"
+        }
+    })]
 
     const getDetailsBCI = () => {
         dispatch(getBonCommandeInterne({ id,args:{
@@ -28,12 +46,27 @@ const DetailsBCI = () => {
                 ArticleCommande:true
             }
         }}));
-        // setPdfData(bonCommandeInterne)
+        dispatch(getInterns({}));
+        dispatch(getEmployees({}));
+        dispatch(getGrantList({}));
+        dispatch(getBudgetLineList({}));
     };
 
     useEffect(()=> {
         getDetailsBCI();
-        console.log(bonCommandeInterne)
+        const dataPdf = {
+            programme: bonCommandeInterne.programme,
+            grant: grantList.find((e:any)=> e.id === bonCommandeInterne?.grant)?.code,
+            ligneBudgetaire: budgetLineList.find((e:any)=> e.id === bonCommandeInterne?.ligneBudgetaire)?.code,
+            demandeur: total.find((e:any)=> e.id === bonCommandeInterne?.demandeur)?.name,
+            reference:bonCommandeInterne.reference,
+            observation:bonCommandeInterne.observation,
+            dateBonCommande: bonCommandeInterne.dateBonCommande,
+            numBonCommande: bonCommandeInterne.numBonCommande,
+            montantTotal: bonCommandeInterne.montantTotal,
+            ArticleCommande:bonCommandeInterne.ArticleCommande,
+        }
+        setPdf(dataPdf)
     },[id,bonCommandeInterne])
     return (
         <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
@@ -43,12 +76,10 @@ const DetailsBCI = () => {
                 sx={{ mb: 2 }}
             >
                 <Stack flexDirection={"row"}>
-                    <Link href="/materiels/bon_commande_intern">
-                        <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
-                            Retour
-                        </Button>
-                    </Link>
-                    <PDFButton data={bonCommandeInterne} />
+                    <Button color="info" onClick={()=>router.back()} variant="text" startIcon={<ArrowBackIcon />}>
+                        Retour
+                    </Button>
+                    <PDFButton data={pdf} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">
                     Details d'une bon de commande interne
@@ -66,55 +97,45 @@ const DetailsBCI = () => {
                             }}
                             >
                         <Grid container spacing={4} my={1}>
-                                <Grid item xs={12} md={12}>
-                                    <InfoItems direction="row" spacing={2}>
-                                        <Typography variant="body1" color="secondary">
-                                            N° Bon de commande
-                                        </Typography>
-                                        <Typography variant="body1" color="gray">
-                                        {bonCommandeInterne.numBonCommande}
-                                        </Typography>
-                                    </InfoItems>
-                                    </Grid>
-                                    <Grid item xs={12} md={12}>
-                                    <InfoItems direction="row" spacing={2}>
-                                        <Typography variant="body1" color="secondary">
-                                            Demandeur
-                                        </Typography>
-                                        <Typography variant="body1" color="gray">
-                                            {bonCommandeInterne.owner?.name} {bonCommandeInterne.owner?.surname}
-                                        </Typography>
-                                    </InfoItems>
-                                </Grid>
-                                <Grid item xs={12} md={12}>
-                                    <InfoItems direction="row" spacing={2}>
-                                        <Typography variant="body1" color="secondary">
-                                            Montant total
-                                        </Typography>
-                                        <Typography variant="body1" color="gray">
-                                            {bonCommandeInterne.montantTotal}
-                                        </Typography>
-                                    </InfoItems>
-                                </Grid>
+                            <Grid item xs={12} md={12}>
+                                <InfoItems direction="row" spacing={2}>
+                                    <Typography variant="body1" color="secondary">
+                                        Réference
+                                    </Typography>
+                                    <Typography variant="body1" color="gray">
+                                    {bonCommandeInterne.reference}
+                                    </Typography>
+                                </InfoItems>
                             </Grid>
-                            <Grid container spacing={4} my={1}>
-                                <Grid item xs={12} md={12}>
-                                    <InfoItems direction="row" spacing={2}>
-                                        <Typography variant="body1" color="secondary">
-                                            N° Bon de commande interne
-                                        </Typography>
-                                        <Typography variant="body1" color="gray">
-                                        {bonCommandeInterne.numBon}
-                                        </Typography>
-                                    </InfoItems>
-                                    </Grid>
-                                    <Grid item xs={12} md={12}>
+                            <Grid item xs={12} md={12}>
+                                <InfoItems direction="row" spacing={2}>
+                                    <Typography variant="body1" color="secondary">
+                                        N° Bon de commande
+                                    </Typography>
+                                    <Typography variant="body1" color="gray">
+                                    {bonCommandeInterne.numBonCommande}
+                                    </Typography>
+                                </InfoItems>
+                            </Grid>
+                            <Grid item xs={12} md={12}>
+                                <InfoItems direction="row" spacing={2}>
+                                    <Typography variant="body1" color="secondary">
+                                        Demandeur
+                                    </Typography>
+                                    <Typography variant="body1" color="gray">
+                                        {total.find((e:any)=> e.id === bonCommandeInterne?.demandeur)?.name}
+                                    </Typography>
+                                </InfoItems>
+                            </Grid>
+                        </Grid>
+                        <Grid container spacing={4} my={1}>
+                            <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
                                             Grant
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                        {bonCommandeInterne.grant}
+                                        {grantList.find((e:any)=> e.id === bonCommandeInterne?.grant)?.code}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
@@ -124,10 +145,20 @@ const DetailsBCI = () => {
                                             Ligne budgétaire
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                            {bonCommandeInterne.ligneBudgetaire}
+                                            {budgetLineList.find((e:any)=> e.id === bonCommandeInterne?.ligneBudgetaire)?.code}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
+                            <Grid item xs={12} md={12}>
+                                <InfoItems direction="row" spacing={2}>
+                                    <Typography variant="body1" color="secondary">
+                                        Montant total
+                                    </Typography>
+                                    <Typography variant="body1" color="gray">
+                                        {bonCommandeInterne.montantTotal}
+                                    </Typography>
+                                </InfoItems>
+                            </Grid>
                             </Grid>
                             <Grid container spacing={4} my={1}>
                                 <Grid item xs={12} md={12}>
@@ -139,8 +170,18 @@ const DetailsBCI = () => {
                                             {bonCommandeInterne.programme}
                                         </Typography>
                                     </InfoItems>
-                                    </Grid>
-                                    <Grid item xs={12} md={12}>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Observation
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            {bonCommandeInterne.observation}
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
                                             Date
