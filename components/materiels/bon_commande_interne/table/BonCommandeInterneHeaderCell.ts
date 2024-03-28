@@ -2,6 +2,11 @@ import { HeadCell } from "./HeadCell.interface";
 
 export const BonCommandeInterneHeadCells: readonly HeadCell[] = [
     {
+        id: "reference",
+        numeric: false,
+        disablePadding: false,
+        label: "Réference",
+    },{
         id: "numBonCommande",
         numeric: false,
         disablePadding: false,

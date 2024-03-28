@@ -90,36 +90,7 @@ export const getBonCommandeInternes = createAsyncThunk(
         args: JSON.stringify(data.args),
       };
       const response = await axios.get("/logistique/bon-de-commande-interne", { params });
-      let newData: any = [];
-      if (response.data.length > 0) {
-        await Promise.all(
-          response.data.map(async (cons: BonCommandeItem) => {
-            const employeeId = cons.demandeur;
-            const detailEmployee = await thunkAPI
-              .dispatch(getEmployee({ employeeId }))
-                if(detailEmployee){
-                  const oneCons = {
-                    id: cons.id,
-                    dateBonCommande: cons.dateBonCommande,
-                    observation:cons.observation,
-                    numBonCommande: cons.numBonCommande,
-                    programme: cons.programme,
-                    montantTotal: cons.montantTotal,
-                    grant: cons.grant,
-                    ligneBudgetaire: cons.ligneBudgetaire,
-                    ArticleCommande: cons.ArticleCommande,
-                    demandeur: cons.demandeur,
-                    owner: detailEmployee.payload.id ? detailEmployee.payload :{ id:employeeId, name:"Employée n'existe plus",surname:""},
-                  };
-                  newData.push(oneCons);
-                }
-          })
-        );
-        return newData;
-      } else {
-        return response.data;
-      }
-      return newData;
+      return response.data;
     } catch (error: any) {
       if (error.response) {
         return thunkAPI.rejectWithValue(error);
@@ -137,26 +108,6 @@ export const getBonCommandeInterne = createAsyncThunk(
         args: JSON.stringify(data.args),
       };
       const response = await axios.get(`/logistique/bon-de-commande-interne/${data.id}`, { params });
-
-      const employeeId = response.data.demandeur;
-      const detailEmployee = await thunkAPI
-        .dispatch(getEmployee({ employeeId }))
-          if(detailEmployee){
-            const oneCons = {
-              id:  response.data.id,
-              dateBonCommande:  response.data.dateBonCommande,
-              numBon:  response.data.numBon,
-              numBonCommande:  response.data.numBonCommande,
-              programme:  response.data.programme,
-              montantTotal:  response.data.montantTotal,
-              grant:  response.data.grant,
-              ligneBudgetaire:  response.data.ligneBudgetaire,
-              ArticleCommande:  response.data.ArticleCommande,
-              demandeur:  response.data.demandeur,
-              owner: detailEmployee.payload.id ? detailEmployee.payload :{ id:employeeId, name:"Employée n'existe plus",surname:""},
-            };
-            return oneCons
-          }
       return response.data;
     } catch (error: any) {
       if (error.response) {
