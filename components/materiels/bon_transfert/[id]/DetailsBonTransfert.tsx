@@ -15,11 +15,28 @@ import { useRouter } from "next/router";
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
 import { getBonTransfert } from "../../../../redux/features/bon_transfert/bonTransfertSlice";
 import PDFButton from "./PrintBonTransfert";
+import { getInterns } from "../../../../redux/features/employeStagiaire/stagiaireSlice";
+import { getEmployees } from "../../../../redux/features/orderEquipment";
+import { getGrantList } from "../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
 const DetailsBonTransfert = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { id }: any = router.query;
     const { bonTransfert } = useAppSelector((state) => state.bonTransfert);
+    const { employees } = useAppSelector( (state) => state.employe);
+    const { interns } = useAppSelector( (state) => state.stagiaire);
+    const { grantList } = useAppSelector( (state) => state.grant);
+    const [ pdf,setPdf ] = useState<any>({})
+    
+    const total = [...employees.map((i:any)=>{
+        return {
+            id : i.id, name: i.name +" "+ i.surname, type: "employe"
+        }
+    }),...interns.map((i:any)=>{
+        return {
+            id : i.id, name: i.name +" "+ i.surname, type: "intern"
+        }
+    })]
     // const [pdfData, setPdfData] = useState<any>();
 
 
@@ -29,13 +46,25 @@ const DetailsBonTransfert = () => {
                 articleTransfert:true
             }
         }}));
+        dispatch(getInterns({}));
+        dispatch(getEmployees({}));
+        dispatch(getGrantList({}));
         // setPdfData(bonTransfert)
-
     };
 
     useEffect(()=> {
         getDetailsBonTransfert();
-        console.log(bonTransfert)
+        const data = {
+            expediteur: total.find((e:any)=> e.id === bonTransfert?.expediteur)?.name,
+            destination:total.find((e:any)=> e.id === bonTransfert?.designation)?.name,
+            reference:bonTransfert.reference,
+            dateExp: bonTransfert.dateExp,
+            expeditionVia: bonTransfert.expeditionVia,
+            programme: bonTransfert.programme,
+            grant: grantList.find((e:any)=> e.id === bonTransfert?.grant)?.code,
+            articleTransfert: bonTransfert.articleTransfert
+        }
+        setPdf(data)
     },[id,bonTransfert])
 
     return (
@@ -51,7 +80,7 @@ const DetailsBonTransfert = () => {
                     startIcon={<ArrowBackIcon />}>
                         Retour
                     </Button>
-                    <PDFButton data={bonTransfert} />
+                    <PDFButton data={pdf} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">
                     Details d'une bon de transfert
@@ -68,24 +97,34 @@ const DetailsBonTransfert = () => {
                                 alignItems: "center",
                             }}
                             >
-                        <Grid container spacing={4} my={1}>
+                            <Grid container spacing={4} my={1}>
+                                <Grid item xs={12} md={12}>
+                                    <InfoItems direction="row" spacing={2}>
+                                        <Typography variant="body1" color="secondary">
+                                            Réference
+                                        </Typography>
+                                        <Typography variant="body1" color="gray">
+                                            {bonTransfert?.reference}
+                                        </Typography>
+                                    </InfoItems>
+                                </Grid>
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
                                             Expediteur
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                            {bonTransfert.expediteurData?.name} {bonTransfert.expediteurData?.surname}
+                                            {total.find((e:any)=> e.id === bonTransfert?.expediteur)?.name}
                                         </Typography>
                                     </InfoItems>
-                                    </Grid>
+                                </Grid>
                                     <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
                                             Destination
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                            {bonTransfert?.destination?.name} {bonTransfert?.destination?.surname}
+                                        {total.find((e:any)=> e.id === bonTransfert?.designation)?.name}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
@@ -116,10 +155,10 @@ const DetailsBonTransfert = () => {
                                     <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                            Departement
+                                            Programme
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                        {bonTransfert.departement}
+                                        {bonTransfert.programme}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
@@ -129,7 +168,7 @@ const DetailsBonTransfert = () => {
                                             Grant
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                            {bonTransfert.grant}
+                                            {grantList.find((e:any)=> e.id === bonTransfert?.grant)?.code}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>

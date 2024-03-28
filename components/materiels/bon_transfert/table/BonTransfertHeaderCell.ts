@@ -2,6 +2,12 @@ import { HeadCell } from "./HeadCell.interface";
 
 export const BonTransfertHeadCells: readonly HeadCell[] = [
     {
+        id: "reference",
+        numeric: false,
+        disablePadding: false,
+        label: "Réference",
+    },
+    {
         id: "expediteur",
         numeric: false,
         disablePadding: false,
@@ -26,10 +32,10 @@ export const BonTransfertHeadCells: readonly HeadCell[] = [
         label: "Expedition via",
     },
     {
-        id: "departement",
+        id: "programme",
         numeric: false,
         disablePadding: false,
-        label: "Departement",
+        label: "Programme",
     },
     {
         id: "grant",

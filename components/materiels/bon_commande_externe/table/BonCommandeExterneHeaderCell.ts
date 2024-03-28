@@ -27,10 +27,10 @@ export const BonCommandeExterneHeadCells: readonly HeadCell[] = [
         label: "Réference",
     },
     {
-        id: "objer",
+        id: "objet",
         numeric: false,
         disablePadding: false,
-        label: "OBJET",
+        label: "Objet",
     },
     
     

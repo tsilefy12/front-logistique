@@ -4,9 +4,7 @@ import { axios } from "../../../lib/axios";
 
 import {
    bonTransfertInitialState,bonTransfertItem
-} from "./bonTransfert.interface";
-import { getEmployee } from "../equipment";
-import { getIntern } from "../employeStagiaire/stagiaireSlice";
+} from "./bonTransfert.interface";;
 
 const initialState: bonTransfertInitialState = {
     bonTransferts: [],
@@ -87,64 +85,7 @@ export const getBonTransferts = createAsyncThunk(
         args: JSON.stringify(data.args),
       };
       const response = await axios.get("/logistique/bon-de-transfert", { params });
-      let newData: any = [];
-      if (response.data.length > 0) {
-        await Promise.all(
-          response.data.map(async (cons: bonTransfertItem) => {
-            const type = cons.type;
-            const employeeId = cons.expediteur;
-            const id = cons.destination;
-            const detailExpediteur = await thunkAPI
-              .dispatch(getEmployee({ employeeId }))
-            console.log(detailExpediteur)
-            if(type === "employe"){
-                  const detailDestination = await thunkAPI
-                  .dispatch(getEmployee({ employeeId }))
-                  console.log(detailDestination)
-                  if(detailExpediteur && detailDestination){
-                      const oneCons = {
-                        id: cons.id,
-                        dateExp: cons.dateExp,
-                        departement: cons.departement,
-                        designation: cons.designation,
-                        destination: detailDestination.payload,
-                        expediteur: cons.expediteur,
-                        expediteurData: detailExpediteur.payload,
-                        expeditionVia: cons.expeditionVia,
-                        articleTransfert: cons.articleTransfert,
-                        grant: cons.grant,
-                        type: cons.type,
-                      };
-                      newData.push(oneCons);
-                  }
-            }else{
-              const detailDestination = await thunkAPI
-                .dispatch(getIntern({ id }))
-                console.log(detailDestination)
-                if(detailExpediteur && detailDestination){
-                    const oneCons = {
-                      id: cons.id,
-                      dateExp: cons.dateExp,
-                      departement: cons.departement,
-                      designation: cons.designation,
-                      destination: detailDestination,
-                      expediteur: cons.expediteur,
-                      expediteurData: detailExpediteur,
-                      expeditionVia: cons.expeditionVia,
-                      articleTransfert: cons.articleTransfert,
-                      grant: cons.grant,
-                      type: cons.type,
-                    };
-                    newData.push(oneCons);
-                }
-            }
-          })
-        );
-        return newData;
-      } else {
-        return response.data;
-      }
-      return newData;
+      return response.data;
     } catch (error: any) {
       if (error.response) {
         return thunkAPI.rejectWithValue(error);
@@ -161,53 +102,7 @@ export const getBonTransfert = createAsyncThunk(
         args: JSON.stringify(data.args),
       };
       const response = await axios.get(`/logistique/bon-de-transfert/${data.id}`, { params });
-      const type = response.data.type;
-      const employeeId = response.data.expediteur;
-      const id = response.data.destination;
-      const detailExpediteur = await thunkAPI
-        .dispatch(getEmployee({ employeeId }))
-      console.log(detailExpediteur)
-      if(type === "employe"){
-            const detailDestination = await thunkAPI
-            .dispatch(getEmployee({ employeeId }))
-            console.log(detailDestination)
-            if(detailExpediteur && detailDestination){
-                const oneCons = {
-                  id: response.data.id,
-                  dateExp: response.data.dateExp,
-                  departement: response.data.departement,
-                  designation: response.data.designation,
-                  destination: detailDestination.payload,
-                  expediteur: response.data.expediteur,
-                  expediteurData: detailExpediteur.payload,
-                  expeditionVia: response.data.expeditionVia,
-                  articleTransfert: response.data.articleTransfert,
-                  grant: response.data.grant,
-                  type: response.data.type,
-                };
-                return oneCons;
-            }
-      }else{
-        const detailDestination = await thunkAPI
-          .dispatch(getIntern({ id }))
-          console.log(detailDestination)
-          if(detailExpediteur && detailDestination){
-              const oneCons = {
-                id: response.data.id,
-                dateExp: response.data.dateExp,
-                departement: response.data.departement,
-                designation: response.data.designation,
-                destination: detailDestination,
-                expediteur: response.data.expediteur,
-                expediteurData: detailExpediteur,
-                expeditionVia: response.data.expeditionVia,
-                articleTransfert: response.data.articleTransfert,
-                grant: response.data.grant,
-                type: response.data.type,
-              };
-              return oneCons;
-          }
-      }
+      return response.data
     } catch (error: any) {
       if (error.response) {
         return thunkAPI.rejectWithValue(error);

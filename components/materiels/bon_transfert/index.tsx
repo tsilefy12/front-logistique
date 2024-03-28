@@ -21,7 +21,6 @@ import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import { useConfirm } from "material-ui-confirm";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
-import { BonCommandeItem } from "../../../redux/features/bon_commande_interne/bonCommandeInterne.interface";
 import {
   labelRowsPerPage,
   defaultLabelDisplayedRows,
@@ -33,6 +32,9 @@ import BonTransfertTableToolbar from "./table/BonTransfertTableToolbar";
 import BonTransfertTableHeader from "./table/BonTransfertTableHeader";
 import Moment from "react-moment";
 import { bonTransfertItem } from "../../../redux/features/bon_transfert/bonTransfert.interface";
+import { getInterns } from "../../../redux/features/employeStagiaire/stagiaireSlice";
+import { getEmployees } from "../../../redux/features/orderEquipment";
+import { getGrantList } from "../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
 
 export default function BonTransfertList() {
     const [page, setPage] = React.useState(0);
@@ -48,6 +50,19 @@ export default function BonTransfertList() {
     const dispatch = useAppDispatch();
 
     const { bonTransferts } = useAppSelector((state) => state.bonTransfert);
+    const { employees } = useAppSelector( (state) => state.employe);
+    const { interns } = useAppSelector( (state) => state.stagiaire);
+    const { grantList } = useAppSelector( (state) => state.grant);
+    
+    const total = [...employees.map((i:any)=>{
+        return {
+            id : i.id, name: i.matricule +" "+i.name +" "+ i.surname, type: "employe"
+        }
+    }),...interns.map((i:any)=>{
+        return {
+            id : i.id, name: i.name +" "+ i.surname, type: "intern"
+        }
+    })]
 
     const fetchBonTransfert = useFetchBonTransfert();
     
@@ -55,6 +70,9 @@ export default function BonTransfertList() {
 
     useEffect(() => {
         fetchBonTransfert();
+        dispatch(getInterns({}));
+        dispatch(getEmployees({}));
+        dispatch(getGrantList({}));
     }, [router.query]);
 
     const handleClickEdit = async (id: any) => {
@@ -130,8 +148,11 @@ export default function BonTransfertList() {
                             const labelId = `enhanced-table-checkbox-${index}`;
                             return (
                                 <TableRow hover tabIndex={-1} key={row.id}>
-                                    <TableCell align="left">{row.expediteurData?.name} {row.expediteurData?.surname}</TableCell>
-                                    <TableCell align="left">{row.destination?.name} {row.destination?.surname}</TableCell>
+                                    <TableCell align="left">
+                                        {row?.reference}
+                                    </TableCell>
+                                    <TableCell align="left">{row?.expediteur}</TableCell>
+                                    <TableCell align="left">{total.find((e:any)=> e.id === row?.designation)?.name}</TableCell>
                                     <TableCell align="left">
                                         <Moment format="DD/MM/YYYY">
                                             {row?.dateExp}
@@ -141,9 +162,9 @@ export default function BonTransfertList() {
                                         {row?.expeditionVia}
                                     </TableCell>
                                     <TableCell align="left">
-                                        {row?.departement}
+                                        {row?.programme}
                                     </TableCell>
-                                    <TableCell align="left">{row?.grant}</TableCell>
+                                    <TableCell align="left">{grantList.find((e:any)=> e.id === row?.grant)?.code}</TableCell>
                                     <TableCell align="right" width={"150px"}>
                                         <BtnActionContainer
                                         direction="row"

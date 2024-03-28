@@ -1,6 +1,5 @@
 import { Form, FormikProps } from 'formik';
 import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { useRouter } from 'next/router';
 import { getEmployees } from '../../../../redux/features/employeStagiaire/employeeSlice';
 import { getInterns } from '../../../../redux/features/employeStagiaire/stagiaireSlice';
@@ -14,6 +13,7 @@ import ArrowBack from '@mui/icons-material/ArrowBack';
 import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 import { getGrantList } from '../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice';
 import EditIcon from "@mui/icons-material/Edit";
+import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 
 const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) =>  {
     const dispatch = useAppDispatch();
@@ -141,11 +141,11 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                     <FormControl fullWidth>
                         <OSSelectField
                             id="outlined-basic"
-                            label="Expedition via"
-                            name="expeditionVia"
-                            options={ExpeditionVia}
-                            dataKey={["name"]}
-                            valueKey="name"
+                            label="Expediteur"
+                            name="expediteur"
+                            options={employees}
+                            dataKey={["matricule","name","surname"]}
+                            valueKey="id"
                         />
                     </FormControl>
                     <FormControl fullWidth>
@@ -166,12 +166,13 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                     spacing={2}
                     >
                     <FormControl fullWidth>
-                        <OSTextField
-                            fullWidth
+                        <OSSelectField
                             id="outlined-basic"
-                            variant="outlined"
                             label="Expedition via"
                             name="expeditionVia"
+                            options={ExpeditionVia}
+                            dataKey={["name"]}
+                            valueKey="name"
                         />
                     </FormControl>
                     <FormControl fullWidth>
