@@ -96,7 +96,7 @@ const DetailBonDeVoiture = () => {
                 <TableCell>{row.activite}</TableCell>
                 <TableCell>{row.nombre}</TableCell>
                 <TableCell>{row.pu}</TableCell>
-                <TableCell>{row.montants}</TableCell>
+                <TableCell>{row.montants} Ariary</TableCell>
               </TableRow>
                ))
              }

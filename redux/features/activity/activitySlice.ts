@@ -8,7 +8,7 @@ import { ActivityInitialState, ActivityItem } from "./activity.interface";
 const ActivityInitialState: ActivityInitialState = {
     activitys: [],
     activity: {},
-    isEditing: false,
+    isEdit: false,
     loading: false,
     error: null
 };
@@ -17,7 +17,7 @@ export const editActivity = createAsyncThunk(
     "activity/editActivity",
     async (data: { id: string }, thunkAPI) => {
         try {
-            const response = await axios.get(`/logistique/activity/${data.id}`);
+            const response = await axios.get(`/logistique/activity/find-by-carVoucherId/${data.id}`);
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -146,7 +146,7 @@ export const activitySlice = createSlice({
     initialState: ActivityInitialState,
     reducers: {
         cancelEdit: (state) => {
-            state.isEditing = false;
+            state.isEdit = false;
             state.employe = {};
         },
     },
@@ -196,7 +196,7 @@ export const activitySlice = createSlice({
         [editActivity.fulfilled.type]: (state, action) => {
             state.activity = action.payload;
             state.loading = false;
-            state.isEditing = true;
+            state.isEdit = true;
         },
         [editActivity.rejected.type]: (state, action) => {
             state.error = action.error;
@@ -207,7 +207,7 @@ export const activitySlice = createSlice({
         },
         [updateActivity.fulfilled.type]: (state, action) => {
             state.loading = false;
-            state.isEditing = false;
+            state.isEdit = false;
             state.activity = {};
         },
         [updateActivity.rejected.type]: (state, action) => {

@@ -135,16 +135,10 @@ import Moment from "react-moment";
                             <TableCell align="left">
                                 {row.referenceBudgetaire}
                             </TableCell>
-                            <TableCell align="left">
-                                {row.prestataire}
-                            </TableCell>
 
                          <TableCell align="left">
-                                {row?.nif ? row.vendor?.nif: ''}
+                                {row?.fournisseur ? row.vendor?.fournisseur: ''}
                             </TableCell>
-                            <TableCell align="left">
-                                {row?.nif ? row.vendor?.state: ''}
-                        </TableCell>
                             <TableCell align="left">
                                 {row.montant}
                             </TableCell>

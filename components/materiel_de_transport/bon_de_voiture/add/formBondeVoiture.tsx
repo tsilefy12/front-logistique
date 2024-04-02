@@ -15,7 +15,7 @@ import {
 } from "../../../../redux/features/car-voucher";
 import useFetchCarVouchers from "../hooks/useFetchCarVoucher";
 import FormBonVoiture from "./bonVoitureForm";
-import { createActivity } from "../../../../redux/features/activity/activitySlice";
+import { createActivity, editActivity } from "../../../../redux/features/activity/activitySlice";
 
 const FormBonDeVoiture = () => {
     const route = useRouter();
@@ -26,11 +26,14 @@ const FormBonDeVoiture = () => {
     const [ idDelete,setIdDelete] = React.useState < any[]> ([])
 
     const { isEditing, carVoucher } = useAppSelector((state) => state.carVoucher);
+    const { isEdit, activity } = useAppSelector((state) =>state.activity);
     React.useEffect(() => {
         if (id) {
         dispatch(editCarVoucher({ id }));
+        dispatch(editActivity({ id }));
         }
     }, [id]);
+  
     const handleSubmit = async (values: any) => {
         try {
             const data = {
@@ -53,7 +56,7 @@ const FormBonDeVoiture = () => {
                         activite: element.activite,
                         nombre: element.nombre,
                         pu: element.pu,
-                        montants:element.montants,
+                        montants:element.nombre * element.pu,
                         carVoucherId: response.payload.id
                     };
                     dispatch(createActivity(newData));
@@ -74,10 +77,10 @@ const FormBonDeVoiture = () => {
                 materiel: isEditing ? carVoucher?.materiel : "",
                 date: isEditing ? carVoucher?.date : new Date(),
                 reference: isEditing ? carVoucher?.reference: "",
-                activite:"",
-                nombre:"",
-                pu:"",
-                montants:"",
+                activite:isEdit ? activity?.activite: "",
+                nombre:isEdit ? activity?.nombre :"",
+                pu:isEdit ? activity?.pu:"",
+                montants:isEdit ? activity?.montants: "",
                 quantite:""
 
             }}

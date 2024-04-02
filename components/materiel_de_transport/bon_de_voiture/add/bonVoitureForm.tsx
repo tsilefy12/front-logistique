@@ -181,7 +181,7 @@ const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDel
                                                         formikProps.setFieldValue('activite', item.activite);
                                                         formikProps.setFieldValue('nombre', item.nombre);
                                                         formikProps.setFieldValue('pu', item.pu);
-                                                        formikProps.setFieldValue('montants', item.montants);
+                                                        formikProps.setFieldValue('montants', item.nombre * item.pu);
                                                         setIdValues(item.id)
                                                     }}
                                                 >
@@ -252,6 +252,8 @@ const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDel
                                             <OSTextField
                                                 id="montant"
                                                 label="Montant"
+                                                value={formikProps.values.nombre * formikProps.values.pu}
+                                                onChange={(value: any) =>formikProps.setFieldValue("montants", value)}
                                                 name="montants"
                                                 type="number"
                                             />
@@ -273,7 +275,7 @@ const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDel
                                                     const activite = formikProps.values.activite;
                                                     const nombre = formikProps.values.nombre;
                                                     const pu = formikProps.values.pu;
-                                                    const montants = formikProps.values.montants;
+                                                    const montants = formikProps.values.nombre * formikProps.values.pu;
 
                                                     if (activite.trim() !== '') {
                                                         if (idValues) {

@@ -60,7 +60,7 @@ const SuiviCarburantTableToolbar = () => {
           }}
         >
           <Typography variant="h6" id="tableTitle" component="div">
-            Liste des suivi de carburants
+            Liste des courses ville
           </Typography>
           <TextField
             variant="outlined"

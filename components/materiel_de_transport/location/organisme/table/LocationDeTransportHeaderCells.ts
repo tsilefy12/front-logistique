@@ -25,24 +25,14 @@ export const LocationTransporTableaHeaderCells: readonly HeadCell[] = [
     disablePadding: false,
     label: "Référence budgetaire",
   },
-  {
-    id: "prestataire",
-    numeric: false,
-    disablePadding: false,
-    label: "Prestataire",
-  },
+
   {
     id: "nif",
     numeric: false,
     disablePadding: false,
-    label: "Nif",
+    label: "Fournisseur",
   },
-  {
-    id: "stat",
-    numeric: false,
-    disablePadding: false,
-    label: "Stat",
-  },
+
   {
     id: "montant",
     numeric: false,

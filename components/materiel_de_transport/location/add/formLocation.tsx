@@ -98,8 +98,8 @@ const FormLocation = () => {
                     date: isEditing ? locationDeTransport?.date : new Date(),
                     responsable: isEditing ? locationDeTransport?.responsable : "",
                     referenceBudgetaire: isEditing ? locationDeTransport?.referenceBudgetaire : "",
-                    prestataire: isEditing ? locationDeTransport?.prestataire : "",
-                    nif: isEditing ? locationDeTransport?.nif : "",
+                    //prestataire: isEditing ? locationDeTransport?.prestataire : "",
+                    fournisseur: isEditing ? locationDeTransport?.fournisseur : "",
                     //stat: isEditing ? locationDeTransport?.stat : "",
                     montant: isEditing ? locationDeTransport?.montant : "",
                     grant: isEditing ? locationDeTransport?.grant : "",
@@ -113,11 +113,11 @@ const FormLocation = () => {
                     referenceBudgetaire: Yup.string().required(
                         "Veuillez remplir le champ référence budgetaire"
                     ),
-                    prestataire: Yup.string().required(
+                   /* prestataire: Yup.string().required(
                         "Veuillez remplir le champ prestataire"
-                    ),
-                    nif: Yup.string().required(
-                        "Veuillez remplir le champ nif"
+                    ),*/
+                    fournisseur: Yup.string().required(
+                        "Veuillez remplir le champ fournisseur"
                     ),
                    /* stat: Yup.string().required(
                         "Veuillez remplir le champ stat"
@@ -233,13 +233,13 @@ const FormLocation = () => {
                                 </FormControl>
                             </Stack>
                             <Stack direction="row" spacing={2} margin={2}>
-                                <FormControl fullWidth>
+                               { /*<FormControl fullWidth>
                                     <OSTextField
                                         id="outlined-basic"
                                         label="Prestataire"
                                         name="prestataire"
                                     />
-                                </FormControl>
+                                </FormControl>*/}
                                 <FormControl fullWidth>
                                     <OSTextField
                                         id="outlined-basic"
@@ -254,12 +254,12 @@ const FormLocation = () => {
                             <Stack direction="row" spacing={2} margin={2}>
                                 <OSSelectField
                                     id="outlined-basic"
-                                    label="Nif"
+                                    label="Fournisseur"
                                     variant="outlined"
                                     options={vendors}
-                                    dataKey={["nif"]}
+                                    dataKey={["fournisseur"]}
                                     valueKey="id"
-                                    name="nif"
+                                    name="fournisseur"
                                 />
                                 {/*<OSSelectField
                                     id="outlined-basic"

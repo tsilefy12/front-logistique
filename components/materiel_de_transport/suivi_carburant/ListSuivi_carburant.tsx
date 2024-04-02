@@ -108,7 +108,7 @@ import useFetchTransportationEquipments from "../hooks/useFetchTransportationEqu
                 Ajouter
               </Button>
             </Link>
-            <Typography variant="h4">Tous les suivi carburants</Typography>
+            <Typography variant="h4">Tous les courses ville</Typography>
           </SectionNavigation>
           {/* <Divider /> */}
         </NavigationContainer>

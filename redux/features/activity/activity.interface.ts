@@ -10,7 +10,7 @@ export interface ActivityItem {
 export interface ActivityInitialState{
     activitys: ActivityItem[],
     activity: ActivityItem,
-    isEditing: boolean,
+    isEdit: boolean,
     loading: boolean
     [key: string]: any
 }

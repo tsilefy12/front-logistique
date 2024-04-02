@@ -117,26 +117,26 @@ const menu = [
         link: "/materiel_de_transport/bon_de_voiture",
         icon: "/materiel_de_transport",
       },
-      {
+      /*{
         id: 33,
         name: "Facture de consommation",
         link: "/materiel_de_transport/facture_de_consommation",
         icon: "",
-      },
+      },*/
       {
-        id: 34,
-        name: "Suivi carburant",
+        id: 33,
+        name: "Course ville",
         link: "/materiel_de_transport/suivi_carburant",
         icon: "",
       },
       {
-        id: 35,
+        id: 34,
         name: "Location",
         link: "/materiel_de_transport/location",
         icon: "",
       },
       {
-        id: 36,
+        id: 35,
         name: "Mission",
         link: "/materiel_de_transport/mission",
         icon: "",
