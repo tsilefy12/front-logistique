@@ -7,7 +7,11 @@ const useFetchSuplyAndConsumableList = () => {
   const dispatch = useAppDispatch();
 
   return async () => {
-    let args: any = {};
+    let args: any = {
+      include: {
+          uniteStock: true
+      },
+  };
     if (router.query.search) {
       args.where = {
         OR: [

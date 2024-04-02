@@ -43,6 +43,7 @@ import {
                 await dispatch(createInventaire(values));
                 route.push("/materiels/inventaire");
             }
+            route.push("/materiels/inventaire");
         } catch (error) {
             console.log("error", error);
         }
@@ -144,7 +145,7 @@ import {
                             label="Date dépréciation"
                             value={formikProps.values.datePreciation}
                             onChange={(value: any) =>
-                                formikProps.setFieldValue("dateDepreciation", value)
+                                formikProps.setFieldValue("datePreciation", value)
                             }
                         />
                         <OSTextField
@@ -164,7 +165,7 @@ import {
                                 ):0
                             }
                             id="outlined-basic"
-                            label={ dureAmortissement+" "+acquisitionValue }
+                            label="Valeur"
                             variant="outlined"
                             type="number"
                         />

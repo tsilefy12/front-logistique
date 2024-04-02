@@ -8,6 +8,12 @@ export const equipmentHeadCells: readonly HeadCell[] = [
     label: "CODE",
   },
   {
+    id: "designation",
+    numeric: false,
+    disablePadding: false,
+    label: "Désignation",
+  },
+  {
     id: "typeEquipment",
     numeric: false,
     disablePadding: false,
@@ -18,12 +24,6 @@ export const equipmentHeadCells: readonly HeadCell[] = [
     numeric: false,
     disablePadding: false,
     label: "Utilisateur",
-  },
-  {
-    id: "designation",
-    numeric: false,
-    disablePadding: false,
-    label: "Désignation",
   },
   {
     id: "status",

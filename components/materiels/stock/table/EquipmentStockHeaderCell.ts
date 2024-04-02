@@ -2,27 +2,32 @@ import { HeadCell } from "./HeadCell.interface";
 
 export const equipmentStockHeadCells: readonly HeadCell[] = [
   {
+    id: "code",
+    numeric: false,
+    disablePadding: false,
+    label: "Code",
+  },{
     id: "type",
     numeric: false,
     disablePadding: false,
     label: "Article",
   },
   {
-    id: "inStock",
+    id: "date",
     numeric: false,
     disablePadding: false,
-    label: "En Stock",
+    label: "Date d'acquisition",
   },
   {
-    id: "inUse",
+    id: "etat",
     numeric: false,
     disablePadding: false,
-    label: "En cours d'utilisation",
+    label: "Etat",
   },
   {
-    id: "isBroken",
+    id: "disponibilité",
     numeric: false,
     disablePadding: false,
-    label: "Defectueux",
+    label: "Disponibilité",
   },
 ];

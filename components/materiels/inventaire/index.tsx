@@ -24,7 +24,6 @@ import InventaireTableHeader from "./table/InventaireHeader";
 import { InventaireItem } from "../../../redux/features/inventaire/inventaire.interface";
 import useFetchInventaireList from "./hooks/useFetchInventaire";
 import Moment from "react-moment";
-import { Badge, RadioGroup, FormControlLabel,Radio } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 
 export default function InventaireList() {
@@ -48,14 +47,13 @@ export default function InventaireList() {
 
   const router = useRouter();
 
-  const {inventaireList} = useAppSelector(
-    (state) => state.inventaire
-  );
+  const {inventaireList} = useAppSelector((state) => state.inventaire);
 
   const fetchInventaireList = useFetchInventaireList();
 
   React.useEffect(() => {
     fetchInventaireList();
+    console.log("length"+ inventaireList.length)
   }, [router.query]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -72,7 +70,7 @@ export default function InventaireList() {
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0
-      ? Math.max(0, (1 + page) * rowsPerPage - InventaireList.length)
+      ? Math.max(0, (1 + page) * rowsPerPage - inventaireList.length)
       : 0;
 
   return (
@@ -80,16 +78,13 @@ export default function InventaireList() {
       <NavigationContainer>
         <SectionNavigation>
           <Stack direction='row' spacing={3}>
-            <Link href="/materiels/informatiques/">
-              <Button color="info" variant="text" startIcon={<ArrowBack />}>
+              <Button color="info" variant="text" onClick={()=> router.back()} startIcon={<ArrowBack />}>
                 Retour
               </Button>
-            </Link>
           </Stack>
         </SectionNavigation>
         {/* <Divider /> */}
       </NavigationContainer>
-
       <SectionTable>
         <Box sx={{ width: "100%", mb: 2 }}>
           <Paper sx={{ width: "100%", mb: 2 }}>

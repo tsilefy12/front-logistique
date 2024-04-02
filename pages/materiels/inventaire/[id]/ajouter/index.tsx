@@ -1,9 +1,9 @@
 import { Container } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
-import BackOfficeLayout from "../../../../layouts/backOffice";
-import useBasePath from "../../../../hooks/useBasePath";
-import FormInventaireMateriel from "../../../../components/materiels/inventaire/form/formInventaire";
+import BackOfficeLayout from "../../../../../layouts/backOffice";
+import useBasePath from "../../../../../hooks/useBasePath";
+import FormInventaireMateriel from "../../../../../components/materiels/inventaire/form/formInventaire";
 
 const NewInventaire: NextPage = () => {
   const basePath = useBasePath();

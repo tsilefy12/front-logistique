@@ -248,7 +248,6 @@ export default function PDFButton({ data }: { data: PvComparaisonItem }) {
                     startIcon={<Print />}
                     sx={{ marginInline: 3 }}
                     >
-                      Imprimer
                     </Button>
                )
                }

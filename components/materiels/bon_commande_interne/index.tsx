@@ -53,9 +53,9 @@ export default function BonCommandeInterneList() {
     console.log(bonCommandeInternes)
 
     const fetchBonCommandeInterne = useFetchBonCommandeInterne();
+    const { grantList } = useAppSelector( (state) => state.grant);
     const { employees } = useAppSelector( (state) => state.employe);
     const { interns } = useAppSelector( (state) => state.stagiaire);
-    const { grantList } = useAppSelector( (state) => state.grant);
     
     const total = [...employees.map((i:any)=>{
         return {

@@ -18,7 +18,7 @@ export default function BonCommandeInterneForm() {
     const { id }: any = route.query;
 
 
-    const [valuesArticle, setValuesArticle] = useState < any[]> ([])
+    const [ valuesArticle, setValuesArticle ] = useState < any[]> ([])
     const [ idDelete,setIdDelete] = useState < any[]> ([])
 
     const { isEditing,bonCommandeInterne } = useAppSelector((state) => state.bonCommandeInterne);
@@ -130,12 +130,6 @@ export default function BonCommandeInterneForm() {
                     }
                     validationSchema={Yup.object({
                         reference:Yup.string().required("Champ obligatoire"),
-                        programme: Yup.string().required("Champ obligatoire"),
-                        grant: Yup.string().required("Champ obligatoire"),
-                        ligneBudgetaire: Yup.string().required("Champ obligatoire"),
-                        demandeur: Yup.string().required("Champ obligatoire"),
-                        observation:Yup.string().required("Champ obligatoire"),
-                        dateBonCommande: Yup.date().required("Champ obligatoire"),
                         numBonCommande:Yup.string().required("Champ obligatoire"),
                     })}
                     onSubmit={(value: any, action: any) => {

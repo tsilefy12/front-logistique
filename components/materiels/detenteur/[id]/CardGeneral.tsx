@@ -1,9 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Stack, styled, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
 import KeyValue from "../../../shared/keyValue";
 import Moment from "react-moment";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
+import { useRouter } from "next/router";
+import { getEmployees } from "../../../../redux/features/employeStagiaire/employeeSlice";
+import { getInterns } from "../../../../redux/features/employeStagiaire/stagiaireSlice";
 
 const CardGeneral = ({ holder }: any) => {
+    const router = useRouter();
+    const dispatch: any = useAppDispatch();
+    const { employees } = useAppSelector((state) => state.employe);
+    const { interns } = useAppSelector((state) => state.stagiaire);
+    const total = [...employees.map((i:any)=>{
+        return {
+        id : i.id, name: i.name +" "+ i.surname, type: "employe"
+        }
+    }),...interns.map((i:any)=>{
+        return {
+        id : i.id, name: i.name +" "+ i.surname, type: "intern"
+        }
+    })]
+
+    useEffect(() => {
+        dispatch(getEmployees({}));
+        dispatch(getInterns({}));
+    }, [router.query]);
+
     return (
         <Stack
             direction="row"
@@ -19,7 +42,7 @@ const CardGeneral = ({ holder }: any) => {
                 </OneCardHeader>
                 <OneCardBody spacing={2}>
                     <KeyValue keyName="Réference" value={holder?.reference} />
-                    <KeyValue keyName="Nom" value={holder?.name} />
+                    <KeyValue keyName="Nom" value={total.find((e:any)=> e.id === holder?.name)?.name} />
                     <KeyValue keyName="Contact" value={holder?.contact} />
                     <KeyValue keyName="N* Matricule" value={holder?.matricule} />
                     <KeyValue keyName="Fonction" value={holder?.function} />
@@ -75,11 +98,11 @@ export const OneCardHeader = styled("div")(({ theme }) => ({}));
 export const InfoItems = styled(Stack)(({ theme }) => ({}));
 
 export const OneCard = styled("div")(({ theme }) => ({
-display:"flex",
-flexDirection:"column",
-  width:"100%",
-  height: "100%",
-  borderRadius: 20,
-  padding: 25,
-  background: "#fff",
+    display:"flex",
+    flexDirection:"column",
+    width:"100%",
+    height: "100%",
+    borderRadius: 20,
+    padding: 25,
+    background: "#fff",
 }));

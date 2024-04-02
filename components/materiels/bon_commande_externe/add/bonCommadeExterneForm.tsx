@@ -99,11 +99,6 @@ export default function BonCommandeExterneForm() {
                     validationSchema={Yup.object({
                         ref: Yup.string().required("Champ obligatoire"),
                         objet: Yup.string().required("Champ obligatoire"),
-                        beneficiaire: Yup.string().required("Champ obligatoire"),
-                        modePaiement : Yup.string().required("Champ obligatoire"),
-                        dateCommande : Yup.date().required("Champ obligatoire"),
-                        demandeur: Yup.string().required("Champ obligatoire"),
-                        conditionLivraison: Yup.string().required("Champ obligatoire"),
                     })}
                     onSubmit={(value: any, action: any) => {
                         handleSubmit(value);

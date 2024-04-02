@@ -14,21 +14,23 @@ import { getEquipment } from '../../../../../redux/features/equipment/useCases/g
 import { getEmployees, getEquipments } from '../../../../../redux/features/equipment';
 import { getInterns } from '../../../../../redux/features/employeStagiaire/stagiaireSlice';
 import Moment from 'react-moment';
+import { useRouter } from 'next/router';
 
 const FormDetenteur = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any}) => {
-    
+    const route = useRouter();
     const { isEditing, holder } = useAppSelector((state) => state.holder);
 
     const dispatch = useAppDispatch();
     const { employees } = useAppSelector((state) => state.employe);
     const { interns } = useAppSelector((state) => state.stagiaire);
+
     const total = [...employees.map((i:any)=>{
         return {
-        id : i.id, name:i.matricule +" "+ i.name +" "+ i.surname, type: "employe"
+        id : i.id,matricule:i.matricule, name:i.matricule +" "+ i.name +" "+ i.surname, type: "employe"
         }
     }),...interns.map((i:any)=>{
         return {
-        id : i.id, name:i.matricule +" "+ i.name +" "+ i.surname, type: "intern"
+            id : i.id,matricule:i.matricule, name:i.matricule +" "+ i.name +" "+ i.surname, type: "intern"
         }
     })]
 
@@ -80,6 +82,7 @@ const FormDetenteur = ({formikProps,valuesArticle,setValuesArticle}: {formikProp
         if(formikProps.values.name){
             const Val:any = total.find((e:any)=> e.id === formikProps.values.name)
             formikProps.setFieldValue("type", Val?.type)
+            formikProps.setFieldValue("matricule", Val?.matricule)
             console.log(formikProps.values.type)
         }
     }, [formikProps.values.name]);
@@ -88,18 +91,17 @@ const FormDetenteur = ({formikProps,valuesArticle,setValuesArticle}: {formikProp
             <NavigationContainer>
                 <SectionNavigation>
                 <Stack flexDirection={"row"}>
-                    <Link href="/materiels/detenteur">
                     <Button
                         color="info"
                         variant="text"
                         startIcon={<ArrowBack />}
                         onClick={() => {
+                            route.back()
                             formikProps.resetForm();
                         }}
                     >
                         Retour
                     </Button>
-                    </Link>
                     <Button
                     variant="contained"
                     color="primary"

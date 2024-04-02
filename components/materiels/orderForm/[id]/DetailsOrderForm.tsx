@@ -67,7 +67,6 @@ const DetailsOrderForm = () => {
               size="small"
               onClick={Imprimer}
             >
-              Imprimer
             </Button>
       </Stack>
         <Typography variant="h4" color="GrayText">

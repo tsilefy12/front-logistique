@@ -21,6 +21,8 @@ import {
   getHolder,
 } from "../../../../redux/features/holder";
 import CardGeneral from "./CardGeneral";
+import { getEmployees } from "../../../../redux/features/employeStagiaire/employeeSlice";
+import { getInterns } from "../../../../redux/features/employeStagiaire/stagiaireSlice";
 
 const Details = () => {
   const router = useRouter();
@@ -32,7 +34,7 @@ const Details = () => {
   const dispatch: any = useAppDispatch();
 
   const { holder } = useAppSelector((state: any) => state.holder);
-
+  
   const confirm = useConfirm();
 
   useEffect(() => {
@@ -46,6 +48,7 @@ const Details = () => {
           }
         }
       }}));
+
       console.log(holder)
     }
   }, [router.query]);
@@ -71,17 +74,14 @@ const Details = () => {
         console.log("cancelled");
       });
   };
-
   return (
     <DetailStagiaireWrapper maxWidth="xl">
       <NavigationContainer>
         <SectionNavigation>
           <Stack flexDirection={"row"}>
-            <Link href="/materiels/detenteur">
-              <Button color="info" variant="text" startIcon={<ArrowBack />}>
-                Retour
-              </Button>
-            </Link>
+            <Button color="info" variant="text" onClick={() => router.back()} startIcon={<ArrowBack />}>
+              Retour
+            </Button>
             <Link href={`/materiels/detenteur/${holder.id}/edit`}>
               <Button
                 variant="text"
@@ -96,7 +96,6 @@ const Details = () => {
                 Modifier
               </Button>
             </Link>
-
             <Button
               variant="text"
               color="warning"

@@ -18,7 +18,7 @@ export const InventaireSlice = createSlice({
   reducers: {
     cancelEdit: (state) => {
       state.isEditing = false;
-      state.Inventaire = {};
+      state.inventaire = {};
     },
   },
   extraReducers: {
@@ -28,7 +28,7 @@ export const InventaireSlice = createSlice({
     },
     [getInventaire.fulfilled.type]: (state, action) => {
       state.loading = false;
-      state.Inventaire = action.payload;
+      state.inventaire = action.payload;
     },
     [getInventaire.rejected.type]: (state, action) => {
       state.loading = false;
@@ -41,7 +41,7 @@ export const InventaireSlice = createSlice({
     },
     [getInventaireListe.fulfilled.type]: (state, action) => {
       state.loading = false;
-      state.InventaireList = action.payload;
+      state.inventaireList = action.payload;
     },
     [getInventaireListe.rejected.type]: (state, action) => {
       state.loading = false;
@@ -54,7 +54,7 @@ export const InventaireSlice = createSlice({
     },
     [createInventaire.fulfilled.type]: (state, action) => {
       state.loading = false;
-      state.InventaireList.push(action.payload);
+      state.inventaireList.push(action.payload);
     },
     [createInventaire.rejected.type]: (state, action) => {
       state.loading = false;
@@ -67,7 +67,7 @@ export const InventaireSlice = createSlice({
     },
     [updateInventaire.fulfilled.type]: (state, action) => {
       state.loading = false;
-      state.Inventaire = {};
+      state.inventaire = {};
       state.isEditing = false;
     },
     [updateInventaire.rejected.type]: (state, action) => {

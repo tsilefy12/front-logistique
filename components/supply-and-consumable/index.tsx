@@ -140,7 +140,7 @@ export default function SuplyAndCosumableList() {
 
                           <TableCell align="left">{row.unitPrice}</TableCell>
 
-                          <TableCell align="left">{row.SKU}</TableCell>
+                          <TableCell align="left">{row.uniteStock?.uniteStock}</TableCell>
                           <TableCell align="left">{row.montant}</TableCell>
 
                           {/* <TableCell align="left">

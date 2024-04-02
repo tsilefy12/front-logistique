@@ -251,7 +251,6 @@ export default function PDFButton({ data }: { data: ficheDotationItem }) {
                     startIcon={<Print />}
                     sx={{ marginInline: 3 }}
                     >
-                    Imprimer
                     </Button>
                )
                }
