@@ -1,22 +1,9 @@
 import {
-  Button,
   Container,
   styled,
-  Typography,
-  Stack,
-  Divider,
-  Box,
-  TableContainer,
-  Table,
-  TableHead,
-  TableCell,
-  TableBody,
-  TableRow,
+  Stack
 } from "@mui/material";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import ArrowBack from "@mui/icons-material/ArrowBack";
-import { Check, Close, Save } from "@mui/icons-material";
+import React, {  useState } from "react";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
 import Paper from "@mui/material/Paper";
@@ -24,13 +11,11 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../../../hooks/reduxHooks";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import {
   createHolder,
   updateHolder,
 } from "../../../../../redux/features/holder";
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import { cancelEdit } from "../../../../../redux/features/holder/holderSlice";
 import FormDetenteur from "./formDetenteur";
 import { createHolderEquipement } from "../../../../../redux/features/holder/holderEquipementSlice";
@@ -77,7 +62,7 @@ const FormDetentionMateriel = () => {
     return (
         <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
             <Formik
-                enableReinitialize
+                enableReinitialize = { isEditing ? true :false }
                 initialValues={
                     {
                         numOptim:  "",

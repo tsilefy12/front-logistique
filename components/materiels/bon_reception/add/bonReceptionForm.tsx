@@ -101,6 +101,7 @@ export default function BonReceptionForm() {
         <>
             <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
                 <Formik
+                    enableReinitialize = { isEditing ? true :false }
                     initialValues={
                         {
                             bce: (isEditing && bonReception.bce ) ? bonReception.bce :(isEditing && bonReception.bci ) ? bonReception.bci:"",

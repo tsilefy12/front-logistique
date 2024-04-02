@@ -24,7 +24,6 @@ export default function BonCommandeInterneForm() {
     const { isEditing,bonCommandeInterne } = useAppSelector((state) => state.bonCommandeInterne);
 
     const handleSubmit = async (values: any) => {
-        values.montantTotal = valuesArticle.reduce((acc:any, curr:any) => acc + curr.valueArticle, 0);
         try {
             const updateData = {
                 programme: values.programme,
@@ -110,6 +109,7 @@ export default function BonCommandeInterneForm() {
         <>
             <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
                 <Formik
+                    enableReinitialize = { isEditing ? true :false }
                     initialValues={
                         {
                             programme: isEditing ? bonCommandeInterne.programme: "",

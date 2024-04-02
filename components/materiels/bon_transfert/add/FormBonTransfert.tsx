@@ -69,7 +69,6 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
             <NavigationContainer>
                 <SectionNavigation>
                 <Stack flexDirection={"row"}>
-                    <Link href="/materiels/bon_transfert">
                     <Button
                         color="info"
                         variant="text"
@@ -81,26 +80,25 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                     >
                         Retour
                     </Button>
-                    </Link>
                     <Button
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    startIcon={<Check />}
-                    sx={{ marginInline: 3 }}
-                    type="submit"
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        startIcon={<Check />}
+                        sx={{ marginInline: 3 }}
+                        type="submit"
                     >
                         {isEditing ? "Modifier" : "Enregistrer"}
                     </Button>
                     <Button
-                    variant="text"
-                    color="warning"
-                    size="small"
-                    type="reset"
-                    startIcon={<Close />}
-                    onClick={() => {
-                        formikProps.resetForm();
-                    }}
+                        variant="text"
+                        color="warning"
+                        size="small"
+                        type="reset"
+                        startIcon={<Close />}
+                        onClick={() => {
+                            formikProps.resetForm();
+                        }}
                     >
                     Annuler
                     </Button>
@@ -136,6 +134,7 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                             id="outlined-basic"
                             variant="outlined"
                             label="Réference"
+                            value = {formikProps.values.reference}
                             name="reference"
                         />
                     </FormControl>
