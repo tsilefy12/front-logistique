@@ -74,16 +74,15 @@ const Details = () => {
         console.log("cancelled");
       });
   };
-
   return (
     <DetailStagiaireWrapper maxWidth="xl">
       <NavigationContainer>
         <SectionNavigation>
           <Stack flexDirection={"row"}>
-            <Button color="info" variant="text" startIcon={<ArrowBack />}>
+            <Button color="info" variant="text" onClick={() => router.back()} startIcon={<ArrowBack />}>
               Retour
             </Button>
-           <Link href={`/materiels/detenteur/${holder.id}/edit`}>
+            <Link href={`/materiels/detenteur/${holder.id}/edit`}>
               <Button
                 variant="text"
                 color="primary"
@@ -97,7 +96,6 @@ const Details = () => {
                 Modifier
               </Button>
             </Link>
-
             <Button
               variant="text"
               color="warning"

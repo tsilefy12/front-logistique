@@ -155,6 +155,7 @@ const ListStock = () => {
                           tabIndex={-1}
                           key={row.id}
                         >
+                          <TableCell align="left">{row.numOptim}</TableCell>
                           <TableCell
                             padding="normal"
                             component="th"
@@ -164,9 +165,9 @@ const ListStock = () => {
                           >
                             {row.type}
                           </TableCell>
+                          <TableCell align="left">{row.acquisitionDate}</TableCell>
+                          <TableCell align="left">{row.status}</TableCell>
                           <TableCell align="left">{row.inStock}</TableCell>
-                          <TableCell align="left">{row.inUse}</TableCell>
-                          <TableCell align="left">{row.isBroken}</TableCell>
                           <TableCell align="right">
                             <BtnActionContainer
                               direction="row"

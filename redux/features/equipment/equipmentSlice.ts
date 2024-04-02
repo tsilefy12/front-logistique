@@ -12,8 +12,6 @@ import { getEquipment } from "./useCases/getEquipment";
 const equipementInitialState: EquipmentInitialState = {
   equipments: [],
   equipment: {},
-  employees: [],
-  typeequipment: [],
   isEditing: false,
   loading: false,
   error: null,

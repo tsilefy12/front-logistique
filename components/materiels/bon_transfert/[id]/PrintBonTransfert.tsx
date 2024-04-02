@@ -174,7 +174,6 @@ export default function PDFButton({ data }: { data: bonTransfertItem }) {
                     startIcon={<Print />}
                     sx={{ marginInline: 3 }}
                     >
-                    Imprimer
                     </Button>
                )
                }

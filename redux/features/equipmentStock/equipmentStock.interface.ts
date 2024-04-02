@@ -1,11 +1,10 @@
 export interface EquipmentStockItem {
   id?: string;
-  type?: string;
-  prefix?: string;
-  imageUrl?: string;
+  numOptim?: string;
+  type?: string; 
+  acquisitionDate?: string;
+  status?: string;
   inStock?: number;
-  inUse?: number;
-  isBroken?: number;
 }
 
 export interface EquipmentStockInitialState {

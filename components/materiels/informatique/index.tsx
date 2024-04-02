@@ -31,10 +31,10 @@ import EquipmentTableToolbar from "./organism/table/EquipmentTableToolbar";
 import {
   deleteEquipment,
   editEquipment,
-  getEmployee,
 } from "../../../redux/features/equipment";
 import { useConfirm } from "material-ui-confirm";
-import { axios } from "../../../lib/axios";
+import { getInterns } from "../../../redux/features/employeStagiaire/stagiaireSlice";
+import { getEmployees } from "../../../redux/features/employeStagiaire/employeeSlice";
 const ListInfo = () => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -42,10 +42,25 @@ const ListInfo = () => {
     const confirm = useConfirm();
     const dispatch = useAppDispatch();
     const { equipments } = useAppSelector((state) => state.equipment);
-    console.log(equipments);
+    const { employees } = useAppSelector( (state) => state.employe);
+    const { interns } = useAppSelector( (state) => state.stagiaire);
+    
+    const total = [...employees.map((i:any)=>{
+        return {
+            id : i.id, name:i.name +" "+ i.surname, type: "employe"
+        }
+    }),...interns.map((i:any)=>{
+        return {
+            id : i.id, name: i.name +" "+ i.surname, type: "intern"
+        }
+    })]
+
     const fetchEquipment = useFetchEquipment();
     useEffect(() => {
         fetchEquipment();
+        dispatch(getInterns({}));
+        dispatch(getEmployees({}));
+
     }, [router.query]);
     const handleClickDelete = async (id: any) => {
         confirm({
@@ -72,7 +87,7 @@ const ListInfo = () => {
     };
     const handleClickNewInventaire = async (id: any) => {
         await dispatch(editEquipment({ id }));
-        router.push(`/materiels/inventaire/${id}`);
+        router.push(`/materiels/inventaire/${id}/ajouter`);
     };
     //   const name = async (id: any) => {
     //   console.log(getEmployee({ id }));
@@ -130,9 +145,9 @@ const ListInfo = () => {
                         equipments.map((item: any, index: any) => (
                         <TableBody key={index}>
                             <TableCell align="left">{item.numOptim}</TableCell>
-                            <TableCell align="left">{item.type?.type}</TableCell>
-                            <TableCell align="left">{item.owner?.name+" "+item.owner?.surname}</TableCell>
                             <TableCell align="left">{item.designation}</TableCell>
+                            <TableCell align="left">{item.type?.type}</TableCell>
+                            <TableCell align="left">{total.find((e:any)=> e.id === item?.ownerId)?.name}</TableCell>
                             <TableCell align="left">{item.status}</TableCell>
                             <TableCell align="right">
                             <BtnActionContainer

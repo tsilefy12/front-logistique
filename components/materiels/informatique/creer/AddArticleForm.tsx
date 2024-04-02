@@ -89,9 +89,9 @@ const AddArticleForm = () => {
             enableReinitialize
             initialValues={{
                 numOptim: isEditing ? equipment?.numOptim : "",
-                additionalInformation: isEditing
-                    ? equipment?.additionalInformation
-                    : "",
+                // additionalInformation: isEditing
+                //     ? equipment?.additionalInformation
+                //     : "",
                 acquisitionDate: isEditing ? equipment?.acquisitionDate : new Date(),
                 acquisitionValue: isEditing ? equipment?.acquisitionValue : 0,
                 designation: isEditing ? equipment?.designation : "",
@@ -108,7 +108,7 @@ const AddArticleForm = () => {
             }}
             validationSchema={Yup.object({
                 numOptim: Yup.string().required("Veuillez sélectionner un numOptim"),
-                additionalInformation: Yup.string(),
+                // additionalInformation: Yup.string(),
                 acquisitionDate: Yup.date(),
                 acquisitionValue: Yup.number(),
                 designation: Yup.string().required(
@@ -225,7 +225,7 @@ const AddArticleForm = () => {
                             label="Employé utilisateur"
                             name="ownerId"
                             options={employees}
-                            dataKey={["id","name","surname"]}
+                            dataKey={["matricule","name","surname"]}
                             valueKey="id"
                             type="text"
                         />

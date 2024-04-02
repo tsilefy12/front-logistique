@@ -21,7 +21,7 @@ const CardDetenteur = ({ holder }: any) => {
             <Avatar
               sx={{ width: 80, height: 80 }}
               alt="Remy Sharp"
-              // src={process.env.NEXT_PUBLIC_API_URL + holder?.photoURL}
+              src={process.env.NEXT_PUBLIC_API_URL + holder?.photoURL}
             />
           </CardImg>
           <CardDesc sx={{justifyContent: "space-between"}}>
