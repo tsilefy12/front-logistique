@@ -8,6 +8,7 @@ export interface MissionTranportItem{
     montant?: number,
     grant?: string,
     ligneBudgetaire?: string;
+    transportationEquipment?: any;
 }
 
 export interface MissionTransportInitialState{

@@ -36,7 +36,7 @@ const FormBonDeVoiture = () => {
             const data = {
                 materiel: values.materiel,
                 date: new Date(values.date),
-                montantTotal : valuesArticle.reduce((acc:any, curr:any) => acc + curr.montant, 0),
+                montantTotal : valuesArticle.reduce((acc:any, curr:any) => acc + curr.montants, 0),
                 reference: values.reference
             }
             if (isEditing) {
@@ -53,7 +53,7 @@ const FormBonDeVoiture = () => {
                         activite: element.activite,
                         nombre: element.nombre,
                         pu: element.pu,
-                        montant:element.montant,
+                        montants:element.montants,
                         carVoucherId: response.payload.id
                     };
                     dispatch(createActivity(newData));
@@ -69,7 +69,7 @@ const FormBonDeVoiture = () => {
     return (
         <Container maxWidth="xl" sx={{ pb: 5, mb: 4 }}>
         <Formik
-            enableReinitialize
+            enableReinitialize = {isEditing ? true : false}
             initialValues={{
                 materiel: isEditing ? carVoucher?.materiel : "",
                 date: isEditing ? carVoucher?.date : new Date(),
@@ -77,6 +77,7 @@ const FormBonDeVoiture = () => {
                 activite:"",
                 nombre:"",
                 pu:"",
+                montants:"",
                 quantite:""
 
             }}

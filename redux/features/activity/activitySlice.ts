@@ -32,6 +32,7 @@ export const createActivity = createAsyncThunk(
     "activity/createActivity",
     async (data: ActivityItem, thunkAPI) => {
         try {
+            console.log("mandalo ato")
             const response = await axios.post("/logistique/activity", data);
             thunkAPI.dispatch(
                 enqueueSnackbar({
@@ -76,7 +77,7 @@ export const deleteActivity = createAsyncThunk(
 
 export const getActivityList = createAsyncThunk(
     "activity/getActivityList",
-    async (data: { args?: any }, thunkAPI) => {
+    async (data: {args?: any }, thunkAPI) => {
         try {
             const params = {
                 args: JSON.stringify(data.args),
@@ -101,7 +102,7 @@ export const getActivity = createAsyncThunk(
             const params = {
                 args: JSON.stringify(data.args),
             };
-            const response = await axios.get(`/logistique/activity/${data.id}`, { params });
+            const response = await axios.get(`/logistique/activity/find-by-carVoucherId/${data.id}`, { params });
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -152,7 +153,7 @@ export const activitySlice = createSlice({
     extraReducers: {
         [getActivity.fulfilled.type]: (state, action) => {
             state.loading = false;
-            state.activity = action.payload;
+            state.activitys = action.payload;
         },
         [getActivity.rejected.type]: (state, action) => {
             state.loading = false;

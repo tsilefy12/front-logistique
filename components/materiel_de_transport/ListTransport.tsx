@@ -171,6 +171,11 @@ const ListTransport = () => {
                             </TableCell>
 
                             <TableCell align="left">
+                              {row?.fournisseur ? row.vendor?.name: ''}
+                            </TableCell>
+
+
+                            <TableCell align="left">
                               {row.status}
                             </TableCell>
 

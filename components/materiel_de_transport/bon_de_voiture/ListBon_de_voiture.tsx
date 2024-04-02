@@ -45,24 +45,15 @@ const ListTransport = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { carVouchers } = useAppSelector((state) => state.carVoucher);
+  const {transportationEquipment } = useAppSelector((state) =>state.transportationEquipment) 
+  const fetchTransportEquipements = useFetchTransportationEquipments()
 
   const fetchCarVouchers = useFetchCarVouchers();
-  const fetchTransportationEquipment = useFetchTransportationEquipments();
-  const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment);
 
   React.useEffect(() => {
+    fetchTransportEquipements()
     fetchCarVouchers();
-    fetchTransportationEquipment();
   }, [router.query]);
-
-  var MaterielValue = "";
-    transportationEquipments.forEach((element:any) => {
-      carVouchers.forEach((item:any) =>{
-           if (element?.id === item["materiel"]) {
-              MaterielValue = element?.registration;
-           }
-        })
-    });
 
   const handleClickEdit = async (id: any) => {
     router.push(`/materiel_de_transport/bon_de_voiture/${id}/edit`);
@@ -71,7 +62,7 @@ const ListTransport = () => {
   const handleClickDelete = async (id: any) => {
     confirm({
       title: "Supprimer le bon de voiture",
-      description: "Voulez-vous vraiment supprimer ce bon de voiture ?",
+      description: "Voulez-vous vraiment supprimer cet entretien ?",
       cancellationText: "Annuler",
       confirmationText: "Supprimer",
       cancellationButtonProps: {
@@ -131,15 +122,17 @@ const ListTransport = () => {
                 <TableBody>
                   {carVouchers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row: CarVoucherItem | any, index: any) => {
+                    .map((row: CarVoucherItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (
                         <TableRow hover tabIndex={-1} key={row.id}>
                           <TableCell component="th" id={labelId} align="left">
-                            {MaterielValue}
+                            {row?.materiel ? row.transportationEquipment?.registration: ''}
                           </TableCell>
 
-                          <TableCell align="left">{format(new Date(row.date), "dd/MM/yyyy")}</TableCell>
+                          <TableCell align="left">
+                            <Moment format="DD/MM/yyyy">{row.date}</Moment>
+                          </TableCell>
 
                           <TableCell align="left">
                             {row.reference}

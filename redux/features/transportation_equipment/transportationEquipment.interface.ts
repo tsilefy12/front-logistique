@@ -10,6 +10,7 @@ export interface TransportationEquipmentItem {
     reservoir?: number;
     consommation?: number;
     fournisseur?: string;
+    vendor? : any;
 }
 
 export interface TransportationEquipmentInitialState {

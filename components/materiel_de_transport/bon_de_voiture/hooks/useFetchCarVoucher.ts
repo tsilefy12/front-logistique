@@ -13,7 +13,11 @@ const useFetchCarVouchers = () => {
     const dispatch = useAppDispatch();
 
     return async () => {
-        let args: any = {};
+        let args: any = {
+            include:{
+                transportationEquipment: true,
+            }
+        };
         if (router.query.search) {
             args.where = {
                 OR: [

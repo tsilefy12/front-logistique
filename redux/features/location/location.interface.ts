@@ -6,11 +6,13 @@ export interface LocationItem{
     referenceBudgetaire?: string,
     prestataire?: string,
     nif?: string,
-    stat?: string,
+    //stat?: string,
     montant?: number,
     grant?: string,
     ligneBudgetaire?: string,
     itineraire?: string;
+    transportationEquipment?: any;
+    vendor?: any;
 }
 
 export interface LocationInitialState{

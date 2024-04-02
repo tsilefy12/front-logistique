@@ -6,7 +6,12 @@ const useFetchLocationDeTransport = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   return () => {
-    let args: any = {};
+    let args: any = {
+      include:{
+          transportationEquipment: true,
+          vendor: true,
+      }
+    };
     if (router.query.search) {
       args.where = {
         OR: [

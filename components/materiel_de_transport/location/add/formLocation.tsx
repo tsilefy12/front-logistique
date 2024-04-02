@@ -100,7 +100,7 @@ const FormLocation = () => {
                     referenceBudgetaire: isEditing ? locationDeTransport?.referenceBudgetaire : "",
                     prestataire: isEditing ? locationDeTransport?.prestataire : "",
                     nif: isEditing ? locationDeTransport?.nif : "",
-                    stat: isEditing ? locationDeTransport?.stat : "",
+                    //stat: isEditing ? locationDeTransport?.stat : "",
                     montant: isEditing ? locationDeTransport?.montant : "",
                     grant: isEditing ? locationDeTransport?.grant : "",
                     ligneBudgetaire: isEditing ? locationDeTransport?.ligneBudgetaire : "",
@@ -119,9 +119,9 @@ const FormLocation = () => {
                     nif: Yup.string().required(
                         "Veuillez remplir le champ nif"
                     ),
-                    stat: Yup.string().required(
+                   /* stat: Yup.string().required(
                         "Veuillez remplir le champ stat"
-                    ),
+                    ),*/
                     montant: Yup.string().required(
                         "Veuillez remplir le champ montant"
                     ),
@@ -261,7 +261,7 @@ const FormLocation = () => {
                                     valueKey="id"
                                     name="nif"
                                 />
-                                <OSSelectField
+                                {/*<OSSelectField
                                     id="outlined-basic"
                                     label="stat"
                                     variant="outlined"
@@ -270,7 +270,7 @@ const FormLocation = () => {
                                     valueKey="id"
                                     name="stat"
                                 />
-
+                                        */}
                             </Stack>
                             <Stack
                                 direction="row"
