@@ -3,8 +3,9 @@ export interface ActivityItem {
     activite?:string,
     nombre?: number,
     pu?: number,
-    montant?: number,
-    carVoucherId?: string
+    montants?: number,
+    carVoucherId?: string,
+    carVoucher?: any
 }
 export interface ActivityInitialState{
     activitys: ActivityItem[],

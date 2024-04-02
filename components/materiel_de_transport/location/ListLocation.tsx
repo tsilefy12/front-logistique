@@ -31,6 +31,7 @@ import { defaultLabelDisplayedRows, labelRowsPerPage } from "../../../config/tab
 import useFetchLocationDeTransport from "./hooks/useFetchLocationDeTransport";
 import useFetchVendors from "../../vendor/hooks/useFetchVendors";
 import useFetchTransportationEquipments from "../hooks/useFetchTransportationEquipments";
+import Moment from "react-moment";
 
     const ListLocation = () => {
     const [page, setPage] = React.useState(0);
@@ -42,16 +43,11 @@ import useFetchTransportationEquipments from "../hooks/useFetchTransportationEqu
     const dispatch = useAppDispatch();
     const { locationDeTransports } = useAppSelector((state) => state.locationDeTransport);
     const fetchLocationTransport = useFetchLocationDeTransport();
-    const fetchVendor = useFetchVendors();
-    const {vendors } = useAppSelector((state) =>state.vendor)
-    const fetchTransportationEquipment = useFetchTransportationEquipments();
-    const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment)
+    
 
    
     React.useEffect(() => {
       fetchLocationTransport();
-      fetchVendor();
-      fetchTransportationEquipment();
     }, [router.query]);
    
     const handleClickEdit = async (id: any) => {
@@ -92,30 +88,7 @@ import useFetchTransportationEquipments from "../hooks/useFetchTransportationEqu
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
       page > 0 ? Math.max(0, (1 + page) * rowsPerPage - locationDeTransports.length) : 0;
-    
-    var nifValue = "";
-    var stateValue = "";
-    locationDeTransports.forEach((element:any) => {
-        vendors.forEach((item:any) =>{
-           if (element?.nif === item["id"]) {
-              nifValue = item?.nif;
-              stateValue = item?.website;
-           }else{
-              nifValue  = ""
-              stateValue= ""
-           }
-        })
-    });
-      var MaterielValue = "";
-      transportationEquipments.forEach((element:any) => {
-        
-        locationDeTransports.forEach((item:any) =>{
-             if (element?.id === item["materiel"]) {
-                MaterielValue = element?.registration;
-             }
-          })
-      });
-    
+
     return (
       <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
         <NavigationContainer>
@@ -145,15 +118,17 @@ import useFetchTransportationEquipments from "../hooks/useFetchTransportationEqu
                     {
                     locationDeTransports
                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      .map((row: LocationItem | any, index: any) => {
+                      .map((row: LocationItem, index: any) => {
                         const labelId = `enhanced-table-checkbox-${index}`;
                         return (
                           <TableRow hover tabIndex={-1} key={row.id}>
                             <TableCell component="th" id={labelId} align="left" className="gogo">
-                              {MaterielValue}
+                              {row?.materiel ? row.transportationEquipment?.registration: ''}
                             </TableCell>
 
-                            <TableCell align="left">{format(new Date(row.date), "dd/MM/yyyy")}</TableCell>
+                            <TableCell align="left">
+                              <Moment format="DD/MM/yyyy">{row.date}</Moment>
+                            </TableCell>
   
                             <TableCell align="left">{row.responsable}</TableCell>
   
@@ -164,12 +139,12 @@ import useFetchTransportationEquipments from "../hooks/useFetchTransportationEqu
                                 {row.prestataire}
                             </TableCell>
 
-                            <TableCell align="left">
-                                {nifValue}
+                         <TableCell align="left">
+                                {row?.nif ? row.vendor?.nif: ''}
                             </TableCell>
                             <TableCell align="left">
-                                {stateValue}
-                            </TableCell>
+                                {row?.nif ? row.vendor?.state: ''}
+                        </TableCell>
                             <TableCell align="left">
                                 {row.montant}
                             </TableCell>

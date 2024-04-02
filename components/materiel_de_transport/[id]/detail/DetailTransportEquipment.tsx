@@ -19,18 +19,16 @@ import { getTransportationEquipment } from "../../../../redux/features/transport
 import Moment from "react-moment";
 import useFetchTransportationEquipments from "../../hooks/useFetchTransportationEquipments";
 import useFetchVendors from "../../../vendor/hooks/useFetchVendors";
+import { TransportationEquipmentItem } from "../../../../redux/features/transportation_equipment/transportationEquipment.interface";
 
 const DetailTransportEquipment = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { id }: any = router.query;
-  const { transportationEquipment } = useAppSelector(
-    (state) => state.transportationEquipment
-  );
-  const {transportationEquipments} = useAppSelector((state) =>state.transportationEquipment)
+
+  const { transportationEquipment } = useAppSelector((state) => state.transportationEquipment)
   const fetchTransportEquipement = useFetchTransportationEquipments();
-  const { vendors } = useAppSelector((state) =>state.vendor)
-  const fetchVendor = useFetchVendors();
+ 
   const getDetailTransportationEquipment = () => {
     const args: any = {
       include: {
@@ -44,6 +42,7 @@ const DetailTransportEquipment = () => {
         reservoir: true,
         consommation: true,
         fournisseur: true,
+        vendor: true
       },
     };
     dispatch(getTransportationEquipment({ id, args }));
@@ -52,18 +51,8 @@ const DetailTransportEquipment = () => {
   useEffect(() => {
     getDetailTransportationEquipment();
     fetchTransportEquipement();
-    fetchVendor();
   }, [id]);
 
-  var nomFournisseur = "";
- // var bool = false;
-  transportationEquipments.forEach((element:any) => {
-      vendors.forEach((item:any) =>{
-         if (element?.fournisseur === item["id"]) {
-          nomFournisseur = item?.name;
-         }
-      })
-  });
   return (
     <Container maxWidth="xl" sx={{ pb: 5 }}>
       <NavigationContainer>
@@ -88,134 +77,134 @@ const DetailTransportEquipment = () => {
         <Divider />
       </NavigationContainer>
       <DetailsContainer>
-        <Stack direction="row" spacing={25}>
-        <Stack>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Régistration :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {transportationEquipment.registration}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Type :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {transportationEquipment.type}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Marque :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {transportationEquipment.brand}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Status :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {transportationEquipment.status}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        </Stack>
-        <Stack>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Date d'acquisition :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                <Moment format="DD/MM/YYYY">{transportationEquipment.dateAcquisition}</Moment>
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Kilometrage initial :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {transportationEquipment.kilometrageInitial}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Reservoir :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {transportationEquipment.reservoir}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Consommation :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {transportationEquipment.consommation}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        </Stack>
-        <Stack>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Autre information :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {transportationEquipment.otherInformation}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Fournisseur :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {nomFournisseur}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        </Stack>
-        </Stack>
+               <Stack direction="row" spacing={25}>
+               <Stack>
+                 <Grid container spacing={4} my={1}>
+                   <Grid item xs={12} md={12}>
+                     <InfoItems direction="row" spacing={2}>
+                       <Typography variant="body1" color="secondary">
+                         Régistration :
+                       </Typography>
+                       <Typography variant="body1" color="gray">
+                         {transportationEquipment.registration}
+                       </Typography>
+                     </InfoItems>
+                   </Grid>
+                 </Grid>
+                 <Grid container spacing={4} my={1}>
+                   <Grid item xs={12} md={12}>
+                     <InfoItems direction="row" spacing={2}>
+                       <Typography variant="body1" color="secondary">
+                         Type :
+                       </Typography>
+                       <Typography variant="body1" color="gray">
+                         {transportationEquipment.type}
+                       </Typography>
+                     </InfoItems>
+                   </Grid>
+                 </Grid>
+                 <Grid container spacing={4} my={1}>
+                   <Grid item xs={12} md={12}>
+                     <InfoItems direction="row" spacing={2}>
+                       <Typography variant="body1" color="secondary">
+                         Marque :
+                       </Typography>
+                       <Typography variant="body1" color="gray">
+                         {transportationEquipment.brand}
+                       </Typography>
+                     </InfoItems>
+                   </Grid>
+                 </Grid>
+                 <Grid container spacing={4} my={1}>
+                   <Grid item xs={12} md={12}>
+                     <InfoItems direction="row" spacing={2}>
+                       <Typography variant="body1" color="secondary">
+                         Status :
+                       </Typography>
+                       <Typography variant="body1" color="gray">
+                         {transportationEquipment.status}
+                       </Typography>
+                     </InfoItems>
+                   </Grid>
+                 </Grid>
+               </Stack>
+               <Stack>
+                 <Grid container spacing={4} my={1}>
+                   <Grid item xs={12} md={12}>
+                     <InfoItems direction="row" spacing={2}>
+                       <Typography variant="body1" color="secondary">
+                         Date d'acquisition :
+                       </Typography>
+                       <Typography variant="body1" color="gray">
+                         <Moment format="DD/MM/YYYY">{transportationEquipment.dateAcquisition}</Moment>
+                       </Typography>
+                     </InfoItems>
+                   </Grid>
+                 </Grid>
+                 <Grid container spacing={4} my={1}>
+                   <Grid item xs={12} md={12}>
+                     <InfoItems direction="row" spacing={2}>
+                       <Typography variant="body1" color="secondary">
+                         Kilometrage initial :
+                       </Typography>
+                       <Typography variant="body1" color="gray">
+                         {transportationEquipment.kilometrageInitial}
+                       </Typography>
+                     </InfoItems>
+                   </Grid>
+                 </Grid>
+                 <Grid container spacing={4} my={1}>
+                   <Grid item xs={12} md={12}>
+                     <InfoItems direction="row" spacing={2}>
+                       <Typography variant="body1" color="secondary">
+                         Reservoir :
+                       </Typography>
+                       <Typography variant="body1" color="gray">
+                         {transportationEquipment.reservoir}
+                       </Typography>
+                     </InfoItems>
+                   </Grid>
+                 </Grid>
+                 <Grid container spacing={4} my={1}>
+                   <Grid item xs={12} md={12}>
+                     <InfoItems direction="row" spacing={2}>
+                       <Typography variant="body1" color="secondary">
+                         Consommation :
+                       </Typography>
+                       <Typography variant="body1" color="gray">
+                         {transportationEquipment.consommation}
+                       </Typography>
+                     </InfoItems>
+                   </Grid>
+                 </Grid>
+               </Stack>
+               <Stack>
+                 <Grid container spacing={4} my={1}>
+                   <Grid item xs={12} md={12}>
+                     <InfoItems direction="row" spacing={2}>
+                       <Typography variant="body1" color="secondary">
+                         Autre information :
+                       </Typography>
+                       <Typography variant="body1" color="gray">
+                         {transportationEquipment.otherInformation}
+                       </Typography>
+                     </InfoItems>
+                   </Grid>
+                 </Grid>
+                { /*<Grid container spacing={4} my={1}>
+                   <Grid item xs={12} md={12}>
+                     <InfoItems direction="row" spacing={2}>
+                       <Typography variant="body1" color="secondary">
+                         Fournisseur :
+                       </Typography>
+                       <Typography variant="body1" color="gray">
+                         {transportationEquipment.vendor?.name}
+                       </Typography>
+                     </InfoItems>
+                   </Grid>
+                 </Grid>*/}
+               </Stack>
+             </Stack>
       </DetailsContainer>
     </Container>
   );

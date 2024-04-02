@@ -9,6 +9,7 @@ export interface SuiviCarburantItem{
     grant?: string,
     ligneBudgetaire?: string,
     modePaiement?: string;
+    transportationEquipment?: any;
 }
 
 export interface SuiviCarburantInitialState{

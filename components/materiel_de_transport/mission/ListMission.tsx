@@ -28,7 +28,6 @@ import {
     defaultLabelDisplayedRows,
     labelRowsPerPage,
   } from "../../shared/table/tableFeature";
-  import Moment from "react-moment";
 import { format } from "date-fns";
 import useFetchMissionTransport from "./hooks/useFectMission";
 import { deleteMissionDeTransport } from "../../../redux/features/mission_transport/missionTransportSlice";
@@ -36,6 +35,7 @@ import MissionTransportTableHeader from "./organisme/table/MissionTransportTable
 import { MissionTranportItem } from "../../../redux/features/mission_transport/missionTransport.interface";
 import MissionTransportTableToolbar from "./organisme/table/MissionTransportTableToolbar";
 import useFetchTransportationEquipments from "../hooks/useFetchTransportationEquipments";
+import Moment from "react-moment";
   
     const ListMission = () => {
     const [page, setPage] = React.useState(0);
@@ -57,14 +57,14 @@ import useFetchTransportationEquipments from "../hooks/useFetchTransportationEqu
       
     }, [router.query]);
    
-    var MaterielValue = "";
+    /*var MaterielValue = "";
     transportationEquipments.forEach((element:any) => {
       missionTransports.forEach((item:any) =>{
            if (element?.id === item["materiel"]) {
               MaterielValue = element?.registration;
            }
         })
-    });
+    });*/
 
     const handleClickEdit = async (id: any) => {
       router.push(`/materiel_de_transport/mission/${id}/edit`);
@@ -134,17 +134,19 @@ import useFetchTransportationEquipments from "../hooks/useFetchTransportationEqu
                     {
                     missionTransports
                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      .map((row: MissionTranportItem | any, index: any) => {
+                      .map((row: MissionTranportItem, index: any) => {
                         const labelId = `enhanced-table-checkbox-${index}`;
                         return (
                           <TableRow hover tabIndex={-1} key={row.id}>
                             <TableCell component="th" id={labelId} align="left">
-                              {MaterielValue}
+                              {row?.materiel ? row.transportationEquipment?.registration: ''}
                             </TableCell>
 
                             <TableCell align="left">{row.pj}</TableCell>
   
-                            <TableCell align="left">{format(new Date(row.date), "dd/MM/yyyy")}</TableCell>
+                            <TableCell align="left">
+                              <Moment format ="DD/MM/yyyy">{row.date}</Moment>
+                            </TableCell>
   
                             <TableCell align="left">
                                 {row.libelle}

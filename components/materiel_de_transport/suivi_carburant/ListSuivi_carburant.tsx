@@ -59,14 +59,6 @@ import useFetchTransportationEquipments from "../hooks/useFetchTransportationEqu
       fetchTransportationEquipment();
     }, [router.query]);
 
-    var MaterielValue = "";
-    transportationEquipments.forEach((element:any) => {
-      suiviCarburants.forEach((item:any) =>{
-           if (element?.id === item["materiel"]) {
-              MaterielValue = element?.registration;
-           }
-        })
-    });
 
     const handleClickEdit = async (id: any) => {
       router.push(`/materiel_de_transport/suivi_carburant/${id}/edit`);
@@ -136,15 +128,17 @@ import useFetchTransportationEquipments from "../hooks/useFetchTransportationEqu
                     {
                     suiviCarburants
                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      .map((row: SuiviCarburantItem | any, index: any) => {
+                      .map((row: SuiviCarburantItem, index: any) => {
                         const labelId = `enhanced-table-checkbox-${index}`;
                         return (
                           <TableRow hover tabIndex={-1} key={row.id}>
                             <TableCell component="th" id={labelId} align="left">
-                              {MaterielValue}
+                              {row?.materiel ? row.transportationEquipment?.registration: ''}
                             </TableCell>
   
-                            <TableCell align="left">{format(new Date(row.date), "dd/MM/yyyy")}</TableCell>
+                            <TableCell align="left">
+                              <Moment format="DD/MM/yyyy">{row.date}</Moment>
+                            </TableCell>
   
                             <TableCell align="left">{row.itineraire}</TableCell>
   

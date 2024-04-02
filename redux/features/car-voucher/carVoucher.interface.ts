@@ -4,6 +4,7 @@
     date?: Date;
     montantTotal?: string;
     reference?: string;
+    transportationEquipment?: any
     /*argument?: string;
     itinerary?: string;
     departureDate?: string;
