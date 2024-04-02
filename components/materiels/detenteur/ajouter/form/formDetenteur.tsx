@@ -14,9 +14,10 @@ import { getEquipment } from '../../../../../redux/features/equipment/useCases/g
 import { getEmployees, getEquipments } from '../../../../../redux/features/equipment';
 import { getInterns } from '../../../../../redux/features/employeStagiaire/stagiaireSlice';
 import Moment from 'react-moment';
+import { useRouter } from 'next/router';
 
 const FormDetenteur = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any}) => {
-    
+    const route = useRouter();
     const { isEditing, holder } = useAppSelector((state) => state.holder);
 
     const dispatch = useAppDispatch();
@@ -88,18 +89,17 @@ const FormDetenteur = ({formikProps,valuesArticle,setValuesArticle}: {formikProp
             <NavigationContainer>
                 <SectionNavigation>
                 <Stack flexDirection={"row"}>
-                    <Link href="/materiels/detenteur">
-                    <Button
+                     <Button
                         color="info"
                         variant="text"
                         startIcon={<ArrowBack />}
                         onClick={() => {
+                            route.back()
                             formikProps.resetForm();
                         }}
                     >
                         Retour
                     </Button>
-                    </Link>
                     <Button
                     variant="contained"
                     color="primary"
