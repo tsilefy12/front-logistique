@@ -123,7 +123,7 @@ export default function PvComparaisonForm() {
         <>
             <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
                 <Formik
-                    enableReinitialize
+                    enableReinitialize = { isEditing ? true :false }
                     initialValues={
                         {
                             objet:"",

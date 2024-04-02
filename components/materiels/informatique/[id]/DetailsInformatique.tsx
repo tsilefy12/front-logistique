@@ -73,7 +73,7 @@ const DetailsInformatique = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-                N°Optim :
+                Code :
               </Typography>
               <Typography variant="body1" color="gray">
                 {equipment.numOptim}
@@ -123,9 +123,9 @@ const DetailsInformatique = () => {
               <Typography variant="body1" color="secondary">
                 Etat :
               </Typography>
-              <Typography variant="body1" color="gray">
+              {/* <Typography variant="body1" color="gray">
                 {getText(equipment.status)}
-              </Typography>
+              </Typography> */}
             </InfoItems>
           </Grid>
         </Grid>

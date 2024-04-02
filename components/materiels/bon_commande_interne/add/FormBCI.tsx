@@ -16,6 +16,7 @@ import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 import { getGrantList } from '../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice';
 import { getBudgetLineList } from '../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice';
 import EditIcon from "@mui/icons-material/Edit";
+import OSDatePicker from '../../../shared/date/OSDatePicker';
 
 const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) => {
     const dispatch = useAppDispatch();
@@ -166,9 +167,13 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
                         />
                     </FormControl>
                     <FormControl fullWidth>
-                        <OSDateTimePicker
-                            label="Date bon de commande interne"
-                            name="dateBonCommande"
+                        <OSDatePicker
+                            fullWidth
+                            id="outlined-basic"
+                            label="Date du bon de commande"
+                            variant="outlined"
+                            value = {formikProps.values.dateBonCommande}
+                            onChange = {(value: any) =>formikProps.setFieldValue("dateBonCommande", value)}
                         />
                     </FormControl>
                 </Stack>

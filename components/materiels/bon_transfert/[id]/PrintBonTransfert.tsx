@@ -33,11 +33,11 @@ function PrintBonTransfert({ pdfData }: { pdfData: any }) {
                               <View style={{width: "50%",display: "flex",flexDirection: "row"}}>
                                    <View style={{width: "40%",display: "flex",flexDirection: "column"}}>
                                         <Text style={{width: "100%",border:"1px solid #000",textAlign:"center",fontWeight:"bold",fontSize:10,padding:2}}>DESTINATAIRE</Text>
-                                        <Text style={{width: "100%",border:"1px solid #000",textAlign:"center",fontSize:10,padding:2}}>{pdfData.destination?.name} {pdfData.destination?.surname}</Text>
+                                        <Text style={{width: "100%",border:"1px solid #000",textAlign:"center",fontSize:10,padding:2}}>{pdfData?.destination}</Text>
                                    </View>
                                    <View style={{width: "40%",display: "flex",flexDirection: "column"}}>
                                         <Text style={{width: "100%",border:"1px solid #000",textAlign:"center",fontWeight:"bold",fontSize:10,padding:2}}>EXPEDITEUR</Text>
-                                        <Text style={{width: "100%",border:"1px solid #000",textAlign:"center",fontSize:10,padding:2}}>{pdfData.expediteurData?.name} {pdfData.expediteurData?.surname}</Text>
+                                        <Text style={{width: "100%",border:"1px solid #000",textAlign:"center",fontSize:10,padding:2}}>{pdfData.expediteur}</Text>
                                    </View>
                               </View>
                               <View style={{width: "50%",display: "flex",flexDirection: "row",marginLeft:10}}>

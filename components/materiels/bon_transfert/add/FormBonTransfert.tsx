@@ -1,6 +1,5 @@
 import { Form, FormikProps } from 'formik';
 import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { useRouter } from 'next/router';
 import { getEmployees } from '../../../../redux/features/employeStagiaire/employeeSlice';
 import { getInterns } from '../../../../redux/features/employeStagiaire/stagiaireSlice';
@@ -14,6 +13,8 @@ import ArrowBack from '@mui/icons-material/ArrowBack';
 import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 import { getGrantList } from '../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice';
 import EditIcon from "@mui/icons-material/Edit";
+import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
+import OSDatePicker from '../../../shared/date/OSDatePicker';
 
 const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) =>  {
     const dispatch = useAppDispatch();
@@ -68,7 +69,6 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
             <NavigationContainer>
                 <SectionNavigation>
                 <Stack flexDirection={"row"}>
-                    <Link href="/materiels/bon_transfert">
                     <Button
                         color="info"
                         variant="text"
@@ -80,26 +80,25 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                     >
                         Retour
                     </Button>
-                    </Link>
                     <Button
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    startIcon={<Check />}
-                    sx={{ marginInline: 3 }}
-                    type="submit"
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        startIcon={<Check />}
+                        sx={{ marginInline: 3 }}
+                        type="submit"
                     >
                         {isEditing ? "Modifier" : "Enregistrer"}
                     </Button>
                     <Button
-                    variant="text"
-                    color="warning"
-                    size="small"
-                    type="reset"
-                    startIcon={<Close />}
-                    onClick={() => {
-                        formikProps.resetForm();
-                    }}
+                        variant="text"
+                        color="warning"
+                        size="small"
+                        type="reset"
+                        startIcon={<Close />}
+                        onClick={() => {
+                            formikProps.resetForm();
+                        }}
                     >
                     Annuler
                     </Button>
@@ -135,17 +134,18 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                             id="outlined-basic"
                             variant="outlined"
                             label="Réference"
+                            value = {formikProps.values.reference}
                             name="reference"
                         />
                     </FormControl>
                     <FormControl fullWidth>
                         <OSSelectField
                             id="outlined-basic"
-                            label="Expedition via"
-                            name="expeditionVia"
-                            options={ExpeditionVia}
-                            dataKey={["name"]}
-                            valueKey="name"
+                            label="Expediteur"
+                            name="expediteur"
+                            options={employees}
+                            dataKey={["matricule","name","surname"]}
+                            valueKey="id"
                         />
                     </FormControl>
                     <FormControl fullWidth>
@@ -166,18 +166,23 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                     spacing={2}
                     >
                     <FormControl fullWidth>
-                        <OSTextField
-                            fullWidth
+                        <OSSelectField
                             id="outlined-basic"
-                            variant="outlined"
                             label="Expedition via"
                             name="expeditionVia"
+                            options={ExpeditionVia}
+                            dataKey={["name"]}
+                            valueKey="name"
                         />
                     </FormControl>
                     <FormControl fullWidth>
-                        <OSDateTimePicker
+                        <OSDatePicker
+                            fullWidth
+                            id="outlined-basic"
                             label="Date expedition"
-                            name="dateExp"
+                            variant="outlined"
+                            value = {formikProps.values.dateExp}
+                            onChange = {(value: any) =>formikProps.setFieldValue("dateExp", value)}
                         />
                     </FormControl>
                 </Stack>

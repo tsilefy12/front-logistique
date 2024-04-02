@@ -77,6 +77,7 @@ export default function BonCommandeExterneForm() {
         <>
             <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
                 <Formik
+                    enableReinitialize = { isEditing ? true :false }
                     initialValues={{
                         ref: "",
                         dateCommande: new Date(),

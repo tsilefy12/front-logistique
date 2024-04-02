@@ -126,7 +126,7 @@ const ListDetailStockParType = () => {
               >
                 <TableHead>
                   <TableRow>
-                    <TableCell>N° OPTIM</TableCell>
+                    <TableCell>Code</TableCell>
                     <TableCell align="right">Désignation</TableCell>
                     <TableCell align="right">Date début de stock</TableCell>
                   </TableRow>

@@ -101,10 +101,11 @@ export default function BonReceptionForm() {
         <>
             <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
                 <Formik
+                    enableReinitialize = { isEditing ? true :false }
                     initialValues={
                         {
                             bce: (isEditing && bonReception.bce ) ? bonReception.bce :(isEditing && bonReception.bci ) ? bonReception.bci:"",
-                            reference : isEditing && bonReception.reference ? bonReception.reference:"",
+                            reference : isEditing ? bonReception.reference:"",
                             dateReception : isEditing && bonReception.dateReception ? new Date(bonReception.dateReception): new Date(),
                             type: "",
                             designation :"",

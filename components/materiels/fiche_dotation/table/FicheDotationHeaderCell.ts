@@ -2,6 +2,12 @@ import { HeadCell } from "./HeadCell.interface";
 
 export const FicheDotationHeadCells: readonly HeadCell[] = [
     {
+        id: "reference",
+        numeric: false,
+        disablePadding: false,
+        label: "Réference",
+    },
+    {
         id: "date",
         numeric: false,
         disablePadding: false,
@@ -20,16 +26,15 @@ export const FicheDotationHeadCells: readonly HeadCell[] = [
         label: "District",
     },
     {
-        id: "fokotany",
-        numeric: false,
-        disablePadding: false,
-        label: "Fokotany",
-    },
-    {
         id: "commune",
         numeric: false,
         disablePadding: false,
         label: "Commune",
+    },{
+        id: "fokotany",
+        numeric: false,
+        disablePadding: false,
+        label: "Fokotany",
     },
     {
         id: "grant",

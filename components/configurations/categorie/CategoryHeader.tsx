@@ -39,7 +39,7 @@ const CategoryHeader = () => {
                     categorieStock: isEditing ? categorieStock?.categorieStock : "",
                 }}
                 validationSchema={Yup.object({
-                    categorieStock: Yup.string().required("Veuillez sélectionner un numOptim"),
+                    categorieStock: Yup.string().required("Veuillez sélectionner un code"),
                 })}
                 onSubmit={(value: any, action: any) => {
                     handleSubmit(value);

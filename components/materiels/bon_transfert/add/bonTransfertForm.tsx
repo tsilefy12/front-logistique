@@ -108,16 +108,17 @@ export default function BonTransfertForm() {
         <>
             <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
                 <Formik
+                    enableReinitialize = { isEditing ? true :false }
                     initialValues={
                         {
-                            reference: isEditing && bonTransfert ? bonTransfert.reference:"",
-                            expediteur:isEditing && bonTransfert ? bonTransfert.expediteur:"",
-                            destination:isEditing && bonTransfert ? bonTransfert.designation: "",
-                            dateExp:isEditing && bonTransfert.dateExp ? new Date(bonTransfert.dateExp).toISOString(): new Date().toISOString(),
-                            expeditionVia: isEditing && bonTransfert ? bonTransfert.expeditionVia:"",
-                            programme:isEditing && bonTransfert ? bonTransfert.programme:"",
-                            grant:isEditing && bonTransfert ? bonTransfert.grant: "",
-                            type:isEditing && bonTransfert ? bonTransfert.type:"",
+                            reference: isEditing ? bonTransfert.reference:"",
+                            expediteur:isEditing ? bonTransfert.expediteur:"",
+                            destination:isEditing ? bonTransfert.designation: "",
+                            dateExp:isEditing && bonTransfert.dateExp ? new Date(bonTransfert.dateExp): new Date(),
+                            expeditionVia: isEditing ? bonTransfert.expeditionVia:"",
+                            programme:isEditing? bonTransfert.programme:"",
+                            grant:isEditing ? bonTransfert.grant: "",
+                            type:isEditing ? bonTransfert.type:"",
                             designation: "",
                             quantiteCommande: 0,
                             quantiteExpedie:0,

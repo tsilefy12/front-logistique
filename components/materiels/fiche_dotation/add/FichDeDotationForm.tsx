@@ -58,7 +58,7 @@ export default function FichDotationForm() {
         <>
             <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
                 <Formik
-                    enableReinitialize
+                    enableReinitialize = { isEditing ? true :false }
                     initialValues={
                         {
                             date:isEditing && ficheDotation.date ? new Date(ficheDotation.date):new Date().toISOString(),

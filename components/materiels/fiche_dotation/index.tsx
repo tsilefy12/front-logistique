@@ -32,6 +32,8 @@ import Moment from "react-moment";
 import { ficheDotationItem } from "../../../redux/features/fiche_dotation/ficheDotation.interface";
 import useFetchFicheDeDotation from "./hooks/useFetchFicheDeDotation";
 import { deleteFicheDotation } from "../../../redux/features/fiche_dotation/ficheDotationSlice";
+import { getGrantList } from "../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
+import { getBudgetLineList } from "../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
 
 export default function FicheDotationList() {
     const [page, setPage] = React.useState(0);
@@ -47,6 +49,8 @@ export default function FicheDotationList() {
     const dispatch = useAppDispatch();
 
     const { ficheDotations } = useAppSelector((state) => state.ficheDotation);
+    const { grantList } = useAppSelector( (state) => state.grant);
+    const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
 
     const fetchFicheDotation = useFetchFicheDeDotation();
     
@@ -54,6 +58,8 @@ export default function FicheDotationList() {
 
     useEffect(() => {
         fetchFicheDotation();
+        dispatch(getGrantList({}));
+        dispatch(getBudgetLineList({}));
     }, [router.query]);
 
     const handleClickEdit = async (id: any) => {
@@ -130,6 +136,9 @@ export default function FicheDotationList() {
                             return (
                                 <TableRow hover tabIndex={-1} key={row.id}>
                                     <TableCell align="left">
+                                        {row?.reference}
+                                    </TableCell>
+                                    <TableCell align="left">
                                         <Moment format="DD/MM/YYYY">
                                             {row?.date}
                                         </Moment>
@@ -142,8 +151,8 @@ export default function FicheDotationList() {
                                     <TableCell align="left">
                                         {row?.fokontany}
                                     </TableCell>
-                                    <TableCell align="left">{row?.grant}</TableCell>
-                                    <TableCell align="left">{row?.ligneBudgetaire}</TableCell>
+                                    <TableCell align="left">{grantList.find((e:any)=> e.id === row?.grant)?.code}</TableCell>
+                                    <TableCell align="left">{budgetLineList.find((e:any)=> e.id === row?.ligneBudgetaire)?.code}</TableCell>
                                     <TableCell align="right" width={"150px"}>
                                         <BtnActionContainer
                                         direction="row"
