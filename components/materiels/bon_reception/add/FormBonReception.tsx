@@ -30,7 +30,7 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
         }
     }),...bonCommandeInternes.map((i:any)=>{
         return {
-            id : i.id, name: i.numBon, type: "BCI"
+            id : i.id, name: i.reference, type: "BCI"
         }
     })]
 
