@@ -22,7 +22,7 @@ const BonCommandeFournisseurTableToolbar = () => {
 		}
 	}, [router.query.search]);
 
-	const search = (key: string) => {
+	const search = (key: any) => {
 		const query = { ...router.query, search: key };
 		router.push({
 			pathname: router.pathname,
