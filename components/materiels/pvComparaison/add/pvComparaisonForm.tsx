@@ -31,26 +31,28 @@ export default function PvComparaisonForm() {
             } else {
                 const newDataPV = {
                     objet: values.objet,
-                    ref: values.ref,
+                    bce: values.type ==="BCE" ? values.ref : null,
+                    bci: values.type ==="BCI" ? values.ref : null,
                     programme: values.programme,
                     grant: values.grant,
                     ligneBudgetaire: values.ligneBudgetaire,
                     materiel: values.materiel,
                     offreRetenu: values.offreRetenu,
-                    justification: values.justification,
-                    argument: values.argument
+                    argument: values.argument,
+                    motif: values.motif
                 }
                 const response = await dispatch(createPvComparaison(newDataPV));
-                valuesArticle.forEach((element:any, index:any) => {
-                    const newData = {
-                        fournisseur: element.fournisseur,
-                        modePaie: element.modePaie,
-                        offre: element.offre,
-                        designation: element.designation,
-                        pvComparaisonOffreId: response.payload.id
-                    };
-                    dispatch(createPvComparaisonFournisseur(newData));
-                });
+                if(valuesArticle.length > 0 ){
+                    valuesArticle.forEach((element:any, index:any) => {
+                        const newData = {
+                            fournisseur: element.fournisseur,
+                            modePaie: element.modePaie,
+                            designation: element.designation,
+                            pvComparaisonOffreId: response.payload.id
+                        };
+                        dispatch(createPvComparaisonFournisseur(newData));
+                    });
+                }
             }
             route.push("/materiels/pv_comparaison");
         } catch (error) {

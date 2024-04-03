@@ -50,6 +50,7 @@ import { budgetLineSlice } from "./features/grant_ligneBudgétaire_programme/bud
 import { holderEquipementSlice } from "./features/holder/holderEquipementSlice";
 import { activitySlice } from "./features/activity/activitySlice";
 import { programSlice } from "./features/program/programSlice";
+import { BonCommandeFournisseurSlice } from "./features/bon_commande_fournisseur/bonCommandeFournisseurSlice";
 
 export const store = configureStore({
   reducer: {
@@ -104,7 +105,8 @@ export const store = configureStore({
     lineBugetaire : budgetLineSlice.reducer,
     holderEquipment : holderEquipementSlice.reducer,
     activity: activitySlice.reducer,
-    program: programSlice.reducer
+    program: programSlice.reducer,
+    bonDeCommandeFournisseur : BonCommandeFournisseurSlice.reducer
   },
 });
 

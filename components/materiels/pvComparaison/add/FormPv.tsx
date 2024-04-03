@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react'
 import OSSelectField from '../../../shared/select/OSSelectField';
 import OSTextField from '../../../shared/input/OSTextField';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
-import { getBonCommandeInternes } from '../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice';
-import { getBonCommandeExternes } from '../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice';
+import { getBonCommandeInterne, getBonCommandeInternes } from '../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice';
+import { getBonCommandeExterne, getBonCommandeExternes } from '../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice';
 import { getEquipments } from '../../../../redux/features/equipment';
 import { getFournisseurList } from '../../../../redux/features/fournisseur';
 import { getBudgetLineList } from '../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice';
@@ -24,7 +24,7 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
     const dispatch = useAppDispatch();
     const route = useRouter();
 
-    const { equipments } = useAppSelector( (state) => state.equipment);
+    const [ materiel, setMateriel] = useState < any[]> ([])
     const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
     const { grantList } = useAppSelector( (state) => state.grant);
     const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
@@ -39,7 +39,7 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
         }
     }),...bonCommandeInternes.map((i:any)=>{
         return {
-            id : i.id, name: i.numBon, type: "BCI"
+            id : i.id, name: i.reference, type: "BCI"
         }
     })]
     
@@ -75,7 +75,51 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
         }
         files = files.filter((f) => f !== s);
         formikProps.setFieldValue("fileRequired", files.join(";"));
-      };
+    };
+
+    const handleFech = async (id: any) => {
+        try { 
+            const response:any = total.find((e:any)=> e.id === id)
+            formikProps.setFieldValue("type", response?.type)
+            if(response?.type === "BCE"){
+                const Val = await dispatch(getBonCommandeExterne({ id , args:{
+                    include:{
+                        articleCommandeBce:true
+                    }
+                }}));
+                console.log(Val)
+                setMateriel((prev:any[])=>{
+                    console.log(prev)
+                    prev = Val.payload.articleCommandeBce
+                    return prev
+                })
+            }else{
+                const Val = await dispatch(getBonCommandeInterne({ id , args:{
+                    include:{
+                        ArticleCommande:true
+                    }
+                }}));
+                console.log(Val)
+                setMateriel((prev:any[])=>{
+                    console.log(prev)
+                    prev = Val.payload.ArticleCommande
+                    return prev
+                })
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        const id = formikProps.values.ref
+        if(id){
+            handleFech(id)
+        }
+    }, [formikProps.values.ref]);
+    useEffect(() => {
+        fetchUtilsData();
+    }, []);
     return (
         <Form>
             <NavigationContainer>
@@ -174,8 +218,8 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                             id="outlined-basic"
                             label="Matériel"
                             name="materiel"
-                            options={equipments}
-                            dataKey={["numOptim","designation"]}
+                            options={materiel}
+                            dataKey={["designation"]}
                             valueKey="id"
                             type="text"
                         />

@@ -1,98 +1,47 @@
+import { Form, FormikProps } from 'formik';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
-import { Form, FormikProps } from 'formik';
+import { getFournisseurList } from '../../../../redux/features/fournisseur';
 import { Box, Button, Divider, FormControl, IconButton, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from '@mui/material';
 import Delete from '@mui/icons-material/Delete';
 import OSTextField from '../../../shared/input/OSTextField';
-import ArrowBack from '@mui/icons-material/ArrowBack';
-import { cancelEdit } from '../../../../redux/features/bon_reception/bonReceptionSlice';
 import Check from '@mui/icons-material/Check';
 import Close from '@mui/icons-material/Close';
 import OSSelectField from '../../../shared/select/OSSelectField';
-import { getBonCommandeExterne, getBonCommandeExternes } from "../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
-import { useRouter } from 'next/router';
+import { ArrowBack } from '@mui/icons-material';
 import EditIcon from "@mui/icons-material/Edit";
-import { getBonCommandeInterne, getBonCommandeInternes } from '../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice';
 import OSDatePicker from '../../../shared/date/OSDatePicker';
 
-const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) => {
+const FormBonCommandeFournisseur  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) => {
     const dispatch = useAppDispatch();
     const route = useRouter();
     const [idValues ,setIdValues] = useState<any>()
-
-    const { isEditing } = useAppSelector((state) => state.bonReceptions);
-    const { bonCommandeExternes } = useAppSelector((state) => state.bonCommendeExterne);
-    const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
-
-    const total = [...bonCommandeExternes.map((i:any)=>{
-        return {
-            id : i.id, name: i.ref, type: "BCE"
-        }
-    }),...bonCommandeInternes.map((i:any)=>{
-        return {
-            id : i.id, name: i.reference, type: "BCI"
-        }
-    })]
+    
+    const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
+ 
+    const { isEditing } = useAppSelector((state) => state.bonDeCommandeFournisseur);
 
     const fetchUtilsData = () => {
-        dispatch(getBonCommandeExternes({}));
-        dispatch(getBonCommandeInternes({}));
+        dispatch(getFournisseurList({}));
     };
-    const handleFech = async (id: any) => {
-        try { 
-            const response:any = total.find((e:any)=> e.id === id)
-            formikProps.setFieldValue("type", response?.type)
-            if(response?.type === "BCE"){
-                const Val = await dispatch(getBonCommandeExterne({ id , args:{
-                    include:{
-                        articleCommandeBce:true
-                    }
-                }}));
-                console.log(Val)
-                setValuesArticle((prev:any[])=>{
-                    console.log(prev)
-                    prev = Val.payload.articleCommandeBce
-                    return prev
-                })
-            }else{
-                const Val = await dispatch(getBonCommandeInterne({ id , args:{
-                    include:{
-                        ArticleCommande:true
-                    }
-                }}));
-                console.log(Val)
-                setValuesArticle((prev:any[])=>{
-                    console.log(prev)
-                    prev = Val.payload.ArticleCommande
-                    return prev
-                })
-            }
-        } catch (error) {
-            console.log("error", error);
-        }
-    }
-    useEffect(() => {
-        const id = formikProps.values.bce
-        if(id){
-            handleFech(id)
-        }
-    }, [formikProps.values.bce]);
+    
     useEffect(() => {
         fetchUtilsData();
     }, []);
+
     return (
         <Form>
             <NavigationContainer>
                 <SectionNavigation>
                 <Stack flexDirection={"row"}>
-                    <Button
+                     <Button
                         color="info"
                         variant="text"
                         startIcon={<ArrowBack />}
                         onClick={() => {
                             route.back()
                             formikProps.resetForm();
-                            dispatch(cancelEdit());
                         }}
                     >
                         Retour
@@ -108,21 +57,20 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                         {isEditing ? "Modifier" : "Enregistrer"}
                     </Button>
                     <Button
-                        variant="text"
-                        color="warning"
-                        size="small"
-                        type="reset"
-                        startIcon={<Close />}
-                        onClick={() => {
-                            formikProps.resetForm();
-                            dispatch(cancelEdit());
-                        }}
+                    variant="text"
+                    color="warning"
+                    size="small"
+                    type="reset"
+                    startIcon={<Close />}
+                    onClick={() => {
+                        formikProps.resetForm();
+                    }}
                     >
                         Annuler
                     </Button>
                 </Stack>
                 <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"} Bon de reception
+                    {isEditing ? "Modifier" : "Ajouter"} Bon de commande fournisseur
                 </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -137,40 +85,72 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                     }}
                     >
                     <Typography variant="h6" id="tableTitle" component="div">
-                        Bon de reception
+                        Bon de commande fournisseur
                     </Typography>
                 </Stack>
                 <FormControl fullWidth>
-                    <OSTextField
-                        fullWidth
-                        id="outlined-basic"
-                        variant="outlined"
-                        label="Réference"
-                        name="reference"
-                    />
-                </FormControl>
-                <FormControl fullWidth>
                     <OSSelectField
                         id="outlined-basic"
-                        label="Ref BCI/BCE"
-                        name="bce"
-                        options={total}
-                        dataKey={["name","type"]}
+                        name="vendorId"
+                        label="Fournisseur"
+                        options={fournisseurList}
+                        dataKey={["name"]}
                         valueKey="id"
                         type="text"
-                       
                     />
                 </FormControl>
-                <FormControl fullWidth>
-                    <OSDatePicker
-                        fullWidth
-                        id="outlined-basic"
-                        label="Date bon de reception"
-                        variant="outlined"
-                        value = {formikProps.values.dateReception}
-                        onChange = {(value: any) =>formikProps.setFieldValue("dateReception", value)}
-                    />
-                </FormControl>
+                <Stack
+                    direction="row"
+                    justifyContent="flex-start"
+                    alignItems="flex-start"
+                    spacing={2}
+                    >
+                    <FormControl fullWidth>
+                        <OSDatePicker
+                            fullWidth
+                            id="outlined-basic"
+                            label="Date d'etablissement"
+                            variant="outlined"
+                            value = {formikProps.values.establishmentDate}
+                            onChange = {(value: any) =>formikProps.setFieldValue("establishmentDate", value)}
+                        />
+                    </FormControl>
+                    <FormControl fullWidth>
+                        <OSTextField
+                            fullWidth
+                            id="outlined-basic"
+                            variant="outlined"
+                            label="Mode de paiement"
+                            name="paymentMethod"
+                        />
+                    </FormControl>
+                </Stack>
+                <Stack
+                    direction="row"
+                    justifyContent="flex-start"
+                    alignItems="flex-start"
+                    spacing={2}
+                    >
+                    <FormControl fullWidth>
+                        <OSDatePicker
+                            fullWidth
+                            id="outlined-basic"
+                            label="Date de livraison"
+                            variant="outlined"
+                            value = {formikProps.values.deliveryDate}
+                            onChange = {(value: any) =>formikProps.setFieldValue("deliveryDate", value)}
+                        />
+                    </FormControl>
+                    <FormControl fullWidth>
+                        <OSTextField
+                            fullWidth
+                            id="outlined-basic"
+                            variant="outlined"
+                            label="Condition de livraison"
+                            name="deliveryCondition"
+                        />
+                    </FormControl>
+                </Stack>
             </FormContainer>
             <Box>
                 <FormContainer spacing={2}>
@@ -183,7 +163,7 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                             }}
                             >
                             <Typography variant="h6" id="tableTitle" component="div">
-                                Produit reçu
+                                Article
                             </Typography>
                         </Stack>
                         <TableContainer component={Paper}>
@@ -191,20 +171,27 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Designation</TableCell>
+                                        <TableCell align="left">PU</TableCell>
                                         <TableCell align="left">Quantité</TableCell>
+                                        <TableCell align="left">Details</TableCell>
+                                        <TableCell align="left">Montant</TableCell>
+                                        <TableCell></TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {valuesArticle && valuesArticle?.map((item:any , index:any) => (
+                                    {valuesArticle.map((item:any , index:any) => (
                                         <TableRow
                                             key={index}
                                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                         >
                                             <TableCell component="th" scope="row">{item.designation}</TableCell>
+                                            <TableCell align="left">{item.unitPrice}  Ar</TableCell>
                                             <TableCell align="left">{item.quantite}</TableCell>
+                                            <TableCell align="left">{item.details} Ar</TableCell>
+                                            <TableCell align="left">{item.montant}</TableCell>
                                             <TableCell
-                                            align="center"
-                                            sx={{ width: 150, background: "#F5F5F5" }}
+                                                align="center"
+                                                sx={{ width: 150, background: "#F5F5F5" }}
                                             >
                                             <Stack
                                                 direction="row"
@@ -218,8 +205,10 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                                         component="span"
                                                         size="small"
                                                         onClick={() => {
-                                                            formikProps.setFieldValue('designation', item.designation)
-                                                            formikProps.setFieldValue('quantite', item.quantite)
+                                                            formikProps.setFieldValue('designation', item.designation);
+                                                            formikProps.setFieldValue('unitPrice', item.unitPrice);
+                                                            formikProps.setFieldValue('quantite', item.quantite);
+                                                            formikProps.setFieldValue('details', item.details);
                                                             setIdValues(item.id)
                                                         }}
                                                     >
@@ -243,7 +232,6 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                                                 temp.splice(index,1)
                                                                 return temp
                                                             })
-                                                            
                                                         }}
                                                     >
                                                     <Delete />
@@ -266,15 +254,38 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                                     />
                                                 </FormControl>
                                             </TableCell>
-                                            
                                             <TableCell align="left">
                                                 <FormControl fullWidth>
                                                     <OSTextField
-                                                        id="designation"
+                                                        id="pu"
+                                                        label="Prix unitaire"
+                                                        name="unitPrice"
+                                                        type="number"
+                                                    />
+                                                </FormControl>
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                <FormControl fullWidth>
+                                                    <OSTextField
+                                                        id="quantite"
                                                         label="Quantité"
                                                         name="quantite"
                                                         type="number"
                                                     />
+                                                </FormControl>
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                <FormControl fullWidth>
+                                                    <OSTextField
+                                                        id="details"
+                                                        label="Details"
+                                                        name="details"
+                                                        type="text"
+                                                    />
+                                                </FormControl>
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                <FormControl fullWidth>
                                                 </FormControl>
                                             </TableCell>
                                             <TableCell
@@ -291,37 +302,47 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                                         type="button"
                                                         onClick={() => {
                                                             const designation = formikProps.values.designation;
+                                                            const unitPrice = formikProps.values.unitPrice;
                                                             const quantite = formikProps.values.quantite;
-                                                                // Vérifier si les champs sont vides
-                                                                if (designation.trim() !== '') {
-                                                                    if(idValues){
-                                                                        setValuesArticle((prev:any[])=>{
-                                                                            let temp = [...prev.map((ValId)=>{
-                                                                                if(ValId.id === idValues){
-                                                                                    return {
-                                                                                        id:idValues,
-                                                                                        designation,
-                                                                                        quantite
-                                                                                    }
+                                                            const details = formikProps.values.details;
+
+                                                            if (designation.trim()) {
+                                                                if(idValues){
+                                                                    setValuesArticle((prev:any[])=>{
+                                                                        let temp = [...prev.map((ValId)=>{
+                                                                            if(ValId.id === idValues){
+                                                                                return {
+                                                                                    id:idValues,
+                                                                                    designation,
+                                                                                    unitPrice,
+                                                                                    quantite,
+                                                                                    montant: unitPrice*quantite,
+                                                                                    details
                                                                                 }
-                                                                                return ValId
-                                                                            })]
-                                                                            return temp
+                                                                            }
+                                                                            return ValId
+                                                                        })]
+                                                                        return temp
+                                                                    })
+                                                                }else{
+                                                                    setValuesArticle((prev:any[])=>{
+                                                                        let temp = [...prev]
+                                                                        temp.push({
+                                                                            designation,
+                                                                            unitPrice,
+                                                                            quantite,
+                                                                            montant: unitPrice*quantite,
+                                                                            details
                                                                         })
-                                                                    } else{
-                                                                        setValuesArticle((prev:any[])=>{
-                                                                            let temp = [...prev]
-                                                                            temp.push({
-                                                                                designation: designation,
-                                                                                quantite: quantite
-                                                                            })
-                                                                            return temp
-                                                                        })
-                                                                    }
-                                                                formikProps.setFieldValue('designation', '')
+                                                                        return temp
+                                                                    })
+                                                                }
+                                                                formikProps.setFieldValue('designation', '');
+                                                                formikProps.setFieldValue('unitPrice', 0);
                                                                 formikProps.setFieldValue('quantite', 0);
+                                                                formikProps.setFieldValue('details', '');
                                                             }
-                                                            
+                                                        
                                                         }}
                                                     >
                                                         <Check color="primary"/>
@@ -329,8 +350,10 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                                     <IconButton
                                                         type="button"
                                                         onClick={() => {
-                                                            formikProps.setFieldValue('designation', '')
+                                                            formikProps.setFieldValue('designation', '');
+                                                            formikProps.setFieldValue('unitPrice', 0);
                                                             formikProps.setFieldValue('quantite', 0);
+                                                            formikProps.setFieldValue('details', '');
                                                         }}
                                                         >
                                                         <Close />
@@ -346,7 +369,8 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
         </Form>
     )
 }
-export default FormBonReception;
+
+export default FormBonCommandeFournisseur;
 
 const FormContainer = styled(Stack)(({ theme }) => ({
     padding: 30,
