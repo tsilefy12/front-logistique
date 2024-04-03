@@ -76,19 +76,13 @@ export default function PvComparaisonForm() {
                             fournisseur:"",
                             modePaie:"",
                             offre:"",
+                            fileRequired:"",
                             designation:"",
                         }
                     }
                     validationSchema={Yup.object({
                         objet:Yup.string().required("Champ obligatoire"),
                         ref:Yup.string().required("Champ obligatoire"),
-                        programme:Yup.string().required("Champ obligatoire"),
-                        grant:Yup.string().required("Champ obligatoire"),
-                        ligneBudgetaire:Yup.string().required("Champ obligatoire"),
-                        materiel:Yup.string().required("Champ obligatoire"),
-                        offreRetenu:Yup.string().required("Champ obligatoire"),
-                        justification:Yup.string().required("Champ obligatoire"),
-                        argument:Yup.string().required("Champ obligatoire"),
                     })}
                     onSubmit={(value: any, action: any) => {
                         handleSubmit(value);

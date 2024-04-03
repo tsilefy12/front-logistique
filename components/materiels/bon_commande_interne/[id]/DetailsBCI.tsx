@@ -19,6 +19,7 @@ import { getInterns } from "../../../../redux/features/employeStagiaire/stagiair
 import { getGrantList } from "../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
 import { getEmployees } from "../../../../redux/features/orderEquipment";
 import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
+import { getPrograms } from "../../../../redux/features/program/programSlice";
 const DetailsBCI = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
@@ -28,6 +29,8 @@ const DetailsBCI = () => {
     const { interns } = useAppSelector( (state) => state.stagiaire);
     const { grantList } = useAppSelector( (state) => state.grant);
     const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
+    const { programs } = useAppSelector( (state) => state.program);
+
     const [ pdf,setPdf ] = useState<any>({})
 
     const total = [...employees.map((i:any)=>{
@@ -50,12 +53,13 @@ const DetailsBCI = () => {
         dispatch(getEmployees({}));
         dispatch(getGrantList({}));
         dispatch(getBudgetLineList({}));
+        dispatch(getPrograms({}));
     };
 
     useEffect(()=> {
         getDetailsBCI();
         const dataPdf = {
-            programme: bonCommandeInterne.programme,
+            programme: programs.find((e:any)=>  e.id === bonCommandeInterne.programme)?.name,
             grant: grantList.find((e:any)=> e.id === bonCommandeInterne?.grant)?.code,
             ligneBudgetaire: budgetLineList.find((e:any)=> e.id === bonCommandeInterne?.ligneBudgetaire)?.code,
             demandeur: total.find((e:any)=> e.id === bonCommandeInterne?.demandeur)?.name,
@@ -167,7 +171,7 @@ const DetailsBCI = () => {
                                             Programme
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                            {bonCommandeInterne.programme}
+                                            {programs.find((e:any)=>  e.id === bonCommandeInterne.programme)?.name}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>

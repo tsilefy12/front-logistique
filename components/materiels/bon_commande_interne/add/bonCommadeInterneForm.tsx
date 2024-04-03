@@ -63,18 +63,20 @@ export default function BonCommandeInterneForm() {
                 })
             }else{
                 const response = await dispatch(createBonCommandeInterne(updateData));
-                valuesArticle.forEach((element:any, index:any) => {
-                    const newData = {
-                        designation: element.designation,
-                        caracteristik: element.caracteristik,
-                        quantite: element.quantite,
-                        fournisseurId:element.fournisseurId,
-                        pu: element.pu,
-                        valueArticle: element.valueArticle,
-                        bondeCommandeInterneId: response.payload.id
-                    };
-                    dispatch(createArticleCommandeInterne(newData));
-                });
+                if(valuesArticle.length > 0 ){
+                    valuesArticle.forEach((element:any, index:any) => {
+                        const newData = {
+                            designation: element.designation,
+                            caracteristik: element.caracteristik,
+                            quantite: element.quantite,
+                            fournisseurId:element.fournisseurId,
+                            pu: element.pu,
+                            valueArticle: element.valueArticle,
+                            bondeCommandeInterneId: response.payload.id
+                        };
+                        dispatch(createArticleCommandeInterne(newData));
+                    });
+                }
             }
             route.push("/materiels/bon_commande_interne");
         } catch (error) {

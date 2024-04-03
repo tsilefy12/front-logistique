@@ -54,6 +54,7 @@ export default function BonCommandeExterneForm() {
         }
 
         const response = await dispatch(createBonCommandeExterne(newDataBCE));
+        if(valuesArticle.length > 0 ){
             valuesArticle.forEach((element:any, index:any) => {
                 const newData = {
                     designation: element.designation,
@@ -64,9 +65,9 @@ export default function BonCommandeExterneForm() {
                     valueArticle: element.valeur,
                     bonDeCommandeExterneId: response.payload.id
                 };
-            dispatch(createArticleCommandeExterne(newData));
-        });
-        }
+                dispatch(createArticleCommandeExterne(newData));
+            });
+        }}
         route.push("/materiels/bon_commande_externe/");
         } catch (error) {
             console.log("error", error);

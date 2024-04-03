@@ -12,11 +12,11 @@ import Check from '@mui/icons-material/Check';
 import Close from '@mui/icons-material/Close';
 import OSSelectField from '../../../shared/select/OSSelectField';
 import { ArrowBack } from '@mui/icons-material';
-import OSDateTimePicker from '../../../shared/date/OSDateTimePicker';
 import { getGrantList } from '../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice';
 import { getBudgetLineList } from '../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice';
 import EditIcon from "@mui/icons-material/Edit";
 import OSDatePicker from '../../../shared/date/OSDatePicker';
+import { getPrograms } from '../../../../redux/features/program/programSlice';
 
 const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) => {
     const dispatch = useAppDispatch();
@@ -28,14 +28,9 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
     const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
     const { grantList } = useAppSelector( (state) => state.grant);
     const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
+    const { programs } = useAppSelector( (state) => state.program);
     
     const { isEditing } = useAppSelector((state) => state.bonCommandeInterne);
-    
-    const programmeList = [
-        {id : "test1",name : "TEST1"},
-        {id : "test2",name : "TEST2"},
-        {id : "test3",name : "TEST3"}
-    ]
 
     const total = [...employees.map((i:any)=>{
         return {
@@ -53,6 +48,7 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
         dispatch(getFournisseurList({}));
         dispatch(getGrantList({}));
         dispatch(getBudgetLineList({}));
+        dispatch(getPrograms({}));
     };
     
     useEffect(() => {
@@ -158,9 +154,9 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
                     <FormControl fullWidth>
                         <OSSelectField
                         id="outlined-basic"
-                            label="Programme/Projet"
+                            label="Programme"
                             name="programme"
-                            options={programmeList}
+                            options={programs}
                             dataKey="name"
                             valueKey="id"
                             type="text"

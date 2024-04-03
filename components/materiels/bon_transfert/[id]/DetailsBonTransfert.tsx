@@ -18,6 +18,7 @@ import PDFButton from "./PrintBonTransfert";
 import { getInterns } from "../../../../redux/features/employeStagiaire/stagiaireSlice";
 import { getEmployees } from "../../../../redux/features/orderEquipment";
 import { getGrantList } from "../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
+import { getPrograms } from "../../../../redux/features/program/programSlice";
 const DetailsBonTransfert = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
@@ -26,6 +27,7 @@ const DetailsBonTransfert = () => {
     const { employees } = useAppSelector( (state) => state.employe);
     const { interns } = useAppSelector( (state) => state.stagiaire);
     const { grantList } = useAppSelector( (state) => state.grant);
+    const { programs } = useAppSelector( (state) => state.program);
     const [ pdf,setPdf ] = useState<any>({})
     
     const total = [...employees.map((i:any)=>{
@@ -37,9 +39,7 @@ const DetailsBonTransfert = () => {
             id : i.id, name: i.name +" "+ i.surname, type: "intern"
         }
     })]
-    // const [pdfData, setPdfData] = useState<any>();
-
-
+    
     const getDetailsBonTransfert = () => {
         dispatch(getBonTransfert({ id,args:{
             include:{
@@ -49,7 +49,7 @@ const DetailsBonTransfert = () => {
         dispatch(getInterns({}));
         dispatch(getEmployees({}));
         dispatch(getGrantList({}));
-        // setPdfData(bonTransfert)
+        dispatch(getPrograms({}));
     };
 
     useEffect(()=> {
@@ -60,7 +60,7 @@ const DetailsBonTransfert = () => {
             reference:bonTransfert.reference,
             dateExp: bonTransfert.dateExp,
             expeditionVia: bonTransfert.expeditionVia,
-            programme: bonTransfert.programme,
+            programme:programs.find((e:any)=>  e.id === bonTransfert?.programme)?.name,
             grant: grantList.find((e:any)=> e.id === bonTransfert?.grant)?.code,
             articleTransfert: bonTransfert.articleTransfert
         }
@@ -158,7 +158,7 @@ const DetailsBonTransfert = () => {
                                             Programme
                                         </Typography>
                                         <Typography variant="body1" color="gray">
-                                        {bonTransfert.programme}
+                                        {programs.find((e:any)=>  e.id === bonTransfert?.programme)?.name}
                                         </Typography>
                                     </InfoItems>
                                 </Grid>
