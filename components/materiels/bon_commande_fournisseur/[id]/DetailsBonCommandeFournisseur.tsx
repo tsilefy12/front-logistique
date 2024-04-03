@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from "@mui/material";
 import { getBonCommandeFournisseur } from "../../../../redux/features/bon_commande_fournisseur/bonCommandeFournisseurSlice";
+import PDFButton from "./printBonCommandeFournisseur";
 
 const DetailsBCI = () => {
     const router = useRouter();
@@ -38,6 +39,7 @@ const DetailsBCI = () => {
         getDetailsBCI();
         const dataPdf = {
             fournisseur: commandeFournisseur.vendor?.name,
+            vendor: commandeFournisseur?.vendor,
             establishmentDate: commandeFournisseur.establishmentDate,
             paymentMethod: commandeFournisseur.paymentMethod,
             deliveryCondition:commandeFournisseur.deliveryCondition,
@@ -57,7 +59,7 @@ const DetailsBCI = () => {
                     <Button color="info" onClick={()=>router.back()} variant="text" startIcon={<ArrowBackIcon />}>
                         Retour
                     </Button>
-                    {/* <PDFButton data={pdf} /> */}
+                    <PDFButton data={pdf} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">
                     Details d'une bon de commande fournisseur

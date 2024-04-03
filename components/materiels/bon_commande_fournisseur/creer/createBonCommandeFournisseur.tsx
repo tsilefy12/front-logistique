@@ -8,7 +8,6 @@ import * as Yup from "yup";
 import {
   createBonCommandeFournisseur,editBonCommandeFournisseur,cancelEdit,updateBonCommandeFournisseur
 } from "../../../../redux/features/bon_commande_fournisseur/bonCommandeFournisseurSlice";
-import { createArticleCommandeInterne, deleteArticleCommandeInterne, updateArticleCommande } from "../../../../redux/features/bon_commande_interne/articleCommandeSlice";
 import FormBonCommandeFournisseur from "./FormBonCommandeFournisseur";
 import { styled } from "@mui/material";
 import { createArticleCommandeFournisseur, deleteArticleCommandeFournisseur, updateArticleCommandeFournisseur } from "../../../../redux/features/bon_commande_fournisseur/articleCommandeFournisseurSlice";
