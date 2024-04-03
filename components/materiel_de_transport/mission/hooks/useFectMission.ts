@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 import { useAppDispatch } from "../../../../hooks/reduxHooks";
 import { getMissionDeTransportList } from "../../../../redux/features/mission_transport/missionTransportSlice";
+import { getGrantList } from "../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
+import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
 
 
 /**
@@ -64,6 +66,8 @@ const useFetchMissionTransport = () => {
             };
         }
         await dispatch(getMissionDeTransportList({ args }));
+        dispatch(getGrantList({}));
+        dispatch(getBudgetLineList({}));
     };
 };
 

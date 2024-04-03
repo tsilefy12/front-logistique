@@ -35,9 +35,9 @@ import { SuiviCarburantHeaderCells } from "./organisme/table/SuiviCarburantHeade
 import { deleteSuiviCarburant } from "../../../redux/features/suivi_carburant/suiviCarburantSlice";
 import SuiviCarburantTableToolbar from "./organisme/table/SuiviCarburantTableToolbar";
 import SuiviCarburantTableHeader from "./organisme/table/SuiviCarburantTableHeader";
-import { format } from "date-fns";
-import useFetchGrant from "./hooks/useFetchGrant";
 import useFetchTransportationEquipments from "../hooks/useFetchTransportationEquipments";
+import useFetchGrant from "./hooks/useFetchGrant";
+import useFetchLigneBudgetaire from "./hooks/useFetchLigneBudgetaire";
   
     const ListSuiviCarburant = () => {
     const [page, setPage] = React.useState(0);
@@ -52,11 +52,17 @@ import useFetchTransportationEquipments from "../hooks/useFetchTransportationEqu
     
     const fetchSuiviCarburant = useFetchSuiviCarburants();
     const fetchTransportationEquipment = useFetchTransportationEquipments();
+    const fetchGrant = useFetchGrant();
+    const { grantList } = useAppSelector( (state) => state.grant);
+    const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
+    const fetchLignebudgetaire = useFetchLigneBudgetaire();
    // const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment)
 
     React.useEffect(() => {
       fetchSuiviCarburant();    
       fetchTransportationEquipment();
+      fetchGrant();
+      fetchLignebudgetaire();
     }, [router.query]);
 
 
@@ -155,10 +161,10 @@ import useFetchTransportationEquipments from "../hooks/useFetchTransportationEqu
                             </TableCell>
 
                             <TableCell align="left">
-                                {row.grant}
+                            {grantList.find((e:any)=> e.id === row?.grant)?.code}
                             </TableCell>
                             <TableCell align="left">
-                                {row.ligneBudgetaire}
+                            {budgetLineList.find((e:any)=> e.id === row?.ligneBudgetaire)?.code}
                             </TableCell>
                             <TableCell align="left">
                                 {row.modePaiement}

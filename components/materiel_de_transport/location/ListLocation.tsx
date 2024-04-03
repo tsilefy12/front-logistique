@@ -45,9 +45,9 @@ import Moment from "react-moment";
     const fetchLocationTransport = useFetchLocationDeTransport();
     const fetchTransportationEquipment = useFetchTransportationEquipments();
     const fetchVendor = useFetchVendors()
-    
-
-   
+    const { grantList } = useAppSelector( (state) => state.grant);
+    const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
+ 
     React.useEffect(() => {
       fetchLocationTransport();
       fetchTransportationEquipment();
@@ -147,10 +147,10 @@ import Moment from "react-moment";
                                 {row.montant}
                             </TableCell>
                             <TableCell align="left">
-                                {row.grant}
+                            {grantList.find((e:any)=> e.id === row?.grant)?.code}
                             </TableCell>
                             <TableCell align="left">
-                                {row.ligneBudgetaire}
+                            {budgetLineList.find((e:any)=> e.id === row?.ligneBudgetaire)?.code}
                             </TableCell>
                             <TableCell align="left">
                                 {row.itineraire}

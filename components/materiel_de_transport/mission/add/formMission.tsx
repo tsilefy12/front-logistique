@@ -87,7 +87,7 @@ import useFetchTransportationEquipments from "../../hooks/useFetchTransportation
     return (
       <Container maxWidth="xl" sx={{ pb: 5, mb: 4 }}>
         <Formik
-          enableReinitialize
+          enableReinitialize = { isEditing ? true : false}
           initialValues={{
             materiel: isEditing ? missionTransport?.materiel : "",
             pj: isEditing ? missionTransport?.pj : "",

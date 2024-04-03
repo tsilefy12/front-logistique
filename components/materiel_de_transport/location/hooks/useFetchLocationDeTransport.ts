@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import { getLocationtList } from "../../../../redux/features/location/locationSlice";
 import { useAppDispatch } from "../../../../hooks/reduxHooks";
-
+import { getGrantList } from "../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
+import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
 const useFetchLocationDeTransport = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -78,6 +79,8 @@ const useFetchLocationDeTransport = () => {
       };
     }
     dispatch(getLocationtList({ args }));
+    dispatch(getGrantList({}));
+    dispatch(getBudgetLineList({}));
   };
 };
 

@@ -49,23 +49,15 @@ import Moment from "react-moment";
     const fetchMissionTransport = useFetchMissionTransport();
     const fetchTransportationEquipment = useFetchTransportationEquipments();
     const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment)
-
+    const { grantList } = useAppSelector( (state) => state.grant);
+    const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
 
     React.useEffect(() => {
       fetchMissionTransport();
       fetchTransportationEquipment();
       
     }, [router.query]);
-   
-    /*var MaterielValue = "";
-    transportationEquipments.forEach((element:any) => {
-      missionTransports.forEach((item:any) =>{
-           if (element?.id === item["materiel"]) {
-              MaterielValue = element?.registration;
-           }
-        })
-    });*/
-
+  
     const handleClickEdit = async (id: any) => {
       router.push(`/materiel_de_transport/mission/${id}/edit`);
     };
@@ -161,10 +153,10 @@ import Moment from "react-moment";
                             </TableCell>
 
                             <TableCell align="left">
-                                {row.grant}
+                            {grantList.find((e:any)=> e.id === row?.grant)?.code}
                             </TableCell>
                             <TableCell align="left">
-                                {row.ligneBudgetaire}
+                            {budgetLineList.find((e:any)=> e.id === row?.ligneBudgetaire)?.code}
                             </TableCell>
                             <TableCell align="right" width={"150px"}>
                               <BtnActionContainer

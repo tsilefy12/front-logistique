@@ -41,7 +41,13 @@ const useFetchTransportationEquipments = () => {
                             contains: router.query.search,
                             mode: "insensitive",
                         },
-                    },         
+                    },   
+                    {
+                        status:{
+                            contains: router.query.search,
+                            mode: "insensitive",
+                        }
+                    }      
                 ],
             }      
         }
