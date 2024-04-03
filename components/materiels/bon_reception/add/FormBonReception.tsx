@@ -72,15 +72,14 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
         }
     }
     useEffect(() => {
-        fetchUtilsData();
-    }, []);
-    useEffect(() => {
         const id = formikProps.values.bce
         if(id){
             handleFech(id)
         }
     }, [formikProps.values.bce]);
-    
+    useEffect(() => {
+        fetchUtilsData();
+    }, []);
     return (
         <Form>
             <NavigationContainer>

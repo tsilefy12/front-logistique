@@ -15,6 +15,7 @@ import { getGrantList } from '../../../../redux/features/grant_ligneBudgétaire_
 import EditIcon from "@mui/icons-material/Edit";
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import OSDatePicker from '../../../shared/date/OSDatePicker';
+import { getPrograms } from '../../../../redux/features/program/programSlice';
 
 const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) =>  {
     const dispatch = useAppDispatch();
@@ -25,6 +26,8 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
     const { employees } = useAppSelector((state) => state.employe);
     const { interns } = useAppSelector((state) => state.stagiaire);
     const { grantList } = useAppSelector( (state) => state.grant);
+    const { programs } = useAppSelector( (state) => state.program);
+   
     const [idValues ,setIdValues] = useState<any>()
 
     const total = [...employees.map((i:any)=>{
@@ -43,15 +46,11 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
         {id : "3",name : "Vie ferovierre"},
         {id : "4",name : "Vie maritime"}
     ]
-    const programmeList = [
-        {id : "test1",name : "TEST1"},
-        {id : "test2",name : "TEST2"},
-        {id : "test3",name : "TEST3"}
-    ]
     const fetchUtilsData = () => {
         dispatch(getEmployees({}));
         dispatch(getInterns({}));
         dispatch(getGrantList({}));
+        dispatch(getPrograms({}));
     };
 
     useEffect(() => {
@@ -197,9 +196,9 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                             id="outlined-basic"
                             label="Programme"
                             name="programme"
-                            options={programmeList}
+                            options={programs}
                             dataKey={["name"]}
-                            valueKey="name"
+                            valueKey="id"
                         />
                     </FormControl>
                     <FormControl fullWidth>

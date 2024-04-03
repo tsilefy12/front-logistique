@@ -6,10 +6,10 @@ import { Formik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import * as Yup from "yup";
 import {
-  createBonCommandeInterne, editBonCommandeInterne,cancelEdit, updateBonCommandeInterne
-} from "../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice";
+  createBonCommandeFournisseur,editBonCommandeFournisseur,cancelEdit,updateBonCommandeFournisseur
+} from "../../../../redux/features/bon_commande_fournisseur/bonCommandeFournisseurSlice";
 import { createArticleCommandeInterne, deleteArticleCommandeInterne, updateArticleCommande } from "../../../../redux/features/bon_commande_interne/articleCommandeSlice";
-import FormBCI from "./FormBCI";
+import FormBonCommandeFournisseur from "./FormBonCommandeFournisseur";
 import { styled } from "@mui/material";
 
 export default function BonCommandeInterneForm() {
@@ -21,35 +21,30 @@ export default function BonCommandeInterneForm() {
     const [ valuesArticle, setValuesArticle ] = useState < any[]> ([])
     const [ idDelete,setIdDelete] = useState < any[]> ([])
 
-    const { isEditing,bonCommandeInterne } = useAppSelector((state) => state.bonCommandeInterne);
+    const { isEditing,commandeFournisseur } = useAppSelector((state) => state.bonDeCommandeFournisseur);
 
     const handleSubmit = async (values: any) => {
         try {
             const updateData = {
-                programme: values.programme,
-                reference:values.reference,
-                grant: values.grant,
-                ligneBudgetaire: values.ligneBudgetaire,
-                demandeur: values.demandeur,
-                observation: values.observation,
-                type:values.type,
-                dateBonCommande: new Date(values.dateBonCommande),
-                numBonCommande: values.numBonCommande,
-                montantTotal : valuesArticle.reduce((acc:any, curr:any) => acc + curr.valueArticle, 0)
+                vendorId: values.vendorId,
+                establishmentDate:new Date(values.establishmentDate),
+                paymentMethod: values.paymentMethod,
+                deliveryDate: new Date(values.dateBonCommande),
+                deliveryCondition: values.deliveryCondition,
+                // montantTotal : valuesArticle.reduce((acc:any, curr:any) => acc + curr.valueArticle, 0)
             }
 
             if(isEditing){
-                const response = await dispatch(updateBonCommandeInterne({id,updateData}));
+                const response = await dispatch(updateBonCommandeFournisseur({id,updateData}));
                 valuesArticle?.forEach((element:any, index:any) => {
                     const id = element.id
                     const updateData = {
                         designation: element.designation,
-                        caracteristik: element.caracteristik,
+                        unitPrice: element.unitPrice,
                         quantite: element.quantite,
-                        fournisseurId:element.fournisseurId,
-                        pu: element.pu,
-                        valueArticle: element.valueArticle,
-                        bondeCommandeInterneId: response.payload.id
+                        montant:element.montant,
+                        details: element.details,
+                        bonCommandeFournisseurId: response.payload.id
                     };
                     if(id){
                         dispatch(updateArticleCommande({id,updateData}));
@@ -62,7 +57,7 @@ export default function BonCommandeInterneForm() {
                     dispatch(deleteArticleCommandeInterne({id}));
                 })
             }else{
-                const response = await dispatch(createBonCommandeInterne(updateData));
+                const response = await dispatch(createBonCommandeFournisseur(updateData));
                 if(valuesArticle.length > 0 ){
                     valuesArticle.forEach((element:any, index:any) => {
                         const newData = {
@@ -86,7 +81,7 @@ export default function BonCommandeInterneForm() {
 
     const handleFech = async (id: any) => {
         try { 
-            const Val = await dispatch(editBonCommandeInterne({ id , args:{
+            const Val = await dispatch(editBonCommandeFournisseur({ id , args:{
                 include:{
                     ArticleCommande:true
                 }
@@ -114,20 +109,15 @@ export default function BonCommandeInterneForm() {
                     enableReinitialize = { isEditing ? true :false }
                     initialValues={
                         {
-                            programme: isEditing ? bonCommandeInterne.programme: "",
-                            grant: isEditing ? bonCommandeInterne.grant: "",
-                            ligneBudgetaire: isEditing ? bonCommandeInterne.ligneBudgetaire: "",
-                            demandeur: isEditing ? bonCommandeInterne.demandeur: "",
-                            observation:isEditing ? bonCommandeInterne.observation :"",
-                            reference: isEditing ? bonCommandeInterne.reference:"",
-                            dateBonCommande: isEditing && bonCommandeInterne?.dateBonCommande ? new Date(bonCommandeInterne?.dateBonCommande): new Date(),
-                            numBonCommande: isEditing ? bonCommandeInterne.numBonCommande :"",
-                            type:isEditing ? bonCommandeInterne.type :"",
+                            vendorId: isEditing ? commandeFournisseur.vendorId: "",
+                            establishmentDate: isEditing && commandeFournisseur.establishmentDate ? new Date(commandeFournisseur.establishmentDate):new Date(),
+                            paymentMethod: isEditing ? commandeFournisseur.paymentMethod: "",
+                            deliveryDate: isEditing && commandeFournisseur.deliveryDate? new Date(commandeFournisseur.deliveryDate): new Date(),
+                            deliveryCondition:isEditing ? commandeFournisseur.deliveryCondition :"",
                             designation :"",
-                            caracteristik:"",
-                            pu:0,
-                            fournisseurId:"",
+                            unitPrice:0,
                             quantite:0,
+                            details:"",
                         }
                     }
                     validationSchema={Yup.object({
@@ -139,7 +129,7 @@ export default function BonCommandeInterneForm() {
                         action.resetForm();
                     }}
                 >
-                    {(formikProps) => <FormBCI setIdDelete={setIdDelete} formikProps={formikProps} valuesArticle={valuesArticle} setValuesArticle={setValuesArticle} />}
+                    {(formikProps) => <FormBonCommandeFournisseur setIdDelete={setIdDelete} formikProps={formikProps} valuesArticle={valuesArticle} setValuesArticle={setValuesArticle} />}
                 </Formik>
             </Container>
         </>
@@ -151,4 +141,3 @@ export const CustomStack = styled(Stack)(({ theme }) => ({
     flexWrap: "wrap",
   },
 }));
-

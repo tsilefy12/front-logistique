@@ -49,6 +49,8 @@ import { grantSlice } from "./features/grant_ligneBudgétaire_programme/grantSli
 import { budgetLineSlice } from "./features/grant_ligneBudgétaire_programme/budgeteLineSlice";
 import { holderEquipementSlice } from "./features/holder/holderEquipementSlice";
 import { activitySlice } from "./features/activity/activitySlice";
+import { programSlice } from "./features/program/programSlice";
+import { BonCommandeFournisseurSlice } from "./features/bon_commande_fournisseur/bonCommandeFournisseurSlice";
 
 export const store = configureStore({
   reducer: {
@@ -102,7 +104,9 @@ export const store = configureStore({
     grant : grantSlice.reducer,
     lineBugetaire : budgetLineSlice.reducer,
     holderEquipment : holderEquipementSlice.reducer,
-    activity: activitySlice.reducer
+    activity: activitySlice.reducer,
+    program: programSlice.reducer,
+    bonDeCommandeFournisseur : BonCommandeFournisseurSlice.reducer
   },
 });
 

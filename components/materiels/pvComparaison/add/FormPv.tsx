@@ -1,12 +1,12 @@
 import Delete from '@mui/icons-material/Delete';
-import { Box, Button, Divider, FormControl, FormControlLabel, IconButton, Paper, Radio, RadioGroup, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from '@mui/material';
+import { Box, Button, Checkbox, Divider, FormControl, FormControlLabel, FormGroup, IconButton, InputLabel, Paper, Radio, RadioGroup, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from '@mui/material';
 import { Form, FormikProps } from 'formik';
 import React, { useEffect, useState } from 'react'
 import OSSelectField from '../../../shared/select/OSSelectField';
 import OSTextField from '../../../shared/input/OSTextField';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
-import { getBonCommandeInternes } from '../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice';
-import { getBonCommandeExternes } from '../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice';
+import { getBonCommandeInterne, getBonCommandeInternes } from '../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice';
+import { getBonCommandeExterne, getBonCommandeExternes } from '../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice';
 import { getEquipments } from '../../../../redux/features/equipment';
 import { getFournisseurList } from '../../../../redux/features/fournisseur';
 import { getBudgetLineList } from '../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice';
@@ -16,22 +16,22 @@ import Close from '@mui/icons-material/Close';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import { useRouter } from 'next/router';
 import { cancelEdit } from '../../../../redux/features/pvComparaison/pvComparaisonSlice';
+import Edit from '@mui/icons-material/Edit';
+import { getPrograms } from '../../../../redux/features/program/programSlice';
 
 const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any}) =>  {
 
     const dispatch = useAppDispatch();
     const route = useRouter();
 
-    const { equipments } = useAppSelector( (state) => state.equipment);
+    const [ materiel, setMateriel] = useState < any[]> ([])
     const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
     const { grantList } = useAppSelector( (state) => state.grant);
     const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
     const { bonCommandeExternes } = useAppSelector((state) => state.bonCommendeExterne);
     const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
+    const { programs } = useAppSelector( (state) => state.program);
     const { isEditing } = useAppSelector((state) => state.pvComparaisonFournisseurs);
-
-    const [operate, setOperate] = useState<"INPUT" | "OUTPUT">("INPUT")
-    const [operationLabel, setOperationLabel] = useState<"Entrée" | "Sortie">("Entrée")
 
     const total = [...bonCommandeExternes.map((i:any)=>{
         return {
@@ -39,15 +39,9 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
         }
     }),...bonCommandeInternes.map((i:any)=>{
         return {
-            id : i.id, name: i.numBon, type: "BCI"
+            id : i.id, name: i.reference, type: "BCI"
         }
     })]
-
-    const programmeList = [
-        {id : "test1",name : "TEST1"},
-        {id : "test2",name : "TEST2"},
-        {id : "test3",name : "TEST3"}
-    ]
     
     const fetchUtilsData = () => {
         dispatch(getBonCommandeInternes({}));
@@ -56,12 +50,76 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
         dispatch(getFournisseurList({}));
         dispatch(getGrantList({}));
         dispatch(getBudgetLineList({}));
+        dispatch(getPrograms({}));
     };
+
+    const optionsOffres = valuesArticle.map((item:any,index:any) => ({
+        index:index,
+        value: item.fournisseur,
+        label: `Offre N°${index + 1} : ${item.fournisseurName}`
+    }));
     
     useEffect(() => {
         fetchUtilsData();
     }, []);
 
+    const checkboxChange = (c: boolean, s: string) => {
+        let files: string[] =
+          formikProps.values.fileRequired.length > 0
+            ? formikProps.values.fileRequired.split(";")
+            : [];
+        if (c) {
+          files.push(s);
+          formikProps.setFieldValue("fileRequired", files.join(";"));
+          return;
+        }
+        files = files.filter((f) => f !== s);
+        formikProps.setFieldValue("fileRequired", files.join(";"));
+    };
+
+    const handleFech = async (id: any) => {
+        try { 
+            const response:any = total.find((e:any)=> e.id === id)
+            formikProps.setFieldValue("type", response?.type)
+            if(response?.type === "BCE"){
+                const Val = await dispatch(getBonCommandeExterne({ id , args:{
+                    include:{
+                        articleCommandeBce:true
+                    }
+                }}));
+                console.log(Val)
+                setMateriel((prev:any[])=>{
+                    console.log(prev)
+                    prev = Val.payload.articleCommandeBce
+                    return prev
+                })
+            }else{
+                const Val = await dispatch(getBonCommandeInterne({ id , args:{
+                    include:{
+                        ArticleCommande:true
+                    }
+                }}));
+                console.log(Val)
+                setMateriel((prev:any[])=>{
+                    console.log(prev)
+                    prev = Val.payload.ArticleCommande
+                    return prev
+                })
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        const id = formikProps.values.ref
+        if(id){
+            handleFech(id)
+        }
+    }, [formikProps.values.ref]);
+    useEffect(() => {
+        fetchUtilsData();
+    }, []);
     return (
         <Form>
             <NavigationContainer>
@@ -160,8 +218,8 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                             id="outlined-basic"
                             label="Matériel"
                             name="materiel"
-                            options={equipments}
-                            dataKey={["numOptim","designation"]}
+                            options={materiel}
+                            dataKey={["designation"]}
                             valueKey="id"
                             type="text"
                         />
@@ -171,7 +229,7 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                             id="outlined-basic"
                             label="Programme"
                             name="programme"
-                            options={programmeList}
+                            options={programs}
                             dataKey="name"
                             valueKey="id"
                             type="text"
@@ -236,9 +294,9 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                                             key={index}
                                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                         >
-                                            <TableCell component="th" scope="row">{element.fournisseur}</TableCell>
+                                            <TableCell component="th" scope="row">{element.fournisseurName}</TableCell>
                                             <TableCell align="left">{element.modePaie}</TableCell>
-                                            <TableCell align="left">{element.designation} Ar</TableCell>
+                                            <TableCell align="left">{element.designation}</TableCell>
 
                                             <TableCell
                                             align="center"
@@ -250,6 +308,20 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                                                 alignItems="center"
                                                 spacing={2}
                                             >
+                                                <IconButton
+                                                        color="warning"
+                                                        aria-label="Edit"
+                                                        component="span"
+                                                        size="small"
+                                                        onClick={() => {
+                                                            formikProps.setFieldValue('fournisseur', element.fournisseur);
+                                                            formikProps.setFieldValue('modePaie', element.modePaie);
+                                                            formikProps.setFieldValue('designation', element.designation);
+                                                            // setIdValues(item.id)
+                                                        }}
+                                                    >
+                                                    <Edit color="primary" />
+                                                </IconButton>
                                                 <IconButton
                                                         color="warning"
                                                         aria-label="Supprimer"
@@ -384,9 +456,9 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                             id="outlined-basic"
                             label="Offres Retenu"
                             name="offreRetenu"
-                            options={valuesArticle}
-                            dataKey={["fournisseurName"]}
-                            valueKey="fournisseur"
+                            options={optionsOffres}
+                            dataKey={["label"]}
+                            valueKey="index"
                             type="text"
                         />
                     </FormControl>
@@ -401,28 +473,36 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                         />
                     </FormControl>
                     </Stack>
-                    <Stack direction="row" spacing={2} margin={4}>
-                        <Typography variant="h6" id="tableTitle" component="div">
-                            Motif de Retenu :
-                        </Typography>
-                        <RadioGroup
-                        aria-label="choixEntreSortie"
-                        name="choixEntreSortie"
+                    <FormGroup>
+                    <Stack
+                        direction="row"
+                        spacing={4}
+                        sx={{
+                            flex: "1 1 100%",
+                            alignItems: "center",
+                        }}
                         >
-                        <Stack direction='row' spacing={4}>
-                        <FormControlLabel value="INPUT" onChange={(e, c)=>{
-                            if (!c) { setOperate("OUTPUT")} 
-                            setOperate("INPUT")
-                            setOperationLabel("Entrée")
-                        }} control={<Radio checked={operate === "INPUT"} />} label="Moins distant" />
-                        <FormControlLabel value="OUTPUT" onChange={(e, c)=>{
-                            if (!c) { setOperate("INPUT") } 
-                            setOperate("OUTPUT")
-                            setOperationLabel("Sortie")
-                        }} control={<Radio checked={operate === "OUTPUT"} />} label="Conforme aux besoin" />
+                        <InputLabel>Motif de retenu</InputLabel>
+                        <FormControlLabel
+                            label="Moins distant"
+                            control={
+                            <Checkbox
+                                checked={formikProps.values.fileRequired.includes("cv")}
+                                onChange={(e, c) => checkboxChange(c, "cv")}
+                            />
+                            }
+                        />
+                        <FormControlLabel
+                            label="Conforme aux besoin"
+                            control={
+                            <Checkbox
+                                checked={formikProps.values.fileRequired.includes("lm")}
+                                onChange={(e, c) => checkboxChange(c, "lm")}
+                            />
+                            }
+                        />
                         </Stack>
-                        </RadioGroup>
-                    </Stack>
+                    </FormGroup>
                 </FormContainer>
             </Box>
         </Form>

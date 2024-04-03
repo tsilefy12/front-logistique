@@ -30,24 +30,26 @@ export default function BonReceptionForm() {
                     dateReception: new Date(values.dateReception)
                 }
                 const response = await dispatch(updateBonReception({id,updateDataBR}));
-                valuesArticle?.forEach((element:any, index:any) => {
-                    const id = element.id
-                    if(id){
-                        const updateProduitRecu = {
-                            designation: element.designation,
-                            quantite:element.quantite,
-                            bonDeReceptionId: response.payload.id
-                        };
-                        dispatch(updateProduiRecu({id,updateProduitRecu}));
-                    }else{
-                        const newData = {
-                            designation: element.designation,
-                            quantite:element.quantite,
-                            bonDeReceptionId: response.payload.id
-                        };
-                        dispatch(createproduitRecu(newData));
-                    }
-                });
+                if(valuesArticle.length > 0 ){
+                    valuesArticle?.forEach((element:any, index:any) => {
+                        const id = element.id
+                        if(id){
+                            const updateProduitRecu = {
+                                designation: element.designation,
+                                quantite:element.quantite,
+                                bonDeReceptionId: response.payload.id
+                            };
+                            dispatch(updateProduiRecu({id,updateProduitRecu}));
+                        }else{
+                            const newData = {
+                                designation: element.designation,
+                                quantite:element.quantite,
+                                bonDeReceptionId: response.payload.id
+                            };
+                            dispatch(createproduitRecu(newData));
+                        }
+                    });
+                }
                 idDelete?.forEach((element:any, index:any) =>{
                     const id = element.id
                     dispatch(deleteproduitRecu({id}));

@@ -11,7 +11,7 @@ export interface ArticleCommandeItem {
     vendor?:any;
     type?:string;
 }
-  
+
 export interface ArticleCommandeInitialState {
     articleCommandeInternes: ArticleCommandeItem[];
     articleCommandeInterne: ArticleCommandeItem;

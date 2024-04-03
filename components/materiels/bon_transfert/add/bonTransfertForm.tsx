@@ -36,18 +36,38 @@ export default function BonTransfertForm() {
             }
             if(isEditing){
                 const response = await dispatch(updateBonTransfert({id,updateData}));
-                valuesArticle?.forEach((element:any, index:any) => {
+                if(valuesArticle.length > 0 ){
+                    valuesArticle?.forEach((element:any, index:any) => {
+                        const id = element.id
+                        if(id){
+                            const updateData = {
+                                designation: element.designation,
+                                quantiteCommande: element.quantiteCommande,
+                                quantiteExpedie:element.quantiteExpedie,
+                                observation: element.observation,
+                                bonDeTransfertId: response.payload.id,
+                            };
+                            dispatch(updateArticleTransfert({id,updateData}));
+                        }else{
+                            const newData = {
+                                designation: element.designation,
+                                quantiteCommande: element.quantiteCommande,
+                                quantiteExpedie:element.quantiteExpedie,
+                                observation: element.observation,
+                                bonDeTransfertId: response.payload.id,
+                            };
+                            dispatch(createArticleTransfert(newData));
+                        }
+                    });
+                }
+                idDelete?.forEach((element:any, index:any) =>{
                     const id = element.id
-                    if(id){
-                        const updateData = {
-                            designation: element.designation,
-                            quantiteCommande: element.quantiteCommande,
-                            quantiteExpedie:element.quantiteExpedie,
-                            observation: element.observation,
-                            bonDeTransfertId: response.payload.id,
-                        };
-                        dispatch(updateArticleTransfert({id,updateData}));
-                    }else{
+                    dispatch(deleteArticleTransfert({id}));
+                })
+            }else{
+                const response = await dispatch(createBonTransfert(updateData));
+                if(valuesArticle.length > 0 ){
+                    valuesArticle.forEach((element:any, index:any) => {
                         const newData = {
                             designation: element.designation,
                             quantiteCommande: element.quantiteCommande,
@@ -56,28 +76,12 @@ export default function BonTransfertForm() {
                             bonDeTransfertId: response.payload.id,
                         };
                         dispatch(createArticleTransfert(newData));
-                    }
-                });
-                idDelete?.forEach((element:any, index:any) =>{
-                    const id = element.id
-                    dispatch(deleteArticleTransfert({id}));
-                })
-            }else{
-                const response = await dispatch(createBonTransfert(updateData));
-                valuesArticle.forEach((element:any, index:any) => {
-                    const newData = {
-                        designation: element.designation,
-                        quantiteCommande: element.quantiteCommande,
-                        quantiteExpedie:element.quantiteExpedie,
-                        observation: element.observation,
-                        bonDeTransfertId: response.payload.id,
-                    };
-                    dispatch(createArticleTransfert(newData));
-                });
+                    });
+                }
             }
             route.push("/materiels/bon_transfert");
         } catch (error) {
-        console.log("error", error);
+            console.log("error", error);
         }
     };
 

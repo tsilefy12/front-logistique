@@ -1,18 +1,16 @@
 export interface PvComparaisonItem {
     id?: string;
     objet?: string,
-    ref?: string,
     programme?: string,
-    grant?: string,
-    ligneBudgetaire?: string,
+    grant?: number,
+    ligneBudgetaire?: number,
     materiel?: string,
-    offreRetenu?: string,
-    justification?: string,
+    motif?: string,
     argument?: string,
-    type?: string,
+    bci?: string,
+    bce?: string,
     TableComparaison?:any
 }
-  
 export interface PvComparaisonInitialState {
     pvComparaisons: PvComparaisonItem[];
     pvComparaison: PvComparaisonItem;

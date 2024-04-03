@@ -77,6 +77,12 @@ const menu = [
         link: "/materiels/fiche_dotation",
         icon: "",
       },
+      {
+        id: 114,
+        name: "Bon de commande fournisseur",
+        link: "/materiels/bon_de_commande_fournisseur",
+        icon: "",
+      },
     ],
   },
   {
