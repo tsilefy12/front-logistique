@@ -31,6 +31,7 @@ import useFetchpvComparaison from "./hooks/useFetchPvComparaisonFournisseur";
 import { deletePvComparaison } from "../../../redux/features/pvComparaison/pvComparaisonSlice";
 import PvComparaisonTableToolbar from "./table/pvComparaisonTableToolbar";
 import PvComparaisonTableHeader from "./table/pvComparaisonTableHeader";
+import { PvComparaisonItem } from "../../../redux/features/pvComparaison/pvComparaison.interface";
 
 export default function PvComparaisonList() {
     const [page, setPage] = React.useState(0);
@@ -51,6 +52,7 @@ export default function PvComparaisonList() {
 
     React.useEffect(() => {
         fetchpvComparaison();
+        console.log(pvComparaisons)
     }, [router.query]);
 
     const handleClickDelete = async (id: any) => {
@@ -116,16 +118,16 @@ export default function PvComparaisonList() {
                         <TableBody>
                         {pvComparaisons
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row: PvComparaisonFournisseurItem, index: any) => {
+                            .map((row: PvComparaisonItem, index: any) => {
                             const labelId = `enhanced-table-checkbox-${index}`;
                             return (
                                 <TableRow hover tabIndex={-1} key={row.id}>
-                                    <TableCell align="left">{row?.fournisseur}</TableCell>
-                                    <TableCell align="left">{row?.modePaie}</TableCell>
+                                    <TableCell align="left">{row?.objet}</TableCell>
+                                    <TableCell align="left">{row?.bce ? row.bonDeCommandeExterne?.ref+"(BCE)" : row.bonDeCommandeInterne?.reference +"(BCI)"}</TableCell>
                                     <TableCell align="left">
-                                        {row?.offre}
+                                        {row.tableComparaison?.offerRetenu?.length > 0 && row.tableComparaison?.vendor?.name}
                                     </TableCell>
-                                    <TableCell align="left">{row?.designation}</TableCell>
+                                    <TableCell align="left">{row.tableComparaison?.offerRetenu?.length > 0 ? row.tableComparaison?.modePaie : ""}</TableCell>
                                     <TableCell align="right" width={"150px"}>
                                         <BtnActionContainer
                                         direction="row"

@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useAppDispatch } from "../../../../hooks/reduxHooks";
-import { getPvComparaisonFournisseurs } from "../../../../redux/features/pvComparaison/pvComparaisonFournisseurSlice";
+import { getPvComparaisons } from "../../../../redux/features/pvComparaison/pvComparaisonSlice";
 
 /**
  * @description Hook to fetch employees
@@ -10,7 +10,18 @@ const useFetchPvComparaisonFournisseurs = () => {
     const dispatch = useAppDispatch();
 
     return async () => {
-        let args: any = {};
+        let args: any = {
+            include :  {
+                bonDeCommandeExterne: true,
+                bonDeCommandeInterne:true,
+                tableComparaison :{
+                    include : {
+                        offreRetenu:true,
+                        vendor:true
+                    }
+                }
+            }
+        };
         if (router.query.search) {
             args.where = {};
         }
@@ -19,7 +30,8 @@ const useFetchPvComparaisonFournisseurs = () => {
                 [<string>router.query.orderBy]: router.query.order,
             };
         }
-        await dispatch(getPvComparaisonFournisseurs({ args }));
+        const response = await dispatch(getPvComparaisons({ args }));
+        console.log(response)
     };
 };
 

@@ -10,6 +10,7 @@ import { createPvComparaison } from "../../../../redux/features/pvComparaison/pv
 import { createPvComparaisonFournisseur } from "../../../../redux/features/pvComparaison/pvComparaisonFournisseurSlice";
 import FormPv from "./FormPv";
 import { styled } from "@mui/material";
+import { createOffreRetenu } from "../../../../redux/features/pvComparaison/offreRetenuSlice";
 
 export default function PvComparaisonForm() {
     const dispatch = useAppDispatch();
@@ -37,9 +38,6 @@ export default function PvComparaisonForm() {
                     grant: values.grant,
                     ligneBudgetaire: values.ligneBudgetaire,
                     materiel: values.materiel,
-                    offreRetenu: values.offreRetenu,
-                    argument: values.argument,
-                    motif: values.motif
                 }
                 const response = await dispatch(createPvComparaison(newDataPV));
                 if(valuesArticle.length > 0 ){
@@ -50,7 +48,16 @@ export default function PvComparaisonForm() {
                             designation: element.designation,
                             pvComparaisonOffreId: response.payload.id
                         };
-                        dispatch(createPvComparaisonFournisseur(newData));
+                        const res:any = dispatch(createPvComparaisonFournisseur(newData));
+                        console.log(res)
+                        if(index === values.offreRetenu){
+                            const data = {
+                                motif: values.motif ? values.motif: null,
+                                argument: values.argument ? values.argument :null,
+                                tableComparaisonId: res.payload?.id
+                            }
+                            dispatch(createOffreRetenu(data))
+                        }
                     });
                 }
             }
@@ -72,14 +79,12 @@ export default function PvComparaisonForm() {
                             grant: "",
                             ligneBudgetaire: "",
                             materiel:"",
-                            offreRetenu: "",
-                            justification: "",
-                            argument: "",
                             fournisseur:"",
                             modePaie:"",
-                            offre:"",
-                            fileRequired:"",
                             designation:"",
+                            motif:"",
+                            offreRetenu: 0,
+                            argument: "",
                         }
                     }
                     validationSchema={Yup.object({

@@ -52,6 +52,7 @@ import { activitySlice } from "./features/activity/activitySlice";
 import { programSlice } from "./features/program/programSlice";
 import { BonCommandeFournisseurSlice } from "./features/bon_commande_fournisseur/bonCommandeFournisseurSlice";
 import { ArticleCommandeFournisseurSlice } from "./features/bon_commande_fournisseur/articleCommandeFournisseurSlice";
+import { OffreRetenuSlice } from "./features/pvComparaison/offreRetenuSlice";
 
 export const store = configureStore({
   reducer: {
@@ -108,7 +109,8 @@ export const store = configureStore({
     activity: activitySlice.reducer,
     program: programSlice.reducer,
     bonDeCommandeFournisseur : BonCommandeFournisseurSlice.reducer,
-    articleCommanedFournisseur : ArticleCommandeFournisseurSlice.reducer
+    articleCommanedFournisseur : ArticleCommandeFournisseurSlice.reducer,
+    offreRetenu : OffreRetenuSlice.reducer
   },
 });
 

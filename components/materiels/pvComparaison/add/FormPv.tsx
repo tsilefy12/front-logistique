@@ -64,19 +64,18 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
     }, []);
 
     const checkboxChange = (c: boolean, s: string) => {
-        let files: string[] =
-          formikProps.values.fileRequired.length > 0
-            ? formikProps.values.fileRequired.split(";")
+        let motifRetenu: string[] =
+          formikProps.values.motif.length > 0
+            ? formikProps.values.motif.split(";")
             : [];
         if (c) {
-          files.push(s);
-          formikProps.setFieldValue("fileRequired", files.join(";"));
-          return;
+            motifRetenu.push(s);
+            formikProps.setFieldValue("motif", motifRetenu.join(";"));
+            return;
         }
-        files = files.filter((f) => f !== s);
-        formikProps.setFieldValue("fileRequired", files.join(";"));
+        motifRetenu = motifRetenu.filter((f) => f !== s);
+        formikProps.setFieldValue("motif", motifRetenu.join(";"));
     };
-
     const handleFech = async (id: any) => {
         try { 
             const response:any = total.find((e:any)=> e.id === id)
@@ -487,8 +486,8 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                             label="Moins distant"
                             control={
                             <Checkbox
-                                checked={formikProps.values.fileRequired.includes("cv")}
-                                onChange={(e, c) => checkboxChange(c, "cv")}
+                                checked={formikProps.values.motif.includes("moins_distant")}
+                                onChange={(e, c) => checkboxChange(c, "moins_distant")}
                             />
                             }
                         />
@@ -496,8 +495,8 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                             label="Conforme aux besoin"
                             control={
                             <Checkbox
-                                checked={formikProps.values.fileRequired.includes("lm")}
-                                onChange={(e, c) => checkboxChange(c, "lm")}
+                                checked={formikProps.values.motif.includes("conforme_aux_besoins")}
+                                onChange={(e, c) => checkboxChange(c, "conforme_aux_besoins")}
                             />
                             }
                         />

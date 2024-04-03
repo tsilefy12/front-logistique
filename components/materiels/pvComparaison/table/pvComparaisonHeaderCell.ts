@@ -2,27 +2,27 @@ import { HeadCell } from "./HeadCell.interface";
 
 export const BonCommandeInterneHeadCells: readonly HeadCell[] = [
     {
-        id: "fournisseur",
+        id: "objet",
         numeric: false,
         disablePadding: false,
-        label: "Fournisseur",
+        label: "Objet",
+    },
+    {
+        id: "ref",
+        numeric: false,
+        disablePadding: false,
+        label: "Ref BCI / BCE",
+    },
+    {
+        id: "offreRetenu",
+        numeric: false,
+        disablePadding: false,
+        label: "Offre retenu",
     },
     {
         id: "modePaie",
         numeric: false,
         disablePadding: false,
-        label: "Mode de paie",
-    },
-    {
-        id: "offre",
-        numeric: false,
-        disablePadding: false,
-        label: "Offre",
-    },
-    {
-        id: "Désignation",
-        numeric: false,
-        disablePadding: false,
-        label: "Montant total",
+        label: "Mode de paiement",
     },
 ];
