@@ -11,6 +11,7 @@ import {
 import { createArticleCommandeInterne, deleteArticleCommandeInterne, updateArticleCommande } from "../../../../redux/features/bon_commande_interne/articleCommandeSlice";
 import FormBonCommandeFournisseur from "./FormBonCommandeFournisseur";
 import { styled } from "@mui/material";
+import { createArticleCommandeFournisseur, deleteArticleCommandeFournisseur, updateArticleCommandeFournisseur } from "../../../../redux/features/bon_commande_fournisseur/articleCommandeFournisseurSlice";
 
 export default function BonCommandeInterneForm() {
     const dispatch = useAppDispatch();
@@ -29,32 +30,35 @@ export default function BonCommandeInterneForm() {
                 vendorId: values.vendorId,
                 establishmentDate:new Date(values.establishmentDate),
                 paymentMethod: values.paymentMethod,
-                deliveryDate: new Date(values.dateBonCommande),
+                deliveryDate: new Date(values.deliveryDate),
                 deliveryCondition: values.deliveryCondition,
                 // montantTotal : valuesArticle.reduce((acc:any, curr:any) => acc + curr.valueArticle, 0)
             }
 
             if(isEditing){
                 const response = await dispatch(updateBonCommandeFournisseur({id,updateData}));
-                valuesArticle?.forEach((element:any, index:any) => {
-                    const id = element.id
-                    const updateData = {
-                        designation: element.designation,
-                        unitPrice: element.unitPrice,
-                        quantite: element.quantite,
-                        montant:element.montant,
-                        details: element.details,
-                        bonCommandeFournisseurId: response.payload.id
-                    };
-                    if(id){
-                        dispatch(updateArticleCommande({id,updateData}));
-                    }else{
-                        dispatch(createArticleCommandeInterne(updateData));
-                    }
-                });
+                if(valuesArticle.length > 0){
+                    valuesArticle?.forEach((element:any, index:any) => {
+                        const id = element.id
+                        const updateData = {
+                            designation: element.designation,
+                            unitPrice: element.unitPrice,
+                            quantite: element.quantite,
+                            montant:element.montant,
+                            details: element.details ? element.details :null,
+                            bonCommandeFournisseurId: response.payload.id
+                        };
+                        if(id){
+                            dispatch(updateArticleCommandeFournisseur({id,updateData}));
+                        }else{
+                            dispatch(createArticleCommandeFournisseur(updateData));
+                        }
+                    });
+                }
+                
                 idDelete?.forEach((element:any, index:any) =>{
                     const id = element.id
-                    dispatch(deleteArticleCommandeInterne({id}));
+                    dispatch(deleteArticleCommandeFournisseur({id}));
                 })
             }else{
                 const response = await dispatch(createBonCommandeFournisseur(updateData));
@@ -62,18 +66,17 @@ export default function BonCommandeInterneForm() {
                     valuesArticle.forEach((element:any, index:any) => {
                         const newData = {
                             designation: element.designation,
-                            caracteristik: element.caracteristik,
+                            unitPrice: element.unitPrice,
                             quantite: element.quantite,
-                            fournisseurId:element.fournisseurId,
-                            pu: element.pu,
-                            valueArticle: element.valueArticle,
-                            bondeCommandeInterneId: response.payload.id
+                            montant:element.montant,
+                            details: element.details,
+                            bonCommandeFournisseurId: response.payload.id
                         };
-                        dispatch(createArticleCommandeInterne(newData));
+                        dispatch(createArticleCommandeFournisseur(newData));
                     });
                 }
             }
-            route.push("/materiels/bon_commande_interne");
+            route.push("/materiels/bon_de_commande_fournisseur");
         } catch (error) {
         console.log("error", error);
         }
@@ -83,13 +86,13 @@ export default function BonCommandeInterneForm() {
         try { 
             const Val = await dispatch(editBonCommandeFournisseur({ id , args:{
                 include:{
-                    ArticleCommande:true
+                    articleFournisseur:true
                 }
             }}));
             console.log(Val)
             setValuesArticle((prev:any[])=>{
                 console.log(prev)
-                prev = Val.payload.ArticleCommande
+                prev = Val.payload.articleFournisseur
                 return prev
             })
         } catch (error) {
@@ -121,8 +124,7 @@ export default function BonCommandeInterneForm() {
                         }
                     }
                     validationSchema={Yup.object({
-                        reference:Yup.string().required("Champ obligatoire"),
-                        numBonCommande:Yup.string().required("Champ obligatoire"),
+                        vendorId:Yup.string().required("Champ obligatoire"),
                     })}
                     onSubmit={(value: any, action: any) => {
                         handleSubmit(value);

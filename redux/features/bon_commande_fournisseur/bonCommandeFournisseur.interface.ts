@@ -6,6 +6,7 @@ export interface CommandeFournisseurItem {
     paymentMethod?:string;
     deliveryDate?:Date;
     deliveryCondition?:string;
+    articleFournisseur?:any;
 }
 
 export interface CommandeFournisseurInitialState {

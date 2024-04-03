@@ -2,7 +2,7 @@ export interface ArticleCommandeFournisseurItem {
     id?:string;
     designation?:string;
     unitPrice?:number;
-    unite?:string;
+    quantite?:string;
     montant?:number;
     details?:string;
     bonCommandeFournisseurId?:string;

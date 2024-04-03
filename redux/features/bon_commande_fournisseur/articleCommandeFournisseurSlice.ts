@@ -1,17 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { CommandeFournisseurInitialState, CommandeFournisseurItem } from "./bonCommandeFournisseur.interface";
 import { axios } from "../../../lib/axios";
 import { enqueueSnackbar } from "../notification/notificationSlice";
+import { ArticleCommandeFournisseurInitialState, ArticleCommandeFournisseurItem } from "./articleCommandeFournisseur.interfae";
 
-const initialState:CommandeFournisseurInitialState = {
-    commandeFournisseurs: [],
-    commandeFournisseur: {},
+const initialState: ArticleCommandeFournisseurInitialState = {
+    articleCommandeVendors: [],
+    articleCommandeVendor: {},
     isEditing: false,
     loading: false,
     error: null,
 };
-export const editBonCommandeFournisseur = createAsyncThunk(
-    "materiels/editBonCommandeFournisseur",
+
+export const editArticleCommandeFournisseur = createAsyncThunk(
+    "materiels/editArticleCommandeFournisseur",
     async (data: { id: string , args?: any }, thunkAPI) => {
         try {
           
@@ -19,7 +20,7 @@ export const editBonCommandeFournisseur = createAsyncThunk(
               args: JSON.stringify(data.args),
             };
 
-            const response = await axios.get(`/logistique/bon-de-commande-fournisseur/${data.id}`, { params });
+            const response = await axios.get(`/logistique/article-fournisseur${data.id}`, { params });
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -30,14 +31,14 @@ export const editBonCommandeFournisseur = createAsyncThunk(
     }
 );
 
-export const createBonCommandeFournisseur = createAsyncThunk(
-    "materiels/createBonCommandeFournisseur",
-    async (data: CommandeFournisseurItem, thunkAPI) => {
+export const createArticleCommandeFournisseur = createAsyncThunk(
+    "materiels/createArticleCommandeFournisseur",
+    async (data: ArticleCommandeFournisseurItem, thunkAPI) => {
       try {
-        const response = await axios.post("/logistique/bon-de-commande-fournisseur", data);
+        const response = await axios.post("/logistique/article-fournisseur", data);
         thunkAPI.dispatch(
           enqueueSnackbar({
-            message: "Bon de commande fournisseur créé avec succès",
+            message: "Article de commande fournisseur créé avec succès",
             options: {
               variant: "success",
             },
@@ -53,15 +54,15 @@ export const createBonCommandeFournisseur = createAsyncThunk(
     }
 );
   
-export const deleteBonCommandeFournisseur = createAsyncThunk(
-    "materiels/deleteBonCommandeFournisseur",
+export const deleteArticleCommandeFournisseur = createAsyncThunk(
+    "materiels/deleteArticleCommandeFournisseur",
     async (data: { id: string }, thunkAPI) => {
       console.log("data.id" + data.id)
       try {
-        const response = await axios.delete(`/logistique/bon-de-commande-fournisseur/${data.id}`);
+        const response = await axios.delete(`/logistique/article-fournisseur/${data.id}`);
         thunkAPI.dispatch(
           enqueueSnackbar({
-            message: "Bon de commande fournisseur supprimé avec succès",
+            message: "Artcile de commande fournisseur supprimé avec succès",
             options: {
               variant: "success",
             },
@@ -77,14 +78,14 @@ export const deleteBonCommandeFournisseur = createAsyncThunk(
     }
 );
 
-export const getBonCommandeFournisseurs = createAsyncThunk(
-  "materiels/getBonCommandeFournisseurs",
+export const getArticleCommandeFournisseurs = createAsyncThunk(
+  "materiels/getArticleCommandeFournisseurs",
   async (data: { args?: any }, thunkAPI) => {
     try {
       const params = {
         args: JSON.stringify(data.args),
       };
-      const response = await axios.get("/logistique/bon-de-commande-fournisseur", { params });
+      const response = await axios.get("/logistique/bon-de-commande-interne", { params });
       return response.data;
     } catch (error: any) {
       if (error.response) {
@@ -95,14 +96,14 @@ export const getBonCommandeFournisseurs = createAsyncThunk(
   }
 );
 
-export const getBonCommandeFournisseur = createAsyncThunk(
-  "materiels/getBonCommandeFournisseur",
+export const getArticleCommandeFournisseur = createAsyncThunk(
+  "materiels/getArticleCommandeFournisseur",
   async (data: { id: string , args?: any }, thunkAPI) => {
     try {
       const params = {
         args: JSON.stringify(data.args),
       };
-      const response = await axios.get(`/logistique/bon-de-commande-fournisseur/${data.id}`, { params });
+      const response = await axios.get(`/logistique/article-fournisseur${data.id}`, { params });
       return response.data;
     } catch (error: any) {
       if (error.response) {
@@ -113,12 +114,12 @@ export const getBonCommandeFournisseur = createAsyncThunk(
   }
 );
 
-export const updateBonCommandeFournisseur = createAsyncThunk(
-  "BonFournisseur/updateBonFournisseur",
-  async (data: { id: string; updateData: CommandeFournisseurItem }, thunkAPI) => {
+export const updateArticleCommandeFournisseur = createAsyncThunk(
+  "BonFournisseur/updateArticleCommandeFournisseur",
+  async (data: { id: string; updateData: ArticleCommandeFournisseurItem }, thunkAPI) => {
     try {
       const response = await axios.patch(
-        `/logistique/bon-de-commande-fournisseur/${data.id}`,
+        `/logistique/article-fournisseur${data.id}`,
         data.updateData
       );
       thunkAPI.dispatch(
@@ -139,89 +140,90 @@ export const updateBonCommandeFournisseur = createAsyncThunk(
   }
 );
 
-export const BonCommandeFournisseurSlice = createSlice({
-    name: "bocCommandeFournisseur",
+export const ArticleCommandeFournisseurSlice = createSlice({
+    name: "articleCommandeFournisseur",
     initialState: initialState,
     reducers: {
         cancelEdit: (state) => {
             state.isEditing = false;
-            state.commandeFournisseur = {};
+            state.articleCommandeVendor = {};
         },
     },
     extraReducers: {
-        [getBonCommandeFournisseurs.pending.type]: (state) => {
+        [getArticleCommandeFournisseurs.pending.type]: (state) => {
             state.loading = true;
         },
-        [getBonCommandeFournisseurs.fulfilled.type]: (state, action) => {
+        [getArticleCommandeFournisseurs.fulfilled.type]: (state, action) => {
             state.loading = false;
-            state.commandeFournisseurs = action.payload;
+            state.articleCommandeVendors = action.payload;
         },
-        [getBonCommandeFournisseurs.rejected.type]: (state, action) => {
+        [getArticleCommandeFournisseurs.rejected.type]: (state, action) => {
             state.loading = false;
             state.error = action.error;
         },
 
-        [getBonCommandeFournisseur.pending.type]: (state) => {
+        [getArticleCommandeFournisseur.pending.type]: (state) => {
             state.loading = true;
         },
-        [getBonCommandeFournisseur.fulfilled.type]: (state, action) => {
+        [getArticleCommandeFournisseur.fulfilled.type]: (state, action) => {
             state.loading = false;
-            state.commandeFournisseur = action.payload;
+            state.articleCommandeVendor = action.payload;
         },
-        [getBonCommandeFournisseur.rejected.type]: (state, action) => {
+        [getArticleCommandeFournisseur.rejected.type]: (state, action) => {
             state.loading = false;
             state.error = action.error;
         },
 
-        [createBonCommandeFournisseur.pending.type]: (state) => {
+       
+        [createArticleCommandeFournisseur.pending.type]: (state) => {
             state.loading = true;
         },
-        [createBonCommandeFournisseur.fulfilled.type]: (state, action) => {
+        [createArticleCommandeFournisseur.fulfilled.type]: (state, action) => {
             state.loading = false;
         },
-        [createBonCommandeFournisseur.rejected.type]: (state, action) => {
+        [createArticleCommandeFournisseur.rejected.type]: (state, action) => {
             state.error = action.error;
             state.loading = false;
         },
 
-        [deleteBonCommandeFournisseur.pending.type]: (state) => {
+        [deleteArticleCommandeFournisseur.pending.type]: (state) => {
             state.loading = true;
         },
-        [deleteBonCommandeFournisseur.fulfilled.type]: (state, action) => {
+        [deleteArticleCommandeFournisseur.fulfilled.type]: (state, action) => {
             state.loading = false;
         },
-        [deleteBonCommandeFournisseur.rejected.type]: (state, action) => {
+        [deleteArticleCommandeFournisseur.rejected.type]: (state, action) => {
             state.error = action.error;
             state.loading = false;
         },
 
-        [editBonCommandeFournisseur.pending.type]: (state) => {
+        [ editArticleCommandeFournisseur.pending.type]: (state) => {
             state.loading = true;
         },
-        [editBonCommandeFournisseur.fulfilled.type]: (state, action) => {
-            state.commandeFournisseur = action.payload;
+        [editArticleCommandeFournisseur.fulfilled.type]: (state, action) => {
+            state.articleCommandeVendor = action.payload;
             state.loading = false;
             state.isEditing = true;
         },
-        [editBonCommandeFournisseur.rejected.type]: (state, action) => {
+        [editArticleCommandeFournisseur.rejected.type]: (state, action) => {
             state.error = action.error;
             state.loading = false;
         },
 
-        // update bon commande fournisseur
-        [updateBonCommandeFournisseur.pending.type]: (state) => {
+        // update article commande fournisseur
+        [updateArticleCommandeFournisseur.pending.type]: (state) => {
           state.loading = true;
         },
-        [updateBonCommandeFournisseur.fulfilled.type]: (state, action) => {
+        [updateArticleCommandeFournisseur.fulfilled.type]: (state, action) => {
           state.loading = false;
-          state.commandeFournisseur = {};
+          state.articleCommandeVendor = {};
           state.isEditing = false;
         },
-        [updateBonCommandeFournisseur.rejected.type]: (state, action) => {
+        [updateArticleCommandeFournisseur.rejected.type]: (state, action) => {
           state.loading = false;
           state.error = action.error;
         },
     },
 });
 
-export const { cancelEdit } = BonCommandeFournisseurSlice.actions;
+export const { cancelEdit } = ArticleCommandeFournisseurSlice.actions;
