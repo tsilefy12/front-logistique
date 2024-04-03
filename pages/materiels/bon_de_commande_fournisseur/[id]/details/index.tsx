@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import BackOfficeLayout from "../../../../../layouts/backOffice";
 import useBasePath from "../../../../../hooks/useBasePath";
-import DetailsBCI from "../../../../../components/materiels/bon_commande_interne/[id]/DetailsBCI";
+import DetailsBonCommandeFournisseur from "../../../../../components/materiels/bon_commande_fournisseur/[id]/DetailsBonCommandeFournisseur";
 
 const DetailsBCIPage: NextPage = () => {
   const basePath = useBasePath();
@@ -15,7 +15,7 @@ const DetailsBCIPage: NextPage = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <DetailsBCI />
+        <DetailsBonCommandeFournisseur />
       </Container>
     </BackOfficeLayout>
   );

@@ -86,7 +86,7 @@ export default function BonCommandeFournisseurList() {
     };
 
     const handleClickDetails = async (id: any) => {
-        router.push(`/materiels/bon_commande_externe/${id}/details`);
+        router.push(`/materiels/bon_de_commande_fournisseur/${id}/details`);
     };
 
     // Avoid a layout jump when reaching the last page with empty rows.

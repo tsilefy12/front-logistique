@@ -31,6 +31,7 @@ const DetailsBCI = () => {
                 articleFournisseur:true
             }
         }}));
+        console.log(commandeFournisseur)
     };
 
     useEffect(()=> {
@@ -41,7 +42,7 @@ const DetailsBCI = () => {
             paymentMethod: commandeFournisseur.paymentMethod,
             deliveryCondition:commandeFournisseur.deliveryCondition,
             deliveryDate: commandeFournisseur.deliveryDate,
-            articleFournisseur: commandeFournisseur.articleFournisseur
+            articleFournisseur: commandeFournisseur?.articleFournisseur
         }
         setPdf(dataPdf)
     },[id,commandeFournisseur])
@@ -59,7 +60,7 @@ const DetailsBCI = () => {
                     {/* <PDFButton data={pdf} /> */}
                 </Stack>
                 <Typography variant="h4" color="GrayText">
-                    Details d'une bon de commande interne
+                    Details d'une bon de commande fournisseur
                 </Typography>
             </SectionNavigation>
             <DetailsContainer>
@@ -156,12 +157,12 @@ const DetailsBCI = () => {
                                             <TableCell align="left">Prix unitaire</TableCell>
                                             <TableCell align="left">Quantité</TableCell>
                                             <TableCell align="left">Montant</TableCell>
-                                            <TableCell align="left">Valeur</TableCell>
+                                            <TableCell align="left">Details</TableCell>
                                             <TableCell></TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {commandeFournisseur.articleFournisseur.length > 0 && commandeFournisseur.articleFournisseur?.map((item:any , index:any) => (
+                                        {commandeFournisseur.articleFournisseur?.length > 0 && commandeFournisseur.articleFournisseur?.map((item:any , index:any) => (
                                             <TableRow
                                                 key={index}
                                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -169,8 +170,8 @@ const DetailsBCI = () => {
                                                 <TableCell component="th" scope="row">{item.designation}</TableCell>
                                                 <TableCell align="left">{item.unitPrice}</TableCell>
                                                 <TableCell align="left">{item.quantite}</TableCell>
-                                                <TableCell align="left">{item.pu}  Ar</TableCell>
-                                                <TableCell align="left">{item.valueArticle} Ar</TableCell>
+                                                <TableCell align="left">{item.montant}  Ar</TableCell>
+                                                <TableCell align="left">{item.details} Ar</TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>

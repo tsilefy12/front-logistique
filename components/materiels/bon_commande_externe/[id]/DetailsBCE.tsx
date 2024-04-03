@@ -179,7 +179,7 @@ const DetailsBCE = () => {
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
                                             Grant
-                                            "</Typography>
+                                        </Typography>
                                         <Typography variant="body1" color="gray">
                                             {grantList.find((e:any)=> e.id === bonCommandeExterne?.grant)?.code}
                                         </Typography>
