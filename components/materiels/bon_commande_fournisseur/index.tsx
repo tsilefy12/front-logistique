@@ -50,6 +50,10 @@ export default function BonCommandeFournisseurList() {
         fetchBonCommandeFournisseurs();
     }, [router.query]);
 
+    const handleClickEdit = async (id: any) => {
+        router.push(`/materiels/bon_de_commande_fournisseur/${id}/edit`);
+    };
+
     const handleClickDelete = async (id: any) => {
         confirm({
         title: "Supprimer le bon commande fournisseur",
@@ -82,7 +86,7 @@ export default function BonCommandeFournisseurList() {
     };
 
     const handleClickDetails = async (id: any) => {
-        router.push(`/materiels/bon_commande_externe/${id}/details`);
+        router.push(`/materiels/bon_de_commande_fournisseur/${id}/details`);
     };
 
     // Avoid a layout jump when reaching the last page with empty rows.
@@ -157,11 +161,11 @@ export default function BonCommandeFournisseurList() {
                                         </IconButton>
                                         <IconButton
                                             color="primary"
-                                            aria-label="Editer"
+                                            aria-label="Modifier"
                                             component="span"
                                             size="small"
                                             onClick={() => {
-                                                handleClickDelete(row.id);
+                                                handleClickEdit(row?.id);
                                             }}
                                         >
                                             <Edit />

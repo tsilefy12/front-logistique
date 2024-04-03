@@ -10,7 +10,11 @@ const useFetchBonCommandeFournisseur = () => {
     const dispatch = useAppDispatch();
 
     return async () => {
-        let args: any = {};
+        let args: any = {
+            include : {
+                vendor:true
+            }
+        };
         if (router.query.search) {
             args.where = {
                 OR:[

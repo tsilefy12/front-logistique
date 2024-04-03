@@ -179,16 +179,16 @@ const FormBonCommandeFournisseur  = ({formikProps,valuesArticle,setValuesArticle
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {valuesArticle.map((item:any , index:any) => (
+                                    {valuesArticle?.map((item:any , index:any) => (
                                         <TableRow
                                             key={index}
                                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                         >
                                             <TableCell component="th" scope="row">{item.designation}</TableCell>
-                                            <TableCell align="left">{item.unitPrice}  Ar</TableCell>
-                                            <TableCell align="left">{item.quantite}</TableCell>
-                                            <TableCell align="left">{item.details} Ar</TableCell>
-                                            <TableCell align="left">{item.montant}</TableCell>
+                                            <TableCell align="left">{item.unitPrice} Ar</TableCell>
+                                            <TableCell align="left">{item.quantite} </TableCell>
+                                            <TableCell align="left">{item.details} </TableCell>
+                                            <TableCell align="left">{item.montant} Ar</TableCell>
                                             <TableCell
                                                 align="center"
                                                 sx={{ width: 150, background: "#F5F5F5" }}

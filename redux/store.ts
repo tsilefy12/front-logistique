@@ -51,6 +51,7 @@ import { holderEquipementSlice } from "./features/holder/holderEquipementSlice";
 import { activitySlice } from "./features/activity/activitySlice";
 import { programSlice } from "./features/program/programSlice";
 import { BonCommandeFournisseurSlice } from "./features/bon_commande_fournisseur/bonCommandeFournisseurSlice";
+import { ArticleCommandeFournisseurSlice } from "./features/bon_commande_fournisseur/articleCommandeFournisseurSlice";
 
 export const store = configureStore({
   reducer: {
@@ -106,7 +107,8 @@ export const store = configureStore({
     holderEquipment : holderEquipementSlice.reducer,
     activity: activitySlice.reducer,
     program: programSlice.reducer,
-    bonDeCommandeFournisseur : BonCommandeFournisseurSlice.reducer
+    bonDeCommandeFournisseur : BonCommandeFournisseurSlice.reducer,
+    articleCommanedFournisseur : ArticleCommandeFournisseurSlice.reducer
   },
 });
 
