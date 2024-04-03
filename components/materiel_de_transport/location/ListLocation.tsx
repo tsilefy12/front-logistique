@@ -43,11 +43,15 @@ import Moment from "react-moment";
     const dispatch = useAppDispatch();
     const { locationDeTransports } = useAppSelector((state) => state.locationDeTransport);
     const fetchLocationTransport = useFetchLocationDeTransport();
+    const fetchTransportationEquipment = useFetchTransportationEquipments();
+    const fetchVendor = useFetchVendors()
     
 
    
     React.useEffect(() => {
       fetchLocationTransport();
+      fetchTransportationEquipment();
+      fetchVendor();
     }, [router.query]);
    
     const handleClickEdit = async (id: any) => {
@@ -137,7 +141,7 @@ import Moment from "react-moment";
                             </TableCell>
 
                          <TableCell align="left">
-                                {row?.fournisseur ? row.vendor?.fournisseur: ''}
+                                {row?.fournisseur ? row.vendor?.name: ''}
                             </TableCell>
                             <TableCell align="left">
                                 {row.montant}

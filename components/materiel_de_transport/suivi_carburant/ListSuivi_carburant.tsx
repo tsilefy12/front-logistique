@@ -52,7 +52,7 @@ import useFetchTransportationEquipments from "../hooks/useFetchTransportationEqu
     
     const fetchSuiviCarburant = useFetchSuiviCarburants();
     const fetchTransportationEquipment = useFetchTransportationEquipments();
-    const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment)
+   // const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment)
 
     React.useEffect(() => {
       fetchSuiviCarburant();    

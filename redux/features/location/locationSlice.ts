@@ -80,7 +80,7 @@ export const getLocationtList = createAsyncThunk(
             const params = {
                 args: JSON.stringify(data.args),
             };
-            const response = await axios.get("/logistique/location-de-transport");
+            const response = await axios.get("/logistique/location-de-transport", {params});
             return response.data;
         } catch (error: any) {
             if (error.response) {

@@ -257,7 +257,7 @@ const FormLocation = () => {
                                     label="Fournisseur"
                                     variant="outlined"
                                     options={vendors}
-                                    dataKey={["fournisseur"]}
+                                    dataKey={["name"]}
                                     valueKey="id"
                                     name="fournisseur"
                                 />
