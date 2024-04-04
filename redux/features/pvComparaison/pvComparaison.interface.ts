@@ -7,6 +7,7 @@ export interface PvComparaisonItem {
     materiel?: string,
     bci?: string,
     bce?: string,
+    offre?:string,
     tableComparaison?:any,
     bonDeCommandeExterne?:any;
     bonDeCommandeInterne?:any;
