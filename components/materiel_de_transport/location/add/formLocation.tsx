@@ -35,12 +35,12 @@ const FormLocation = () => {
     const { isEditing, locationDeTransport } = useAppSelector((state) => state.locationDeTransport);
     const fetchGrant = useFetchGrant();
     const fetchLigneBudgetaire = useFetchLigneBudgetaire()
-    const { grantList } = useAppSelector((state) =>state.grant);
-    const { budgetLineList} = useAppSelector((state) =>state.lineBugetaire) 
-    const { vendors} = useAppSelector((state) =>state.vendor)
+    const { grantList } = useAppSelector((state) => state.grant);
+    const { budgetLineList } = useAppSelector((state) => state.lineBugetaire)
+    const { vendors } = useAppSelector((state) => state.vendor)
     const fetchVendors = useFetchVendors();
     const fetchMateriels = useFetchTransportationEquipments();
-    const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment)
+    const { transportationEquipments } = useAppSelector((state) => state.transportationEquipment)
 
     React.useEffect(() => {
         fetchGrant();
@@ -48,23 +48,23 @@ const FormLocation = () => {
         fetchVendors();
         fetchMateriels();
         if (id) {
-          dispatch(editLocation({ id }));
+            dispatch(editLocation({ id }));
         }
-      }, [id]);
+    }, [id]);
 
     console.log("materiel :", transportationEquipments);
 
-    const listMateriel: { id: string, name: string }[] = []; 
+    const listMateriel: { id: string, name: string }[] = [];
 
     if (transportationEquipments.length > 0) {
-        transportationEquipments.forEach((element:any) => {
+        transportationEquipments.forEach((element: any) => {
             if (element["status"] === "Location") {
                 console.log("id :", element["id"]);
                 console.log("materiel ", element["registration"]);
-                listMateriel.push({ id: element.id, name: element.registration }); 
+                listMateriel.push({ id: element.id, name: element.registration });
             }
         });
-    }else{
+    } else {
         console.log("Rien")
     }
     const handleSubmit = async (values: any) => {
@@ -76,7 +76,7 @@ const FormLocation = () => {
                         id: locationDeTransport.id!,
                         location: values,
                     })
-                   
+
                 );
             } else {
                 await dispatch(createLocation(values));
@@ -113,15 +113,15 @@ const FormLocation = () => {
                     referenceBudgetaire: Yup.string().required(
                         "Veuillez remplir le champ référence budgetaire"
                     ),
-                   /* prestataire: Yup.string().required(
-                        "Veuillez remplir le champ prestataire"
-                    ),*/
+                    /* prestataire: Yup.string().required(
+                         "Veuillez remplir le champ prestataire"
+                     ),*/
                     fournisseur: Yup.string().required(
                         "Veuillez remplir le champ fournisseur"
                     ),
-                   /* stat: Yup.string().required(
-                        "Veuillez remplir le champ stat"
-                    ),*/
+                    /* stat: Yup.string().required(
+                         "Veuillez remplir le champ stat"
+                     ),*/
                     montant: Yup.string().required(
                         "Veuillez remplir le champ montant"
                     ),
@@ -233,7 +233,7 @@ const FormLocation = () => {
                                 </FormControl>
                             </Stack>
                             <Stack direction="row" spacing={2} margin={2}>
-                               { /*<FormControl fullWidth>
+                                { /*<FormControl fullWidth>
                                     <OSTextField
                                         id="outlined-basic"
                                         label="Prestataire"
@@ -241,13 +241,13 @@ const FormLocation = () => {
                                     />
                                 </FormControl>*/}
                                 <FormControl fullWidth>
-                                    <TextField
+                                    <OSTextField
                                         id="outlined-basic"
                                         label="Montant"
                                         variant="outlined"
                                         name="montant"
                                         type="number"
-                                        inputProps={{min: 0}}
+                                        min="0"
                                     />
                                 </FormControl>
                             </Stack>

@@ -220,22 +220,22 @@ import useFetchTransportationEquipments from "../../hooks/useFetchTransportation
                   </Stack>
                   <Stack direction="row" spacing={2} margin={2}> 
                   <FormControl fullWidth>
-                    <TextField
+                    <OSTextField
                       id="outlined-basic"
                       label="kilometrage final"
                       name="kilometrageFinal"
                       type="number"
-                      inputProps={{min: 0}}
+                      min="0"
                     />
                   </FormControl>
                   <FormControl fullWidth>
-                    <TextField
+                    <OSTextField
                       id="outlined-basic"
                       label="Montant"
                       variant="outlined"
                       name="montant"
                       type="number"
-                      inputProps={{min: 0}}
+                      min="0"
                     />
                   </FormControl>
                   </Stack>

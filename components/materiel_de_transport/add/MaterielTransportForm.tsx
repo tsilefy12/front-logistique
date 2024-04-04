@@ -219,29 +219,29 @@ const MaterielTransportForm = () => {
                   />
                 </Stack>
                 <Stack direction="row" spacing={3} margin={2}>
-                  <TextField
+                  <OSTextField
                     id="outlined-basic"
                     label="Kilometrage initial"
                     variant="outlined"
                     name="kilometrageInitial"
                     type="number"
-                    inputProps={{min: 0}}
+                    min="0"
                   />
-                  <TextField
+                  <OSTextField
                     id="outlined-basic"
                     label="Remplissage"
                     variant="outlined"
                     name="reservoir"
                     type="number"
-                    inputProps={{min: 0}}
+                    min="0"
                   />
-                  <TextField
+                  <OSTextField
                     id="outlined-basic"
                     label="Consommation au 100"
                     variant="outlined"
                     name="consommation"
                     type="number"
-                    inputProps={{min: 0}}
+                    min="0"
                   />
                 </Stack>
                 <Stack direction="row" spacing={2} margin={2}>

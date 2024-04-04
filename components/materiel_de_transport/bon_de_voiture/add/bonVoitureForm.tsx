@@ -229,36 +229,36 @@ const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDel
                                     </TableCell>
                                     <TableCell align="left">
                                         <FormControl fullWidth>
-                                            <TextField
+                                            <OSTextField
                                                 id="nombre"
                                                 label="Nombre"
                                                 name="nombre"
                                                 type="number"
-                                                inputProps={{min: 0}}
+                                                min="0"
                                             />
                                         </FormControl>
                                     </TableCell>
                                     <TableCell align="left">
                                         <FormControl fullWidth>
-                                            <TextField
+                                            <OSTextField
                                                 id="pu"
                                                 label="PU"
                                                 name="pu"
                                                 type="number"
-                                                inputProps={{min: 0}}
+                                                min="0"
                                             />
                                         </FormControl>
                                     </TableCell>
                                     <TableCell align="left">
                                         <FormControl fullWidth>
-                                            <TextField
+                                            <OSTextField
                                                 id="montant"
                                                 label="Montant"
                                                 value={formikProps.values.nombre * formikProps.values.pu}
                                                 onChange={(value: any) =>formikProps.setFieldValue("montants", value)}
                                                 name="montants"
                                                 type="number"
-                                                inputProps={{min: 0}}
+                                                min="0"
                                             />
                                         </FormControl>
                                     </TableCell>
