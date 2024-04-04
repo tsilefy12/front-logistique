@@ -1,6 +1,8 @@
 import {
   Button,
+  Checkbox,
   Container,
+  FormControlLabel,
   Grid,
   Stack,
   Typography,
@@ -24,7 +26,7 @@ const DetailsPvComparaison = () => {
     const { grantList } = useAppSelector( (state) => state.grant);
     const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
     const { programs } = useAppSelector( (state) => state.program);
-
+    const [ pdf,setPdf ] = useState<any>({})
     const [offre, setOffres] = useState<any>({});
     let tempOffres :any= {};
 
@@ -56,6 +58,16 @@ const DetailsPvComparaison = () => {
     useEffect(()=> {
         getDetailsPVComparaison();
         setOffres(tempOffres);
+        const data = {
+            objet: pvComparaison.objet,
+            grant:grantList.find((e:any)=> e.id === pvComparaison.grant)?.code,
+            program : programs.find((e:any)=> e.id === pvComparaison.programme)?.name,
+            ligneBudgetaire : budgetLineList.find((e:any)=> e.id === pvComparaison.ligneBudgetaire)?.code,
+            bci : pvComparaison.bce ? pvComparaison.bonDeCommandeExterne?.ref : pvComparaison.bonDeCommandeInterne?.reference,
+            tableComparaison :pvComparaison.tableComparaison,
+            offre : offre
+        }
+        setPdf(data)
     },[id,pvComparaison])
     return (
         <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
@@ -68,7 +80,7 @@ const DetailsPvComparaison = () => {
                     <Button color="info" variant="text" onClick={()=> router.back()} startIcon={<ArrowBackIcon />}>
                         Retour
                     </Button>
-                    {/* <PDFButton data={pvComparaison} /> */}
+                    <PDFButton data={pdf} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">
                     Details d'une bon de pv de comparaison d'offre
@@ -179,7 +191,22 @@ const DetailsPvComparaison = () => {
                                                 Motif
                                             </Typography>
                                             <Typography variant="body1" color="gray">
-                                                {offre.motif}
+                                                <FormControlLabel
+                                                    label="Moins distant"
+                                                    control={
+                                                    <Checkbox
+                                                        checked={offre.motif === "moins_distant"}
+                                                    />
+                                                    }
+                                                />
+                                                <FormControlLabel
+                                                    label="Conforme aux besoins"
+                                                    control={
+                                                    <Checkbox
+                                                        checked={offre.motif === "conforme_aux_besoins"}
+                                                    />
+                                                    }
+                                                />
                                             </Typography>
                                         </InfoItems>
                                     </Grid>
