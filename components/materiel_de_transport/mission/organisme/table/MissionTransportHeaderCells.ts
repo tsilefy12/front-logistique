@@ -11,7 +11,7 @@ export const MissionTransporTableaHeaderCells: readonly HeadCell[] = [
     id: "pj",
     numeric: false,
     disablePadding: false,
-    label: "PJ",
+    label: "Référence budgetaire",
   },
   {
     id: "date",
