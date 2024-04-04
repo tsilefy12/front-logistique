@@ -30,7 +30,7 @@ function PrintFicheDotation({ pdfData }: { pdfData: any }) {
                                    <Text style={{textAlign:"center",width:"100%",fontSize:10}}>BP 5181, 101 Antananarivo</Text>
                                    <Text style={{textAlign:"center",width:"100%",fontSize:10}}>+261 34 25 155 23</Text>
                                    <Text style={{textAlign:"center",width:"100%",fontSize:10}}>voakajy@vokajy.mg</Text>
-                                   <Text style={{textAlign:"center",width:"100%",fontSize:12,marginTop:10}}>FICHE DE DOTATION</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:12,marginTop:10,backgroundColor:"#28549c",fontWeight:"bold",padding:4}}>FICHE DE DOTATION</Text>
                               </View>
                          </View>
                     </View>
