@@ -6,6 +6,7 @@ import {
     FormControl,
     Stack,
     Divider,
+    TextField,
   } from "@mui/material";
   import { useRouter } from "next/router";
   import Link from "next/link";
@@ -218,20 +219,21 @@ import useFetchTransportationEquipments from "../../hooks/useFetchTransportation
                   </Stack>
                   <Stack direction="row" spacing={2} margin={2}> 
                   <FormControl fullWidth>
-                    <OSTextField
+                    <TextField
                       id="outlined-basic"
                       label="Utilisateur"
                       name="utilisateur"
-                      min="0"
+                      type="text"
                     />
                   </FormControl>
                   <FormControl fullWidth>
-                    <OSTextField
+                    <TextField
                       id="outlined-basic"
                       label="Montant"
                       variant="outlined"
                       name="montant"
                       type="number"
+                      inputProps={{min: 0}}
                     />
                   </FormControl>
                   </Stack>

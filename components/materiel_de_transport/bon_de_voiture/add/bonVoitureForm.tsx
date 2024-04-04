@@ -2,7 +2,7 @@ import { Form, FormikProps } from 'formik';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
-import { Box, Button, Divider, FormControl, IconButton, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from '@mui/material';
+import { Box, Button, Divider, FormControl, IconButton, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, styled } from '@mui/material';
 import Delete from '@mui/icons-material/Delete';
 import OSTextField from '../../../shared/input/OSTextField';
 import Check from '@mui/icons-material/Check';
@@ -229,33 +229,36 @@ const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDel
                                     </TableCell>
                                     <TableCell align="left">
                                         <FormControl fullWidth>
-                                            <OSTextField
+                                            <TextField
                                                 id="nombre"
                                                 label="Nombre"
                                                 name="nombre"
                                                 type="number"
+                                                inputProps={{min: 0}}
                                             />
                                         </FormControl>
                                     </TableCell>
                                     <TableCell align="left">
                                         <FormControl fullWidth>
-                                            <OSTextField
+                                            <TextField
                                                 id="pu"
                                                 label="PU"
                                                 name="pu"
                                                 type="number"
+                                                inputProps={{min: 0}}
                                             />
                                         </FormControl>
                                     </TableCell>
                                     <TableCell align="left">
                                         <FormControl fullWidth>
-                                            <OSTextField
+                                            <TextField
                                                 id="montant"
                                                 label="Montant"
                                                 value={formikProps.values.nombre * formikProps.values.pu}
                                                 onChange={(value: any) =>formikProps.setFieldValue("montants", value)}
                                                 name="montants"
                                                 type="number"
+                                                inputProps={{min: 0}}
                                             />
                                         </FormControl>
                                     </TableCell>

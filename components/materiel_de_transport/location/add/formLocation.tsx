@@ -241,12 +241,13 @@ const FormLocation = () => {
                                     />
                                 </FormControl>*/}
                                 <FormControl fullWidth>
-                                    <OSTextField
+                                    <TextField
                                         id="outlined-basic"
                                         label="Montant"
                                         variant="outlined"
                                         name="montant"
                                         type="number"
+                                        inputProps={{min: 0}}
                                     />
                                 </FormControl>
                             </Stack>
