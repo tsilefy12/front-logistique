@@ -137,13 +137,13 @@ const menu = [
       },
       {
         id: 34,
-        name: "Location",
+        name: "Location externe",
         link: "/materiel_de_transport/location",
         icon: "",
       },
       {
         id: 35,
-        name: "Mission",
+        name: "Location interne",
         link: "/materiel_de_transport/mission",
         icon: "",
       },

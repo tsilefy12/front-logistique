@@ -98,9 +98,9 @@ const FormLocation = () => {
                     date: isEditing ? locationDeTransport?.date : new Date(),
                     responsable: isEditing ? locationDeTransport?.responsable : "",
                     referenceBudgetaire: isEditing ? locationDeTransport?.referenceBudgetaire : "",
-                    //prestataire: isEditing ? locationDeTransport?.prestataire : "",
+                    nombreJour: isEditing ? locationDeTransport?.nombreJour : "",
                     fournisseur: isEditing ? locationDeTransport?.fournisseur : "",
-                    //stat: isEditing ? locationDeTransport?.stat : "",
+                    pu: isEditing ? locationDeTransport?.pu : "",
                     montant: isEditing ? locationDeTransport?.montant : "",
                     grant: isEditing ? locationDeTransport?.grant : "",
                     ligneBudgetaire: isEditing ? locationDeTransport?.ligneBudgetaire : "",
@@ -113,15 +113,15 @@ const FormLocation = () => {
                     referenceBudgetaire: Yup.string().required(
                         "Veuillez remplir le champ référence budgetaire"
                     ),
-                    /* prestataire: Yup.string().required(
-                         "Veuillez remplir le champ prestataire"
-                     ),*/
+                    nombreJour: Yup.string().required(
+                         "Veuillez remplir le champ nombre de jour"
+                     ),
                     fournisseur: Yup.string().required(
                         "Veuillez remplir le champ fournisseur"
                     ),
-                    /* stat: Yup.string().required(
-                         "Veuillez remplir le champ stat"
-                     ),*/
+                    pu: Yup.string().required(
+                         "Veuillez remplir le champ prix unitaire"
+                     ),
                     montant: Yup.string().required(
                         "Veuillez remplir le champ montant"
                     ),
@@ -232,19 +232,33 @@ const FormLocation = () => {
                                     />
                                 </FormControl>
                             </Stack>
-                            <Stack direction="row" spacing={2} margin={2}>
-                                { /*<FormControl fullWidth>
+                            <Stack direction="row" spacing={3} margin={2}>
+                                <FormControl fullWidth>
                                     <OSTextField
                                         id="outlined-basic"
-                                        label="Prestataire"
-                                        name="prestataire"
+                                        label="Nombre de jour"
+                                        name="nombreJour"
+                                        type="number"
+                                        min="0"
                                     />
-                                </FormControl>*/}
+                                </FormControl>
+                               <FormControl fullWidth>
+                               <OSTextField
+                                    id="outlined-basic"
+                                    label="prix unitaire"
+                                    variant="outlined"
+                                    name="pu"
+                                    type="number"
+                                    min="0"
+                                />
+                                </FormControl>
                                 <FormControl fullWidth>
                                     <OSTextField
                                         id="outlined-basic"
                                         label="Montant"
                                         variant="outlined"
+                                        value={formikProps.values.nombreJour * formikProps.values.pu}
+                                        onChange={(value: any) =>formikProps.setFieldValue("montant", value)}
                                         name="montant"
                                         type="number"
                                         min="0"
@@ -261,16 +275,7 @@ const FormLocation = () => {
                                     valueKey="id"
                                     name="fournisseur"
                                 />
-                                {/*<OSSelectField
-                                    id="outlined-basic"
-                                    label="stat"
-                                    variant="outlined"
-                                    options={vendors}
-                                    dataKey={["website"]}
-                                    valueKey="id"
-                                    name="stat"
-                                />
-                                        */}
+                                
                             </Stack>
                             <Stack
                                 direction="row"

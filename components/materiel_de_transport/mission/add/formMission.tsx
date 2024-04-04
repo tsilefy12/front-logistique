@@ -95,6 +95,8 @@ const FormMission = () => {
           date: isEditing ? missionTransport?.date : new Date(),
           libelle: isEditing ? missionTransport?.libelle : "",
           utilisateur: isEditing ? missionTransport?.utilisateur : "",
+          nombreJour: isEditing ? missionTransport?.nombreJour : "",
+          pu: isEditing ? missionTransport?.pu : "",
           montant: isEditing ? missionTransport?.montant : "",
           grant: isEditing ? missionTransport?.grant : "",
           ligneBudgetaire: isEditing ? missionTransport?.ligneBudgetaire : "",
@@ -109,6 +111,12 @@ const FormMission = () => {
           libelle: Yup.string().required("Veuillez remplir le champ libellé"),
           utilisateur: Yup.string().required(
             "Veuillez remplir le champ utilisateur"
+          ),
+          nombreJour: Yup.string().required(
+            "Veuillez remplir le champ nombre de jour"
+          ),
+          pu: Yup.string().required(
+            "Veuillez remplir le champ prix unitaire"
           ),
           montant: Yup.string().required(
             "Veuillez remplir le champ montant"
@@ -194,12 +202,12 @@ const FormMission = () => {
                 <OSTextField
                   fullWidth
                   id="outlined-basic"
-                  label="PJ"
+                  label="Référence budgetaire"
                   variant="outlined"
                   name="pj"
                 />
               </Stack>
-              <Stack direction="row" spacing={2} margin={2}>
+              <Stack direction="row" spacing={3} margin={2}>
                 <FormControl fullWidth>
                   <OSDatePicker
                     id="outlined-basic"
@@ -216,8 +224,6 @@ const FormMission = () => {
                     name="libelle"
                   />
                 </FormControl>
-              </Stack>
-              <Stack direction="row" spacing={2} margin={2}>
                 <FormControl fullWidth>
                   <OSTextField
                     id="outlined-basic"
@@ -226,6 +232,28 @@ const FormMission = () => {
                     type="text"
                   />
                 </FormControl>
+              </Stack>
+              <Stack direction="row" spacing={3} margin={2}>
+              
+                <FormControl fullWidth>
+                                    <OSTextField
+                                        id="outlined-basic"
+                                        label="Nombre de jour"
+                                        name="nombreJour"
+                                        type="number"
+                                        min="0"
+                                    />
+                                </FormControl>
+                               <FormControl fullWidth>
+                               <OSTextField
+                                    id="outlined-basic"
+                                    label="prix unitaire"
+                                    variant="outlined"
+                                    name="pu"
+                                    type="number"
+                                    min="0"
+                                />
+                                </FormControl>
                 <FormControl fullWidth>
                   <OSTextField
                     id="outlined-basic"

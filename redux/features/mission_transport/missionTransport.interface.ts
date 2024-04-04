@@ -5,6 +5,8 @@ export interface MissionTranportItem{
     date?: Date,
     libelle?: string,
     utilisateur?: string,
+    nombreJour?: any,
+    pu?: any,
     montant?: number,
     grant?: string,
     ligneBudgetaire?: string;
