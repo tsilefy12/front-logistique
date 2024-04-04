@@ -232,7 +232,6 @@ import useFetchTransportationEquipments from "../../hooks/useFetchTransportation
                       variant="outlined"
                       name="montant"
                       type="number"
-                      inputProps={{ min: 0 }}
                     />
                   </FormControl>
                   </Stack>

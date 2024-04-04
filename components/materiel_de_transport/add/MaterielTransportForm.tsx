@@ -224,11 +224,6 @@ const MaterielTransportForm = () => {
                     variant="outlined"
                     name="kilometrageInitial"
                     type="number"
-<<<<<<< HEAD
-                    inputProps={{ min: 0 }}
-=======
-                    min="0"
->>>>>>> 7a0c3dc22e34aeb7ea660192317e8101beb59235
                   />
                   <OSTextField
                     id="outlined-basic"
@@ -236,11 +231,6 @@ const MaterielTransportForm = () => {
                     variant="outlined"
                     name="reservoir"
                     type="number"
-<<<<<<< HEAD
-                    inputProps={{ min: 0 }}
-=======
-                    min="0"
->>>>>>> 7a0c3dc22e34aeb7ea660192317e8101beb59235
                   />
                   <OSTextField
                     id="outlined-basic"
@@ -248,11 +238,6 @@ const MaterielTransportForm = () => {
                     variant="outlined"
                     name="consommation"
                     type="number"
-<<<<<<< HEAD
-                    inputProps={{ min: 0 }}
-=======
-                    min="0"
->>>>>>> 7a0c3dc22e34aeb7ea660192317e8101beb59235
                   />
                 </Stack>
                 <Stack direction="row" spacing={2} margin={2}>
