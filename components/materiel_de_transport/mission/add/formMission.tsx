@@ -256,6 +256,8 @@ const FormMission = () => {
                     id="outlined-basic"
                     label="Montant"
                     variant="outlined"
+                    value={formikProps.values.nombreJour * formikProps.values.pu}
+                    onChange={(value: any) => formikProps.setFieldValue("montant", value)}
                     name="montant"
                     type="number"
                     min="0"
