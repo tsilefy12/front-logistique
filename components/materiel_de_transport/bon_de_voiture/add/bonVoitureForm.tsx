@@ -147,7 +147,7 @@ const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDel
                                 <TableRow>
                                     <TableCell align="left">Activité</TableCell>
                                     <TableCell>Nombre</TableCell>
-                                    <TableCell align="left">PU</TableCell>
+                                    <TableCell align="left">Prix unitaire</TableCell>
                                     <TableCell align="left">Montant</TableCell>
                                     <TableCell></TableCell>
                                 </TableRow>
@@ -234,7 +234,6 @@ const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDel
                                                 label="Nombre"
                                                 name="nombre"
                                                 type="number"
-                                                min="0"
                                             />
                                         </FormControl>
                                     </TableCell>
@@ -245,7 +244,6 @@ const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDel
                                                 label="PU"
                                                 name="pu"
                                                 type="number"
-                                                min="0"
                                             />
                                         </FormControl>
                                     </TableCell>
@@ -258,7 +256,6 @@ const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDel
                                                 onChange={(value: any) =>formikProps.setFieldValue("montants", value)}
                                                 name="montants"
                                                 type="number"
-                                                min="0"
                                             />
                                         </FormControl>
                                     </TableCell>

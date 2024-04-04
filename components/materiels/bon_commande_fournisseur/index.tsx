@@ -102,7 +102,7 @@ export default function BonCommandeFournisseurList() {
                     Ajouter
                 </Button>
             </Link>
-            <Typography variant="h4">Liste de Bon de commande fournisseur</Typography>
+            <Typography variant="h4">Liste de bon de commande fournisseur</Typography>
             </SectionNavigation>
             {/* <Divider /> */}
         </NavigationContainer>

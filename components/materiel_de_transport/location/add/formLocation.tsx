@@ -247,7 +247,6 @@ const FormLocation = () => {
                                         variant="outlined"
                                         name="montant"
                                         type="number"
-                                        min="0"
                                     />
                                 </FormControl>
                             </Stack>

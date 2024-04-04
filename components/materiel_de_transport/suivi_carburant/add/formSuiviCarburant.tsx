@@ -225,7 +225,6 @@ import useFetchTransportationEquipments from "../../hooks/useFetchTransportation
                       label="kilometrage final"
                       name="kilometrageFinal"
                       type="number"
-                      min="0"
                     />
                   </FormControl>
                   <FormControl fullWidth>
@@ -235,7 +234,6 @@ import useFetchTransportationEquipments from "../../hooks/useFetchTransportation
                       variant="outlined"
                       name="montant"
                       type="number"
-                      min="0"
                     />
                   </FormControl>
                   </Stack>

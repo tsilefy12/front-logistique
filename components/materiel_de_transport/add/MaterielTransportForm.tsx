@@ -224,7 +224,6 @@ const MaterielTransportForm = () => {
                     variant="outlined"
                     name="kilometrageInitial"
                     type="number"
-                    min="0"
                   />
                   <OSTextField
                     id="outlined-basic"
@@ -232,7 +231,6 @@ const MaterielTransportForm = () => {
                     variant="outlined"
                     name="reservoir"
                     type="number"
-                    min="0"
                   />
                   <OSTextField
                     id="outlined-basic"
@@ -240,7 +238,6 @@ const MaterielTransportForm = () => {
                     variant="outlined"
                     name="consommation"
                     type="number"
-                    min="0"
                   />
                 </Stack>
                 <Stack direction="row" spacing={2} margin={2}>

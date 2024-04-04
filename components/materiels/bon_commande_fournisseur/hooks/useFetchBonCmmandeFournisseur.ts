@@ -19,35 +19,29 @@ const useFetchBonCommandeFournisseur = () => {
             args.where = {
                 OR:[
                     {
-                        ref:{
+                        paymentMethod:{
                             contains:router.query.search,
                             mode: "insensitive"
                         }
                     },
                     {
-                        modePaiement:{
+                        deliveryCondition:{
                             contains:router.query.search,
                             mode: "insensitive"
                         }
                     },
                     {
-                        conditionLivraison:{
+                        deliveryDate:{
                             contains:router.query.search,
                             mode: "insensitive"
                         }
                     },
                     {
-                        type:{
+                        establishmentDate:{
                             contains:router.query.search,
                             mode: "insensitive"
                         }
-                    },
-                    {
-                        demandeur:{
-                            contains:router.query.search,
-                            mode: "insensitive"
-                        }
-                    },
+                    }
                 ]
             };
         }
