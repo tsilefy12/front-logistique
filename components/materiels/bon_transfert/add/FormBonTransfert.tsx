@@ -320,6 +320,7 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                                     label="Quantité commander"
                                                     name="quantiteCommande"
                                                     type="number"
+                                                    min="0"
                                                 />
                                             </FormControl>
                                         </TableCell>
@@ -330,6 +331,7 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                                     label="Quantité expedié"
                                                     name="quantiteExpedie"
                                                     type="number"
+                                                    min="0"
                                                 />
                                             </FormControl>
                                         </TableCell>

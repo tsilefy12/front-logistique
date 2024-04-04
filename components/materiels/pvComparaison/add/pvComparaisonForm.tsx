@@ -18,8 +18,7 @@ export default function PvComparaisonForm() {
 
     const [valuesArticle, setValuesArticle] = useState < any[]> ([])
     const { isEditing,pvComparaison } = useAppSelector((state) => state.pvComparaison);
-    const { pvComparaisonFournisseur } = useAppSelector((state) => state.pvComparaisonFournisseurs);
-    
+     
     const handleSubmit = async (values: any) => {
         try {
             if (isEditing) {
@@ -41,15 +40,16 @@ export default function PvComparaisonForm() {
                 }
                 const response = await dispatch(createPvComparaison(newDataPV));
                 if(valuesArticle.length > 0 ){
-                    valuesArticle.forEach((element:any, index:any) => {
+                    let index = 0;
+                    for (const element of valuesArticle) {
                         const newData = {
                             fournisseur: element.fournisseur,
                             modePaie: element.modePaie,
                             designation: element.designation,
                             pvComparaisonOffreId: response.payload.id
                         };
-                        const res:any = dispatch(createPvComparaisonFournisseur(newData));
-                        console.log(res)
+                        const res = await dispatch(createPvComparaisonFournisseur(newData));
+                        console.log(res.payload?.id)
                         if(index === values.offreRetenu){
                             const data = {
                                 motif: values.motif ? values.motif: null,
@@ -58,7 +58,8 @@ export default function PvComparaisonForm() {
                             }
                             dispatch(createOffreRetenu(data))
                         }
-                    });
+                        index++;
+                    };
                 }
             }
             route.push("/materiels/pv_comparaison");

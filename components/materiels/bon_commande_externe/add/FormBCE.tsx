@@ -350,6 +350,7 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
                                                         label="PU"
                                                         name="pu"
                                                         type="number"
+                                                        min="0"
                                                     />
                                                 </FormControl>
                                             </TableCell>
@@ -360,6 +361,7 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
                                                         label="Quantité"
                                                         name="quantite"
                                                         type="number"
+                                                        min="0"
                                                     />
                                                 </FormControl>
                                             </TableCell>

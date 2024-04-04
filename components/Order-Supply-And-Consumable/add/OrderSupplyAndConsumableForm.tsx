@@ -200,12 +200,14 @@ export default function ConsumableForm() {
                   label="Quantité démandée"
                   name="requestedQuantity"
                   type="number"
+                  min="0"
                 />
                 <OSTextField
                   id="outlined-basic"
                   label="Quantité livrée"
                   name="deliveredQuantity"
                   type="number"
+                  min="0"
                 />
                 <OSDatePicker
                   fullWidth

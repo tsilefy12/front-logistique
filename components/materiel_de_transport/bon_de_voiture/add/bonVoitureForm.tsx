@@ -234,6 +234,7 @@ const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDel
                                                 label="Nombre"
                                                 name="nombre"
                                                 type="number"
+                                                min="0"
                                             />
                                         </FormControl>
                                     </TableCell>
@@ -244,6 +245,7 @@ const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDel
                                                 label="PU"
                                                 name="pu"
                                                 type="number"
+                                                min="0"
                                             />
                                         </FormControl>
                                     </TableCell>
@@ -256,6 +258,7 @@ const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDel
                                                 onChange={(value: any) =>formikProps.setFieldValue("montants", value)}
                                                 name="montants"
                                                 type="number"
+                                                min="0"
                                             />
                                         </FormControl>
                                     </TableCell>

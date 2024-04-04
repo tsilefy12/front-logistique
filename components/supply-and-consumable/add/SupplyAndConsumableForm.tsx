@@ -160,12 +160,14 @@ export default function SuplyAndConsumableForm() {
                   label="Quantite"
                   name="quantity"
                   type="number"
+                  min="0"
                 />
                 <OSTextField
                   id="outlined-basic"
                   label="Prix Unitaire"
                   name="unitPrice"
                   type="number"
+                  min="0"
                 />
                 <OSSelectField
                   id="outlined-basic"
@@ -182,12 +184,14 @@ export default function SuplyAndConsumableForm() {
                     label="Montant"
                     name="montant"
                     type="number"
+                    min="0"
                   />
                   <OSTextField
                     id="outlined-basic"
                     label="Seuil"
                     name="seuil"
                     type="number"
+                    min="0"
                   />
                   <OSTextField
                     id="outlined-basic"

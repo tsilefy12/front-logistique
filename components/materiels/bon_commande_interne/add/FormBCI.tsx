@@ -340,6 +340,7 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
                                                         label="PU"
                                                         name="pu"
                                                         type="number"
+                                                        min="0"
                                                     />
                                                 </FormControl>
                                             </TableCell>
@@ -350,6 +351,7 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
                                                         label="Quantité"
                                                         name="quantite"
                                                         type="number"
+                                                        min="0"
                                                     />
                                                 </FormControl>
                                             </TableCell>

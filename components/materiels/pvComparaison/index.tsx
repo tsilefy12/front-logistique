@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import Add from "@mui/icons-material/Add";
 import Delete from "@mui/icons-material/Delete";
-import Edit from "@mui/icons-material/Edit";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -52,7 +51,6 @@ export default function PvComparaisonList() {
 
     React.useEffect(() => {
         fetchpvComparaison();
-        console.log(pvComparaisons)
     }, [router.query]);
 
     const handleClickDelete = async (id: any) => {
@@ -119,46 +117,53 @@ export default function PvComparaisonList() {
                         {pvComparaisons
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row: PvComparaisonItem, index: any) => {
-                            const labelId = `enhanced-table-checkbox-${index}`;
-                            return (
-                                <TableRow hover tabIndex={-1} key={row.id}>
-                                    <TableCell align="left">{row?.objet}</TableCell>
-                                    <TableCell align="left">{row?.bce ? row.bonDeCommandeExterne?.ref+"(BCE)" : row.bonDeCommandeInterne?.reference +"(BCI)"}</TableCell>
-                                    <TableCell align="left">
-                                        {row.tableComparaison?.offerRetenu?.length > 0 && row.tableComparaison?.vendor?.name}
-                                    </TableCell>
-                                    <TableCell align="left">{row.tableComparaison?.offerRetenu?.length > 0 ? row.tableComparaison?.modePaie : ""}</TableCell>
-                                    <TableCell align="right" width={"150px"}>
-                                        <BtnActionContainer
-                                        direction="row"
-                                        justifyContent="right"
-                                        >
-                                        <IconButton
-                                            color="accent"
-                                            aria-label="Details"
-                                            component="span"
-                                            size="small"
-                                            onClick={() => {
-                                                handleClickDetails(row.id);
-                                            }}
+                                const labelId = `enhanced-table-checkbox-${index}`;
+                                let modePaie: string | undefined = undefined;
+                                let fournisseur: string | undefined = undefined;
+                                
+                                row.tableComparaison?.forEach((element:any, index:any) => {
+                                    if (element.offreRetenu?.length > 0) {
+                                        modePaie = element.modePaie;
+                                        fournisseur = element.vendor?.name;
+                                    }
+                                })
+                                return (
+                                    <TableRow hover tabIndex={-1} key={row.id}>
+                                        <TableCell align="left">{row?.objet}</TableCell>
+                                        <TableCell align="left">{row?.bce ? row.bonDeCommandeExterne?.ref+"(BCE)" : row.bonDeCommandeInterne?.reference +"(BCI)"}</TableCell>
+                                        <TableCell align="left">{fournisseur || ""}</TableCell>
+                                        <TableCell align="left">{modePaie || ""}</TableCell>
+                                        <TableCell align="right" width={"150px"}>
+                                            <BtnActionContainer
+                                            direction="row"
+                                            justifyContent="right"
                                             >
-                                            <Visibility />
-                                        </IconButton>
-                                        <IconButton
-                                            color="warning"
-                                            aria-label="Supprimer"
-                                            component="span"
-                                            size="small"
-                                            onClick={() => {
-                                                handleClickDelete(row.id);
-                                            }}
-                                        >
-                                            <Delete />
-                                        </IconButton>
-                                        </BtnActionContainer>
-                                    </TableCell>
-                                </TableRow>
-                            );
+                                            <IconButton
+                                                color="accent"
+                                                aria-label="Details"
+                                                component="span"
+                                                size="small"
+                                                onClick={() => {
+                                                    handleClickDetails(row.id);
+                                                }}
+                                                >
+                                                <Visibility />
+                                            </IconButton>
+                                            <IconButton
+                                                color="warning"
+                                                aria-label="Supprimer"
+                                                component="span"
+                                                size="small"
+                                                onClick={() => {
+                                                    handleClickDelete(row.id);
+                                                }}
+                                            >
+                                                <Delete />
+                                            </IconButton>
+                                            </BtnActionContainer>
+                                        </TableCell>
+                                    </TableRow>
+                                );
                             })}
                         {emptyRows > 0 && (
                             <TableRow

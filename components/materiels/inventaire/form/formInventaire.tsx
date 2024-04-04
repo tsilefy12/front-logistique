@@ -155,6 +155,7 @@ import {
                             variant="outlined"
                             label="Durée de vie"
                             type="number"
+                            min="0"
                         />
                         <OSTextField
                             name="valeurInventaire"
@@ -168,6 +169,7 @@ import {
                             label="Valeur"
                             variant="outlined"
                             type="number"
+                            min="0"
                         />
                         <FormControl fullWidth>
                         <OSSelectField

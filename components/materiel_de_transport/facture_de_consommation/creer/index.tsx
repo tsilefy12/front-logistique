@@ -237,6 +237,7 @@ const FormFactureConsommation = () => {
                     variant="outlined"
                     name="DepartureKilometrage"
                     type="number"
+                    min="0"
                   />
                   <OSTextField
                     fullWidth
@@ -245,6 +246,7 @@ const FormFactureConsommation = () => {
                     variant="outlined"
                     name="arrivalKilometrage"
                     type="number"
+                    min="0"
                   />
                   <CalculatedKilometrage
                     fullWidth
@@ -272,6 +274,7 @@ const FormFactureConsommation = () => {
                     variant="outlined"
                     name="unitPrice"
                     type="number"
+                    min="0"
                   />
                   {/* <OSTextField
                     fullWidth
