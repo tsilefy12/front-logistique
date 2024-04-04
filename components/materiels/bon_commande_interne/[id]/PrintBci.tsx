@@ -73,7 +73,7 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                     <View style={{width: "100%"}}>
                         <View style={[styles.rowBody]}>
                                 <Text style={styles.tr1}>MONTANT TOTAL</Text>
-                                <Text style={styles.tr}>{pdfData?.montantTotal}</Text>
+                                <Text style={[styles.tr,{backgroundColor:"#D5D8DC"}]}>{pdfData?.montantTotal}</Text>
                         </View>
                         <View style={[styles.rowBody]}>
                                 <Text style={styles.tr1}>soit:</Text>

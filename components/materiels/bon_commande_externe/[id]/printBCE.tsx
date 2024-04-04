@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Print } from "@mui/icons-material";
+import { BorderTop, Print } from "@mui/icons-material";
 import { Button, CircularProgress } from "@mui/material";
 import {
      Document,
@@ -26,34 +26,35 @@ function PrintBCE({ pdfData }: { pdfData: any }) {
                                    />
                               </Text>
                               <View style={styles.row2}>
-                                   <Text style={{textAlign:"center",width:"100%",fontSize:10}}>ASSOCIATION MADAGASIKARA VOAKAY</Text>
-                                   <Text style={{textAlign:"center",width:"100%",fontSize:10}}>Lot II F 72 H Bis A Andraisora</Text>
-                                   <Text style={{textAlign:"center",width:"100%",fontSize:10}}>BP 5181, 101 Antananarivo</Text>
-                                   <Text style={{textAlign:"center",width:"100%",fontSize:10}}>+261 34 25 155 23</Text>
-                                   <Text style={{textAlign:"center",width:"100%",fontSize:10}}>voakajy@vokajy.mg</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5}}>Lot II F 14 P Bis A-Andraisora;BP 5181, 101 Antananarivo</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5,borderBottom:"1px solid #000"}}>Antananarivo : Tél: 261342515523</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5,borderBottom:"1px solid #000"}}>Moramanga: Tél: 231341570461</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5,borderBottom:"1px solid #000"}}>Diégo-suarez: Tél 261346746335</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5,textDecoration:"underline",color:"#219ae6"}}>voakajy@vokajy.mg</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5,borderBottom:"1px solid #000",textDecoration:"underline",color:"#219ae6",fontWeight:500}}>www.madagasikara-voakajy.org</Text>
                               </View>
                          </View>
                     </View>
                     <View style={styles.table}>
                         <Text style={{textAlign:"center",width:"100%",fontSize:14,fontWeight:"bold"}}>BON DE COMMANDE DU DON EXTERNE</Text>
                     </View>
-                    <View style={styles.table}>
+                    <View style={[styles.table,{marginLeft:20}]}>
                          <View style={{width: "100%" ,display: "flex",flexDirection: "row"}}>
-                              <Text style={{width: "50%",padding:2,fontSize:10}}>Réference : {pdfData.ref}</Text>
-                              <Text style={{width: "50%",padding:2,fontSize:10}}>Date: {pdfData.dateCommande ? format(new Date(pdfData.dateCommande),"dd/MM/yyyy") :""}</Text>
+                              <Text style={{width: "50%",padding:5,fontSize:10}}>Réference : {pdfData.ref}</Text>
+                              <Text style={{width: "50%",padding:5,fontSize:10}}>Date: {pdfData.dateCommande ? format(new Date(pdfData.dateCommande),"dd/MM/yyyy") :""}</Text>
                          </View>
                          <View style={{width: "100%",display: "flex",borderTop:"none",flexDirection: "column"}}>
-                              <Text style={{padding:2,fontSize:10}}>Grants:  {pdfData?.grant}</Text>
-                              <Text style={{padding:2,fontSize:10}}>Ligne budgétaire:  {pdfData?.ligneBudgetaire}</Text>
-                              <Text style={{padding:2,fontSize:10}}>Nom du démandeur:  {pdfData?.demandeur}</Text>
-                              <Text style={{padding:2,fontSize:10}}>Objet:  {pdfData.objet}</Text>
+                              <Text style={{padding:5,fontSize:10}}>Grants:  {pdfData?.grant}</Text>
+                              <Text style={{padding:5,fontSize:10}}>Ligne budgétaire:  {pdfData?.ligneBudgetaire}</Text>
+                              <Text style={{padding:5,fontSize:10}}>Nom du démandeur:  {pdfData?.demandeur}</Text>
+                              <Text style={{padding:5,fontSize:10}}>Objet:  {pdfData.objet}</Text>
                          </View>
                     </View>
                     <View style={{width: "100%",marginTop:20,}}>
                          <View style={[styles.rowBody]}>
-                              <Text style={styles.th}>Fournisseur</Text>
-                              <Text style={styles.th}>Designation</Text>
-                              <Text style={styles.th}>Caractéristique</Text>
+                              <Text style={[styles.th,{borderLeft:"none !important"}]}>Fournisseur</Text>
+                              <Text style={[styles.th,{width: "50%",}]}>Designation</Text>
+                              <Text style={[styles.th,{width: "50%",}]}>Caractéristique</Text>
                               <Text style={styles.th}>Quantité</Text>
                               <Text style={styles.th}>PU</Text>
                          </View>
@@ -62,10 +63,10 @@ function PrintBCE({ pdfData }: { pdfData: any }) {
                          (element:any, index: any) => {
                               return (
                                    <View style={{width: "100%"}}>
-                                        <View style={[styles.rowBody]}>
-                                             <Text style={styles.tr}>{element?.vendor?.name}</Text>
-                                             <Text style={styles.tr}>{element?.designation}</Text>
-                                             <Text style={styles.tr}>{element?.caracteristik}</Text>
+                                        <View style={[styles.rowBody,{borderTop:"none !important"}]}>
+                                             <Text style={[styles.tr,{borderLeft:"none !important"}]}>{element?.vendor?.name}</Text>
+                                             <Text style={[styles.tr,{width: "50%",}]}>{element?.designation}</Text>
+                                             <Text style={[styles.tr,{width: "50%",}]}>{element?.caracteristik}</Text>
                                              <Text style={styles.tr}>{element?.quantite}</Text>
                                              <Text style={styles.tr}>{element?.pu} ar</Text>
                                         </View>
@@ -138,18 +139,16 @@ const styles = StyleSheet.create({
           border:"1px solid #000"
      },
      th:{
-          width: "50%",
+          width: "20%",
           textAlign: "center",
           borderLeft: "1px solid #000",
-          paddingTop: 2,
-          backgroundColor:"#D5D8DC",
-          paddingBottom: 2,
-          paddingLeft:2,
+          paddingTop: 4,
+          textDecoration:"underline",
           fontWeight: "bold",
           fontSize: 10,
      },
      tr:{
-          width: "50%",
+          width: "20%",
           textAlign: "left",
           borderLeft: "1px solid #000",
           borderTop:"none",
@@ -170,7 +169,7 @@ const styles = StyleSheet.create({
           paddingBottom: 2,
      },
      row2: {
-          width: "50%",
+          width: "100%",
           display: "flex",
           alignItems: "center",
           fontSize: 20,

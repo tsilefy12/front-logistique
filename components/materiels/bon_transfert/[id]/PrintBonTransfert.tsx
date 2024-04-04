@@ -26,7 +26,7 @@ function PrintBonTransfert({ pdfData }: { pdfData: any }) {
                                    />
                               </Text>
                               <View style={styles.row2}>
-                                   <Text style={{textAlign:"center",width:"100%",fontSize:14,backgroundColor:"#6aa246",padding:6}}>BON DE TRANSFERT</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:12,backgroundColor:"#6aa246",padding:4}}>BON DE TRANSFERT</Text>
                               </View>
                          </View>
                     </View>
@@ -67,7 +67,7 @@ function PrintBonTransfert({ pdfData }: { pdfData: any }) {
                          (element:any, index: any) => {
                               return (
                                    <View style={{width: "100%"}}>
-                                        <View style={[styles.rowBody]}>
+                                        <View style={[styles.rowBody ,{borderTop:"none !important",}]}>
                                              <Text style={[styles.tr,{borderLeft:"none"}]}>{element?.quantiteCommande}</Text>
                                              <Text style={styles.tr}>{element?.quantiteExpedie}</Text>
                                              <Text style={styles.tr}></Text>
@@ -82,11 +82,11 @@ function PrintBonTransfert({ pdfData }: { pdfData: any }) {
                          <View style={{width:"100%",display:"flex",flexDirection:"row",alignItems:"center"}}>
                               <View style={[styles.footer]}>
                                   <Text style={{width: "40%",border:"1px solid #000",textAlign:"center",fontWeight:"bold",fontSize:10,padding:5}}>EXPEDITEUR</Text>
-                                  <Text style={{width: "40%",border:"1px solid #000",textAlign:"center",fontSize:10,padding:10}}></Text>
+                                  <Text style={{width: "40%",border:"1px solid #000",borderTop:"none !important",textAlign:"center",fontSize:10,padding:10}}></Text>
                               </View>
                               <View style={[styles.footer]}>
                                   <Text style={{width: "40%",border:"1px solid #000",textAlign:"center",fontWeight:"bold",fontSize:10,padding:5}}>RECEPTIONNAIRE</Text>
-                                  <Text style={{width: "40%",border:"1px solid #000",textAlign:"center",fontSize:10,padding:10}}></Text>
+                                  <Text style={{width: "40%",border:"1px solid #000",textAlign:"center",fontSize:10,padding:10,borderTop:"none !important"}}></Text>
                               </View>
                          </View>
                     </View>
@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
           display: "flex",
           flexDirection: "row",
           fontSize: 11,
-          borderTop:"none !important",
           border:"1px solid #000"
      },
      th:{
