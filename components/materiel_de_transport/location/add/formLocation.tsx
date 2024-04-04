@@ -122,9 +122,6 @@ const FormLocation = () => {
                     pu: Yup.string().required(
                          "Veuillez remplir le champ prix unitaire"
                      ),
-                    montant: Yup.string().required(
-                        "Veuillez remplir le champ montant"
-                    ),
                     grant: Yup.string().required(
                         "Veuillez remplir le champ grant"
                     ),
