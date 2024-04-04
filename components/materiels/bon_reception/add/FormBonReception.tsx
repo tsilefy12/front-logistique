@@ -274,6 +274,7 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                                         label="Quantité"
                                                         name="quantite"
                                                         type="number"
+                                                        min="0"
                                                     />
                                                 </FormControl>
                                             </TableCell>

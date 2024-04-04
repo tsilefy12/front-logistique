@@ -18,6 +18,7 @@ import { useRouter } from 'next/router';
 import { cancelEdit } from '../../../../redux/features/pvComparaison/pvComparaisonSlice';
 import Edit from '@mui/icons-material/Edit';
 import { getPrograms } from '../../../../redux/features/program/programSlice';
+import { enqueueSnackbar } from '../../../../redux/features/notification/notificationSlice';
 
 const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any}) =>  {
 
@@ -63,20 +64,9 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
         fetchUtilsData();
     }, []);
 
-    const checkboxChange = (c: boolean, s: string) => {
-        let files: string[] =
-          formikProps.values.fileRequired.length > 0
-            ? formikProps.values.fileRequired.split(";")
-            : [];
-        if (c) {
-          files.push(s);
-          formikProps.setFieldValue("fileRequired", files.join(";"));
-          return;
-        }
-        files = files.filter((f) => f !== s);
-        formikProps.setFieldValue("fileRequired", files.join(";"));
+    const checkboxChange = (checked :boolean, value:string) => {
+        formikProps.setFieldValue('motif', checked ? value : '');
     };
-
     const handleFech = async (id: any) => {
         try { 
             const response:any = total.find((e:any)=> e.id === id)
@@ -393,8 +383,9 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                                                             const modePaie = formikProps.values.modePaie;
                                                             const designation = formikProps.values.designation;
                                                                 // Vérifier si les champs sont vides
-                                                                if (fournisseur.trim() !== ''  && modePaie.trim() !== '' && designation.trim() !== '') {
-                                                                    setValuesArticle((prev:any[])=>{
+                                                            if (fournisseur.trim() !== ''  && modePaie.trim() !== '' && designation.trim() !== '') {
+                                                                if(valuesArticle.length < 3){
+                                                                    setValuesArticle((prev:any[])=> {
                                                                         let temp = [...prev]
                                                                         temp.push({
                                                                             fournisseur: fournisseur,
@@ -404,6 +395,14 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                                                                         })
                                                                         return temp
                                                                     })
+                                                                }else{
+                                                                    enqueueSnackbar({
+                                                                        message: "Desolée vous avez atteint le nombre d'offre possible",
+                                                                        options: {
+                                                                          variant: "error",
+                                                                        },
+                                                                    })
+                                                                }
                                                                 formikProps.setFieldValue('fournisseur', '');
                                                                 formikProps.setFieldValue('modePaie', '');
                                                                 formikProps.setFieldValue('designation', '');
@@ -487,17 +486,17 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                             label="Moins distant"
                             control={
                             <Checkbox
-                                checked={formikProps.values.fileRequired.includes("cv")}
-                                onChange={(e, c) => checkboxChange(c, "cv")}
+                                checked={formikProps.values.motif === "moins_distant"}
+                                onChange={(e, checked) => checkboxChange(checked, "moins_distant")}
                             />
                             }
                         />
                         <FormControlLabel
-                            label="Conforme aux besoin"
+                            label="Conforme aux besoins"
                             control={
                             <Checkbox
-                                checked={formikProps.values.fileRequired.includes("lm")}
-                                onChange={(e, c) => checkboxChange(c, "lm")}
+                                checked={formikProps.values.motif === "conforme_aux_besoins"}
+                                onChange={(e, checked) => checkboxChange(checked, "conforme_aux_besoins")}
                             />
                             }
                         />

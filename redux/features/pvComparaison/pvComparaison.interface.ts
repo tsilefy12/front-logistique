@@ -5,11 +5,11 @@ export interface PvComparaisonItem {
     grant?: number,
     ligneBudgetaire?: number,
     materiel?: string,
-    motif?: string,
-    argument?: string,
     bci?: string,
     bce?: string,
-    TableComparaison?:any
+    tableComparaison?:any,
+    bonDeCommandeExterne?:any;
+    bonDeCommandeInterne?:any;
 }
 export interface PvComparaisonInitialState {
     pvComparaisons: PvComparaisonItem[];

@@ -192,6 +192,7 @@ const FormCommande = () => {
                       label="Nombre d'offres autorisé possible pour une commande"
                       name="numberOfAuthorisedOffersPossible"
                       type="number"
+                      min="0"
                     />
                   </FormControl>
                   <FormControl fullWidth>

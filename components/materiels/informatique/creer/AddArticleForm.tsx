@@ -266,6 +266,7 @@ const AddArticleForm = () => {
                         label="Valeur d'acquisition"
                         variant="outlined"
                         type="number"
+                        min="0"
                     />
                     <OSSelectField
                         id="outlined-basic"
@@ -299,6 +300,7 @@ const AddArticleForm = () => {
                             label="Durée d'amortissement"
                             variant="outlined"
                             type="number"
+                            min="0"
                         />
                         <OSDatePicker
                             name="dateAmortissement"

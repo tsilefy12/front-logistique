@@ -261,6 +261,7 @@ const FormBonCommandeFournisseur  = ({formikProps,valuesArticle,setValuesArticle
                                                         label="Prix unitaire"
                                                         name="unitPrice"
                                                         type="number"
+                                                        min="0"
                                                     />
                                                 </FormControl>
                                             </TableCell>
@@ -271,6 +272,7 @@ const FormBonCommandeFournisseur  = ({formikProps,valuesArticle,setValuesArticle
                                                         label="Quantité"
                                                         name="quantite"
                                                         type="number"
+                                                        min="0"
                                                     />
                                                 </FormControl>
                                             </TableCell>
