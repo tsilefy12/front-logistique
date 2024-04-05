@@ -3,7 +3,7 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { createUniteStock } from "../../../redux/features/configuration"
-import { cancelEdit } from "../../../redux/features/configuration/uniteStockSlice"
+import { cancelEdit, updateUniteStock } from "../../../redux/features/configuration/uniteStockSlice"
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import OSTextField from "../../shared/input/OSTextField";
@@ -14,14 +14,20 @@ const UniteStockHeader = () => {
         (state) => state.uniteStock
     );
     const dispatch = useAppDispatch();
-    const route = useRouter();
     const fetchUniteStockList = useFetchUniteStockList();
     const handleSubmit = async (values: any) => {
         try {
-            if ( !isEditing) {
+            if (isEditing) {
+                await dispatch(
+                    updateUniteStock({
+                        id: uniteStock.id!,
+                        unite: values,
+                    })
+                );
+            } else {
                 await dispatch(createUniteStock(values));
-                fetchUniteStockList();
-            } 
+            }
+            fetchUniteStockList();
 
         } catch (error) {
             console.log("error", error);
