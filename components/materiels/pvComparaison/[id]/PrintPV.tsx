@@ -39,7 +39,7 @@ function PrintPVComparaison({ pdfData }: { pdfData: any }) {
                               <Text style={styles.th}>Fournisseur</Text>
                               {pdfData.tableComparaison?.map((item:any , index:any) => {
                                    return(
-                                        <Text style={[styles.th,{backgroundColor:"#a3e0ad"}]}>{item.vendor?.name}</Text>
+                                        <Text key={index}  style={[styles.th,{backgroundColor:"#a3e0ad"}]}>{item.vendor?.name}</Text>
                                    )
                               })}
                          </View>
@@ -65,7 +65,7 @@ function PrintPVComparaison({ pdfData }: { pdfData: any }) {
                               <Text style={styles.row1Cadre}>DESIGNATION</Text>
                               {pdfData.tableComparaison?.map((item:any , index:any) => {
                                    return(
-                                        <Text style={styles.row2Cadre}>{item.designation}</Text>
+                                        <Text key={index}  style={styles.row2Cadre}>{item.designation}</Text>
                                    )
                               })}
                         </View>
@@ -75,7 +75,7 @@ function PrintPVComparaison({ pdfData }: { pdfData: any }) {
                               <Text style={styles.tr}>Montant total</Text>
                               {pdfData.tableComparaison?.map((item:any , index:any) => {
                                    return(
-                                        <Text style={styles.tr}></Text>
+                                        <Text key={index}  style={styles.tr}></Text>
                                    )
                               })}
                          </View>
@@ -85,7 +85,7 @@ function PrintPVComparaison({ pdfData }: { pdfData: any }) {
                               <Text style={styles.tr}>Modalité de paiment</Text>
                               {pdfData.tableComparaison?.map((item:any , index:any) => {
                                    return(
-                                        <Text style={styles.tr}>{item.modePaie}</Text>
+                                        <Text key={index}  style={styles.tr}>{item.modePaie}</Text>
                                    )
                               })}
                          </View>
