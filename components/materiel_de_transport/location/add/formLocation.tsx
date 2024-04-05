@@ -51,16 +51,11 @@ const FormLocation = () => {
             dispatch(editLocation({ id }));
         }
     }, [id]);
-
-    console.log("materiel :", transportationEquipments);
-
     const listMateriel: { id: string, name: string }[] = [];
 
     if (transportationEquipments.length > 0) {
         transportationEquipments.forEach((element: any) => {
             if (element["status"] === "Location") {
-                console.log("id :", element["id"]);
-                console.log("materiel ", element["registration"]);
                 listMateriel.push({ id: element.id, name: element.registration });
             }
         });
@@ -83,7 +78,6 @@ const FormLocation = () => {
             }
             fetchLocationTransport()
             route.push("/materiel_de_transport/location");
-            console.log("mandalo ato")
         } catch (error) {
             console.log("error", error);
         }
@@ -92,16 +86,15 @@ const FormLocation = () => {
     return (
         <Container maxWidth="xl" sx={{ pb: 5, mb: 4 }}>
             <Formik
-                enableReinitialize
+                enableReinitialize={isEditing ? true : false}
                 initialValues={{
                     materiel: isEditing ? locationDeTransport?.materiel : "",
                     date: isEditing ? locationDeTransport?.date : new Date(),
                     responsable: isEditing ? locationDeTransport?.responsable : "",
                     referenceBudgetaire: isEditing ? locationDeTransport?.referenceBudgetaire : "",
-                    nombreJour: isEditing ? locationDeTransport?.nombreJour : "",
+                    nombreJour: isEditing ? locationDeTransport?.nombreJour : 0,
                     fournisseur: isEditing ? locationDeTransport?.fournisseur : "",
-                    pu: isEditing ? locationDeTransport?.pu : "",
-                    montant: isEditing ? locationDeTransport?.montant : "",
+                    pu: isEditing ? locationDeTransport?.pu : 0,
                     grant: isEditing ? locationDeTransport?.grant : "",
                     ligneBudgetaire: isEditing ? locationDeTransport?.ligneBudgetaire : "",
                     itineraire: isEditing ? locationDeTransport?.itineraire : "",
@@ -113,15 +106,15 @@ const FormLocation = () => {
                     referenceBudgetaire: Yup.string().required(
                         "Veuillez remplir le champ référence budgetaire"
                     ),
-                    nombreJour: Yup.string().required(
-                         "Veuillez remplir le champ nombre de jour"
-                     ),
+                    nombreJour: Yup.number().required(
+                        "Veuillez remplir le champ nombre de jour"
+                    ),
                     fournisseur: Yup.string().required(
                         "Veuillez remplir le champ fournisseur"
                     ),
-                    pu: Yup.string().required(
-                         "Veuillez remplir le champ prix unitaire"
-                     ),
+                    pu: Yup.number().required(
+                        "Veuillez remplir le champ prix unitaire"
+                    ),
                     grant: Yup.string().required(
                         "Veuillez remplir le champ grant"
                     ),
@@ -237,28 +230,42 @@ const FormLocation = () => {
                                         name="nombreJour"
                                         type="number"
                                         min="0"
+                                        value={formikProps.values.nombreJour}
+                                        onChange={(event: any) => {
+                                            const newValue = parseInt(event.target.value);
+                                            formikProps.setFieldValue("nombreJour", newValue);
+                                            const newMontant = newValue * (formikProps.values.pu ?? 0);
+                                            formikProps.setFieldValue("montant", newMontant);
+                                        }}
                                     />
                                 </FormControl>
-                               <FormControl fullWidth>
-                               <OSTextField
-                                    id="outlined-basic"
-                                    label="prix unitaire"
-                                    variant="outlined"
-                                    name="pu"
-                                    type="number"
-                                    min="0"
-                                />
+                                <FormControl fullWidth>
+                                    <OSTextField
+                                        id="outlined-basic"
+                                        label="prix unitaire"
+                                        variant="outlined"
+                                        name="pu"
+                                        type="number"
+                                        min="0"
+                                        value={formikProps.values.pu}  
+                                        onChange={(event: any) => {
+                                            const newValue = parseInt(event.target.value); 
+                                            formikProps.setFieldValue("pu", newValue); 
+                                            const newMontant = (formikProps.values.nombreJour ?? 0) * newValue; 
+                                            formikProps.setFieldValue("montant", newMontant); 
+                                        }}
+                                    />
                                 </FormControl>
                                 <FormControl fullWidth>
                                     <OSTextField
                                         id="outlined-basic"
                                         label="Montant"
                                         variant="outlined"
-                                        value={formikProps.values.nombreJour * formikProps.values.pu}
-                                        onChange={(value: any) =>formikProps.setFieldValue("montant", value)}
-                                        name={formikProps.values.nombreJour * formikProps.values.pu}
+                                        value={(formikProps.values.nombreJour ?? 0) * (formikProps.values.pu ?? 0)}
+                                        name="montant"
                                         type="number"
                                         min="0"
+                                        disabled
                                     />
                                 </FormControl>
                             </Stack>
@@ -272,7 +279,7 @@ const FormLocation = () => {
                                     valueKey="id"
                                     name="fournisseur"
                                 />
-                                
+
                             </Stack>
                             <Stack
                                 direction="row"

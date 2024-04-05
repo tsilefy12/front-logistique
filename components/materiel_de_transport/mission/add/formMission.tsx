@@ -95,9 +95,9 @@ const FormMission = () => {
           date: isEditing ? missionTransport?.date : new Date(),
           libelle: isEditing ? missionTransport?.libelle : "",
           utilisateur: isEditing ? missionTransport?.utilisateur : "",
-          nombreJour: isEditing ? missionTransport?.nombreJour : "",
-          pu: isEditing ? missionTransport?.pu : "",
-          montant: isEditing ? missionTransport?.montant : "",
+          nombreJour: isEditing ? missionTransport?.nombreJour : 0,
+          pu: isEditing ? missionTransport?.pu : 0,
+          montant: isEditing ? missionTransport?.montant : 0,
           grant: isEditing ? missionTransport?.grant : "",
           ligneBudgetaire: isEditing ? missionTransport?.ligneBudgetaire : "",
 
@@ -112,10 +112,10 @@ const FormMission = () => {
           utilisateur: Yup.string().required(
             "Veuillez remplir le champ utilisateur"
           ),
-          nombreJour: Yup.string().required(
+          nombreJour: Yup.number().required(
             "Veuillez remplir le champ nombre de jour"
           ),
-          pu: Yup.string().required(
+          pu: Yup.number().required(
             "Veuillez remplir le champ prix unitaire"
           ),
           grant: Yup.string().required(
@@ -231,36 +231,49 @@ const FormMission = () => {
                 </FormControl>
               </Stack>
               <Stack direction="row" spacing={3} margin={2}>
-              
+
                 <FormControl fullWidth>
-                                    <OSTextField
-                                        id="outlined-basic"
-                                        label="Nombre de jour"
-                                        name="nombreJour"
-                                        type="number"
-                                        min="0"
-                                    />
-                                </FormControl>
-                               <FormControl fullWidth>
-                               <OSTextField
-                                    id="outlined-basic"
-                                    label="prix unitaire"
-                                    variant="outlined"
-                                    name="pu"
-                                    type="number"
-                                    min="0"
-                                />
-                                </FormControl>
+                  <OSTextField
+                    id="outlined-basic"
+                    label="Nombre de jour"
+                    name="nombreJour"
+                    type="number"
+                    min="0"
+                    value={formikProps.values.nombreJour}
+                    onChange={(event: any) => {
+                      const newValue = parseInt(event.target.value);
+                      formikProps.setFieldValue("nombreJour", newValue);
+                      const newMontant = newValue * (formikProps.values.pu ?? 0);
+                      formikProps.setFieldValue("montant", newMontant);
+                    }}
+                  />
+                </FormControl>
+                <FormControl fullWidth>
+                  <OSTextField
+                    id="outlined-basic"
+                    label="prix unitaire"
+                    variant="outlined"
+                    name="pu"
+                    type="number"
+                    min="0"
+                    value={formikProps.values.pu}
+                    onChange={(event: any) => {
+                      const newValue = parseInt(event.target.value);
+                      formikProps.setFieldValue("pu", newValue);
+                      const newMontant = (formikProps.values.nombreJour ?? 0) * newValue;
+                      formikProps.setFieldValue("montant", newMontant);
+                    }}
+                  />
+                </FormControl>
                 <FormControl fullWidth>
                   <OSTextField
                     id="outlined-basic"
                     label="Montant"
                     variant="outlined"
-                    value={formikProps.values.nombreJour * formikProps.values.pu}
-                    onChange={(value: any) => formikProps.setFieldValue("montant", value)}
-                    name={formikProps.values.nombreJour * formikProps.values.pu}
+                    value={(formikProps.values.nombreJour ?? 0) * (formikProps.values.pu ?? 0)}
                     type="number"
                     min="0"
+                    disabled
                   />
                 </FormControl>
               </Stack>
