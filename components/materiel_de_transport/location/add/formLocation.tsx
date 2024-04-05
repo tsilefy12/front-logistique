@@ -51,6 +51,7 @@ const FormLocation = () => {
             dispatch(editLocation({ id }));
         }
     }, [id]);
+    console.log("data location :", transportationEquipments)
     const listMateriel: { id: string, name: string }[] = [];
 
     if (transportationEquipments.length > 0) {
@@ -60,7 +61,7 @@ const FormLocation = () => {
             }
         });
     } else {
-        console.log("Rien")
+        listMateriel.push({ id: '', name: '' });
     }
     const handleSubmit = async (values: any) => {
 

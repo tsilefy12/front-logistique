@@ -49,21 +49,20 @@ const FormMission = () => {
       dispatch(editMissionDeTransport({ id }));
     }
   }, [id]);
-
+ console.log("data :", transportationEquipments)
   const ListMateriel: { id: string, name: string }[] = [];
 
   if (transportationEquipments.length > 0) {
     transportationEquipments.forEach((element: any) => {
       if (element["status"] === "Interne") {
-        console.log("id :", element["id"]);
-        console.log("materiel ", element["registration"]);
-        ListMateriel.push({ id: element.id, name: element.registration });
+        console.log("status :", element.status)
+        ListMateriel.push({ id: element.id, name: element.registration});
       }
     });
   } else {
-    console.log("Rien")
+    ListMateriel.push({ id: 'aucun', name: 'aucun' });
   }
-
+ console.log("liste mat", ListMateriel)
   const handleSubmit = async (values: any) => {
 
     try {
