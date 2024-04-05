@@ -269,6 +269,7 @@ const FormMission = () => {
                     id="outlined-basic"
                     label="Montant"
                     variant="outlined"
+                    name="montant"
                     value={(formikProps.values.nombreJour ?? 0) * (formikProps.values.pu ?? 0)}
                     type="number"
                     min="0"
