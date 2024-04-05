@@ -15,7 +15,7 @@ import {
 } from "../../../../redux/features/car-voucher";
 import useFetchCarVouchers from "../hooks/useFetchCarVoucher";
 import FormBonVoiture from "./bonVoitureForm";
-import { createActivity, editActivity } from "../../../../redux/features/activity/activitySlice";
+import { createActivity, editActivity, updateActivity } from "../../../../redux/features/activity/activitySlice";
 
 const FormBonDeVoiture = () => {
     const route = useRouter();
@@ -27,30 +27,60 @@ const FormBonDeVoiture = () => {
 
     const { isEditing, carVoucher } = useAppSelector((state) => state.carVoucher);
     const { isEdit, activity } = useAppSelector((state) =>state.activity);
+    const [valueActivity, setValueActivity] = React.useState < any[]> ([])
+    const handleFech = async (id: any) => {
+        try { 
+            const Val = await dispatch(editCarVoucher({ id , args:{
+                include:{
+                    activity:true
+                }
+            }}));
+            console.log(Val)
+            setValueActivity((prev:any[])=>{
+                console.log(prev)
+                prev = Val.payload.activity
+                return prev
+            })
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    
     React.useEffect(() => {
         if (id) {
-        dispatch(editCarVoucher({ id }));
-        dispatch(editActivity({ id }));
+        handleFech(id);
         }
     }, [id]);
   
     const handleSubmit = async (values: any) => {
         try {
-            const data = {
+            const carVoucher = {
                 materiel: values.materiel,
                 date: new Date(values.date),
                 montantTotal : valuesArticle.reduce((acc:any, curr:any) => acc + curr.montants, 0),
                 reference: values.reference
             }
             if (isEditing) {
-                await dispatch(
-                updateCarVoucher({
-                    id: carVoucher.id!,
-                    carVoucher: values,
-                })
-                );
+                const response = await dispatch(updateCarVoucher({id, carVoucher}))
+                console.log("value article :", valuesArticle)
+                if (valueActivity.length > 0) {
+                    valueActivity?.forEach((item: any, index: any) =>{
+                        const id = item.id
+                        if (id) {
+                            const activity = {
+                                activite:item.activite,
+                                nombre:item.nombre,
+                                pu:item.pu,
+                                montants:item.montants,
+                                carVoucherId:response.payload.id
+                            };
+                            dispatch(updateActivity({id, activity}))
+                        }
+                    })
+                }
             } else {
-                const response = await dispatch(createCarVoucher(data));
+                const response = await dispatch(createCarVoucher(carVoucher));
                 valuesArticle.forEach((element:any, index:any) => {
                     const newData = {
                         activite: element.activite,

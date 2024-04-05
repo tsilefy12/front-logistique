@@ -41,11 +41,11 @@ export default function BonTransfertForm() {
                         const id = element.id
                         if(id){
                             const updateData = {
-                                designation: element.designation,
-                                quantiteCommande: element.quantiteCommande,
-                                quantiteExpedie:element.quantiteExpedie,
-                                observation: element.observation,
-                                bonDeTransfertId: response.payload.id,
+                                // designation: element.designation,
+                                // quantiteCommande: element.quantiteCommande,
+                                // quantiteExpedie:element.quantiteExpedie,
+                                // observation: element.observation,
+                                // bonDeTransfertId: response.payload.id,
                             };
                             dispatch(updateArticleTransfert({id,updateData}));
                         }else{
