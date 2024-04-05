@@ -65,7 +65,14 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
     }, []);
 
     const checkboxChange = (checked :boolean, value:string) => {
-        formikProps.setFieldValue('motif', checked ? value : '');
+        let newValue = formikProps.values.motif || ''; // Initialiser à une chaîne vide si motif est null ou undefined
+        if (checked) {
+            newValue = newValue ? newValue + ", " + value : value;
+        } else {
+            newValue = newValue.replace(value + ", ", "").replace(", " + value, "").replace(value, ""); // Enlever la valeur sélectionnée
+        }
+        formikProps.setFieldValue('motif', newValue);
+        console.log(formikProps.values.motif)
     };
     const handleFech = async (id: any) => {
         try { 
@@ -473,20 +480,20 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                     </FormControl>
                     </Stack>
                     <FormGroup>
-                    <Stack
-                        direction="row"
-                        spacing={4}
-                        sx={{
-                            flex: "1 1 100%",
-                            alignItems: "center",
-                        }}
-                        >
+                        <Stack
+                            direction="row"
+                            spacing={4}
+                            sx={{
+                                flex: "1 1 100%",
+                                alignItems: "center",
+                            }}
+                            >
                         <InputLabel>Motif de retenu</InputLabel>
                         <FormControlLabel
                             label="Moins distant"
                             control={
                             <Checkbox
-                                checked={formikProps.values.motif === "moins_distant"}
+                                checked={formikProps.values.motif.includes("moins_distant")}
                                 onChange={(e, checked) => checkboxChange(checked, "moins_distant")}
                             />
                             }
@@ -495,7 +502,7 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                             label="Conforme aux besoins"
                             control={
                             <Checkbox
-                                checked={formikProps.values.motif === "conforme_aux_besoins"}
+                                checked={formikProps.values.motif.includes("conforme_aux_besoins")}
                                 onChange={(e, checked) => checkboxChange(checked, "conforme_aux_besoins")}
                             />
                             }

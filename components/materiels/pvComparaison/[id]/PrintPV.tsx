@@ -102,11 +102,11 @@ function PrintPVComparaison({ pdfData }: { pdfData: any }) {
                                    <Text style={{padding:4,fontSize:10}}>JUSTIFICATION DE CHOIX : si le choix ne correspond pas aux critère requis</Text>
                                    <Text style={{padding:4,fontSize:10}}>Fournir un argumentaires</Text>
                                    <View style={{display:"flex",flexDirection:"row"}}>
-                                        <Text style={{marginLeft:4,width:"15px",height:"15px",fontSize:10,border:"1px solid #000", backgroundColor: pdfData.offre?.motif === "moins_distant" ? "#49be25" :"transparent"}}></Text>
+                                        <Text style={{marginLeft:4,width:"15px",height:"15px",fontSize:10,border:"1px solid #000", backgroundColor: pdfData.offre?.motif && pdfData.offre?.motif.includes("moins_distant") ? "#49be25" :"transparent"}}></Text>
                                         <Text style={{padding:4,fontSize:10}}>Moins distant</Text>
                                    </View>
                                    <View style={{display:"flex",flexDirection:"row",marginTop:2,marginBottom:2}}>
-                                        <Text style={{marginLeft:4,width:"15px",height:"15px",fontSize:10,border:"1px solid #000", backgroundColor: pdfData.offre?.motif === "conforme_aux_besoins" ? "#49be25" :"transparent"}}></Text>
+                                        <Text style={{marginLeft:4,width:"15px",height:"15px",fontSize:10,border:"1px solid #000", backgroundColor: pdfData.offre?.motif && pdfData.offre?.motif.includes("conforme_aux_besoins") ? "#49be25" :"transparent"}}></Text>
                                         <Text style={{padding:4,fontSize:10}}>conforme au besoin</Text>
                                    </View>
                               </View>

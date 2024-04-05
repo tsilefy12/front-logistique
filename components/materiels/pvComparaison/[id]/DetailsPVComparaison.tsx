@@ -68,6 +68,7 @@ const DetailsPvComparaison = () => {
             offre : offre
         }
         setPdf(data)
+        console.log("offre.motif:", offre.motif)
     },[id,pvComparaison])
     return (
         <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
@@ -191,22 +192,30 @@ const DetailsPvComparaison = () => {
                                                 Motif
                                             </Typography>
                                             <Typography variant="body1" color="gray">
-                                                <FormControlLabel
-                                                    label="Moins distant"
-                                                    control={
-                                                    <Checkbox
-                                                        checked={offre.motif === "moins_distant"}
-                                                    />
-                                                    }
+                                            <Stack
+                                                direction="row"
+                                                sx={{
+                                                    flex: "1 1 100%",
+                                                    alignItems: "center",
+                                                }}
+                                            >
+                                            <FormControlLabel
+                                                label="Moins distant"
+                                                control={
+                                                <Checkbox
+                                                    checked={offre?.motif ? offre?.motif.includes("moins_distant"): false}
                                                 />
-                                                <FormControlLabel
-                                                    label="Conforme aux besoins"
-                                                    control={
-                                                    <Checkbox
-                                                        checked={offre.motif === "conforme_aux_besoins"}
-                                                    />
-                                                    }
+                                                }
+                                            />
+                                            <FormControlLabel
+                                                label="Conforme aux besoins"
+                                                control={
+                                                <Checkbox
+                                                    checked={offre?.motif ? offre?.motif.includes("conforme_aux_besoins"):false}
                                                 />
+                                                }
+                                            />
+                                            </Stack>
                                             </Typography>
                                         </InfoItems>
                                     </Grid>
