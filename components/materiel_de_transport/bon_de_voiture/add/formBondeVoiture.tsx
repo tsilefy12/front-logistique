@@ -15,7 +15,7 @@ import {
 } from "../../../../redux/features/car-voucher";
 import useFetchCarVouchers from "../hooks/useFetchCarVoucher";
 import FormBonVoiture from "./bonVoitureForm";
-import { createActivity, editActivity, updateActivity } from "../../../../redux/features/activity/activitySlice";
+import { createActivity, deleteActivity, editActivity, updateActivity } from "../../../../redux/features/activity/activitySlice";
 
 const FormBonDeVoiture = () => {
     const route = useRouter();
@@ -26,8 +26,6 @@ const FormBonDeVoiture = () => {
     const [ idDelete,setIdDelete] = React.useState < any[]> ([])
 
     const { isEditing, carVoucher } = useAppSelector((state) => state.carVoucher);
-    const { isEdit, activity } = useAppSelector((state) =>state.activity);
-    const [valueActivity, setValueActivity] = React.useState < any[]> ([])
     const handleFech = async (id: any) => {
         try { 
             const Val = await dispatch(editCarVoucher({ id , args:{
@@ -36,7 +34,7 @@ const FormBonDeVoiture = () => {
                 }
             }}));
             console.log(Val)
-            setValueActivity((prev:any[])=>{
+            setValuesArticle((prev:any[])=>{
                 console.log(prev)
                 prev = Val.payload.activity
                 return prev
@@ -64,8 +62,8 @@ const FormBonDeVoiture = () => {
             if (isEditing) {
                 const response = await dispatch(updateCarVoucher({id, carVoucher}))
                 console.log("value article :", valuesArticle)
-                if (valueActivity.length > 0) {
-                    valueActivity?.forEach((item: any, index: any) =>{
+                if (valuesArticle.length > 0) {
+                    valuesArticle?.forEach((item: any, index: any) =>{
                         const id = item.id
                         if (id) {
                             const activity = {
@@ -79,6 +77,10 @@ const FormBonDeVoiture = () => {
                         }
                     })
                 }
+                idDelete?.forEach((element:any, index:any) =>{
+                    const id = element.id
+                    dispatch(deleteActivity({id}));
+                })
             } else {
                 const response = await dispatch(createCarVoucher(carVoucher));
                 valuesArticle.forEach((element:any, index:any) => {
