@@ -52,7 +52,7 @@ const FormMission = () => {
  console.log("data :", transportationEquipments)
   const ListMateriel: { id: string, name: string }[] = [];
 
-  if (transportationEquipments.length > 0) {
+ if (transportationEquipments.length > 0) {
     transportationEquipments.forEach((element: any) => {
       if (element["status"] === "Interne") {
         console.log("status :", element.status)
@@ -62,6 +62,7 @@ const FormMission = () => {
   } else {
     ListMateriel.push({ id: 'aucun', name: 'aucun' });
   }
+ 
  console.log("liste mat", ListMateriel)
   const handleSubmit = async (values: any) => {
 
@@ -96,7 +97,6 @@ const FormMission = () => {
           utilisateur: isEditing ? missionTransport?.utilisateur : "",
           nombreJour: isEditing ? missionTransport?.nombreJour : 0,
           pu: isEditing ? missionTransport?.pu : 0,
-          montant: isEditing ? missionTransport?.montant : 0,
           grant: isEditing ? missionTransport?.grant : "",
           ligneBudgetaire: isEditing ? missionTransport?.ligneBudgetaire : "",
 
