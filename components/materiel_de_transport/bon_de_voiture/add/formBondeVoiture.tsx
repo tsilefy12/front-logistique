@@ -105,14 +105,13 @@ const FormBonDeVoiture = () => {
             enableReinitialize = {isEditing ? true : false}
             initialValues={{
                 materiel: isEditing ? carVoucher?.materiel : "",
-                date: isEditing ? carVoucher?.date : new Date(),
+                date: isEditing && carVoucher?.date ? new Date(carVoucher?.date) : new Date(),
                 reference: isEditing ? carVoucher?.reference: "",
-                activite:isEdit ? activity?.activite: "",
-                nombre:isEdit ? activity?.nombre :"",
-                pu:isEdit ? activity?.pu:"",
-                montants:isEdit ? activity?.montants: "",
+                activite: "",
+                nombre:"",
+                pu:"",
+                montants:"",
                 quantite:""
-
             }}
             validationSchema={Yup.object({
                 materiel: Yup.string().required("Veuillez remplir le champ matériel"),

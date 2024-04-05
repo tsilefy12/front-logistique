@@ -9,24 +9,31 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import OSTextField from "../../shared/input/OSTextField";
 import {
-    cancelEdit
+    cancelEdit,
+    updateCategorie
 } from "../../../redux/features/configuration/categorieStockSlice"
 import useFetchCategorieList from "./hooks/useFetchCategorie";
+
 const CategoryHeader = () => {
     const { isEditing, categorieStock } = useAppSelector(
         (state) => state.categorieStock
     );
     const dispatch = useAppDispatch();
-    const route = useRouter();
     const fetchCategorieList = useFetchCategorieList();
     
     const handleSubmit = async (values: any) => {
         try {
-          if ( !isEditing) {
-            await dispatch(createCategorieStock(values));
+            if (isEditing) {
+                await dispatch(
+                    updateCategorie({
+                        id: categorieStock.id!,
+                        categorie: values,
+                    })
+                );
+            } else {
+                await dispatch(createCategorieStock(values));
+            }
             fetchCategorieList();
-          } 
-    
         } catch (error) {
           console.log("error", error);
         }
@@ -42,7 +49,7 @@ const CategoryHeader = () => {
                     categorieStock: Yup.string().required("Veuillez sélectionner un code"),
                 })}
                 onSubmit={(value: any, action: any) => {
-                    handleSubmit(value);
+                        handleSubmit(value);
                         action.resetForm();
                     }}
                 >

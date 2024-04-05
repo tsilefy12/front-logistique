@@ -3,7 +3,7 @@ export interface typeProduitItem {
     typeProduct?: string;
 }
   
-export interface typeProduitInitialState {
+export interface TypeProduitInitialState {
     typeProduits: typeProduitItem[];
     typeProduit: typeProduitItem;
     isEditing: boolean;

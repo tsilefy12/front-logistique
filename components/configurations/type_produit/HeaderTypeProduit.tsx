@@ -3,7 +3,7 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { createTypeProduit } from "../../../redux/features/configuration"
-import { cancelEdit } from "../../../redux/features/configuration/typeProduitSlice"
+import { cancelEdit, updateTypeProduit } from "../../../redux/features/configuration/typeProduitSlice"
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import OSTextField from "../../shared/input/OSTextField";
@@ -13,15 +13,20 @@ const HeaderTypeProduit = () => {
         (state) => state.typeProduit
     );
     const dispatch = useAppDispatch();
-    const route = useRouter();
     const fetchTypeProduitList = useFetchTypeProduitList();
     const handleSubmit = async (values: any) => {
         try {
-            if ( !isEditing) {
+            if (isEditing) {
+                await dispatch(
+                    updateTypeProduit({
+                        id: typeProduit.id!,
+                        typeProduit: values,
+                    })
+                );
+            } else {
                 await dispatch(createTypeProduit(values));
-                fetchTypeProduitList();
-            } 
-
+            }
+            fetchTypeProduitList();
         } catch (error) {
             console.log("error", error);
         }
