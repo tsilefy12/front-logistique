@@ -82,11 +82,11 @@ function PrintBonTransfert({ pdfData }: { pdfData: any }) {
                          <View style={{width:"100%",display:"flex",flexDirection:"row",alignItems:"center"}}>
                               <View style={[styles.footer]}>
                                   <Text style={{width: "40%",border:"1px solid #000",textAlign:"center",fontWeight:"bold",fontSize:10,padding:5}}>EXPEDITEUR</Text>
-                                  <Text style={{width: "40%",border:"1px solid #000",borderTop:"none !important",textAlign:"center",fontSize:10,padding:10,height:200}}></Text>
+                                  <Text style={{width: "40%",border:"1px solid #000",borderTop:"none !important",textAlign:"center",fontSize:10,padding:10,height:800}}></Text>
                               </View>
                               <View style={[styles.footer]}>
                                   <Text style={{width: "40%",border:"1px solid #000",textAlign:"center",fontWeight:"bold",fontSize:10,padding:5}}>RECEPTIONNAIRE</Text>
-                                  <Text style={{width: "40%",border:"1px solid #000",textAlign:"center",fontSize:10,padding:10,borderTop:"none !important",height:200}}></Text>
+                                  <Text style={{width: "40%",border:"1px solid #000",textAlign:"center",fontSize:10,padding:10,borderTop:"none !important",height:80}}></Text>
                               </View>
                          </View>
                     </View>
