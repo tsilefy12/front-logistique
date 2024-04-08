@@ -53,7 +53,7 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                          </View>
                     </View>
                     <View style={{width: "100%",marginTop:20,}}>
-                         <View style={[styles.rowBody]}>
+                         <View style={[styles.rowBody,{backgroundColor:"#D5D8DC"}]}>
                               <Text style={[styles.th,{width:"60%"}]}>Désignation</Text>
                               <Text style={[styles.th,{width:"60%"}]}>Caractéristique</Text>
                               <Text style={styles.th}>Quantité</Text>
@@ -96,8 +96,8 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                     </View>  
                     <View style={{width: "100%"}}>
                          <View style={[styles.rowBody]}>
-                              <Text style={{fontSize: 10,padding:2}}>Soit :</Text>
-                              <Text style={{fontSize: 10,padding:2}}>{amountWords} ariary</Text>
+                              <Text style={{fontSize: 12,padding:2}}>Soit :</Text>
+                              <Text style={{fontSize: 12,padding:2}}>{amountWords} ariary</Text>
                          </View>
                     </View>   
                     <View style={{width:"100%"}}>
