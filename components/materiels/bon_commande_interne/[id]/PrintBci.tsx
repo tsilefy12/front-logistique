@@ -1,7 +1,5 @@
 import { Print } from "@mui/icons-material";
 import { Button, CircularProgress } from "@mui/material";
-import { toWords } from 'number-to-words';
-
 import {
      Document,
      Image,
@@ -13,11 +11,14 @@ import {
 } from "@react-pdf/renderer";
 import { format } from "date-fns";
 import { BonCommandeItem } from "../../../../redux/features/bon_commande_interne/bonCommandeInterne.interface";
+// @ts-ignore
+import { NumberToLetter } from 'convertir-nombre-lettre';
 
 function PrintBCI({ pdfData }: { pdfData: any }) {
 
      const montantTotal = pdfData.montantTotal ? parseInt(pdfData.montantTotal) : 0;
-     const amountWords = montantTotal ? toWords(montantTotal) : '';
+     const amountWords = montantTotal ? NumberToLetter(montantTotal) : '';
+     console.log(NumberToLetter(4194945))
      return (
           <Document >
                <Page style={{ padding:15 }} orientation="landscape">
@@ -76,7 +77,7 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                          }
                     )}
                     <View style={{width: "100%"}}>
-                         <View style={[styles.rowBody]}>
+                         <View style={[styles.rowBody,{height:20}]}>
                               <Text style={[styles.tr,{width:'60%'}]}></Text>
                               <Text style={[styles.tr,{width:'60%'}]}></Text>
                               <Text style={styles.tr}></Text>
