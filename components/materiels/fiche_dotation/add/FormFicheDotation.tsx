@@ -13,6 +13,7 @@ import ArrowBack from '@mui/icons-material/ArrowBack';
 import { getGrantList } from '../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice';
 import { getBudgetLineList } from '../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice';
 import OSDatePicker from '../../../shared/date/OSDatePicker';
+import OSFileUpload from '../../../shared/input/OSFileUpload';
 
 const FormFicheDotation = ({formikProps}: {formikProps: FormikProps<any>}) => {
     const dispatch = useAppDispatch();
@@ -206,8 +207,14 @@ const FormFicheDotation = ({formikProps}: {formikProps: FormikProps<any>}) => {
                             valueKey="id"
                         />
                     </FormControl>
-                    
                 </Stack>
+                { isEditing ? (
+                    <FormControl fullWidth>
+                        <OSFileUpload label="Pièce jointe" name="pieceJointe" />
+                    </FormControl>
+                ):(
+                    <></>
+                )}
             </FormContainer>
         </Form>
     )

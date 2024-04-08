@@ -119,7 +119,7 @@ function PrintPVComparaison({ pdfData }: { pdfData: any }) {
                     <View style={styles.table}>
                         <View style={{width:"100%",alignItems:"center"}}>
                           <View style={{display:"flex",flexDirection:"column",border:"1px solid #000",width:"33%"}}>
-                                <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:10}}>Validé(e) par: e-mail par Raphali</Text>
+                                <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:10}}>Validé(e) par:</Text>
                                 <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:10,height:100}}>Signature</Text>
                           </View>
                         </View>
@@ -155,11 +155,10 @@ const styles = StyleSheet.create({
           width: "50%",
           textAlign: "center",
           borderLeft: "1px solid #000",
-          paddingTop: 2,
-          paddingBottom: 2,
-          paddingLeft:2,
+          paddingTop:4,
+          padding :2,
           fontWeight: "bold",
-          fontSize: 10,
+          fontSize: 12,
      },
      tr:{
           width: "50%",

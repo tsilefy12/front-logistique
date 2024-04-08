@@ -14,7 +14,7 @@ import { format } from "date-fns";
 import { CommandeFournisseurItem } from "../../../../redux/features/bon_commande_fournisseur/bonCommandeFournisseur.interface";
 
 function PrintBonCommandeFournisseur({ pdfData }: { pdfData: any }) {
-     const montantTotal  = pdfData.articleFournisseur?.reduce((acc:any, curr:any) => acc + curr.montat, 0)
+     const montantTotal  = pdfData.articleFournisseur?.reduce((acc:any, curr:any) => acc + curr.montant, 0)
      return (
           <Document >
                <Page style={{ padding:15 }} orientation="portrait">
@@ -27,7 +27,7 @@ function PrintBonCommandeFournisseur({ pdfData }: { pdfData: any }) {
                                    />
                               </Text>
                               <View style={styles.row2}>
-                                   <Text style={{textAlign:"center",alignItems:"center",width:"100%",fontSize:14}}>BON COMMANDE</Text>
+                                   <Text style={{textAlign:"center",alignItems:"center",width:"100%",fontSize:14}}>BON DE COMMANDE</Text>
                               </View>
                          </View>
                     </View>
@@ -63,25 +63,25 @@ function PrintBonCommandeFournisseur({ pdfData }: { pdfData: any }) {
                     {pdfData && pdfData.articleFournisseur?.map(
                          (element:any, index: any) => {
                               return (
-                                   <View style={{width: "100%"}}>
-                                        <View style={[styles.rowBody]}>
+                                   <View key={index} style={{width: "100%"}}>
+                                        <View style={[styles.rowBody,{borderTop:"none !important"}]}>
                                              <Text style={[styles.tr1,{borderLeft:"none !important"}]}>{element?.designation}</Text>
                                              <Text style={styles.tr}>{element?.unitPrice}</Text>
                                              <Text style={styles.tr}>{element?.quantite}</Text>
-                                             <Text style={styles.tr}>{element?.montant}</Text>
-                                             <Text style={styles.tr1}>{element?.details} ar</Text>
+                                             <Text style={styles.tr}>{element?.montant}  ar</Text>
+                                             <Text style={styles.tr1}>{element?.details}</Text>
                                         </View>
                                    </View>
                               )
                          }
                     )}
                     <View style={{width: "100%",marginTop:20,}}>
-                         <View style={[styles.rowBody]}>
+                         <View style={[styles.rowBody,{ border:"none !important" }]}>
+                              <Text style={{width:"50%"}}></Text>
+                              <Text style={[styles.tr,{ border: "1px solid #000"}]}>TOTAL</Text>
+                              <Text style={[styles.tr,{ border: "1px solid #000",borderLeft:"none !important"}]}>TTC</Text>
+                              <Text style={[styles.tr,{ border: "1px solid #000",borderLeft:"none !important"}]}>{montantTotal} ar</Text>
                               <Text style={{width:"50%",border:"none"}}></Text>
-                              <Text style={styles.tr}>TOTAL</Text>
-                              <Text style={styles.tr}>TTC</Text>
-                              <Text style={styles.tr}>{montantTotal} ar</Text>
-                              <Text style={styles.tr1}></Text>
                          </View>
                     </View>
                     <View style={{width: "100%",marginTop:20}}>
@@ -145,11 +145,10 @@ const styles = StyleSheet.create({
           width: "23%",
           textAlign: "center",
           borderLeft: "1px solid #000",
-          paddingTop: 2,
-          paddingBottom: 2,
-          paddingLeft:2,
+          paddingTop:4,
+          padding :2,
           fontWeight: "bold",
-          fontSize: 10,
+          fontSize: 12,
      },
      tr1:{
           width: "50%",

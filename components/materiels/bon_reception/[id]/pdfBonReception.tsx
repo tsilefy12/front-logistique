@@ -19,7 +19,7 @@ function PrintBonReception({ pdfData }: { pdfData: any }) {
           <Document>
                <Page style={{ padding:15 }}>
                     <View style={styles.table}>
-                         <View style={[styles.row, styles.bold]}>
+                         <View style={[styles.row,styles.bold]}>
                               <Text style={styles.row1}>
                                    <Image
                                         style={styles.logo}
@@ -31,13 +31,9 @@ function PrintBonReception({ pdfData }: { pdfData: any }) {
                               </View>
                          </View>
                     </View>
-                    <View style={styles.table}>
-                         <View style={{width:'100%',alignItems:"center"}}>
-                              <Text style={{width:'100%',fontSize:14,textAlign:"center"}}>Association Madagasikara voakajy</Text>
-                         </View>
-                    </View>
                     <View style={{width: "100%",}}>
-                         <View style={{width: "100%",display: "flex",flexDirection: "column",marginTop:10}}>
+                         <View style={{width: "100%",display: "flex",flexDirection: "column",marginTop:10,marginLeft:10}}>
+                              <Text style={{width:'100%',fontSize:12,textAlign:"left"}}>Association Madagasikara voakajy</Text>
                               <Text style={{width: "100%",textAlign:"left",fontWeight:"bold",fontSize:10,paddingBottom:5}}>LOT IIf14P Bis A Andraharo</Text>
                               <Text style={{width: "100%",textAlign:"left",fontSize:10,paddingBottom:5}}>BP 5281,101 Antananarivo</Text>
                               <Text style={{width: "100%",textAlign:"left",fontSize:10,paddingBottom:5}}>Contact: +261 342515523</Text>
@@ -46,29 +42,29 @@ function PrintBonReception({ pdfData }: { pdfData: any }) {
 
                     <View style={{width: "100%",marginTop:20,}}>
                          <View style={[styles.rowBody]}>
-                              <Text style={styles.th}>Date</Text>
+                              <Text style={[styles.th, {borderLeft:"none !important"}]}>Date</Text>
                               <Text style={styles.th}>Tiers: Fournisseurs</Text>
                          </View>
                     </View>
                     <View style={{width: "100%"}}>
-                         <View style={[styles.rowBody]}>
-                              <Text style={styles.tr}>{pdfData.dateReception ? format(new Date(pdfData.dateReception),"dd/MM/yyyy") :""}</Text>
+                         <View style={[styles.rowBody,{borderTop:'none !important'}]}>
+                              <Text style={[styles.tr,{borderLeft:"none !important"}]}>{pdfData.dateReception ? format(new Date(pdfData.dateReception),"dd/MM/yyyy") :""}</Text>
                               <Text style={styles.tr}>Nom:</Text>
                          </View>
                     </View>
 
                     <View style={{width: "100%",marginTop:20,}}>
                          <View style={[styles.rowBody]}>
-                              <Text style={styles.th}>Desination</Text>
+                              <Text style={[styles.th, {borderLeft:"none !important"}]}>Desination</Text>
                               <Text style={styles.th}>Quantité</Text>
                          </View>
                     </View>
                     {pdfData && pdfData.produitRecu?.map(
                          (element:any, index: any) => {
                               return (
-                                   <View style={{width: "100%"}}>
-                                        <View style={[styles.rowBody]}>
-                                             <Text style={styles.tr}>{element?.designation}</Text>
+                                   <View key={index} style={{width: "100%"}}>
+                                        <View style={[styles.rowBody,{borderTop:"none !important"}]}>
+                                             <Text style={[styles.tr,{borderLeft:"none !important"}]}>{element?.designation}</Text>
                                              <Text style={styles.tr}>{element?.quantite}</Text>
                                         </View>
                                    </View>
@@ -94,7 +90,6 @@ const styles = StyleSheet.create({
      row: {
           display: "flex",
           flexDirection: "row",
-          border: "1px solid #000",
           fontSize: 11,
      },
      rowBody: {
@@ -107,18 +102,18 @@ const styles = StyleSheet.create({
           width: "50%",
           textAlign: "center",
           borderLeft: "1px solid #000",
-          paddingTop: 2,
-          paddingBottom: 2,
-          paddingLeft:2,
           textDecoration: "underline",
+          paddingTop:4,
+          padding :2,
           fontWeight: "bold",
-          fontSize: 10,
+          fontSize: 12,
      },
      tr:{
           width: "50%",
           textAlign: "left",
           borderLeft: "1px solid #000",
           paddingTop: 2,
+          fontSize: 10,
           paddingBottom: 2,
           paddingLeft:2,
      },

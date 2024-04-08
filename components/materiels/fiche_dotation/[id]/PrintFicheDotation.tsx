@@ -13,9 +13,10 @@ import { ficheDotationItem } from "../../../../redux/features/fiche_dotation/fic
 import { format } from "date-fns";
 
 function PrintFicheDotation({ pdfData }: { pdfData: any }) {
+     const img = pdfData.pieceJointe ? process.env.NEXT_PUBLIC_API_URL + pdfData.pieceJointe:null;
      return (
-          <Document >
-               <Page style={{ padding:15 }} orientation="landscape">
+          <Document>
+               <Page style={{ padding:15 }} orientation="portrait">
                     <View style={styles.table}>
                          <View style={[styles.row, styles.bold]}>
                               <Text style={styles.row1}>
@@ -36,133 +37,127 @@ function PrintFicheDotation({ pdfData }: { pdfData: any }) {
                     </View>
                     <View style={styles.table}>
                          <View style={{width: "100%", border:"1px solid #000" ,display: "flex",flexDirection: "row"}}>
-                              <Text style={{width: "40%",padding:2,fontSize:10}}>Date: {pdfData.date ? format(new Date(pdfData.date),"dd/MM/yyyy") :""}</Text>
-                              <Text style={{width: "40%",padding:2,fontSize:10}}>Région:  {pdfData.region}</Text>
-                              <Text style={{width: "40%",padding:2,fontSize:10}}>District  {pdfData.district}</Text>
+                              <Text style={{width: "40%",padding:2,fontSize:10,}}>Date: {pdfData.date ? format(new Date(pdfData.date),"dd/MM/yyyy") :""}</Text>
+                              <Text style={{width: "40%",padding:2,fontSize:10,borderLeft: "1px solid #000",}}>Région:  {pdfData.region}</Text>
+                              <Text style={{width: "40%",padding:2,fontSize:10,borderLeft: "1px solid #000",}}>District  {pdfData.district}</Text>
                          </View>
                          <View style={{width: "100%",display: "flex",border:"1px solid #000",borderTop:"none",flexDirection: "row"}}>
                               <Text style={{width: "50%",padding:2,fontSize:10}}>Commune:  {pdfData.commune}</Text>
-                              <Text style={{width: "50%",padding:2,fontSize:10}}>Fokontany:  {pdfData.fokontany}</Text>
+                              <Text style={{width: "50%",padding:2,fontSize:10,borderLeft: "1px solid #000",}}>Fokontany:  {pdfData.fokontany}</Text>
                          </View>
                          <View style={{width: "100%",border:"1px solid #000",borderTop:"none",display: "flex",flexDirection: "row"}}>
                               <Text style={{width: "50%",padding:2,fontSize:10}}>Grant:  {pdfData.grant}</Text>
-                              <Text style={{width: "50%",padding:2,fontSize:10}}>Ligne budgétaire:  {pdfData.ligneBudgetaire}</Text>
+                              <Text style={{width: "50%",padding:2,fontSize:10,borderLeft: "1px solid #000",}}>Ligne budgétaire:  {pdfData.ligneBudgetaire}</Text>
                          </View>
                     </View>
                     <View style={{width: "100%",marginTop:20,}}>
                          <View style={[styles.rowBody]}>
-                              <Text style={styles.th}>Nom et Prénom</Text>
+                              <Text style={[styles.th,{borderLeft:"none !important"}]}>Nom et Prénom</Text>
                               <Text style={styles.th}>CIN</Text>
                               <Text style={styles.th}>Fonction</Text>
-                              <Text style={styles.th}>Désignation</Text>
+                              <Text style={[styles.th,{width:"80%"}]}>Désignation</Text>
                               <Text style={styles.th}>Signature</Text>
                          </View>
                     </View>
                     <View style={{width: "100%"}}>
-                         <View style={[styles.rowBody]}>
+                         <View style={[styles.rowBody,{borderTop:"none !important"}]}>
+                              <Text style={[styles.tr,{borderLeft:"none !important"}]}></Text>
                               <Text style={styles.tr}></Text>
                               <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                         </View>
-                    </View>
-                    <View style={{width: "100%"}}>
-                         <View style={[styles.rowBody]}>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
+                              <Text style={[styles.tr,{width:"80%"}]}></Text>
                               <Text style={styles.tr}></Text>
                          </View>
                     </View>
                     <View style={{width: "100%"}}>
-                         <View style={[styles.rowBody]}>
+                         <View style={[styles.rowBody,{borderTop:"none !important"}]}>
+                              <Text style={[styles.tr,{borderLeft:"none !important"}]}></Text>
                               <Text style={styles.tr}></Text>
                               <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                         </View>
-                    </View>
-                    <View style={{width: "100%"}}>
-                         <View style={[styles.rowBody]}>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
+                              <Text style={[styles.tr,{width:"80%"}]}></Text>
                               <Text style={styles.tr}></Text>
                          </View>
                     </View>
                     <View style={{width: "100%"}}>
-                         <View style={[styles.rowBody]}>
+                         <View style={[styles.rowBody,{borderTop:"none !important"}]}>
+                              <Text style={[styles.tr,{borderLeft:"none !important"}]}></Text>
                               <Text style={styles.tr}></Text>
                               <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                         </View>
-                    </View>
-                    <View style={{width: "100%"}}>
-                         <View style={[styles.rowBody]}>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
+                              <Text style={[styles.tr,{width:"80%"}]}></Text>
                               <Text style={styles.tr}></Text>
                          </View>
                     </View>
                     <View style={{width: "100%"}}>
-                         <View style={[styles.rowBody]}>
+                         <View style={[styles.rowBody,{borderTop:"none !important"}]}>
+                              <Text style={[styles.tr,{borderLeft:"none !important"}]}></Text>
                               <Text style={styles.tr}></Text>
                               <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                         </View>
-                    </View>
-                    <View style={{width: "100%"}}>
-                         <View style={[styles.rowBody]}>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
+                              <Text style={[styles.tr,{width:"80%"}]}></Text>
                               <Text style={styles.tr}></Text>
                          </View>
                     </View>
                     <View style={{width: "100%"}}>
-                         <View style={[styles.rowBody]}>
+                         <View style={[styles.rowBody,{borderTop:"none !important"}]}>
+                              <Text style={[styles.tr,{borderLeft:"none !important"}]}></Text>
                               <Text style={styles.tr}></Text>
                               <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
+                              <Text style={[styles.tr,{width:"80%"}]}></Text>
                               <Text style={styles.tr}></Text>
                          </View>
                     </View>
                     <View style={{width: "100%"}}>
-                         <View style={[styles.rowBody]}>
+                         <View style={[styles.rowBody,{borderTop:"none !important"}]}>
+                              <Text style={[styles.tr,{borderLeft:"none !important"}]}></Text>
                               <Text style={styles.tr}></Text>
                               <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
-                              <Text style={styles.tr}></Text>
+                              <Text style={[styles.tr,{width:"80%"}]}></Text>
                               <Text style={styles.tr}></Text>
                          </View>
                     </View>
-                    {/* {pdfData && pdfData.personneConcerne?.map(
-                         (element:any, index: any) => {
-                              return (
-                                   <View style={{width: "100%"}}>
-                                        <View style={[styles.rowBody]}>
-                                             <Text style={styles.tr}>{element?.nomPrenom}</Text>
-                                             <Text style={styles.tr}>{element?.cin}</Text>
-                                             <Text style={styles.tr}>{element?.fonction}</Text>
-                                             <Text style={styles.tr}>{element?.designation}</Text>
-                                             <Text style={styles.tr}></Text>
-                                        </View>
-                                   </View>
-                              )
-                         }
-                    )}  */}
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody,{borderTop:"none !important"}]}>
+                              <Text style={[styles.tr,{borderLeft:"none !important"}]}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={[styles.tr,{width:"80%"}]}></Text>
+                              <Text style={styles.tr}></Text>
+                         </View>
+                    </View>
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody,{borderTop:"none !important"}]}>
+                              <Text style={[styles.tr,{borderLeft:"none !important"}]}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={[styles.tr,{width:"80%"}]}></Text>
+                              <Text style={styles.tr}></Text>
+                         </View>
+                    </View>
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody,{borderTop:"none !important"}]}>
+                              <Text style={[styles.tr,{borderLeft:"none !important"}]}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={[styles.tr,{width:"80%"}]}></Text>
+                              <Text style={styles.tr}></Text>
+                         </View>
+                    </View>
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody,{borderTop:"none !important"}]}>
+                              <Text style={[styles.tr,{borderLeft:"none !important"}]}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={[styles.tr,{width:"80%"}]}></Text>
+                              <Text style={styles.tr}></Text>
+                         </View>
+                    </View>
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody,{borderTop:"none !important"}]}>
+                              <Text style={[styles.tr,{borderLeft:"none !important"}]}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={[styles.tr,{width:"80%"}]}></Text>
+                              <Text style={styles.tr}></Text>
+                         </View>
+                    </View>
                </Page>
           </Document>
      );
@@ -194,11 +189,10 @@ const styles = StyleSheet.create({
           width: "50%",
           textAlign: "center",
           borderLeft: "1px solid #000",
-          paddingTop: 2,
-          paddingBottom: 2,
-          paddingLeft:2,
+          paddingTop:4,
+          padding :2,
           fontWeight: "bold",
-          fontSize: 10,
+          fontSize: 12,
      },
      tr:{
           width: "50%",
@@ -208,7 +202,7 @@ const styles = StyleSheet.create({
           paddingTop: 2,
           paddingBottom: 2,
           paddingLeft:2,
-          height:20
+          height:40
      },
      header: {
           border: "1px solid #000",

@@ -40,10 +40,13 @@ import {
     const handleSubmit = async (values: any) => {
         try {
             if (isEditing) {
+                values.valeurInventaire = dureAmortissement && acquisitionValue ? (
+                    (values.dureDeVie > dureAmortissement ) ? null : Math.round( acquisitionValue - (values.dureDeVie * acquisitionValue / dureAmortissement))
+                ):0
                 await dispatch(createInventaire(values));
-                route.push("/materiels/inventaire");
+                route.push("/materiels/inventaire/");
             }
-            route.push("/materiels/inventaire");
+            route.push("/materiels/inventaire/");
         } catch (error) {
             console.log("error", error);
         }
@@ -112,8 +115,8 @@ import {
                             startIcon={<Close />}
                             sx={{ marginInline: 3 }}
                             onClick={() => {
-                            formikProps.resetForm();
-                            dispatch(cancelEdit());
+                                formikProps.resetForm();
+                                dispatch(cancelEdit());
                             }}
                         >
                             Annuler
@@ -160,10 +163,11 @@ import {
                         <OSTextField
                             name="valeurInventaire"
                             fullWidth
-                            value = { 
-                                dureAmortissement && acquisitionValue ? (
-                                    (formikProps.values.dureDeVie > dureAmortissement ) ? null : Math.round( acquisitionValue - (formikProps.values.dureDeVie * acquisitionValue / dureAmortissement))
-                                ):0
+                            value = { dureAmortissement && acquisitionValue ? (
+                                (formikProps.values.dureDeVie > dureAmortissement ) ? 0 : Math.round( acquisitionValue - (formikProps.values.dureDeVie * acquisitionValue / dureAmortissement))
+                            ):0 }
+                            onChange={(value: any) =>
+                                formikProps.setFieldValue("valeurInventaire", value)
                             }
                             id="outlined-basic"
                             label="Valeur"
