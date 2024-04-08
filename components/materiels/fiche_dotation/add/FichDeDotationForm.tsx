@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import { styled } from "@mui/material";
 import { createFicheDotation, editFicheDotation, updateFicheDotation } from "../../../../redux/features/fiche_dotation/ficheDotationSlice";
 import FormFicheDotation from "./FormFicheDotation";
+import { createFile } from "../../../../redux/features/file/fileSlice";
 
 export default function FichDotationForm() {
     const dispatch = useAppDispatch();
@@ -19,6 +20,12 @@ export default function FichDotationForm() {
 
     const handleSubmit = async (values: any) => {
         try {
+            if (values.pieceJointe && values.pieceJointe.name !== null) {
+                const formData = new FormData();
+                formData.append("file", values.pieceJointe);
+                const { images } = await dispatch(createFile(formData)).unwrap();
+                values.pieceJointe = images[0].url;
+            }
             const updateData = {
                 reference: values.reference,
                 date:new Date(values.date),
@@ -27,7 +34,8 @@ export default function FichDotationForm() {
                 commune: values.commune,
                 grant:values.grant,
                 ligneBudgetaire: values.ligneBudgetaire,
-                fokontany:values.fokontany
+                fokontany:values.fokontany,
+                pieceJointe: (values.pieceJointe && values.pieceJointe.name !== null) ? values.pieceJointe : null
             }
             if(isEditing){
                 await dispatch(updateFicheDotation({id,updateData}));
@@ -69,6 +77,7 @@ export default function FichDotationForm() {
                             fokontany:isEditing ? ficheDotation.fokontany :"",
                             grant:isEditing ? ficheDotation.grant : "",
                             ligneBudgetaire:isEditing ? ficheDotation.ligneBudgetaire :"",
+                            pieceJointe:""
                         }
                     }
                     validationSchema={Yup.object({

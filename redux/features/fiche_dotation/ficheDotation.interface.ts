@@ -8,6 +8,7 @@ export interface ficheDotationItem {
     grant?: string;
     ligneBudgetaire?: string;
     fokontany?: string;
+    pieceJointe?:string;
     personneConcerne?: any;
 }
   

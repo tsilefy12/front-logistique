@@ -34,41 +34,41 @@ export default function BonCommandeExterneForm() {
         // );
         } else {
             if (values.pieceJointe && values.pieceJointe.name !== null) {
-            const formData = new FormData();
-            formData.append("file", values.pieceJointe);
-            const { images } = await dispatch(createFile(formData)).unwrap();
-            values.pieceJointe = images[0].url;
-        }
-        const newDataBCE = {
-            ref: values.ref,
-            dateCommande: new Date(values.dateCommande),
-            objet: values.objet,
-            demandeur:values.demandeur,
-            grant:values.grant,
-            ligneBudgetaire:values.ligneBudgetaire,
-            beneficiaire:values.beneficiaire,
-            type:values.type,
-            modePaiement: values.modePaiement,
-            conditionLivraison: values.conditionLivraison,
-            pieceJointe: values.pieceJointe,
-        }
+                const formData = new FormData();
+                formData.append("file", values.pieceJointe);
+                const { images } = await dispatch(createFile(formData)).unwrap();
+                values.pieceJointe = images[0].url;
+            }
+            const newDataBCE = {
+                ref: values.ref,
+                dateCommande: new Date(values.dateCommande),
+                objet: values.objet,
+                demandeur:values.demandeur,
+                grant:values.grant,
+                ligneBudgetaire:values.ligneBudgetaire,
+                beneficiaire:values.beneficiaire,
+                type:values.type,
+                modePaiement: values.modePaiement,
+                conditionLivraison: values.conditionLivraison,
+                pieceJointe: values.pieceJointe,
+            }
 
-        const response = await dispatch(createBonCommandeExterne(newDataBCE));
-        if(valuesArticle.length > 0 ){
-            valuesArticle.forEach((element:any, index:any) => {
-                const newData = {
-                    designation: element.designation,
-                    caracteristik: element.caracteristique,
-                    fournisseurId: element.fournisseurId,
-                    quantite: element.quantite,
-                    pu: element.pu,
-                    valueArticle: element.valeur,
-                    bonDeCommandeExterneId: response.payload.id
-                };
-                dispatch(createArticleCommandeExterne(newData));
-            });
-        }}
-        route.push("/materiels/bon_commande_externe/");
+            const response = await dispatch(createBonCommandeExterne(newDataBCE));
+            if(valuesArticle.length > 0 ){
+                valuesArticle.forEach((element:any, index:any) => {
+                    const newData = {
+                        designation: element.designation,
+                        caracteristik: element.caracteristique,
+                        fournisseurId: element.fournisseurId,
+                        quantite: element.quantite,
+                        pu: element.pu,
+                        valueArticle: element.valeur,
+                        bonDeCommandeExterneId: response.payload.id
+                    };
+                    dispatch(createArticleCommandeExterne(newData));
+                });
+            }}
+            route.push("/materiels/bon_commande_externe/");
         } catch (error) {
             console.log("error", error);
         }

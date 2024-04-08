@@ -66,7 +66,7 @@ function PrintBonTransfert({ pdfData }: { pdfData: any }) {
                     {pdfData && pdfData.articleTransfert?.map(
                          (element:any, index: any) => {
                               return (
-                                   <View style={{width: "100%"}}>
+                                   <View key={index} style={{width: "100%"}}>
                                         <View style={[styles.rowBody ,{borderTop:"none !important",}]}>
                                              <Text style={[styles.tr,{borderLeft:"none"}]}>{element?.quantiteCommande}</Text>
                                              <Text style={styles.tr}>{element?.quantiteExpedie}</Text>
@@ -82,11 +82,11 @@ function PrintBonTransfert({ pdfData }: { pdfData: any }) {
                          <View style={{width:"100%",display:"flex",flexDirection:"row",alignItems:"center"}}>
                               <View style={[styles.footer]}>
                                   <Text style={{width: "40%",border:"1px solid #000",textAlign:"center",fontWeight:"bold",fontSize:10,padding:5}}>EXPEDITEUR</Text>
-                                  <Text style={{width: "40%",border:"1px solid #000",borderTop:"none !important",textAlign:"center",fontSize:10,padding:10}}></Text>
+                                  <Text style={{width: "40%",border:"1px solid #000",borderTop:"none !important",textAlign:"center",fontSize:10,padding:10,height:200}}></Text>
                               </View>
                               <View style={[styles.footer]}>
                                   <Text style={{width: "40%",border:"1px solid #000",textAlign:"center",fontWeight:"bold",fontSize:10,padding:5}}>RECEPTIONNAIRE</Text>
-                                  <Text style={{width: "40%",border:"1px solid #000",textAlign:"center",fontSize:10,padding:10,borderTop:"none !important"}}></Text>
+                                  <Text style={{width: "40%",border:"1px solid #000",textAlign:"center",fontSize:10,padding:10,borderTop:"none !important",height:200}}></Text>
                               </View>
                          </View>
                     </View>
@@ -121,11 +121,10 @@ const styles = StyleSheet.create({
           width: "20%",
           textAlign: "center",
           borderLeft: "1px solid #000",
-          paddingTop: 2,
-          paddingBottom: 2,
-          paddingLeft:2,
+          paddingTop:4,
+          padding :2,
           fontWeight: "bold",
-          fontSize: 10,
+          fontSize: 12,
      },
      tr:{
           width: "20%",

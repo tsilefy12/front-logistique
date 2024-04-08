@@ -1,5 +1,7 @@
 import { Print } from "@mui/icons-material";
 import { Button, CircularProgress } from "@mui/material";
+import { toWords } from 'number-to-words';
+
 import {
      Document,
      Image,
@@ -13,6 +15,9 @@ import { format } from "date-fns";
 import { BonCommandeItem } from "../../../../redux/features/bon_commande_interne/bonCommandeInterne.interface";
 
 function PrintBCI({ pdfData }: { pdfData: any }) {
+
+     const montantTotal = pdfData.montantTotal ? parseInt(pdfData.montantTotal) : 0;
+     const amountWords = montantTotal ? toWords(montantTotal) : '';
      return (
           <Document >
                <Page style={{ padding:15 }} orientation="landscape">
@@ -48,8 +53,8 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                     </View>
                     <View style={{width: "100%",marginTop:20,}}>
                          <View style={[styles.rowBody]}>
-                              <Text style={styles.th}>Désignation</Text>
-                              <Text style={styles.th}>Caractéristique</Text>
+                              <Text style={[styles.th,{width:"60%"}]}>Désignation</Text>
+                              <Text style={[styles.th,{width:"60%"}]}>Caractéristique</Text>
                               <Text style={styles.th}>Quantité</Text>
                               <Text style={styles.th}>PU</Text>
                               <Text style={styles.th}>Valeur</Text>
@@ -58,10 +63,10 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                     {pdfData && pdfData.ArticleCommande?.map(
                          (element:any, index: any) => {
                               return (
-                                   <View style={{width: "100%"}}>
+                                   <View key = {index} style={{width: "100%"}}>
                                         <View style={[styles.rowBody]}>
-                                             <Text style={styles.tr}>{element?.designation}</Text>
-                                             <Text style={styles.tr}>{element?.caracteristik}</Text>
+                                             <Text style={[styles.tr,{width:'60%'}]}>{element?.designation}</Text>
+                                             <Text style={[styles.tr,{width:'60%'}]}>{element?.caracteristik}</Text>
                                              <Text style={styles.tr}>{element?.quantite}</Text>
                                              <Text style={styles.tr}>{element?.pu} ar</Text>
                                              <Text style={styles.tr}>{element?.valueArticle} ar</Text>
@@ -71,15 +76,29 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                          }
                     )}
                     <View style={{width: "100%"}}>
-                        <View style={[styles.rowBody]}>
-                                <Text style={styles.tr1}>MONTANT TOTAL</Text>
-                                <Text style={[styles.tr,{backgroundColor:"#D5D8DC"}]}>{pdfData?.montantTotal}</Text>
-                        </View>
-                        <View style={[styles.rowBody]}>
-                                <Text style={styles.tr1}>soit:</Text>
-                        </View>
+                         <View style={[styles.rowBody]}>
+                              <Text style={[styles.tr,{width:'60%'}]}></Text>
+                              <Text style={[styles.tr,{width:'60%'}]}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                              <Text style={styles.tr}></Text>
+                         </View>
                     </View>
-                    
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody]}>
+                              <Text style={{width:'60%',fontSize: 10,padding:2}}>MONTANT TOTAL</Text>
+                              <Text style={{width:'60%'}}></Text>
+                              <Text style={{width:'30%'}}></Text>
+                              <Text style={{width:'30%'}}></Text>
+                              <Text style={[styles.tr,{backgroundColor:"#D5D8DC",textAlign:"center"}]}>{pdfData?.montantTotal} ar</Text>
+                         </View>
+                    </View>  
+                    <View style={{width: "100%"}}>
+                         <View style={[styles.rowBody]}>
+                              <Text style={{fontSize: 10,padding:2}}>Soit :</Text>
+                              <Text style={{fontSize: 10,padding:2}}>{amountWords} ariary</Text>
+                         </View>
+                    </View>   
                     <View style={{width:"100%"}}>
                         <View style={{width: "100%",border:"1px solid #000",borderBottom:"none",display:"flex",flexDirection:"row",fontSize:"10"}}>
                             <Text style={styles.headerCadre1}>Date et signature</Text>
@@ -136,7 +155,7 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                             <Text style={styles.row1Cadre}></Text>
                             <Text style={styles.row2Cadre}></Text>
                             <Text style={styles.row2Cadre}></Text>
-                            <Text style={styles.row2Cadre}></Text>
+                            <Text style={styles.row1Cadre}></Text>
                             <Text style={styles.row2Cadre}></Text>
                         </View>
                     </View>
@@ -164,36 +183,31 @@ const styles = StyleSheet.create({
      rowBody: {
           display: "flex",
           flexDirection: "row",
-          fontSize: 11,
           border:"1px solid #000"
      },
      th:{
-          width: "50%",
+          width: "30%",
           textAlign: "center",
           borderLeft: "1px solid #000",
-          paddingTop: 2,
-          paddingBottom: 2,
-          paddingLeft:2,
+          padding :2,
           fontWeight: "bold",
-          fontSize: 10,
+          fontSize: 12,
      },
      tr:{
-          width: "50%",
+          width: "30%",
           textAlign: "left",
           borderLeft: "1px solid #000",
+          fontSize:10,
           borderTop:"none",
-          paddingTop: 2,
-          paddingBottom: 2,
-          paddingLeft:2,
+          padding:4
      },
      tr1:{
         width: "80%",
         textAlign: "left",
         borderLeft: "1px solid #000",
+        fontSize:10,
         borderTop:"none",
-        paddingTop: 2,
-        paddingBottom: 2,
-        paddingLeft:2,
+        padding:4
     },
      header: {
           border: "1px solid #000",
@@ -231,7 +245,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         border: "1px solid #000",
-        fontSize: 11,
+        fontSize: 12,
       },
       headerSignature: {
         border: "1px solid #000",
@@ -241,16 +255,18 @@ const styles = StyleSheet.create({
       },
       headerCadre1:{
           width: "33%",
-          textAlign: "left",
+          textAlign: "center",
+          fontSize:"12",
           paddingLeft: 5,
-          paddingVertical: 2,
+          paddingVertical: 3,
       },
       headerCadre:{
         width: "33%",
-        textAlign: "left",
+        textAlign: "center",
         borderLeft: "1px solid #000",
+        fontSize:"12",
         paddingLeft: 5,
-        paddingVertical: 2,
+        paddingVertical: 3,
       },
       row1Cadre :{
         width: "33%",

@@ -26,7 +26,8 @@ function PrintBCE({ pdfData }: { pdfData: any }) {
                                    />
                               </Text>
                               <View style={styles.row2}>
-                                   <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5}}>Lot II F 14 P Bis A-Andraisora;BP 5181, 101 Antananarivo</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5}}>Lot II F 14 P Bis A-Andraisora</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5}}>BP 5181, 101 Antananarivo</Text>
                                    <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5,borderBottom:"1px solid #000"}}>Antananarivo : Tél: 261342515523</Text>
                                    <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5,borderBottom:"1px solid #000"}}>Moramanga: Tél: 231341570461</Text>
                                    <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5,borderBottom:"1px solid #000"}}>Diégo-suarez: Tél 261346746335</Text>
@@ -62,7 +63,7 @@ function PrintBCE({ pdfData }: { pdfData: any }) {
                     {pdfData && pdfData.articleCommandeBce?.map(
                          (element:any, index: any) => {
                               return (
-                                   <View style={{width: "100%"}}>
+                                   <View key={index} style={{width: "100%"}}>
                                         <View style={[styles.rowBody,{borderTop:"none !important"}]}>
                                              <Text style={[styles.tr,{borderLeft:"none !important"}]}>{element?.vendor?.name}</Text>
                                              <Text style={[styles.tr,{width: "50%",}]}>{element?.designation}</Text>
@@ -144,8 +145,9 @@ const styles = StyleSheet.create({
           borderLeft: "1px solid #000",
           paddingTop: 4,
           textDecoration:"underline",
+          padding :2,
           fontWeight: "bold",
-          fontSize: 10,
+          fontSize: 12,
      },
      tr:{
           width: "20%",
