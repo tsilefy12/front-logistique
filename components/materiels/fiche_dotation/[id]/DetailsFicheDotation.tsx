@@ -49,6 +49,7 @@ const DetailsFicheDotation = () => {
             grant: grantList.find((e:any)=> e.id === ficheDotation?.grant)?.code,
             ligneBudgetaire: budgetLineList.find((e:any)=> e.id === ficheDotation?.ligneBudgetaire)?.code,
             fokontany: ficheDotation.fokontany,
+            pieceJointe : ficheDotation.pieceJointe ? ficheDotation.pieceJointe : null
         }
         setPdf(data)
     },[id,ficheDotation])

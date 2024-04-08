@@ -13,8 +13,9 @@ import { ficheDotationItem } from "../../../../redux/features/fiche_dotation/fic
 import { format } from "date-fns";
 
 function PrintFicheDotation({ pdfData }: { pdfData: any }) {
+     const img = pdfData.pieceJointe ? process.env.NEXT_PUBLIC_API_URL + pdfData.pieceJointe:null;
      return (
-          <Document >
+          <Document>
                <Page style={{ padding:15 }} orientation="portrait">
                     <View style={styles.table}>
                          <View style={[styles.row, styles.bold]}>
@@ -157,21 +158,6 @@ function PrintFicheDotation({ pdfData }: { pdfData: any }) {
                               <Text style={styles.tr}></Text>
                          </View>
                     </View>
-                    {/* {pdfData && pdfData.personneConcerne?.map(
-                         (element:any, index: any) => {
-                              return (
-                                   <View style={{width: "100%"}}>
-                                        <View style={[styles.rowBody]}>
-                                             <Text style={styles.tr}>{element?.nomPrenom}</Text>
-                                             <Text style={styles.tr}>{element?.cin}</Text>
-                                             <Text style={styles.tr}>{element?.fonction}</Text>
-                                             <Text style={styles.tr}>{element?.designation}</Text>
-                                             <Text style={styles.tr}></Text>
-                                        </View>
-                                   </View>
-                              )
-                         }
-                    )}  */}
                </Page>
           </Document>
      );
