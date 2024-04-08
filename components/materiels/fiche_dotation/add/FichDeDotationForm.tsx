@@ -13,8 +13,7 @@ import { createFile } from "../../../../redux/features/file/fileSlice";
 export default function FichDotationForm() {
     const dispatch = useAppDispatch();
     const route = useRouter();
-    // const valuesArticle :any[] =[]
-
+    
     const { id }: any = route.query;
     const { isEditing,ficheDotation } = useAppSelector((state) => state.ficheDotation);
 
