@@ -14,6 +14,7 @@ import { useAppSelector, useAppDispatch } from "../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { logout } from "../../../redux/features/auth/authSlice";
 import { ButtonProfile, OneButtonLink, OneButtonLinkWithItems } from "../../../layouts/backOffice/navbar/ButtonNav";
+import { WidthFull } from "@mui/icons-material";
 
 const NavbarBackOffice = ({ matches }: any) => {
 	const theme = useTheme();
@@ -34,46 +35,13 @@ const NavbarBackOffice = ({ matches }: any) => {
 			<Container maxWidth="xl">
 				<ToolbarBackOffice variant="dense">
 					<ListMenuContainer>
-						{/* <Link href="/">
-							<IconBntNavBO aria-label="home">
-								<HomeWorkIcon fontSize="inherit" />
-							</IconBntNavBO>
-						</Link>
-						<Typography variant="h5" paddingX={2} color="GrayText">
-							Logistique
-						</Typography> */}
 						<ListPageContainer>
-							{navMenu.map((page, index) =>
-								page.items.length === 0 ? (
+							{navMenu.map((page, index) =>(
 									<OneButtonLink page={page} key={index}/>
-								) : (
-									<OneButtonLinkWithItems page={page} key={index} />
-								)
+								) 
 							)}
 						</ListPageContainer>
 					</ListMenuContainer>
-					{/* <MenuNavbarBo>
-						<Tooltip title="Pas de notification" sx={{ mx: 4 }}>
-							<IconButton
-								size="large"
-								aria-label="show 17 new notifications"
-								color="inherit"
-							>
-								<Badge
-									badgeContent={0}
-									color="error"
-									sx={{
-										".MuiBadge-badge": {
-											top: 6,
-										},
-									}}
-								>
-									<CircleNotificationsIcon fontSize="large" />
-								</Badge>
-							</IconButton>
-						</Tooltip>
-						<ButtonProfile handleClickLogout={handleClickLogout} />
-					</MenuNavbarBo> */}
 				</ToolbarBackOffice>
 			</Container>
 		</AppbarBackOffice>
@@ -84,18 +52,17 @@ export default NavbarBackOffice;
 
 const ListPageContainer = styled(Box)(({ theme }) => ({
 	display: "flex",
-	flexDirection: "column",
-	alignItems: "center",
-	justifyContent: "space-around",
+	flexWrap: "wrap",
     height: 450,
-    width: 145,
-    marginRight: "20%",
+	textAlign: "left",
+	justifyContent: "space-between"
+
 }));
 
 const ListMenuContainer = styled(Stack)(({ theme }) => ({
 	display: "flex",
 	flexDirection: "column",
-	alignItems: "center",
+	alignItems: "left",
 	justifyContent: "space-between",
     width: "100%"
 }));
@@ -103,14 +70,14 @@ const ListMenuContainer = styled(Stack)(({ theme }) => ({
 export const MenuNavbarBo = styled(Stack)(({ theme }) => ({
 	display: "flex",
 	flexDirection: "column",
-	alignItems: "center",
+	alignItems: "left",
 }));
 
 export const IconBntNavBO = styled(IconButton)(({ theme }) => ({}));
 
 export const AppbarBackOffice = styled(AppBar)(({ theme }) => ({
 	backgroundColor: theme.palette.grey[300],
-    right: 35
+    right: 5
 }));
 
 export const ToolbarBackOffice = styled(Toolbar)(({ theme }) => ({

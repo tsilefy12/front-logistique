@@ -2,7 +2,7 @@ const menu = [
   {
     id: 1,
     name: "Matériels",
-    link: "/",
+    link: "/materiels",
     icon: "inventory_2",
     items: [
       // {
@@ -88,7 +88,7 @@ const menu = [
   {
     id: 2,
     name: "Fournitures et Consomables",
-    link: "",
+    link: "/fournitures_et_consommables/",
     icon: "edit_note",
     items: [
       {
@@ -108,7 +108,7 @@ const menu = [
   {
     id: 3,
     name: "Materiel de Transport",
-    link: "",
+    link: "/materiel_de_transport",
     icon: "local_shipping",
     items: [
       {

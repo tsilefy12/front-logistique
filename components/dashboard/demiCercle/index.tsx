@@ -1,15 +1,15 @@
-/*import { useEffect, useRef } from 'react';
-import Chart, { ChartOptions } from 'chart.js/auto';
+import { useEffect, useRef } from 'react';
+import Chart from 'chart.js/auto';
 
-const HalfCircleChart = () => {
+const DemiCercleChart = () => {
     const chartRef = useRef<HTMLCanvasElement | null>(null);
 
     useEffect(() => {
-        const ctx = chartRef.current?.getContext('2d');
+        const ctx = chartRef.current;
         if (!ctx) return;
 
-        const halfChartOptions: ChartOptions<'pie'> = {
-            type: 'pie',
+        const newChart = new Chart(ctx, {
+            type: 'bar',
             data: {
                 labels: ['Red', 'Blue', 'Yellow'],
                 datasets: [{
@@ -29,33 +29,26 @@ const HalfCircleChart = () => {
                 }]
             },
             options: {
-                type: 'pie', // Ajout de la propriété 'type'
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        stacked: true
                     },
-                    title: {
-                        display: true,
-                        text: 'Half Circle Chart'
-                    }
-                },
-                elements: {
-                    arc: {
-                        angle: Math.PI // Définit l'angle du demi-cercle
+                    y: {
+                        stacked: true
                     }
                 }
             }
-        };
-        
-        const halfChart = new Chart(ctx, halfChartOptions);
+        });
 
         return () => {
-            halfChart.destroy();
+            newChart.destroy();
         };
     }, []);
 
-    return <canvas ref={chartRef} id="half-circle-chart" width="400" height="200"></canvas>;
-}
+    return (
+        <canvas ref={chartRef} id="circle-chart" width="200" height="200"></canvas>
+    );
+};
 
-export default HalfCircleChart;*/
+export default DemiCercleChart;

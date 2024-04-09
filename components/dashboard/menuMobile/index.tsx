@@ -15,19 +15,13 @@ import {
 } from "@mui/material";
 import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import React, { Fragment, useState } from "react";
-import {
-	AppbarBackOffice,
-	ToolbarBackOffice,
-	IconBntNavBO,
-	MenuNavbarBo,
-} from "./NavbarBackOffice";
+
 import Drawer from "@mui/material/Drawer";
-import { ButtonProfile } from "./ButtonNav";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import { useAppSelector } from "../../../hooks/reduxHooks";
-
-import { ListItemDrawer, ListItemWhiteChildrenDrawer } from "./MenuDrawer";
+import { ListItemDrawer, ListItemWhiteChildrenDrawer } from "../../../layouts/backOffice/navbar/MenuDrawer";
+import { AppbarBackOffice, IconBntNavBO, ToolbarBackOffice } from "../../../layouts/backOffice/navbar/NavbarBackOffice";
 
 const NavbarMobile = ({ matches }: any) => {
 	/**
@@ -51,7 +45,7 @@ const NavbarMobile = ({ matches }: any) => {
 	return (
 		<AppbarBackOffice position="static">
 			<Container maxWidth="xl">
-				<ToolbarBackOffice variant="dense">
+				<ToolbarBackOffice>
 					<Stack flexDirection="row" alignItems="center">
 						<IconBntNavBO onClick={toogleDrawer} aria-label="home">
 							<MenuIcon fontSize="inherit" />
@@ -65,28 +59,6 @@ const NavbarMobile = ({ matches }: any) => {
 							Logistique
 						</NavMobileTypo>
 					</Stack>
-					<MenuNavbarBo>
-						<Tooltip title="Open notification" sx={{ mx: 4 }}>
-							<IconButton
-								size="large"
-								aria-label="show 17 new notifications"
-								color="inherit"
-							>
-								<Badge
-									badgeContent={17}
-									color="error"
-									sx={{
-										".MuiBadge-badge": {
-											top: 6,
-										},
-									}}
-								>
-									<CircleNotificationsIcon fontSize="large" />
-								</Badge>
-							</IconButton>
-						</Tooltip> 
-						<ButtonProfile />
-					</MenuNavbarBo>
 				</ToolbarBackOffice>
 			</Container>
 			<Drawer
@@ -95,6 +67,7 @@ const NavbarMobile = ({ matches }: any) => {
 				PaperProps={{
 					sx: {
 						backgroundColor: theme.palette.grey[300],
+                        width: "90%"
 					},
 				}}
 			>
@@ -134,7 +107,7 @@ const NavMobileTypo = styled(Typography)(({ theme }) => ({
 
 const MenuDrawerContainer = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.grey[300],
-	minHeight: "100%",
+	minHeight: "auto",
 	paddingTop: theme.spacing(2),
 	paddingLeft: theme.spacing(0),
 	paddingBottom: theme.spacing(2),
@@ -142,4 +115,5 @@ const MenuDrawerContainer = styled(Box)(({ theme }) => ({
 	display: "flex",
 	flexDirection: "column",
 	alignItems: "flex-start",
+    textDecoration: "none"
 }));

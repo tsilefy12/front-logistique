@@ -1,15 +1,14 @@
-import { FormControl, FormLabel, Stack } from "@mui/material"
-import logo from "../image/logo.png"
+import { FormControl, FormLabel, Stack, useMediaQuery, useTheme } from "@mui/material"
 import { format } from "date-fns";
-import WatchIcon from '@mui/icons-material/Watch';
-import { AccountBalance, AccountCircle, FormatAlignJustify } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { position } from "polished";
+import NavbarMobile from "../menuMobile";
 
 const HeaderDashboard = () => {
     const today = format(new Date(), 'dd/MM/yyyy');
     const [currentTime, setCurrentTime] = useState('');
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.down("md"));
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -24,15 +23,24 @@ const HeaderDashboard = () => {
 
         <FormControl fullWidth sx={StyleHeader}>
             <Stack direction="row" justifyContent="space-between">
-                <img src={`/logistique/images/logo/MV_logo.png`} style={styleLogo} />
-                <Stack direction="row" justifyContent="space-between" margin={4}>
-                    <FormLabel style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-                        <span>{today}</span>
-                        <span style={{marginLeft: "10px"}}>{currentTime}</span>
+                <FormControl style={{display: !matches ? 'none': 'block', marginLeft: "-10px"}}>
+                    {matches ? (
+                        <NavbarMobile matches={matches} />
+                    ) : ''}
+                </FormControl>
+               <FormControl>
+               <img src={`/logistique/images/logo/MV_logo.png`} style={{width: "60px",height: "55px", marginLeft: matches ? "10px": "65px"}} />
+               </FormControl>
+                <Stack direction="row" justifyContent="space-between" margin={2}>
+
+                    <FormLabel style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: "2px" }}>
+                        <span style={{ color: "GrayText" }}>{today}</span>
+                        <span style={{ marginLeft: "10px", color: "GrayText", display: matches ? 'none': "flex" }}>{currentTime}</span>
                     </FormLabel>
+
                     <FormControl fullWidth style={{ marginLeft: "10px" }}>
                         <Stack direction="row">
-                            <span>compte</span><AccountCircleIcon />
+                            <span style={{ color: "GrayText" }}>compte</span><AccountCircleIcon style={{ fontSize: "25px", marginRight: "20px"}} />
                         </Stack>
                     </FormControl>
                 </Stack>
@@ -43,13 +51,10 @@ const HeaderDashboard = () => {
 export default HeaderDashboard;
 
 const StyleHeader = {
-    height: "15vh",
+    height: "20vh",
     position: "fixed",
     top: 0,
     left: 0,
-    border: "1px solid red",
-}
-const styleLogo = {
-    width: 80,
-    height: 80,
+    //borderBottom: "1px solid black",
+    backgroundColor: "rgb(224, 224, 224)",
 }
