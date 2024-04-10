@@ -13,7 +13,10 @@ export const getTransportationEquipment = createAsyncThunk(
     "transportation-equipment/getTransportationEquipment",
     async (data: { id: string; args?: any }, thunkAPI) => {
         try {
-            const response = await axios.get(`/logistique/transportation-equipment/${data.id}`);
+            const params = JSON.stringify(data.args);
+            const response = await axios.get(`/logistique/transportation-equipment/${data.id}`,{
+                params: { args: params },
+              });
             return response.data;
         } catch (error: any) {
             if (error.response) {

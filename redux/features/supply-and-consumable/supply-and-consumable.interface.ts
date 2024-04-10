@@ -11,6 +11,8 @@ export interface SuplyAndConsumableItem {
   fournisseur?: string;
   categorieStock?: string;
   grant?: string;
+  vendor?: any;
+  categorieStocks?: any;
 }
 
 export interface SuplyAndConsumableInitialState {

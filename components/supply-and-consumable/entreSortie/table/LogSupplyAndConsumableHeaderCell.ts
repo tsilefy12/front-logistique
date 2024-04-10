@@ -20,16 +20,10 @@ export const logSuplyAndConsumableHeadCells: readonly HeadCell[] = [
     label: "Quantité",
   },
   {
-    id: "SKU",
-    numeric: false,
-    disablePadding: false,
-    label: "Unite Gestion Stock",
-  },
-  {
     id: "unitPrice",
     numeric: false,
     disablePadding: false,
-    label: ["Prix unitaire","Utilisateur"],
+    label: "Prix unitaire",
   },
   {
     id: "reste",

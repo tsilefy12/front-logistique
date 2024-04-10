@@ -13,8 +13,11 @@ export const getSuplyAndConsumable = createAsyncThunk(
   "suplyAndConsumable/getSuplyAndConsumable",
   async (data: { id: string; args?: any }, thunkAPI) => {
     try {
+      const params = JSON.stringify(data.args);
       const response = await axios.get(
-        `/logistique/supply-and-consumable/${data.id}`
+        `/logistique/supply-and-consumable/${data.id}`,{
+          params: { args: params },
+        }
       );
       return response.data;
     } catch (error: any) {

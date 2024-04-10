@@ -143,9 +143,9 @@ export default function SuplyAndCosumableList() {
                           <TableCell align="left">{row.uniteStock?.uniteStock}</TableCell>
                           <TableCell align="left">{row.montant}</TableCell>
 
-                          {/* <TableCell align="left">
-														{row.website}
-													</TableCell> */}
+                          <TableCell align="left">
+														{row.seuil}
+													</TableCell>
                           <TableCell align="right" width={"150px"}>
                             <BtnActionContainer
                               direction="row"

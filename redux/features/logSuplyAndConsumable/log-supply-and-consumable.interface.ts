@@ -2,7 +2,7 @@ export interface LogSuplyAndConsumableItem {
   id?: string;
   date?: string;
   quantity?: number;
-  SKU?: string;
+ // SKU?: string;
   OperationType?: string;
   unitPrice?: number;
   inventoryValue?: number;

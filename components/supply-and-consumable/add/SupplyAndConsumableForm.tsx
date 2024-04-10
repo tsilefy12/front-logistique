@@ -28,22 +28,22 @@ export default function SuplyAndConsumableForm() {
   const route = useRouter();
 
   const dispatch = useAppDispatch();
-  
+
   const { isEditing, suplyAndConsumable } = useAppSelector(
     (state) => state.suplyAndConsumable
   );
   const { categorieStocks } = useAppSelector((state) => state.categorieStock);
-  const { uniteStocks } = useAppSelector( (state) => state.uniteStock);
-  const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
-  const { grantList } = useAppSelector( (state) => state.grant);
-  
+  const { uniteStocks } = useAppSelector((state) => state.uniteStock);
+  const { fournisseurList } = useAppSelector((state) => state.fournisseur);
+  const { grantList } = useAppSelector((state) => state.grant);
+
   const fetchUtilsData = () => {
     dispatch(getCategories({}));
     dispatch(getUniteStocks({}));
     dispatch(getFournisseurList({}));
     dispatch(getGrantList({}));
   };
-  
+
   useEffect(() => {
     fetchUtilsData();
   }, []);
@@ -74,15 +74,15 @@ export default function SuplyAndConsumableForm() {
             ? suplyAndConsumable
             : {
               designation: isEditing ? suplyAndConsumable?.designation : "",
-              quantity: isEditing ? suplyAndConsumable?.quantity : "",
-              unitPrice: isEditing ? suplyAndConsumable?.unitPrice : "",
+              quantity: isEditing ? suplyAndConsumable?.quantity : 0,
+              unitPrice: isEditing ? suplyAndConsumable?.unitPrice : 0,
               SKU: isEditing ? suplyAndConsumable?.SKU : "",
-              montant: isEditing ? suplyAndConsumable?.montant: "",
-              seuil: isEditing ? suplyAndConsumable?.seuil: "",
-              moisPrevision: isEditing ? suplyAndConsumable.moisPrevision: "",
-              fournisseur: isEditing ? suplyAndConsumable.fournisseur: "",
-              categorieStock: isEditing ? suplyAndConsumable.categorieStock: "",
-              grant: isEditing ? suplyAndConsumable.grant: "",
+              // montant: isEditing ? suplyAndConsumable?.montant : "",
+              //seuil: isEditing ? suplyAndConsumable?.seuil : 0,
+              moisPrevision: isEditing ? suplyAndConsumable.moisPrevision : "",
+              fournisseur: isEditing ? suplyAndConsumable.fournisseur : "",
+              categorieStock: isEditing ? suplyAndConsumable.categorieStock : "",
+              grant: isEditing ? suplyAndConsumable.grant : "",
 
             }
         }
@@ -91,6 +91,7 @@ export default function SuplyAndConsumableForm() {
           unitPrice: Yup.number().required("champ obligatoire"),
           quantity: Yup.number().required("Champ obligatoire"),
           SKU: Yup.string(),
+         // seuil: Yup.number()
         })}
         onSubmit={(value: any, action: any) => {
           handleSubmit(value);
@@ -98,7 +99,7 @@ export default function SuplyAndConsumableForm() {
         }}
       >
         {(formikProps) => {
-   
+
           return (
             <Form>
               <NavigationContainer>
@@ -161,6 +162,15 @@ export default function SuplyAndConsumableForm() {
                   name="quantity"
                   type="number"
                   min="0"
+                  value={formikProps.values.quantity}
+                  onChange={(event: any) => {
+                    const newValue = parseInt(event.target.value);
+                    formikProps.setFieldValue("quantity", newValue);
+                    const newMontant = newValue * (formikProps.values.unitPrice ?? 0);
+                    formikProps.setFieldValue("montant", newMontant);
+                    const seuilValue = newValue;
+                    formikProps.setFieldValue("seuil", seuilValue)
+                  }}
                 />
                 <OSTextField
                   id="outlined-basic"
@@ -168,6 +178,13 @@ export default function SuplyAndConsumableForm() {
                   name="unitPrice"
                   type="number"
                   min="0"
+                  value={formikProps.values.unitPrice}
+                  onChange={(event: any) => {
+                    const newValue = parseInt(event.target.value);
+                    formikProps.setFieldValue("unitPrice", newValue);
+                    const newMontant = newValue * (formikProps.values.quantity ?? 0);
+                    formikProps.setFieldValue("montant", newMontant);
+                  }}
                 />
                 <OSSelectField
                   id="outlined-basic"
@@ -179,12 +196,14 @@ export default function SuplyAndConsumableForm() {
                   type="text"
                 />
                 <Stack direction="row" spacing={3}>
-                <OSTextField
+                  <OSTextField
                     id="outlined-basic"
                     label="Montant"
                     name="montant"
                     type="number"
                     min="0"
+                    value={(formikProps.values.quantity ?? 0) * (formikProps.values.unitPrice ?? 0)}
+                    disabled
                   />
                   <OSTextField
                     id="outlined-basic"
@@ -192,6 +211,8 @@ export default function SuplyAndConsumableForm() {
                     name="seuil"
                     type="number"
                     min="0"
+                    value={formikProps.values.quantity}
+                    disabled
                   />
                   <OSTextField
                     id="outlined-basic"
@@ -210,24 +231,24 @@ export default function SuplyAndConsumableForm() {
                     valueKey="id"
                     type="text"
                   />
-                     <OSSelectField
-                      id="outlined-basic"
-                      label="Catégorie"
-                      name="categorieStock"
-                      options={categorieStocks}
-                      dataKey={["categorieStock"]}
-                      valueKey="id"
-                      type="text"
-                    />
-                    <OSSelectField
-                      id="outlined-basic"
-                      label="Grant"
-                      name="grant"
-                      options={grantList}
-                      dataKey="code"
-                      valueKey="id"
-                      type="text"
-                    />
+                  <OSSelectField
+                    id="outlined-basic"
+                    label="Catégorie"
+                    name="categorieStock"
+                    options={categorieStocks}
+                    dataKey={["categorieStock"]}
+                    valueKey="id"
+                    type="text"
+                  />
+                  <OSSelectField
+                    id="outlined-basic"
+                    label="Grant"
+                    name="grant"
+                    options={grantList}
+                    dataKey="code"
+                    valueKey="id"
+                    type="text"
+                  />
                 </Stack>
               </FormContainer>
             </Form>

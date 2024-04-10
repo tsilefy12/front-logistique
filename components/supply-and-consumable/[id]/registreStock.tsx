@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import Check from "@mui/icons-material/Check";
 import Close from "@mui/icons-material/Close";
-import { FormControl, Radio, styled } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Radio, styled } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
@@ -24,8 +24,8 @@ import { cancelEdit } from "../../../redux/features/logSuplyAndConsumable/log-su
 import OSTextField from "../../shared/input/OSTextField";
 import OSDatePicker from "../../shared/date/OSDatePicker";
 import RadioGroup from "@mui/material/RadioGroup";
-import useFetchSuplysAndConsumableList from "./useFetchSuplyAndConsumableList";
-import OSSelectField from "../../shared/select/OSSelectField";
+import { editSuplyAndConsumable, updateSuplyAndConsumable } from "../../../redux/features/supply-and-consumable";
+import useFetchLogSuplyAndConsumableList from "../entreSortie/hooks/useFetchLogSupplyAndConsumable";
 // import useFetchSuplysAndConsumableList from "../../Order-Supply-And-Consumable/hooks/useFetchSuplyAndConsumableList";
 
 const FormLogEntreSortie = () => {
@@ -35,15 +35,22 @@ const FormLogEntreSortie = () => {
   const { logSuplyAndConsumable, isEditing } = useAppSelector(
     (state) => state.logSuplyAndConsumable
   );
-  const { suplyAndConsumableList } = useAppSelector(
+  const { suplyAndConsumable} = useAppSelector(
     (state) => state.suplyAndConsumable
   );
-  const fetchSuplyAndConsumableListe = useFetchSuplysAndConsumableList();
-
+ const fetchLogSypplyAndConsumable = useFetchLogSuplyAndConsumableList();
+  const [open, setOpenDialog] = useState<boolean>(false);
   useEffect(() => {
-    fetchSuplyAndConsumableListe();
-  }, []);
+    if (router.query.id) {
+      getSuplyAndConsumable(router.query.id);
+    }
+    fetchLogSypplyAndConsumable();
+  }, [router.query.id]);
 
+
+  const getSuplyAndConsumable = async (id: any) => {
+    await dispatch(editSuplyAndConsumable({ id }));
+  };
   const handleSubmit = async (values: any) => {
     (values.quantity = +values.quantity),
       (values.unitPrice = +values.unitPrice),
@@ -58,13 +65,50 @@ const FormLogEntreSortie = () => {
         );
       } else {
         await dispatch(createLogSuplyAndConsumable(values));
-      }
+        updateFicehDeStock(values);
+        fetchLogSypplyAndConsumable();
+          }
       router.push("/fournitures_et_consommables/entre_et_sortie");
     } catch (error) {
       console.log("error", error);
     }
   };
-
+  const updateFicehDeStock = async (values: any) => {
+    try {
+      if (suplyAndConsumable.id != "") {
+        const updatedSeuil = calculateUpdatedSeuil(values);
+  
+        await dispatch(
+          updateSuplyAndConsumable({
+            id: suplyAndConsumable.id!,
+            suplyAndConsumable: {
+              ...suplyAndConsumable,
+              seuil: updatedSeuil,
+            },
+          })
+        );
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+  const calculateUpdatedSeuil = (values: any): number => {
+    const currentSeuil = suplyAndConsumable.seuil;
+    const newQuantity = values.quantity;
+    if (currentSeuil !== undefined && newQuantity !== undefined) {
+      if (values.OperationType === "OUTPUT") {
+        const updatedSeuil = currentSeuil - newQuantity;
+        return updatedSeuil >= 0 ? updatedSeuil : 0;
+      } else {
+        const updatedSeuil = currentSeuil + newQuantity;
+        return updatedSeuil >= 0 ? updatedSeuil : 0;
+      }
+    } else {
+      return currentSeuil !== undefined ? currentSeuil : 0;
+    }
+    
+  };
+  
   return (
     <Container maxWidth="xl">
       <Formik
@@ -74,18 +118,18 @@ const FormLogEntreSortie = () => {
             ? logSuplyAndConsumable
             : {
                 date: isEditing ? logSuplyAndConsumable?.date : new Date(),
-                quantity: isEditing ? logSuplyAndConsumable?.quantity : "",
-                SKU: isEditing ? logSuplyAndConsumable?.SKU : "",
+                quantity: isEditing ? logSuplyAndConsumable?.quantity : 0,
+                // SKU: isEditing ? logSuplyAndConsumable?.SKU : ,
                 OperationType: isEditing
                   ? logSuplyAndConsumable?.OperationType
                   : "",
-                unitPrice: isEditing ? logSuplyAndConsumable?.unitPrice : "",
-                inventoryValue: isEditing
-                  ? logSuplyAndConsumable?.inventoryValue
-                  : 0,
+                unitPrice: isEditing ? logSuplyAndConsumable?.unitPrice : 0,
+                // inventoryValue: isEditing
+                //   ? logSuplyAndConsumable?.inventoryValue
+                //   : 0,
                 supplyAndConsumableId: isEditing
                   ? logSuplyAndConsumable?.supplyAndConsumableId
-                  : "",
+                  : suplyAndConsumable.id,
               }
         }
         validationSchema={Yup.object({
@@ -173,24 +217,38 @@ const FormLogEntreSortie = () => {
                   id="outlined-basic"
                   label="Quantité"
                   name="quantity"
+                  type="number"
+                  min="0"
+                  value={formikProps.values.quantity}
+                  onChange={(event: any) => {
+                    const newValue = parseInt(event.target.value);
+                    formikProps.setFieldValue("quantity", newValue);
+                    const newMontant = newValue * (formikProps.values.unitPrice ?? 0);
+                    formikProps.setFieldValue("inventoryValue", newMontant);
+                  }}
                 />
                 <OSTextField
                   id="outlined-basic"
                   label="Prix unitaire"
                   name="unitPrice"
+                  type="number"
+                  min="0"
+                  value={formikProps.values.unitPrice}
+                  onChange={(event: any) => {
+                    const newValue = parseInt(event.target.value);
+                    formikProps.setFieldValue("unitPrice", newValue);
+                    const newMontant = newValue * (formikProps.values.quantity ?? 0);
+                    formikProps.setFieldValue("inventoryValue", newMontant);
+                  }}
                 />
                 <OSTextField
                   id="outlined-basic"
                   label="Valeur de stock"
-                  name="SKU"
-                />
-                <OSSelectField
-                  id="outlined-basic"
-                  label="Article"
-                  name="supplyAndConsumableId"
-                  options={suplyAndConsumableList}
-                  dataKey="designation"
-                  valueKey="id"
+                  name="inventoryValue"
+                  type="number"
+                  min="0"
+                  value={(formikProps.values.quantity ?? 0) * (formikProps.values.unitPrice ?? 0)}
+                  disabled
                 />
                 <FormControl>
                   <Field as={RadioGroup} row name="OperationType">

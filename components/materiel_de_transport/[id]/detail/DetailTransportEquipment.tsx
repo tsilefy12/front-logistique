@@ -32,16 +32,6 @@ const DetailTransportEquipment = () => {
   const getDetailTransportationEquipment = () => {
     const args: any = {
       include: {
-        registration: true,
-        type: true,
-        brand: true,
-        otherInformation: true,
-        status: true,
-        dateAcquisition: true,
-        kilometrageInitial: true,
-        reservoir: true,
-        consommation: true,
-        fournisseur: true,
         vendor: true
       },
     };
@@ -191,7 +181,7 @@ const DetailTransportEquipment = () => {
                      </InfoItems>
                    </Grid>
                  </Grid>
-                { /*<Grid container spacing={4} my={1}>
+                <Grid container spacing={4} my={1}>
                    <Grid item xs={12} md={12}>
                      <InfoItems direction="row" spacing={2}>
                        <Typography variant="body1" color="secondary">
@@ -202,7 +192,7 @@ const DetailTransportEquipment = () => {
                        </Typography>
                      </InfoItems>
                    </Grid>
-                 </Grid>*/}
+                 </Grid>
                </Stack>
              </Stack>
       </DetailsContainer>

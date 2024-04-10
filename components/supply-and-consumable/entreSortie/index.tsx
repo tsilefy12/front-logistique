@@ -149,19 +149,19 @@ export default function LogSupplyAndConsumableList() {
                                     <Moment format="DD/MM/YYYY">{row.date}</Moment>
                                 </TableCell>
                                 <TableCell align="left">
-                                    {row.supplyAndConsumable?.designation}
+                                    {row?.supplyAndConsumableId? row.supplyAndConsumable?.designation: ""}
                                 </TableCell>
 
                                 <TableCell align="left">{row.quantity}</TableCell>
-
-                                <TableCell align="left">{row.SKU}</TableCell>
                                 {
                                     operate ==="INPUT" ? (
                                         <TableCell align="left">{row.unitPrice}</TableCell>
                                     ):(
                                         <TableCell align="left">{row.unitPrice}</TableCell>
                                 )}
-                                <TableCell align="left">12</TableCell>
+                                <TableCell align="left">
+                                {row?.supplyAndConsumableId? row.supplyAndConsumable?.seuil: ""}
+                                </TableCell>
 
                                 {/*<TableCell align="center">
                                     <Badge

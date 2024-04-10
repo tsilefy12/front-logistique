@@ -31,4 +31,10 @@ export const suplyAndConsumableHeadCells: readonly HeadCell[] = [
     disablePadding: false,
     label: "Montant",
   },
+  {
+    id: "reste",
+    numeric: false,
+    disablePadding: false,
+    label: "Reste",
+  },
 ];

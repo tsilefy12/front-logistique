@@ -7,7 +7,11 @@ const useFetchLogSuplyAndConsumableList = () => {
   const dispatch = useAppDispatch();
 
   return async () => {
-    let args: any = {};
+    let args: any = {
+      include:{
+        supplyAndConsumable: true
+      }
+    };
     if (router.query.search) {
       args.where = {};
     }
