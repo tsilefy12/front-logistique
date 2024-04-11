@@ -201,6 +201,7 @@ const FormLogEntreSortie = () => {
                     // fullWidth
                     label="Date"
                     value={formikProps.values.date}
+                    onChange={(value: any) =>formikProps.setFieldValue('Date', value)}
                   />
                   {/* <Stack
                     // flexDirection="row"

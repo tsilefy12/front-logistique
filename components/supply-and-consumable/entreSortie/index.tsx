@@ -156,9 +156,9 @@ export default function LogSupplyAndConsumableList() {
                                 {
                                     operate ==="INPUT" ? (
                                         <TableCell align="left">{row.unitPrice}</TableCell>
-                                    ):''}
+                                    ):   <TableCell align="left">{row.unitPrice}</TableCell>}
                                 <TableCell align="left">
-                                {row?.supplyAndConsumableId? row.supplyAndConsumable?.seuil: ""}
+                                {row?.supplyAndConsumableId? row.supplyAndConsumable?.reste: ""}
                                 </TableCell>
 
                                 {/*<TableCell align="center">
