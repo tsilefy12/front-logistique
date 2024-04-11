@@ -141,7 +141,7 @@ export default function LogSupplyAndConsumableList() {
                         <TableBody>
                         {logSuplyAndConsumableList.filter(i=> i.OperationType === operate)
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row: LogSuplyAndConsumableItem | any, index) => {
+                            .map((row: LogSuplyAndConsumableItem | any, index: any) => {
                             const labelId = `enhanced-table-checkbox-${index}`;
                             return (
                                 <TableRow hover tabIndex={-1} key={row.id}>
@@ -156,9 +156,7 @@ export default function LogSupplyAndConsumableList() {
                                 {
                                     operate ==="INPUT" ? (
                                         <TableCell align="left">{row.unitPrice}</TableCell>
-                                    ):(
-                                        <TableCell align="left">{row.unitPrice}</TableCell>
-                                )}
+                                    ):''}
                                 <TableCell align="left">
                                 {row?.supplyAndConsumableId? row.supplyAndConsumable?.seuil: ""}
                                 </TableCell>

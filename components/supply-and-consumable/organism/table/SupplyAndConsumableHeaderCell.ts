@@ -11,7 +11,7 @@ export const suplyAndConsumableHeadCells: readonly HeadCell[] = [
     id: "quantity",
     numeric: false,
     disablePadding: false,
-    label: "Quantite",
+    label: "Quantité",
   },
   {
     id: "unitPrice",
@@ -36,5 +36,11 @@ export const suplyAndConsumableHeadCells: readonly HeadCell[] = [
     numeric: false,
     disablePadding: false,
     label: "Reste",
+  },
+  {
+    id: "seuil",
+    numeric: false,
+    disablePadding: false,
+    label: "Seuil",
   },
 ];

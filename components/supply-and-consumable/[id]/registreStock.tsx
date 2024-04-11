@@ -39,7 +39,6 @@ const FormLogEntreSortie = () => {
     (state) => state.suplyAndConsumable
   );
  const fetchLogSypplyAndConsumable = useFetchLogSuplyAndConsumableList();
-  const [open, setOpenDialog] = useState<boolean>(false);
   useEffect(() => {
     if (router.query.id) {
       getSuplyAndConsumable(router.query.id);
@@ -66,9 +65,9 @@ const FormLogEntreSortie = () => {
       } else {
         await dispatch(createLogSuplyAndConsumable(values));
         updateFicehDeStock(values);
-        fetchLogSypplyAndConsumable();
           }
       router.push("/fournitures_et_consommables/entre_et_sortie");
+      fetchLogSypplyAndConsumable();
     } catch (error) {
       console.log("error", error);
     }
@@ -76,14 +75,14 @@ const FormLogEntreSortie = () => {
   const updateFicehDeStock = async (values: any) => {
     try {
       if (suplyAndConsumable.id != "") {
-        const updatedSeuil = calculateUpdatedSeuil(values);
+        const updatedReste = calculateUpdatedReste(values);
   
         await dispatch(
           updateSuplyAndConsumable({
             id: suplyAndConsumable.id!,
             suplyAndConsumable: {
               ...suplyAndConsumable,
-              seuil: updatedSeuil,
+              reste: updatedReste,
             },
           })
         );
@@ -92,19 +91,19 @@ const FormLogEntreSortie = () => {
       console.log("error", error);
     }
   };
-  const calculateUpdatedSeuil = (values: any): number => {
-    const currentSeuil = suplyAndConsumable.seuil;
+  const calculateUpdatedReste = (values: any): number => {
+    const currentReste = suplyAndConsumable.reste;
     const newQuantity = values.quantity;
-    if (currentSeuil !== undefined && newQuantity !== undefined) {
+    if (currentReste !== undefined && newQuantity !== undefined) {
       if (values.OperationType === "OUTPUT") {
-        const updatedSeuil = currentSeuil - newQuantity;
-        return updatedSeuil >= 0 ? updatedSeuil : 0;
+        const updatedReste = currentReste - newQuantity;
+        return updatedReste >= 0 ? updatedReste : 0;
       } else {
-        const updatedSeuil = currentSeuil + newQuantity;
-        return updatedSeuil >= 0 ? updatedSeuil : 0;
+        const updatedReste = currentReste + newQuantity;
+        return updatedReste>= 0 ? updatedReste : 0;
       }
     } else {
-      return currentSeuil !== undefined ? currentSeuil : 0;
+      return currentReste !== undefined ? currentReste : 0;
     }
     
   };

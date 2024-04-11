@@ -128,7 +128,7 @@ export default function SuplyAndCosumableList() {
                 <TableBody>
                   {suplyAndConsumableList
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row: SuplyAndConsumableItem | any, index) => {
+                    .map((row: SuplyAndConsumableItem | any, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (
                         <TableRow hover tabIndex={-1} key={row.id}>
@@ -143,6 +143,9 @@ export default function SuplyAndCosumableList() {
                           <TableCell align="left">{row.uniteStock?.uniteStock}</TableCell>
                           <TableCell align="left">{row.montant}</TableCell>
 
+                          <TableCell align="left">
+														{row.reste}
+													</TableCell>
                           <TableCell align="left">
 														{row.seuil}
 													</TableCell>

@@ -45,7 +45,7 @@ const ListTransport = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { carVouchers } = useAppSelector((state) => state.carVoucher);
-  const {transportationEquipment } = useAppSelector((state) =>state.transportationEquipment) 
+  const { transportationEquipment } = useAppSelector((state) => state.transportationEquipment)
   const fetchTransportEquipements = useFetchTransportationEquipments()
 
   const fetchCarVouchers = useFetchCarVouchers();
@@ -76,7 +76,7 @@ const ListTransport = () => {
         await dispatch(deleteCarVoucher({ id }));
         fetchCarVouchers();
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -93,7 +93,25 @@ const ListTransport = () => {
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - carVouchers.length) : 0;
+  const monthsInLetters = [
+    "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+    "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+  ];
 
+  const totalMontantByMonth: any = {};
+  carVouchers.forEach((result) => {
+    const date = new Date(result.date ? result.date : 0);
+   // const month = (date.getMonth() + 1);
+    const month= monthsInLetters[date.getMonth()];
+    const montantTotal = result.montantTotal;
+    if (!totalMontantByMonth[month]) {
+      totalMontantByMonth[month] = 0;
+    }
+    console.log('mois :', month)
+    totalMontantByMonth[month] += montantTotal;
+  });
+
+  console.log("Total montant by month:", totalMontantByMonth);
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
@@ -127,7 +145,7 @@ const ListTransport = () => {
                       return (
                         <TableRow hover tabIndex={-1} key={row.id}>
                           <TableCell component="th" id={labelId} align="left">
-                            {row?.materiel ? row.transportationEquipment?.registration: ''}
+                            {row?.materiel ? row.transportationEquipment?.registration : ''}
                           </TableCell>
 
                           <TableCell align="left">

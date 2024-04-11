@@ -78,8 +78,8 @@ export default function SuplyAndConsumableForm() {
               unitPrice: isEditing ? suplyAndConsumable?.unitPrice : 0,
               SKU: isEditing ? suplyAndConsumable?.SKU : "",
               // montant: isEditing ? suplyAndConsumable?.montant : "",
-              //seuil: isEditing ? suplyAndConsumable?.seuil : 0,
-              moisPrevision: isEditing ? suplyAndConsumable.moisPrevision : "",
+              seuil: isEditing ? suplyAndConsumable?.seuil : 0,
+              moisPrevision: isEditing ? suplyAndConsumable.moisPrevision : 0,
               fournisseur: isEditing ? suplyAndConsumable.fournisseur : "",
               categorieStock: isEditing ? suplyAndConsumable.categorieStock : "",
               grant: isEditing ? suplyAndConsumable.grant : "",
@@ -91,7 +91,7 @@ export default function SuplyAndConsumableForm() {
           unitPrice: Yup.number().required("champ obligatoire"),
           quantity: Yup.number().required("Champ obligatoire"),
           SKU: Yup.string(),
-         // seuil: Yup.number()
+          // seuil: Yup.number()
         })}
         onSubmit={(value: any, action: any) => {
           handleSubmit(value);
@@ -156,7 +156,8 @@ export default function SuplyAndConsumableForm() {
                   label="Désignation"
                   name="designation"
                 />
-                <OSTextField
+               <Stack direction="row" spacing={2}>
+               <OSTextField
                   id="outlined-basic"
                   label="Quantite"
                   name="quantity"
@@ -168,8 +169,8 @@ export default function SuplyAndConsumableForm() {
                     formikProps.setFieldValue("quantity", newValue);
                     const newMontant = newValue * (formikProps.values.unitPrice ?? 0);
                     formikProps.setFieldValue("montant", newMontant);
-                    const seuilValue = newValue;
-                    formikProps.setFieldValue("seuil", seuilValue)
+                    const restelValue = newValue;
+                    formikProps.setFieldValue("reste", restelValue)
                   }}
                 />
                 <OSTextField
@@ -186,6 +187,28 @@ export default function SuplyAndConsumableForm() {
                     formikProps.setFieldValue("montant", newMontant);
                   }}
                 />
+               </Stack>
+               <Stack direction="row" spacing={2}>
+               <OSTextField
+                    id="outlined-basic"
+                    label="Montant"
+                    name="montant"
+                    type="number"
+                    min="0"
+                    value={(formikProps.values.quantity ?? 0) * (formikProps.values.unitPrice ?? 0)}
+                    disabled
+                  />
+                <OSTextField
+                  id="outlined-basic"
+                  label="Reste"
+                  name="reste"
+                  type="number"
+                  min="0"
+                  value={formikProps.values.quantity}
+                  disabled
+                />
+               </Stack>
+                <Stack direction="row" spacing={3}>
                 <OSSelectField
                   id="outlined-basic"
                   label="Unité de stock"
@@ -195,30 +218,19 @@ export default function SuplyAndConsumableForm() {
                   valueKey="id"
                   type="text"
                 />
-                <Stack direction="row" spacing={3}>
-                  <OSTextField
-                    id="outlined-basic"
-                    label="Montant"
-                    name="montant"
-                    type="number"
-                    min="0"
-                    value={(formikProps.values.quantity ?? 0) * (formikProps.values.unitPrice ?? 0)}
-                    disabled
-                  />
                   <OSTextField
                     id="outlined-basic"
                     label="Seuil"
                     name="seuil"
                     type="number"
                     min="0"
-                    value={formikProps.values.quantity}
-                    disabled
                   />
                   <OSTextField
                     id="outlined-basic"
                     label="Mois de provision"
                     name="moisPrevision"
-                    type="text"
+                    type="number"
+                    min="0"
                   />
                 </Stack>
                 <Stack direction="row" spacing={3}>

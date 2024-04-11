@@ -57,8 +57,8 @@ const HeadCellComponent = ({
 				active={orderBy === headCell.id}
 				direction={order}
 				onClick={(event) => handleClickOrder(event, headCell.id)}
-			>
-				{headCell.id === "unitPrice"? (operation ==="INPUT" ? headCell.label[0]:headCell.label[1]) :headCell.label}
+			>  
+			{headCell.label}
 			</TableSortLabel>
 		</TableCell>
 	);

@@ -7,7 +7,8 @@ export interface SuplyAndConsumableItem {
   uniteStock?:any;
   montant?: number,
   seuil?: number,
-  moisPrevision?: string;
+  reste?: number,
+  moisPrevision?: number;
   fournisseur?: string;
   categorieStock?: string;
   grant?: string;
