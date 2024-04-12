@@ -130,32 +130,36 @@ const ListTransport = () => {
  
   const filtreData = () => {
     let temp = [...carVouchers]
-    if (mois != "tous") {
-      temp = temp.filter((row: CarVoucherItem) => {
-        const rowDate = new Date(row.date!).getMonth() + 1;
-        if (rowDate == mois) {
-          return row
-        }
-      });
-      
+    if (mois === 0 && annee === 0) {
+      setFilteredCarVouchers(carVouchers);
+    }else{
+      if (mois != "tous") {
+        temp = temp.filter((row: CarVoucherItem) => {
+          const rowDate = new Date(row.date!).getMonth() + 1;
+          if (rowDate == mois) {
+            return row
+          }
+        });
+        
+      }
+      if (annee!="tous") {
+        temp = temp.filter((row: CarVoucherItem) => {
+          const rowDate = new Date(row.date!).getFullYear();
+          if (rowDate == annee) {
+            return row
+          }
+        });
+      }
+      let calcul = 0;
+      temp.forEach((item: any) => {
+        const montantM = item["montantTotal"];
+        calcul += montantM;
+        setMontantMensuel(calcul);
+      })
+      setFilteredCarVouchers(temp)
     }
-    if (annee!="tous") {
-      temp = temp.filter((row: CarVoucherItem) => {
-        const rowDate = new Date(row.date!).getFullYear();
-        if (rowDate == annee) {
-          return row
-        }
-      });
-    }
-    let calcul = 0;
-    temp.forEach((item: any) => {
-      const montantM = item["montantTotal"];
-      calcul += montantM;
-      setMontantMensuel(calcul);
-    })
-    setFilteredCarVouchers(temp)
   }
-  console.log('valiny calcul :', montantMensuel);
+  //console.log('valiny calcul :', montantMensuel);
   /*const totalMontantByMonth: any = {};
 
   carVouchers.forEach((result) => {
@@ -300,7 +304,7 @@ const ListTransport = () => {
                   )}
                 </TableBody>
               </Table>
-              <FormControl sx={{ display: (montantMensuel == 0 || mois == "Select" || filteredCarVouchers.length == 0) ? 'none' : 'block', marginTop: 4 }}>
+              <FormControl sx={{ display: (montantMensuel == 0 || mois == "tous" || filteredCarVouchers.length == 0) ? 'none' : 'block', marginTop: 4 }}>
                 <label><strong>Montant mensuel</strong> : <b><span>{montantMensuel} Ariary</span></b></label>
               </FormControl>
             </TableContainer>
