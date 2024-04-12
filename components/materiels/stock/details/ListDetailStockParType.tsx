@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -17,20 +17,25 @@ import TablePagination from "@mui/material/TablePagination";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
+// import Checkbox from "@mui/material/Checkbox";
 import Data, { Order } from "./table/type-variable";
 import { rows } from "./table/constante";
 import EnhancedTableToolbar from "./table/EnhancedTableToolbar";
-import { getComparator, stableSort } from "./table/function";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Add from "@mui/icons-material/Add";
+// import { getComparator, stableSort } from "./table/function";
+// import VisibilityIcon from "@mui/icons-material/Visibility";
+// import EditIcon from "@mui/icons-material/Edit";
+// import DeleteIcon from "@mui/icons-material/Delete";
+// import Add from "@mui/icons-material/Add";
 import {
   defaultLabelDisplayedRows,
   labelRowsPerPage,
 } from "../../../../config/table.config";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
+import { getEquipment } from "../../../../redux/features/equipment/useCases/getEquipment";
+import { useRouter } from "next/router";
+import useFetchEquipment from "../../informatique/hooks/useFetchEquipment";
+import Moment from "react-moment";
 
 const ListDetailStockParType = () => {
   const [order, setOrder] = React.useState<Order>("asc");
@@ -38,7 +43,34 @@ const ListDetailStockParType = () => {
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const router = useRouter();
+  const { id }: any = router.query;
+  const { equipments } = useAppSelector((state) =>state.equipment);
+  const dispatch = useAppDispatch();
+  const fetchEquipmentList = useFetchEquipment();
+  useEffect(() =>{
+    fetchEquipmentList();
+  },[])
+
+console.log("donnes :", equipments)
+ const listMateriel: { code: string, designation: string, date: any,acquisitionValue: any, etat: string }[] = [];
+
+ if (equipments.length > 0) {
+     equipments.forEach((element: any) => {
+      console.log("id equip :", element.typeEquipmentId)
+         if (element["typeEquipmentId"] === id) {
+             listMateriel.push({ 
+              code: element.numOptim, 
+              designation: element.designation, 
+              date: element.acquisitionDate, 
+              acquisitionValue: element.acquisitionValue, 
+              etat: element.status});
+         }
+     });
+ } else {
+  listMateriel.push({ code: '', designation: '', date: '', acquisitionValue: '', etat: ''});
+ }
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -126,32 +158,33 @@ const ListDetailStockParType = () => {
               >
                 <TableHead>
                   <TableRow>
-                    <TableCell>Code</TableCell>
-                    <TableCell align="right">Désignation</TableCell>
-                    <TableCell align="right">Date début de stock</TableCell>
+                    <TableCell align="left">Code</TableCell>
+                    <TableCell align="left">Désignation</TableCell>
+                    <TableCell align="left">Date d'acquisition</TableCell>
+                    <TableCell align="left">Valeur d'acquisition</TableCell>
+                    <TableCell align="left">Etat</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {(rowsPerPage > 0
-                    ? rows.slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
-                    : rows
+                  {( listMateriel
                   ).map((row) => (
-                    <TableRow key={row.numero}>
+                    <TableRow key={row.code}>
                       <TableCell component="th" scope="row">
-                        {row.numero}
+                        {row.code}
                       </TableCell>
-                      <TableCell align="right">{row.designation}</TableCell>
-                      <TableCell align="right">{row.dateDebutStock}</TableCell>
+                      <TableCell align="left">{row.designation}</TableCell>
+                      <TableCell align="left">
+                        <Moment format="DD/MM/yyyy">{row.date}</Moment>
+                      </TableCell>
+                      <TableCell align="left">{row.acquisitionValue}</TableCell>
+                      <TableCell align="left">{row.etat}</TableCell>
                     </TableRow>
                   ))}
-                  {emptyRows > 0 && (
+                  {/* {emptyRows > 0 && (
                     <TableRow style={{ height: 53 * emptyRows }}>
                       <TableCell colSpan={6} />
                     </TableRow>
-                  )}
+                  )} */}
                 </TableBody>
               </Table>
             </TableContainer>

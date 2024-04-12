@@ -31,9 +31,7 @@ import { getCarVoucher } from "../../../../../redux/features/car-voucher";
 import { format } from "date-fns";
 import { getActivity } from "../../../../../redux/features/activity/activitySlice";
 import { ActivityItem } from "../../../../../redux/features/activity/activity.interface";
-import { number } from "prop-types";
-import { ca } from "date-fns/locale";
-//   import { getTransportationEquipment } from "../../../../redux/features/transportation_equipment";
+
 
 const DetailBonDeVoiture = () => {
   const router = useRouter();

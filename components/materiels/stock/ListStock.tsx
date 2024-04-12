@@ -51,7 +51,6 @@ const ListStock = () => {
   useEffect(() => {
     fetchEquipmentList();
   }, []);
-
   // const handleRequestSort = (
   //   event: React.MouseEvent<unknown>,
   //   property: keyof Data
@@ -173,7 +172,7 @@ const ListStock = () => {
                               direction="row"
                               justifyContent="center"
                             >
-                              <Link href="stock/1/details">
+                              <Link href={`stock/${row.id}/details`}>
                                 <IconButton
                                   color="accent"
                                   aria-label="Details"

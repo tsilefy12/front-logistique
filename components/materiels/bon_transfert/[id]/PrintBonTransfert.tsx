@@ -26,26 +26,26 @@ function PrintBonTransfert({ pdfData }: { pdfData: any }) {
                                    />
                               </Text>
                               <View style={styles.row2}>
-                                   <Text style={{textAlign:"center",width:"100%",fontSize:12,backgroundColor:"#6aa246",padding:4}}>BON DE TRANSFERT</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:12,backgroundColor:"#76923E",padding:4,color:"#ffffff",fontWeight:900}}>BON DE TRANSFERT</Text>
                               </View>
                          </View>
                     </View>
                     <View style={styles.table}>
                         <View style={{width: "100%",display: "flex",flexDirection: "row",marginTop:10}}>
-                              <View style={{width: "50%",display: "flex",flexDirection: "row"}}>
-                                   <View style={{width: "40%",display: "flex",flexDirection: "column"}}>
-                                        <Text style={{width: "100%",border:"1px solid #000",textAlign:"center",fontWeight:"bold",fontSize:10,padding:5,backgroundColor:"#65c0f1"}}>DESTINATAIRE</Text>
-                                        <Text style={{width: "100%",border:"1px solid #000",borderTop:"none",textAlign:"center",fontSize:10,padding:5}}>{pdfData?.destination}</Text>
+                              <View style={{width: "75%",display: "flex",flexDirection: "column"}}>
+                                   <View style={{width: "75%",display: "flex",flexDirection: "row"}}>
+                                        <Text style={{width: "100%",border:"1px solid #000",textAlign:"center",fontWeight:900,fontSize:10,padding:5,backgroundColor:"#4AADC4",color:"#ffffff",}}>DESTINATAIRE</Text>
+                                        <Text style={{width: "100%",border:"1px solid #000",borderLeft:"none",textAlign:"center",fontWeight:900,fontSize:10,padding:5,backgroundColor:"#4AADC4",color:"#ffffff",}}>EXPEDITEUR</Text>
                                    </View>
-                                   <View style={{width: "40%",display: "flex",flexDirection: "column"}}>
-                                        <Text style={{width: "100%",border:"1px solid #000",borderLeft:"none",textAlign:"center",fontWeight:"bold",fontSize:10,padding:5,backgroundColor:"#65c0f1"}}>EXPEDITEUR</Text>
+                                   <View style={{width: "75%",display: "flex",flexDirection: "row"}}>
+                                        <Text style={{width: "100%",border:"1px solid #000",borderTop:"none",textAlign:"center",fontSize:10,padding:5}}>{pdfData?.destination}</Text>
                                         <Text style={{width: "100%",border:"1px solid #000",borderLeft:"none",borderTop:"none",textAlign:"center",fontSize:10,padding:5}}>{pdfData.expediteur}</Text>
                                    </View>
                               </View>
                               <View style={{width: "50%",display: "flex",flexDirection: "row",marginLeft:10}}>
                                    <View style={{width: "40%",display: "flex",flexDirection: "column",}}>
-                                        <Text style={{width: "100%",border:"1px solid #000",textAlign:"left",fontWeight:"bold",fontSize:10,padding:5,backgroundColor:"#65c0f1"}}>Date d'expediteur</Text>
-                                        <Text style={{width: "100%",border:"1px solid #000",textAlign:"left",fontSize:10,padding:5,backgroundColor:"#65c0f1",borderTop:"none"}}>VIA</Text>
+                                        <Text style={{width: "100%",border:"1px solid #000",textAlign:"center",fontWeight:"bold",fontSize:10,padding:5,backgroundColor:"#4AADC4",color:"#ffffff",}}>Date d'expediteur</Text>
+                                        <Text style={{width: "100%",border:"1px solid #000",textAlign:"center",fontSize:10,padding:5,backgroundColor:"#4AADC4",borderTop:"none",color:"#ffffff",}}>VIA</Text>
                                    </View>
                                    <View style={{width: "50%",display: "flex",flexDirection: "column"}}>
                                         <Text style={{width: "100%",border:"1px solid #000",textAlign:"left",fontWeight:"bold",fontSize:10,padding:5,borderLeft:"none"}}>{pdfData.dateExp ? format(new Date(pdfData.dateExp),"dd/MM/yyyy"):""}</Text>
@@ -55,7 +55,7 @@ function PrintBonTransfert({ pdfData }: { pdfData: any }) {
                          </View>
                     </View>
                     <View style={{width: "100%",marginTop:20,}}>
-                         <View style={[styles.rowBody,{backgroundColor:"#6aa246"}]}>
+                         <View style={[styles.rowBody,{backgroundColor:"#76923E"}]}>
                               <Text style={[styles.th,{borderLeft:"none"}]}>Quantité commandée</Text>
                               <Text style={styles.th}>Quantité expédiée</Text>
                               <Text style={styles.th}>Nombre de produits</Text>
@@ -82,7 +82,7 @@ function PrintBonTransfert({ pdfData }: { pdfData: any }) {
                          <View style={{width:"100%",display:"flex",flexDirection:"row",alignItems:"center"}}>
                               <View style={[styles.footer]}>
                                   <Text style={{width: "40%",border:"1px solid #000",textAlign:"center",fontWeight:"bold",fontSize:10,padding:5}}>EXPEDITEUR</Text>
-                                  <Text style={{width: "40%",border:"1px solid #000",borderTop:"none !important",textAlign:"center",fontSize:10,padding:10,height:800}}></Text>
+                                  <Text style={{width: "40%",border:"1px solid #000",borderTop:"none !important",textAlign:"center",fontSize:10,padding:10,height:80}}></Text>
                               </View>
                               <View style={[styles.footer]}>
                                   <Text style={{width: "40%",border:"1px solid #000",textAlign:"center",fontWeight:"bold",fontSize:10,padding:5}}>RECEPTIONNAIRE</Text>
@@ -123,12 +123,13 @@ const styles = StyleSheet.create({
           borderLeft: "1px solid #000",
           paddingTop:4,
           padding :2,
-          fontWeight: "bold",
+          color:"#ffffff",
+          fontWeight: 900,
           fontSize: 12,
      },
      tr:{
           width: "20%",
-          textAlign: "left",
+          textAlign: "center",
           borderLeft: "1px solid #000",
           paddingTop: 2,
           paddingBottom: 2,
