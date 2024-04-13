@@ -1,12 +1,33 @@
-import { Card, FormControl, FormLabel, Stack} from "@mui/material";
+import { Card, FormControl, FormLabel, Stack } from "@mui/material";
 import HeaderDashboard from "./header";
 import CercleChart from "./cercleChart";
 import CardDashboard from "./card";
 import VerticalMenu from "./menu";
 import DemiCercleChart from "./demiCercle";
+import useFetchSuplyAndConsumableList from "../supply-and-consumable/entreSortie/hooks/useFetchSupplyAndConsumables";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useAppSelector } from "../../hooks/reduxHooks";
 
 
 const Dashboard = () => {
+    const router = useRouter();
+    const { suplyAndConsumableList } = useAppSelector((state) => state.suplyAndConsumable)
+    const fetchSuplyAndConsumableList = useFetchSuplyAndConsumableList();
+    useEffect(() => {
+        fetchSuplyAndConsumableList();
+    }, [router.query])
+
+    const listFltered: { id: string, name: number }[] = [];
+    suplyAndConsumableList.forEach((element: any) => {
+        const restFiltre = element.reste;
+        const seuilfiltre = element.seuil;
+        if (restFiltre <= seuilfiltre) {
+            return listFltered.push({ id: element.designation, name: element.reste })
+        }
+        return [];
+    });
+
     return (
         <FormControl>
             <Stack direction="column">
@@ -18,25 +39,26 @@ const Dashboard = () => {
                                 <CardDashboard />
                             </div>
                             <Stack direction="row" spacing={13}>
-                            <FormControl>
-                                <CercleChart />
+                                <FormControl>
+                                    <CercleChart />
                                 </FormControl>
-                               <FormControl>
-                               <Card sx={styleCard}>
-                                  <FormLabel style={{margin: "10px"}}>Cahier <b>100</b></FormLabel>
-                                  <FormLabel style={{margin: "10px"}}>Stylos <b>200</b></FormLabel>
-                                  <FormLabel style={{margin: "10px"}}>Crayon <b>20</b></FormLabel>
-                                  <FormLabel style={{margin: "10px"}}>Crayon couleur <b>12</b></FormLabel>
-                                  <FormLabel style={{margin: "10px"}}>Cahier <b>100</b></FormLabel>
-                                  <FormLabel style={{margin: "10px"}}>Stylos <b>200</b></FormLabel>
-                                  <FormLabel style={{margin: "10px"}}>Crayon <b>20</b></FormLabel>
-                                  <FormLabel style={{margin: "10px"}}>Crayon couleur <b>12</b></FormLabel>
-                                </Card>
+                                <FormControl>
+                                    <Card sx={styleCard}>
+                                        {
+                                            listFltered.map((itme: any, index: any) => (
+                                                <FormLabel key={index}
+                                                    style={{ margin: "10px", display: "flex", flexWrap: "wrap", justifyContent: "space-between", overflow: "auto"}}>
+                                                    <FormLabel style={{marginLeft: "10px"}}>{itme.id}</FormLabel>
+                                                    <FormLabel style={{ marginRight: "10px" }}><b>{itme.name}</b></FormLabel>
+                                                </FormLabel>
+                                            ))
+                                        }
+                                    </Card>
                                 </FormControl>
                                 {/* <FormControl>
                                 <DemiCercleChart/>
                                 </FormControl> */}
-                                </Stack>
+                            </Stack>
                         </div>
                         <div>
                             <FormControl className="nav-bar">
@@ -59,19 +81,13 @@ const styles = {
     padding: 4,
     backgroundColor: "rgb(245, 245, 245)"
 }
-// const styelMenu = {
-//     display: 'flex',
-//     flexDirection: 'column', // Affichage vertical
-//     height: '100vh', // Hauteur de 100% de la vue
-//     backgroundColor: '#f0f0f0', // Exemple de couleur de fond
-// };
+
 const styleCard = {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
-    border: "1px solid #98FB98",
-    width: 250,
+    width: 280,
     height: 250,
     overflow: "auto",
     marginTop: 5,
+    boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
 }
