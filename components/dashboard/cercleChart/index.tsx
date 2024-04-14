@@ -43,6 +43,7 @@ const CercleChart = () => {
 
             const listMois: string[] = [];
             const listMontant: number[] = [];
+            const now = new Date().getFullYear()
             const colors = [
                 'rgb(224, 224, 224)',
                 '#CC9933',
@@ -60,7 +61,7 @@ const CercleChart = () => {
                 data: {
                     labels: (listMois.length != 0) ? listMois : ["vide"],
                     datasets: [{
-                        label: 'Montant total',
+                        label: 'Montant total (en Ariary)',
                         data: (listMontant.length != 0) ? listMontant : [0.5],
                         backgroundColor: colors,
                         borderColor: colors,
@@ -75,7 +76,7 @@ const CercleChart = () => {
                         },
                         title: {
                             display: true,
-                            text: 'Montant mensuel d\'entretien'
+                            text: `Montant mensuel d\'entretien, année ${now}`
                         },
                         datalabels: {
                             display: true,

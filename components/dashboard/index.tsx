@@ -7,6 +7,7 @@ import useFetchSuplyAndConsumableList from "../supply-and-consumable/entreSortie
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAppSelector } from "../../hooks/reduxHooks";
+import DemiCercleChart from "./demiCercle";
 
 const Dashboard = () => {
     const router = useRouter();
@@ -44,14 +45,7 @@ const Dashboard = () => {
                                     <Card sx={styleCard}>
                                         { 
                                         (listFltered.length !=0) ? 
-                                            listFltered.sort((a, b) => {
-                                                // Convertir les dates en objets Date pour la comparaison
-                                                const dateA: any = new Date(a.id! || '');
-                                                const dateB: any = new Date(b.id!|| '');
-                                          
-                                                // Comparer les dates et retourner le résultat du tri
-                                                return dateA - dateB;
-                                              }).map((itme: any, index: any) => (
+                                            listFltered.map((itme: any, index: any) => (
                                                 <FormLabel key={index}
                                                     style={{ margin: "10px", display: "flex", flexWrap: "wrap", justifyContent: "space-between", overflow: "auto"}}>
                                                     <FormLabel style={{marginLeft: "15px", color: "black"}}>{itme.id}</FormLabel>

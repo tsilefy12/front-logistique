@@ -4,7 +4,7 @@
 // const DemiCercleChart = () => {
 //     useEffect(() => {
 //         const ctx = document.getElementById('speedometerChart')!;
-//         if (ctx === null) {
+//         if (!ctx) {
 //             return;
 //         }
 //         new Chart(ctx, {
@@ -56,7 +56,7 @@
 //     }, []);
 
 //     return (
-//         <canvas id="speedometerChart"></canvas>
+//         <canvas id="speedometerChart" height={20} width={40}></canvas>
 //     );
 // };
 
