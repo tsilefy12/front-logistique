@@ -7,7 +7,6 @@ import useFetchSuplyAndConsumableList from "../supply-and-consumable/entreSortie
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAppSelector } from "../../hooks/reduxHooks";
-import DemiCercleChart from "./demiCercle";
 
 const Dashboard = () => {
     const router = useRouter();
