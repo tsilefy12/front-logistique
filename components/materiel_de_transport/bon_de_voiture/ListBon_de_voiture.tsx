@@ -159,21 +159,7 @@ const ListTransport = () => {
       setFilteredCarVouchers(temp)
     }
   }
-  //console.log('valiny calcul :', montantMensuel);
-  /*const totalMontantByMonth: any = {};
 
-  carVouchers.forEach((result) => {
-    const date = new Date(result.date ? result.date : 0);
-    const month = monthsInLetters[date.getMonth()];
-    const montantTotal = result.montantTotal;
-    if (!totalMontantByMonth[month]) {
-      totalMontantByMonth[month] = 0;
-    }
-    console.log('mois :', month)
-    totalMontantByMonth[month] += montantTotal;
-  });*/
-
-  //console.log("Total montant by month:", totalMontantByMonth);
 
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
@@ -234,6 +220,12 @@ const ListTransport = () => {
                 <CarVoucherTableHeader />
                 <TableBody>
                   {filteredCarVouchers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .sort((a, b) => {
+                    const dateA: any = new Date(a.date || '');
+                    const dateB: any = new Date(b.date || '');
+                    
+                    return dateA - dateB;
+                  })
                     .map((row: CarVoucherItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

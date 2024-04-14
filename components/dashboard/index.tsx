@@ -3,12 +3,10 @@ import HeaderDashboard from "./header";
 import CercleChart from "./cercleChart";
 import CardDashboard from "./card";
 import VerticalMenu from "./menu";
-import DemiCercleChart from "./demiCercle";
 import useFetchSuplyAndConsumableList from "../supply-and-consumable/entreSortie/hooks/useFetchSupplyAndConsumables";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAppSelector } from "../../hooks/reduxHooks";
-
 
 const Dashboard = () => {
     const router = useRouter();
@@ -44,14 +42,25 @@ const Dashboard = () => {
                                 </FormControl>
                                 <FormControl>
                                     <Card sx={styleCard}>
-                                        {
-                                            listFltered.map((itme: any, index: any) => (
+                                        { 
+                                        (listFltered.length !=0) ? 
+                                            listFltered.sort((a, b) => {
+                                                // Convertir les dates en objets Date pour la comparaison
+                                                const dateA: any = new Date(a.id! || '');
+                                                const dateB: any = new Date(b.id!|| '');
+                                          
+                                                // Comparer les dates et retourner le résultat du tri
+                                                return dateA - dateB;
+                                              }).map((itme: any, index: any) => (
                                                 <FormLabel key={index}
                                                     style={{ margin: "10px", display: "flex", flexWrap: "wrap", justifyContent: "space-between", overflow: "auto"}}>
-                                                    <FormLabel style={{marginLeft: "10px"}}>{itme.id}</FormLabel>
-                                                    <FormLabel style={{ marginRight: "10px" }}><b>{itme.name}</b></FormLabel>
+                                                    <FormLabel style={{marginLeft: "15px", color: "black"}}>{itme.id}</FormLabel>
+                                                    <FormLabel style={{ marginRight: "15px", fontWeight: 900, color: "black"}}>{itme.name}</FormLabel>
                                                 </FormLabel>
-                                            ))
+                                            )):
+                                            (
+                                                <FormLabel style={{width: "auto", marginTop: "35%", textAlign: 'center'}}>AUCUN ARTICLE</FormLabel>
+                                            )
                                         }
                                     </Card>
                                 </FormControl>

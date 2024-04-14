@@ -1,54 +1,63 @@
-import { useEffect, useRef } from 'react';
-import Chart from 'chart.js/auto';
+// import { useEffect, useRef } from 'react';
+// import Chart from 'chart.js/auto';
 
-const DemiCercleChart = () => {
-    const chartRef = useRef<HTMLCanvasElement | null>(null);
+// const DemiCercleChart = () => {
+//     useEffect(() => {
+//         const ctx = document.getElementById('speedometerChart')!;
+//         if (ctx === null) {
+//             return;
+//         }
+//         new Chart(ctx, {
+//             type: 'radialGauge',
+//             data: {
+//                 labels: ['Low', 'Medium', 'High'],
+//                 datasets: [{
+//                     data: [20, 50, 80], // Données à afficher sur le graphique
+//                     backgroundColor: ['#FFA07A', '#FF6347', '#FF4500'], // Couleurs de fond des zones
+//                     borderWidth: 0,
+//                     rotate: -90, // Rotation de l'aiguille (0 est en haut)
+//                     min: 0, // Valeur minimale affichée sur l'axe
+//                     max: 100, // Valeur maximale affichée sur l'axe
+//                     stepSize: 20, // Incréments de l'échelle
+//                     startAngle: 180, // Angle de départ du graphique (180 est à midi)
+//                     ticks: { display: false }, // Désactiver l'affichage des graduations
+//                     centerArea: { display: false }, // Désactiver l'affichage de la zone centrale
+//                     height: 40,
+//                     width: 200
+//                 }]
+//             },
+//             options: {
+//                 responsive: true,
+//                 maintainAspectRatio: false,
+//                 layout: {
+//                     padding: {
+//                         top: 20,
+//                         bottom: 20,
+//                         left: 20,
+//                         right: 20
+//                     }
+//                 },
+//                 scale: {
+//                     ticks: {
+//                         fontSize: 12
+//                     }
+//                 },
+//                 plugins: {
+//                     legend: {
+//                         display: false // Masquer la légende
+//                     },
+//                     title: {
+//                         display: true,
+//                         text: 'Speedometer Chart'
+//                     }
+//                 }
+//             }
+//         });
+//     }, []);
 
-    useEffect(() => {
-        const ctx = chartRef.current;
-        if (!ctx) return;
+//     return (
+//         <canvas id="speedometerChart"></canvas>
+//     );
+// };
 
-        const newChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                indexAxis: 'y',
-                scales: {
-                    x: {
-                        stacked: true
-                    },
-                    y: {
-                        stacked: true
-                    }
-                }
-            }
-        });
-
-        return () => {
-            newChart.destroy();
-        };
-    }, []);
-
-    return (
-        <canvas ref={chartRef} id="circle-chart" width="200" height="200"></canvas>
-    );
-};
-
-export default DemiCercleChart;
+// export default DemiCercleChart;
