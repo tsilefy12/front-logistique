@@ -193,6 +193,30 @@ const DetailTransportEquipment = () => {
                      </InfoItems>
                    </Grid>
                  </Grid>
+                 <Grid container spacing={4} my={1}>
+                   <Grid item xs={12} md={12}>
+                     <InfoItems direction="row" spacing={2}>
+                       <Typography variant="body1" color="secondary">
+                         Kilometrage actuel :
+                       </Typography>
+                       <Typography variant="body1" color="gray">
+                         {transportationEquipment.kilometrageActuel}
+                       </Typography>
+                     </InfoItems>
+                   </Grid>
+                 </Grid>
+                 <Grid container spacing={4} my={1}>
+                   <Grid item xs={12} md={12}>
+                     <InfoItems direction="row" spacing={2}>
+                       <Typography variant="body1" color="secondary">
+                         Reste du carburant :
+                       </Typography>
+                       <Typography variant="body1" color="gray">
+                         {transportationEquipment.reste}
+                       </Typography>
+                     </InfoItems>
+                   </Grid>
+                 </Grid>
                </Stack>
              </Stack>
       </DetailsContainer>
