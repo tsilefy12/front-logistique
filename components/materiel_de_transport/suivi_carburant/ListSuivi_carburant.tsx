@@ -48,7 +48,7 @@ import useFetchLigneBudgetaire from "./hooks/useFetchLigneBudgetaire";
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { suiviCarburants } = useAppSelector((state) => state.suiviCarburant);
-    console.log("suivi ", suiviCarburants);
+
     
     const fetchSuiviCarburant = useFetchSuiviCarburants();
     const fetchTransportationEquipment = useFetchTransportationEquipments();

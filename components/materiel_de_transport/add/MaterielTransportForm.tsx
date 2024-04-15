@@ -36,7 +36,7 @@ const MaterielTransportForm = () => {
   const route = useRouter();
   const dispatch = useAppDispatch();
   const { vendors } = useAppSelector((state) => state.vendor);
-  console.log("fournisseur ", vendors);
+
   const fetchVendor = useFetchVendors();
   useEffect(() => {
     fetchVendor();
@@ -45,7 +45,6 @@ const MaterielTransportForm = () => {
   const { isEditing, transportationEquipment } = useAppSelector(
     (state) => state.transportationEquipment
   );
-  const { linkedEmployee } = useAppSelector((state) => state.auth);
 
   const handleSubmit = async (values: any) => {
     try {
@@ -90,6 +89,8 @@ const MaterielTransportForm = () => {
           kilometrageInitial: isEditing ? transportationEquipment.kilometrageInitial : "",
           reservoir: isEditing ? transportationEquipment.reservoir : "",
           consommation: isEditing ? transportationEquipment.consommation : "",
+          kilometrageActuel: isEditing ? transportationEquipment.kilometrageActuel : 0,
+          reste: isEditing ? transportationEquipment.reste : 0,
           fournisseur: isEditing ? transportationEquipment.fournisseur : "",
         }}
         validationSchema={Yup.object({
@@ -226,6 +227,23 @@ const MaterielTransportForm = () => {
                     name="kilometrageInitial"
                     type="number"
                     min="0"
+                    value={formikProps.values.kilometrageInitial}
+                    onChange={(event: any) => {
+                      const newValue = parseInt(event.target.value);
+                      formikProps.setFieldValue("kilometrageInitial", newValue);
+                      const kilometrageActuellValue = newValue;
+                      formikProps.setFieldValue("kilometrageActuel", kilometrageActuellValue)
+                    }}
+                  />
+                  <OSTextField
+                    id="outlined-basic"
+                    label="Kilometrage actuel"
+                    variant="outlined"
+                    name="kilometrageActuel"
+                    value={formikProps.values.kilometrageInitial}
+                    type="number"
+                    min="0"
+                    disabled
                   />
                   <OSTextField
                     id="outlined-basic"
@@ -245,6 +263,15 @@ const MaterielTransportForm = () => {
                   />
                 </Stack>
                 <Stack direction="row" spacing={2} margin={2}>
+                  <OSTextField
+                    id="outlined-basic"
+                    label="Reste"
+                    variant="outlined"
+                    name="reste"
+                    type="number"
+                    min="0"
+                    disabled
+                  />
                   <OSTextField
                     id="outlined-basic"
                     label="Autre information"

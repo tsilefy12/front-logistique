@@ -105,7 +105,6 @@ const FormLogEntreSortie = () => {
     } else {
       return currentReste !== undefined ? currentReste : 0;
     }
-    
   };
   
   return (

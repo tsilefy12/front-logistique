@@ -5,6 +5,7 @@ export interface SuiviCarburantItem{
     itineraire?: string,
     personnelTransporte?: string,
     kilometrageFinal?: number,
+    pu?: number,
     montant?: number,
     grant?: string,
     ligneBudgetaire?: string,

@@ -7,7 +7,9 @@ export interface TransportationEquipmentItem {
     status?: string;
     dateAcquisition?: Date;
     kilometrageInitial?: number;
+    kilometrageActuel?: number;
     reservoir?: number;
+    reste?: number;
     consommation?: number;
     fournisseur?: string;
     vendor? : any;
