@@ -173,7 +173,7 @@ const DetailTransportEquipment = () => {
                    <Grid item xs={12} md={12}>
                      <InfoItems direction="row" spacing={2}>
                        <Typography variant="body1" color="secondary">
-                         Autre information :
+                         Autre informations :
                        </Typography>
                        <Typography variant="body1" color="gray">
                          {transportationEquipment.otherInformation}
@@ -213,6 +213,7 @@ const DetailTransportEquipment = () => {
                        </Typography>
                        <Typography variant="body1" color="gray">
                          {transportationEquipment.reste}
+
                        </Typography>
                      </InfoItems>
                    </Grid>

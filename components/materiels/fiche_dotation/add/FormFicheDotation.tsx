@@ -57,7 +57,7 @@ const FormFicheDotation = ({formikProps}: {formikProps: FormikProps<any>}) => {
             <NavigationContainer>
                 <SectionNavigation>
                 <Stack flexDirection={"row"}>
-                    <Link href="/materiels/bon_transfert">
+                    <Link href="/logistique/materiels/fiche_dotation">
                     <Button
                         color="info"
                         variant="text"

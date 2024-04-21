@@ -23,6 +23,7 @@ import OSSelectField from "../../shared/select/OSSelectField";
 import { getCategories, getUniteStocks } from "../../../redux/features/configuration";
 import { getFournisseurList } from "../../../redux/features/fournisseur";
 import { getGrantList } from "../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
+import { getTypeEquipmentList } from "../../../redux/features/typeEquipment";
 
 export default function SuplyAndConsumableForm() {
   const route = useRouter();
@@ -33,6 +34,7 @@ export default function SuplyAndConsumableForm() {
     (state) => state.suplyAndConsumable
   );
   const { categorieStocks } = useAppSelector((state) => state.categorieStock);
+  const { typeEquipmentList } = useAppSelector( (state) => state.typeEquipment);
   const { uniteStocks } = useAppSelector((state) => state.uniteStock);
   const { fournisseurList } = useAppSelector((state) => state.fournisseur);
   const { grantList } = useAppSelector((state) => state.grant);
@@ -42,6 +44,7 @@ export default function SuplyAndConsumableForm() {
     dispatch(getUniteStocks({}));
     dispatch(getFournisseurList({}));
     dispatch(getGrantList({}));
+    dispatch(getTypeEquipmentList({}));
   };
 
   useEffect(() => {
@@ -247,8 +250,8 @@ export default function SuplyAndConsumableForm() {
                     id="outlined-basic"
                     label="Catégorie"
                     name="categorieStock"
-                    options={categorieStocks}
-                    dataKey={["categorieStock"]}
+                    options={typeEquipmentList}
+                    dataKey={["type"]}
                     valueKey="id"
                     type="text"
                   />

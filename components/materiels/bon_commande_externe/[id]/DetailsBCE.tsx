@@ -96,7 +96,7 @@ const DetailsBCE = () => {
                     <PDFButton data={pdf} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">
-                    Details d'une bon de commande externe
+                    Détail d'un bon de commande externe
                 </Typography>
             </SectionNavigation>
             <DetailsContainer>
@@ -114,7 +114,7 @@ const DetailsBCE = () => {
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                            Réference
+                                            Référence
                                         </Typography>
                                         <Typography variant="body1" color="gray">
                                         {bonCommandeExterne.ref}
@@ -156,7 +156,7 @@ const DetailsBCE = () => {
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                            Béneficière
+                                            Bénéficiaire
                                         </Typography>
                                         <Typography variant="body1" color="gray">
                                             {bonCommandeExterne?.beneficiaire}
@@ -198,7 +198,7 @@ const DetailsBCE = () => {
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                            Date commande 
+                                            Date de commande 
                                         </Typography>
                                         <Typography variant="body1" color="gray">
                                         <Moment format="DD/MM/YYYY">
@@ -230,10 +230,9 @@ const DetailsBCE = () => {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align="left">Fournisseur</TableCell>
-                                            <TableCell align="left">Designation</TableCell>
+                                            <TableCell align="left">Désignation</TableCell>
                                             <TableCell align="left">Caractéristique</TableCell>
                                             <TableCell align="left">PU</TableCell>
-                                            <TableCell align="left">Quantité</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -246,6 +245,7 @@ const DetailsBCE = () => {
                                                 <TableCell component="th" scope="row">{item.designation}</TableCell>
                                                 <TableCell align="left">{item.caracteristik}</TableCell>
                                                 <TableCell align="left">{item.pu}Ar</TableCell>
+                                                <TableCell align="left">{item.quantity}Ar</TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>

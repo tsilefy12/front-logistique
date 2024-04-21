@@ -170,7 +170,7 @@ const menu = [
       },
       {
         id: 52,
-        name: "Type de matériel",
+        name: "Catégorie",
         link: "/configurations/type_materiel",
         icon: "",
       },
@@ -180,14 +180,14 @@ const menu = [
         link:"/configurations/unite_de_stock",
         icon: ""
       },
+      // {
+      //   id: 53, 
+      //   name: "Catégorie",
+      //   link: "/configurations/categorie",
+      //   icon: ""
+      // },
       {
         id: 54, 
-        name: "Catégorie de Stock",
-        link: "/configurations/categorie",
-        icon: ""
-      },
-      {
-        id: 55, 
         name: "Type de produit (Fournisseur)",
         link: "/configurations/type_produit",
         icon: ""
