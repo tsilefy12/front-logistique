@@ -33,7 +33,7 @@ const DetailsSuplyAndConsumable = () => {
       include: {
         uniteStock: true,
         vendor: true,
-        categorieStocks: true,
+        typeEquipment: true,
       },
     };
     dispatch(getSuplyAndConsumable({ id, args }));
@@ -161,10 +161,10 @@ const DetailsSuplyAndConsumable = () => {
               <Grid item xs={12} md={12}>
                 <InfoItems direction="row" spacing={2}>
                   <Typography variant="body1" color="secondary">
-                    Categorie de stock :
+                    Catégorie :
                   </Typography>
                   <Typography variant="body1" color="gray">
-                    {suplyAndConsumable.categorieStocks?.categorieStock}
+                    {suplyAndConsumable.typeEquipment?.type}
                   </Typography>
                 </InfoItems>
               </Grid>

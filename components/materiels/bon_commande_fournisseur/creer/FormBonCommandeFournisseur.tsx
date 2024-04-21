@@ -29,7 +29,11 @@ const FormBonCommandeFournisseur  = ({formikProps,valuesArticle,setValuesArticle
     useEffect(() => {
         fetchUtilsData();
     }, []);
-
+ const listModePaiement = [
+    {id: "Virement bancaire", name: "Virement bancaire"},
+    {id: "Chèque bancaire", name: "Chèque bancaire"},
+    {id: "Mobile money", name: "Mobile money"}
+ ]
     return (
         <Form>
             <NavigationContainer>
@@ -116,12 +120,15 @@ const FormBonCommandeFournisseur  = ({formikProps,valuesArticle,setValuesArticle
                         />
                     </FormControl>
                     <FormControl fullWidth>
-                        <OSTextField
+                        <OSSelectField
                             fullWidth
                             id="outlined-basic"
                             variant="outlined"
                             label="Mode de paiement"
                             name="paymentMethod"
+                            options={listModePaiement}
+                            dataKey="name"
+                            valueKey="id"
                         />
                     </FormControl>
                 </Stack>
@@ -173,7 +180,7 @@ const FormBonCommandeFournisseur  = ({formikProps,valuesArticle,setValuesArticle
                                         <TableCell>Designation</TableCell>
                                         <TableCell align="left">PU</TableCell>
                                         <TableCell align="left">Quantité</TableCell>
-                                        <TableCell align="left">Details</TableCell>
+                                        <TableCell align="left">Détail</TableCell>
                                         <TableCell align="left">Montant</TableCell>
                                         <TableCell></TableCell>
                                     </TableRow>

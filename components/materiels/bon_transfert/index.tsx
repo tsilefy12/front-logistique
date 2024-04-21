@@ -35,6 +35,7 @@ import { bonTransfertItem } from "../../../redux/features/bon_transfert/bonTrans
 import { getInterns } from "../../../redux/features/employeStagiaire/stagiaireSlice";
 import { getEmployees } from "../../../redux/features/orderEquipment";
 import { getGrantList } from "../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
+import { getPrograms } from "../../../redux/features/program/programSlice";
 
 export default function BonTransfertList() {
     const [page, setPage] = React.useState(0);
@@ -53,6 +54,7 @@ export default function BonTransfertList() {
     const { employees } = useAppSelector( (state) => state.employe);
     const { interns } = useAppSelector( (state) => state.stagiaire);
     const { grantList } = useAppSelector( (state) => state.grant);
+    const { programs } = useAppSelector( (state) => state.program);
     
     const total = [...employees.map((i:any)=>{
         return {
@@ -73,6 +75,7 @@ export default function BonTransfertList() {
         dispatch(getInterns({}));
         dispatch(getEmployees({}));
         dispatch(getGrantList({}));
+        dispatch(getPrograms({}))
     }, [router.query]);
 
     const handleClickEdit = async (id: any) => {
@@ -162,7 +165,7 @@ export default function BonTransfertList() {
                                         {row?.expeditionVia}
                                     </TableCell>
                                     <TableCell align="left">
-                                        {row?.programme}
+                                        {programs.find((e: any) => e.id === row?.programme)?.name}
                                     </TableCell>
                                     <TableCell align="left">{grantList.find((e:any)=> e.id === row?.grant)?.code}</TableCell>
                                     <TableCell align="right" width={"150px"}>

@@ -35,14 +35,14 @@ const FormDetenteur = ({formikProps,valuesArticle,setValuesArticle}: {formikProp
     })]
 
     const fonctionListe = [
-        { id: "COMMUNAUTE_ET_CONSERVATION", name: "COMMUNAUTE_ET_CONSERVATION" },
-        { id: "ESPECE_ET_CONSERVATION", name: "ESPECE_ET_CONSERVATION" },
-        { id: "ADMINISTRATION", name: "ADMINISTRATION" },
-        { id: "SUIVI_ET_EVALUATION", name: "SUIVI_ET_EVALUATION" },
-        { id: "RH", name: "RH" },
-        { id: "PRESTATAIRE", name: "PRESTATAIRE" },
-        { id: "STAGIAIRE", name: "STAGIAIRE" },
-        { id: "AUTRES", name: "AUTRES" },
+        { id: "CCP", name: "CCP" },
+        { id: "SPC", name: "SPC" },
+        { id: "ADM", name: "ADM" },
+        // { id: "SUIVI_ET_EVALUATION", name: "SUIVI_ET_EVALUATION" },
+        // { id: "RH", name: "RH" },
+        // { id: "PRESTATAIRE", name: "PRESTATAIRE" },
+        // { id: "STAGIAIRE", name: "STAGIAIRE" },
+        // { id: "AUTRES", name: "AUTRES" },
     ];
 
     const { equipments} = useAppSelector((state) => state.equipment);
