@@ -5,7 +5,7 @@ export const BonTransfertHeadCells: readonly HeadCell[] = [
         id: "reference",
         numeric: false,
         disablePadding: false,
-        label: "Réference",
+        label: "Référence",
     },
     {
         id: "expediteur",
@@ -23,13 +23,13 @@ export const BonTransfertHeadCells: readonly HeadCell[] = [
         id: "dateExp",
         numeric: false,
         disablePadding: false,
-        label: "Date d'exp",
+        label: "Date d'expédition",
     },
     {
         id: "expeditionVia",
         numeric: false,
         disablePadding: false,
-        label: "Expedition via",
+        label: "Expédition via",
     },
     {
         id: "programme",

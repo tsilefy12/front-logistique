@@ -19,6 +19,7 @@ import { Formik } from "formik";
 import { cancelEdit } from "../../../../../redux/features/holder/holderSlice";
 import FormDetenteur from "./formDetenteur";
 import { createHolderEquipement } from "../../../../../redux/features/holder/holderEquipementSlice";
+import { updateEquipment } from "../../../../../redux/features/equipment";
 
 const FormDetentionMateriel = () => {
     const router = useRouter();
@@ -29,12 +30,23 @@ const FormDetentionMateriel = () => {
     const handleSubmit = async (values: any) => {
         try {
         if (isEditing) {
-            await dispatch(
-            updateHolder({
-                id: holder.id!,
-                holder: values,
+          const response =  await dispatch(updateHolder({id: holder.id!,holder: values,}));
+          if (valuesArticle.length > 0) {
+            valuesArticle?.forEach((item: any, index: any) =>{
+                const id = item.id
+                console.log("id :", id)
+                if (id) {
+                    const equipment = {
+                        numOptim:item.numOptim,
+                        designation:item.designation,
+                        acquisitionDate:item.acquisitionDate,
+                        acquisitionValue:item.acquisitionValue,
+                        holderId: response.payload.id!
+                    };
+                    dispatch(updateEquipment({id, equipment}))
+                }
             })
-            );
+        }
         } else {
             const newDataHolder = {
                 reference: values.reference,
@@ -65,13 +77,13 @@ const FormDetentionMateriel = () => {
                 enableReinitialize = { isEditing ? true :false }
                 initialValues={
                     {
-                        numOptim:  "",
-                        contact: "",
-                        reference: "",
-                        name: "",
-                        matricule:  "",
-                        function:"",
-                        type:"",
+                        numOptim:  isEditing ? holder?.id: "",
+                        contact: isEditing ? holder?.contact: "",
+                        reference: isEditing ? holder?.reference: "",
+                        name: isEditing ? holder?.name:"",
+                        matricule: isEditing ? holder?.matricule :"",
+                        function: isEditing ? holder?.function : "",
+                        type:isEditing ? holder?.type : "",
                     }
                 }
                 validationSchema={Yup.object({

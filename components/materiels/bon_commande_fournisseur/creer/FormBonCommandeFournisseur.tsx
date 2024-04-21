@@ -14,7 +14,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import OSDatePicker from '../../../shared/date/OSDatePicker';
 
 const FormBonCommandeFournisseur  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) => {
-    const dispatch = useAppDispatch();
+    const dispatch: any = useAppDispatch();
     const route = useRouter();
     const [idValues ,setIdValues] = useState<any>()
     

@@ -49,7 +49,7 @@ const Details = () => {
         }
       }}));
 
-      console.log(holder)
+      // console.log(holder)
     }
   }, [router.query]);
 
@@ -74,6 +74,10 @@ const Details = () => {
         console.log("cancelled");
       });
   };
+  const handleClickEdit = async (id: any) => {
+    await dispatch(editHolder({ id }));
+    router.push(`/materiels/detenteur/${id}/edit`);
+};
   return (
     <DetailStagiaireWrapper maxWidth="xl">
       <NavigationContainer>
@@ -82,20 +86,16 @@ const Details = () => {
             <Button color="info" variant="text" onClick={() => router.back()} startIcon={<ArrowBack />}>
               Retour
             </Button>
-            <Link href={`/materiels/detenteur/${holder.id}/edit`}>
               <Button
                 variant="text"
                 color="primary"
                 size="small"
                 startIcon={<Edit />}
                 sx={{ marginInline: 3 }}
-                onClick={() => {
-                  dispatch(editHolder({ id }));
-                }}
+                onClick={() =>handleClickEdit(id)}
               >
                 Modifier
               </Button>
-            </Link>
             <Button
               variant="text"
               color="warning"

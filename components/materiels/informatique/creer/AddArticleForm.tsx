@@ -273,7 +273,7 @@ const AddArticleForm = () => {
                         label="BCI"
                         name="bci"
                         options={bonCommandeInternes}
-                        dataKey="numBon"
+                        dataKey={["reference"]}
                         valueKey="id"
                         type="text"
                     />

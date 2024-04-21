@@ -42,9 +42,9 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
 
     const ExpeditionVia = [
         {id : "1",name : "Voie terrestre"},
-        {id : "2",name : "Voie aerienne"},
-        {id : "3",name : "Vie ferovierre"},
-        {id : "4",name : "Vie maritime"}
+        {id : "2",name : "Voie aérienne"},
+        {id : "3",name : "Voie ferrée"},
+        {id : "4",name : "Voie maritime"}
     ]
     const fetchUtilsData = () => {
         dispatch(getEmployees({}));
@@ -132,7 +132,7 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                             fullWidth
                             id="outlined-basic"
                             variant="outlined"
-                            label="Réference"
+                            label="Référence"
                             value = {formikProps.values.reference}
                             name="reference"
                         />
@@ -140,7 +140,7 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                     <FormControl fullWidth>
                         <OSSelectField
                             id="outlined-basic"
-                            label="Expediteur"
+                            label="Expéditeur"
                             name="expediteur"
                             options={employees}
                             dataKey={["matricule","name","surname"]}
@@ -167,7 +167,7 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                     <FormControl fullWidth>
                         <OSSelectField
                             id="outlined-basic"
-                            label="Expedition via"
+                            label="Expédition via"
                             name="expeditionVia"
                             options={ExpeditionVia}
                             dataKey={["name"]}
@@ -178,7 +178,7 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                         <OSDatePicker
                             fullWidth
                             id="outlined-basic"
-                            label="Date expedition"
+                            label="Date d'expédition"
                             variant="outlined"
                             value = {formikProps.values.dateExp}
                             onChange = {(value: any) =>formikProps.setFieldValue("dateExp", value)}
@@ -233,7 +233,7 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                 <TableRow>
                                     <TableCell>Designation</TableCell>
                                     <TableCell align="left">Quantité commander</TableCell>
-                                    <TableCell align="left">Quantité expedié</TableCell>
+                                    <TableCell align="left">Quantité expédié</TableCell>
                                     <TableCell align="left">Observation</TableCell>
                                     <TableCell></TableCell>
                                 </TableRow>
@@ -328,7 +328,7 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                             <FormControl fullWidth>
                                                 <OSTextField
                                                     id="quantiteExpedie"
-                                                    label="Quantité expedié"
+                                                    label="Quantité expédié"
                                                     name="quantiteExpedie"
                                                     type="number"
                                                     min="0"
