@@ -1,15 +1,11 @@
 import React, { useEffect } from "react";
-import { Box, Checkbox, IconButton, Paper, Stack, styled } from "@mui/material";
-import SmieTableHeader from "./TypeEquipmentTableHeader";
+import { Box, IconButton, Paper, Stack, styled } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import TableToolbarSmie from "./TypeEquipmentTableToolbar";
-import Link from "next/link";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
@@ -19,12 +15,6 @@ import {
 import { deleteTypeEquipment } from "../../../../../redux/features/typeEquipment";
 import { editTypeEquipment } from "../../../../../redux/features/typeEquipment";
 import { TypeEquipmentItem } from "../../../../../redux/features/typeEquipment/typeEquipmentSlice.interface";
-import {
-  defaultLabelDisplayedRows,
-  getComparator,
-  labelRowsPerPage,
-  Order,
-} from "../../../../../config/table.config";
 import { useRouter } from "next/router";
 import useFetchTypeEquipment from "../../hooks/useFetchTypeEquipment";
 import { useConfirm } from "material-ui-confirm";
@@ -124,7 +114,16 @@ const ListValeurIndice = () => {
                           padding="normal"
                           align="left"
                         >
-                          {row.prefix}
+                          {row?.prefix}
+                        </TableCell>
+                        <TableCell
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          padding="normal"
+                          align="left"
+                        >
+                          {row?.unitPrice}
                         </TableCell>
                         <TableCell align="right">
                           <BtnActionContainer

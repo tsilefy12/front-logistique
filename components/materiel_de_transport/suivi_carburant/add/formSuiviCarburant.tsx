@@ -28,7 +28,7 @@ import useFetchGrant from "../hooks/useFetchGrant";
 import OSSelectField from "../../../shared/select/OSSelectField";
 import useFetchLigneBudgetaire from "../hooks/useFetchLigneBudgetaire";
 import useFetchTransportationEquipments from "../../hooks/useFetchTransportationEquipments";
-import { getTransportationEquipment, getTransportationEquipments, updateTransportationEquipment } from "../../../../redux/features/transportation_equipment";
+import {  updateTransportationEquipment } from "../../../../redux/features/transportation_equipment";
 
 const FormSuiviCarburant = () => {
   const route = useRouter();
@@ -53,7 +53,7 @@ const FormSuiviCarburant = () => {
     }
   }, [id]);
 
-  const ListMateriel: { id: string, name: string }[] = [];
+  const ListMateriel: { id: string, name: string ,unitPrice:number}[] = [];
   let kilometrageInit: number = 0;
   let reserve: number = 0;
   let resteCarburant: number = 0;
@@ -68,8 +68,8 @@ const FormSuiviCarburant = () => {
         reserve = element["reservoir"];
         resteCarburant = element["reste"];
       }
-      if (element["status"] === "Interne") {
-        ListMateriel.push({ id: element.id, name: element.registration });
+      if (element["status"] === "Location interne") {
+        ListMateriel.push({ id: element.id, name: element.registration ,unitPrice: element.typeEquipment.unitPrice});
       }
     });
   } else {
@@ -162,7 +162,7 @@ const FormSuiviCarburant = () => {
           kilometrageFinal: isEditing ? suiviCarburant?.kilometrageFinal : 0,
           montant: isEditing ? suiviCarburant?.montant : 0,
           grant: isEditing ? suiviCarburant?.grant : "",
-          pu: isEditing ? suiviCarburant?.pu : 0,
+          pu: isEditing ? suiviCarburant?.pu : ListMateriel.find((e:any) => e.id === materiel)?.unitPrice,
           ligneBudgetaire: isEditing ? suiviCarburant?.ligneBudgetaire : "",
           modePaiement: isEditing ? suiviCarburant?.modePaiement : "",
         }}
@@ -312,7 +312,6 @@ const FormSuiviCarburant = () => {
                     variant="outlined"
                     name="pu"
                     type="number"
-                    min="0"
                     value={formikProps.values.pu}
                     onChange={(event: any) => {
                       const newValue = parseInt(event.target.value);

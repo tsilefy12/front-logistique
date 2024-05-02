@@ -192,10 +192,10 @@ const AddArticleForm = () => {
                         <FormControl fullWidth>
                             <OSSelectField
                                 id="outlined-basic"
-                                label="Type"
+                                label="Catégorie"
                                 name="typeEquipmentId"
-                                options={typeEquipmentList}
-                                dataKey={["type"]}
+                                options={typeEquipmentList.map((e:any)=>({...e,prefix:" - " + e.prefix}))}
+                                dataKey={["type","prefix"]}
                                 valueKey="id"
                                 type="text"
                             />

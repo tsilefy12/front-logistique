@@ -2,6 +2,7 @@ export interface TypeEquipmentItem {
   id?: string;
   type?: string;
   prefix?: string;
+  unitPrice?: number;
   imageUrl?: string;
 }
 

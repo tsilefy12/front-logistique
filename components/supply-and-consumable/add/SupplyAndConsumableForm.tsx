@@ -250,8 +250,8 @@ export default function SuplyAndConsumableForm() {
                     id="outlined-basic"
                     label="Catégorie"
                     name="categorieStock"
-                    options={typeEquipmentList}
-                    dataKey={["type"]}
+                    options={typeEquipmentList.map((e)=> ({...e,prefix:" - " + e.prefix}))}
+                    dataKey={["type","prefix"]}
                     valueKey="id"
                     type="text"
                   />

@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import {
   useAppDispatch,
-  useAppSelector,
 } from "../../../hooks/reduxHooks";
 import { getTransportationEquipments } from "../../../redux/features/transportation_equipment";
 
@@ -12,7 +11,8 @@ const useFetchTransportationEquipments = () => {
     return async () => {
         let args: any = {
             include: {
-                vendor: true
+                vendor: true,
+                typeEquipment:true
             }
         };
         if (router.query.search) {
