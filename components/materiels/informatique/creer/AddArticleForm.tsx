@@ -333,7 +333,7 @@ const AddArticleForm = () => {
                             valueKey="id"
                             type="text"
                         />
-                        <OSSelectField
+                        {/* <OSSelectField
                             id="outlined-basic"
                             name="categorieMateriel"
                             label="Catégorie Matériel"
@@ -341,7 +341,7 @@ const AddArticleForm = () => {
                             dataKey={["name"]}
                             valueKey="id"
                             type="text"
-                        />
+                        /> */}
                     </Stack>
                 </FormContainer>
                 </Form>

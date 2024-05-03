@@ -58,7 +58,6 @@ function PrintBonTransfert({ pdfData }: { pdfData: any }) {
                          <View style={[styles.rowBody,{backgroundColor:"#76923E"}]}>
                               <Text style={[styles.th,{borderLeft:"none"}]}>Quantité commandée</Text>
                               <Text style={styles.th}>Quantité expédiée</Text>
-                              <Text style={styles.th}>Nombre de produits</Text>
                               <Text style={[styles.th,{width: "50% !important"}]}>Designation</Text>
                               <Text style={styles.th}>Observation</Text>
                          </View>
@@ -70,7 +69,6 @@ function PrintBonTransfert({ pdfData }: { pdfData: any }) {
                                         <View style={[styles.rowBody ,{borderTop:"none !important",}]}>
                                              <Text style={[styles.tr,{borderLeft:"none"}]}>{element?.quantiteCommande}</Text>
                                              <Text style={styles.tr}>{element?.quantiteExpedie}</Text>
-                                             <Text style={styles.tr}></Text>
                                              <Text style={[styles.tr,{width: "50% !important"}]}>{element?.designation}</Text>
                                              <Text style={styles.tr}>{element?.observation}</Text>
                                         </View>

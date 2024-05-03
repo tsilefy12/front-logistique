@@ -52,6 +52,7 @@ const DetailsFicheDotation = () => {
             pieceJointe : ficheDotation.pieceJointe ? ficheDotation.pieceJointe : null
         }
         setPdf(data)
+        console.log(ficheDotation)
     },[id,ficheDotation])
 
     return (
@@ -176,47 +177,51 @@ const DetailsFicheDotation = () => {
                         </Stack>
                     </FormContainer>
                 </Box>
-                {/* <Box>
-                    <FormContainer spacing={2}>
-                            <Stack
-                                direction="row"
-                                sx={{
-                                    flex: "1 1 100%",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                }}
-                                >
-                                <Typography variant="h6" id="tableTitle" component="div">
-                                    Liste des personnes concernés
-                                </Typography>
-                            </Stack>
-                            <TableContainer component={Paper}>
-                                <Table sx={{ minWidth: 700 }} aria-label="simple table">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>Nom et Prénom</TableCell>
-                                            <TableCell align="left">CIN</TableCell>
-                                            <TableCell align="left">Fonction</TableCell>
-                                            <TableCell align="left">Désignation</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {ficheDotation.personneConcerne?.map((item:any , index:any) => (
-                                            <TableRow
-                                                key={index}
-                                                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                                            >
-                                                <TableCell component="th" scope="row">{item.nomPrenom}</TableCell>
-                                                <TableCell align="left">{item.cin}</TableCell>
-                                                <TableCell align="left">{item.fonction}</TableCell>
-                                                <TableCell align="left">{item.designation}</TableCell>
+                {ficheDotation?.personneConcerne?.length > 0  ? (
+                    <Box>
+                        <FormContainer spacing={2}>
+                                <Stack
+                                    direction="row"
+                                    sx={{
+                                        flex: "1 1 100%",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                    }}
+                                    >
+                                    <Typography variant="h6" id="tableTitle" component="div">
+                                        Liste des personnes concernés
+                                    </Typography>
+                                </Stack>
+                                <TableContainer component={Paper}>
+                                    <Table sx={{ minWidth: 700 }} aria-label="simple table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>Nom et Prénom</TableCell>
+                                                <TableCell align="left">CIN</TableCell>
+                                                <TableCell align="left">Fonction</TableCell>
+                                                <TableCell align="left">Désignation</TableCell>
                                             </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                    </FormContainer>
-                </Box> */}
+                                        </TableHead>
+                                        <TableBody>
+                                            {ficheDotation.personneConcerne?.map((item:any , index:any) => (
+                                                <TableRow
+                                                    key={index}
+                                                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                                >
+                                                    <TableCell component="th" scope="row">{item.nomPrenom}</TableCell>
+                                                    <TableCell align="left">{item.cin}</TableCell>
+                                                    <TableCell align="left">{item.fonction}</TableCell>
+                                                    <TableCell align="left">{item.designation}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                        </FormContainer>
+                    </Box>
+                ):(
+                    <></>
+                )}
             </DetailsContainer>
         </Container>
     );

@@ -231,7 +231,7 @@ const ListTransport = () => {
                       return (
                         <TableRow hover tabIndex={-1} key={row.id}>
                           <TableCell component="th" id={labelId} align="left">
-                            {row?.materiel ? row.transportationEquipment?.registration : ''}
+                            {row.transportationEquipment?.registration}
                           </TableCell>
 
                           <TableCell align="left">

@@ -7,11 +7,37 @@ import {
   useTheme,
 } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import palette from "../../../../themes/palette";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
+import { getEmployees } from "../../../../redux/features/employeStagiaire/employeeSlice";
+import { getInterns } from "../../../../redux/features/employeStagiaire/stagiaireSlice";
 
 const CardDetenteur = ({ holder }: any) => {
   const theme = useTheme();
+  const dispatch = useAppDispatch();
+    
+  const { employees } = useAppSelector((state) => state.employe);
+  const { interns } = useAppSelector((state) => state.stagiaire);
+
+  const total = [...employees.map((i:any)=>{
+      return {
+      id : i.id,matricule:i.matricule, name:i.name +" "+ i.surname, type: "employe"
+      }
+  }),...interns.map((i:any)=>{
+      return {
+          id : i.id,matricule:i.matricule, name:i.name +" "+ i.surname, type: "intern"
+      }
+  })]
+
+  const fetchUtilsData = () => {
+      dispatch(getEmployees({}));
+      dispatch(getInterns({}));
+  };
+
+  useEffect(() => {
+      fetchUtilsData();
+  }, []);
 
   return (
     <Link href={`/materiels/detenteur/${holder.id}/detail`}>
@@ -26,7 +52,7 @@ const CardDetenteur = ({ holder }: any) => {
           </CardImg>
           <CardDesc sx={{justifyContent: "space-between"}}>
             <Typography variant="h6" color="initial">
-              {holder?.lastName} {holder?.firstName}
+              {total.find((e) => e.id == holder?.name)?.name}
             </Typography>
             <Typography variant="body2" color={palette.accent.main}>
               {holder?.matricule}
@@ -53,7 +79,7 @@ const CustomCard = styled(Paper)(({ theme }) => ({
   overflow: "hidden",
   display: "flex",
   justifyContent: "flex-start",
-  width: 286,
+  width: 350,
   height: 116,
   marginBlock: theme.spacing(2),
   cursor: "pointer",

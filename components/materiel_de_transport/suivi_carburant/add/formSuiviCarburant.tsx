@@ -300,7 +300,7 @@ const FormSuiviCarburant = () => {
                     onChange={(event: any) => {
                       const newValue = parseInt(event.target.value);
                       formikProps.setFieldValue("kilometrageFinal", newValue);
-                      const newMontant = (formikProps.values.pu! * ((newValue * reserve) / kilometrageInit)).toFixed(0);
+                      const newMontant = ((formikProps.values.kilometrageFinal! - kilometrageInit)*formikProps.values.pu!).toFixed(0);
                       formikProps.setFieldValue("montant", parseInt(newMontant));
                     }}
                   />
@@ -312,13 +312,7 @@ const FormSuiviCarburant = () => {
                     variant="outlined"
                     name="pu"
                     type="number"
-                    value={formikProps.values.pu}
-                    onChange={(event: any) => {
-                      const newValue = parseInt(event.target.value);
-                      formikProps.setFieldValue("pu", newValue);
-                      const newMontant = ((newValue) * (((formikProps.values.kilometrageFinal! - kilometrageInit) * reserve)/kilometrageInit)).toFixed(0);
-                      formikProps.setFieldValue("montant", parseInt(newMontant));
-                    }}
+                    value={ListMateriel.find((e:any) => e.id === materiel)?.unitPrice}
                   />
                 </FormControl>
                 <FormControl fullWidth>
@@ -329,7 +323,7 @@ const FormSuiviCarburant = () => {
                     name="montant"
                     type="number"
                     min="0"
-                    value={parseInt(((((formikProps.values.kilometrageFinal! - kilometrageInit) * reserve)/kilometrageInit)* formikProps.values.pu!).toFixed(0))}
+                    value={parseInt(((formikProps.values.kilometrageFinal! - kilometrageInit)* formikProps.values.pu!).toFixed(0))}
                   />
                 </FormControl>
               </Stack>

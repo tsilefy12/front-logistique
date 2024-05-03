@@ -1,6 +1,6 @@
 import { Form, FormikProps } from 'formik';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { Box, Button, Divider, FormControl, IconButton, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, styled } from '@mui/material';
 import Delete from '@mui/icons-material/Delete';
@@ -26,13 +26,17 @@ const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDel
 
     if (transportationEquipments.length > 0) {
         transportationEquipments.forEach((element: any) => {
-            if (element["status"] === "Interne") {
+            if (element["status"] === "Location interne") {
                 listMateriel.push({ id: element.id, name: element.registration });
             }
         });
     } else {
         console.log("Rien")
     }
+    useEffect(()=>{
+        fetchTransportEquipment()
+    },[])
+    
     return (
         <Form>
             <NavigationContainer>
