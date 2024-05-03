@@ -43,12 +43,14 @@ const ListStock = () => {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const dispatch = useAppDispatch();
-  const { equipmentStockList } = useAppSelector(
-    (state) => state.equipmentStock
+  const { typeEquipmentList:equipmentStockList } = useAppSelector(
+    (state) => state.typeEquipment
   );
   const fetchEquipmentList = useFetchEquipmentStock();
 
+  console.log(equipmentStockList)
   useEffect(() => {
+
     fetchEquipmentList();
   }, []);
   // const handleRequestSort = (
@@ -146,45 +148,47 @@ const ListStock = () => {
                     .map((row: EquipmentStockItem, index: any) => {
                       // const isItemSelected = isSelected(row.article);
                       const labelId = `enhanced-table-checkbox-${index}`;
-
-                      return (
-                        <TableRow
-                          hover
-                          //   onClick={(event) => handleClick(event, row.article)}
-                          tabIndex={-1}
-                          key={row.id}
-                        >
-                          {/* <TableCell align="left">{row.numOptim}</TableCell> */}
-                          <TableCell
-                            padding="normal"
-                            component="th"
-                            id={labelId}
-                            scope="row"
-                            align="left"
+                      if(row.equipments && row.equipments!.length >0 ){
+                        return (
+                          <TableRow
+                            hover
+                            //   onClick={(event) => handleClick(event, row.article)}
+                            tabIndex={-1}
+                            key={row.id}
                           >
-                            {row.type}
-                          </TableCell>
-                          {/* <TableCell align="left">{row.acquisitionDate}</TableCell>
-                          <TableCell align="left">{row.status}</TableCell>
-                          <TableCell align="left">{row.inStock}</TableCell> */}
-                          <TableCell align="right">
-                            <BtnActionContainer
-                              direction="row"
-                              justifyContent="center"
+                            {/* <TableCell align="left">{row.numOptim}</TableCell> */}
+                            <TableCell
+                              padding="normal"
+                              component="th"
+                              id={labelId}
+                              scope="row"
+                              align="left"
                             >
-                              <Link href={`stock/${row.id}/details`}>
-                                <IconButton
-                                  color="accent"
-                                  aria-label="Details"
-                                  component="span"
-                                >
-                                  <VisibilityIcon />
-                                </IconButton>
-                              </Link>
-                            </BtnActionContainer>
-                          </TableCell>
-                        </TableRow>
-                      );
+                              {row.type}
+                            </TableCell>
+                            {/* <TableCell align="left">{row.acquisitionDate}</TableCell>
+                            <TableCell align="left">{row.status}</TableCell>
+                            <TableCell align="left">{row.inStock}</TableCell> */}
+                            <TableCell align="right">
+                              <BtnActionContainer
+                                direction="row"
+                                justifyContent="center"
+                              >
+                                <Link href={`stock/${row.id}/details`}>
+                                  <IconButton
+                                    color="accent"
+                                    aria-label="Details"
+                                    component="span"
+                                  >
+                                    <VisibilityIcon />
+                                  </IconButton>
+                                </Link>
+                              </BtnActionContainer>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      }
+                      
                     })}
                   {emptyRows > 0 && (
                     <TableRow

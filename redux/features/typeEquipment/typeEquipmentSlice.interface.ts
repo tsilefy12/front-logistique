@@ -4,6 +4,7 @@ export interface TypeEquipmentItem {
   prefix?: string;
   unitPrice?: number;
   imageUrl?: string;
+  equipments?: any[];
 }
 
 export interface TypeEquipmentInitialState {

@@ -3,6 +3,7 @@ export interface EquipmentStockItem {
   numOptim?: string;
   type?: string; 
   acquisitionDate?: string;
+  equipments?: any[];
   status?: string;
   inStock?: number;
 }
