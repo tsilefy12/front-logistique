@@ -71,7 +71,6 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
             newValue = newValue.replace(value + ", ", "").replace(", " + value, "").replace(value, ""); // Enlever la valeur sélectionnée
         }
         formikProps.setFieldValue('motif', newValue);
-        console.log(formikProps.values.motif)
     };
     const handleFech = async (id: any) => {
         try { 
@@ -83,7 +82,6 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                         articleCommandeBce:true
                     }
                 }}));
-                console.log(Val)
                 setMateriel((prev:any[])=>{
                     console.log(prev)
                     prev = Val.payload.articleCommandeBce
@@ -95,7 +93,6 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                         ArticleCommande:true
                     }
                 }}));
-                console.log(Val)
                 setMateriel((prev:any[])=>{
                     console.log(prev)
                     prev = Val.payload.ArticleCommande
@@ -122,7 +119,6 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                 }
             }
         }));
-        console.log(budgetLineList)
     }, [formikProps.values.grant]);
     useEffect(() => {
         fetchUtilsData();

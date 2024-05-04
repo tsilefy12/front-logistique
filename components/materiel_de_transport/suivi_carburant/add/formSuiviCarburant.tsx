@@ -52,9 +52,6 @@ const FormSuiviCarburant = () => {
   } else {
     console.log("Rien")
   }
-  // console.log("kilometrage initial :", kilometrageInit)
-  // console.log("reservoir :", reserve);
-
   const handleSubmit = async (values: any) => {
 
     try {
@@ -69,7 +66,6 @@ const FormSuiviCarburant = () => {
         await dispatch(createSuiviCarburant(values));
         updateTransport(values);
       }
-      // console.log("valeur KF :", values.kilometrageFinal)
 
       fetchSuiviCarburant()
       route.push("/materiel_de_transport/suivi_carburant");
@@ -79,7 +75,6 @@ const FormSuiviCarburant = () => {
   };
 
   const updateTransport = async (values: any) => {
-    // console.log("materiel id :", values.materiel)
     try {
       if (values.materiel != "") {
         const updatedReste = calculateUpdatedReste(values);
@@ -110,11 +105,7 @@ const FormSuiviCarburant = () => {
 
       if (resteCarburant !== undefined) {
         if (calcul2 > 0) {
-          
           resteCarburant = parseInt((reserve - calcul2).toFixed(1));
-
-          console.log("calcul2 :", calcul2)
-
           return resteCarburant;
         }
       } else {

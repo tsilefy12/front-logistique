@@ -38,17 +38,14 @@ const LocationForm = ({formikProps}: {formikProps: FormikProps<any>}) => {
         fetchVendors();
         fetchMateriels();
     }, []);
-    console.log("data location :", transportationEquipments)
     const listMateriel: { id: string, name: string }[] = [];
 
     if (transportationEquipments.length > 0) {
         transportationEquipments.forEach((element: any) => {
-            console.log(element["status"])
             if (element["status"] === "Location externe") {
                 listMateriel.push({ id: element.id, name: element.registration });
             }
         });
-        console.log(listMateriel)
     } else {
         listMateriel.push({ id: '', name: '' });
     }
@@ -61,7 +58,6 @@ const LocationForm = ({formikProps}: {formikProps: FormikProps<any>}) => {
                 }
             }
         }));
-        console.log(budgetLineList)
     }, [formikProps.values.grant]);
     return (
         <Form>

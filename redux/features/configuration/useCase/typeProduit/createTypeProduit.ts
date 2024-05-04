@@ -15,7 +15,6 @@ export const createTypeProduit = createAsyncThunk(
     "typeProduit/createTypeProduit",
     async (typeProduit: typeProduitItem, thunkAPI) => {
         try {
-            console.log(typeProduit);
             const response = await axios.post("/logistique/type-produit", typeProduit);
             thunkAPI.dispatch(
                 enqueueSnackbar({

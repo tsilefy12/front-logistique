@@ -49,7 +49,6 @@ export default function PvComparaisonForm() {
                             pvComparaisonOffreId: response.payload.id
                         };
                         const res = await dispatch(createPvComparaisonFournisseur(newData));
-                        console.log(res.payload?.id)
                         if(index === values.offreRetenu){
                             const data = {
                                 motif: values.motif ? values.motif: null,

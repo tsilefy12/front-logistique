@@ -15,7 +15,6 @@ export const createUniteStock = createAsyncThunk(
     "typeProduit/createTypeProduit",
     async (uniteStockItem: uniteStockItem, thunkAPI) => {
         try {
-            console.log(uniteStockItem);
             const response = await axios.post("/logistique/unite-stock", uniteStockItem);
             thunkAPI.dispatch(
                 enqueueSnackbar({

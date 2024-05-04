@@ -35,7 +35,6 @@ const FormMission = () => {
           );
         } else {
           await dispatch(createMissionDeTransport(values));
-          console.log("mandalo ato")
         }
         route.push("/materiel_de_transport/mission");
       } catch (error) {

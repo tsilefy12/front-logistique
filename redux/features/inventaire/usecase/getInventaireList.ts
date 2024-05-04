@@ -18,7 +18,6 @@ export const getInventaireListe = createAsyncThunk(
                 params: { args: params },
             }
         );
-        console.log(response.data)
         return response.data;
         } catch (error: any) {
         if (error.response) {

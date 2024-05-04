@@ -58,7 +58,6 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
         if(formikProps.values.demandeur){
             const Val:any = total.find((e:any)=> e.id === formikProps.values.demandeur)
             formikProps.setFieldValue("type", Val?.type)
-            console.log(formikProps.values.type)
         }
     }, [formikProps.values.demandeur]);
     
@@ -70,7 +69,6 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
                 }
             }
         }));
-        console.log(budgetLineList)
     }, [formikProps.values.grant]);
     return (
         <Form>

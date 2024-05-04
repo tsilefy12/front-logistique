@@ -67,8 +67,6 @@ export default function BonTransfertList() {
     })]
 
     const fetchBonTransfert = useFetchBonTransfert();
-    
-    console.log(bonTransferts)
 
     useEffect(() => {
         fetchBonTransfert();

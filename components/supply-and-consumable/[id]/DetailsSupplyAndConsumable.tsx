@@ -38,7 +38,6 @@ const DetailsSuplyAndConsumable = () => {
     };
     dispatch(getSuplyAndConsumable({ id, args }));
   };
-  console.log("result :", suplyAndConsumable)
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
       <SectionNavigation

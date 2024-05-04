@@ -48,7 +48,6 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                         articleCommandeBce:true
                     }
                 }}));
-                console.log(Val)
                 setValuesArticle((prev:any[])=>{
                     console.log(prev)
                     prev = Val.payload.articleCommandeBce
@@ -60,7 +59,6 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                         ArticleCommande:true
                     }
                 }}));
-                console.log(Val)
                 setValuesArticle((prev:any[])=>{
                     console.log(prev)
                     prev = Val.payload.ArticleCommande

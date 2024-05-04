@@ -83,7 +83,6 @@ const FormDetenteur = ({formikProps,valuesArticle,setValuesArticle}: {formikProp
             const Val:any = total.find((e:any)=> e.id === formikProps.values.name)
             formikProps.setFieldValue("type", Val?.type)
             formikProps.setFieldValue("matricule", Val?.matricule)
-            console.log(formikProps.values.type)
         }
     }, [formikProps.values.name]);
     return (

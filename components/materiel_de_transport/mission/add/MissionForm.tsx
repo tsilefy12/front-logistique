@@ -51,8 +51,7 @@ const MissionForm = ({formikProps}: {formikProps: FormikProps<any>}) => {
     if (transportationEquipments.length > 0) {
         transportationEquipments.forEach((element: any) => {
             if (element["status"] === "Location interne") {
-                console.log("status :", element.status)
-                ListMateriel.push({ id: element.id, name: element.registration});
+               ListMateriel.push({ id: element.id, name: element.registration});
             }
         });
     } else {
@@ -67,7 +66,6 @@ const MissionForm = ({formikProps}: {formikProps: FormikProps<any>}) => {
                 }
             }
         }));
-        console.log(budgetLineList)
     }, [formikProps.values.grant]);
     
     return (

@@ -28,7 +28,6 @@ const FormLocation = () => {
             dispatch(editLocation({ id }));
         }
     }, [id]);
-    console.log("data location :", transportationEquipments)
     const listMateriel: { id: string, name: string }[] = [];
 
     if (transportationEquipments.length > 0) {

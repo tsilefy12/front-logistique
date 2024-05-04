@@ -33,7 +33,6 @@ export const createArticleCommandeExterne = createAsyncThunk(
     "fourniture_consommable/createArticleCommandeExterne",
     async (data: ArticleBCEItem, thunkAPI) => {
         try {
-            console.log(data);
             const response = await axios.post("/logistique/article-commande-bce", data);
             thunkAPI.dispatch(
                 enqueueSnackbar({

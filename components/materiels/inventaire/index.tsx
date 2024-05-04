@@ -53,7 +53,6 @@ export default function InventaireList() {
 
   React.useEffect(() => {
     fetchInventaireList();
-    console.log("length"+ inventaireList.length)
   }, [router.query]);
 
   const handleChangePage = (event: unknown, newPage: number) => {

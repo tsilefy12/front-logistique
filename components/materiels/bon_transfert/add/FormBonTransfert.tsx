@@ -60,7 +60,6 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
     useEffect(() => {
         const Val:any = total.find((e:any)=> e.id === formikProps.values.destination)
         formikProps.setFieldValue("type", Val?.type)
-        console.log(formikProps.values.type)
     }, [formikProps.values.destination]);
 
     return (

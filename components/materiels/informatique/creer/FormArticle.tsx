@@ -64,7 +64,6 @@ import {
                 }
             }
         }));
-        console.log(budgetLineList)
     }, [formikProps.values.grant]);
 
     return (

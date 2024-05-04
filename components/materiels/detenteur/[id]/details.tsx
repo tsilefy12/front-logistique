@@ -26,10 +26,7 @@ import { getInterns } from "../../../../redux/features/employeStagiaire/stagiair
 
 const Details = () => {
   const router = useRouter();
-
-  //   const id: any = router.query.id;
   const { id }: any = router.query;
-  //   console.log("list Id ", id);
 
   const dispatch: any = useAppDispatch();
 
@@ -48,8 +45,6 @@ const Details = () => {
           }
         }
       }}));
-
-      // console.log(holder)
     }
   }, [router.query]);
 

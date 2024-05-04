@@ -33,7 +33,6 @@ const FormBonDeVoiture = () => {
                     activity:true
                 }
             }}));
-            console.log(Val)
             setValuesArticle((prev:any[])=>{
                 console.log(prev)
                 prev = Val.payload.activity
@@ -61,7 +60,6 @@ const FormBonDeVoiture = () => {
             }
             if (isEditing) {
                 const response = await dispatch(updateCarVoucher({id, carVoucher}))
-                console.log("value article :", valuesArticle)
                 if (valuesArticle.length > 0) {
                     valuesArticle?.forEach((item: any, index: any) =>{
                         const id = item.id

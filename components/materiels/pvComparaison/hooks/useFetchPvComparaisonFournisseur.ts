@@ -31,7 +31,6 @@ const useFetchPvComparaisonFournisseurs = () => {
             };
         }
         const response = await dispatch(getPvComparaisons({ args }));
-        console.log(response)
     };
 };
 

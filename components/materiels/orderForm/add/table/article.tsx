@@ -58,7 +58,6 @@ export default function ListArticle() {
 
   React.useEffect(() => {
     fetchOrderFormListe();
-    // console.log(orderFormItemListe);
   }, [router.query]);
 
   React.useEffect(() => {
@@ -80,7 +79,6 @@ export default function ListArticle() {
   };
 
   const handleEditClick = (idRow: GridRowId) => {
-    // console.log(id);
     const id: any = idRow;
     dispatch(editOrderFormItem({ id }));
     setRowModesModel({
@@ -91,7 +89,6 @@ export default function ListArticle() {
 
   const handleSaveClick = async (id: GridRowId, value: any) => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-    // console.log(value);
   };
   React.useEffect(() => {
     if (rows.length > orderFormItemListe.length) {
@@ -156,12 +153,9 @@ export default function ListArticle() {
   };
 
   const processRowUpdate = (newRow: GridRowModel) => {
-    // console.log("edit");
-
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row: any) => (row.id === newRow.id ? updatedRow : row)));
     if (isEditing) {
-      // console.log(newRow);
       const value: any = newRow;
       try {
         dispatch(

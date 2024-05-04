@@ -14,8 +14,7 @@ import { axios } from "../../../../lib/axios";
       try {
         const params = {
           args: JSON.stringify(data.args),
-        };
-        console.log(params);
+        };;
         const response = await axios.get("/rh/employee", { params });
         return response.data;
       } catch (error: any) {

@@ -56,7 +56,6 @@ const FormFicheDotation = ({formikProps,valuesArticle,setValuesArticle,setIdDele
                 }
             }
         }));
-        console.log(budgetLineList)
     }, [formikProps.values.grant]);
 
     return (

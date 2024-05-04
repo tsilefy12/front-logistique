@@ -68,7 +68,6 @@ const DetailsPvComparaison = () => {
             offre : offre
         }
         setPdf(data)
-        console.log("offre.motif:", offre.motif)
     },[id,pvComparaison])
     return (
         <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>

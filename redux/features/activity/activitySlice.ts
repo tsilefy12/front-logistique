@@ -32,7 +32,6 @@ export const createActivity = createAsyncThunk(
     "activity/createActivity",
     async (data: ActivityItem, thunkAPI) => {
         try {
-            console.log("mandalo ato")
             const response = await axios.post("/logistique/activity", data);
             thunkAPI.dispatch(
                 enqueueSnackbar({
@@ -117,7 +116,6 @@ export const updateActivity = createAsyncThunk(
   "activity/updateActivity",
   async (data: { id: string; activity: ActivityItem }, thunkAPI) => {
     try {
-        console.log("id :", data.id)
       const response = await axios.patch(
         `/logistique/activity/${data.id}`,
         data.activity

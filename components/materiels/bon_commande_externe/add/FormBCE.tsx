@@ -55,7 +55,6 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
     useEffect(() => {
         const Val:any = total.find((e:any)=> e.id === formikProps.values.demandeur)
         formikProps.setFieldValue("type", Val?.type)
-        console.log(formikProps.values.type)
     }, [formikProps.values.demandeur]);
 
     useEffect(() => {
@@ -66,7 +65,6 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
                 }
             }
         }));
-        console.log(budgetLineList)
     }, [formikProps.values.grant]);
 
     return (

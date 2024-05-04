@@ -13,7 +13,6 @@ import { bonTransfertItem } from "../../../../redux/features/bon_transfert/bonTr
 import { format } from "date-fns";
 
 function PrintBonTransfert({ pdfData }: { pdfData: any }) {
-     console.log(pdfData.dateExp)
      return (
           <Document>
                <Page style={{ padding:15 }}>

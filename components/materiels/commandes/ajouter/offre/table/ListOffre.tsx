@@ -88,7 +88,6 @@ export default function ListOffre() {
   };
 
   const handleEditClick = (idRow: GridRowId) => {
-    // console.log(id);
     const id: any = idRow;
     dispatch(editOfferOrder({ id }));
     setRowModesModel({
@@ -99,7 +98,7 @@ export default function ListOffre() {
 
   const handleSaveClick = async (id: GridRowId, value: any) => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-    // console.log(value);
+
   };
   React.useEffect(() => {
     if (rows.length > offerOrderListe.length) {
@@ -167,17 +166,14 @@ export default function ListOffre() {
   };
 
   const handleButtonArticle = async (id: any) => {
-    // console.log(id);
     router.push(`/materiels/commande/${commandId}/offre/${id}/`);
   };
 
   const processRowUpdate = (newRow: GridRowModel) => {
-    // console.log("edit");
 
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row: any) => (row.id === newRow.id ? updatedRow : row)));
     if (isEditing) {
-      // console.log(newRow);
       const value: any = newRow;
       try {
         dispatch(

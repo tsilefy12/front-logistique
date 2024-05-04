@@ -72,7 +72,6 @@ const SuiviForm = ({formikProps}: {formikProps: FormikProps<any>}) => {
                 }
             }
         }));
-        console.log(budgetLineList)
     }, [formikProps.values.grant]);
   
     return (

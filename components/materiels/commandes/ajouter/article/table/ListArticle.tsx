@@ -63,7 +63,6 @@ export default function ListArticleOffre() {
   const router = useRouter();
   // const commandeId: any = router.query.commandId;
   const offerId: any = router.query.id;
-  // console.log("Id", offerId)
   const fetchOfferOrderItemList = useFetchOfferOrderItemListe();
   const dispatch = useAppDispatch();
   const confirm = useConfirm();
@@ -91,7 +90,7 @@ export default function ListArticleOffre() {
   };
 
   const handleEditClick = (idRow: GridRowId) => {
-    // console.log(id);
+
     const id: any = idRow;
     dispatch(editOfferOrderItem({ id }));
     setRowModesModel({
@@ -102,7 +101,7 @@ export default function ListArticleOffre() {
 
   const handleSaveClick = async (id: GridRowId, value: any) => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-    // console.log(value);
+
   };
   React.useEffect(() => {
     if (rows.length > offerOrderItemListe.length) {
@@ -168,18 +167,11 @@ export default function ListArticleOffre() {
     dispatch(cancelEdit());
   };
 
-  // const handleButtonArticle = async (id: any) => {
-  //   console.log(id);
-  //   router.push(`/materiels/commande/${commandeId}/offre/${id}/`);
-  // };
-
   const processRowUpdate = (newRow: GridRowModel) => {
-    // console.log("edit");
-
+    
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row: any) => (row.id === newRow.id ? updatedRow : row)));
     if (isEditing) {
-      // console.log(newRow);
       const value: any = newRow;
       try {
         dispatch(
