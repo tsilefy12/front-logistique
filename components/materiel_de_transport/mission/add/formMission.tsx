@@ -1,319 +1,96 @@
 import {
-  Button,
   Container,
   styled,
-  Typography,
-  FormControl,
   Stack,
-  Divider,
-  TextField,
 } from "@mui/material";
 import { useRouter } from "next/router";
-import Link from "next/link";
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import * as React from "react";
-import ArrowBack from "@mui/icons-material/ArrowBack";
-import { Check, Close } from "@mui/icons-material";
-import OSDatePicker from "../../../shared/date/OSDatePicker";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
-import OSTextField from "../../../shared/input copy/OSTextField";
-
-import { cancelEdit, editMissionDeTransport } from "../../../../redux/features/mission_transport/missionTransportSlice";
+import { editMissionDeTransport } from "../../../../redux/features/mission_transport/missionTransportSlice";
 import { createMissionDeTransport, updateMissionDeTransport } from "../../../../redux/features/mission_transport/missionTransportSlice";
-import useFetchMissionTransport from "../hooks/useFectMission";
-import useFetchGrant from "../../suivi_carburant/hooks/useFetchGrant";
-import useFetchLigneBudgetaire from "../../suivi_carburant/hooks/useFetchLigneBudgetaire";
-import OSSelectField from "../../../shared/select/OSSelectField";
-import useFetchTransportationEquipments from "../../hooks/useFetchTransportationEquipments";
+import MissionForm from "./MissionForm";
 
 const FormMission = () => {
   const route = useRouter();
   const dispatch = useAppDispatch();
   const { id }: any = route.query;
   const { isEditing, missionTransport } = useAppSelector((state) => state.missionDeTransport);
-  const fetchMissionTransport = useFetchMissionTransport()
-  const fetchGrant = useFetchGrant();
-  const fetchLigneBudgetaire = useFetchLigneBudgetaire()
-  const { grantList } = useAppSelector((state) => state.grant);
-  const { budgetLineList } = useAppSelector((state) => state.lineBugetaire)
-  const fetchMateriels = useFetchTransportationEquipments();
-  const { transportationEquipments } = useAppSelector((state) => state.transportationEquipment)
-
-  React.useEffect(() => {
-    fetchGrant();
-    fetchLigneBudgetaire();
-    fetchMissionTransport();
-    fetchMateriels();
-    if (id) {
-      dispatch(editMissionDeTransport({ id }));
-    }
-  }, [id]);
- console.log("data :", transportationEquipments)
-  const ListMateriel: { id: string, name: string }[] = [];
-
- if (transportationEquipments.length > 0) {
-    transportationEquipments.forEach((element: any) => {
-      if (element["status"] === "Interne") {
-        console.log("status :", element.status)
-        ListMateriel.push({ id: element.id, name: element.registration});
-      }
-    });
-  } else {
-    ListMateriel.push({ id: 'aucun', name: 'aucun' });
-  }
  
- console.log("liste mat", ListMateriel)
-  const handleSubmit = async (values: any) => {
-
-    try {
-      if (isEditing) {
-        await dispatch(
-          updateMissionDeTransport({
-            id: missionTransport.id!,
-            mission: values,
-          })
-        );
-      } else {
-        await dispatch(createMissionDeTransport(values));
-        console.log("mandalo ato")
+    React.useEffect(() => {
+      if (id) {
+        dispatch(editMissionDeTransport({ id }));
       }
-      fetchMissionTransport();
-      route.push("/materiel_de_transport/mission");
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
+    }, [id])
+    const handleSubmit = async (values: any) => {
 
-  return (
-    <Container maxWidth="xl" sx={{ pb: 5, mb: 4 }}>
-      <Formik
-        enableReinitialize={isEditing ? true : false}
-        initialValues={{
-          materiel: isEditing ? missionTransport?.materiel : "",
-          pj: isEditing ? missionTransport?.pj : "",
-          date: isEditing ? missionTransport?.date : new Date(),
-          libelle: isEditing ? missionTransport?.libelle : "",
-          utilisateur: isEditing ? missionTransport?.utilisateur : "",
-          nombreJour: isEditing ? missionTransport?.nombreJour : 0,
-          pu: isEditing ? missionTransport?.pu : 0,
-          grant: isEditing ? missionTransport?.grant : "",
-          ligneBudgetaire: isEditing ? missionTransport?.ligneBudgetaire : "",
-
-        }}
-        validationSchema={Yup.object({
-          materiel: Yup.string().required("Veuillez remplir le champ matériel"),
-          pj: Yup.string().required(
-            "Veuillez remplir le champ PJ"
-          ),
-          date: Yup.string().required("Veuillez remplir le champ date"),
-          libelle: Yup.string().required("Veuillez remplir le champ libellé"),
-          utilisateur: Yup.string().required(
-            "Veuillez remplir le champ utilisateur"
-          ),
-          nombreJour: Yup.number().required(
-            "Veuillez remplir le champ nombre de jour"
-          ),
-          pu: Yup.number().required(
-            "Veuillez remplir le champ prix unitaire"
-          ),
-          grant: Yup.string().required(
-            "Veuillez remplir le champ grant"
-          ),
-          ligneBudgetaire: Yup.string().required(
-            "Veuillez remplir le champ ligne budgetaire"
-          ),
-        })}
-        onSubmit={(value: any, action: any) => {
-          handleSubmit(value);
-          action.resetForm();
-        }}
-      >
-        {(formikProps) => {
-          return (
-            <Form>
-              <NavigationContainer>
-                <SectionNavigation>
-                  <Stack flexDirection={"row"}>
-                    <Link href="/materiel_de_transport/mission/">
-                      <Button
-                        color="info"
-                        variant="text"
-                        startIcon={<ArrowBack />}
-                        onClick={() => {
-                          formikProps.resetForm();
-                          dispatch(cancelEdit());
-                        }}
-                      >
-                        Retour
-                      </Button>
-                    </Link>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      startIcon={<Check />}
-                      sx={{ marginInline: 3 }}
-                      type="submit"
-                    >
-                      {isEditing ? "Modifier" : "Ajouter"}
-                    </Button>
-                    <Button
-                      variant="text"
-                      color="warning"
-                      size="small"
-                      startIcon={<Close />}
-                      sx={{ marginInline: 3 }}
-                      onClick={() => {
-                        formikProps.resetForm();
-                        dispatch(cancelEdit());
-                      }}
-                    >
-                      Annuler
-                    </Button>
-                  </Stack>
-                  <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"}
-                  </Typography>
-                </SectionNavigation>
-                <Divider />
-              </NavigationContainer>
-              <Stack
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-                spacing={2}
-                margin={2}
-              >
-                <OSSelectField
-                  fullWidth
-                  id="outlined-basic"
-                  label="Matériel"
-                  variant="outlined"
-                  options={ListMateriel}
-                  dataKey="name"
-                  valueKey="id"
-                  name="materiel"
-                />
-                <OSTextField
-                  fullWidth
-                  id="outlined-basic"
-                  label="Référence budgetaire"
-                  variant="outlined"
-                  name="pj"
-                />
-              </Stack>
-              <Stack direction="row" spacing={3} margin={2}>
-                <FormControl fullWidth>
-                  <OSDatePicker
-                    id="outlined-basic"
-                    label="Date"
-                    variant="outlined"
-                    value={formikProps.values.date}
-                    onChange={(value: any) => formikProps.setFieldValue("date", value)}
-                  />
-                </FormControl>
-                <FormControl fullWidth>
-                  <OSTextField
-                    id="outlined-basic"
-                    label="Libellé"
-                    name="libelle"
-                  />
-                </FormControl>
-                <FormControl fullWidth>
-                  <OSTextField
-                    id="outlined-basic"
-                    label="Utilisateur"
-                    name="utilisateur"
-                    type="text"
-                  />
-                </FormControl>
-              </Stack>
-              <Stack direction="row" spacing={3} margin={2}>
-
-                <FormControl fullWidth>
-                  <OSTextField
-                    id="outlined-basic"
-                    label="Nombre de jour"
-                    name="nombreJour"
-                    type="number"
-                    min="0"
-                    value={formikProps.values.nombreJour}
-                    onChange={(event: any) => {
-                      const newValue = parseInt(event.target.value);
-                      formikProps.setFieldValue("nombreJour", newValue);
-                      const newMontant = newValue * (formikProps.values.pu ?? 0);
-                      formikProps.setFieldValue("montant", newMontant);
-                    }}
-                  />
-                </FormControl>
-                <FormControl fullWidth>
-                  <OSTextField
-                    id="outlined-basic"
-                    label="prix unitaire"
-                    variant="outlined"
-                    name="pu"
-                    type="number"
-                    min="0"
-                    value={formikProps.values.pu}
-                    onChange={(event: any) => {
-                      const newValue = parseInt(event.target.value);
-                      formikProps.setFieldValue("pu", newValue);
-                      const newMontant = (formikProps.values.nombreJour ?? 0) * newValue;
-                      formikProps.setFieldValue("montant", newMontant);
-                    }}
-                  />
-                </FormControl>
-                <FormControl fullWidth>
-                  <OSTextField
-                    id="outlined-basic"
-                    label="Montant"
-                    variant="outlined"
-                    name="montant"
-                    value={(formikProps.values.nombreJour ?? 0) * (formikProps.values.pu ?? 0)}
-                    type="number"
-                    min="0"
-                    disabled
-                  />
-                </FormControl>
-              </Stack>
-              <Stack
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-                spacing={3}
-                margin={2}
-              >
-                <FormControl fullWidth>
-                  <OSSelectField
-                    id="outlined-basic"
-                    label="Grant"
-                    variant="outlined"
-                    options={grantList}
-                    dataKey={["code"]}
-                    valueKey="id"
-                    name="grant"
-                  />
-                </FormControl>
-                <FormControl fullWidth>
-                  <OSSelectField
-                    id="outlined-basic"
-                    label="Ligne budgetaire"
-                    variant="outlined"
-                    options={budgetLineList}
-                    dataKey={["code"]}
-                    valueKey="id"
-                    name="ligneBudgetaire"
-                    type="text"
-                  />
-                </FormControl>
-              </Stack>
-            </Form>
+      try {
+        if (isEditing) {
+          await dispatch(
+            updateMissionDeTransport({
+              id: missionTransport.id!,
+              mission: values,
+            })
           );
-        }}
-      </Formik>
-    </Container>
-  );
+        } else {
+          await dispatch(createMissionDeTransport(values));
+          console.log("mandalo ato")
+        }
+        route.push("/materiel_de_transport/mission");
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    return (
+      <Container maxWidth="xl" sx={{ pb: 5, mb: 4 }}>
+        <Formik
+          enableReinitialize={isEditing ? true : false}
+          initialValues={{
+            materiel: isEditing ? missionTransport?.materiel : "",
+            pj: isEditing ? missionTransport?.pj : "",
+            date: isEditing ? missionTransport?.date : new Date(),
+            libelle: isEditing ? missionTransport?.libelle : "",
+            utilisateur: isEditing ? missionTransport?.utilisateur : "",
+            nombreJour: isEditing ? missionTransport?.nombreJour : 0,
+            pu: isEditing ? missionTransport?.pu : 0,
+            grant: isEditing ? missionTransport?.grant : "",
+            ligneBudgetaire: isEditing ? missionTransport?.ligneBudgetaire : "",
+
+          }}
+          validationSchema={Yup.object({
+            materiel: Yup.string().required("Veuillez remplir le champ matériel"),
+            pj: Yup.string().required(
+              "Veuillez remplir le champ PJ"
+            ),
+            date: Yup.string().required("Veuillez remplir le champ date"),
+            libelle: Yup.string().required("Veuillez remplir le champ libellé"),
+            utilisateur: Yup.string().required(
+              "Veuillez remplir le champ utilisateur"
+            ),
+            nombreJour: Yup.number().required(
+              "Veuillez remplir le champ nombre de jour"
+            ),
+            pu: Yup.number().required(
+              "Veuillez remplir le champ prix unitaire"
+            ),
+            grant: Yup.string().required(
+              "Veuillez remplir le champ grant"
+            ),
+            ligneBudgetaire: Yup.string().required(
+              "Veuillez remplir le champ ligne budgetaire"
+            ),
+          })}
+          onSubmit={(value: any, action: any) => {
+            handleSubmit(value);
+            action.resetForm();
+          }}
+        >
+          {(formikProps) => <MissionForm formikProps={formikProps}/>}
+        </Formik>
+      </Container>
+    );
 };
 
 export default FormMission;

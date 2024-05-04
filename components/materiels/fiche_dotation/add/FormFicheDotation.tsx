@@ -42,18 +42,22 @@ const FormFicheDotation = ({formikProps,valuesArticle,setValuesArticle,setIdDele
         dispatch(getEmployees({}));
         dispatch(getInterns({}));
         dispatch(getGrantList({}));
-        dispatch(getBudgetLineList({}));
     };
 
     useEffect(() => {
         fetchUtilsData();
     }, []);
 
-    // useEffect(() => {
-    //     const Val:any = total.find((e:any)=> e.id === formikProps.values.destination)
-    //     formikProps.setFieldValue("type", Val?.type)
-    //     console.log(formikProps.values.type)
-    // }, [formikProps.values.destination]);
+    useEffect(() => {
+        dispatch(getBudgetLineList({
+            args:{
+                where : {
+                    grantId : formikProps.values.grant
+                }
+            }
+        }));
+        console.log(budgetLineList)
+    }, [formikProps.values.grant]);
 
     return (
         <Form>

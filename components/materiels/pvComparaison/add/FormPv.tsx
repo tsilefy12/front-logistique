@@ -50,7 +50,6 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
         dispatch(getEquipments({}));
         dispatch(getFournisseurList({}));
         dispatch(getGrantList({}));
-        dispatch(getBudgetLineList({}));
         dispatch(getPrograms({}));
     };
 
@@ -114,6 +113,17 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
             handleFech(id)
         }
     }, [formikProps.values.ref]);
+    
+    useEffect(() => {
+        dispatch(getBudgetLineList({
+            args:{
+                where : {
+                    grantId : formikProps.values.grant
+                }
+            }
+        }));
+        console.log(budgetLineList)
+    }, [formikProps.values.grant]);
     useEffect(() => {
         fetchUtilsData();
     }, []);

@@ -47,7 +47,6 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
         dispatch(getEmployees({}));
         dispatch(getFournisseurList({}));
         dispatch(getGrantList({}));
-        dispatch(getBudgetLineList({}));
         dispatch(getPrograms({}));
     };
     
@@ -62,6 +61,17 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
             console.log(formikProps.values.type)
         }
     }, [formikProps.values.demandeur]);
+    
+    useEffect(() => {
+        dispatch(getBudgetLineList({
+            args:{
+                where : {
+                    grantId : formikProps.values.grant
+                }
+            }
+        }));
+        console.log(budgetLineList)
+    }, [formikProps.values.grant]);
     return (
         <Form>
             <NavigationContainer>

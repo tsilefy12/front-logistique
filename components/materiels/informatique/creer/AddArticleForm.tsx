@@ -1,70 +1,26 @@
 import {
-  Button,
   Container,
   styled,
-  Typography,
-  FormControl,
   Stack,
-  Divider,
 } from "@mui/material";
-import Link from "next/link";
-import React, { useEffect } from "react";
-import ArrowBack from "@mui/icons-material/ArrowBack";
-import { Check, Close } from "@mui/icons-material";
-import { Form, Formik } from "formik";
+import React from "react";
+import {  Formik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import * as Yup from "yup";
-import OSSelectField from "../../../shared/select/OSSelectField";
-import OSTextField from "../../../shared/input copy/OSTextField";
-import OSDatePicker from "../../../shared/date/OSDatePicker";
 import {
   createEquipment,
-  getEmployees,
   updateEquipment,
 } from "../../../../redux/features/equipment";
 import { useRouter } from "next/router";
-import { cancelEdit } from "../../../../redux/features/equipment/equipmentSlice";
-import { getFournisseurList } from "../../../../redux/features/fournisseur/useCase/getFournisseurListe";
-import { getTypeEquipmentList } from "../../../../redux/features/typeEquipment";
-import { getBonCommandeInternes } from "../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice";
-import { getGrantList } from "../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
-import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
+import FormArticle from "./FormArticle";
 
 const AddArticleForm = () => {
-  const dispatch = useAppDispatch();
-  const etat = [
-    { name: "GOOD", french: "Bon etat" },
-    { name: "BAD", french: "Mauvais" },
-    { name: "BROKEN", french: "inutilisable" },
-  ];
-  const route = useRouter();
+    const dispatch = useAppDispatch();
+    const route = useRouter();
 
-    const { employees, isEditing, equipment } = useAppSelector(
+    const { isEditing, equipment } = useAppSelector(
         (state) => state.equipment
     );
-    const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
-    const { typeEquipmentList } = useAppSelector( (state) => state.typeEquipment);
-    const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
-    const { grantList } = useAppSelector( (state) => state.grant);
-    const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
-
-    const fetchUtilsData = () => {
-        dispatch(getFournisseurList({}));
-        dispatch(getEmployees({}));
-        dispatch(getTypeEquipmentList({}));
-        dispatch(getBonCommandeInternes({}));
-        dispatch(getGrantList({}));
-        dispatch(getBudgetLineList({}));
-    };
-
-    useEffect(() => {
-        fetchUtilsData();
-    }, []);
-    
-    const categorie = [
-        {id :"Informatique",name:"Informatique"},
-        {id :"Eléctronique",name:"Eléctronique"}
-    ]
     const handleSubmit = async (values: any) => {
       values.acquisitionDate = new Date(values?.acquisitionDate).toISOString();
       try {
@@ -89,9 +45,6 @@ const AddArticleForm = () => {
             enableReinitialize
             initialValues={{
                 numOptim: isEditing ? equipment?.numOptim : "",
-                // additionalInformation: isEditing
-                //     ? equipment?.additionalInformation
-                //     : "",
                 acquisitionDate: isEditing ? equipment?.acquisitionDate : new Date(),
                 acquisitionValue: isEditing ? equipment?.acquisitionValue : 0,
                 designation: isEditing ? equipment?.designation : "",
@@ -124,229 +77,7 @@ const AddArticleForm = () => {
             action.resetForm();
             }}
         >
-            {(formikProps) => {
-            return (
-                <Form>
-                <NavigationContainer>
-                    <SectionNavigation>
-                    <Stack flexDirection={"row"}>
-                        <Link href="/materiels/informatiques">
-                        <Button
-                            color="info"
-                            variant="text"
-                            startIcon={<ArrowBack />}
-                            onClick={() => {
-                            formikProps.resetForm();
-                            dispatch(cancelEdit());
-                            }}
-                        >
-                            Retour
-                        </Button>
-                        </Link>
-                        <Button
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                        startIcon={<Check />}
-                        sx={{ marginInline: 3 }}
-                        type="submit"
-                        >
-                        Enregistrer
-                        </Button>
-                        <Button
-                        variant="text"
-                        color="warning"
-                        size="small"
-                        startIcon={<Close />}
-                        sx={{ marginInline: 3 }}
-                        onClick={() => {
-                            formikProps.resetForm();
-                            dispatch(cancelEdit());
-                        }}
-                        >
-                        Annuler
-                        </Button>
-                    </Stack>
-                    <Typography variant="h4">
-                        {isEditing ? "Modifier" : "Ajouter"} materiels
-                    </Typography>
-                    </SectionNavigation>
-                    <Divider />
-                </NavigationContainer>
-                <FormContainer spacing={2}>
-                    <CustomStack
-                        direction={{
-                            xs: "column",
-                            sm: "column",
-                            md: "row",
-                        }}
-                        spacing={{ xs: 2, sm: 2, md: 1 }}
-                    >
-                        <OSTextField
-                            fullWidth
-                            id="outlined-basic"
-                            label="CODE"
-                            variant="outlined"
-                            name="numOptim"
-                        />
-                        <FormControl fullWidth>
-                            <OSSelectField
-                                id="outlined-basic"
-                                label="Catégorie"
-                                name="typeEquipmentId"
-                                options={typeEquipmentList.map((e:any)=>({...e,prefix:" - " + e.prefix}))}
-                                dataKey={["type","prefix"]}
-                                valueKey="id"
-                                type="text"
-                            />
-                        </FormControl>
-                        <FormControl fullWidth>
-                            <OSSelectField
-                                id="workplaceId"
-                                label="Etat"
-                                name="status"
-                                options={etat}
-                                dataKey="french"
-                                valueKey="name"
-                            />
-                        </FormControl>
-                    </CustomStack>
-                    <CustomStack
-                        direction={{
-                            xs: "column",
-                            sm: "column",
-                            md: "row",
-                        }}
-                        spacing={{ xs: 2, sm: 2, md: 1 }}
-                        >
-                            <FormControl fullWidth>
-                        <OSSelectField
-                            id="outlined-basic"
-                            label="Employé utilisateur"
-                            name="ownerId"
-                            options={employees}
-                            dataKey={["matricule","name","surname"]}
-                            valueKey="id"
-                            type="text"
-                        />
-                    </FormControl>
-                    <FormControl fullWidth>
-                        <OSSelectField
-                            id="outlined-basic"
-                            name="fournisseur"
-                            label="Fournisseur"
-                            options={fournisseurList}
-                            dataKey={["name"]}
-                            valueKey="id"
-                            type="text"
-                        />
-                    </FormControl>
-                    </CustomStack>
-                    <CustomStack
-                    direction={{
-                        xs: "column",
-                        sm: "column",
-                        md: "row",
-                    }}
-                    spacing={{ xs: 2, sm: 2, md: 1 }}
-                    >
-
-                    <OSDatePicker
-                        fullWidth
-                        label="Date d'acquisition"
-                        name="acquisitionDate"
-                        onChange={(value: any) =>
-                            formikProps.setFieldValue("acquisitionDate", value)
-                        }
-                    />
-                    <OSTextField
-                        name="acquisitionValue"
-                        fullWidth
-                        id="outlined-basic"
-                        label="Valeur d'acquisition"
-                        variant="outlined"
-                        type="number"
-                        min="0"
-                    />
-                    <OSSelectField
-                        id="outlined-basic"
-                        label="BCI"
-                        name="bci"
-                        options={bonCommandeInternes}
-                        dataKey={["reference"]}
-                        valueKey="id"
-                        type="text"
-                    />
-                    {/* <OSTextField
-                        name="additionalInformation"
-                        fullWidth
-                        id="outlined-basic"
-                        label="Information suplémentaire"
-                        variant="outlined"
-                    /> */}
-                    </CustomStack>
-                    <Stack direction="row" spacing={3} >
-                        <OSTextField
-                            name="designation"
-                            fullWidth
-                            id="outlined-basic"
-                            label="Déscription"
-                            variant="outlined"
-                        />
-                        <OSTextField
-                            name="dureAmortissement"
-                            fullWidth
-                            id="outlined-basic"
-                            label="Durée d'amortissement"
-                            variant="outlined"
-                            type="number"
-                            min="0"
-                        />
-                        <OSDatePicker
-                            name="dateAmortissement"
-                            fullWidth
-                            id="outlined-basic"
-                            label="Date d'amortissement"
-                            variant="outlined"
-                            value={formikProps.values.dateAmortissement}
-                            onChange={(value: any) =>
-                                formikProps.setFieldValue("dateAmortissement", value)
-                            }
-                        />
-                    </Stack>
-                    <Stack direction="row" spacing={3} >
-                        <OSSelectField
-                            id="outlined-basic"
-                            name="grant"
-                            label="Grant"
-                            options={grantList}
-                            dataKey={["code"]}
-                            valueKey="id"
-                            type="text"
-                        />
-                        <OSSelectField
-                            id="outlined-basic"
-                            name="ligneBudgetaire"
-                            label="Ligne budgétaire"
-                            options={budgetLineList}
-                            dataKey={["code"]}
-                            valueKey="id"
-                            type="text"
-                        />
-                        {/* <OSSelectField
-                            id="outlined-basic"
-                            name="categorieMateriel"
-                            label="Catégorie Matériel"
-                            options={categorie}
-                            dataKey={["name"]}
-                            valueKey="id"
-                            type="text"
-                        /> */}
-                    </Stack>
-                </FormContainer>
-                </Form>
-            );
-            }}
+            {(formikProps) => <FormArticle formikProps={formikProps} />}
         </Formik>
         </Container>
     );

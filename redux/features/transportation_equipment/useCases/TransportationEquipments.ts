@@ -16,6 +16,7 @@ export const getTransportationEquipments = createAsyncThunk(
 			const response = await axios.get("/logistique/transportation-equipment", {
 				params: { args: params },
 			});
+			console.log(response.data)
 			return response.data;
 		} catch (error: any) {
 			if (error.response) {

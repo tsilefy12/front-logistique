@@ -46,7 +46,6 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
         dispatch(getBonCommandeInternes({}));
         dispatch(getFournisseurList({}));
         dispatch(getGrantList({}));
-        dispatch(getBudgetLineList({}));
     };
 
     useEffect(() => {
@@ -58,6 +57,17 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
         formikProps.setFieldValue("type", Val?.type)
         console.log(formikProps.values.type)
     }, [formikProps.values.demandeur]);
+
+    useEffect(() => {
+        dispatch(getBudgetLineList({
+            args:{
+                where : {
+                    grantId : formikProps.values.grant
+                }
+            }
+        }));
+        console.log(budgetLineList)
+    }, [formikProps.values.grant]);
 
     return (
         <Form>
