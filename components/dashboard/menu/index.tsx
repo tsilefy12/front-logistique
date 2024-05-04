@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Tooltip from "@mui/material/Tooltip";
-import { Badge, Link, Stack, styled, useTheme } from "@mui/material";
+import { Badge, FormControl, Icon, Link, ListItemButton, ListItemIcon, ListItemText, Stack, styled, useTheme } from "@mui/material";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import { useAppSelector, useAppDispatch } from "../../../hooks/reduxHooks";
@@ -31,20 +31,24 @@ const NavbarBackOffice = ({ matches }: any) => {
 	};
 
 	return (
-		<AppbarBackOffice position="relative" elevation={0} >
-			<Container maxWidth="xl">
-				<ToolbarBackOffice variant="dense">
-					<ListMenuContainer>
-						<ListPageContainer>
-							{navMenu.map((page, index) =>(
-									<OneButtonLink page={page} key={index}/>
-								) 
-							)}
-						</ListPageContainer>
-					</ListMenuContainer>
-				</ToolbarBackOffice>
-			</Container>
-		</AppbarBackOffice>
+		<Container maxWidth="xl">
+			<ToolbarBackOffice variant="dense">
+				<ListMenuContainer>
+					<ListPageContainer>
+						{navMenu.map((page, index) => (
+
+							<OneButtonLink key={index} page={page}>
+								<Stack direction={"row"}>
+									<Icon sx={{ margin: 2 }}>{page.icon}</Icon>
+									<ListItemText primary={page.name === "Configurations"? '': page.name} sx={{ margin: 2 }} />
+								</Stack>
+							</OneButtonLink>
+						)
+						)}
+					</ListPageContainer>
+				</ListMenuContainer>
+			</ToolbarBackOffice>
+		</Container>
 	);
 };
 
@@ -53,18 +57,20 @@ export default NavbarBackOffice;
 const ListPageContainer = styled(Box)(({ theme }) => ({
 	display: "flex",
 	flexWrap: "wrap",
-    height: 450,
-	textAlign: "left",
-	justifyContent: "space-between"
-
+	height: 450,
+	textAlign: "start",
+	backgroundColor: theme.palette.grey[300],
+	position: "fixed",
+	right: 15,
+	maxWidth: 240,
+	float: "right",
 }));
 
 const ListMenuContainer = styled(Stack)(({ theme }) => ({
 	display: "flex",
 	flexDirection: "column",
 	alignItems: "left",
-	justifyContent: "space-between",
-    width: "100%"
+	width: "100%"
 }));
 
 export const MenuNavbarBo = styled(Stack)(({ theme }) => ({
@@ -75,12 +81,12 @@ export const MenuNavbarBo = styled(Stack)(({ theme }) => ({
 
 export const IconBntNavBO = styled(IconButton)(({ theme }) => ({}));
 
-export const AppbarBackOffice = styled(AppBar)(({ theme }) => ({
-	backgroundColor: theme.palette.grey[300],
-    right: 5
-}));
+// export const AppbarBackOffice = styled(AppBar)(({ theme }) => ({
+// 	// backgroundColor: theme.palette.grey[300],
+// 	right: 10
+// }));
 
 export const ToolbarBackOffice = styled(Toolbar)(({ theme }) => ({
 	display: "flex",
-	justifyContent: "space-between",
+	// justifyContent: "space-between",
 }));
