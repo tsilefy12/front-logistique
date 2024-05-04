@@ -33,7 +33,7 @@ const Dashboard = () => {
                 <HeaderDashboard />
                 <FormControl fullWidth sx={styles}>
                     <Stack direction="row" justifyContent="space-between">
-                        <div>
+                        <div style={{paddingRight: "35px", position: "fixed", left: 4}}>
                             <div style={{ margin: "10px", height: "20vh" }}>
                                 <CardDashboard />
                             </div>
