@@ -192,10 +192,10 @@ const AddArticleForm = () => {
                         <FormControl fullWidth>
                             <OSSelectField
                                 id="outlined-basic"
-                                label="Type"
+                                label="Catégorie"
                                 name="typeEquipmentId"
-                                options={typeEquipmentList}
-                                dataKey={["type"]}
+                                options={typeEquipmentList.map((e:any)=>({...e,prefix:" - " + e.prefix}))}
+                                dataKey={["type","prefix"]}
                                 valueKey="id"
                                 type="text"
                             />
@@ -333,7 +333,7 @@ const AddArticleForm = () => {
                             valueKey="id"
                             type="text"
                         />
-                        <OSSelectField
+                        {/* <OSSelectField
                             id="outlined-basic"
                             name="categorieMateriel"
                             label="Catégorie Matériel"
@@ -341,7 +341,7 @@ const AddArticleForm = () => {
                             dataKey={["name"]}
                             valueKey="id"
                             type="text"
-                        />
+                        /> */}
                     </Stack>
                 </FormContainer>
                 </Form>

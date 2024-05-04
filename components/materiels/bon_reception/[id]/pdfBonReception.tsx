@@ -55,8 +55,8 @@ function PrintBonReception({ pdfData }: { pdfData: any }) {
 
                     <View style={{width: "100%",marginTop:20,}}>
                          <View style={[styles.rowBody]}>
-                              <Text style={[styles.th, {borderLeft:"none !important"}]}>Desination</Text>
-                              <Text style={styles.th}>Quantité</Text>
+                              <Text style={[styles.th, {borderLeft:"none !important"}]}>Désinations</Text>
+                              <Text style={styles.th}>Quantités</Text>
                          </View>
                     </View>
                     {pdfData && pdfData.produitRecu?.map(

@@ -11,7 +11,7 @@ export const equipmentStockHeadCells: readonly HeadCell[] = [
     id: "type",
     numeric: false,
     disablePadding: false,
-    label: "Type",
+    label: "Catégorie",
   },
   // {
   //   id: "date",

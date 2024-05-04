@@ -56,7 +56,7 @@ const FormLocation = () => {
 
     if (transportationEquipments.length > 0) {
         transportationEquipments.forEach((element: any) => {
-            if (element["status"] === "Location") {
+            if (element["status"] === "Location externe") {
                 listMateriel.push({ id: element.id, name: element.registration });
             }
         });

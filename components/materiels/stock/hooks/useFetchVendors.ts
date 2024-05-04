@@ -1,13 +1,17 @@
 import { useRouter } from "next/router";
 import { useAppDispatch } from "../../../../hooks/reduxHooks";
-import { getEquipmentStockList } from "../../../../redux/features/equipmentStock";
+import { getTypeEquipmentList } from "../../../../redux/features/typeEquipment";
 
 const useFetchEquipmentStock = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   return async () => {
-    let args: any = {};
+    let args: any = {
+      include : {
+        equipments :true
+      }
+    };
     if (router.query.search) {
       args.where = {
         OR: [
@@ -54,7 +58,7 @@ const useFetchEquipmentStock = () => {
           break;
       }
     }
-    await dispatch(getEquipmentStockList({ args }));
+    await dispatch(getTypeEquipmentList({ args }));
   };
 };
 

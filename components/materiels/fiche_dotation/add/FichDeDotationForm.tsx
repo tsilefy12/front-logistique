@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
@@ -9,11 +9,15 @@ import { styled } from "@mui/material";
 import { createFicheDotation, editFicheDotation, updateFicheDotation } from "../../../../redux/features/fiche_dotation/ficheDotationSlice";
 import FormFicheDotation from "./FormFicheDotation";
 import { createFile } from "../../../../redux/features/file/fileSlice";
+import { createPersonneConcerner } from "../../../../redux/features/fiche_dotation/personneConcernerSlice";
 
 export default function FichDotationForm() {
     const dispatch = useAppDispatch();
     const route = useRouter();
     
+    const [ valuesArticle, setValuesArticle ] = useState < any[]> ([])
+    const [ idDelete,setIdDelete] = useState < any[]> ([])
+
     const { id }: any = route.query;
     const { isEditing,ficheDotation } = useAppSelector((state) => state.ficheDotation);
 
@@ -37,7 +41,19 @@ export default function FichDotationForm() {
                 pieceJointe: (values.pieceJointe && values.pieceJointe.name !== null) ? values.pieceJointe : null
             }
             if(isEditing){
-                await dispatch(updateFicheDotation({id,updateData}));
+                const response = await dispatch(updateFicheDotation({id,updateData}));
+                if(valuesArticle.length > 0){
+                    valuesArticle?.forEach((element:any, index:any) => {
+                        const updateData = {
+                            nomPrenom: element.nomPrenom,
+                            cin: element.cin,
+                            fonction: element.fonction,
+                            designation:element.designation,
+                            ficheDotationId: response.payload.id
+                        };
+                        dispatch(createPersonneConcerner(updateData));
+                    });
+                }
             }else{
                 await dispatch(createFicheDotation(updateData));
             }
@@ -94,7 +110,7 @@ export default function FichDotationForm() {
                         action.resetForm();
                     }}
                 >
-                    {(formikProps) => <FormFicheDotation formikProps={formikProps}/>}
+                    {(formikProps) => <FormFicheDotation setIdDelete={setIdDelete} formikProps={formikProps} valuesArticle={valuesArticle} setValuesArticle={setValuesArticle}/>}
                 </Formik>
             </Container>
         </>

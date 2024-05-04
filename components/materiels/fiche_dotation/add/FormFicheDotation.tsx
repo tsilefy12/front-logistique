@@ -1,10 +1,10 @@
 import { Form, FormikProps } from 'formik';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { useRouter } from 'next/router';
 import { getEmployees } from '../../../../redux/features/employeStagiaire/employeeSlice';
 import { getInterns } from '../../../../redux/features/employeStagiaire/stagiaireSlice';
-import {  Button, Divider, FormControl, Link, Stack, Typography, styled } from '@mui/material';
+import {  Box, Button, Divider, FormControl, IconButton, Link, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled } from '@mui/material';
 import OSTextField from '../../../shared/input/OSTextField';
 import Check from '@mui/icons-material/Check';
 import Close from '@mui/icons-material/Close';
@@ -14,11 +14,14 @@ import { getGrantList } from '../../../../redux/features/grant_ligneBudgétaire_
 import { getBudgetLineList } from '../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice';
 import OSDatePicker from '../../../shared/date/OSDatePicker';
 import OSFileUpload from '../../../shared/input/OSFileUpload';
+import { Delete, Edit } from '@mui/icons-material';
 
-const FormFicheDotation = ({formikProps}: {formikProps: FormikProps<any>}) => {
+const FormFicheDotation = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) => {
     const dispatch = useAppDispatch();
 
     const { isEditing } = useAppSelector((state) => state.ficheDotation);
+    const [idValues ,setIdValues] = useState<any>()
+
     const route = useRouter();
     
     // const { employees } = useAppSelector((state) => state.employe);
@@ -216,6 +219,218 @@ const FormFicheDotation = ({formikProps}: {formikProps: FormikProps<any>}) => {
                     <></>
                 )}
             </FormContainer>
+            { isEditing ? (
+                <Box>
+                    <FormContainer spacing={2}>
+                            <Stack
+                                direction="row"
+                                sx={{
+                                    flex: "1 1 100%",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                }}
+                                >
+                                <Typography variant="h6" id="tableTitle" component="div">
+                                    Personne concerner
+                                </Typography>
+                            </Stack>
+                            <TableContainer component={Paper}>
+                                <Table sx={{ minWidth: 700 }} aria-label="simple table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Nom et Prénoms</TableCell>
+                                            <TableCell align="left">CIN</TableCell>
+                                            <TableCell align="left">Fonction</TableCell>
+                                            <TableCell align="left">Désignation</TableCell>
+                                            <TableCell></TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {valuesArticle.map((item:any , index:any) => (
+                                            <TableRow
+                                                key={index}
+                                                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                            >
+                                                <TableCell component="th" scope="row">{item.nomPrenom}</TableCell>
+                                                <TableCell align="left">{item.cin}</TableCell>
+                                                <TableCell align="left">{item.fonction}</TableCell>
+                                                <TableCell align="left">{item.designation}</TableCell>
+                                                <TableCell
+                                                    align="center"
+                                                    sx={{ width: 150, background: "#F5F5F5" }}
+                                                >
+                                                <Stack
+                                                    direction="row"
+                                                    justifyContent="center"
+                                                    alignItems="center"
+                                                    spacing={2}
+                                                >
+                                                    <IconButton
+                                                            color="warning"
+                                                            aria-label="Supprimer"
+                                                            component="span"
+                                                            size="small"
+                                                            onClick={() => {
+                                                                formikProps.setFieldValue('nomPrenom', item.nomPrenom);
+                                                                formikProps.setFieldValue('cin', item.cin);
+                                                                formikProps.setFieldValue('fonction', item.fonction);
+                                                                formikProps.setFieldValue('designation', item.designation);
+                                                                const id = index + 1
+                                                                setIdValues(id)
+                                                            }}
+                                                        >
+                                                        <Edit color="primary" />
+                                                    </IconButton>
+                                                    <IconButton
+                                                            color="warning"
+                                                            aria-label="Supprimer"
+                                                            component="span"
+                                                            size="small"
+                                                            onClick={() => {
+                                                                setIdDelete((prev:any[])=>{
+                                                                    let temp = [...prev]
+                                                                    temp.push({
+                                                                        id: item.id
+                                                                    })
+                                                                    return temp
+                                                                })
+                                                                setValuesArticle((prev:any[])=>{
+                                                                    let temp = [...prev]
+                                                                    temp.splice(index,1)
+                                                                    return temp
+                                                                })
+                                                            }}
+                                                        >
+                                                        <Delete />
+                                                    </IconButton>
+                                                </Stack>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                        <TableRow
+                                                key="index"
+                                                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                            >
+                                                <TableCell component="th" scope="row">
+                                                    <FormControl fullWidth>
+                                                        <OSTextField
+                                                            id="nomPrenom"
+                                                            label="Nom et Prénoms"
+                                                            name="nomPrenom"
+                                                            type="text"
+                                                        />
+                                                    </FormControl>
+                                                </TableCell>
+                                                <TableCell align="left">
+                                                    <FormControl fullWidth>
+                                                        <OSTextField
+                                                            id="cin"
+                                                            label="CIN"
+                                                            name="cin"
+                                                            type="text"
+                                                        />
+                                                    </FormControl>
+                                                </TableCell>
+                                                <TableCell align="left">
+                                                    <FormControl fullWidth>
+                                                        <OSTextField
+                                                            id="fonction"
+                                                            label="Fonction"
+                                                            name="fonction"
+                                                            type="text"
+                                                        />
+                                                    </FormControl>
+                                                </TableCell>
+                                                <TableCell align="left">
+                                                    <FormControl fullWidth>
+                                                        <OSTextField
+                                                            id="designation"
+                                                            label="Designation"
+                                                            name="designation"
+                                                            type="text"
+                                                        />
+                                                    </FormControl>
+                                                </TableCell>
+                                                <TableCell
+                                                    align="center"
+                                                    sx={{ width: 150, background: "#F5F5F5" }}
+                                                    >
+                                                    <Stack
+                                                        direction="row"
+                                                        justifyContent="center"
+                                                        alignItems="center"
+                                                        spacing={2}
+                                                    >
+                                                        <IconButton
+                                                            type="button"
+                                                            onClick={() => {
+                                                                
+                                                                const nomPrenom = formikProps.values.nomPrenom;
+                                                                const cin = formikProps.values.cin;
+                                                                const fonction = formikProps.values.fonction;
+                                                                const designation = formikProps.values.designation;
+
+                                                                if (nomPrenom.trim() !== '' && cin.trim() !== '') {
+                                                                    if(idValues){
+                                                                        setValuesArticle((prev:any[])=>{
+                                                                            let temp = [...prev.map((ValId, index)=>{
+                                                                                const id = index + 1
+                                                                                if(id === idValues){
+                                                                                    return {
+                                                                                        nomPrenom,
+                                                                                        cin,
+                                                                                        fonction,
+                                                                                        designation,
+                                                                                    }
+                                                                                }
+                                                                                return ValId
+                                                                            })]
+                                                                            return temp
+                                                                        })
+                                                                    }else{
+                                                                        setValuesArticle((prev:any[])=>{
+                                                                            let temp = [...prev]
+                                                                            temp.push({
+                                                                                nomPrenom,
+                                                                                cin, 
+                                                                                fonction,
+                                                                                designation
+                                                                            })
+                                                                            return temp
+                                                                        })
+                                                                    }
+                                                                    formikProps.setFieldValue('nomPrenom', "");
+                                                                    formikProps.setFieldValue('cin', "");
+                                                                    formikProps.setFieldValue('fonction',"");
+                                                                    formikProps.setFieldValue('designation',"");
+                                                                }
+                                                            
+                                                            }}
+                                                        >
+                                                            <Check color="primary"/>
+                                                        </IconButton>
+                                                        <IconButton
+                                                            type="button"
+                                                            onClick={() => {
+                                                                formikProps.setFieldValue('nomPrenom', "");
+                                                                formikProps.setFieldValue('cin', "");
+                                                                formikProps.setFieldValue('fonction', "");
+                                                                formikProps.setFieldValue('designation', "");
+                                                            }}
+                                                            >
+                                                            <Close />
+                                                        </IconButton>
+                                                    </Stack>
+                                                </TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                    </FormContainer>
+                </Box>
+            ):(
+                <></>
+            )}
         </Form>
     )
 }

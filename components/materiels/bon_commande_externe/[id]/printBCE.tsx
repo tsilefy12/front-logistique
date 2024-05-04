@@ -12,8 +12,15 @@ import {
 } from "@react-pdf/renderer";
 import { format } from "date-fns";
 import { BonCommandeExterneItem } from "../../../../redux/features/bon_commande_externe/bonCommandeExterne.interface";
+// @ts-ignore
+import { NumberToLetter } from 'convertir-nombre-lettre';
 
 function PrintBCE({ pdfData }: { pdfData: any }) {
+
+     const montant = pdfData.articleCommandeBce?.reduce((acc:any, curr:any) => acc + (curr.quantite * curr.pu), 0)
+     const montantTotal = montant ? parseInt(montant) : 0;
+     const amountWords = montantTotal ? NumberToLetter(montantTotal) : '';
+     
      return (
           <Document >
                <Page style={{ padding:15 }} orientation="portrait">
@@ -77,7 +84,10 @@ function PrintBCE({ pdfData }: { pdfData: any }) {
                     )}
                     <View style={styles.table}>
                          <View style={{width: "100%",display: "flex",flexDirection: "column"}}>
-                              <Text style={{padding:10,fontSize:10,textDecoration:"underline"}}>Montant en lettre: </Text>
+                              <Text style={{padding:10,fontSize:10,display:"flex", flexDirection:"row"}}>
+                                   <Text style={{textDecoration:"underline"}}>Montant en lettre:</Text>
+                                   <Text>{amountWords}</Text>
+                              </Text>
                               <Text style={{padding:10,fontSize:10 ,textDecoration:"underline"}}>Béneficiaire: {pdfData?.beneficiaire} </Text>
                               <Text style={{padding:10,fontSize:10 ,textDecoration:"underline"}}>Pièces jointe:  </Text>
                          </View>

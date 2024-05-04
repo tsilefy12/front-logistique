@@ -30,16 +30,19 @@ import {
 } from "../../../redux/features/transportation_equipment";
 import OSDatePicker from "../../shared/date/OSDatePicker";
 import useFetchVendors from "../../vendor/hooks/useFetchVendors";
+import { getTypeEquipmentList } from "../../../redux/features/typeEquipment";
 
 
 const MaterielTransportForm = () => {
   const route = useRouter();
   const dispatch = useAppDispatch();
   const { vendors } = useAppSelector((state) => state.vendor);
+  const { typeEquipmentList } = useAppSelector((state) => state.typeEquipment);
 
   const fetchVendor = useFetchVendors();
   useEffect(() => {
     fetchVendor();
+    dispatch(getTypeEquipmentList({}))
   }, [route.query])
 
   const { isEditing, transportationEquipment } = useAppSelector(
@@ -64,14 +67,15 @@ const MaterielTransportForm = () => {
     }
   };
 
-  const type = [
-    { id: "Moto", name: "Moto" },
-    { id: "Voiture", name: "Voiture" },
-    { id: "Pirogue", name: "Pirogue" },
-  ]
+  // const type = [
+  //   { id: "Moto", name: "Moto" },
+  //   { id: "Voiture", name: "Voiture" },
+  //   { id: "Pirogue", name: "Pirogue" },
+  // ]
+
   const ListStatus = [
-    { id: "Location", name: "Location" },
-    { id: "Interne", name: "Interne" }
+    { id: "Location interne", name: "Location interne" },
+    { id: "Location externe", name: "Location externe" }
   ]
   return (
     <Container maxWidth="xl" sx={{ pb: 5 }}>
@@ -187,10 +191,10 @@ const MaterielTransportForm = () => {
                   />
                   <OSSelectField
                     id="outlined-basic"
-                    label="Type"
+                    label="Catégorie"
                     variant="outlined"
-                    options={type}
-                    dataKey="name"
+                    options={typeEquipmentList.map((e)=> ({...e,prefix:" - " +e.prefix}))}
+                    dataKey={["type","prefix"]}
                     valueKey="id"
                     name="type"
                   />

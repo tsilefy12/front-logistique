@@ -159,7 +159,7 @@ const ListTransport = () => {
                             </TableCell>
 
                             <TableCell align="left">
-                              {row.type}
+                              {row.typeEquipment.type} - {row.typeEquipment.prefix}
                             </TableCell>
 
                             <TableCell align="left">

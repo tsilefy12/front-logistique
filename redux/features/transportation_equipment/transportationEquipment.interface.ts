@@ -11,6 +11,7 @@ export interface TransportationEquipmentItem {
     reservoir?: number;
     reste?: number;
     consommation?: number;
+    typeEquipment?:any;
     fournisseur?: string;
     vendor? : any;
 }
