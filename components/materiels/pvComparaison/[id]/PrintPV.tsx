@@ -75,7 +75,7 @@ function PrintPVComparaison({ pdfData }: { pdfData: any }) {
                               <Text style={styles.tr}>Montant total</Text>
                               {pdfData.tableComparaison?.map((item:any , index:any) => {
                                    return(
-                                        <Text key={index}  style={styles.tr}></Text>
+                                        <Text key={index}  style={styles.tr}>{item.amount} ar</Text>
                                    )
                               })}
                          </View>
