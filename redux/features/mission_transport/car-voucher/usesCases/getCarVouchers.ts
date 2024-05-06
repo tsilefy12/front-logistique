@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { axios } from "../../../../lib/axios";
+import { axios } from "../../../../../lib/axios";
 
 /**
  * @param data: { args?: any } : PRISMA arguments to filter getted carvoucher data

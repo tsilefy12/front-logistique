@@ -20,7 +20,7 @@ const FormFicheDotation = ({formikProps,valuesArticle,setValuesArticle,setIdDele
     const dispatch = useAppDispatch();
 
     const { isEditing } = useAppSelector((state) => state.ficheDotation);
-    const [idValues ,setIdValues] = useState<any>()
+    const [idValues ,setIdValues] = useState<any>({})
 
     const route = useRouter();
     
@@ -279,7 +279,15 @@ const FormFicheDotation = ({formikProps,valuesArticle,setValuesArticle,setIdDele
                                                                 formikProps.setFieldValue('fonction', item.fonction);
                                                                 formikProps.setFieldValue('designation', item.designation);
                                                                 const id = index + 1
-                                                                setIdValues(id)
+                                                                setIdValues(()=>{
+                                                                    let temp = item.id ? {
+                                                                        index : index +1,
+                                                                        idVal : item.id
+                                                                    } : {
+                                                                        index : index +1,
+                                                                    }
+                                                                    return temp
+                                                                })
                                                             }}
                                                         >
                                                         <Edit color="primary" />
@@ -374,11 +382,28 @@ const FormFicheDotation = ({formikProps,valuesArticle,setValuesArticle,setIdDele
                                                                 const designation = formikProps.values.designation;
 
                                                                 if (nomPrenom.trim() !== '' && cin.trim() !== '') {
-                                                                    if(idValues){
-                                                                        setValuesArticle((prev:any[])=>{
-                                                                            let temp = [...prev.map((ValId, index)=>{
-                                                                                const id = index + 1
-                                                                                if(id === idValues){
+                                                                    if (idValues.idVal) {
+                                                                        setValuesArticle((prev: any[]) => {
+                                                                            let temp = [...prev.map((ValId, index) => {
+                                                                                let indexUpdate = index + 1
+                                                                                if(indexUpdate === idValues.index){
+                                                                                    return {
+                                                                                        id:idValues.idVal,
+                                                                                        nomPrenom,
+                                                                                        cin,
+                                                                                        fonction,
+                                                                                        designation,
+                                                                                    }
+                                                                                }
+                                                                                return ValId
+                                                                            })]
+                                                                            return temp
+                                                                        })
+                                                                    }else if(idValues.index && !idValues.idVal){
+                                                                        setValuesArticle((prev: any[]) => {
+                                                                            let temp = [...prev.map((ValId, index) => {
+                                                                                let indexUpdate = index + 1
+                                                                                if(indexUpdate === idValues.index){
                                                                                     return {
                                                                                         nomPrenom,
                                                                                         cin,

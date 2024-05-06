@@ -25,6 +25,8 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
     const dispatch = useAppDispatch();
     const route = useRouter();
 
+    const [idValues ,setIdValues] = useState<any>({})
+
     const [ materiel, setMateriel] = useState < any[]> ([])
     const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
     const { grantList } = useAppSelector( (state) => state.grant);
@@ -112,13 +114,15 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
     }, [formikProps.values.ref]);
     
     useEffect(() => {
-        dispatch(getBudgetLineList({
-            args:{
-                where : {
-                    grantId : formikProps.values.grant
+        if(formikProps.values.grant != 0){
+            dispatch(getBudgetLineList({
+                args:{
+                    where : {
+                        grantId : formikProps.values.grant
+                    }
                 }
-            }
-        }));
+            }));
+        }
     }, [formikProps.values.grant]);
     useEffect(() => {
         fetchUtilsData();
@@ -320,7 +324,15 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                                                             formikProps.setFieldValue('fournisseur', element.fournisseur);
                                                             formikProps.setFieldValue('modePaie', element.modePaie);
                                                             formikProps.setFieldValue('designation', element.designation);
-                                                            // setIdValues(item.id)
+                                                            setIdValues(()=>{
+                                                                let temp = element.id ? {
+                                                                    index : index +1,
+                                                                    idVal : element.id
+                                                                } : {
+                                                                    index : index +1,
+                                                                }
+                                                                return temp
+                                                            })
                                                         }}
                                                     >
                                                     <Edit color="primary" />
@@ -395,19 +407,38 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                                                             const fournisseur = formikProps.values.fournisseur;
                                                             const modePaie = formikProps.values.modePaie;
                                                             const designation = formikProps.values.designation;
-                                                                // Vérifier si les champs sont vides
+
                                                             if (fournisseur.trim() !== ''  && modePaie.trim() !== '' && designation.trim() !== '') {
                                                                 if(valuesArticle.length < 3){
-                                                                    setValuesArticle((prev:any[])=> {
-                                                                        let temp = [...prev]
-                                                                        temp.push({
-                                                                            fournisseur: fournisseur,
-                                                                            modePaie: modePaie,
-                                                                            designation: designation,
-                                                                            fournisseurName:fournisseurList.find((e:any)=> e.id === fournisseur)?.name
+                                                                    if(idValues){
+                                                                        setValuesArticle((prev:any[])=>{
+                                                                            let temp = [...prev.map((ValId, index)=>{
+                                                                                const id = index + 1
+                                                                                if(id === idValues){
+                                                                                    return {
+                                                                                        fournisseur: fournisseur,
+                                                                                        modePaie: modePaie,
+                                                                                        designation: designation,
+                                                                                        fournisseurName:fournisseurList.find((e:any)=> e.id === fournisseur)?.name
+                                                                                    }
+                                                                                }
+                                                                                return ValId
+                                                                            })]
+                                                                            return temp
                                                                         })
-                                                                        return temp
-                                                                    })
+
+                                                                    }else{
+                                                                        setValuesArticle((prev:any[])=> {
+                                                                            let temp = [...prev]
+                                                                            temp.push({
+                                                                                fournisseur: fournisseur,
+                                                                                modePaie: modePaie,
+                                                                                designation: designation,
+                                                                                fournisseurName:fournisseurList.find((e:any)=> e.id === fournisseur)?.name
+                                                                            })
+                                                                            return temp
+                                                                        })
+                                                                    }
                                                                 }else{
                                                                     enqueueSnackbar({
                                                                         message: "Desolée vous avez atteint le nombre d'offre possible",
