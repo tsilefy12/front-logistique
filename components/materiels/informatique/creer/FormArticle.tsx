@@ -57,13 +57,15 @@ import {
     }, []);
       
     useEffect(() => {
-        dispatch(getBudgetLineList({
-            args:{
-                where : {
-                    grantId : formikProps.values.grant
+        if(formikProps.values.grant != 0){
+            dispatch(getBudgetLineList({
+                args:{
+                    where : {
+                        grantId : formikProps.values.grant
+                    }
                 }
-            }
-        }));
+            }));
+        }
     }, [formikProps.values.grant]);
 
     return (
@@ -196,6 +198,7 @@ import {
                 fullWidth
                 label="Date d'acquisition"
                 name="acquisitionDate"
+                value={formikProps.values.acquisitionDate}
                 onChange={(value: any) =>
                     formikProps.setFieldValue("acquisitionDate", value)
                 }

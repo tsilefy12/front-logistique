@@ -59,13 +59,15 @@ const MissionForm = ({formikProps}: {formikProps: FormikProps<any>}) => {
     }
    
     React.useEffect(() => {
-        dispatch(getBudgetLineList({
-            args:{
-                where : {
-                    grantId : formikProps.values.grant
+        if(formikProps.values.grant != 0){
+            dispatch(getBudgetLineList({
+                args:{
+                    where : {
+                        grantId : formikProps.values.grant
+                    }
                 }
-            }
-        }));
+            }));
+        }
     }, [formikProps.values.grant]);
     
     return (
