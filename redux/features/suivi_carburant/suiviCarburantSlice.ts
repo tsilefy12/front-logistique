@@ -18,7 +18,6 @@ export const editSuiviCarburant = createAsyncThunk(
     async (data: { id: string }, thunkAPI) => {
         try {
             const response = await axios.get(`/logistique/suivi-de-carburant/${data.id}`);
-            console.log("data :", response.data)
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -100,7 +99,6 @@ export const getSuiviCarburant = createAsyncThunk(
                 args: JSON.stringify(data.args),
             };
             const response = await axios.get(`/logistique/suivi-de-carburant/${data.id}`, { params });
-            console.log("donnees",response.data)
             return response.data;
         } catch (error: any) {
             if (error.response) {

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { axios } from "../../../../lib/axios";
+import { axios } from "../../../../../lib/axios";
 
 /**
  * @param data: { args?: any } : PRISMA arguments to filter getted carvoucher data
@@ -15,7 +15,6 @@ export const getCarVouchers = createAsyncThunk(
     async (data: { args?: any }, thunkAPI) => {
 		try {
 			const params = JSON.stringify(data.args);
-            console.log(params)
 			const response = await axios.get("/logistique/car-voucher", {
 				params: { args: params },
 			});

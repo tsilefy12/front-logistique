@@ -11,7 +11,6 @@ const useFetchConsumptionInvoice = () => {
     return async () => {
         let args: any = {};
           if (router.query.search) {
-            console.log("search", router.query.search);
             args.where = {
               OR: [
                     {

@@ -25,6 +25,8 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
     const dispatch = useAppDispatch();
     const route = useRouter();
 
+    const [idValues ,setIdValues] = useState<any>({})
+
     const [ materiel, setMateriel] = useState < any[]> ([])
     const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
     const { grantList } = useAppSelector( (state) => state.grant);
@@ -50,7 +52,6 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
         dispatch(getEquipments({}));
         dispatch(getFournisseurList({}));
         dispatch(getGrantList({}));
-        dispatch(getBudgetLineList({}));
         dispatch(getPrograms({}));
     };
 
@@ -72,7 +73,6 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
             newValue = newValue.replace(value + ", ", "").replace(", " + value, "").replace(value, ""); // Enlever la valeur sélectionnée
         }
         formikProps.setFieldValue('motif', newValue);
-        console.log(formikProps.values.motif)
     };
     const handleFech = async (id: any) => {
         try { 
@@ -84,7 +84,6 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                         articleCommandeBce:true
                     }
                 }}));
-                console.log(Val)
                 setMateriel((prev:any[])=>{
                     console.log(prev)
                     prev = Val.payload.articleCommandeBce
@@ -96,7 +95,6 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                         ArticleCommande:true
                     }
                 }}));
-                console.log(Val)
                 setMateriel((prev:any[])=>{
                     console.log(prev)
                     prev = Val.payload.ArticleCommande
@@ -114,6 +112,18 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
             handleFech(id)
         }
     }, [formikProps.values.ref]);
+    
+    useEffect(() => {
+        if(formikProps.values.grant != 0){
+            dispatch(getBudgetLineList({
+                args:{
+                    where : {
+                        grantId : formikProps.values.grant
+                    }
+                }
+            }));
+        }
+    }, [formikProps.values.grant]);
     useEffect(() => {
         fetchUtilsData();
     }, []);
@@ -282,6 +292,7 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                                         <TableCell>Fournisseur</TableCell>
                                         <TableCell align="left">Mode de Paie</TableCell>
                                         <TableCell align="left">Désignation</TableCell>
+                                        <TableCell align="left">Montant total</TableCell>
                                         <TableCell></TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -294,7 +305,7 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                                             <TableCell component="th" scope="row">{element.fournisseurName}</TableCell>
                                             <TableCell align="left">{element.modePaie}</TableCell>
                                             <TableCell align="left">{element.designation}</TableCell>
-
+                                            <TableCell align="left">{element.amount}</TableCell>
                                             <TableCell
                                             align="center"
                                             sx={{ width: 150, background: "#F5F5F5" }}
@@ -314,7 +325,16 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                                                             formikProps.setFieldValue('fournisseur', element.fournisseur);
                                                             formikProps.setFieldValue('modePaie', element.modePaie);
                                                             formikProps.setFieldValue('designation', element.designation);
-                                                            // setIdValues(item.id)
+                                                            formikProps.setFieldValue('amount', element.amount);
+                                                            setIdValues(()=>{
+                                                                let temp = element.id ? {
+                                                                    index : index +1,
+                                                                    idVal : element.id
+                                                                } : {
+                                                                    index : index +1,
+                                                                }
+                                                                return temp
+                                                            })
                                                         }}
                                                     >
                                                     <Edit color="primary" />
@@ -365,13 +385,23 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                                                 </FormControl>
                                             </TableCell>
                                             <TableCell align="left">
-                                            <FormControl fullWidth>
-                                                <OSTextField
-                                                    id="designation"
-                                                    label="Designation"
-                                                    name="designation"
-                                                />
-                                            </FormControl>
+                                                <FormControl fullWidth>
+                                                    <OSTextField
+                                                        id="designation"
+                                                        label="Designation"
+                                                        name="designation"
+                                                    />
+                                                </FormControl>
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                <FormControl fullWidth>
+                                                    <OSTextField
+                                                        id="amount"
+                                                        label="Montant total"
+                                                        type="number"
+                                                        name="amount"
+                                                    />
+                                                </FormControl>
                                             </TableCell>
                                             <TableCell
                                             align="center"
@@ -389,32 +419,52 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                                                             const fournisseur = formikProps.values.fournisseur;
                                                             const modePaie = formikProps.values.modePaie;
                                                             const designation = formikProps.values.designation;
-                                                                // Vérifier si les champs sont vides
-                                                            if (fournisseur.trim() !== ''  && modePaie.trim() !== '' && designation.trim() !== '') {
-                                                                if(valuesArticle.length < 3){
+                                                            const amount = formikProps.values.amount;
+
+                                                            if(valuesArticle.length < 3){
+                                                                if(idValues.index){
+                                                                    setValuesArticle((prev:any[])=>{
+                                                                        let temp = [...prev.map((ValId, index)=>{
+                                                                            const id = index + 1
+                                                                            if(id === idValues){
+                                                                                return {
+                                                                                    fournisseur: fournisseur,
+                                                                                    modePaie: modePaie,
+                                                                                    designation: designation,
+                                                                                    amount : amount,
+                                                                                    fournisseurName:fournisseurList.find((e:any)=> e.id === fournisseur)?.name
+                                                                                }
+                                                                            }
+                                                                            return ValId
+                                                                        })]
+                                                                        return temp
+                                                                    })
+
+                                                                }else{
                                                                     setValuesArticle((prev:any[])=> {
                                                                         let temp = [...prev]
                                                                         temp.push({
                                                                             fournisseur: fournisseur,
                                                                             modePaie: modePaie,
                                                                             designation: designation,
+                                                                            amount : amount,
                                                                             fournisseurName:fournisseurList.find((e:any)=> e.id === fournisseur)?.name
                                                                         })
                                                                         return temp
                                                                     })
-                                                                }else{
-                                                                    enqueueSnackbar({
-                                                                        message: "Desolée vous avez atteint le nombre d'offre possible",
-                                                                        options: {
-                                                                          variant: "error",
-                                                                        },
-                                                                    })
                                                                 }
-                                                                formikProps.setFieldValue('fournisseur', '');
-                                                                formikProps.setFieldValue('modePaie', '');
-                                                                formikProps.setFieldValue('designation', '');
+                                                            }else{
+                                                                enqueueSnackbar({
+                                                                    message: "Desolée vous avez atteint le nombre d'offre possible",
+                                                                    options: {
+                                                                        variant: "error",
+                                                                    },
+                                                                })
                                                             }
-                                                            
+                                                            formikProps.setFieldValue('fournisseur', '');
+                                                            formikProps.setFieldValue('modePaie', '');
+                                                            formikProps.setFieldValue('designation', '');
+                                                            formikProps.setFieldValue('amount', 0);
                                                         }}
                                                     ><Check color="primary"/>
                                                     </IconButton>
@@ -422,7 +472,7 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                                                         type="button"
                                                         onClick={() => {
                                                             formikProps.setFieldValue('fournisseur', '');
-                                                            formikProps.setFieldValue('offre', '');
+                                                            formikProps.setFieldValue('amount', 0);
                                                             formikProps.setFieldValue('modePaie', '');
                                                             formikProps.setFieldValue('designation', '');
                                                         }}

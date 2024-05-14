@@ -10,7 +10,6 @@ export const getEquipment = createAsyncThunk(
       const response = await axios.get(`/logistique/equipment/${data.id}`,{
         params: { args: params },
       });
-      console.log(response.data)
       return response.data;
     } catch (error: any) {
       if (error.response) {

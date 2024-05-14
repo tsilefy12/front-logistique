@@ -130,13 +130,13 @@ export default function PvComparaisonList() {
                                 return (
                                     <TableRow hover tabIndex={-1} key={row.id}>
                                         <TableCell align="left">{row?.objet}</TableCell>
-                                        <TableCell align="left">{row?.bce ? row.bonDeCommandeExterne?.ref+"(BCE)" : row.bonDeCommandeInterne?.reference +"(BCI)"}</TableCell>
+                                        <TableCell align="left">{row?.bce ? row.bonDeCommandeExterne?.ref : row.bonDeCommandeInterne?.reference }</TableCell>
                                         <TableCell align="left">{fournisseur || ""}</TableCell>
                                         <TableCell align="left">{modePaie || ""}</TableCell>
                                         <TableCell align="right" width={"150px"}>
                                             <BtnActionContainer
-                                            direction="row"
-                                            justifyContent="right"
+                                                direction="row"
+                                                justifyContent="right"
                                             >
                                             <IconButton
                                                 color="accent"

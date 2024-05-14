@@ -84,7 +84,6 @@ export default function BonReceptionForm() {
                     produitRecu:true,
                 }
             }}));
-            console.log(Val?.payload)
             setValuesArticle((prev:any[])=>{
                 prev = Val?.payload?.produitRecu
                 return prev

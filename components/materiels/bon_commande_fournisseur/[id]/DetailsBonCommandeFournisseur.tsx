@@ -32,7 +32,6 @@ const DetailsBCI = () => {
                 articleFournisseur:true
             }
         }}));
-        console.log(commandeFournisseur)
     };
 
     useEffect(()=> {

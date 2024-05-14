@@ -12,7 +12,6 @@ import {
 import { BonCommandeItem } from "../../../../redux/features/bon_commande_interne/bonCommandeInterne.interface";
 
 function PrintBCI({ pdfData }: { pdfData: any }) {
-     console.log(pdfData)
      return (
           <Document>
                <Page style={{ padding:15 }} orientation="landscape">

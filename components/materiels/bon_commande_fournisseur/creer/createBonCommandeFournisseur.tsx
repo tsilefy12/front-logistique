@@ -88,7 +88,6 @@ export default function BonCommandeInterneForm() {
                     articleFournisseur:true
                 }
             }}));
-            console.log(Val)
             setValuesArticle((prev:any[])=>{
                 console.log(prev)
                 prev = Val.payload.articleFournisseur

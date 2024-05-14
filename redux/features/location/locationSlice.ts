@@ -115,7 +115,6 @@ export const updateLocation = createAsyncThunk(
   "location/updateLocation",
   async (data: { id: string; location: LocationItem }, thunkAPI) => {
     try {
-        console.log("id :", data.id)
       const response = await axios.patch(
         `/logistique/location-de-transport/${data.id}`,
         data.location

@@ -20,8 +20,6 @@ const LogSupplyAndConsumableTableToolbar: FunctionComponent<PostConfig>= ({opera
   });
   const router = useRouter();
 
-  // console.log("entre", filtreEntre);
-  // initialisation du champ de recherche
   React.useEffect(() => {
     if (router?.query?.search) {
       setKey(router.query.search);

@@ -28,7 +28,7 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
     const { grantList } = useAppSelector( (state) => state.grant);
     const { programs } = useAppSelector( (state) => state.program);
    
-    const [idValues ,setIdValues] = useState<any>()
+    const [idValues ,setIdValues] = useState<any>({})
 
     const total = [...employees.map((i:any)=>{
         return {
@@ -60,7 +60,6 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
     useEffect(() => {
         const Val:any = total.find((e:any)=> e.id === formikProps.values.destination)
         formikProps.setFieldValue("type", Val?.type)
-        console.log(formikProps.values.type)
     }, [formikProps.values.destination]);
 
     return (
@@ -268,7 +267,15 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                                         formikProps.setFieldValue('quantiteCommande', item.quantiteCommande);
                                                         formikProps.setFieldValue('quantiteExpedie', item.quantiteExpedie);
                                                         formikProps.setFieldValue('observation', item.observation);
-                                                        setIdValues(item.id)
+                                                        setIdValues(()=>{
+                                                            let temp = item.id ? {
+                                                                index : index +1,
+                                                                idVal : item.id
+                                                            } : {
+                                                                index : index +1,
+                                                            }
+                                                            return temp
+                                                        })
                                                     }}
                                                 >
                                                 <EditIcon color="primary" />
@@ -364,12 +371,13 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                                         const observation = formikProps.values.observation;
                                                             // Vérifier si les champs sont vides
                                                             if (designation.trim() !== '' && observation.trim() !== '') {
-                                                                if(idValues){
-                                                                    setValuesArticle((prev:any[])=>{
-                                                                        let temp = [...prev.map((ValId)=>{
-                                                                            if(ValId.id === idValues){
+                                                                if (idValues.idVal) {
+                                                                    setValuesArticle((prev: any[]) => {
+                                                                        let temp = [...prev.map((ValId, index) => {
+                                                                            let indexUpdate = index + 1
+                                                                            if(indexUpdate === idValues.index){
                                                                                 return {
-                                                                                    id:idValues,
+                                                                                    id:idValues.idVal,
                                                                                     designation,
                                                                                     quantiteCommande,
                                                                                     quantiteExpedie,
@@ -380,7 +388,23 @@ const FormBonTransfert = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                                                                         })]
                                                                         return temp
                                                                     })
-                                                                } else{
+                                                                }else if(idValues.index && !idValues.idVal){
+                                                                    setValuesArticle((prev: any[]) => {
+                                                                        let temp = [...prev.map((ValId, index) => {
+                                                                            let indexUpdate = index + 1
+                                                                            if(indexUpdate === idValues.index){
+                                                                                return {
+                                                                                    designation,
+                                                                                    quantiteCommande,
+                                                                                    quantiteExpedie,
+                                                                                    observation
+                                                                                }
+                                                                            }
+                                                                            return ValId
+                                                                        })]
+                                                                        return temp
+                                                                    })
+                                                                }else{
                                                                     setValuesArticle((prev:any[])=>{
                                                                         let temp = [...prev]
                                                                         temp.push({

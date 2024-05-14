@@ -53,12 +53,10 @@ const ListDetailStockParType = () => {
     fetchEquipmentList();
   },[])
 
-console.log("donnes :", equipments)
  const listMateriel: { code: string, designation: string, date: any,acquisitionValue: any, etat: string }[] = [];
 
  if (equipments.length > 0) {
      equipments.forEach((element: any) => {
-      console.log("id equip :", element.typeEquipmentId)
          if (element["typeEquipmentId"] === id) {
              listMateriel.push({ 
               code: element.numOptim, 

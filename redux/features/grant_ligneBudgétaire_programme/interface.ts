@@ -2,6 +2,7 @@ export interface GrantItem {
     id?: string;
     code?: string;
     postAnalyticId?: number;
+    budgetLine?: BudgetLineItem;
     [x: string]: any;
 }
   

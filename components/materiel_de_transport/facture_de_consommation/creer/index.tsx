@@ -145,7 +145,6 @@ const FormFactureConsommation = () => {
         })}
         onSubmit={(value: any, action: any) => {
           handleSubmit(value);
-          console.log("valeur", value);
           action.resetForm();
         }}
       >

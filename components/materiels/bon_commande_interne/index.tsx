@@ -50,8 +50,6 @@ export default function BonCommandeInterneList() {
 
     const { bonCommandeInternes } = useAppSelector((state) => state.bonCommandeInterne);
 
-    console.log(bonCommandeInternes)
-
     const fetchBonCommandeInterne = useFetchBonCommandeInterne();
     const { grantList } = useAppSelector( (state) => state.grant);
     const { employees } = useAppSelector( (state) => state.employe);
@@ -83,7 +81,6 @@ export default function BonCommandeInterneList() {
 
 
     const handleClickDelete = async (id: any) => {
-        console.log("id:"+id)
         confirm({
             title: "Supprimer le BCI",
             description: "Voulez-vous vraiment supprimer ce BCI ?",
@@ -97,7 +94,6 @@ export default function BonCommandeInterneList() {
             },
         })
         .then(async () => {
-            console.log("idnn:"+id)
             await dispatch(deleteBonCommandeInterne({ id }));
             fetchBonCommandeInterne();
         })
@@ -196,7 +192,6 @@ export default function BonCommandeInterneList() {
                                             component="span"
                                             size="small"
                                             onClick={() => {
-                                                console.log(row?.id)
                                                 handleClickDelete(row?.id);
                                             }}
                                         >

@@ -16,7 +16,7 @@ import OSSelectField from '../../../shared/select/OSSelectField';
 const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDelete }: { formikProps: FormikProps<any>, valuesArticle: any, setValuesArticle: any, setIdDelete: any }) => {
     const dispatch = useAppDispatch();
     const route = useRouter();
-    const [idValues, setIdValues] = useState<any>()
+    const [idValues, setIdValues] = useState<any>({})
 
     const { isEditing } = useAppSelector((state) => state.carVoucher);
     const fetchTransportEquipment = useFetchTransportationEquipments()
@@ -186,7 +186,15 @@ const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDel
                                                         formikProps.setFieldValue('nombre', item.nombre);
                                                         formikProps.setFieldValue('pu', item.pu);
                                                         formikProps.setFieldValue('montants', item.nombre * item.pu);
-                                                        setIdValues(item.id)
+                                                        setIdValues(()=>{
+                                                            let temp = item.id ? {
+                                                                index : index +1,
+                                                                idVal : item.id
+                                                            } : {
+                                                                index : index +1,
+                                                            }
+                                                            return temp
+                                                        })
                                                     }}
                                                 >
                                                     <EditIcon color="primary" />
@@ -285,12 +293,29 @@ const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDel
                                                     const montants = formikProps.values.nombre * formikProps.values.pu;
 
                                                     if (activite.trim() !== '') {
-                                                        if (idValues) {
+                                                        if (idValues.idVal) {
                                                             setValuesArticle((prev: any[]) => {
-                                                                let temp = [...prev.map((ValId) => {
-                                                                    if (ValId.id === idValues) {
+                                                                let temp = [...prev.map((ValId, index) => {
+                                                                    let indexUpdate = index + 1
+                                                                    if(indexUpdate === idValues.index){
                                                                         return {
-                                                                            id: idValues,
+                                                                            id:idValues.idVal,
+                                                                            activite,
+                                                                            pu,
+                                                                            nombre,
+                                                                            montants
+                                                                        }
+                                                                    }
+                                                                    return ValId
+                                                                })]
+                                                                return temp
+                                                            })
+                                                        }else if(idValues.index && !idValues.idVal){
+                                                            setValuesArticle((prev: any[]) => {
+                                                                let temp = [...prev.map((ValId, index) => {
+                                                                    let indexUpdate = index + 1
+                                                                    if(indexUpdate === idValues.index){
+                                                                        return {
                                                                             activite,
                                                                             pu,
                                                                             nombre,
@@ -318,7 +343,6 @@ const FormBonVoiture = ({ formikProps, valuesArticle, setValuesArticle, setIdDel
                                                         formikProps.setFieldValue('pu', 0);
                                                         formikProps.setFieldValue('montants', 0);
                                                     }
-
                                                 }}
                                             >
                                                 <Check color="primary" />

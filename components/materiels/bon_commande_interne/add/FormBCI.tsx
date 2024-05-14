@@ -17,11 +17,12 @@ import { getBudgetLineList } from '../../../../redux/features/grant_ligneBudgét
 import EditIcon from "@mui/icons-material/Edit";
 import OSDatePicker from '../../../shared/date/OSDatePicker';
 import { getPrograms } from '../../../../redux/features/program/programSlice';
+import { cancelEdit } from '../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice';
 
 const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) => {
     const dispatch = useAppDispatch();
     const route = useRouter();
-    const [idValues ,setIdValues] = useState<any>()
+    const [idValues ,setIdValues] = useState<any>({})
 
     const { employees } = useAppSelector( (state) => state.employe);
     const { interns } = useAppSelector( (state) => state.stagiaire);
@@ -47,7 +48,6 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
         dispatch(getEmployees({}));
         dispatch(getFournisseurList({}));
         dispatch(getGrantList({}));
-        dispatch(getBudgetLineList({}));
         dispatch(getPrograms({}));
     };
     
@@ -59,9 +59,20 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
         if(formikProps.values.demandeur){
             const Val:any = total.find((e:any)=> e.id === formikProps.values.demandeur)
             formikProps.setFieldValue("type", Val?.type)
-            console.log(formikProps.values.type)
         }
     }, [formikProps.values.demandeur]);
+    
+    useEffect(() => {
+        if(formikProps.values.grant != 0){
+            dispatch(getBudgetLineList({
+                args:{
+                    where : {
+                        grantId : formikProps.values.grant
+                    }
+                }
+            }));
+        }
+    }, [formikProps.values.grant]);
     return (
         <Form>
             <NavigationContainer>
@@ -72,6 +83,7 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
                         variant="text"
                         startIcon={<ArrowBack />}
                         onClick={() => {
+                            dispatch(cancelEdit())
                             route.back()
                             formikProps.resetForm();
                         }}
@@ -278,7 +290,15 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
                                                             formikProps.setFieldValue('pu', item.pu);
                                                             formikProps.setFieldValue('quantite', item.quantite);
                                                             formikProps.setFieldValue('fournisseurId', item.fournisseurId);
-                                                            setIdValues(item.id)
+                                                            setIdValues(()=>{
+                                                                let temp = item.id ? {
+                                                                    index : index +1,
+                                                                    idVal : item.id
+                                                                } : {
+                                                                    index : index +1,
+                                                                }
+                                                                return temp
+                                                            })
                                                         }}
                                                     >
                                                     <EditIcon color="primary" />
@@ -392,12 +412,31 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
                                                             const fournisseurId = formikProps.values.fournisseurId;
 
                                                             if (designation.trim() !== '' && caracteristik.trim() !== '') {
-                                                                if(idValues){
-                                                                    setValuesArticle((prev:any[])=>{
-                                                                        let temp = [...prev.map((ValId)=>{
-                                                                            if(ValId.id === idValues){
+                                                                if (idValues.idVal) {
+                                                                    setValuesArticle((prev: any[]) => {
+                                                                        let temp = [...prev.map((ValId, index) => {
+                                                                            let indexUpdate = index + 1
+                                                                            if(indexUpdate === idValues.index){
                                                                                 return {
-                                                                                    id:idValues,
+                                                                                    id:idValues.idVal,
+                                                                                    designation,
+                                                                                    caracteristik,
+                                                                                    pu,
+                                                                                    quantite,
+                                                                                    valueArticle: pu*quantite,
+                                                                                    fournisseurId
+                                                                                }
+                                                                            }
+                                                                            return ValId
+                                                                        })]
+                                                                        return temp
+                                                                    })
+                                                                }else if(idValues.index && !idValues.idVal){
+                                                                    setValuesArticle((prev: any[]) => {
+                                                                        let temp = [...prev.map((ValId, index) => {
+                                                                            let indexUpdate = index + 1
+                                                                            if(indexUpdate === idValues.index){
+                                                                                return {
                                                                                     designation,
                                                                                     caracteristik,
                                                                                     pu,

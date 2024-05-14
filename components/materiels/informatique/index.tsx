@@ -89,10 +89,7 @@ const ListInfo = () => {
         await dispatch(editEquipment({ id }));
         router.push(`/materiels/inventaire/${id}/ajouter`);
     };
-    //   const name = async (id: any) => {
-    //   console.log(getEmployee({ id }));
-        //   await getEmployee({ id });
-        // };
+
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };

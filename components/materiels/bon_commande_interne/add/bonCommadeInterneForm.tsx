@@ -91,7 +91,6 @@ export default function BonCommandeInterneForm() {
                     ArticleCommande:true
                 }
             }}));
-            console.log(Val)
             setValuesArticle((prev:any[])=>{
                 console.log(prev)
                 prev = Val.payload.ArticleCommande

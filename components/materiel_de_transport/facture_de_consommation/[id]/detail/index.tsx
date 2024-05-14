@@ -25,9 +25,6 @@ const DetailFactureConsommation = () => {
   const { consumptionInvoice } = useAppSelector(
     (state) => state.consumptionInvoice
   );
-
-  console.log(consumptionInvoice);
-
   useEffect(() => {
     getDetailsFactureConsommation();
   }, [id]);

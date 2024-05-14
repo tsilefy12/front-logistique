@@ -16,7 +16,7 @@ import OSDatePicker from '../../../shared/date/OSDatePicker';
 const FormBonCommandeFournisseur  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any,setIdDelete:any}) => {
     const dispatch: any = useAppDispatch();
     const route = useRouter();
-    const [idValues ,setIdValues] = useState<any>()
+    const [idValues ,setIdValues] = useState<any>({})
     
     const { fournisseurList } = useAppSelector( (state) => state.fournisseur);
  
@@ -216,7 +216,15 @@ const FormBonCommandeFournisseur  = ({formikProps,valuesArticle,setValuesArticle
                                                             formikProps.setFieldValue('unitPrice', item.unitPrice);
                                                             formikProps.setFieldValue('quantite', item.quantite);
                                                             formikProps.setFieldValue('details', item.details);
-                                                            setIdValues(item.id)
+                                                            setIdValues(()=>{
+                                                                let temp = item.id ? {
+                                                                    index : index +1,
+                                                                    idVal : item.id
+                                                                } : {
+                                                                    index : index +1,
+                                                                }
+                                                                return temp
+                                                            })
                                                         }}
                                                     >
                                                     <EditIcon color="primary" />
@@ -316,12 +324,30 @@ const FormBonCommandeFournisseur  = ({formikProps,valuesArticle,setValuesArticle
                                                             const details = formikProps.values.details;
 
                                                             if (designation.trim()) {
-                                                                if(idValues){
-                                                                    setValuesArticle((prev:any[])=>{
-                                                                        let temp = [...prev.map((ValId)=>{
-                                                                            if(ValId.id === idValues){
+                                                                if (idValues.idVal) {
+                                                                    setValuesArticle((prev: any[]) => {
+                                                                        let temp = [...prev.map((ValId, index) => {
+                                                                            let indexUpdate = index + 1
+                                                                            if(indexUpdate === idValues.index){
                                                                                 return {
-                                                                                    id:idValues,
+                                                                                    id:idValues.idVal,
+                                                                                    designation,
+                                                                                    unitPrice,
+                                                                                    quantite,
+                                                                                    montant: unitPrice*quantite,
+                                                                                    details
+                                                                                }
+                                                                            }
+                                                                            return ValId
+                                                                        })]
+                                                                        return temp
+                                                                    })
+                                                                }else if(idValues.index && !idValues.idVal){
+                                                                    setValuesArticle((prev: any[]) => {
+                                                                        let temp = [...prev.map((ValId, index) => {
+                                                                            let indexUpdate = index + 1
+                                                                            if(indexUpdate === idValues.index){
+                                                                                return {
                                                                                     designation,
                                                                                     unitPrice,
                                                                                     quantite,

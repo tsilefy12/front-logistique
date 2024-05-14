@@ -48,7 +48,6 @@ const ListStock = () => {
   );
   const fetchEquipmentList = useFetchEquipmentStock();
 
-  console.log(equipmentStockList)
   useEffect(() => {
 
     fetchEquipmentList();

@@ -52,7 +52,6 @@ const DetailsFicheDotation = () => {
             pieceJointe : ficheDotation.pieceJointe ? ficheDotation.pieceJointe : null
         }
         setPdf(data)
-        console.log(ficheDotation)
     },[id,ficheDotation])
 
     return (

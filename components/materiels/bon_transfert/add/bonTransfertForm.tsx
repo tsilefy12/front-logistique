@@ -92,7 +92,6 @@ export default function BonTransfertForm() {
                     articleTransfert:true
                 }
             }}));
-            console.log(Val)
             setValuesArticle((prev:any[])=>{
                 console.log(prev)
                 prev = Val.payload.articleTransfert

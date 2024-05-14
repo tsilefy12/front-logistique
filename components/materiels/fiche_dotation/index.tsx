@@ -53,8 +53,6 @@ export default function FicheDotationList() {
     const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
 
     const fetchFicheDotation = useFetchFicheDeDotation();
-    
-    console.log(ficheDotations)
 
     useEffect(() => {
         fetchFicheDotation();

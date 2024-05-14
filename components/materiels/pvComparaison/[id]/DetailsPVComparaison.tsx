@@ -68,7 +68,6 @@ const DetailsPvComparaison = () => {
             offre : offre
         }
         setPdf(data)
-        console.log("offre.motif:", offre.motif)
     },[id,pvComparaison])
     return (
         <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
@@ -244,7 +243,8 @@ const DetailsPvComparaison = () => {
                                             <TableCell></TableCell>
                                             <TableCell>Fournisseur</TableCell>
                                             <TableCell align="left">Mode de Paie</TableCell>
-                                            <TableCell align="left">Désignation</TableCell>             
+                                            <TableCell align="left">Désignation</TableCell>  
+                                            <TableCell align="left">Montant total</TableCell>             
                                             <TableCell></TableCell>
                                         </TableRow>
                                     </TableHead>
@@ -268,6 +268,7 @@ const DetailsPvComparaison = () => {
                                                     <TableCell component="th" scope="row">{item.vendor?.name}</TableCell>
                                                     <TableCell align="left">{item.modePaie}</TableCell>
                                                     <TableCell align="left">{item.designation}</TableCell>
+                                                    <TableCell align="left">{item.amount}</TableCell>
                                                 </TableRow>
                                             )
                                         })}

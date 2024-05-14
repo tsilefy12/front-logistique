@@ -46,10 +46,10 @@ export default function PvComparaisonForm() {
                             fournisseur: element.fournisseur,
                             modePaie: element.modePaie,
                             designation: element.designation,
+                            amount: element.amount,
                             pvComparaisonOffreId: response.payload.id
                         };
                         const res = await dispatch(createPvComparaisonFournisseur(newData));
-                        console.log(res.payload?.id)
                         if(index === values.offreRetenu){
                             const data = {
                                 motif: values.motif ? values.motif: null,
@@ -77,8 +77,8 @@ export default function PvComparaisonForm() {
                             objet:"",
                             ref: "",
                             programme: "",
-                            grant: "",
-                            ligneBudgetaire: "",
+                            grant: 0,
+                            ligneBudgetaire: 0,
                             materiel:"",
                             fournisseur:"",
                             modePaie:"",
@@ -86,6 +86,7 @@ export default function PvComparaisonForm() {
                             motif:"",
                             offreRetenu: 0,
                             argument: "",
+                            amount:0
                         }
                     }
                     validationSchema={Yup.object({
