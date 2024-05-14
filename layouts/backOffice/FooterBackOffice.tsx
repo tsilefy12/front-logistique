@@ -23,14 +23,14 @@ const FooterBackOffice = () => {
             variant="body2"
             sx={{ color: theme.palette.grey[500] }}
           >
-            Copyright © 2022 | <Lien>HAISOA</Lien>{" "}
+            Copyright © 2024 | <Lien>HAISOA</Lien>{" "}
           </Typography>
           <Typography
             variant="body2"
             sx={{ color: theme.palette.grey[500] }}
           >
-            Version ¤ <Lien>1.0.0</Lien>, dernière mise à jour :{" "}
-            <Lien>05/10/2022</Lien>{" "}
+            Version ¤ <Lien>2.0.0</Lien>, dernière mise à jour :{" "}
+            <Lien>04/03/2024</Lien>{" "}
           </Typography>
         </Stack>
       </Container>
