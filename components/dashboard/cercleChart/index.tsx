@@ -24,6 +24,26 @@ const CercleChart = () => {
         "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
         "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
     ];
+    function generateRandomHexColor() {
+        // Fonction pour générer une valeur hexadécimale aléatoire à deux chiffres
+        function getRandomHex() {
+            // Générer un nombre entier aléatoire entre 0 et 255
+            const randomInt = Math.floor(Math.random() * 256);
+            // Convertir ce nombre en une chaîne hexadécimale à deux chiffres
+            const hexString = randomInt.toString(16);
+            // Si la chaîne est d'un seul chiffre, ajouter un zéro devant
+            return hexString.padStart(2, '0');
+        }
+    
+        // Générer les composantes rouge, verte et bleue de la couleur
+        const red = getRandomHex();
+        const green = getRandomHex();
+        const blue = getRandomHex();
+    
+        // Combiner les composantes pour former le code couleur hexadécimal
+        const hexColor = `#${red}${green}${blue}`;
+        return hexColor;
+    }
     React.useEffect(() => {
         const ctx = chartRef.current;
         if (carVouchers.length !== 0) {
@@ -44,14 +64,6 @@ const CercleChart = () => {
             const listMois: string[] = [];
             const listMontant: number[] = [];
             const now = new Date().getFullYear()
-            const colors = [
-                'rgb(224, 224, 224)',
-                '#CC9933',
-                'rgb(154, 205, 50)',
-                'blue',
-                'orange'
-            ];
-
             Object.keys(totalMontantByMonth).forEach(month => {
                 listMois.push(month);
                 listMontant.push(totalMontantByMonth[month]);
@@ -63,9 +75,9 @@ const CercleChart = () => {
                     datasets: [{
                         label: 'Montant total (en Ariary)',
                         data: (listMontant.length != 0) ? listMontant : [0.5],
-                        backgroundColor: colors,
-                        borderColor: colors,
-                        borderWidth: 1
+                        backgroundColor: listMois.map(m=> generateRandomHexColor()),
+                        // borderColor: listMois.map(m=>generateRandomHexColor()),
+                        borderWidth: 0
                     }]
                 },
                 options: {

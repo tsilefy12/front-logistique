@@ -11,9 +11,7 @@ import Dashboard from "../components/dashboard";
 const Home: NextPage = () => {
   const basePath = useBasePath();
   return (
-    <Container maxWidth="xl">
     <Dashboard />
-  </Container>
   );
 };
 

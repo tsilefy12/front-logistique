@@ -1,27 +1,31 @@
-import {
-  Container,
-  styled,
-  Stack
-} from "@mui/material";
+import { Container, styled, Stack } from "@mui/material";
 import { useRouter } from "next/router";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import * as React from "react";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
-import { createSuiviCarburant, editSuiviCarburant, updateSuiviCarburant } from "../../../../redux/features/suivi_carburant/suiviCarburantSlice";
+import {
+  createSuiviCarburant,
+  editSuiviCarburant,
+  updateSuiviCarburant,
+} from "../../../../redux/features/suivi_carburant/suiviCarburantSlice";
 import useFetchSuiviCarburants from "../hooks/useFetchSuiviCarburant";
 import useFetchTransportationEquipments from "../../hooks/useFetchTransportationEquipments";
-import {  updateTransportationEquipment } from "../../../../redux/features/transportation_equipment";
+import { updateTransportationEquipment } from "../../../../redux/features/transportation_equipment";
 import SuiviForm from "./SuiviForm";
 
 const FormSuiviCarburant = () => {
   const route = useRouter();
   const dispatch = useAppDispatch();
   const { id }: any = route.query;
-  const fetchSuiviCarburant = useFetchSuiviCarburants()
-  const { isEditing, suiviCarburant } = useAppSelector((state) => state.suiviCarburant);
+  const fetchSuiviCarburant = useFetchSuiviCarburants();
+  const { isEditing, suiviCarburant } = useAppSelector(
+    (state) => state.suiviCarburant
+  );
   const fetchMateriels = useFetchTransportationEquipments();
-  const { transportationEquipment, transportationEquipments } = useAppSelector((state) => state.transportationEquipment)
+  const { transportationEquipment, transportationEquipments } = useAppSelector(
+    (state) => state.transportationEquipment
+  );
 
   React.useEffect(() => {
     fetchMateriels();
@@ -30,30 +34,12 @@ const FormSuiviCarburant = () => {
     }
   }, [id]);
 
-  const ListMateriel: { id: string, name: string ,unitPrice:number}[] = [];
-  let kilometrageInit: number = 0;
-  let reserve: number = 0;
-  let resteCarburant: number = 0;
+  const ListMateriel: { id: string; name: string; unitPrice: number }[] = [];
 
   // let [selectMateriel, setSelectMateriel] = React.useState('');
   const [materiel, setMateriel] = React.useState("");
 
-  if (transportationEquipments.length > 0) {
-    transportationEquipments.forEach((element: any) => {
-      if (element.id === materiel) {
-        kilometrageInit = element["kilometrageActuel"];
-        reserve = element["reservoir"];
-        resteCarburant = element["reste"];
-      }
-      if (element["status"] === "Location interne") {
-        ListMateriel.push({ id: element.id, name: element.registration ,unitPrice: element.typeEquipment.unitPrice});
-      }
-    });
-  } else {
-    console.log("Rien")
-  }
   const handleSubmit = async (values: any) => {
-
     try {
       if (isEditing) {
         await dispatch(
@@ -67,7 +53,7 @@ const FormSuiviCarburant = () => {
         updateTransport(values);
       }
 
-      fetchSuiviCarburant()
+      fetchSuiviCarburant();
       route.push("/materiel_de_transport/suivi_carburant");
     } catch (error) {
       console.log("error", error);
@@ -85,7 +71,7 @@ const FormSuiviCarburant = () => {
             transportationEquipment: {
               ...transportationEquipment,
               reste: updatedReste,
-              kilometrageActuel: values.kilometrageFinal
+              kilometrageActuel: values.kilometrageFinal,
             },
           })
         );
@@ -95,27 +81,21 @@ const FormSuiviCarburant = () => {
     }
   };
 
-
   const calculateUpdatedReste = (values: any) => {
-
-    const calcul1 = values.kilometrageFinal - kilometrageInit;
-
-    if (calcul1 >= 0) {
-      const calcul2 = (calcul1 * reserve) / kilometrageInit;
-
-      if (resteCarburant !== undefined) {
-        if (calcul2 > 0) {
-          resteCarburant = parseInt((reserve - calcul2).toFixed(1));
-          return resteCarburant;
-        }
-      } else {
-        return resteCarburant !== undefined ? resteCarburant : 0;
-      }
-    } else {
-      const calcul3 = (calcul1 * reserve) / kilometrageInit;
-      resteCarburant = calcul3;
-      return resteCarburant;
-    }
+    const km =
+      values.kilometrageFinal -
+      transportationEquipments.find((e) => e.id === values.materiel)!
+        .kilometrageActuel!;
+    const carburants =
+      (km *
+        transportationEquipments.find((e) => e.id === values.materiel)!
+          .reservoir!) /
+      transportationEquipments.find((e) => e.id === values.materiel)!
+        .kilometrageActuel!;
+    return (
+      transportationEquipments.find((e) => e.id === values.materiel)!.reste! -
+      carburants
+    );
   };
 
   return (
@@ -126,11 +106,13 @@ const FormSuiviCarburant = () => {
           materiel: isEditing ? suiviCarburant?.materiel : materiel,
           date: isEditing ? suiviCarburant?.date : new Date(),
           itineraire: isEditing ? suiviCarburant?.itineraire : "",
-          personnelTransporte: isEditing ? suiviCarburant?.personnelTransporte : "",
+          personnelTransporte: isEditing
+            ? suiviCarburant?.personnelTransporte
+            : "",
           kilometrageFinal: isEditing ? suiviCarburant?.kilometrageFinal : 0,
           montant: isEditing ? suiviCarburant?.montant : 0,
           grant: isEditing ? suiviCarburant?.grant : "",
-          pu: isEditing ? suiviCarburant?.pu : ListMateriel.find((e:any) => e.id === materiel)?.unitPrice,
+          pu: isEditing ? suiviCarburant?.pu : 0,
           ligneBudgetaire: isEditing ? suiviCarburant?.ligneBudgetaire : "",
           modePaiement: isEditing ? suiviCarburant?.modePaiement : "",
         }}
@@ -140,15 +122,15 @@ const FormSuiviCarburant = () => {
           itineraire: Yup.string().required(
             "Veuillez remplir le champ itineraire"
           ),
-          personnelTransporte: Yup.string().required("Veuillez remplir le champ personne transporté"),
-          kilometrageFinal: Yup.number().required("Veuillez remplir le champ kilometrage final"),
-          montant: Yup.string().required(
-            "Veuillez remplir le champ montant"
+          personnelTransporte: Yup.string().required(
+            "Veuillez remplir le champ personne transporté"
           ),
+          kilometrageFinal: Yup.number().required(
+            "Veuillez remplir le champ kilometrage final"
+          ),
+          montant: Yup.string().required("Veuillez remplir le champ montant"),
           pu: Yup.number().required("Veuillez remplir le champ prix unitaire"),
-          grant: Yup.string().required(
-            "Veuillez remplir le champ grant"
-          ),
+          grant: Yup.string().required("Veuillez remplir le champ grant"),
           ligneBudgetaire: Yup.string().required(
             "Veuillez choisir ligne budgetaire"
           ),
@@ -157,11 +139,18 @@ const FormSuiviCarburant = () => {
           ),
         })}
         onSubmit={(value: any, action: any) => {
+          if (
+            transportationEquipments.find((e) => e.id === value.materiel) &&
+            value.kilometrageFinal <
+              transportationEquipments.find((e) => e.id === value.materiel)!
+                .kilometrageActuel!
+          )
+            return;
           handleSubmit(value);
           action.resetForm();
         }}
       >
-        {(formikProps) => <SuiviForm formikProps={formikProps} /> }
+        {(formikProps) => <SuiviForm formikProps={formikProps} />}
       </Formik>
     </Container>
   );

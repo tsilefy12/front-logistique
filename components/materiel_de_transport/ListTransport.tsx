@@ -159,7 +159,7 @@ const ListTransport = () => {
                             </TableCell>
 
                             <TableCell align="left">
-                              {row.typeEquipment.type} - {row.typeEquipment.prefix}
+                              {row?.typeEquipment?.type} - {row?.typeEquipment?.prefix}
                             </TableCell>
 
                             <TableCell align="left">
@@ -171,7 +171,7 @@ const ListTransport = () => {
                             </TableCell>
 
                             <TableCell align="left">
-                              {row?.fournisseur ? row.vendor?.name: ''}
+                              {row?.fournisseur ? row?.vendor?.name: ''}
                             </TableCell>
 
 

@@ -32,7 +32,6 @@ import OSDatePicker from "../../shared/date/OSDatePicker";
 import useFetchVendors from "../../vendor/hooks/useFetchVendors";
 import { getTypeEquipmentList } from "../../../redux/features/typeEquipment";
 
-
 const MaterielTransportForm = () => {
   const route = useRouter();
   const dispatch = useAppDispatch();
@@ -42,8 +41,8 @@ const MaterielTransportForm = () => {
   const fetchVendor = useFetchVendors();
   useEffect(() => {
     fetchVendor();
-    dispatch(getTypeEquipmentList({}))
-  }, [route.query])
+    dispatch(getTypeEquipmentList({}));
+  }, [route.query]);
 
   const { isEditing, transportationEquipment } = useAppSelector(
     (state) => state.transportationEquipment
@@ -59,6 +58,7 @@ const MaterielTransportForm = () => {
           })
         );
       } else {
+        values.reste = values.reservoir;
         await dispatch(createTransportEquipment(values));
       }
       route.push("/materiel_de_transport");
@@ -75,8 +75,8 @@ const MaterielTransportForm = () => {
 
   const ListStatus = [
     { id: "Location interne", name: "Location interne" },
-    { id: "Location externe", name: "Location externe" }
-  ]
+    { id: "Location externe", name: "Location externe" },
+  ];
   return (
     <Container maxWidth="xl" sx={{ pb: 5 }}>
       <Formik
@@ -89,12 +89,17 @@ const MaterielTransportForm = () => {
             ? transportationEquipment?.otherInformation
             : "",
           status: isEditing ? transportationEquipment.status : "",
-          dateAcquisition: isEditing ? transportationEquipment.dateAcquisition : new Date(),
-          kilometrageInitial: isEditing ? transportationEquipment.kilometrageInitial : "",
+          dateAcquisition: isEditing
+            ? transportationEquipment.dateAcquisition
+            : new Date(),
+          kilometrageInitial: isEditing
+            ? transportationEquipment.kilometrageInitial
+            : "",
           reservoir: isEditing ? transportationEquipment.reservoir : "",
           consommation: isEditing ? transportationEquipment.consommation : "",
-          kilometrageActuel: isEditing ? transportationEquipment.kilometrageActuel : 0,
-          reste: isEditing ? transportationEquipment.reste : 0,
+          kilometrageActuel: isEditing
+            ? transportationEquipment.kilometrageActuel
+            : 0,
           fournisseur: isEditing ? transportationEquipment.fournisseur : "",
         }}
         validationSchema={Yup.object({
@@ -106,9 +111,7 @@ const MaterielTransportForm = () => {
           otherInformation: Yup.string().required(
             "Veuillez remplir le champ otherInformation"
           ),
-          status: Yup.string().required(
-            "Veuillez remplir le champ status"
-          ),
+          status: Yup.string().required("Veuillez remplir le champ status"),
           dateAcquisition: Yup.string().required(
             "Veuillez remplir le champ date d'acquisition"
           ),
@@ -193,8 +196,11 @@ const MaterielTransportForm = () => {
                     id="outlined-basic"
                     label="Catégorie"
                     variant="outlined"
-                    options={typeEquipmentList.map((e)=> ({...e,prefix:" - " +e.prefix}))}
-                    dataKey={["type","prefix"]}
+                    options={typeEquipmentList.map((e) => ({
+                      ...e,
+                      prefix: " - " + e.prefix,
+                    }))}
+                    dataKey={["type", "prefix"]}
                     valueKey="id"
                     name="type"
                   />
@@ -220,7 +226,9 @@ const MaterielTransportForm = () => {
                     label="Date d'acquisition"
                     variant="outlined"
                     value={formikProps.values.dateAcquisition}
-                    onChange={(value: any) => formikProps.setFieldValue("dateAcquisition", value)}
+                    onChange={(value: any) =>
+                      formikProps.setFieldValue("dateAcquisition", value)
+                    }
                   />
                 </Stack>
                 <Stack direction="row" spacing={3} margin={2}>
@@ -236,7 +244,10 @@ const MaterielTransportForm = () => {
                       const newValue = parseInt(event.target.value);
                       formikProps.setFieldValue("kilometrageInitial", newValue);
                       const kilometrageActuellValue = newValue;
-                      formikProps.setFieldValue("kilometrageActuel", kilometrageActuellValue)
+                      formikProps.setFieldValue(
+                        "kilometrageActuel",
+                        kilometrageActuellValue
+                      );
                     }}
                   />
                   <OSTextField
@@ -267,15 +278,6 @@ const MaterielTransportForm = () => {
                   />
                 </Stack>
                 <Stack direction="row" spacing={2} margin={2}>
-                  <OSTextField
-                    id="outlined-basic"
-                    label="Reste"
-                    variant="outlined"
-                    name="reste"
-                    type="number"
-                    min="0"
-                    disabled
-                  />
                   <OSTextField
                     id="outlined-basic"
                     label="Autre information"
