@@ -39,10 +39,8 @@ import {
 import Moment from "react-moment";
 import { format } from "date-fns";
 import useFetchTransportationEquipments from "../hooks/useFetchTransportationEquipments";
-import 'bootstrap/dist/css/bootstrap.min.css'
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Label } from "@mui/icons-material";
-
-
 
 const ListTransport = () => {
   const [page, setPage] = React.useState(0);
@@ -54,18 +52,22 @@ const ListTransport = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { carVouchers } = useAppSelector((state) => state.carVoucher);
-  const { transportationEquipment } = useAppSelector((state) => state.transportationEquipment)
-  const fetchTransportEquipements = useFetchTransportationEquipments()
+  const { transportationEquipment } = useAppSelector(
+    (state) => state.transportationEquipment
+  );
+  const fetchTransportEquipements = useFetchTransportationEquipments();
 
   const fetchCarVouchers = useFetchCarVouchers();
-  const [positionMois, setPositionMois]: any = useState(0)
-  const [mois, setMois]: any = useState(0)
-  const [annee, setAnne]: any = useState(0)
+  const [positionMois, setPositionMois]: any = useState("tous");
+  const [mois, setMois]: any = useState("tous");
+  const [annee, setAnne]: any = useState("tous");
   const [montantMensuel, setMontantMensuel]: any = useState(0);
-  const [filteredCarVouchers, setFilteredCarVouchers] = useState<CarVoucherItem[]>([]);
+  const [filteredCarVouchers, setFilteredCarVouchers] = useState<
+    CarVoucherItem[]
+  >([]);
 
   React.useEffect(() => {
-    fetchTransportEquipements()
+    fetchTransportEquipements();
     fetchCarVouchers();
   }, [router.query, positionMois]);
 
@@ -90,7 +92,7 @@ const ListTransport = () => {
         await dispatch(deleteCarVoucher({ id }));
         fetchCarVouchers();
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -108,45 +110,52 @@ const ListTransport = () => {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - carVouchers.length) : 0;
 
-  //Filtre par mois 
+  //Filtre par mois
   const ListMois: any = [
-    { id: 1, name: "Janvier" }, { id: 2, name: "Février" },
-    { id: 3, name: "Mars" }, { id: 4, name: "Avril" },
-    { id: 5, name: "Mai" }, { id: 6, name: "Juin" },
-    { id: 7, name: "Juillet" }, { id: 8, name: "Août" },
-    { id: 9, name: "Septembre" }, { id: 10, name: "Octobre" },
-    { id: 11, name: "Novembre" }, { id: 12, name: "Décembre" }
+    { id: 1, name: "Janvier" },
+    { id: 2, name: "Février" },
+    { id: 3, name: "Mars" },
+    { id: 4, name: "Avril" },
+    { id: 5, name: "Mai" },
+    { id: 6, name: "Juin" },
+    { id: 7, name: "Juillet" },
+    { id: 8, name: "Août" },
+    { id: 9, name: "Septembre" },
+    { id: 10, name: "Octobre" },
+    { id: 11, name: "Novembre" },
+    { id: 12, name: "Décembre" },
   ];
-  const ListeAnnee: any = useMemo(() =>{
+  const ListeAnnee: any = useMemo(() => {
     if (carVouchers && carVouchers.length > 0) {
-       return new Set(carVouchers.map((item: any) => new Date(item.date!).getFullYear()))
+      return new Set(
+        carVouchers.map((item: any) => new Date(item.date!).getFullYear())
+      );
     }
     return [];
-  }, [carVouchers])
+  }, [carVouchers]);
 
- React.useEffect(() =>{
-     filtreData()
- }, [mois, annee])
- 
+  React.useEffect(() => {
+    filtreData();
+  }, [mois, annee, carVouchers]);
+
   const filtreData = () => {
-    let temp = [...carVouchers]
-    if (mois === 0 && annee === 0) {
+    let temp = [...carVouchers];
+    if (mois == "tous" && annee == "tous") {
       setFilteredCarVouchers(carVouchers);
-    }else{
+    } else {
       if (mois != "tous") {
         temp = temp.filter((row: CarVoucherItem) => {
           const rowDate = new Date(row.date!).getMonth() + 1;
           if (rowDate == mois) {
-            return row
+            return row;
           }
         });
-        
       }
-      if (annee!="tous") {
+      if (annee != "tous") {
         temp = temp.filter((row: CarVoucherItem) => {
           const rowDate = new Date(row.date!).getFullYear();
           if (rowDate == annee) {
-            return row
+            return row;
           }
         });
       }
@@ -155,11 +164,10 @@ const ListTransport = () => {
         const montantM = item["montantTotal"];
         calcul += montantM;
         setMontantMensuel(calcul);
-      })
-      setFilteredCarVouchers(temp)
+      });
+      setFilteredCarVouchers(temp);
     }
-  }
-
+  };
 
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
@@ -168,37 +176,46 @@ const ListTransport = () => {
           <Typography>
             <Stack direction="row" spacing={4}>
               <Link href={"/materiel_de_transport/bon_de_voiture/add"}>
-                <Button variant="contained" startIcon={<Add />} size="small" sx={{height: 40, width: "260px" }}>
+                <Button
+                  variant="contained"
+                  startIcon={<Add />}
+                  size="small"
+                  sx={{ height: 40, width: "260px" }}
+                >
                   Ajouter
                 </Button>
               </Link>
               <FormControl fullWidth>
-                  <TextField
-                    select
-                    label="Mois"
-                    value={mois}
-                    onChange={(e) => setMois(e.target.value)}
-                    size="small"
-                  >
-                    <MenuItem value="tous">Tous les mois</MenuItem>
-                    {ListMois.map((element: any) => (
-                      <MenuItem key={element.id} value={element.id}>{element.name}</MenuItem>
-                    ))}
-                  </TextField>
+                <TextField
+                  select
+                  label="Mois"
+                  value={mois}
+                  onChange={(e) => setMois(e.target.value)}
+                  size="small"
+                >
+                  <MenuItem value="tous">Tous les mois</MenuItem>
+                  {ListMois.map((element: any) => (
+                    <MenuItem key={element.id} value={element.id}>
+                      {element.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </FormControl>
               <FormControl fullWidth>
-                  <TextField
-                    select
-                    label="Année"
-                    value={annee}
-                    onChange={(e) => setAnne(e.target.value)}
-                    size="small"
-                  >
-                    <MenuItem value="tous">Tous les années</MenuItem>
-                    {[...ListeAnnee].map((element: any) => (
-                      <MenuItem key={element} value={element}>{element}</MenuItem>
-                    ))}
-                  </TextField>
+                <TextField
+                  select
+                  label="Année"
+                  value={annee}
+                  onChange={(e) => setAnne(e.target.value)}
+                  size="small"
+                >
+                  <MenuItem value="tous">Tous les années</MenuItem>
+                  {[...ListeAnnee].map((element: any) => (
+                    <MenuItem key={element} value={element}>
+                      {element}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </FormControl>
             </Stack>
           </Typography>
@@ -219,13 +236,14 @@ const ListTransport = () => {
               >
                 <CarVoucherTableHeader />
                 <TableBody>
-                  {filteredCarVouchers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .sort((a, b) => {
-                    const dateA: any = new Date(a.date || '');
-                    const dateB: any = new Date(b.date || '');
-                    
-                    return dateA - dateB;
-                  })
+                  {filteredCarVouchers
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => {
+                      const dateA: any = new Date(a.date || "");
+                      const dateB: any = new Date(b.date || "");
+
+                      return dateA - dateB;
+                    })
                     .map((row: CarVoucherItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (
@@ -238,10 +256,10 @@ const ListTransport = () => {
                             <Moment format="DD/MM/yyyy">{row.date}</Moment>
                           </TableCell>
 
+                          <TableCell align="left">{row.reference}</TableCell>
                           <TableCell align="left">
-                            {row.reference}
+                            {row.montantTotal} Ariary
                           </TableCell>
-                          <TableCell align="left">{row.montantTotal} Ariary</TableCell>
                           <TableCell align="right" width={"150px"}>
                             <BtnActionContainer
                               direction="row"
@@ -296,8 +314,23 @@ const ListTransport = () => {
                   )}
                 </TableBody>
               </Table>
-              <FormControl sx={{ display: (montantMensuel == 0 || mois == "tous" || filteredCarVouchers.length == 0) ? 'none' : 'block', marginTop: 4 }}>
-                <label><strong>Montant mensuel</strong> : <b><span>{montantMensuel} Ariary</span></b></label>
+              <FormControl
+                sx={{
+                  display:
+                    montantMensuel == 0 ||
+                    mois == "tous" ||
+                    filteredCarVouchers.length == 0
+                      ? "none"
+                      : "block",
+                  marginTop: 4,
+                }}
+              >
+                <label>
+                  <strong>Montant mensuel</strong> :{" "}
+                  <b>
+                    <span>{montantMensuel} Ariary</span>
+                  </b>
+                </label>
               </FormControl>
             </TableContainer>
             <TablePagination

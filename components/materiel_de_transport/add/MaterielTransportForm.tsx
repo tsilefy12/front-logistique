@@ -191,6 +191,7 @@ const MaterielTransportForm = () => {
                     label="Immatriculation/Reference"
                     variant="outlined"
                     name="registration"
+                    inputProps={{ autoComplete: "off" }}
                   />
                   <OSSelectField
                     id="outlined-basic"
@@ -209,6 +210,7 @@ const MaterielTransportForm = () => {
                     label="Marque"
                     variant="outlined"
                     name="brand"
+                    inputProps={{ autoComplete: "off" }}
                   />
                 </Stack>
                 <Stack direction="row" spacing={2} margin={2}>
@@ -239,6 +241,7 @@ const MaterielTransportForm = () => {
                     name="kilometrageInitial"
                     type="number"
                     min="0"
+                    inputProps={{ autoComplete: "off", min: 0 }}
                     value={formikProps.values.kilometrageInitial}
                     onChange={(event: any) => {
                       const newValue = parseInt(event.target.value);
@@ -258,6 +261,7 @@ const MaterielTransportForm = () => {
                     value={formikProps.values.kilometrageInitial}
                     type="number"
                     min="0"
+                    inputProps={{ autoComplete: "off", min: 0 }}
                     disabled
                   />
                   <OSTextField
@@ -267,6 +271,7 @@ const MaterielTransportForm = () => {
                     name="reservoir"
                     type="number"
                     min="0"
+                    inputProps={{ autoComplete: "off", min: 0 }}
                   />
                   <OSTextField
                     id="outlined-basic"
@@ -275,6 +280,7 @@ const MaterielTransportForm = () => {
                     name="consommation"
                     type="number"
                     min="0"
+                    inputProps={{ autoComplete: "off", min: 0 }}
                   />
                 </Stack>
                 <Stack direction="row" spacing={2} margin={2}>
@@ -283,6 +289,7 @@ const MaterielTransportForm = () => {
                     label="Autre information"
                     variant="outlined"
                     name="otherInformation"
+                    inputProps={{ autoComplete: "off" }}
                   />
                   <OSSelectField
                     id="outlined-basic"

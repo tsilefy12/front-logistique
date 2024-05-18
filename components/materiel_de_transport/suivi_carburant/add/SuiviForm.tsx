@@ -81,7 +81,11 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
       }
     }
   }, [formikProps.values]);
-
+  const modePaiement = [
+    { id: "Virement bancaire", name: "Virement bancaire" },
+    { id: "Chèque bancaire", name: "Chèque bancaire" },
+    { id: "Mobile Money", name: "Mobile Money" },
+  ];
   return (
     <Form>
       <NavigationContainer>
@@ -159,6 +163,7 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
             label="Itineraire"
             variant="outlined"
             name="itineraire"
+            inputProps={{ autoComplete: "off" }}
           />
         </FormControl>
         <FormControl fullWidth>
@@ -166,6 +171,7 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
             id="outlined-basic"
             label="Personne transporté"
             name="personnelTransporte"
+            inputProps={{ autoComplete: "off" }}
           />
         </FormControl>
       </Stack>
@@ -176,6 +182,7 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
             label="kilometrage final"
             name="kilometrageFinal"
             type="number"
+            inputProps={{ autoComplete: "off", min: 0 }}
           />
         </FormControl>
         <FormControl fullWidth>
@@ -229,12 +236,22 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
           />
         </FormControl>
         <FormControl fullWidth>
-          <OSTextField
+          {/* <OSTextField
             id="outlined-basic"
             label="Mode paiement"
             variant="outlined"
             name="modePaiement"
             type="text"
+          /> */}
+          <OSSelectField
+            id="outlined-basic"
+            label="Mode paiement"
+            variant="outlined"
+            name="modePaiement"
+            type="text"
+            options={modePaiement}
+            dataKey={"name"}
+            valueKey="id"
           />
         </FormControl>
       </Stack>

@@ -19,10 +19,7 @@ import Paper from "@mui/material/Paper";
 import Edit from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Add from "@mui/icons-material/Add";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import useFetchTransportationEquipments from "./hooks/useFetchTransportationEquipments";
 import { useRouter } from "next/router";
 import { TransportationEquipmentItem } from "../../redux/features/transportation_equipment/transportationEquipment.interface";
@@ -51,8 +48,7 @@ const ListTransport = () => {
     (state) => state.transportationEquipment
   );
 
-  const fetchTransportationEquipments =
-    useFetchTransportationEquipments();
+  const fetchTransportationEquipments = useFetchTransportationEquipments();
 
   React.useEffect(() => {
     fetchTransportationEquipments();
@@ -69,8 +65,7 @@ const ListTransport = () => {
   const handleClickDelete = async (id: any) => {
     confirm({
       title: "Supprimer le matériel de transport",
-      description:
-        "Voulez-vous vraiment supprimer ce matériel de transport ?",
+      description: "Voulez-vous vraiment supprimer ce matériel de transport ?",
       cancellationText: "Annuler",
       confirmationText: "Supprimer",
       cancellationButtonProps: {
@@ -101,22 +96,15 @@ const ListTransport = () => {
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0
-      ? Math.max(
-          0,
-          (1 + page) * rowsPerPage - transportationEquipments.length
-        )
+      ? Math.max(0, (1 + page) * rowsPerPage - transportationEquipments.length)
       : 0;
-
+  // console.log(transportationEquipments);
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
           <Link href={"/materiel_de_transport/add"}>
-            <Button
-              variant="contained"
-              startIcon={<Add />}
-              size="small"
-            >
+            <Button variant="contained" startIcon={<Add />} size="small">
               Ajouter
             </Button>
           </Link>
@@ -138,46 +126,32 @@ const ListTransport = () => {
                 <TransportEquipmentTableHeader />
                 <TableBody>
                   {transportationEquipments
-                    .slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map(
-                      (
-                        row: TransportationEquipmentItem | any,
-                        index: any
-                      ) => {
+                      (row: TransportationEquipmentItem | any, index: any) => {
                         const labelId = `enhanced-table-checkbox-${index}`;
                         return (
                           <TableRow hover tabIndex={-1} key={row.id}>
-                            <TableCell
-                              component="th"
-                              id={labelId}
-                              align="left"
-                            >
+                            <TableCell component="th" id={labelId} align="left">
                               {row.registration}
                             </TableCell>
 
                             <TableCell align="left">
-                              {row?.typeEquipment?.type} - {row?.typeEquipment?.prefix}
+                              {row?.typeEquipment?.type} -{" "}
+                              {row?.typeEquipment?.prefix}
                             </TableCell>
 
-                            <TableCell align="left">
-                              {row.brand}
-                            </TableCell>
+                            <TableCell align="left">{row.brand}</TableCell>
 
                             <TableCell align="left">
                               {row.otherInformation}
                             </TableCell>
 
                             <TableCell align="left">
-                              {row?.fournisseur ? row?.vendor?.name: ''}
+                              {row?.fournisseur ? row?.vendor?.name : ""}
                             </TableCell>
 
-
-                            <TableCell align="left">
-                              {row.status}
-                            </TableCell>
+                            <TableCell align="left">{row.status}</TableCell>
 
                             <TableCell align="right" width={"150px"}>
                               <BtnActionContainer

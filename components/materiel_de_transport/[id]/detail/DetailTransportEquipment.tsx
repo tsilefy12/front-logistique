@@ -136,7 +136,7 @@ const DetailTransportEquipment = () => {
                     Kilometrage initial :
                   </Typography>
                   <Typography variant="body1" color="gray">
-                    {transportationEquipment.kilometrageInitial}
+                    {transportationEquipment.kilometrageInitial} Km
                   </Typography>
                 </InfoItems>
               </Grid>
@@ -148,7 +148,7 @@ const DetailTransportEquipment = () => {
                     Reservoir :
                   </Typography>
                   <Typography variant="body1" color="gray">
-                    {transportationEquipment.reservoir}
+                    {transportationEquipment.reservoir} L
                   </Typography>
                 </InfoItems>
               </Grid>
@@ -157,10 +157,10 @@ const DetailTransportEquipment = () => {
               <Grid item xs={12} md={12}>
                 <InfoItems direction="row" spacing={2}>
                   <Typography variant="body1" color="secondary">
-                    Consommation :
+                    Consommation au 100 :
                   </Typography>
                   <Typography variant="body1" color="gray">
-                    {transportationEquipment.consommation}
+                    {transportationEquipment.consommation} L
                   </Typography>
                 </InfoItems>
               </Grid>
@@ -198,7 +198,7 @@ const DetailTransportEquipment = () => {
                     Kilometrage actuel :
                   </Typography>
                   <Typography variant="body1" color="gray">
-                    {transportationEquipment.kilometrageActuel}
+                    {transportationEquipment.kilometrageActuel} Km
                   </Typography>
                 </InfoItems>
               </Grid>
@@ -210,7 +210,7 @@ const DetailTransportEquipment = () => {
                     Reste du carburant :
                   </Typography>
                   <Typography variant="body1" color="gray">
-                    {transportationEquipment.reste}
+                    {transportationEquipment.reste} L
                   </Typography>
                 </InfoItems>
               </Grid>

@@ -34,11 +34,6 @@ const FormSuiviCarburant = () => {
     }
   }, [id]);
 
-  const ListMateriel: { id: string; name: string; unitPrice: number }[] = [];
-
-  // let [selectMateriel, setSelectMateriel] = React.useState('');
-  const [materiel, setMateriel] = React.useState("");
-
   const handleSubmit = async (values: any) => {
     try {
       if (isEditing) {
@@ -61,15 +56,15 @@ const FormSuiviCarburant = () => {
   };
 
   const updateTransport = async (values: any) => {
+    console.log(values.materiel);
     try {
-      if (values.materiel != "") {
+      if (transportationEquipments.filter((t) => t.id === values.materiel)) {
         const updatedReste = calculateUpdatedReste(values);
 
         await dispatch(
           updateTransportationEquipment({
             id: values.materiel!,
             transportationEquipment: {
-              ...transportationEquipment,
               reste: updatedReste,
               kilometrageActuel: values.kilometrageFinal,
             },
@@ -89,9 +84,9 @@ const FormSuiviCarburant = () => {
     const carburants =
       (km *
         transportationEquipments.find((e) => e.id === values.materiel)!
-          .reservoir!) /
-      transportationEquipments.find((e) => e.id === values.materiel)!
-        .kilometrageActuel!;
+          .consommation!) /
+      100;
+    console.log(carburants);
     return (
       transportationEquipments.find((e) => e.id === values.materiel)!.reste! -
       carburants
@@ -103,7 +98,7 @@ const FormSuiviCarburant = () => {
       <Formik
         enableReinitialize
         initialValues={{
-          materiel: isEditing ? suiviCarburant?.materiel : materiel,
+          materiel: isEditing ? suiviCarburant?.materiel : "",
           date: isEditing ? suiviCarburant?.date : new Date(),
           itineraire: isEditing ? suiviCarburant?.itineraire : "",
           personnelTransporte: isEditing
