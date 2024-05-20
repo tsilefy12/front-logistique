@@ -32,7 +32,6 @@ import { format } from "date-fns";
 import { getActivity } from "../../../../../redux/features/activity/activitySlice";
 import { ActivityItem } from "../../../../../redux/features/activity/activity.interface";
 
-
 const DetailBonDeVoiture = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -48,14 +47,14 @@ const DetailBonDeVoiture = () => {
     dispatch(getActivity({ id, args }));
   };
 
-  const [total, setTotal] = useState(0)
-  
+  const [total, setTotal] = useState(0);
+
   useEffect(() => {
     getDetailCarVoucher();
     let calcul = 0;
-    activitys.forEach((element:any) => {
-       calcul+=element.montants;
-       setTotal(calcul)
+    activitys.forEach((element: any) => {
+      calcul += element.montants;
+      setTotal(calcul);
     });
   }, [id, activitys]);
 
@@ -80,34 +79,41 @@ const DetailBonDeVoiture = () => {
       </NavigationContainer>
       <Table>
         <TableHead>
-        <TableRow>
-        <TableCell>Activité</TableCell>
-          <TableCell>Nombre</TableCell>
-          <TableCell>PU</TableCell>
-          <TableCell>Montant</TableCell>
-        </TableRow>
+          <TableRow>
+            <TableCell>Activité</TableCell>
+            <TableCell>Nombre</TableCell>
+            <TableCell>PU</TableCell>
+            <TableCell>Montant</TableCell>
+          </TableRow>
         </TableHead>
         <TableBody>
-             {
-               activitys.map((row: ActivityItem | any, index: any) =>(
-                <TableRow key={index}>
-                <TableCell>{row.activite}</TableCell>
-                <TableCell>{row.nombre}</TableCell>
-                <TableCell>{row.pu}</TableCell>
-                <TableCell>{row.montants} Ariary</TableCell>
-              </TableRow>
-               ))
-             }
+          {activitys.map((row: ActivityItem | any, index: any) => (
+            <TableRow key={index}>
+              <TableCell>{row.activite}</TableCell>
+              <TableCell>{row.nombre}</TableCell>
+              <TableCell>{row.pu}</TableCell>
+              <TableCell>{row.montants}</TableCell>
+            </TableRow>
+          ))}
         </TableBody>
         <TableFooter>
-          {
-            (activitys.length !=0) ? (
-              <TableRow>
-              <TableCell colSpan={4} sx={{textAlign: 'center', fontSize: '1.1em', color: 'black'}}>Total : {total} Ariary</TableCell>
+          {activitys.length != 0 ? (
+            <TableRow>
+              <TableCell
+                colSpan={4}
+                sx={{ textAlign: "center", fontSize: "1.1em", color: "black" }}
+              >
+                Total : {total}
+              </TableCell>
             </TableRow>
-            ):
-            (<TableCell colSpan={4} sx={{textAlign: 'center', fontSize: '1.3em'}}>Aucune activitée</TableCell>)
-          }
+          ) : (
+            <TableCell
+              colSpan={4}
+              sx={{ textAlign: "center", fontSize: "1.3em" }}
+            >
+              Aucune activitée
+            </TableCell>
+          )}
         </TableFooter>
       </Table>
     </Container>

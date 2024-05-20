@@ -157,7 +157,7 @@ const ListSuiviCarburant = () => {
                             {row.kilometrageFinal} Km
                           </TableCell>
 
-                          <TableCell align="left">{row.montant} Ar</TableCell>
+                          <TableCell align="left">{row.montant}</TableCell>
 
                           <TableCell align="left">
                             {

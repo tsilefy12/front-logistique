@@ -43,13 +43,12 @@ const ListStock = () => {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const dispatch = useAppDispatch();
-  const { typeEquipmentList:equipmentStockList } = useAppSelector(
+  const { typeEquipmentList: equipmentStockList } = useAppSelector(
     (state) => state.typeEquipment
   );
   const fetchEquipmentList = useFetchEquipmentStock();
 
   useEffect(() => {
-
     fetchEquipmentList();
   }, []);
   // const handleRequestSort = (
@@ -116,7 +115,7 @@ const ListStock = () => {
   return (
     <Container maxWidth="xl">
       <SectionNavigation direction="row" justifyContent="space-between" mb={2}>
-        <Link href="/materiels/stock">
+        <Link href="/materiels">
           <Button
             variant="text"
             size="small"
@@ -147,7 +146,7 @@ const ListStock = () => {
                     .map((row: EquipmentStockItem, index: any) => {
                       // const isItemSelected = isSelected(row.article);
                       const labelId = `enhanced-table-checkbox-${index}`;
-                      if(row.equipments && row.equipments!.length >0 ){
+                      if (row.equipments && row.equipments!.length > 0) {
                         return (
                           <TableRow
                             hover
@@ -187,7 +186,6 @@ const ListStock = () => {
                           </TableRow>
                         );
                       }
-                      
                     })}
                   {emptyRows > 0 && (
                     <TableRow

@@ -257,10 +257,8 @@ const ListTransport = () => {
                           </TableCell>
 
                           <TableCell align="left">{row.reference}</TableCell>
-                          <TableCell align="left">
-                            {row.montantTotal} Ariary
-                          </TableCell>
-                          <TableCell align="right" width={"150px"}>
+                          <TableCell align="left">{row.montantTotal}</TableCell>
+                          <TableCell align="right" width={"50px"}>
                             <BtnActionContainer
                               direction="row"
                               justifyContent="right"

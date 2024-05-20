@@ -24,20 +24,27 @@ const DetailsInformatique = () => {
   const dispatch = useAppDispatch();
   const { id }: any = router.query;
   const { equipment } = useAppSelector((state) => state.equipment);
-  const { employees } = useAppSelector( (state) => state.employe);
-  const { interns } = useAppSelector( (state) => state.stagiaire);
-  const { grantList } = useAppSelector( (state) => state.grant);
-  const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
-  
-  const total = [...employees.map((i:any)=>{
+  const { employees } = useAppSelector((state) => state.employe);
+  const { interns } = useAppSelector((state) => state.stagiaire);
+  const { grantList } = useAppSelector((state) => state.grant);
+  const { budgetLineList } = useAppSelector((state) => state.lineBugetaire);
+
+  const total = [
+    ...employees.map((i: any) => {
       return {
-          id : i.id, name:i.name +" "+ i.surname, type: "employe"
-      }
-  }),...interns.map((i:any)=>{
+        id: i.id,
+        name: i.name + " " + i.surname,
+        type: "employe",
+      };
+    }),
+    ...interns.map((i: any) => {
       return {
-          id : i.id, name: i.name +" "+ i.surname, type: "intern"
-      }
-  })]
+        id: i.id,
+        name: i.name + " " + i.surname,
+        type: "intern",
+      };
+    }),
+  ];
 
   useEffect(() => {
     getDetailInformatique();
@@ -47,7 +54,7 @@ const DetailsInformatique = () => {
     const args: any = {
       include: {
         type: true,
-        vendor: true
+        vendor: true,
       },
     };
     dispatch(getEquipment({ id, args }));
@@ -56,7 +63,7 @@ const DetailsInformatique = () => {
     dispatch(getGrantList({}));
     dispatch(getBudgetLineList({}));
   };
-
+  // console.log(equipment);
   function getText(etat: any) {
     switch (etat) {
       case "GOOD":
@@ -91,178 +98,168 @@ const DetailsInformatique = () => {
         </Typography>
       </SectionNavigation>
       <Stack
-          direction="row"
-          spacing={3}
-          sx={{
-              flex: "1 1 100%",
-          }}
-          >
-          <DetailsContainer>
-              <Grid container spacing={4} my={1}>
-                <Grid item xs={12} md={12}>
-                  <InfoItems direction="row" spacing={2}>
-                    <Typography variant="body1" color="secondary">
-                      Code :
-                    </Typography>
-                    <Typography variant="body1" color="gray">
-                      {equipment.numOptim}
-                    </Typography>
-                  </InfoItems>
-                </Grid>
-              </Grid>
-              <Grid container spacing={4} my={1}>
-                <Grid item xs={12} md={12}>
-                  <InfoItems direction="row" spacing={2}>
-                    <Typography variant="body1" color="secondary">
-                      Type :
-                    </Typography>
-                    <Typography variant="body1" color="gray">
-                      {equipment?.type?.type}
-                    </Typography>
-                  </InfoItems>
-                </Grid>
-              </Grid>
-              <Grid container spacing={4} my={1}>
-                <Grid item xs={12} md={12}>
-                  <InfoItems direction="row" spacing={2}>
-                    <Typography variant="body1" color="secondary">
-                      Utilisateur :
-                    </Typography>
-                    <Typography variant="body1" color="gray">
-                      {total.find((e:any)=> e.id === equipment?.ownerId)?.name}
-                    </Typography>
-                  </InfoItems>
-                </Grid>
-              </Grid>
-              <Grid container spacing={4} my={1}>
-                <Grid item xs={12} md={12}>
-                  <InfoItems direction="row" spacing={2}>
-                    <Typography variant="body1" color="secondary">
-                      Designation :
-                    </Typography>
-                    <Typography variant="body1" color="gray">
-                      {equipment.designation}
-                    </Typography>
-                  </InfoItems>
-                </Grid>
-              </Grid>
-              <Grid container spacing={4} my={1}>
-                <Grid item xs={12} md={12}>
-                  <InfoItems direction="row" spacing={2}>
-                    <Typography variant="body1" color="secondary">
-                      Etat :
-                    </Typography>
-                    <Typography variant="body1" color="gray">
-                      {getText(equipment?.status)}
-                    </Typography>
-                  </InfoItems>
-                </Grid>
-              </Grid>
-          </DetailsContainer>
-          <DetailsContainer>
-              <Grid container spacing={4} my={1}>
-                <Grid item xs={12} md={12}>
-                  <InfoItems direction="row" spacing={2}>
-                    <Typography variant="body1" color="secondary">
-                        Date d'acquisition
-                    </Typography>
-                    <Typography variant="body1" color="gray">
-                        <Moment format="DD/MM/YYYY">
-                          {equipment.acquisitionDate}
-                        </Moment>
-                    </Typography>
-                  </InfoItems>
-                </Grid>
-              </Grid>
-              <Grid container spacing={4} my={1}>
-                <Grid item xs={12} md={12}>
-                  <InfoItems direction="row" spacing={2}>
-                    <Typography variant="body1" color="secondary">
-                        Valeur d'acquisition
-                    </Typography>
-                    <Typography variant="body1" color="gray">
-                      {equipment?.acquisitionValue}
-                    </Typography>
-                  </InfoItems>
-                </Grid>
-              </Grid>
-              <Grid container spacing={4} my={1}>
-                <Grid item xs={12} md={12}>
-                  <InfoItems direction="row" spacing={2}>
-                    <Typography variant="body1" color="secondary">
-                      Date d'amortissement
-                    </Typography>
-                    <Typography variant="body1" color="gray">
-                        <Moment format="DD/MM/YYYY">
-                          {equipment.dateAmortissement}
-                        </Moment>
-                    </Typography>
-                  </InfoItems>
-                </Grid>
-              </Grid>
-              <Grid container spacing={4} my={1}>
-                <Grid item xs={12} md={12}>
-                  <InfoItems direction="row" spacing={2}>
-                    <Typography variant="body1" color="secondary">
-                      Durée d'amortissement
-                    </Typography>
-                    <Typography variant="body1" color="gray">
-                      {equipment.dureAmortissement}
-                    </Typography>
-                  </InfoItems>
-                </Grid>
-              </Grid>
-              <Grid container spacing={4} my={1}>
-                <Grid item xs={12} md={12}>
-                  <InfoItems direction="row" spacing={2}>
-                    <Typography variant="body1" color="secondary">
-                      Categorie matériel:
-                    </Typography>
-                    <Typography variant="body1" color="gray">
-                      {equipment?.categorieMateriel}
-                    </Typography>
-                  </InfoItems>
-                </Grid>
-              </Grid>
-          </DetailsContainer>
-          <DetailsContainer>
-              <Grid container spacing={4} my={1}>
-                <Grid item xs={12} md={12}>
-                  <InfoItems direction="row" spacing={2}>
-                    <Typography variant="body1" color="secondary">
-                        Grant
-                    </Typography>
-                    <Typography variant="body1" color="gray">
-                      {grantList.find((e:any)=> e.id === equipment?.grant)?.code}
-                    </Typography>
-                  </InfoItems>
-                </Grid>
-              </Grid>
-              <Grid container spacing={4} my={1}>
-                <Grid item xs={12} md={12}>
-                  <InfoItems direction="row" spacing={2}>
-                    <Typography variant="body1" color="secondary">
-                        Ligne budgétaire
-                    </Typography>
-                    <Typography variant="body1" color="gray">
-                      {budgetLineList.find((e:any)=> e.id === equipment?.ligneBudgetaire)?.code}
-                    </Typography>
-                  </InfoItems>
-                </Grid>
-              </Grid>
-              <Grid container spacing={4} my={1}>
-                <Grid item xs={12} md={12}>
-                  <InfoItems direction="row" spacing={2}>
-                    <Typography variant="body1" color="secondary">
-                      Fournisseur
-                    </Typography>
-                    <Typography variant="body1" color="gray">
-                        {equipment?.vendor?.name}
-                    </Typography>
-                  </InfoItems>
-                </Grid>
-              </Grid>
-          </DetailsContainer>
+        direction="row"
+        justifyContent={"space-between"}
+        alignItems={"center"}
+      >
+        <Stack direction={"column"} gap={2}>
+          <Grid container spacing={4} my={1}>
+            <Grid item xs={12} md={12}>
+              <InfoItems direction="row" spacing={2}>
+                <Typography variant="body1" color="secondary">
+                  Code :
+                </Typography>
+                <Typography variant="body1" color="gray">
+                  {equipment.numOptim}
+                </Typography>
+              </InfoItems>
+            </Grid>
+          </Grid>
+          <Grid container spacing={4} my={1}>
+            <Grid item xs={12} md={12}>
+              <InfoItems direction="row" spacing={2}>
+                <Typography variant="body1" color="secondary">
+                  Type :
+                </Typography>
+                <Typography variant="body1" color="gray">
+                  {equipment?.type?.type}
+                </Typography>
+              </InfoItems>
+            </Grid>
+          </Grid>
+          <Grid container spacing={4} my={1}>
+            <Grid item xs={12} md={12}>
+              <InfoItems direction="row" spacing={2}>
+                <Typography variant="body1" color="secondary">
+                  Utilisateur :
+                </Typography>
+                <Typography variant="body1" color="gray">
+                  {total.find((e: any) => e.id === equipment?.ownerId)?.name}
+                </Typography>
+              </InfoItems>
+            </Grid>
+          </Grid>
+          <Grid container spacing={4} my={1}>
+            <Grid item xs={12} md={12}>
+              <InfoItems direction="row" spacing={2}>
+                <Typography variant="body1" color="secondary">
+                  Designation :
+                </Typography>
+                <Typography variant="body1" color="gray">
+                  {equipment.designation}
+                </Typography>
+              </InfoItems>
+            </Grid>
+          </Grid>
+        </Stack>
+        <Stack direction={"column"} gap={2}>
+          <Grid container spacing={4} my={1}>
+            <Grid item xs={12} md={12}>
+              <InfoItems direction="row" spacing={2}>
+                <Typography variant="body1" color="secondary">
+                  Date d'acquisition
+                </Typography>
+                <Typography variant="body1" color="gray">
+                  <Moment format="DD/MM/YYYY">
+                    {equipment.acquisitionDate}
+                  </Moment>
+                </Typography>
+              </InfoItems>
+            </Grid>
+          </Grid>
+          <Grid container spacing={4} my={1}>
+            <Grid item xs={12} md={12}>
+              <InfoItems direction="row" spacing={2}>
+                <Typography variant="body1" color="secondary">
+                  Valeur d'acquisition
+                </Typography>
+                <Typography variant="body1" color="gray">
+                  {equipment?.acquisitionValue}
+                </Typography>
+              </InfoItems>
+            </Grid>
+          </Grid>
+          <Grid container spacing={4} my={1}>
+            <Grid item xs={12} md={12}>
+              <InfoItems direction="row" spacing={2}>
+                <Typography variant="body1" color="secondary">
+                  Date d'amortissement
+                </Typography>
+                <Typography variant="body1" color="gray">
+                  <Moment format="DD/MM/YYYY">
+                    {equipment.dateAmortissement}
+                  </Moment>
+                </Typography>
+              </InfoItems>
+            </Grid>
+          </Grid>
+          <Grid container spacing={4} my={1}>
+            <Grid item xs={12} md={12}>
+              <InfoItems direction="row" spacing={2}>
+                <Typography variant="body1" color="secondary">
+                  Durée d'amortissement
+                </Typography>
+                <Typography variant="body1" color="gray">
+                  {equipment.dureAmortissement}
+                </Typography>
+              </InfoItems>
+            </Grid>
+          </Grid>
+        </Stack>
+        <Stack direction={"column"} gap={2}>
+          <Grid container spacing={4} my={1}>
+            <Grid item xs={12} md={12}>
+              <InfoItems direction="row" spacing={2}>
+                <Typography variant="body1" color="secondary">
+                  Grant
+                </Typography>
+                <Typography variant="body1" color="gray">
+                  {grantList.find((e: any) => e.id === equipment?.grant)?.code}
+                </Typography>
+              </InfoItems>
+            </Grid>
+          </Grid>
+          <Grid container spacing={4} my={1}>
+            <Grid item xs={12} md={12}>
+              <InfoItems direction="row" spacing={2}>
+                <Typography variant="body1" color="secondary">
+                  Ligne budgétaire
+                </Typography>
+                <Typography variant="body1" color="gray">
+                  {
+                    budgetLineList.find(
+                      (e: any) => e.id === equipment?.ligneBudgetaire
+                    )?.code
+                  }
+                </Typography>
+              </InfoItems>
+            </Grid>
+          </Grid>
+          <Grid container spacing={4} my={1}>
+            <Grid item xs={12} md={12}>
+              <InfoItems direction="row" spacing={2}>
+                <Typography variant="body1" color="secondary">
+                  Fournisseur
+                </Typography>
+                <Typography variant="body1" color="gray">
+                  {equipment?.vendor?.name}
+                </Typography>
+              </InfoItems>
+            </Grid>
+          </Grid>
+          <Grid container spacing={4} my={1}>
+            <Grid item xs={12} md={12}>
+              <InfoItems direction="row" spacing={2}>
+                <Typography variant="body1" color="secondary">
+                  Etat :
+                </Typography>
+                <Typography variant="body1" color="gray">
+                  {getText(equipment?.status)}
+                </Typography>
+              </InfoItems>
+            </Grid>
+          </Grid>
+        </Stack>
       </Stack>
     </Container>
   );

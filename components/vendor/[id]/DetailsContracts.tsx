@@ -9,31 +9,28 @@ import {
 import React, { useEffect } from "react";
 import Link from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { getVendor } from "../../../redux/features/vendor";
+import useFetchTypeProduitList from "../../configurations/type_produit/hooks/useFetchTypeProduitList";
 
 const DetailsVendor = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { id }: any = router.query;
   const { vendor } = useAppSelector((state) => state.vendor);
+  const fetchTypeProduit = useFetchTypeProduitList();
+  const { typeProduits } = useAppSelector((state) => state.typeProduit);
 
   useEffect(() => {
     getDetailsVendor();
+    fetchTypeProduit();
   }, [id]);
-
+  // console.log(vendor);
   const getDetailsVendor = () => {
     const args: any = {
       include: {
-        name: true,
-        address: true,
-        phone: true,
-        email: true,
-        website: true,
+        typeProduct: true,
       },
     };
     dispatch(getVendor({ id, args }));
@@ -47,11 +44,7 @@ const DetailsVendor = () => {
         sx={{ mb: 2 }}
       >
         <Link href="/fournisseurs">
-          <Button
-            color="info"
-            variant="text"
-            startIcon={<ArrowBackIcon />}
-          >
+          <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
             Retour
           </Button>
         </Link>
@@ -60,78 +53,129 @@ const DetailsVendor = () => {
         </Typography>
       </SectionNavigation>
       <DetailsContainer>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Nom :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {vendor.name}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Adresse :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {vendor.address}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Télephone :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {vendor.phone}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Email :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {vendor.email}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Nif :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {vendor.nif}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
-        <Grid container spacing={4} my={1}>
-          <Grid item xs={12} md={12}>
-            <InfoItems direction="row" spacing={2}>
-              <Typography variant="body1" color="secondary">
-                Stat :
-              </Typography>
-              <Typography variant="body1" color="gray">
-                {vendor.website}
-              </Typography>
-            </InfoItems>
-          </Grid>
-        </Grid>
+        <Stack
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+        >
+          <Stack direction={"column"} gap={2}>
+            <Grid container spacing={4} my={1}>
+              <Grid item xs={12} md={12}>
+                <InfoItems direction="row" spacing={2}>
+                  <Typography variant="body1" color="secondary">
+                    Nom :
+                  </Typography>
+                  <Typography variant="body1" color="gray">
+                    {vendor.name}
+                  </Typography>
+                </InfoItems>
+              </Grid>
+            </Grid>
+            <Grid container spacing={4} my={1}>
+              <Grid item xs={12} md={12}>
+                <InfoItems direction="row" spacing={2}>
+                  <Typography variant="body1" color="secondary">
+                    Adresse :
+                  </Typography>
+                  <Typography variant="body1" color="gray">
+                    {vendor.address}
+                  </Typography>
+                </InfoItems>
+              </Grid>
+            </Grid>
+            <Grid container spacing={4} my={1}>
+              <Grid item xs={12} md={12}>
+                <InfoItems direction="row" spacing={2}>
+                  <Typography variant="body1" color="secondary">
+                    Télephone :
+                  </Typography>
+                  <Typography variant="body1" color="gray">
+                    {vendor.phone}
+                  </Typography>
+                </InfoItems>
+              </Grid>
+            </Grid>
+          </Stack>
+          <Stack direction={"column"} gap={2}>
+            <Grid container spacing={4} my={1}>
+              <Grid item xs={12} md={12}>
+                <InfoItems direction="row" spacing={2}>
+                  <Typography variant="body1" color="secondary">
+                    Email :
+                  </Typography>
+                  <Typography variant="body1" color="gray">
+                    {vendor.email}
+                  </Typography>
+                </InfoItems>
+              </Grid>
+            </Grid>
+            <Grid container spacing={4} my={1}>
+              <Grid item xs={12} md={12}>
+                <InfoItems direction="row" spacing={2}>
+                  <Typography variant="body1" color="secondary">
+                    Nif :
+                  </Typography>
+                  <Typography variant="body1" color="gray">
+                    {vendor.nif}
+                  </Typography>
+                </InfoItems>
+              </Grid>
+            </Grid>
+            <Grid container spacing={4} my={1}>
+              <Grid item xs={12} md={12}>
+                <InfoItems direction="row" spacing={2}>
+                  <Typography variant="body1" color="secondary">
+                    Stat :
+                  </Typography>
+                  <Typography variant="body1" color="gray">
+                    {vendor.website}
+                  </Typography>
+                </InfoItems>
+              </Grid>
+            </Grid>
+          </Stack>
+          <Stack direction={"column"} gap={2}>
+            <Grid container spacing={4} my={1}>
+              <Grid item xs={12} md={12}>
+                <InfoItems direction="row" spacing={2}>
+                  <Typography variant="body1" color="secondary">
+                    Catégorie fournisseur :
+                  </Typography>
+                  <Typography variant="body1" color="gray">
+                    {vendor.categorieFournisseur}
+                  </Typography>
+                </InfoItems>
+              </Grid>
+            </Grid>
+            <Grid container spacing={4} my={1}>
+              <Grid item xs={12} md={12}>
+                <InfoItems direction="row" spacing={2}>
+                  <Typography variant="body1" color="secondary">
+                    Evaluation :
+                  </Typography>
+                  <Typography variant="body1" color="gray">
+                    {vendor.evaluation}
+                  </Typography>
+                </InfoItems>
+              </Grid>
+            </Grid>
+            <Grid container spacing={4} my={1}>
+              <Grid item xs={12} md={12}>
+                <InfoItems direction="row" spacing={2}>
+                  <Typography variant="body1" color="secondary">
+                    Type de produit :
+                  </Typography>
+                  <Typography variant="body1" color="gray">
+                    {
+                      typeProduits.find((t) => t.id === vendor.typeProduit)!
+                        .typeProduct!
+                    }
+                  </Typography>
+                </InfoItems>
+              </Grid>
+            </Grid>
+          </Stack>
+        </Stack>
       </DetailsContainer>
     </Container>
   );

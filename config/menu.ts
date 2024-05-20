@@ -5,82 +5,65 @@ const menu = [
     link: "/materiels",
     icon: "inventory_2",
     items: [
-      // {
-      //   id: 11,
-      //   name: "Commande",
-      //   link: "/materiels/commande",
-      //   icon: "",
-      // },
-      // {
-      //   id: 12,
-      //   name: "Mes commandes",
-      //   link: "/materiels/mes_commandes",
-      //   icon: "",
-      // },
-      // {
-      //   id: 13,
-      //   name: "Bon de commande",
-      //   link: "/materiels/bon_de_commande",
-      //   icon: "",
-      // },
       {
         id: 14,
-        name: "Liste des materiels",
-        link: "/materiels/informatiques",
-        icon: "",
-      },
-      {
-        id: 15,
-        name: "Stock",
-        link: "/materiels/stock",
-        icon: "",
-      },
-      {
-        id: 16,
-        name: "Fiche détention materielle",
-        link: "/materiels/detenteur",
-        icon: "",
-      },
-      {
-        id: 17,
-        name: "Pv de Comparaison",
-        link: "/materiels/pv_comparaison",
-        icon: "",
-      },
-      {
-        id: 18,
-        name: "Bon de commande interne (BCI)",
-        link: "/materiels/bon_commande_interne",
-        icon: "",
-      },
-      {
-        id: 19,
         name: "Bon de Commende Externe (BCE)",
         link: "/materiels/bon_commande_externe",
         icon: "",
       },
       {
-        id: 111,
+        id: 15,
+        name: "Bon de commande fournisseur",
+        link: "/materiels/bon_de_commande_fournisseur",
+        icon: "",
+      },
+      {
+        id: 16,
+        name: "Bon de commande interne (BCI)",
+        link: "/materiels/bon_commande_interne",
+        icon: "",
+      },
+
+      {
+        id: 17,
         name: "Bon de reception",
         link: "/materiels/bon_reception",
         icon: "",
       },
       {
-        id: 112,
+        id: 18,
         name: "Bon de transfert",
         link: "/materiels/bon_transfert",
         icon: "",
       },
       {
-        id: 113,
+        id: 19,
         name: "Fiche de dotation",
         link: "/materiels/fiche_dotation",
         icon: "",
       },
       {
-        id: 114,
-        name: "Bon de commande fournisseur",
-        link: "/materiels/bon_de_commande_fournisseur",
+        id: 20,
+        name: "Fiche détention materielle",
+        link: "/materiels/detenteur",
+        icon: "",
+      },
+      {
+        id: 21,
+        name: "Liste des materiels",
+        link: "/materiels/informatiques",
+        icon: "",
+      },
+      {
+        id: 22,
+        name: "Pv de Comparaison",
+        link: "/materiels/pv_comparaison",
+        icon: "",
+      },
+      {
+        id: 23,
+        name: "Stock",
+        link: "/materiels/stock",
         icon: "",
       },
     ],
@@ -177,21 +160,21 @@ const menu = [
       {
         id: 53,
         name: "Unité de stock",
-        link:"/configurations/unite_de_stock",
-        icon: ""
+        link: "/configurations/unite_de_stock",
+        icon: "",
       },
       // {
-      //   id: 53, 
+      //   id: 53,
       //   name: "Catégorie",
       //   link: "/configurations/categorie",
       //   icon: ""
       // },
       {
-        id: 54, 
+        id: 54,
         name: "Type de produit (Fournisseur)",
         link: "/configurations/type_produit",
-        icon: ""
-      }
+        icon: "",
+      },
     ],
   },
 ];
