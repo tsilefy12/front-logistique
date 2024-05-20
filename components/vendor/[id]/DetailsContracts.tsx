@@ -166,10 +166,9 @@ const DetailsVendor = () => {
                     Type de produit :
                   </Typography>
                   <Typography variant="body1" color="gray">
-                    {
-                      typeProduits.find((t) => t.id === vendor.typeProduit)!
-                        .typeProduct!
-                    }
+                    {typeProduits &&
+                      typeProduits.find((t) => t.id === vendor.typeProduit)
+                        ?.typeProduct!}
                   </Typography>
                 </InfoItems>
               </Grid>
