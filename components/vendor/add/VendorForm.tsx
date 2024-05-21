@@ -9,18 +9,20 @@ import Divider from "@mui/material/Divider";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import Check from "@mui/icons-material/Check";
 import Close from "@mui/icons-material/Close";
-import { styled } from "@mui/material";
-import { Form, Formik } from "formik";
 import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../hooks/reduxHooks";
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+  styled,
+} from "@mui/material";
+import { Form, Formik } from "formik";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import * as Yup from "yup";
 import OSTextField from "../../shared/input copy/OSTextField";
-import {
-  createVendor,
-  updateVendor,
-} from "../../../redux/features/vendor";
+import { createVendor, updateVendor } from "../../../redux/features/vendor";
 import { cancelEdit } from "../../../redux/features/vendor/vendorSlice";
 import OSSelectField from "../../shared/select/OSSelectField";
 import { getTypeProduits } from "../../../redux/features/configuration";
@@ -30,11 +32,19 @@ export default function VendorForm() {
 
   const dispatch = useAppDispatch();
 
-  const { isEditing, vendor } = useAppSelector(
-    (state) => state.vendor
-  );
+  const { isEditing, vendor } = useAppSelector((state) => state.vendor);
+  const [open, setOpen] = React.useState(false);
+  const [getValue, setGetVaue] = React.useState("");
 
   const handleSubmit = async (values: any) => {
+    // console.log(values.website.length);
+    if (values.nif.length < 10) {
+      setGetVaue("NIF");
+      return setOpen(true);
+    } else if (values.website.length < 15) {
+      setGetVaue("STAT");
+      return setOpen(true);
+    }
     try {
       if (isEditing) {
         await dispatch(
@@ -52,27 +62,28 @@ export default function VendorForm() {
     }
   };
 
-  const { typeProduits } = useAppSelector( (state) => state.typeProduit);
-  
+  const { typeProduits } = useAppSelector((state) => state.typeProduit);
+
   const fetchUtilsData = () => {
     dispatch(getTypeProduits({}));
   };
-  
+
   useEffect(() => {
     fetchUtilsData();
   }, []);
-  
+
   const CategoryitList = [
     { id: "Bien", name: "Bien" },
     { id: "Service", name: "Service" },
-    { id: "Don", name: "Don" }
+    { id: "Don", name: "Don" },
   ];
   const EvaluationList = [
     { id: "Fidèle", name: "Fidèle" },
     { id: "Croissance", name: "Croissance" },
     { id: "Dilemme", name: "Dilemme" },
-    { id: "Disqualifier", name: "Disqualifier" }
-  ]
+    { id: "Disqualifier", name: "Disqualifier" },
+  ];
+
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <Formik
@@ -81,16 +92,18 @@ export default function VendorForm() {
           isEditing
             ? vendor
             : {
-              name: isEditing ? vendor?.name : "",
-              address: isEditing ? vendor?.address : "",
-              phone: isEditing ? vendor?.address : "",
-              email: isEditing ? vendor?.email : "",
-              website: isEditing ? vendor?.website : "",
-              nif: isEditing ? vendor?.nif : "",
-              typeProduit: isEditing ? vendor?.typeProduit: "",
-              categorieFournisseur: isEditing ? vendor?.categorieFournisseur: "",
-              evaluation: isEditing ? vendor?.evaluation: "",
-            }
+                name: isEditing ? vendor?.name : "",
+                address: isEditing ? vendor?.address : "",
+                phone: isEditing ? vendor?.address : "",
+                email: isEditing ? vendor?.email : "",
+                website: isEditing ? vendor?.website : "",
+                nif: isEditing ? vendor?.nif : "",
+                typeProduit: isEditing ? vendor?.typeProduit : "",
+                categorieFournisseur: isEditing
+                  ? vendor?.categorieFournisseur
+                  : "",
+                evaluation: isEditing ? vendor?.evaluation : "",
+              }
         }
         validationSchema={Yup.object({
           name: Yup.string().required("Champ obligatoire"),
@@ -153,7 +166,7 @@ export default function VendorForm() {
               </NavigationContainer>
 
               <FormContainer spacing={2}>
-                <Stack direction="row" spacing={3} >
+                <Stack direction="row" spacing={3}>
                   <OSTextField
                     id="outlined-basic"
                     label="Fournisseur"
@@ -164,31 +177,32 @@ export default function VendorForm() {
                     label="Téléphone"
                     name="phone"
                   />
-                  <OSTextField
-                    id="outlined-basic"
-                    label="Email"
-                    name="email"
-                  />
-
+                  <OSTextField id="outlined-basic" label="Email" name="email" />
                 </Stack>
                 <OSTextField
                   id="outlined-basic"
                   label="Adresse"
                   name="address"
                 />
-                <Stack direction="row" spacing={3} >
+                <Stack direction="row" spacing={3}>
                   <OSTextField
-                    id="outlined-basic"
+                    id="outlined-basic-nif"
                     label="Nif"
                     name="nif"
+                    inputProps={{ maxLength: 10 }}
+                    fullWidth
+                    margin="normal"
                   />
                   <OSTextField
-                    id="outlined-basic"
+                    id="outlined-basic-stat"
                     label="Stat"
                     name="website"
+                    inputProps={{ maxLength: 15 }}
+                    fullWidth
+                    margin="normal"
                   />
                 </Stack>
-                <Stack direction="row" spacing={3} >
+                <Stack direction="row" spacing={3}>
                   <OSSelectField
                     id="outlined-basic"
                     label="Type de produit"
@@ -214,12 +228,26 @@ export default function VendorForm() {
                     valueKey="name"
                   />
                 </Stack>
-
               </FormContainer>
             </Form>
           );
         }}
       </Formik>
+      <Dialog open={open}>
+        <DialogTitle color={"red"}>Information</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {`La valeur de ${getValue} doit contenir des ${
+              getValue == "NIF" ? 10 : 15
+            } caractères`}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)}>
+            <Check color="primary" />
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
