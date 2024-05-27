@@ -201,7 +201,7 @@ const DetailsBCI = () => {
                       Montant total
                     </Typography>
                     <Typography variant="body1" color="gray">
-                      {formatMontant(bonCommandeInterne.montantTotal!)}
+                      {formatMontant(Number(bonCommandeInterne.montantTotal))}
                     </Typography>
                   </InfoItems>
                 </Grid>

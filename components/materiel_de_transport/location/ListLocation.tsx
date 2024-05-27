@@ -36,6 +36,7 @@ import useFetchVendors from "../../vendor/hooks/useFetchVendors";
 import useFetchTransportationEquipments from "../hooks/useFetchTransportationEquipments";
 import Moment from "react-moment";
 import useFetchEmployes from "../../Order-Supply-And-Consumable/hooks/useFetchEmployees";
+import formatMontant from "../../../hooks/format";
 
 const ListLocation = () => {
   const [page, setPage] = React.useState(0);
@@ -171,7 +172,9 @@ const ListLocation = () => {
                           <TableCell align="left">
                             {row?.fournisseur ? row.vendor?.name : ""}
                           </TableCell>
-                          <TableCell align="left">{row.montant}</TableCell>
+                          <TableCell align="left">
+                            {formatMontant(Number(row.montant))}
+                          </TableCell>
                           <TableCell align="left">
                             {
                               grantList.find((e: any) => e.id === row?.grant)

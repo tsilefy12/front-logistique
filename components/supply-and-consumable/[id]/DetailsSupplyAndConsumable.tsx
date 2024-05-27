@@ -13,8 +13,9 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { getSuplyAndConsumable } from "../../../redux/features/supply-and-consumable";
 import useFetchUniteStockList from "../../configurations/unite_de_stock/hooks/useFetchUniteStock";
-import formatMontant from "../../../hooks/format";
+// import formatMontant from "../../../hooks/format";
 import { format } from "path";
+import formatMontant from "../../../hooks/format";
 
 const DetailsSuplyAndConsumable = () => {
   const router = useRouter();
@@ -96,7 +97,7 @@ const DetailsSuplyAndConsumable = () => {
                     Prix Unitaire :
                   </Typography>
                   <Typography variant="body1" color="gray">
-                    {formatMontant(suplyAndConsumable.unitPrice!)}
+                    {formatMontant(suplyAndConsumable.unitPrice ?? 0)}
                   </Typography>
                 </InfoItems>
               </Grid>
@@ -108,7 +109,7 @@ const DetailsSuplyAndConsumable = () => {
                     Montant :
                   </Typography>
                   <Typography variant="body1" color="gray">
-                    {formatMontant(suplyAndConsumable.montant!)}
+                    {formatMontant(suplyAndConsumable.montant ?? 0)}
                   </Typography>
                 </InfoItems>
               </Grid>
