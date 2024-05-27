@@ -38,6 +38,7 @@ import SuiviCarburantTableHeader from "./organisme/table/SuiviCarburantTableHead
 import useFetchTransportationEquipments from "../hooks/useFetchTransportationEquipments";
 import useFetchGrant from "./hooks/useFetchGrant";
 import useFetchLigneBudgetaire from "./hooks/useFetchLigneBudgetaire";
+import formatMontant from "../../../hooks/format";
 
 const ListSuiviCarburant = () => {
   const [page, setPage] = React.useState(0);
@@ -157,7 +158,9 @@ const ListSuiviCarburant = () => {
                             {row.kilometrageFinal} Km
                           </TableCell>
 
-                          <TableCell align="left">{row.montant}</TableCell>
+                          <TableCell align="left">
+                            {formatMontant(row.montant!)}
+                          </TableCell>
 
                           <TableCell align="left">
                             {

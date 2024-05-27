@@ -41,6 +41,7 @@ import { format } from "date-fns";
 import useFetchTransportationEquipments from "../hooks/useFetchTransportationEquipments";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Label } from "@mui/icons-material";
+import formatMontant from "../../../hooks/format";
 
 const ListTransport = () => {
   const [page, setPage] = React.useState(0);
@@ -257,7 +258,9 @@ const ListTransport = () => {
                           </TableCell>
 
                           <TableCell align="left">{row.reference}</TableCell>
-                          <TableCell align="left">{row.montantTotal}</TableCell>
+                          <TableCell align="left">
+                            {formatMontant(Number(row.montantTotal))}
+                          </TableCell>
                           <TableCell align="right" width={"50px"}>
                             <BtnActionContainer
                               direction="row"
@@ -326,7 +329,7 @@ const ListTransport = () => {
                 <label>
                   <strong>Montant mensuel</strong> :{" "}
                   <b>
-                    <span>{montantMensuel} Ariary</span>
+                    <span>{formatMontant(montantMensuel)}</span>
                   </b>
                 </label>
               </FormControl>

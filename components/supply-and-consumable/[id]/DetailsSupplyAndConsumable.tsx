@@ -13,6 +13,8 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { getSuplyAndConsumable } from "../../../redux/features/supply-and-consumable";
 import useFetchUniteStockList from "../../configurations/unite_de_stock/hooks/useFetchUniteStock";
+import formatMontant from "../../../hooks/format";
+import { format } from "path";
 
 const DetailsSuplyAndConsumable = () => {
   const router = useRouter();
@@ -55,7 +57,13 @@ const DetailsSuplyAndConsumable = () => {
         </Typography>
       </SectionNavigation>
       <DetailsContainer>
-        <Stack direction="row" spacing={65} marginLeft={4} marginRight={4} marginTop={-4}>
+        <Stack
+          direction="row"
+          spacing={65}
+          marginLeft={4}
+          marginRight={4}
+          marginTop={-4}
+        >
           <Stack direction="column">
             <Grid container spacing={4} my={1}>
               <Grid item xs={12} md={12}>
@@ -88,7 +96,7 @@ const DetailsSuplyAndConsumable = () => {
                     Prix Unitaire :
                   </Typography>
                   <Typography variant="body1" color="gray">
-                    {suplyAndConsumable.unitPrice}
+                    {formatMontant(suplyAndConsumable.unitPrice!)}
                   </Typography>
                 </InfoItems>
               </Grid>
@@ -100,7 +108,7 @@ const DetailsSuplyAndConsumable = () => {
                     Montant :
                   </Typography>
                   <Typography variant="body1" color="gray">
-                    {suplyAndConsumable.montant}
+                    {formatMontant(suplyAndConsumable.montant!)}
                   </Typography>
                 </InfoItems>
               </Grid>
@@ -131,7 +139,7 @@ const DetailsSuplyAndConsumable = () => {
                 </InfoItems>
               </Grid>
             </Grid>
-         
+
             <Grid container spacing={4} my={1}>
               <Grid item xs={12} md={12}>
                 <InfoItems direction="row" spacing={2}>
@@ -175,8 +183,11 @@ const DetailsSuplyAndConsumable = () => {
                     Grant :
                   </Typography>
                   <Typography variant="body1" color="gray">
-                    {grantList.find((e: any) => e.id === suplyAndConsumable?.grant)?.code}
-
+                    {
+                      grantList.find(
+                        (e: any) => e.id === suplyAndConsumable?.grant
+                      )?.code
+                    }
                   </Typography>
                 </InfoItems>
               </Grid>

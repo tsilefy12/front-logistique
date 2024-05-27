@@ -34,6 +34,7 @@ import {
 import SuplyAndConsumableTableToolbar from "./organism/table/SupplyAndConsumableTableToolbar";
 import SuplyAndConsumableTableHeader from "./organism/table/SupplyAndConsumableTableHeader";
 import { SuplyAndConsumableItem } from "../../redux/features/supply-and-consumable/supply-and-consumable.interface";
+import formatMontant from "../../hooks/format";
 
 export default function SuplyAndCosumableList() {
   const [page, setPage] = React.useState(0);
@@ -138,17 +139,19 @@ export default function SuplyAndCosumableList() {
 
                           <TableCell align="left">{row.quantity}</TableCell>
 
-                          <TableCell align="left">{row.unitPrice}</TableCell>
-
-                          <TableCell align="left">{row.uniteStock?.uniteStock}</TableCell>
-                          <TableCell align="left">{row.montant}</TableCell>
+                          <TableCell align="left">
+                            {formatMontant(row.unitPrice!)}
+                          </TableCell>
 
                           <TableCell align="left">
-														{row.reste}
-													</TableCell>
+                            {row.uniteStock?.uniteStock}
+                          </TableCell>
                           <TableCell align="left">
-														{row.seuil}
-													</TableCell>
+                            {formatMontant(row.montant!)}
+                          </TableCell>
+
+                          <TableCell align="left">{row.reste}</TableCell>
+                          <TableCell align="left">{row.seuil}</TableCell>
                           <TableCell align="right" width={"150px"}>
                             <BtnActionContainer
                               direction="row"

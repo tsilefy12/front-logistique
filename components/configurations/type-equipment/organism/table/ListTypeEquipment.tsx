@@ -20,6 +20,7 @@ import useFetchTypeEquipment from "../../hooks/useFetchTypeEquipment";
 import { useConfirm } from "material-ui-confirm";
 import TypeEquipmentTableToolbar from "./TypeEquipmentTableToolbar";
 import TypeEquipmentTableHeader from "./TypeEquipmentTableHeader";
+import formatMontant from "../../../../../hooks/format";
 
 const ListValeurIndice = () => {
   const [page, setPage] = React.useState(0);
@@ -123,7 +124,7 @@ const ListValeurIndice = () => {
                           padding="normal"
                           align="left"
                         >
-                          {row?.unitPrice}
+                          {formatMontant(row?.unitPrice!)}
                         </TableCell>
                         <TableCell align="right">
                           <BtnActionContainer

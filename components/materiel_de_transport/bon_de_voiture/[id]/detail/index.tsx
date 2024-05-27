@@ -31,6 +31,7 @@ import { getCarVoucher } from "../../../../../redux/features/car-voucher";
 import { format } from "date-fns";
 import { getActivity } from "../../../../../redux/features/activity/activitySlice";
 import { ActivityItem } from "../../../../../redux/features/activity/activity.interface";
+import formatMontant from "../../../../../hooks/format";
 
 const DetailBonDeVoiture = () => {
   const router = useRouter();
@@ -91,8 +92,8 @@ const DetailBonDeVoiture = () => {
             <TableRow key={index}>
               <TableCell>{row.activite}</TableCell>
               <TableCell>{row.nombre}</TableCell>
-              <TableCell>{row.pu}</TableCell>
-              <TableCell>{row.montants}</TableCell>
+              <TableCell>{formatMontant(row.pu)}</TableCell>
+              <TableCell>{formatMontant(row.montants)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -103,7 +104,7 @@ const DetailBonDeVoiture = () => {
                 colSpan={4}
                 sx={{ textAlign: "center", fontSize: "1.1em", color: "black" }}
               >
-                Total : {total}
+                Total : {formatMontant(total)}
               </TableCell>
             </TableRow>
           ) : (
