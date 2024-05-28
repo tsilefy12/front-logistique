@@ -11,6 +11,7 @@ import Link from "@mui/material/Link";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 import { OneButtonLink } from "../../../layouts/backOffice/navbar/ButtonNav";
 import NextLink from "next/link";
+import { borderRadius } from "polished";
 
 const VerticalMenu = ({ matches }: any) => {
   const navMenu = useAppSelector((state) => state.menu.value);
@@ -24,8 +25,17 @@ const VerticalMenu = ({ matches }: any) => {
           sx={{ textDecoration: "none" }}
         >
           <StyledStack direction={"row"}>
-            <Icon sx={{ margin: 2, color: "GrayText" }}>{page.icon}</Icon>
-            <FormLabel sx={{ margin: 2, cursor: "pointer" }}>
+            <Icon sx={{ margin: 2 }}>{page.icon}</Icon>
+            <FormLabel
+              sx={{
+                margin: 2,
+                cursor: "pointer",
+                fontWeight: "bold",
+                "&:hover": {
+                  color: "black",
+                },
+              }}
+            >
               {page.name}
             </FormLabel>
           </StyledStack>
@@ -49,9 +59,14 @@ const ListPageContainer = styled(Box)(({ theme }) => ({
 const StyledStack = styled(Stack)(({ theme }) => ({
   backgroundColor: "transparent",
   cursor: "pointer",
-  color: "none",
+  width: "100%", // Définir une largeur initiale
+  color: "GrayText",
   "&:hover": {
+    fontWeight: "bold",
     cursor: "pointer",
-    backgroundColor: "#9EC04E",
+    // backgroundColor: "#eaffbf",
+    minWidth: "100%",
+    borderRadius: 8,
+    color: "black",
   },
 }));

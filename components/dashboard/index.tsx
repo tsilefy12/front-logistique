@@ -75,20 +75,24 @@ const Dashboard = () => {
                 justifyContent: "flex-start",
                 height: "auto",
                 maxHeight: "calc(100vh - 240px)",
-                marginTop: -5,
+                marginTop: -3.5,
               }}
             >
               {listFltered.map((i) => (
-                <Stack
-                  direction={"row"}
-                  alignItems={"center"}
-                  justifyContent={"space-between"}
-                  padding={2}
-                  sx={{ width: "100%" }}
-                  key={i.id}
-                >
-                  <p>{i.id}</p>
-                  <p>{i.name}</p>
+                <Stack direction={"column"} sx={{ width: "100%" }}>
+                  <Stack
+                    direction={"row"}
+                    alignItems={"center"}
+                    justifyContent={"space-between"}
+                    paddingLeft={2}
+                    paddingRight={2}
+                    sx={{ width: "100%" }}
+                    key={i.id}
+                  >
+                    <p>{i.id}</p>
+                    <p>{i.name}</p>
+                  </Stack>
+                  <Divider />
                 </Stack>
               ))}
             </Stack>
@@ -110,7 +114,7 @@ const Dashboard = () => {
             </Stack>
           </Card>
         </Stack>
-        <Stack sx={{ height: "100%" }}>
+        <Stack sx={{ height: "100%", borderLeft: "1px solid gray" }}>
           <VerticalMenu />
         </Stack>
       </Stack>
