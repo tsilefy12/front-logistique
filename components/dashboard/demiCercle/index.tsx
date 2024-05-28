@@ -77,7 +77,9 @@ const DemiCercleChart = () => {
   }, [transportationEquipments]);
 
   return (
-    <canvas ref={chartRef} id="circle-chart" width="295" height="290"></canvas> // Réduisez la hauteur du canevas à la moitié pour afficher un demi-cercle
+    <div style={{ width: "300px", height: "300px" }}>
+      <canvas ref={chartRef} id="circle-chart"></canvas>
+    </div>
   );
 };
 

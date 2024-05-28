@@ -35,13 +35,18 @@ const HeaderDashboard = () => {
         padding: "10px",
       }}
     >
-      <Stack>
+      <Stack paddingLeft={6}>
         <img
           src={`/logistique/images/logo/MV_logo.png`}
           style={{ width: "60px", height: "60px" }}
         />
       </Stack>
-      <Stack direction="row" justifyContent="space-between" gap={1}>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        gap={1}
+        paddingRight={5}
+      >
         <Stack
           style={{
             display: "flex",

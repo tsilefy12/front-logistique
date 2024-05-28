@@ -95,6 +95,10 @@ const CercleChart = () => {
             title: {
               display: true,
               text: `Montant mensuel d\'entretien, année ${now}`,
+              // color: "black",
+              font: {
+                weight: "normal",
+              },
             },
             datalabels: {
               display: true,
@@ -118,7 +122,9 @@ const CercleChart = () => {
   }, [carVouchers]);
 
   return (
-    <canvas ref={chartRef} id="circle-chart" width="300" height="300"></canvas>
+    <div style={{ width: "300px", height: "300px" }}>
+      <canvas ref={chartRef} id="circle-chart"></canvas>
+    </div>
   );
 };
 export default CercleChart;

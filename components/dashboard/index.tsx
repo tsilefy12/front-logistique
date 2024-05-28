@@ -8,6 +8,7 @@ import { Fragment, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import DemiCercleChart from "./demiCercle";
+import { padding } from "polished";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -38,27 +39,43 @@ const Dashboard = () => {
         justifyContent={"space-between"}
         sx={{ height: "calc(100vh - 80px)" }}
       >
-        <Stack direction={"row"} gap={2} padding={2} flexWrap={"wrap"}>
-          <Stack direction={"column"} alignItems={"center"} gap={4}>
-            <Card sx={styleCard}>
-              <p style={{ fontSize: "1.2em", textAlign: "center" }}>
+        <Stack></Stack>
+        <Stack direction={"row"} gap={2} flexWrap={"wrap"} paddingTop={2}>
+          <Card sx={styleCard}>
+            <Stack>
+              <p
+                style={{
+                  fontSize: "1.2em",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                }}
+              >
                 Montant mensuel d'entretien de voiture
               </p>
-            </Card>
-            <CercleChart />
-          </Stack>
-          <Stack direction={"column"} alignItems={"center"} gap={4}>
-            <Card sx={styleCard}>
-              <p style={{ fontSize: "1.2em", textAlign: "center" }}>
+            </Stack>
+            <Stack sx={{ ...styleCard, marginTop: -4 }}>
+              <CercleChart />
+            </Stack>
+          </Card>
+          <Card sx={styleCard}>
+            <Stack>
+              <p
+                style={{
+                  fontSize: "1.2em",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                }}
+              >
                 Liste des articles à acheter dans fiche de stock
               </p>
-            </Card>
-            <Card
+            </Stack>
+            <Stack
               sx={{
                 ...styleCard,
                 justifyContent: "flex-start",
                 height: "auto",
                 maxHeight: "calc(100vh - 240px)",
+                marginTop: -5,
               }}
             >
               {listFltered.map((i) => (
@@ -74,16 +91,24 @@ const Dashboard = () => {
                   <p>{i.name}</p>
                 </Stack>
               ))}
-            </Card>
-          </Stack>
-          <Stack direction={"column"} alignItems={"center"} gap={4}>
-            <Card sx={styleCard}>
-              <p style={{ fontSize: "1.2em", textAlign: "center" }}>
-                Recharge du carbuarant
+            </Stack>
+          </Card>
+          <Card sx={{ ...styleCard }}>
+            <Stack>
+              <p
+                style={{
+                  fontSize: "1.2em",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                }}
+              >
+                Recharge du carburant
               </p>
-            </Card>
-            <DemiCercleChart />
-          </Stack>
+            </Stack>
+            <Stack sx={{ paddingTop: 2 }}>
+              <DemiCercleChart />
+            </Stack>
+          </Card>
         </Stack>
         <Stack sx={{ height: "100%" }}>
           <VerticalMenu />
@@ -96,8 +121,11 @@ export default Dashboard;
 
 const styleCard = {
   width: 300,
-  height: 100,
+  // height: 100,
   display: "flex",
-  justifyContent: "center",
+  // justifyContent: "center",
   alignItems: "center",
+  flexDirection: "column",
+  gap: 5,
+  padding: 2,
 };
