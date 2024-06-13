@@ -1,240 +1,253 @@
-import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 // import Badge from "@mui/material";
 import styled from "@emotion/styled";
 import Add from "@mui/icons-material/Add";
 import Delete from "@mui/icons-material/Delete";
 import Edit from "@mui/icons-material/Edit";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import Table from "@mui/material/Table";
-import TableContainer from "@mui/material/TableContainer";
-import TableBody from "@mui/material/TableBody";
-import TablePagination from "@mui/material/TablePagination";
-import TableCell from "@mui/material/TableCell";
+import Visibility from "@mui/icons-material/Visibility";
 import Box from "@mui/material/Box";
-import TableRow from "@mui/material/TableRow";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
 import { useConfirm } from "material-ui-confirm";
-import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
-import {
-  labelRowsPerPage,
-  defaultLabelDisplayedRows,
-} from "../../shared/table/tableFeature";
-import Visibility from "@mui/icons-material/Visibility";
-import BonTransfertTableToolbar from "./table/FicheDotationTableToolbar";
-import BonTransfertTableHeader from "./table/FicheDotationTableHeader";
 import Moment from "react-moment";
+import { usePermitted } from "../../../config/middleware";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { ficheDotationItem } from "../../../redux/features/fiche_dotation/ficheDotation.interface";
-import useFetchFicheDeDotation from "./hooks/useFetchFicheDeDotation";
 import { deleteFicheDotation } from "../../../redux/features/fiche_dotation/ficheDotationSlice";
-import { getGrantList } from "../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
 import { getBudgetLineList } from "../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
+import { getGrantList } from "../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
+import {
+  defaultLabelDisplayedRows,
+  labelRowsPerPage,
+} from "../../shared/table/tableFeature";
+import useFetchFicheDeDotation from "./hooks/useFetchFicheDeDotation";
+import BonTransfertTableHeader from "./table/FicheDotationTableHeader";
+import BonTransfertTableToolbar from "./table/FicheDotationTableToolbar";
 
 export default function FicheDotationList() {
-    const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    // const { suplyAndConsumable } = useAppSelector(
-    //   (state) => state.suplyAndConsumable
-    // );
-    const router = useRouter();
+  const [page, setPage] = React.useState(0);
+  const [dense, setDense] = React.useState(false);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  // const { suplyAndConsumable } = useAppSelector(
+  //   (state) => state.suplyAndConsumable
+  // );
+  const router = useRouter();
 
-    const confirm = useConfirm();
+  const confirm = useConfirm();
 
-    const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-    const { ficheDotations } = useAppSelector((state) => state.ficheDotation);
-    const { grantList } = useAppSelector( (state) => state.grant);
-    const { budgetLineList } = useAppSelector( (state) => state.lineBugetaire);
+  const { ficheDotations } = useAppSelector((state) => state.ficheDotation);
+  const { grantList } = useAppSelector((state) => state.grant);
+  const { budgetLineList } = useAppSelector((state) => state.lineBugetaire);
 
-    const fetchFicheDotation = useFetchFicheDeDotation();
+  const fetchFicheDotation = useFetchFicheDeDotation();
+  const validate = usePermitted();
 
-    useEffect(() => {
+  useEffect(() => {
+    fetchFicheDotation();
+    dispatch(getGrantList({}));
+    dispatch(getBudgetLineList({}));
+  }, [router.query]);
+
+  const handleClickEdit = async (id: any) => {
+    router.push(`/materiels/fiche_dotation/${id}/edit`);
+  };
+  const handleClickDetails = async (id: any) => {
+    router.push(`/materiels/fiche_dotation/${id}/details`);
+  };
+
+  const handleClickDelete = async (id: any) => {
+    confirm({
+      title: "Supprimer le fiche de dotation",
+      description: "Voulez-vous vraiment supprimer ce fiche de dotation ?",
+      cancellationText: "Annuler",
+      confirmationText: "Supprimer",
+      cancellationButtonProps: {
+        color: "warning",
+      },
+      confirmationButtonProps: {
+        color: "error",
+      },
+    })
+      .then(async () => {
+        await dispatch(deleteFicheDotation({ id }));
         fetchFicheDotation();
-        dispatch(getGrantList({}));
-        dispatch(getBudgetLineList({}));
-    }, [router.query]);
+      })
+      .catch(() => {});
+  };
 
-    const handleClickEdit = async (id: any) => {
-        router.push(`/materiels/fiche_dotation/${id}/edit`);
-    };
-    const handleClickDetails = async (id: any) => {
-        router.push(`/materiels/fiche_dotation/${id}/details`);
-    };
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
 
-    const handleClickDelete = async (id: any) => {
-        confirm({
-            title: "Supprimer le fiche de dotation",
-            description: "Voulez-vous vraiment supprimer ce fiche de dotation ?",
-            cancellationText: "Annuler",
-            confirmationText: "Supprimer",
-            cancellationButtonProps: {
-                color: "warning",
-            },
-            confirmationButtonProps: {
-                color: "error",
-            },
-        })
-        .then(async () => {
-            await dispatch(deleteFicheDotation({ id }));
-            fetchFicheDotation();
-        })
-        .catch(() => {});
-    };
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
-    const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
-    };
-    
-    const handleChangeRowsPerPage = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
+  // Avoid a layout jump when reaching the last page with empty rows.
+  const emptyRows =
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - ficheDotations.length)
+      : 0;
 
-    // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - ficheDotations.length) : 0;
-
-    return (
-        <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
-        <NavigationContainer>
-            <SectionNavigation>
+  return (
+    <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
+      <NavigationContainer>
+        <SectionNavigation>
+          {validate("Logistiques FD", "C") && (
             <Link href={"/materiels/fiche_dotation/ajouter"}>
-                <Button variant="contained" startIcon={<Add />} size="small">
-                    Ajouter
-                </Button>
+              <Button variant="contained" startIcon={<Add />} size="small">
+                Ajouter
+              </Button>
             </Link>
-            <Typography variant="h4"> Liste de fiche de dotation</Typography>
-            </SectionNavigation>
-            {/* <Divider /> */}
-        </NavigationContainer>
-        <SectionTable>
-            <Box sx={{ width: "100%", mb: 2 }}>
-                <Paper sx={{ width: "100%", mb: 2 }}>
-                    <BonTransfertTableToolbar />
-                    <TableContainer>
-                    <Table
-                        sx={{ minWidth: 750 }}
-                        aria-labelledby="tableTitle"
-                        size="small"
-                    >
-                        <BonTransfertTableHeader />
-                        <TableBody>
-                        {ficheDotations
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row: ficheDotationItem, index: any) => {
-                            const labelId = `enhanced-table-checkbox-${index}`;
-                            return (
-                                <TableRow hover tabIndex={-1} key={row.id}>
-                                    <TableCell align="left">
-                                        {row?.reference}
-                                    </TableCell>
-                                    <TableCell align="left">
-                                        <Moment format="DD/MM/YYYY">
-                                            {row?.date}
-                                        </Moment>
-                                    </TableCell>
-                                    <TableCell align="left">{row?.region}</TableCell>
-                                    <TableCell align="left">{row?.district}</TableCell>
-                                    <TableCell align="left">
-                                        {row?.commune}
-                                    </TableCell>
-                                    <TableCell align="left">
-                                        {row?.fokontany}
-                                    </TableCell>
-                                    <TableCell align="left">{grantList.find((e:any)=> e.id === row?.grant)?.code}</TableCell>
-                                    <TableCell align="left">{budgetLineList.find((e:any)=> e.id === row?.ligneBudgetaire)?.code}</TableCell>
-                                    <TableCell align="right" width={"150px"}>
-                                        <BtnActionContainer
-                                        direction="row"
-                                        justifyContent="right"
-                                        >
-                                        <IconButton
-                                            color="accent"
-                                            aria-label="Details"
-                                            component="span"
-                                            size="small"
-                                            onClick={() => {
-                                                handleClickDetails(row.id);
-                                            }}
-                                            >
-                                            <Visibility />
-                                        </IconButton>
-                                        <IconButton
-                                            color="primary"
-                                            aria-label="Modifier"
-                                            component="span"
-                                            size="small"
-                                            onClick={() => {
-                                                handleClickEdit(row.id);
-                                            }}
-                                        >
-                                            <Edit />
-                                        </IconButton>
-                                        <IconButton
-                                            color="warning"
-                                            aria-label="Supprimer"
-                                            component="span"
-                                            size="small"
-                                            onClick={() => {
-                                                handleClickDelete(row.id);
-                                            }}
-                                        >
-                                            <Delete />
-                                        </IconButton>
-                                        </BtnActionContainer>
-                                    </TableCell>
-                                </TableRow>
-                            );
-                            })}
-                        {emptyRows > 0 && (
-                            <TableRow
-                            style={{
-                                height: (dense ? 33 : 53) * emptyRows,
-                            }}
+          )}
+          <Typography variant="h4"> Liste de fiche de dotation</Typography>
+        </SectionNavigation>
+        {/* <Divider /> */}
+      </NavigationContainer>
+      <SectionTable>
+        <Box sx={{ width: "100%", mb: 2 }}>
+          <Paper sx={{ width: "100%", mb: 2 }}>
+            <BonTransfertTableToolbar />
+            <TableContainer>
+              <Table
+                sx={{ minWidth: 750 }}
+                aria-labelledby="tableTitle"
+                size="small"
+              >
+                <BonTransfertTableHeader />
+                <TableBody>
+                  {ficheDotations
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row: ficheDotationItem, index: any) => {
+                      const labelId = `enhanced-table-checkbox-${index}`;
+                      return (
+                        <TableRow hover tabIndex={-1} key={row.id}>
+                          <TableCell align="left">{row?.reference}</TableCell>
+                          <TableCell align="left">
+                            <Moment format="DD/MM/YYYY">{row?.date}</Moment>
+                          </TableCell>
+                          <TableCell align="left">{row?.region}</TableCell>
+                          <TableCell align="left">{row?.district}</TableCell>
+                          <TableCell align="left">{row?.commune}</TableCell>
+                          <TableCell align="left">{row?.fokontany}</TableCell>
+                          <TableCell align="left">
+                            {
+                              grantList.find((e: any) => e.id === row?.grant)
+                                ?.code
+                            }
+                          </TableCell>
+                          <TableCell align="left">
+                            {
+                              budgetLineList.find(
+                                (e: any) => e.id === row?.ligneBudgetaire
+                              )?.code
+                            }
+                          </TableCell>
+                          <TableCell align="right" width={"150px"}>
+                            <BtnActionContainer
+                              direction="row"
+                              justifyContent="right"
                             >
-                            <TableCell colSpan={6} />
-                            </TableRow>
-                        )}
-                        </TableBody>
-                    </Table>
-                    </TableContainer>
-                    <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        component="div"
-                        count={ficheDotations.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
-                        labelRowsPerPage={labelRowsPerPage}
-                        labelDisplayedRows={defaultLabelDisplayedRows}
-                    />
-                </Paper>
-            </Box>
-        </SectionTable>
-        </Container>
-    );
+                              <IconButton
+                                color="accent"
+                                aria-label="Details"
+                                component="span"
+                                size="small"
+                                onClick={() => {
+                                  handleClickDetails(row.id);
+                                }}
+                              >
+                                <Visibility />
+                              </IconButton>
+                              {validate("Logistiques FD", "U") && (
+                                <IconButton
+                                  color="primary"
+                                  aria-label="Modifier"
+                                  component="span"
+                                  size="small"
+                                  onClick={() => {
+                                    handleClickEdit(row.id);
+                                  }}
+                                >
+                                  <Edit />
+                                </IconButton>
+                              )}
+                              {validate("Logistiques FD", "D") && (
+                                <IconButton
+                                  color="warning"
+                                  aria-label="Supprimer"
+                                  component="span"
+                                  size="small"
+                                  onClick={() => {
+                                    handleClickDelete(row.id);
+                                  }}
+                                >
+                                  <Delete />
+                                </IconButton>
+                              )}
+                            </BtnActionContainer>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  {emptyRows > 0 && (
+                    <TableRow
+                      style={{
+                        height: (dense ? 33 : 53) * emptyRows,
+                      }}
+                    >
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={ficheDotations.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              labelRowsPerPage={labelRowsPerPage}
+              labelDisplayedRows={defaultLabelDisplayedRows}
+            />
+          </Paper>
+        </Box>
+      </SectionTable>
+    </Container>
+  );
 }
 
 const NavigationContainer = styled(Stack)(({ theme }) => ({
-    flexDirection: "column",
-    marginBottom: "16px",
-    flex: 1,
-    width: "100%",
+  flexDirection: "column",
+  marginBottom: "16px",
+  flex: 1,
+  width: "100%",
 }));
 
 const SectionNavigation = styled(Stack)(({ theme }) => ({
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingBottom: "5px",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  paddingBottom: "5px",
 }));
 
 const BtnActionContainer = styled(Stack)(({ theme }) => ({}));

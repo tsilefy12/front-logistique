@@ -1,42 +1,42 @@
-import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import React from "react";
 // import Badge from "@mui/material";
 import styled from "@emotion/styled";
 import Add from "@mui/icons-material/Add";
 import Delete from "@mui/icons-material/Delete";
 import Edit from "@mui/icons-material/Edit";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import Table from "@mui/material/Table";
-import TableContainer from "@mui/material/TableContainer";
-import TableBody from "@mui/material/TableBody";
-import TablePagination from "@mui/material/TablePagination";
-import TableCell from "@mui/material/TableCell";
+import Visibility from "@mui/icons-material/Visibility";
 import Box from "@mui/material/Box";
-import TableRow from "@mui/material/TableRow";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
 import { useConfirm } from "material-ui-confirm";
+import Moment from "react-moment";
+import { usePermitted } from "../../../config/middleware";
+import formatMontant from "../../../hooks/format";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { BonCommandeItem } from "../../../redux/features/bon_commande_interne/bonCommandeInterne.interface";
-import {
-  labelRowsPerPage,
-  defaultLabelDisplayedRows,
-} from "../../shared/table/tableFeature";
-import Visibility from "@mui/icons-material/Visibility";
-import useFetchBonCommandeInterne from "./hooks/useFetchBonCommandeInterne";
 import { deleteBonCommandeInterne } from "../../../redux/features/bon_commande_interne/bonCommandeInterneSlice";
-import BonCommandeInterneTableToolbar from "./table/BonCommandeInterneTableToolbar";
-import BonCommandeInterneTableHeader from "./table/BonCommandeInterneTableHeader";
-import Moment from "react-moment";
 import { getInterns } from "../../../redux/features/employeStagiaire/stagiaireSlice";
-import { getEmployees } from "../../../redux/features/orderEquipment";
 import { getGrantList } from "../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
-import { getBudgetLineList } from "../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
-import formatMontant from "../../../hooks/format";
+import { getEmployees } from "../../../redux/features/orderEquipment";
+import {
+  defaultLabelDisplayedRows,
+  labelRowsPerPage,
+} from "../../shared/table/tableFeature";
+import useFetchBonCommandeInterne from "./hooks/useFetchBonCommandeInterne";
+import BonCommandeInterneTableHeader from "./table/BonCommandeInterneTableHeader";
+import BonCommandeInterneTableToolbar from "./table/BonCommandeInterneTableToolbar";
 
 export default function BonCommandeInterneList() {
   const [page, setPage] = React.useState(0);
@@ -57,6 +57,7 @@ export default function BonCommandeInterneList() {
   const { grantList } = useAppSelector((state) => state.grant);
   const { employees } = useAppSelector((state) => state.employe);
   const { interns } = useAppSelector((state) => state.stagiaire);
+  const validate = usePermitted();
 
   const total = [
     ...employees.map((i: any) => {
@@ -130,11 +131,13 @@ export default function BonCommandeInterneList() {
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
-          <Link href={"/materiels/bon_commande_interne/ajouter"}>
-            <Button variant="contained" startIcon={<Add />} size="small">
-              Ajouter
-            </Button>
-          </Link>
+          {validate("Logistiques BCI", "C") && (
+            <Link href={"/materiels/bon_commande_interne/ajouter"}>
+              <Button variant="contained" startIcon={<Add />} size="small">
+                Ajouter
+              </Button>
+            </Link>
+          )}
           <Typography variant="h4">
             {" "}
             Liste de Bon des commandes Interne
@@ -200,28 +203,32 @@ export default function BonCommandeInterneList() {
                               >
                                 <Visibility />
                               </IconButton>
-                              <IconButton
-                                color="primary"
-                                aria-label="Modifier"
-                                component="span"
-                                size="small"
-                                onClick={() => {
-                                  handleClickEdit(row?.id);
-                                }}
-                              >
-                                <Edit />
-                              </IconButton>
-                              <IconButton
-                                color="warning"
-                                aria-label="Supprimer"
-                                component="span"
-                                size="small"
-                                onClick={() => {
-                                  handleClickDelete(row?.id);
-                                }}
-                              >
-                                <Delete />
-                              </IconButton>
+                              {validate("Logistiques BCI", "U") && (
+                                <IconButton
+                                  color="primary"
+                                  aria-label="Modifier"
+                                  component="span"
+                                  size="small"
+                                  onClick={() => {
+                                    handleClickEdit(row?.id);
+                                  }}
+                                >
+                                  <Edit />
+                                </IconButton>
+                              )}
+                              {validate("Logistiques BCI", "D") && (
+                                <IconButton
+                                  color="warning"
+                                  aria-label="Supprimer"
+                                  component="span"
+                                  size="small"
+                                  onClick={() => {
+                                    handleClickDelete(row?.id);
+                                  }}
+                                >
+                                  <Delete />
+                                </IconButton>
+                              )}
                             </BtnActionContainer>
                           </TableCell>
                         </TableRow>
