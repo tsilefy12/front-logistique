@@ -6,6 +6,7 @@ import NotificationProvider from "../redux/features/notification/NotificationPro
 import AuthProvider from "../redux/features/auth/AuthProvider";
 import { SnackbarProvider } from "notistack";
 import { ConfirmProvider } from "material-ui-confirm";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
