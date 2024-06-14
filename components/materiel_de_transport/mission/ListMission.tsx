@@ -1,3 +1,6 @@
+import Add from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Edit from "@mui/icons-material/Edit";
 import {
   Button,
   Container,
@@ -6,42 +9,40 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import Link from "next/link";
-import React from "react";
 import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Edit from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Add from "@mui/icons-material/Add";
-import { useRouter } from "next/router";
 import { useConfirm } from "material-ui-confirm";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 
+import Moment from "react-moment";
+import { usePermitted } from "../../../config/middleware";
+import formatMontant from "../../../hooks/format";
+import { MissionTranportItem } from "../../../redux/features/mission_transport/missionTransport.interface";
+import { deleteMissionDeTransport } from "../../../redux/features/mission_transport/missionTransportSlice";
 import {
   defaultLabelDisplayedRows,
   labelRowsPerPage,
 } from "../../shared/table/tableFeature";
-import { format } from "date-fns";
-import useFetchMissionTransport from "./hooks/useFectMission";
-import { deleteMissionDeTransport } from "../../../redux/features/mission_transport/missionTransportSlice";
-import MissionTransportTableHeader from "./organisme/table/MissionTransportTableHeader";
-import { MissionTranportItem } from "../../../redux/features/mission_transport/missionTransport.interface";
-import MissionTransportTableToolbar from "./organisme/table/MissionTransportTableToolbar";
 import useFetchTransportationEquipments from "../hooks/useFetchTransportationEquipments";
-import Moment from "react-moment";
-import formatMontant from "../../../hooks/format";
+import useFetchMissionTransport from "./hooks/useFectMission";
+import MissionTransportTableHeader from "./organisme/table/MissionTransportTableHeader";
+import MissionTransportTableToolbar from "./organisme/table/MissionTransportTableToolbar";
 
 const ListMission = () => {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const validate = usePermitted();
 
   const confirm = useConfirm();
   const router = useRouter();
@@ -107,11 +108,13 @@ const ListMission = () => {
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
-          <Link href={"/materiel_de_transport/mission/add"}>
-            <Button variant="contained" startIcon={<Add />} size="small">
-              Ajouter
-            </Button>
-          </Link>
+          {validate("Logistiques LI", "C") && (
+            <Link href={"/materiel_de_transport/mission/add"}>
+              <Button variant="contained" startIcon={<Add />} size="small">
+                Ajouter
+              </Button>
+            </Link>
+          )}
           <Typography variant="h4">Tous les missions de transport</Typography>
         </SectionNavigation>
         {/* <Divider /> */}
@@ -184,28 +187,32 @@ const ListMission = () => {
                                     <VisibilityIcon />
                                   </IconButton>
                                 </Link>*/}
-                              <IconButton
-                                color="primary"
-                                aria-label="Modifier"
-                                component="span"
-                                size="small"
-                                onClick={() => {
-                                  handleClickEdit(row.id);
-                                }}
-                              >
-                                <Edit />
-                              </IconButton>
-                              <IconButton
-                                color="warning"
-                                aria-label="Supprimer"
-                                component="span"
-                                size="small"
-                                onClick={() => {
-                                  handleClickDelete(row.id);
-                                }}
-                              >
-                                <DeleteIcon />
-                              </IconButton>
+                              {validate("Logistiques LI", "U") && (
+                                <IconButton
+                                  color="primary"
+                                  aria-label="Modifier"
+                                  component="span"
+                                  size="small"
+                                  onClick={() => {
+                                    handleClickEdit(row.id);
+                                  }}
+                                >
+                                  <Edit />
+                                </IconButton>
+                              )}
+                              {validate("Logistiques LI", "D") && (
+                                <IconButton
+                                  color="warning"
+                                  aria-label="Supprimer"
+                                  component="span"
+                                  size="small"
+                                  onClick={() => {
+                                    handleClickDelete(row.id);
+                                  }}
+                                >
+                                  <DeleteIcon />
+                                </IconButton>
+                              )}
                             </BtnActionContainer>
                           </TableCell>
                         </TableRow>

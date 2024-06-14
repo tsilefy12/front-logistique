@@ -1,40 +1,40 @@
-import React from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import styled from "@emotion/styled";
-import Add from "@mui/icons-material/Add";
+import { default as Add, default as AddIcon } from "@mui/icons-material/Add";
 import Delete from "@mui/icons-material/Delete";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import Table from "@mui/material/Table";
-import TableContainer from "@mui/material/TableContainer";
-import TableBody from "@mui/material/TableBody";
-import TablePagination from "@mui/material/TablePagination";
-import TableCell from "@mui/material/TableCell";
+import Edit from "@mui/icons-material/Edit";
+import Visibility from "@mui/icons-material/Visibility";
 import Box from "@mui/material/Box";
-import TableRow from "@mui/material/TableRow";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
 import { useConfirm } from "material-ui-confirm";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
+import { usePermitted } from "../../config/middleware";
+import formatMontant from "../../hooks/format";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import {
-  labelRowsPerPage,
-  defaultLabelDisplayedRows,
-} from "../shared/table/tableFeature";
-import Visibility from "@mui/icons-material/Visibility";
-import AddIcon from "@mui/icons-material/Add";
-import Edit from "@mui/icons-material/Edit";
-import useFetchSuplyAndConsumableList from "./entreSortie/hooks/useFetchSupplyAndConsumables";
 import {
   deleteSuplyAndConsumable,
   editSuplyAndConsumable,
 } from "../../redux/features/supply-and-consumable";
-import SuplyAndConsumableTableToolbar from "./organism/table/SupplyAndConsumableTableToolbar";
-import SuplyAndConsumableTableHeader from "./organism/table/SupplyAndConsumableTableHeader";
 import { SuplyAndConsumableItem } from "../../redux/features/supply-and-consumable/supply-and-consumable.interface";
-import formatMontant from "../../hooks/format";
+import {
+  defaultLabelDisplayedRows,
+  labelRowsPerPage,
+} from "../shared/table/tableFeature";
+import useFetchSuplyAndConsumableList from "./entreSortie/hooks/useFetchSupplyAndConsumables";
+import SuplyAndConsumableTableHeader from "./organism/table/SupplyAndConsumableTableHeader";
+import SuplyAndConsumableTableToolbar from "./organism/table/SupplyAndConsumableTableToolbar";
 
 export default function SuplyAndCosumableList() {
   const [page, setPage] = React.useState(0);
@@ -52,6 +52,8 @@ export default function SuplyAndCosumableList() {
   );
 
   const fetchSuplyAndConsumableList = useFetchSuplyAndConsumableList();
+
+  const validate = usePermitted();
 
   React.useEffect(() => {
     fetchSuplyAndConsumableList();
@@ -103,11 +105,13 @@ export default function SuplyAndCosumableList() {
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
-          <Link href={"/fournitures_et_consommables/fiche_de_stock/ajouter"}>
-            <Button variant="contained" startIcon={<Add />} size="small">
-              Ajouter
-            </Button>
-          </Link>
+          {validate("Logistiques FS", "C") && (
+            <Link href={"/fournitures_et_consommables/fiche_de_stock/ajouter"}>
+              <Button variant="contained" startIcon={<Add />} size="small">
+                Ajouter
+              </Button>
+            </Link>
+          )}
           <Typography variant="h4"> Fiche de Stock </Typography>
         </SectionNavigation>
         {/* <Divider /> */}
@@ -157,19 +161,21 @@ export default function SuplyAndCosumableList() {
                               direction="row"
                               justifyContent="right"
                             >
-                              <Link
-                                href={`/fournitures_et_consommables/fiche_de_stock/${row.id}/entre_sortie`}
-                              >
-                                <Button
-                                  sx={{ mr: 1 }}
-                                  color="accent"
-                                  variant="outlined"
-                                  size="small"
+                              {validate("Logistiques ES", "C") && (
+                                <Link
+                                  href={`/fournitures_et_consommables/fiche_de_stock/${row.id}/entre_sortie`}
                                 >
-                                  <AddIcon />
-                                  Gerer
-                                </Button>
-                              </Link>
+                                  <Button
+                                    sx={{ mr: 1 }}
+                                    color="accent"
+                                    variant="outlined"
+                                    size="small"
+                                  >
+                                    <AddIcon />
+                                    Gerer
+                                  </Button>
+                                </Link>
+                              )}
                               <Link
                                 href={`/fournitures_et_consommables/fiche_de_stock/${row.id}/details`}
                               >
@@ -183,28 +189,32 @@ export default function SuplyAndCosumableList() {
                                 </IconButton>
                               </Link>
 
-                              <IconButton
-                                color="primary"
-                                aria-label="Modifier"
-                                component="span"
-                                size="small"
-                                onClick={() => {
-                                  handleClickEdit(row.id);
-                                }}
-                              >
-                                <Edit />
-                              </IconButton>
-                              <IconButton
-                                color="warning"
-                                aria-label="Supprimer"
-                                component="span"
-                                size="small"
-                                onClick={() => {
-                                  handleClickDelete(row.id);
-                                }}
-                              >
-                                <Delete />
-                              </IconButton>
+                              {validate("Logistiques FS", "U") && (
+                                <IconButton
+                                  color="primary"
+                                  aria-label="Modifier"
+                                  component="span"
+                                  size="small"
+                                  onClick={() => {
+                                    handleClickEdit(row.id);
+                                  }}
+                                >
+                                  <Edit />
+                                </IconButton>
+                              )}
+                              {validate("Logistiques FS", "D") && (
+                                <IconButton
+                                  color="warning"
+                                  aria-label="Supprimer"
+                                  component="span"
+                                  size="small"
+                                  onClick={() => {
+                                    handleClickDelete(row.id);
+                                  }}
+                                >
+                                  <Delete />
+                                </IconButton>
+                              )}
                             </BtnActionContainer>
                           </TableCell>
                         </TableRow>

@@ -1,8 +1,11 @@
+import Add from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Edit from "@mui/icons-material/Edit";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   Button,
   Container,
   FormControl,
-  FormLabel,
   IconButton,
   MenuItem,
   Stack,
@@ -10,38 +13,33 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Link from "next/link";
-import React, { useEffect, useMemo, useState } from "react";
 import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Edit from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Add from "@mui/icons-material/Add";
-import { useRouter } from "next/router";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { useConfirm } from "material-ui-confirm";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { useMemo, useState } from "react";
+import Moment from "react-moment";
+import { usePermitted } from "../../../config/middleware";
+import formatMontant from "../../../hooks/format";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
-import useFetchCarVouchers from "./hooks/useFetchCarVoucher";
 import { deleteCarVoucher } from "../../../redux/features/car-voucher";
-import CarVoucherTableToolbar from "./organism/table/CarVoucherTableToolbar";
-import CarVoucherTableHeader from "./organism/table/CarVoucherTableHeader";
 import { CarVoucherItem } from "../../../redux/features/car-voucher/carVoucher.interface";
 import {
   defaultLabelDisplayedRows,
   labelRowsPerPage,
 } from "../../shared/table/tableFeature";
-import Moment from "react-moment";
-import { format } from "date-fns";
 import useFetchTransportationEquipments from "../hooks/useFetchTransportationEquipments";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Label } from "@mui/icons-material";
-import formatMontant from "../../../hooks/format";
+import useFetchCarVouchers from "./hooks/useFetchCarVoucher";
+import CarVoucherTableHeader from "./organism/table/CarVoucherTableHeader";
+import CarVoucherTableToolbar from "./organism/table/CarVoucherTableToolbar";
 
 const ListTransport = () => {
   const [page, setPage] = React.useState(0);
@@ -51,6 +49,7 @@ const ListTransport = () => {
 
   const confirm = useConfirm();
   const router = useRouter();
+  const validate = usePermitted();
   const dispatch = useAppDispatch();
   const { carVouchers } = useAppSelector((state) => state.carVoucher);
   const { transportationEquipment } = useAppSelector(
@@ -176,16 +175,18 @@ const ListTransport = () => {
         <SectionNavigation>
           <Typography>
             <Stack direction="row" spacing={4}>
-              <Link href={"/materiel_de_transport/bon_de_voiture/add"}>
-                <Button
-                  variant="contained"
-                  startIcon={<Add />}
-                  size="small"
-                  sx={{ height: 40, width: "260px" }}
-                >
-                  Ajouter
-                </Button>
-              </Link>
+              {validate("Logistiques Ent", "C") && (
+                <Link href={"/materiel_de_transport/bon_de_voiture/add"}>
+                  <Button
+                    variant="contained"
+                    startIcon={<Add />}
+                    size="small"
+                    sx={{ height: 40, width: "260px" }}
+                  >
+                    Ajouter
+                  </Button>
+                </Link>
+              )}
               <FormControl fullWidth>
                 <TextField
                   select
@@ -277,28 +278,32 @@ const ListTransport = () => {
                                   <VisibilityIcon />
                                 </IconButton>
                               </Link>
-                              <IconButton
-                                color="primary"
-                                aria-label="Modifier"
-                                component="span"
-                                size="small"
-                                onClick={() => {
-                                  handleClickEdit(row.id);
-                                }}
-                              >
-                                <Edit />
-                              </IconButton>
-                              <IconButton
-                                color="warning"
-                                aria-label="Supprimer"
-                                component="span"
-                                size="small"
-                                onClick={() => {
-                                  handleClickDelete(row.id);
-                                }}
-                              >
-                                <DeleteIcon />
-                              </IconButton>
+                              {validate("Logistiques Ent", "U") && (
+                                <IconButton
+                                  color="primary"
+                                  aria-label="Modifier"
+                                  component="span"
+                                  size="small"
+                                  onClick={() => {
+                                    handleClickEdit(row.id);
+                                  }}
+                                >
+                                  <Edit />
+                                </IconButton>
+                              )}
+                              {validate("Logistiques Ent", "D") && (
+                                <IconButton
+                                  color="warning"
+                                  aria-label="Supprimer"
+                                  component="span"
+                                  size="small"
+                                  onClick={() => {
+                                    handleClickDelete(row.id);
+                                  }}
+                                >
+                                  <DeleteIcon />
+                                </IconButton>
+                              )}
                             </BtnActionContainer>
                           </TableCell>
                         </TableRow>
