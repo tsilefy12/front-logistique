@@ -1,20 +1,9 @@
-import React from "react";
-import {
-  Box,
-  Stack,
-  Icon,
-  ListItemText,
-  styled,
-  FormLabel,
-} from "@mui/material";
+import { Box, FormLabel, Icon, Stack, styled } from "@mui/material";
 import Link from "@mui/material/Link";
-import { useAppSelector } from "../../../hooks/reduxHooks";
-import { OneButtonLink } from "../../../layouts/backOffice/navbar/ButtonNav";
-import NextLink from "next/link";
-import { borderRadius } from "polished";
+import allMenu from "../../../config/menu";
 
 const VerticalMenu = ({ matches }: any) => {
-  const navMenu = useAppSelector((state) => state.menu.value);
+  const navMenu = allMenu();
 
   return (
     <ListPageContainer>
