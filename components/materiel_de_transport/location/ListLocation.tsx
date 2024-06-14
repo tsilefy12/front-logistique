@@ -1,3 +1,6 @@
+import Add from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Edit from "@mui/icons-material/Edit";
 import {
   Button,
   Container,
@@ -6,43 +9,40 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import Link from "next/link";
-import React, { useState } from "react";
 import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Edit from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Add from "@mui/icons-material/Add";
-import { useRouter } from "next/router";
 import { useConfirm } from "material-ui-confirm";
-import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
-import { deleteLocation } from "../../../redux/features/location/locationSlice";
-import LocationDeTransportTableToolbar from "./organisme/table/LocationDeTransportTableToolbar";
-import LocationTransportTableHeader from "./organisme/table/LocationDeTransportTableHeader";
-import { LocationItem } from "../../../redux/features/location/location.interface";
-import { format } from "date-fns";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
+import Moment from "react-moment";
+import { usePermitted } from "../../../config/middleware";
 import {
   defaultLabelDisplayedRows,
   labelRowsPerPage,
 } from "../../../config/table.config";
-import useFetchLocationDeTransport from "./hooks/useFetchLocationDeTransport";
+import formatMontant from "../../../hooks/format";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
+import { LocationItem } from "../../../redux/features/location/location.interface";
+import { deleteLocation } from "../../../redux/features/location/locationSlice";
+import useFetchEmployes from "../../Order-Supply-And-Consumable/hooks/useFetchEmployees";
 import useFetchVendors from "../../vendor/hooks/useFetchVendors";
 import useFetchTransportationEquipments from "../hooks/useFetchTransportationEquipments";
-import Moment from "react-moment";
-import useFetchEmployes from "../../Order-Supply-And-Consumable/hooks/useFetchEmployees";
-import formatMontant from "../../../hooks/format";
+import useFetchLocationDeTransport from "./hooks/useFetchLocationDeTransport";
+import LocationTransportTableHeader from "./organisme/table/LocationDeTransportTableHeader";
+import LocationDeTransportTableToolbar from "./organisme/table/LocationDeTransportTableToolbar";
 
 const ListLocation = () => {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+  const validate = usePermitted();
   const confirm = useConfirm();
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -109,11 +109,13 @@ const ListLocation = () => {
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
-          <Link href={"/materiel_de_transport/location/add"}>
-            <Button variant="contained" startIcon={<Add />} size="small">
-              Ajouter
-            </Button>
-          </Link>
+          {validate("Logistiques LE", "C") && (
+            <Link href={"/materiel_de_transport/location/add"}>
+              <Button variant="contained" startIcon={<Add />} size="small">
+                Ajouter
+              </Button>
+            </Link>
+          )}
           <Typography variant="h4">Toutes locations de transport</Typography>
         </SectionNavigation>
         {/* <Divider /> */}
@@ -205,28 +207,32 @@ const ListLocation = () => {
                                     <VisibilityIcon />
                                   </IconButton>
                                 </Link>*/}
-                              <IconButton
-                                color="primary"
-                                aria-label="Modifier"
-                                component="span"
-                                size="small"
-                                onClick={() => {
-                                  handleClickEdit(row.id);
-                                }}
-                              >
-                                <Edit />
-                              </IconButton>
-                              <IconButton
-                                color="warning"
-                                aria-label="Supprimer"
-                                component="span"
-                                size="small"
-                                onClick={() => {
-                                  handleClickDelete(row.id);
-                                }}
-                              >
-                                <DeleteIcon />
-                              </IconButton>
+                              {validate("Logistiques LE", "U") && (
+                                <IconButton
+                                  color="primary"
+                                  aria-label="Modifier"
+                                  component="span"
+                                  size="small"
+                                  onClick={() => {
+                                    handleClickEdit(row.id);
+                                  }}
+                                >
+                                  <Edit />
+                                </IconButton>
+                              )}
+                              {validate("Logistiques LE", "D") && (
+                                <IconButton
+                                  color="warning"
+                                  aria-label="Supprimer"
+                                  component="span"
+                                  size="small"
+                                  onClick={() => {
+                                    handleClickDelete(row.id);
+                                  }}
+                                >
+                                  <DeleteIcon />
+                                </IconButton>
+                              )}
                             </BtnActionContainer>
                           </TableCell>
                         </TableRow>

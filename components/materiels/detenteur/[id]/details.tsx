@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import Container from "@mui/material/Container";
+import { ArrowBack, Edit } from "@mui/icons-material";
+import DeleteForever from "@mui/icons-material/DeleteForever";
 import {
-  Avatar,
   Button,
   Divider,
   Grid,
@@ -9,11 +8,11 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import Link from "next/link";
-import { ArrowBack, Edit } from "@mui/icons-material";
-import { useRouter } from "next/router";
+import Container from "@mui/material/Container";
 import { useConfirm } from "material-ui-confirm";
-import DeleteForever from "@mui/icons-material/DeleteForever";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { usePermitted } from "../../../../config/middleware";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import {
   deleteHolder,
@@ -21,8 +20,6 @@ import {
   getHolder,
 } from "../../../../redux/features/holder";
 import CardGeneral from "./CardGeneral";
-import { getEmployees } from "../../../../redux/features/employeStagiaire/employeeSlice";
-import { getInterns } from "../../../../redux/features/employeStagiaire/stagiaireSlice";
 
 const Details = () => {
   const router = useRouter();
@@ -31,20 +28,27 @@ const Details = () => {
   const dispatch: any = useAppDispatch();
 
   const { holder } = useAppSelector((state: any) => state.holder);
-  
+
   const confirm = useConfirm();
+
+  const validate = usePermitted();
 
   useEffect(() => {
     if (id) {
-      dispatch(getHolder({ id, args:{
-        include:{
-          holderEquipment:{
-            include:{
-              equipment:true
-            }
-          }
-        }
-      }}));
+      dispatch(
+        getHolder({
+          id,
+          args: {
+            include: {
+              holderEquipment: {
+                include: {
+                  equipment: true,
+                },
+              },
+            },
+          },
+        })
+      );
     }
   }, [router.query]);
 
@@ -72,33 +76,42 @@ const Details = () => {
   const handleClickEdit = async (id: any) => {
     await dispatch(editHolder({ id }));
     router.push(`/materiels/detenteur/${id}/edit`);
-};
+  };
   return (
     <DetailStagiaireWrapper maxWidth="xl">
       <NavigationContainer>
         <SectionNavigation>
           <Stack flexDirection={"row"}>
-            <Button color="info" variant="text" onClick={() => router.back()} startIcon={<ArrowBack />}>
+            <Button
+              color="info"
+              variant="text"
+              onClick={() => router.back()}
+              startIcon={<ArrowBack />}
+            >
               Retour
             </Button>
+            {validate("Logistiques FDM", "U") && (
               <Button
                 variant="text"
                 color="primary"
                 size="small"
                 startIcon={<Edit />}
                 sx={{ marginInline: 3 }}
-                onClick={() =>handleClickEdit(id)}
+                onClick={() => handleClickEdit(id)}
               >
                 Modifier
               </Button>
-            <Button
-              variant="text"
-              color="warning"
-              startIcon={<DeleteForever />}
-              onClick={() => handleClickDelete()}
-            >
-              Supprimer
-            </Button>
+            )}
+            {validate("Logistiques FDM", "D") && (
+              <Button
+                variant="text"
+                color="warning"
+                startIcon={<DeleteForever />}
+                onClick={() => handleClickDelete()}
+              >
+                Supprimer
+              </Button>
+            )}
           </Stack>
           <Typography variant="h4">Détail Detenteur</Typography>
         </SectionNavigation>

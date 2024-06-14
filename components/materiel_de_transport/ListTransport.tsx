@@ -1,3 +1,7 @@
+import Add from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Edit from "@mui/icons-material/Edit";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   Button,
   Container,
@@ -6,35 +10,29 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import Link from "next/link";
-import React from "react";
 import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Edit from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Add from "@mui/icons-material/Add";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import useFetchTransportationEquipments from "./hooks/useFetchTransportationEquipments";
-import { useRouter } from "next/router";
-import { TransportationEquipmentItem } from "../../redux/features/transportation_equipment/transportationEquipment.interface";
-import TransportEquipmentTableToolbar from "./organism/table/TransportEquipmentTableToolbar";
-import TransportEquipmentTableHeader from "./organism/table/TransportEquipmentTableHeader";
 import { useConfirm } from "material-ui-confirm";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
+import { usePermitted } from "../../config/middleware";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { deleteTransportationEquipment } from "../../redux/features/transportation_equipment";
+import { TransportationEquipmentItem } from "../../redux/features/transportation_equipment/transportationEquipment.interface";
 import {
-  labelRowsPerPage,
   defaultLabelDisplayedRows,
+  labelRowsPerPage,
 } from "../shared/table/tableFeature";
-import {
-  deleteTransportationEquipment,
-  editTransportationEquipment,
-} from "../../redux/features/transportation_equipment";
+import useFetchTransportationEquipments from "./hooks/useFetchTransportationEquipments";
+import TransportEquipmentTableHeader from "./organism/table/TransportEquipmentTableHeader";
+import TransportEquipmentTableToolbar from "./organism/table/TransportEquipmentTableToolbar";
 
 const ListTransport = () => {
   const [page, setPage] = React.useState(0);
@@ -47,6 +45,7 @@ const ListTransport = () => {
   const { transportationEquipments } = useAppSelector(
     (state) => state.transportationEquipment
   );
+  const validate = usePermitted();
 
   const fetchTransportationEquipments = useFetchTransportationEquipments();
 
@@ -103,11 +102,13 @@ const ListTransport = () => {
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
-          <Link href={"/materiel_de_transport/add"}>
-            <Button variant="contained" startIcon={<Add />} size="small">
-              Ajouter
-            </Button>
-          </Link>
+          {validate("Logistiques Mat", "C") && (
+            <Link href={"/materiel_de_transport/add"}>
+              <Button variant="contained" startIcon={<Add />} size="small">
+                Ajouter
+              </Button>
+            </Link>
+          )}
           <Typography variant="h4">Tous les matériels</Typography>
         </SectionNavigation>
         {/* <Divider /> */}
@@ -169,28 +170,32 @@ const ListTransport = () => {
                                     <VisibilityIcon />
                                   </IconButton>
                                 </Link>
-                                <IconButton
-                                  color="primary"
-                                  aria-label="Modifier"
-                                  component="span"
-                                  size="small"
-                                  onClick={() => {
-                                    handleClickEdit(row.id);
-                                  }}
-                                >
-                                  <Edit />
-                                </IconButton>
-                                <IconButton
-                                  color="warning"
-                                  aria-label="Supprimer"
-                                  component="span"
-                                  size="small"
-                                  onClick={() => {
-                                    handleClickDelete(row.id);
-                                  }}
-                                >
-                                  <DeleteIcon />
-                                </IconButton>
+                                {validate("Logistiques Mat", "U") && (
+                                  <IconButton
+                                    color="primary"
+                                    aria-label="Modifier"
+                                    component="span"
+                                    size="small"
+                                    onClick={() => {
+                                      handleClickEdit(row.id);
+                                    }}
+                                  >
+                                    <Edit />
+                                  </IconButton>
+                                )}
+                                {validate("Logistiques Mat", "D") && (
+                                  <IconButton
+                                    color="warning"
+                                    aria-label="Supprimer"
+                                    component="span"
+                                    size="small"
+                                    onClick={() => {
+                                      handleClickDelete(row.id);
+                                    }}
+                                  >
+                                    <DeleteIcon />
+                                  </IconButton>
+                                )}
                               </BtnActionContainer>
                             </TableCell>
                           </TableRow>
