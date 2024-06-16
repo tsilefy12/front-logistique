@@ -1,24 +1,24 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
-import Container from "@mui/material/Container";
+import AddIcon from "@mui/icons-material/Add";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import {
+  Button,
   Divider,
   Grid,
   Paper,
+  Stack,
   styled,
   Typography,
-  Stack,
-  Button,
   useTheme,
-  // TextField,
 } from "@mui/material";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import AddIcon from "@mui/icons-material/Add";
+import Container from "@mui/material/Container";
+import { debounce } from "lodash";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { Fragment, useEffect, useState } from "react";
+import { usePermitted } from "../../../config/middleware";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 import CardDetenteur from "./home/CardDetenteur";
 import SearchDetenteur from "./home/Search";
-import { useRouter } from "next/router";
-import { debounce } from "lodash";
 import useFetchDetenteurListe from "./hooks/useFetchDetenteurListe";
 
 const ListDetenteur = () => {
@@ -28,6 +28,8 @@ const ListDetenteur = () => {
   const router = useRouter();
 
   const { holderListe } = useAppSelector((state) => state.holder);
+
+  const validate = usePermitted();
 
   useEffect(() => {
     if (router?.query?.search) {
@@ -144,18 +146,20 @@ const ListDetenteur = () => {
             <Divider />
             <ListEmployeContent>
               <CustomBtnAdd>
-                <Link href="/materiels/detenteur/ajouter">
-                  <Button
-                    sx={{
-                      width: 286,
-                      height: 116,
-                    }}
-                    variant="text"
-                    startIcon={<AddIcon />}
-                  >
-                    Ajouter Detenteur
-                  </Button>
-                </Link>
+                {validate("Logistiques FDM", "C") && (
+                  <Link href="/materiels/detenteur/ajouter">
+                    <Button
+                      sx={{
+                        width: 286,
+                        height: 116,
+                      }}
+                      variant="text"
+                      startIcon={<AddIcon />}
+                    >
+                      Ajouter Detenteur
+                    </Button>
+                  </Link>
+                )}
               </CustomBtnAdd>
               {holderListe.map((holder, index) => (
                 <Fragment key={index}>

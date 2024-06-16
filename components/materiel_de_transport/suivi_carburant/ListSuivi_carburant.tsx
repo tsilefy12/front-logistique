@@ -1,3 +1,6 @@
+import Add from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Edit from "@mui/icons-material/Edit";
 import {
   Button,
   Container,
@@ -6,39 +9,35 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import Link from "next/link";
-import React from "react";
 import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Edit from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Add from "@mui/icons-material/Add";
-import { useRouter } from "next/router";
 import { useConfirm } from "material-ui-confirm";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 
+import Moment from "react-moment";
+import { usePermitted } from "../../../config/middleware";
+import formatMontant from "../../../hooks/format";
+import { SuiviCarburantItem } from "../../../redux/features/suivi_carburant/suivi_carburant.interface";
+import { deleteSuiviCarburant } from "../../../redux/features/suivi_carburant/suiviCarburantSlice";
 import {
   defaultLabelDisplayedRows,
   labelRowsPerPage,
 } from "../../shared/table/tableFeature";
-import Moment from "react-moment";
-import useFetchSuiviCarburants from "./hooks/useFetchSuiviCarburant";
-import { SuiviCarburantItem } from "../../../redux/features/suivi_carburant/suivi_carburant.interface";
-import { SuiviCarburantHeaderCells } from "./organisme/table/SuiviCarburantHeaderCells";
-import { deleteSuiviCarburant } from "../../../redux/features/suivi_carburant/suiviCarburantSlice";
-import SuiviCarburantTableToolbar from "./organisme/table/SuiviCarburantTableToolbar";
-import SuiviCarburantTableHeader from "./organisme/table/SuiviCarburantTableHeader";
 import useFetchTransportationEquipments from "../hooks/useFetchTransportationEquipments";
 import useFetchGrant from "./hooks/useFetchGrant";
 import useFetchLigneBudgetaire from "./hooks/useFetchLigneBudgetaire";
-import formatMontant from "../../../hooks/format";
+import useFetchSuiviCarburants from "./hooks/useFetchSuiviCarburant";
+import SuiviCarburantTableHeader from "./organisme/table/SuiviCarburantTableHeader";
+import SuiviCarburantTableToolbar from "./organisme/table/SuiviCarburantTableToolbar";
 
 const ListSuiviCarburant = () => {
   const [page, setPage] = React.useState(0);
@@ -68,6 +67,8 @@ const ListSuiviCarburant = () => {
   const handleClickEdit = async (id: any) => {
     router.push(`/materiel_de_transport/suivi_carburant/${id}/edit`);
   };
+
+  const validate = usePermitted();
 
   const handleClickDelete = async (id: any) => {
     confirm({
@@ -110,11 +111,13 @@ const ListSuiviCarburant = () => {
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
-          <Link href={"/materiel_de_transport/suivi_carburant/add"}>
-            <Button variant="contained" startIcon={<Add />} size="small">
-              Ajouter
-            </Button>
-          </Link>
+          {validate("Logistiques CV", "C") && (
+            <Link href={"/materiel_de_transport/suivi_carburant/add"}>
+              <Button variant="contained" startIcon={<Add />} size="small">
+                Ajouter
+              </Button>
+            </Link>
+          )}
           <Typography variant="h4">Tous les courses ville</Typography>
         </SectionNavigation>
         {/* <Divider /> */}
@@ -192,28 +195,32 @@ const ListSuiviCarburant = () => {
                                     <VisibilityIcon />
                                   </IconButton>
                                 </Link>*/}
-                              <IconButton
-                                color="primary"
-                                aria-label="Modifier"
-                                component="span"
-                                size="small"
-                                onClick={() => {
-                                  handleClickEdit(row.id);
-                                }}
-                              >
-                                <Edit />
-                              </IconButton>
-                              <IconButton
-                                color="warning"
-                                aria-label="Supprimer"
-                                component="span"
-                                size="small"
-                                onClick={() => {
-                                  handleClickDelete(row.id);
-                                }}
-                              >
-                                <DeleteIcon />
-                              </IconButton>
+                              {validate("Logistiques CV", "U") && (
+                                <IconButton
+                                  color="primary"
+                                  aria-label="Modifier"
+                                  component="span"
+                                  size="small"
+                                  onClick={() => {
+                                    handleClickEdit(row.id);
+                                  }}
+                                >
+                                  <Edit />
+                                </IconButton>
+                              )}
+                              {validate("Logistiques CV", "D") && (
+                                <IconButton
+                                  color="warning"
+                                  aria-label="Supprimer"
+                                  component="span"
+                                  size="small"
+                                  onClick={() => {
+                                    handleClickDelete(row.id);
+                                  }}
+                                >
+                                  <DeleteIcon />
+                                </IconButton>
+                              )}
                             </BtnActionContainer>
                           </TableCell>
                         </TableRow>

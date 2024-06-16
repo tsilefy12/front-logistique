@@ -6,17 +6,16 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import Link from "next/link";
-import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
+import Link from "next/link";
+import React, { useEffect } from "react";
 // import Data, { Order } from "./table/type-variable";
 // import { rows } from "./table/constante";
 // import EnhancedTableToolbar from "./table/EnhancedTableToolbar";
@@ -33,10 +32,10 @@ import {
   labelRowsPerPage,
 } from "../../../config/table.config";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
-import EquipmentStockTableToolbar from "./table/EquipmentStockTableToolbar";
-import EquipmentStockTableHeader from "./table/EquipmentStockTableHeader";
 import { EquipmentStockItem } from "../../../redux/features/equipmentStock/equipmentStock.interface";
 import useFetchEquipmentStock from "./hooks/useFetchVendors";
+import EquipmentStockTableHeader from "./table/EquipmentStockTableHeader";
+import EquipmentStockTableToolbar from "./table/EquipmentStockTableToolbar";
 
 const ListStock = () => {
   const [page, setPage] = React.useState(0);
