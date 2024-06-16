@@ -1,22 +1,22 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 import useFetchCarVouchers from "../../materiel_de_transport/bon_de_voiture/hooks/useFetchCarVoucher";
 import { useRouter } from "next/router";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-const CercleChart = () => {
+const CercleChart: React.FC = () => {
   const { carVouchers } = useAppSelector((state) => state.carVoucher);
   const fetchCarVouchers = useFetchCarVouchers();
   const router = useRouter();
 
   let toutLst: { id: string; name: number }[] = [];
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchCarVouchers();
   }, [router.query]);
 
-  const chartRef = React.useRef<HTMLCanvasElement | null>(null);
+  const chartRef = useRef<HTMLCanvasElement | null>(null);
 
   const totalMontantByMonth: { [key: string]: number } = {};
 
@@ -34,20 +34,8 @@ const CercleChart = () => {
     "Novembre",
     "Décembre",
   ];
-  function generateRandomHexColor() {
-    function getRandomHex() {
-      const randomInt = Math.floor(Math.random() * 256);
-      const hexString = randomInt.toString(16);
-      return hexString.padStart(2, "0");
-    }
-    const red = getRandomHex();
-    const green = getRandomHex();
-    const blue = getRandomHex();
 
-    const hexColor = `#${red}${green}${blue}`;
-    return hexColor;
-  }
-  React.useEffect(() => {
+  useEffect(() => {
     const ctx = chartRef.current;
     if (carVouchers.length !== 0) {
       carVouchers.forEach((result) => {
@@ -67,35 +55,45 @@ const CercleChart = () => {
 
       const listMois: string[] = [];
       const listMontant: number[] = [];
-      const now = new Date().getFullYear();
       Object.keys(totalMontantByMonth).forEach((month) => {
         listMois.push(month);
         listMontant.push(totalMontantByMonth[month]);
       });
+
+      const colors = [
+        "#4caf50", // green
+        "#f44336", // red
+        "#2196f3", // blue
+        "#ffeb3b", // yellow
+        "#ff9800", // orange
+        "#9c27b0", // purple
+      ];
+
       const newChart = new Chart(ctx!, {
         type: "pie",
         data: {
-          labels: listMois.length != 0 ? listMois : ["vide"],
+          labels: listMois.length !== 0 ? listMois : ["vide"],
           datasets: [
             {
               label: "Montant total (en Ariary)",
-              data: listMontant.length != 0 ? listMontant : [0.5],
-              backgroundColor: listMois.map((m) => generateRandomHexColor()),
-              // borderColor: listMois.map(m=>generateRandomHexColor()),
+              data: listMontant.length !== 0 ? listMontant : [0.5],
+              backgroundColor: listMontant.map(
+                (_, index) => colors[index % colors.length]
+              ),
               borderWidth: 0,
             },
           ],
         },
         options: {
           responsive: true,
+          animation: false,
           plugins: {
             legend: {
-              position: "top",
+              position: "top" as const,
             },
             title: {
               display: true,
-              text: `Montant mensuel d\'entretien, année ${now}`,
-              // color: "black",
+              text: `Montant mensuel d'entretien, année ${new Date().getFullYear()}`,
               font: {
                 weight: "normal",
               },
@@ -104,7 +102,7 @@ const CercleChart = () => {
               display: true,
               color: "black",
               formatter: (value, context) => {
-                return listMois[context.dataIndex]; // Utilisez le nom du mois comme étiquette de données
+                return listMois[context.dataIndex];
               },
             },
           },
@@ -113,10 +111,11 @@ const CercleChart = () => {
             intersect: false,
           },
         },
+        plugins: [ChartDataLabels],
       });
 
       return () => {
-        newChart.destroy(); // Détruire le graphique lors du démontage du composant
+        newChart.destroy();
       };
     }
   }, [carVouchers]);
@@ -127,4 +126,5 @@ const CercleChart = () => {
     </div>
   );
 };
+
 export default CercleChart;

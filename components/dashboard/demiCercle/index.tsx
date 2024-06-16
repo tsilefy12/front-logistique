@@ -1,84 +1,87 @@
-import React from "react";
-import Chart from "chart.js/auto";
+import React, { useEffect } from "react";
+import { Doughnut } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 import useFetchTransportationEquipments from "../../materiel_de_transport/hooks/useFetchTransportationEquipments";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
-const DemiCercleChart = () => {
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
+
+const DemiCercleChart: React.FC = () => {
   const { transportationEquipments } = useAppSelector(
     (state) => state.transportationEquipment
   );
   const fetchTransportEquipments = useFetchTransportationEquipments();
-  const chartRef = React.useRef<HTMLCanvasElement | null>(null);
-  React.useEffect(() => {
+
+  useEffect(() => {
     fetchTransportEquipments();
-  }, []);
-  function generateRandomHexColor() {
-    function getRandomHex() {
-      const randomInt = Math.floor(Math.random() * 256);
-      const hexString = randomInt.toString(16);
-      return hexString.padStart(2, "0");
+  }, [fetchTransportEquipments]);
+
+  const listMateriel: string[] = [];
+  const listResteCarburant: number[] = [];
+
+  transportationEquipments.forEach((element) => {
+    if (
+      element.reste !== 0 &&
+      element.kilometrageActuel !== element.kilometrageInitial
+    ) {
+      listMateriel.push(element.registration || "");
+      listResteCarburant.push(element.reste || 0);
     }
-    const red = getRandomHex();
-    const green = getRandomHex();
-    const blue = getRandomHex();
+  });
 
-    const hexColor = `#${red}${green}${blue}`;
-    return hexColor;
-  }
-  React.useEffect(() => {
-    const ctx = chartRef.current;
-    if (!ctx) return;
+  const colors = [
+    "#4caf50", // green
+    "#f44336", // red
+    "#2196f3", // blue
+    "#ffeb3b", // yellow
+    "#ff9800", // orange
+    "#9c27b0", // purple
+  ];
 
-    const listMateriel: string[] = [];
-    const listResteCarburant: number[] = [];
-    transportationEquipments.forEach((element) => {
-      if (
-        element.reste != 0 &&
-        element.kilometrageActuel !== element.kilometrageInitial
-      ) {
-        listMateriel.push(element.registration!);
-        listResteCarburant.push(element.reste!);
-      }
-    });
-    const newChart = new Chart(ctx, {
-      type: "doughnut",
-      data: {
-        labels: listMateriel.length != 0 ? listMateriel : ["vide"],
-        datasets: [
-          {
-            label: "Reste",
-            data: listResteCarburant.length != 0 ? listResteCarburant : [0],
-            backgroundColor: listResteCarburant.map((l) =>
-              generateRandomHexColor()
-            ),
-            // borderColor: [],
-            borderWidth: 0,
-          },
-        ],
+  const data = {
+    labels: listMateriel.length !== 0 ? listMateriel : ["vide"],
+    datasets: [
+      {
+        label: "Reste",
+        data: listResteCarburant.length !== 0 ? listResteCarburant : [0],
+        backgroundColor: listResteCarburant.map(
+          (_, index) => colors[index % colors.length]
+        ),
+        borderWidth: 0,
+        cutout: "85%",
+        rotation: 270,
+        circumference: 180,
       },
-      options: {
-        responsive: true,
-        cutout: "50%",
-        plugins: {
-          legend: {
-            position: "top",
-          },
-          // title: {
-          //     display: true,
-          //     text: 'My Half Circle Chart'
-          // }
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: false,
+    plugins: {
+      tooltip: {
+        enabled: false,
+      },
+      legend: {
+        position: "top" as const,
+      },
+      datalabels: {
+        formatter: (value: any, context: any) => {
+          return value; // Display the raw data value
+        },
+        color: "#fff",
+        font: {
+          weight: "bold" as const,
         },
       },
-    });
-
-    return () => {
-      newChart.destroy(); // Détruire le graphique lors du démontage du composant
-    };
-  }, [transportationEquipments]);
+    },
+  };
 
   return (
-    <div style={{ width: "300px", height: "300px" }}>
-      <canvas ref={chartRef} id="circle-chart"></canvas>
+    <div style={{ position: "relative", width: "300px", height: "300px" }}>
+      <Doughnut data={data} options={options} />
     </div>
   );
 };
