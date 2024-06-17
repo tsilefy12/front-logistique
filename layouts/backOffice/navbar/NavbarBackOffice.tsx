@@ -17,7 +17,7 @@ import {
 } from "./ButtonNav";
 import { useRouter } from "next/router";
 import { logout } from "../../../redux/features/auth/authSlice";
-import { allMenu } from "../../../config/menu.ts";
+import allMenu from "../../../config/menu.ts";
 
 const NavbarBackOffice = ({ matches }: any) => {
 	const theme = useTheme();
