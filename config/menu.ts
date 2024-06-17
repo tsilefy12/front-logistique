@@ -13,8 +13,15 @@ function allMenu() {
         items: [],
       },
       {
+        id: 2,
+        name: "Fournitures et consommables",
+        link: "/fournitures_et_consommables",
+        icon: "inventory_2",
+        items: [],
+      },
+      {
         id: 3,
-        name: "Materiel de Transport",
+        name: "Materiel de transport",
         link: "/materiel_de_transport",
         icon: "local_shipping",
         items: [],
