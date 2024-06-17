@@ -17,13 +17,14 @@ import {
 } from "./ButtonNav";
 import { useRouter } from "next/router";
 import { logout } from "../../../redux/features/auth/authSlice";
+import { allMenu } from "../../../config/menu.ts";
 
 const NavbarBackOffice = ({ matches }: any) => {
 	const theme = useTheme();
 	/**
 	 * Take all menu lists in the redux store
 	 */
-	const navMenu = useAppSelector((state) => state.menu.value);
+	const navMenu = allMenu();
 	const dispatch = useAppDispatch();
 	const router = useRouter();
 
