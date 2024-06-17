@@ -26,13 +26,6 @@ function allMenu() {
         icon: "local_shipping",
         items: [],
       },
-      {
-        id: 4,
-        name: "Fournisseurs",
-        link: "/fournisseurs",
-        icon: "contacts",
-        items: [],
-      },
     ];
     if (user) {
       if (user.groups?.some((g) => g.service.name === "Logistiques BCE")) {
