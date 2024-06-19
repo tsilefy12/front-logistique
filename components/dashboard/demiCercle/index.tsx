@@ -49,9 +49,9 @@ const DemiCercleChart: React.FC = () => {
           (_, index) => colors[index % colors.length]
         ),
         borderWidth: 0,
-        cutout: "85%",
-        rotation: 270,
-        circumference: 180,
+        cutout: "85%", // Creates the semi-circle effect
+        rotation: -0.5 * Math.PI, // Start angle (top)
+        circumference: Math.PI, // Only half of the circle
       },
     ],
   };
@@ -80,7 +80,7 @@ const DemiCercleChart: React.FC = () => {
   };
 
   return (
-    <div style={{ position: "relative", width: "300px", height: "300px" }}>
+    <div style={{ display: "flex", width: "100%" }}>
       <Doughnut data={data} options={options} />
     </div>
   );

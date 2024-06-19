@@ -1,4 +1,4 @@
-import { Stack, useMediaQuery, useTheme } from "@mui/material";
+import { Button, Link, Stack, useMediaQuery, useTheme } from "@mui/material";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -32,7 +32,7 @@ const HeaderDashboard = () => {
       alignItems={"center"}
       sx={{
         backgroundColor: "#DFE3E8",
-        padding: "10px",
+        padding: "2px",
       }}
     >
       <Stack paddingLeft={6}>
@@ -56,6 +56,16 @@ const HeaderDashboard = () => {
             alignItems: "center",
           }}
         >
+          {" "}
+          <Link
+            href="/logistique/materiels"
+            component={"a"}
+            sx={{ textDecoration: "none", color: "GrayText" }}
+          >
+            <Button variant="contained" sx={{ backgroundColor: "#9DBF4C" }}>
+              Accueil
+            </Button>
+          </Link>
           <span style={{ color: "GrayText" }}>{today}</span>
           <span
             style={{

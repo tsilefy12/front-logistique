@@ -1,24 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 import useFetchCarVouchers from "../../materiel_de_transport/bon_de_voiture/hooks/useFetchCarVoucher";
 import { useRouter } from "next/router";
-import ChartDataLabels from "chartjs-plugin-datalabels";
 
 const CercleChart: React.FC = () => {
   const { carVouchers } = useAppSelector((state) => state.carVoucher);
   const fetchCarVouchers = useFetchCarVouchers();
   const router = useRouter();
-
-  let toutLst: { id: string; name: number }[] = [];
-
-  useEffect(() => {
-    fetchCarVouchers();
-  }, [router.query]);
-
   const chartRef = useRef<HTMLCanvasElement | null>(null);
-
-  const totalMontantByMonth: { [key: string]: number } = {};
 
   const monthsInLetters = [
     "Janvier",
@@ -36,93 +27,88 @@ const CercleChart: React.FC = () => {
   ];
 
   useEffect(() => {
-    const ctx = chartRef.current;
-    if (carVouchers.length !== 0) {
-      carVouchers.forEach((result) => {
-        const now = new Date().getFullYear();
-        const date = new Date(result.date || 0);
-        const month = monthsInLetters[date.getMonth()];
-        const year = new Date(result.date!).getFullYear();
+    fetchCarVouchers();
+  }, [router.query]);
+  useEffect(() => {
+    if (carVouchers.length === 0) return;
 
-        if (year === now) {
-          const montantTotal = parseInt(result.montantTotal || "0");
-          if (month && !isNaN(montantTotal)) {
-            totalMontantByMonth[month] =
-              (totalMontantByMonth[month] || 0) + montantTotal;
-          }
+    const now = new Date().getFullYear();
+    const totalMontantByMonth: { [key: string]: number } = {};
+
+    carVouchers.forEach((result) => {
+      const date = new Date(result.date || 0);
+      const month = monthsInLetters[date.getMonth()];
+      const year = date.getFullYear();
+
+      if (year === now) {
+        const montantTotal = parseInt(result.montantTotal || "0", 10);
+        if (month && !isNaN(montantTotal)) {
+          totalMontantByMonth[month] =
+            (totalMontantByMonth[month] || 0) + montantTotal;
         }
-      });
+      }
+    });
 
-      const listMois: string[] = [];
-      const listMontant: number[] = [];
-      Object.keys(totalMontantByMonth).forEach((month) => {
-        listMois.push(month);
-        listMontant.push(totalMontantByMonth[month]);
-      });
+    const listMois = monthsInLetters.map((month) => month);
+    const listMontant = listMois.map(
+      (month) => totalMontantByMonth[month] || 0
+    );
 
-      const colors = [
-        "#4caf50", // green
-        "#f44336", // red
-        "#2196f3", // blue
-        "#ffeb3b", // yellow
-        "#ff9800", // orange
-        "#9c27b0", // purple
-      ];
-
-      const newChart = new Chart(ctx!, {
-        type: "pie",
-        data: {
-          labels: listMois.length !== 0 ? listMois : ["vide"],
-          datasets: [
-            {
-              label: "Montant total (en Ariary)",
-              data: listMontant.length !== 0 ? listMontant : [0.5],
-              backgroundColor: listMontant.map(
-                (_, index) => colors[index % colors.length]
-              ),
-              borderWidth: 0,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          animation: false,
-          plugins: {
-            legend: {
-              position: "top" as const,
-            },
-            title: {
-              display: true,
-              text: `Montant mensuel d'entretien, année ${new Date().getFullYear()}`,
-              font: {
-                weight: "normal",
-              },
-            },
-            datalabels: {
-              display: true,
-              color: "black",
-              formatter: (value, context) => {
-                return listMois[context.dataIndex];
-              },
-            },
-          },
-          interaction: {
-            mode: "index",
-            intersect: false,
-          },
-        },
-        plugins: [ChartDataLabels],
-      });
-
-      return () => {
-        newChart.destroy();
-      };
-    }
+    renderChart(chartRef.current!, listMois, listMontant);
   }, [carVouchers]);
 
+  const renderChart = (
+    canvas: HTMLCanvasElement,
+    labels: string[],
+    data: number[]
+  ) => {
+    // Destroy previous chart instance if exists
+    const existingChart = Chart.getChart(canvas);
+    if (existingChart) {
+      existingChart.destroy();
+    }
+
+    const colors = ["#9DBF4C"];
+
+    new Chart(canvas, {
+      type: "line",
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: "Montant par mois",
+            data: data,
+            backgroundColor: colors,
+            borderColor: colors,
+            borderWidth: 1,
+            cubicInterpolationMode: "monotone",
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          datalabels: {
+            color: "white",
+            display: true,
+            align: "center",
+            anchor: "center",
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: Math.max(...data) + 10,
+          },
+        },
+      },
+      plugins: [ChartDataLabels],
+    });
+  };
+
   return (
-    <div style={{ width: "300px", height: "300px" }}>
-      <canvas ref={chartRef} id="circle-chart"></canvas>
+    <div style={{ width: "100%", height: 300 }}>
+      <canvas ref={chartRef} id="circle-chart" width={"100%"}></canvas>
     </div>
   );
 };
