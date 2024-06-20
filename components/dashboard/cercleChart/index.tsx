@@ -4,12 +4,14 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 import useFetchCarVouchers from "../../materiel_de_transport/bon_de_voiture/hooks/useFetchCarVoucher";
 import { useRouter } from "next/router";
+import { linearGradient } from "polished";
 
 const CercleChart: React.FC = () => {
   const { carVouchers } = useAppSelector((state) => state.carVoucher);
   const fetchCarVouchers = useFetchCarVouchers();
   const router = useRouter();
   const chartRef = useRef<HTMLCanvasElement | null>(null);
+  const chartInstanceRef = useRef<Chart | null>(null);
 
   const monthsInLetters = [
     "Janvier",
@@ -28,7 +30,11 @@ const CercleChart: React.FC = () => {
 
   useEffect(() => {
     fetchCarVouchers();
-  }, [router.query]);
+  }, []);
+
+  const [dataLabels, setDataLabels] = useState<string[]>([]);
+  const [data, setData] = useState<number[]>([]);
+
   useEffect(() => {
     if (carVouchers.length === 0) return;
 
@@ -53,65 +59,67 @@ const CercleChart: React.FC = () => {
     const listMontant = listMois.map(
       (month) => totalMontantByMonth[month] || 0
     );
-
-    renderChart(chartRef.current!, listMois, listMontant);
+    setDataLabels(listMois);
+    setData(listMontant);
   }, [carVouchers]);
 
-  const renderChart = (
-    canvas: HTMLCanvasElement,
-    labels: string[],
-    data: number[]
-  ) => {
-    // Destroy previous chart instance if exists
-    const existingChart = Chart.getChart(canvas);
-    if (existingChart) {
-      existingChart.destroy();
+  useEffect(() => {
+    if (!chartRef.current) return;
+
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.data.labels = dataLabels;
+      chartInstanceRef.current.data.datasets[0].data = data;
+      chartInstanceRef.current.update();
+    } else {
+      chartInstanceRef.current = new Chart(chartRef.current, {
+        type: "line",
+        data: {
+          labels: dataLabels,
+          datasets: [
+            {
+              label: "Montant par mois",
+              data: data,
+              backgroundColor: "rgb(75, 192, 192)",
+              borderColor: "rgb(75, 192, 192)",
+              borderWidth: 2,
+              cubicInterpolationMode: "monotone",
+              pointHoverBorderWidth: 1,
+              tension: 0.1,
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          plugins: {
+            datalabels: {
+              color: "white",
+              display: true,
+              align: "center",
+              anchor: "center",
+              textAlign: "center",
+            },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+        plugins: [ChartDataLabels],
+      });
     }
 
-    const colors = ["rgb(75, 192, 192)"];
-
-    new Chart(canvas, {
-      type: "line",
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: "Montant par mois",
-            data: data,
-            backgroundColor: colors,
-            borderColor: colors,
-            borderWidth: 2,
-            cubicInterpolationMode: "monotone",
-            pointHoverBorderWidth: 1,
-            tension: 0.1,
-            fill: false,
-          },
-        ],
-      },
-      options: {
-        plugins: {
-          datalabels: {
-            color: "white",
-            display: true,
-            align: "center",
-            anchor: "center",
-            textAlign: "center",
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            // min: 0,
-            // max: Math.max(...data) + 10,
-          },
-        },
-      },
-      plugins: [ChartDataLabels],
-    });
-  };
+    // Cleanup function to destroy the chart when the component unmounts
+    return () => {
+      if (chartInstanceRef.current) {
+        chartInstanceRef.current.destroy();
+        chartInstanceRef.current = null;
+      }
+    };
+  }, [dataLabels, data]);
 
   return (
-    <div style={{ width: "auto", height: 300, display: "flex" }}>
+    <div style={{ width: "auto", display: "flex" }}>
       <canvas
         ref={chartRef}
         id="circle-chart"
