@@ -1,43 +1,27 @@
 import { Card, Divider, FormLabel, Stack } from "@mui/material";
 import HeaderDashboard from "./header";
 import CercleChart from "./cercleChart";
-import CardDashboard from "./card";
-import VerticalMenu from "./menu";
 import useFetchSuplyAndConsumableList from "../supply-and-consumable/entreSortie/hooks/useFetchSupplyAndConsumables";
-import React, { Fragment, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import DemiCercleChart from "./demiCercle";
-import { padding } from "polished";
-import Typography from "../../themes/overrides/Typography";
-import { Label } from "@mui/icons-material";
-import allMenu from "../../config/menu";
 import useFetchVendors from "../vendor/hooks/useFetchVendors";
-import useFetchTransportationEquipments from "../materiel_de_transport/hooks/useFetchTransportationEquipments";
-import { TransportationEquipmentItem } from "../../redux/features/transportation_equipment/transportationEquipment.interface";
 import useFetchTypeEquipment from "../configurations/type-equipment/hooks/useFetchTypeEquipment";
-import { TypeEquipmentItem } from "../../redux/features/typeEquipment/typeEquipmentSlice.interface";
 import useFetchEquipment from "../materiels/informatique/hooks/useFetchEquipment";
 import { EquipmentItem } from "../../redux/features/equipment/equipment.interface";
+import CardTranpostationEquipment from "./transportationEquipment";
 
 const Dashboard = () => {
-  const router = useRouter();
-  const dispatch = useAppDispatch();
-
   const { suplyAndConsumableList } = useAppSelector(
     (state) => state.suplyAndConsumable
   );
   const { vendors } = useAppSelector((state) => state.vendor);
-  const { transportationEquipments } = useAppSelector(
-    (state) => state.transportationEquipment
-  );
-  const { typeEquipmentList } = useAppSelector((state) => state.typeEquipment);
   const { equipments } = useAppSelector((state) => state.equipment);
   const { user } = useAppSelector((state) => state.auth);
 
   const fetchSuplyAndConsumableList = useFetchSuplyAndConsumableList();
   const fetchVendors = useFetchVendors();
-  const fetchTransportationEquipments = useFetchTransportationEquipments();
   const fetchTypeEquipment = useFetchTypeEquipment();
   const fetchEquipment = useFetchEquipment();
 
@@ -54,13 +38,7 @@ const Dashboard = () => {
     fetchVendors();
     fetchTypeEquipment();
     fetchEquipment();
-  }, [
-    dispatch,
-    fetchSuplyAndConsumableList,
-    fetchVendors,
-    fetchTypeEquipment,
-    fetchEquipment,
-  ]);
+  }, []);
 
   useEffect(() => {
     const filteredList = suplyAndConsumableList.filter(
@@ -87,14 +65,7 @@ const Dashboard = () => {
 
     setNomUtilisateur(user?.name || "");
   }, [suplyAndConsumableList, equipments, user]);
-  const colors = [
-    "#4caf50", // green
-    "#f44336", // red
-    "rgb(75, 192, 192)", // blue
-    "#ffeb3b", // yellow
-    "#ff9800", // orange
-    "#9c27b0", // purple
-  ];
+
   return (
     <Stack direction="column">
       <HeaderDashboard />
@@ -181,7 +152,7 @@ const Dashboard = () => {
               ...styleCard,
               width: "70%",
               alignItems: "start",
-              height: "10%",
+              height: "5%",
             }}
           >
             <Stack>
@@ -190,7 +161,15 @@ const Dashboard = () => {
                 {new Date().getFullYear()}
               </p>
             </Stack>
-            <Stack marginTop={-4} height={"60%"} width={"100%"}>
+            <Stack
+              marginTop={-4}
+              width="100%"
+              sx={{
+                "& .MuiPaper-root": {
+                  width: "100%",
+                },
+              }}
+            >
               <CercleChart />
             </Stack>
           </Card>
@@ -200,62 +179,34 @@ const Dashboard = () => {
             height={"100%"}
             fontWeight={"bold"}
           >
-            <Card
-              sx={{
-                paddingLeft: 3,
-                paddingRight: 3,
-                paddingTop: 2,
-                height: 120,
-                overflow: "auto",
-              }}
-            >
-              <Stack direction={"column"} gap={2}>
-                <p>Nombre de materièle de transport</p>
-                <Stack direction={"column"} gap={1}>
-                  {typeEquipmentList.map(
-                    (t: TypeEquipmentItem, index) =>
-                      transportationEquipments.filter((f) => f.type == t.id)
-                        .length !== 0 && (
-                        <Stack
-                          key={t.id}
-                          direction={"row"}
-                          gap={8}
-                          alignItems={"center"}
-                        >
-                          <span
-                            style={{ color: colors[index % colors.length] }}
-                          >
-                            {
-                              transportationEquipments.filter(
-                                (f) => f.type == t.id
-                              ).length
-                            }
-                          </span>
-                          <span
-                            style={{ color: "GrayText", fontWeight: "normal" }}
-                          >
-                            - {t.type} {t.prefix}
-                          </span>
-                        </Stack>
-                      )
-                  )}
-                </Stack>
-              </Stack>
-            </Card>
+            <CardTranpostationEquipment />
             <Card
               sx={{
                 paddingLeft: 3,
                 paddingRight: 3,
                 paddingTop: 1,
-                height: 95,
+                height: 145,
               }}
             >
-              <Stack direction={"column"} gap={2} alignItems={"center"}>
+              <Stack
+                direction={"column"}
+                gap={2}
+                alignItems={"center"}
+                paddingTop={2}
+              >
                 <p>
                   Nombre de{" "}
                   {vendors.length > 1 ? "fournisseurs" : "fournisseur"}
                 </p>
-                <span style={{ paddingBottom: 4, color: "rgb(75, 192, 192)" }}>
+                <span
+                  style={{
+                    textAlign: "center",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "rgb(75, 192, 192)",
+                    paddingTop: "5%",
+                  }}
+                >
                   {vendors.length}
                 </span>
               </Stack>
@@ -265,7 +216,7 @@ const Dashboard = () => {
                 paddingLeft: 3,
                 paddingRight: 3,
                 paddingTop: 1,
-                height: 114,
+                height: 160,
                 overflow: "auto",
               }}
             >

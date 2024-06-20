@@ -16,7 +16,7 @@ const DemiCercleChart: React.FC = () => {
 
   useEffect(() => {
     fetchTransportEquipments();
-  }, [fetchTransportEquipments]);
+  }, []);
 
   const listMateriel: string[] = [];
   const listResteCarburant: number[] = [];
