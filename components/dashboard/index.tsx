@@ -4,7 +4,7 @@ import CercleChart from "./cercleChart";
 import CardDashboard from "./card";
 import VerticalMenu from "./menu";
 import useFetchSuplyAndConsumableList from "../supply-and-consumable/entreSortie/hooks/useFetchSupplyAndConsumables";
-import { Fragment, useEffect, useMemo } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import DemiCercleChart from "./demiCercle";
@@ -64,6 +64,22 @@ const Dashboard = () => {
       statusCounts[equipment.status!] = 1;
     }
   });
+  const [colors, setColors] = useState<any[]>([]);
+
+  const getRandomColor = () => {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
+  useEffect(() => {
+    const generatedColors = typeEquipmentList.map(() => getRandomColor());
+    setColors(generatedColors);
+  }, [typeEquipmentList]);
+
   return (
     <Stack direction="column">
       <HeaderDashboard />
@@ -103,8 +119,9 @@ const Dashboard = () => {
                   ...styleCard,
                   justifyContent: "flex-start",
                   height: "auto",
-                  maxHeight: "calc(100vh - 240px)",
                   marginTop: -3.5,
+                  width: "85%",
+                  margingLeft: 3,
                 }}
               >
                 {listFltered.map((i) => (
@@ -117,7 +134,13 @@ const Dashboard = () => {
                       key={i.id}
                     >
                       <p>{i.id}</p>
-                      <p>{i.name}</p>
+                      <p
+                        style={{
+                          color: i.name <= 5 ? "red" : "rgb(75, 192, 192)",
+                        }}
+                      >
+                        {i.name}
+                      </p>
                     </Stack>
                     <Divider />
                   </Stack>
@@ -142,9 +165,9 @@ const Dashboard = () => {
                   Recharge du carburant
                 </p>
               </Stack>
-              {/* <Stack sx={{ paddingTop: 2 }}>
+              <Stack direction={"row"} sx={{ marginTop: -3.5 }}>
                 <DemiCercleChart />
-              </Stack> */}
+              </Stack>
             </Card>
           </Stack>
         </Stack>
@@ -152,9 +175,9 @@ const Dashboard = () => {
           <Card
             sx={{
               ...styleCard,
-              width: "50%",
+              width: "70%",
               alignItems: "start",
-              height: "5%",
+              height: "10%",
             }}
           >
             <Stack>
@@ -167,7 +190,7 @@ const Dashboard = () => {
                 {new Date().getFullYear()}
               </p>
             </Stack>
-            <Stack sx={{ marginTop: -4, width: "100%", height: "50%" }}>
+            <Stack marginTop={-4} height={"60%"} width={"100%"}>
               <CercleChart />
             </Stack>
           </Card>
@@ -182,7 +205,7 @@ const Dashboard = () => {
                 paddingLeft: 3,
                 paddingRight: 3,
                 paddingTop: 2,
-                height: 114,
+                height: 120,
                 overflow: "auto",
               }}
             >
@@ -190,7 +213,7 @@ const Dashboard = () => {
                 <p>Nombre de materièle de transport</p>
                 <Stack direction={"column"} gap={1}>
                   {typeEquipmentList.map(
-                    (t: TypeEquipmentItem) =>
+                    (t: TypeEquipmentItem, index: any) =>
                       transportationEquipments.filter((f) => f.type == t.id)
                         .length != 0 && (
                         <Stack
@@ -199,15 +222,21 @@ const Dashboard = () => {
                           alignItems={"center"}
                           key={t.id!}
                         >
-                          <span>
+                          <span
+                            style={{
+                              color: colors[index],
+                            }}
+                          >
                             {
                               transportationEquipments.filter(
                                 (f) => f.type == t.id
                               ).length
                             }
                           </span>
-                          <span>
-                            -{t.type} {t.prefix}
+                          <span
+                            style={{ color: "GrayText", fontWeight: "normal" }}
+                          >
+                            - {t.type} {t.prefix}
                           </span>
                         </Stack>
                       )
@@ -219,8 +248,8 @@ const Dashboard = () => {
               sx={{
                 paddingLeft: 3,
                 paddingRight: 3,
-                paddingTop: 2,
-                height: 110,
+                paddingTop: 1,
+                height: 95,
               }}
             >
               <Stack direction={"column"} gap={2} alignItems={"center"}>
@@ -228,15 +257,17 @@ const Dashboard = () => {
                   Nombre de{" "}
                   {vendors.length > 1 ? "fournisseurs" : "fournisseur"}
                 </p>
-                <span style={{ paddingBottom: 4 }}>{vendors.length}</span>
+                <span style={{ paddingBottom: 4, color: "rgb(75, 192, 192)" }}>
+                  {vendors.length}
+                </span>
               </Stack>
             </Card>
             <Card
               sx={{
                 paddingLeft: 3,
                 paddingRight: 3,
-                paddingTop: 2,
-                height: 110,
+                paddingTop: 1,
+                height: 114,
                 overflow: "auto",
               }}
             >
@@ -250,9 +281,22 @@ const Dashboard = () => {
                       direction={"row"}
                       gap={8}
                       alignItems={"center"}
+                      paddingBottom={1}
                     >
-                      <span>{statusCounts[status]}</span>
-                      <span>
+                      <span
+                        style={{
+                          color:
+                            status === "BAD"
+                              ? "red"
+                              : status === "GOOD"
+                              ? "green"
+                              : "brown",
+                        }}
+                      >
+                        {statusCounts[status]}
+                      </span>
+                      <span style={{ color: "GrayText", fontWeight: "normal" }}>
+                        -{" "}
                         {status == "GOOD"
                           ? "Bon"
                           : status == "BAD"
@@ -273,7 +317,7 @@ const Dashboard = () => {
 export default Dashboard;
 
 const styleCard = {
-  width: 300,
+  width: "100%",
   // height: 100,
   display: "flex",
   // justifyContent: "center",

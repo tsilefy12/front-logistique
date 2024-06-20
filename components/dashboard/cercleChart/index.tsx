@@ -68,7 +68,7 @@ const CercleChart: React.FC = () => {
       existingChart.destroy();
     }
 
-    const colors = ["#9DBF4C"];
+    const colors = ["rgb(75, 192, 192)"];
 
     new Chart(canvas, {
       type: "line",
@@ -80,8 +80,11 @@ const CercleChart: React.FC = () => {
             data: data,
             backgroundColor: colors,
             borderColor: colors,
-            borderWidth: 1,
+            borderWidth: 2,
             cubicInterpolationMode: "monotone",
+            pointHoverBorderWidth: 1,
+            tension: 0.1,
+            fill: false,
           },
         ],
       },
@@ -97,8 +100,8 @@ const CercleChart: React.FC = () => {
         scales: {
           y: {
             beginAtZero: true,
-            min: 0,
-            max: Math.max(...data) + 10,
+            // min: 0,
+            // max: Math.max(...data) + 10,
           },
         },
       },
@@ -107,8 +110,12 @@ const CercleChart: React.FC = () => {
   };
 
   return (
-    <div style={{ width: "100%", height: 300 }}>
-      <canvas ref={chartRef} id="circle-chart" width={"100%"}></canvas>
+    <div style={{ width: "auto", height: 300, display: "flex" }}>
+      <canvas
+        ref={chartRef}
+        id="circle-chart"
+        style={{ display: "flex", width: "100%" }}
+      ></canvas>
     </div>
   );
 };
