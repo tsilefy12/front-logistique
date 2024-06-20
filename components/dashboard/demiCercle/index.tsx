@@ -34,7 +34,7 @@ const DemiCercleChart: React.FC = () => {
   const colors = [
     "#4caf50", // green
     "#f44336", // red
-    "#2196f3", // blue
+    "rgb(75, 192, 192)", // blue
     "#ffeb3b", // yellow
     "#ff9800", // orange
     "#9c27b0", // purple

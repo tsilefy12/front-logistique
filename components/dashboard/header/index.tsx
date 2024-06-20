@@ -3,13 +3,14 @@ import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NavbarMobile from "../menuMobile";
+import { useAppSelector } from "../../../hooks/reduxHooks";
 
 const HeaderDashboard = () => {
   const today = format(new Date(), "dd/MM/yyyy");
   const [currentTime, setCurrentTime] = useState("");
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
-
+  const { user } = useAppSelector((state) => state.auth);
   useEffect(() => {
     const intervalId = setInterval(() => {
       const now = new Date();
@@ -24,7 +25,13 @@ const HeaderDashboard = () => {
 
     return () => clearInterval(intervalId);
   }, []);
-
+  const [nomUtilisateur, setNomUtilisateur] = useState<string>("");
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setNomUtilisateur(user?.name as string);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [user?.name]);
   return (
     <Stack
       direction="row"
@@ -76,8 +83,17 @@ const HeaderDashboard = () => {
           </span>
         </Stack>
         <Stack direction="row" gap={1} alignItems={"center"}>
-          <span style={{ color: "GrayText" }}>compte</span>
-          <AccountCircleIcon style={{ fontSize: "25px" }} />
+          <span style={{ color: "GrayText" }}>{nomUtilisateur}</span>
+          {user?.profileImageUrl != null ? (
+            <img
+              src={user?.profileImageUrl}
+              style={{ width: "20px", height: "20px" }}
+            />
+          ) : (
+            <AccountCircleIcon
+              style={{ fontSize: "25px", color: "GrayText" }}
+            />
+          )}
         </Stack>
       </Stack>
     </Stack>

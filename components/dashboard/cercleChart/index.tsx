@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Chart from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { useAppSelector } from "../../../hooks/reduxHooks";
@@ -95,6 +95,7 @@ const CercleChart: React.FC = () => {
             display: true,
             align: "center",
             anchor: "center",
+            textAlign: "center",
           },
         },
         scales: {
