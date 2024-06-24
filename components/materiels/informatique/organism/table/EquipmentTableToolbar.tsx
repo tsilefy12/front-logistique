@@ -56,7 +56,7 @@ const EquipmentTableToolbar = () => {
           }}
         >
           <Typography variant="h6" id="tableTitle" component="div">
-            Liste des Equipements
+            Liste des équipements
           </Typography>
           <TextField
             variant="outlined"

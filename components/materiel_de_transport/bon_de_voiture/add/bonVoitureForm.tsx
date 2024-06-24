@@ -106,7 +106,7 @@ const FormBonVoiture = ({
             </Button>
           </Stack>
           <Typography variant="h4">
-            {isEditing ? "Modifier" : "Ajouter"} Entretien
+            {isEditing ? "Modifier" : "Ajouter"} entretien
           </Typography>
         </SectionNavigation>
         <Divider />
@@ -134,7 +134,7 @@ const FormBonVoiture = ({
             <OSSelectField
               fullWidth
               id="outlined-basic"
-              label="matériel"
+              label="Matériel"
               variant="outlined"
               options={listMateriel}
               dataKey={["name"]}

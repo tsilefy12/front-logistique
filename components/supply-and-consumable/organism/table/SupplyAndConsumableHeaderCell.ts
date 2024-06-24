@@ -17,13 +17,13 @@ export const suplyAndConsumableHeadCells: readonly HeadCell[] = [
     id: "unitPrice",
     numeric: false,
     disablePadding: false,
-    label: "Prix Unitaire",
+    label: "Prix unitaire",
   },
   {
     id: "SKU",
     numeric: false,
     disablePadding: false,
-    label: "Unité de Gestion de Stock",
+    label: "Unité de gestion de stock",
   },
   {
     id: "montant",

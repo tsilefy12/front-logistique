@@ -49,7 +49,7 @@ const DetailsVendor = () => {
           </Button>
         </Link>
         <Typography variant="h4" color="GrayText">
-          Details du fournisseur
+          Détails du fournisseur
         </Typography>
       </SectionNavigation>
       <DetailsContainer>
@@ -87,7 +87,7 @@ const DetailsVendor = () => {
               <Grid item xs={12} md={12}>
                 <InfoItems direction="row" spacing={2}>
                   <Typography variant="body1" color="secondary">
-                    Télephone :
+                    Téléphone :
                   </Typography>
                   <Typography variant="body1" color="gray">
                     {vendor.phone}

@@ -43,8 +43,8 @@ const ListValeurIndice = () => {
 
   const handleclickDelete = async (id: any) => {
     confirm({
-      title: "Supprimer type de materiel",
-      description: "Voulez-vous vraiment supprimer ce type de materiel ?",
+      title: "Supprimer type de matériel",
+      description: "Voulez-vous vraiment supprimer ce type de matériel ?",
       cancellationText: "Annuler",
       confirmationText: "Supprimer",
       cancellationButtonProps: {

@@ -219,7 +219,7 @@ export default function ListArticleOffre() {
     },
     {
       field: "unitPrice",
-      headerName: "Prix Unitaire",
+      headerName: "Prix unitaire",
       type: "number",
       editable: true,
       flex: 1,

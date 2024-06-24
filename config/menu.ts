@@ -21,7 +21,7 @@ function allMenu() {
       },
       {
         id: 3,
-        name: "Materiel de transport",
+        name: "Matériel de transport",
         link: "/materiel_de_transport",
         icon: "local_shipping",
         items: [],
@@ -133,7 +133,7 @@ function allMenu() {
           .find((t: any) => t.id === 2)
           ?.items.push({
             id: 21,
-            name: "Fiche de Stock",
+            name: "Fiche de stock",
             link: "/fournitures_et_consommables/fiche_de_stock",
             icon: "",
           });
@@ -143,7 +143,7 @@ function allMenu() {
           .find((t: any) => t.id === 2)
           ?.items.push({
             id: 22,
-            name: "Entre et Sortie",
+            name: "Entre et sortie",
             link: "/fournitures_et_consommables/entre_et_sortie",
             icon: "",
           });
@@ -153,7 +153,7 @@ function allMenu() {
           .find((t: any) => t.id === 3)
           ?.items.push({
             id: 31,
-            name: "Tous les materiels",
+            name: "Tous les matériels",
             link: "/materiel_de_transport",
             icon: "",
           });

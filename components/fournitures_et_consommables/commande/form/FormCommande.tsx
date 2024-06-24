@@ -121,7 +121,7 @@ const FormCommande = () => {
           <TextField
             fullWidth
             id="outlined-basic"
-            label="Quantite demandeur"
+            label="Quantité demandeur"
             variant="outlined"
           />
           <FormControl fullWidth>

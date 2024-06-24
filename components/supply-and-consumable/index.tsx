@@ -112,7 +112,7 @@ export default function SuplyAndCosumableList() {
               </Button>
             </Link>
           )}
-          <Typography variant="h4"> Fiche de Stock </Typography>
+          <Typography variant="h4">Fiche de stock </Typography>
         </SectionNavigation>
         {/* <Divider /> */}
       </NavigationContainer>

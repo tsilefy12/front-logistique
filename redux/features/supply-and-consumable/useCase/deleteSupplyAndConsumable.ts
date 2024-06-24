@@ -19,7 +19,7 @@ export const deleteSuplyAndConsumable = createAsyncThunk(
       );
       thunkAPI.dispatch(
         enqueueSnackbar({
-          message: "Fiche de Stock supprimé avec succès",
+          message: "Fiche de stock supprimé avec succès",
           options: { variant: "success" },
         })
       );

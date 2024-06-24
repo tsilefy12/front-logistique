@@ -73,8 +73,8 @@ const ListInfo = () => {
   }, [router.query]);
   const handleClickDelete = async (id: any) => {
     confirm({
-      title: "Supprimer le materiel",
-      description: "Voulez-vous vraiment supprimer ce materiel ?",
+      title: "Supprimer le matériel",
+      description: "Voulez-vous vraiment supprimer ce matériel ?",
       cancellationText: "Annuler",
       confirmationText: "Supprimer",
       cancellationButtonProps: {

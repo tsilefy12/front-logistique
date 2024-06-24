@@ -57,7 +57,7 @@ const DetailTransportEquipment = () => {
             </Button>
           </Link>
           <Typography variant="h4" color="GrayText">
-            Details materiel de transport
+            Détails matériel de transport
           </Typography>
         </SectionNavigation>
         <Divider />
@@ -133,7 +133,7 @@ const DetailTransportEquipment = () => {
               <Grid item xs={12} md={12}>
                 <InfoItems direction="row" spacing={2}>
                   <Typography variant="body1" color="secondary">
-                    Kilometrage initial :
+                    Kilométrage initial :
                   </Typography>
                   <Typography variant="body1" color="gray">
                     {transportationEquipment.kilometrageInitial} Km
@@ -145,7 +145,7 @@ const DetailTransportEquipment = () => {
               <Grid item xs={12} md={12}>
                 <InfoItems direction="row" spacing={2}>
                   <Typography variant="body1" color="secondary">
-                    Reservoir :
+                    Réservoir :
                   </Typography>
                   <Typography variant="body1" color="gray">
                     {transportationEquipment.reservoir} L
@@ -195,7 +195,7 @@ const DetailTransportEquipment = () => {
               <Grid item xs={12} md={12}>
                 <InfoItems direction="row" spacing={2}>
                   <Typography variant="body1" color="secondary">
-                    Kilometrage actuel :
+                    Kilométrage actuel :
                   </Typography>
                   <Typography variant="body1" color="gray">
                     {transportationEquipment.kilometrageActuel} Km

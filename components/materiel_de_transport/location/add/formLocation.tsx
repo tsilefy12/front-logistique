@@ -81,7 +81,7 @@ const FormLocation = () => {
                     date: Yup.string().required("Veuillez remplir le champ date"),
                     responsable: Yup.string().required("Veuillez remplir le champ responsable"),
                     referenceBudgetaire: Yup.string().required(
-                        "Veuillez remplir le champ référence budgetaire"
+                        "Veuillez remplir le champ référence budgétaire"
                     ),
                     nombreJour: Yup.number().required(
                         "Veuillez remplir le champ nombre de jour"

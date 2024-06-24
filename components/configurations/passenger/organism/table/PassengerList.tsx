@@ -56,8 +56,8 @@ export default function PassengerListe () {
 
   const handleclickDelete = async (id: any) => {
     confirm({
-      title: "Supprimer ce Etat Materiel",
-      description: "Voulez-vous vraiment supprimer ce etat materiel ?",
+      title: "Supprimer ce etat matériel",
+      description: "Voulez-vous vraiment supprimer ce etat matériel ?",
       cancellationText: "Annuler",
       confirmationText: "Supprimer",
       cancellationButtonProps: {

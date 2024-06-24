@@ -17,7 +17,7 @@ export const SuiviCarburantHeaderCells: readonly HeadCell[] = [
     id: "itineraire",
     numeric: false,
     disablePadding: false,
-    label: "Itineraire",
+    label: "Itinéraire",
   },
   {
     id: "personnelTransporte",
@@ -29,7 +29,7 @@ export const SuiviCarburantHeaderCells: readonly HeadCell[] = [
     id: "kilometrageFinal",
     numeric: false,
     disablePadding: false,
-    label: "Kilometrage final",
+    label: "Kilométrage final",
   },
   {
     id: "montant",
@@ -47,7 +47,7 @@ export const SuiviCarburantHeaderCells: readonly HeadCell[] = [
     id: "ligneBudgetaire",
     numeric: false,
     disablePadding: false,
-    label: "Ligne budgetaire",
+    label: "Ligne budgétaire",
   },
   {
     id: "modePaiement",

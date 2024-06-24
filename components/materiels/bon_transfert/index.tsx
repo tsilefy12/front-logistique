@@ -139,7 +139,7 @@ export default function BonTransfertList() {
               </Button>
             </Link>
           )}
-          <Typography variant="h4"> Liste de Bon des transferts</Typography>
+          <Typography variant="h4"> Liste de bon des transferts</Typography>
         </SectionNavigation>
         {/* <Divider /> */}
       </NavigationContainer>

@@ -71,7 +71,7 @@ const DetailsFicheDotation = () => {
                     <PDFButton data={pdf} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">
-                    Details d'une fiche de dotation
+                    Détails d'une fiche de dotation
                 </Typography>
             </SectionNavigation>
             <DetailsContainer>
@@ -89,7 +89,7 @@ const DetailsFicheDotation = () => {
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                            Réference
+                                            Référence
                                         </Typography>
                                         <Typography variant="body1" color="gray">
                                             {ficheDotation?.reference}
@@ -99,7 +99,7 @@ const DetailsFicheDotation = () => {
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                            Region
+                                            Région
                                         </Typography>
                                         <Typography variant="body1" color="gray">
                                             {ficheDotation?.region}

@@ -11,7 +11,7 @@ export const orderEquipmentItemHeadCells: readonly HeadCell[] = [
     id: "quantity",
     numeric: false,
     disablePadding: false,
-    label: "Quantite",
+    label: "Quantité",
   },
   {
     id: "orderEquipment",

@@ -154,7 +154,7 @@ const ListEtatMateriel = () => {
                             <Link href="#">
                               <IconButton
                                 color="accent"
-                                aria-label="Details"
+                                aria-label="Détails"
                                 component="span"
                               >
                                 <VisibilityIcon />

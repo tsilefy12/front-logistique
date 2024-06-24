@@ -169,7 +169,7 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                     </Button>
                 </Stack>
                 <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"} Pv de Comparaison Offre
+                    {isEditing ? "Modifier" : "Ajouter"} un PV de comparaison offre
                 </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -290,7 +290,7 @@ const FormPv = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Form
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Fournisseur</TableCell>
-                                        <TableCell align="left">Mode de Paie</TableCell>
+                                        <TableCell align="left">Mode de paie</TableCell>
                                         <TableCell align="left">Désignation</TableCell>
                                         <TableCell align="left">Montant total</TableCell>
                                         <TableCell></TableCell>

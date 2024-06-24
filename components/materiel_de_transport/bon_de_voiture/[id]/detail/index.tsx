@@ -73,7 +73,7 @@ const DetailBonDeVoiture = () => {
             </Button>
           </Link>
           <Typography variant="h4" color="GrayText">
-            Details d'entretien
+            Détails d'entretien
           </Typography>
         </SectionNavigation>
         <Divider />

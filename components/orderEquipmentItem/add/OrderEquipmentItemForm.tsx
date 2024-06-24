@@ -141,7 +141,7 @@ export default function OrderEquipmentItemForm() {
                 />
                 <OSTextField
                   id="outlined-basic"
-                  label="Quantite"
+                  label="Quantité"
                   name="quantity"
                 />
                 <OSSelectField

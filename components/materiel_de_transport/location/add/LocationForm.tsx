@@ -164,7 +164,7 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
         <FormControl fullWidth>
           <OSTextField
             id="outlined-basic"
-            label="Référence budgetaire"
+            label="Référence budgétaire"
             name="referenceBudgetaire"
             inputProps={{ autoComplete: "off" }}
           />
@@ -246,7 +246,7 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
         />
         <OSSelectField
           id="outlined-basic"
-          label="Ligne budgetaire"
+          label="Ligne budgétaire"
           variant="outlined"
           options={budgetLineList}
           dataKey={["code"]}

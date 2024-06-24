@@ -145,7 +145,7 @@ const MissionForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
         <OSTextField
           fullWidth
           id="outlined-basic"
-          label="Référence budgetaire"
+          label="Référence budgétaire"
           variant="outlined"
           name="pj"
           inputProps={{ autoComplete: "off" }}
@@ -253,7 +253,7 @@ const MissionForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
         <FormControl fullWidth>
           <OSSelectField
             id="outlined-basic"
-            label="Ligne budgetaire"
+            label="Ligne budgétaire"
             variant="outlined"
             options={budgetLineList}
             dataKey={["code"]}

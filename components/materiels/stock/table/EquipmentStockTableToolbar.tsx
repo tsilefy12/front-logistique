@@ -56,7 +56,7 @@ const EquipmentStockTableToolbar = () => {
           }}
         >
           <Typography variant="h6" id="tableTitle" component="div">
-            Liste des Stock par catégorie
+            Liste des stocks par catégorie
           </Typography>
           <TextField
             variant="outlined"

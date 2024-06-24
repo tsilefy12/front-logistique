@@ -98,7 +98,7 @@ const DetailsArticle = () => {
               Retour
             </Button>
           </Link>
-          <Typography variant="h4">Details d'un article</Typography>
+          <Typography variant="h4">Détails d'un article</Typography>
         </SectionNavigation>
         <Divider />
       </NavigationContainer>

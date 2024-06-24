@@ -102,7 +102,7 @@ const FormFicheDotation = ({formikProps,valuesArticle,setValuesArticle,setIdDele
                     </Button>
                 </Stack>
                 <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"} Fiche de dotation
+                    {isEditing ? "Modifier" : "Ajouter"} fiche de dotation
                 </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -141,7 +141,7 @@ const FormFicheDotation = ({formikProps,valuesArticle,setValuesArticle,setIdDele
                             fullWidth
                             id="outlined-basic"
                             variant="outlined"
-                            label="Réference"
+                            label="Référence"
                             name="reference"
                         />
                     </FormControl>

@@ -60,7 +60,7 @@ const DetailsBonReception = () => {
                     <PDFButton data={pdf} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">
-                    Details d'une bon de reception
+                    Détails d'un bon de réception
                 </Typography>
             </SectionNavigation>
             <DetailsContainer>
@@ -78,7 +78,7 @@ const DetailsBonReception = () => {
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                            Réference
+                                            Référence
                                         </Typography>
                                         <Typography variant="body1" color="gray">
                                             {bonReception.reference}
@@ -88,7 +88,7 @@ const DetailsBonReception = () => {
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                            Réference BCI / BCE
+                                            Référence BCI / BCE
                                         </Typography>
                                         <Typography variant="body1" color="gray">
                                             {bonReception.bce? bonReception.bonDeCommandeExterne?.ref+"(BCE)" :bonReception.bonDeCommandeInterne?.reference+"(BCI)"}
@@ -98,7 +98,7 @@ const DetailsBonReception = () => {
                                 <Grid item xs={12} md={12}>
                                 <InfoItems direction="row" spacing={2}>
                                     <Typography variant="body1" color="secondary">
-                                        Date de reception
+                                        Date de réception
                                     </Typography>
                                     <Typography variant="body1" color="gray">
                                         <Moment format="DD/MM/YYYY">
@@ -129,7 +129,7 @@ const DetailsBonReception = () => {
                                 <Table sx={{ minWidth: 700 }} aria-label="simple table">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Designation</TableCell>
+                                            <TableCell>Désignation</TableCell>
                                             <TableCell align="left">Quantité</TableCell>
                                         </TableRow>
                                     </TableHead>

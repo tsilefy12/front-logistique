@@ -145,7 +145,7 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
           options={transportationEquipments}
           dataKey={"registration"}
           valueKey="id"
-          label="Materiel"
+          label="Matériel"
         />
         <OSDatePicker
           fullWidth
@@ -160,7 +160,7 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
         <FormControl fullWidth>
           <OSTextField
             id="outlined-basic"
-            label="Itineraire"
+            label="Itinéraire"
             variant="outlined"
             name="itineraire"
             inputProps={{ autoComplete: "off" }}
@@ -179,7 +179,7 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
         <FormControl fullWidth>
           <OSTextField
             id="outlined-basic"
-            label="kilometrage final"
+            label="Kilométrage final"
             name="kilometrageFinal"
             type="number"
             inputProps={{ autoComplete: "off", min: 0 }}
@@ -226,7 +226,7 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
         <FormControl fullWidth>
           <OSSelectField
             id="outlined-basic"
-            label="Ligne budgetaire"
+            label="Ligne budgétaire"
             variant="outlined"
             options={budgetLineList}
             dataKey={["code"]}

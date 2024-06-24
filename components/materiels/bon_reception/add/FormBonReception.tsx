@@ -120,7 +120,7 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                     </Button>
                 </Stack>
                 <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"} Bon de reception
+                    {isEditing ? "Modifier" : "Ajouter"} bon de réception
                 </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -135,7 +135,7 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                     }}
                     >
                     <Typography variant="h6" id="tableTitle" component="div">
-                        Bon de reception
+                        Bon de réception
                     </Typography>
                 </Stack>
                 <FormControl fullWidth>
@@ -143,7 +143,7 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                         fullWidth
                         id="outlined-basic"
                         variant="outlined"
-                        label="Réference"
+                        label="Référence"
                         name="reference"
                     />
                 </FormControl>
@@ -163,7 +163,7 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                     <OSDatePicker
                         fullWidth
                         id="outlined-basic"
-                        label="Date bon de reception"
+                        label="Date du bon de réception"
                         variant="outlined"
                         value = {formikProps.values.dateReception}
                         onChange = {(value: any) =>formikProps.setFieldValue("dateReception", value)}
@@ -188,7 +188,7 @@ const FormBonReception = ({formikProps,valuesArticle,setValuesArticle,setIdDelet
                             <Table sx={{ minWidth: 700 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Designation</TableCell>
+                                        <TableCell>Désignation </TableCell>
                                         <TableCell align="left">Quantité</TableCell>
                                     </TableRow>
                                 </TableHead>

@@ -121,7 +121,7 @@ const FormSuiviCarburant = () => {
             "Veuillez remplir le champ personne transporté"
           ),
           kilometrageFinal: Yup.number().required(
-            "Veuillez remplir le champ kilometrage final"
+            "Veuillez remplir le champ Kilométrage final"
           ),
           montant: Yup.string().required("Veuillez remplir le champ montant"),
           pu: Yup.number().required("Veuillez remplir le champ prix unitaire"),

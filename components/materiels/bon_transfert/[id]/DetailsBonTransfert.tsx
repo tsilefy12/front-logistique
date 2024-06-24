@@ -83,7 +83,7 @@ const DetailsBonTransfert = () => {
                     <PDFButton data={pdf} />
                 </Stack>
                 <Typography variant="h4" color="GrayText">
-                    Details d'une bon de transfert
+                    Détails d'un bon de transfert
                 </Typography>
             </SectionNavigation>
             <DetailsContainer>
@@ -101,7 +101,7 @@ const DetailsBonTransfert = () => {
                                 <Grid item xs={12} md={12}>
                                     <InfoItems direction="row" spacing={2}>
                                         <Typography variant="body1" color="secondary">
-                                            Réference
+                                            Référence
                                         </Typography>
                                         <Typography variant="body1" color="gray">
                                             {bonTransfert?.reference}
@@ -187,14 +187,14 @@ const DetailsBonTransfert = () => {
                                 }}
                                 >
                                 <Typography variant="h6" id="tableTitle" component="div">
-                                    Liste des articles à transferer
+                                    Liste des articles à transférer
                                 </Typography>
                             </Stack>
                             <TableContainer component={Paper}>
                                 <Table sx={{ minWidth: 700 }} aria-label="simple table">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Designation</TableCell>
+                                            <TableCell>Désignation</TableCell>
                                             <TableCell align="left">Quantité commander</TableCell>
                                             <TableCell align="left">Quantité expedié</TableCell>
                                             <TableCell align="left">Observation</TableCell>

@@ -60,7 +60,7 @@ export default function BonCommandeExterneList() {
 
   const handleClickDelete = async (id: any) => {
     confirm({
-      title: "Supprimer le fournisseur",
+      title: "Supprimer le BCE",
       description: "Voulez-vous vraiment supprimer ce BCE ?",
       cancellationText: "Annuler",
       confirmationText: "Supprimer",
@@ -111,7 +111,7 @@ export default function BonCommandeExterneList() {
             </Link>
           )}
           <Typography variant="h4">
-            Liste de Bon des commandes externe
+            Liste de bon des commandes externe
           </Typography>
         </SectionNavigation>
         {/* <Divider /> */}

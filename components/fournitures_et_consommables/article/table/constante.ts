@@ -12,13 +12,13 @@ export const headCells: readonly HeadCell[] = [
     id: "quantite",
     numeric: true,
     disablePadding: false,
-    label: "Quantite",
+    label: "Quantité",
   },
   {
     id: "prix_unitaire",
     numeric: true,
     disablePadding: false,
-    label: "Prix Unitaire",
+    label: "Prix unitaire",
   },
   
 ];

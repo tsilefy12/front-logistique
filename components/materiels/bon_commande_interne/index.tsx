@@ -140,7 +140,7 @@ export default function BonCommandeInterneList() {
           )}
           <Typography variant="h4">
             {" "}
-            Liste de Bon des commandes Interne
+            Liste de bon des commandes interne
           </Typography>
         </SectionNavigation>
         {/* <Divider /> */}

@@ -76,7 +76,7 @@ const DetailsBCI = () => {
           <PDFButton data={pdf} />
         </Stack>
         <Typography variant="h4" color="GrayText">
-          Details d'une bon de commande fournisseur
+          Détails d'un bon de commande fournisseur
         </Typography>
       </SectionNavigation>
       <DetailsContainer>

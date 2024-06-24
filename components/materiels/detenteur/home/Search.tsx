@@ -56,7 +56,7 @@ const SearchDetenteur = () => {
           }}
         >
           <Typography variant="h6" id="tableTitle" component="div">
-            Liste des détenteurs de materiels
+            Liste des détenteurs des matériels
           </Typography>
           <TextField
             variant="outlined"

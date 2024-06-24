@@ -132,7 +132,7 @@ const FormArticle = ({ formikProps }: { formikProps: FormikProps<any> }) => {
           <OSTextField
             fullWidth
             id="outlined-basic"
-            label="CODE"
+            label="code"
             variant="outlined"
             name="numOptim"
           />

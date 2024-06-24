@@ -56,7 +56,7 @@ const SuplyAndConsumableTableToolbar = () => {
           }}
         >
           <Typography variant="h6" id="tableTitle" component="div">
-            Liste des Fiches de Stock
+            Liste des fiches de stock
           </Typography>
           <TextField
             variant="outlined"

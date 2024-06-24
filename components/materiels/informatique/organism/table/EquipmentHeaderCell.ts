@@ -5,7 +5,7 @@ export const equipmentHeadCells: readonly HeadCell[] = [
     id: "numOptim",
     numeric: false,
     disablePadding: false,
-    label: "CODE",
+    label: "Code",
   },
   {
     id: "designation",

@@ -56,7 +56,7 @@ const BonCommandeInterneTableToolbar = () => {
 					}}
 				>
 					<Typography variant="h6" id="tableTitle" component="div">
-						Liste de Bon des commandes interne
+						Liste de bon des commandes interne
 					</Typography>
 					<TextField
 						variant="outlined"

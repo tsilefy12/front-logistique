@@ -51,7 +51,7 @@ const FournisseurTableToolbar = () => {
           }}
         >
           <Typography variant="h6" id="tableTitle" component="div">
-            Liste des Fournisseurs
+            Liste des fournisseurs
           </Typography>
           <TextField
             variant="outlined"
