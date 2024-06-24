@@ -37,6 +37,7 @@ export default function BonCommandeExterneList() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [filtre, setFiltre] = React.useState("");
   // const { suplyAndConsumable } = useAppSelector(
   //   (state) => state.suplyAndConsumable
   // );
@@ -119,17 +120,18 @@ export default function BonCommandeExterneList() {
       <SectionTable>
         <Box sx={{ width: "100%", mb: 2 }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <BonCommandeExterneTableToolbar />
+            <BonCommandeExterneTableToolbar filtre={filtre} setFiltre={setFiltre} />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
                 size="small"
               >
-                <BonCommandeExterneTableHeader />
+                <BonCommandeExterneTableHeader  />
                 <TableBody>
                   {bonCommandeExternes
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .filter((item) => (`${item.ref} ${item.conditionLivraison} ${item.modePaiement}`).toLowerCase().includes(filtre.toLowerCase()))
                     .map((row: BonCommandeExterneItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

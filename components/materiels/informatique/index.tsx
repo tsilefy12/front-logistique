@@ -39,6 +39,8 @@ import EquipmentTableToolbar from "./organism/table/EquipmentTableToolbar";
 const ListInfo = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [filtre, setFiltre] = React.useState("");
+
   const router = useRouter();
   const confirm = useConfirm();
   const dispatch = useAppDispatch();
@@ -140,7 +142,7 @@ const ListInfo = () => {
       <SectionTable>
         <Box sx={{ width: "100%" }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <EquipmentTableToolbar />
+            <EquipmentTableToolbar filtre={filtre} setFiltre={setFiltre}/>
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
@@ -148,8 +150,9 @@ const ListInfo = () => {
                 size="small"
               >
                 <EquipmentTableHeader />
-                {equipments.length > 0 &&
-                  equipments.map((item: any, index: any) => (
+                {equipments.length > 0 && equipments
+                  .filter((item) => (`${item.numOptim} ${item.designation} ${item.type} ${total.find((e: any) => e.id === item?.ownerId)?.name} ${item.status}`).toLowerCase().includes(filtre.toLowerCase()))
+                  .map((item: any, index: any) => (
                     <TableBody key={index}>
                       <TableCell align="left">{item.numOptim}</TableCell>
                       <TableCell align="left">{item.designation}</TableCell>

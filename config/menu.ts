@@ -33,7 +33,7 @@ function allMenu() {
           .find((t: any) => t.id === 1)
           ?.items.push({
             id: 14,
-            name: "Bon de Commende Externe (BCE)",
+            name: "Bon de commende externe (BCE)",
             link: "/materiels/bon_commande_externe",
             icon: "",
           });
@@ -123,7 +123,7 @@ function allMenu() {
           .find((t: any) => t.id === 1)
           ?.items.push({
             id: 22,
-            name: "Pv de Comparaison",
+            name: "PV de comparaison",
             link: "/materiels/pv_comparaison",
             icon: "",
           });
@@ -143,7 +143,7 @@ function allMenu() {
           .find((t: any) => t.id === 2)
           ?.items.push({
             id: 22,
-            name: "Entre et sortie",
+            name: "Entrée et sortie",
             link: "/fournitures_et_consommables/entre_et_sortie",
             icon: "",
           });

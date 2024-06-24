@@ -41,7 +41,8 @@ const ListStock = () => {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const dispatch = useAppDispatch();
+  const [filtre, setFiltre] = React.useState("")
+
   const { typeEquipmentList: equipmentStockList } = useAppSelector(
     (state) => state.typeEquipment
   );
@@ -129,7 +130,7 @@ const ListStock = () => {
       <SectionTable>
         <Box sx={{ width: "100%" }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <EquipmentStockTableToolbar />
+            <EquipmentStockTableToolbar filtre={filtre} setFiltre={setFiltre}/>
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
@@ -142,6 +143,7 @@ const ListStock = () => {
               rows.slice().sort(getComparator(order, orderBy)) */}
                   {equipmentStockList
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .filter((item) => (`${item.id} ${item.type} ${item.type}`).toLowerCase().includes(filtre.toLowerCase()))
                     .map((row: EquipmentStockItem, index: any) => {
                       // const isItemSelected = isSelected(row.article);
                       const labelId = `enhanced-table-checkbox-${index}`;

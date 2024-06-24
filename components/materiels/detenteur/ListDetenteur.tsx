@@ -25,60 +25,24 @@ const ListDetenteur = () => {
   const theme = useTheme();
   const [key, setKey] = useState<any>("");
   const [fonction, setFonction] = useState<any>("");
+  const [filtre, setFiltre] = React.useState("");
   const router = useRouter();
 
   const { holderListe } = useAppSelector((state) => state.holder);
 
   const validate = usePermitted();
 
-  useEffect(() => {
-    if (router?.query?.search) {
-      setKey(router.query.search);
-    }
-
-    if (router?.query?.filter) {
-      setFonction(router.query.filter);
-    }
-  }, [router.query.search, router.query.filter]);
-
-  const search = (key: string) => {
-    const query = { ...router.query, search: key };
-    router.push({
-      pathname: router.pathname,
-      query: query,
-    });
-  };
-
-  const filter = (fonction: string) => {
-    const query = { ...router.query, filter: fonction };
-    router.push({
-      pathname: router.pathname,
-      query: query,
-    });
-  };
-
-  const deboncedSearch = React.useCallback(debounce(search, 300), [
-    router.query,
-  ]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setKey(event.target.value);
-    deboncedSearch(event.target.value);
-    if (event.target.value === "") {
-      setKey("");
-    }
-  };
-
   const fonctionListe = [
-    { id: "COMMUNAUTE_ET_CONSERVATION", name: "Communaute et Conservation" },
-    { id: "ESPECE_ET_CONSERVATION", name: "Espece et Conservation" },
-    { id: "ADMINISTRATION", name: "Administration" },
-    { id: "SUIVI_ET_EVALUATION", name: "Suivi et Evaluation" },
-    { id: "RH", name: "RH" },
-    { id: "PRESTATAIRE", name: "Prestataire" },
-    { id: "STAGIAIRE", name: "Stagiaire" },
-    { id: "AUTRES", name: "Autres" },
+    { id: "CCP", name: "Communaute et Conservation" },
+    { id: "SPC", name: "Espece et Conservation" },
+    { id: "ADM", name: "Administration" },
+    // { id: "SUIVI_ET_EVALUATION", name: "SUIVI_ET_EVALUATION" },
+    // { id: "RH", name: "RH" },
+    // { id: "PRESTATAIRE", name: "PRESTATAIRE" },
+    // { id: "STAGIAIRE", name: "STAGIAIRE" },
+    // { id: "AUTRES", name: "AUTRES" },
   ];
+  
   const fetchDetenteurList = useFetchDetenteurListe();
 
   React.useEffect(() => {
@@ -105,7 +69,7 @@ const ListDetenteur = () => {
                   component="span"
                   onClick={() => {
                     setFonction("");
-                    filter("");
+                    setFiltre("");
                   }}
                   sx={{
                     cursor: "pointer",
@@ -129,8 +93,7 @@ const ListDetenteur = () => {
                       cursor: "pointer",
                     }}
                     onClick={() => {
-                      setFonction(currentFonction?.id!);
-                      filter(currentFonction?.id!);
+                      setFiltre(currentFonction?.id!);
                     }}
                   >
                     {currentFonction.name}
@@ -142,7 +105,7 @@ const ListDetenteur = () => {
         </Grid>
         <Grid item xs={12} md={9}>
           <ContainerListEmploye>
-            <SearchDetenteur />
+            <SearchDetenteur filtre={filtre} setFiltre={setFiltre}/>
             <Divider />
             <ListEmployeContent>
               <CustomBtnAdd>
@@ -161,11 +124,13 @@ const ListDetenteur = () => {
                   </Link>
                 )}
               </CustomBtnAdd>
-              {holderListe.map((holder, index) => (
-                <Fragment key={index}>
-                  <CardDetenteur holder={holder} />
-                </Fragment>
-              ))}
+              {holderListe
+                .filter((item) => (`${item.matricule} ${item.function} ${item.contact} ${item.name} ${item.id}`).toLowerCase().includes(filtre.toLowerCase()))
+                .map((holder, index) => (
+                  <Fragment key={index}>
+                    <CardDetenteur holder={holder} />
+                  </Fragment>
+                ))}
             </ListEmployeContent>
           </ContainerListEmploye>
         </Grid>
