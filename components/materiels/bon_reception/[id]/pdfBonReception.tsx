@@ -27,7 +27,7 @@ function PrintBonReception({ pdfData }: { pdfData: any }) {
                                    />
                               </Text>
                               <View style={styles.row2}>
-                                   <Text>Bon de Réception</Text>
+                                   <Text>Bon de réception</Text>
                               </View>
                          </View>
                     </View>
@@ -43,13 +43,13 @@ function PrintBonReception({ pdfData }: { pdfData: any }) {
                     <View style={{width: "100%",marginTop:20,}}>
                          <View style={[styles.rowBody]}>
                               <Text style={[styles.th, {borderLeft:"none !important"}]}>Date</Text>
-                              <Text style={styles.th}>Tiers: Fournisseurs</Text>
+                              <Text style={[styles.th,{width:"60%"}]}>Fournisseurs</Text>
                          </View>
                     </View>
                     <View style={{width: "100%"}}>
-                         <View style={[styles.rowBody,{borderTop:'none !important'}]}>
-                              <Text style={[styles.tr,{borderLeft:"none !important"}]}>{pdfData.dateReception ? format(new Date(pdfData.dateReception),"dd/MM/yyyy") :""}</Text>
-                              <Text style={styles.tr}>Nom:</Text>
+                         <View style={[styles.rowBody,{border:'none !important'}]}>
+                              <Text style={[styles.tr,{border:"none !important",textAlign: "center"}]}>{pdfData.dateReception ? format(new Date(pdfData.dateReception),"dd/MM/yyyy") :""}</Text>
+                              <Text style={[styles.tr, {border:"none !important",textAlign: "center",}]}>Nom:</Text>
                          </View>
                     </View>
 

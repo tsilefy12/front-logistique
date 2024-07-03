@@ -16,7 +16,7 @@ function PrintFicheDotation({ pdfData }: { pdfData: any }) {
      const img = pdfData.pieceJointe ? process.env.NEXT_PUBLIC_API_URL + pdfData.pieceJointe:null;
      return (
           <Document>
-               <Page style={{ padding:15 }} orientation="portrait">
+               <Page style={{ padding:15 }} orientation="landscape">
                     <View style={styles.table}>
                          <View style={[styles.row, styles.bold]}>
                               <Text style={styles.row1}>
@@ -37,16 +37,16 @@ function PrintFicheDotation({ pdfData }: { pdfData: any }) {
                     </View>
                     <View style={styles.table}>
                          <View style={{width: "100%", border:"1px solid #000" ,display: "flex",flexDirection: "row"}}>
-                              <Text style={{width: "40%",padding:2,fontSize:10,}}>Date: {pdfData.date ? format(new Date(pdfData.date),"dd/MM/yyyy") :""}</Text>
+                              <Text style={{width: "40%",padding:2,fontSize:10,}}>Date : {pdfData.date ? format(new Date(pdfData.date),"dd/MM/yyyy") :""}</Text>
                               <Text style={{width: "40%",padding:2,fontSize:10,borderLeft: "1px solid #000",}}>Région:  {pdfData.region}</Text>
                               <Text style={{width: "40%",padding:2,fontSize:10,borderLeft: "1px solid #000",}}>District  {pdfData.district}</Text>
                          </View>
                          <View style={{width: "100%",display: "flex",border:"1px solid #000",borderTop:"none",flexDirection: "row"}}>
-                              <Text style={{width: "50%",padding:2,fontSize:10}}>Commune:  {pdfData.commune}</Text>
+                              <Text style={{width: "50%",padding:2,fontSize:10}}>Commune :  {pdfData.commune}</Text>
                               <Text style={{width: "50%",padding:2,fontSize:10,borderLeft: "1px solid #000",}}>Fokontany:  {pdfData.fokontany}</Text>
                          </View>
                          <View style={{width: "100%",border:"1px solid #000",borderTop:"none",display: "flex",flexDirection: "row"}}>
-                              <Text style={{width: "50%",padding:2,fontSize:10}}>Grant:  {pdfData.grant}</Text>
+                              <Text style={{width: "50%",padding:2,fontSize:10}}>Grant :  {pdfData.grant}</Text>
                               <Text style={{width: "50%",padding:2,fontSize:10,borderLeft: "1px solid #000",}}>Ligne budgétaire:  {pdfData.ligneBudgetaire}</Text>
                          </View>
                     </View>

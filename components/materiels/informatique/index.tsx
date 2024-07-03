@@ -36,6 +36,22 @@ import {
 import useFetchEquipment from "./hooks/useFetchEquipment";
 import EquipmentTableHeader from "./organism/table/EquipmentTableHeader";
 import EquipmentTableToolbar from "./organism/table/EquipmentTableToolbar";
+export const getTextStatus = (status: string | undefined) => {
+  switch (status) {
+    case "GOOD":
+      return "Bon etat";
+      break;
+    case "BAD":
+      return "Mauvais";
+      break;
+    case "BROKEN":
+      return "Inutilisable";
+      break;
+    default:
+      break;
+  }
+};
+
 const ListInfo = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -160,7 +176,7 @@ const ListInfo = () => {
                       <TableCell align="left">
                         {total.find((e: any) => e.id === item?.ownerId)?.name}
                       </TableCell>
-                      <TableCell align="left">{item.status}</TableCell>
+                      <TableCell align="left">{getTextStatus(item.status)}</TableCell>
                       <TableCell align="right">
                         <BtnActionContainer
                           direction="row"

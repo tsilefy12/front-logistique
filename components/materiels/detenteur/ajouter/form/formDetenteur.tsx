@@ -163,7 +163,7 @@ const FormDetenteur = ({formikProps,valuesArticle,setValuesArticle}: {formikProp
                 />
                 <OSSelectField
                     id="outlined-basic"
-                    label="Fonction"
+                    label="Programme"
                     name="function"
                     options={fonctionListe}
                     dataKey="name"

@@ -34,7 +34,7 @@ const CardGeneral = ({ holder }: any) => {
             alignItems="flex-start"
             spacing={2}
             >
-           <OneCard>
+           <OneCardInfo>
                 <OneCardHeader>
                     <Typography variant="h5" color="initial">
                         Informations générale
@@ -45,9 +45,9 @@ const CardGeneral = ({ holder }: any) => {
                     <KeyValue keyName="Nom" value={total.find((e:any)=> e.id === holder?.name)?.name} />
                     <KeyValue keyName="Contact" value={holder?.contact} />
                     <KeyValue keyName="N* Matricule" value={holder?.matricule} />
-                    <KeyValue keyName="Fonction" value={holder?.function} />
+                    <KeyValue keyName="Programme" value={holder?.function} />
                 </OneCardBody>
-            </OneCard>
+            </OneCardInfo>
             <OneCard>
                 <OneCardHeader>
                     <Typography variant="h5" color="initial">
@@ -100,7 +100,17 @@ export const InfoItems = styled(Stack)(({ theme }) => ({}));
 export const OneCard = styled("div")(({ theme }) => ({
     display:"flex",
     flexDirection:"column",
-    width:"100%",
+    minWidthwidth:"800px",
+    height: "100%",
+    borderRadius: 20,
+    padding: 25,
+    background: "#fff",
+}));
+
+export const OneCardInfo = styled("div")(({ theme }) => ({
+    display:"flex",
+    flexDirection:"column",
+    minWidth:"400px",
     height: "100%",
     borderRadius: 20,
     padding: 25,

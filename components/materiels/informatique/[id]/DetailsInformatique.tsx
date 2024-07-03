@@ -67,10 +67,10 @@ const DetailsInformatique = () => {
   function getText(etat: any) {
     switch (etat) {
       case "GOOD":
-        return "Bon_état";
+        return "Bon etat";
         break;
       case "BAD":
-        return "mauvais";
+        return "Mauvais";
         break;
       case "BROKEN":
         return "Inutilisable";
@@ -94,7 +94,7 @@ const DetailsInformatique = () => {
           </Button>
         </Link>
         <Typography variant="h4" color="GrayText">
-          Details Equipement
+          Détails Equipement
         </Typography>
       </SectionNavigation>
       <Stack
@@ -103,6 +103,18 @@ const DetailsInformatique = () => {
         alignItems={"center"}
       >
         <Stack direction={"column"} gap={2}>
+          <Grid container spacing={4} my={1}>
+            <Grid item xs={12} md={12}>
+              <InfoItems direction="row" spacing={2}>
+                <Typography variant="body1" color="secondary">
+                  Designation :
+                </Typography>
+                <Typography variant="body1" color="gray">
+                  {equipment.designation}
+                </Typography>
+              </InfoItems>
+            </Grid>
+          </Grid>
           <Grid container spacing={4} my={1}>
             <Grid item xs={12} md={12}>
               <InfoItems direction="row" spacing={2}>
@@ -135,18 +147,6 @@ const DetailsInformatique = () => {
                 </Typography>
                 <Typography variant="body1" color="gray">
                   {total.find((e: any) => e.id === equipment?.ownerId)?.name}
-                </Typography>
-              </InfoItems>
-            </Grid>
-          </Grid>
-          <Grid container spacing={4} my={1}>
-            <Grid item xs={12} md={12}>
-              <InfoItems direction="row" spacing={2}>
-                <Typography variant="body1" color="secondary">
-                  Designation :
-                </Typography>
-                <Typography variant="body1" color="gray">
-                  {equipment.designation}
                 </Typography>
               </InfoItems>
             </Grid>
@@ -200,7 +200,7 @@ const DetailsInformatique = () => {
                   Durée d'amortissement
                 </Typography>
                 <Typography variant="body1" color="gray">
-                  {equipment.dureAmortissement}
+                  {equipment.dureAmortissement} ans
                 </Typography>
               </InfoItems>
             </Grid>

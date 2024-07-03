@@ -12,6 +12,7 @@ import {
 } from "@react-pdf/renderer";
 import { format } from "date-fns";
 import { CommandeFournisseurItem } from "../../../../redux/features/bon_commande_fournisseur/bonCommandeFournisseur.interface";
+import formatMontant from "../../../../hooks/format";
 
 function PrintBonCommandeFournisseur({ pdfData }: { pdfData: any }) {
      const montantTotal  = pdfData.articleFournisseur?.reduce((acc:any, curr:any) => acc + curr.montant, 0)
@@ -54,10 +55,10 @@ function PrintBonCommandeFournisseur({ pdfData }: { pdfData: any }) {
                     <View style={{width: "100%",marginTop:20,}}>
                          <View style={[styles.rowBody]}>
                               <Text style={[styles.th1,{borderLeft:"none !important"}]}>Designation</Text>
-                              <Text style={styles.th}>Prix unitaire</Text>
-                              <Text style={styles.th}>Quantité</Text>
-                              <Text style={styles.th}>Montant</Text>
                               <Text style={styles.th1}>Details</Text>
+                              <Text style={styles.th}>Prix unitaire</Text>
+                              <Text style={styles.th2}>Qté</Text>
+                              <Text style={styles.th}>Montant</Text>
                          </View>
                     </View>
                     {pdfData && pdfData.articleFournisseur?.map(
@@ -66,10 +67,10 @@ function PrintBonCommandeFournisseur({ pdfData }: { pdfData: any }) {
                                    <View key={index} style={{width: "100%"}}>
                                         <View style={[styles.rowBody,{borderTop:"none !important"}]}>
                                              <Text style={[styles.tr1,{borderLeft:"none !important"}]}>{element?.designation}</Text>
-                                             <Text style={styles.tr}>{element?.unitPrice}</Text>
-                                             <Text style={styles.tr}>{element?.quantite}</Text>
-                                             <Text style={styles.tr}>{element?.montant}  ar</Text>
                                              <Text style={styles.tr1}>{element?.details}</Text>
+                                             <Text style={styles.tr}>{formatMontant(element?.unitPrice)} ar</Text>
+                                             <Text style={styles.tr2}>{element?.quantite}</Text>
+                                             <Text style={styles.tr}>{formatMontant(element?.montant)}  ar</Text>
                                         </View>
                                    </View>
                               )
@@ -80,26 +81,25 @@ function PrintBonCommandeFournisseur({ pdfData }: { pdfData: any }) {
                               <Text style={{width:"50%"}}></Text>
                               <Text style={[styles.tr,{ border: "1px solid #000"}]}>TOTAL</Text>
                               <Text style={[styles.tr,{ border: "1px solid #000",borderLeft:"none !important"}]}>TTC</Text>
-                              <Text style={[styles.tr,{ border: "1px solid #000",borderLeft:"none !important"}]}>{montantTotal} ar</Text>
-                              <Text style={{width:"50%",border:"none"}}></Text>
+                              <Text style={[styles.tr1,{ border: "1px solid #000",borderLeft:"none !important" , textAlign:"right"}]}>{formatMontant(montantTotal)} ar</Text>
                          </View>
                     </View>
                     <View style={{width: "100%",marginTop:20}}>
                          <View style={{display:"flex",flexDirection:"row"}}>
-                              <Text style={{width:"50%",fontSize:10,padding:4}}>Modalité de paiement : {pdfData?.paymentMethod}</Text>
+                              <Text style={{width:"50%",fontSize:10,padding:4}}>Modalité de paiement{" "}:{" "}{pdfData?.paymentMethod}</Text>
                               <Text style={{width:"30%",border:"1px solid #000",fontSize:10,padding:4,textAlign:"center"}}>{pdfData?.fournisseur}</Text>
                          </View>
                     </View>
                     <View style={{width: "100%"}}>
                          <View style={{display:"flex",flexDirection:"row"}}>
-                              <Text style={{width:"23%",fontSize:10,padding:4,}}>Condition de livraison</Text>
+                              <Text style={{width:"23%",fontSize:10,padding:4,}}>Condition de livraison {" "}</Text>
                               <Text style={{width:"30%",fontSize:10 ,padding:4,}}>{pdfData?.deliveryCondition}</Text>
                          </View>
                     </View>
                     <View style={{width: "100%"}}>
                          <View style={[styles.rowBody]}>
                               <View style={{display:"flex",flexDirection:"row"}}>
-                                   <Text style={{width:"23%",fontSize:10,padding:4, height:30}}>Date de livraison</Text>
+                                   <Text style={{width:"23%",fontSize:10,padding:4, height:30}}>Date de livraison {" "}</Text>
                                    <Text style={{width:"30%",fontSize:10,padding:4,height:30,borderLeft:"1px solid #000"}}>{pdfData.deliveryDate ? format(new Date(pdfData.deliveryDate),"dd/MM/yyyy") :""}</Text>
                               </View>
                          </View>
@@ -150,8 +150,26 @@ const styles = StyleSheet.create({
           fontWeight: "bold",
           fontSize: 12,
      },
+     th2:{
+          width: "15%",
+          textAlign: "center",
+          borderLeft: "1px solid #000",
+          paddingTop:4,
+          padding :2,
+          fontWeight: "bold",
+          fontSize: 12,
+     },
      tr1:{
           width: "50%",
+          textAlign: "left",
+          borderLeft: "1px solid #000",
+          borderTop:"none",
+          paddingTop: 2,
+          paddingBottom: 2,
+          paddingLeft:2,
+     },
+     tr2:{
+          width: "15%",
           textAlign: "left",
           borderLeft: "1px solid #000",
           borderTop:"none",

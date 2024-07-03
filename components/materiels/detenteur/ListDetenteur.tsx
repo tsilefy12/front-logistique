@@ -76,7 +76,7 @@ const ListDetenteur = () => {
                     textTransform: "none",
                   }}
                 >
-                  Tous les Fonctions
+                  Tous les programmes
                 </Typography>
                 {fonctionListe.map((currentFonction) => (
                   <Typography

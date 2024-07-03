@@ -31,7 +31,7 @@ const FormArticle = ({ formikProps }: { formikProps: FormikProps<any> }) => {
   const etat = [
     { name: "GOOD", french: "Bon etat" },
     { name: "BAD", french: "Mauvais" },
-    { name: "BROKEN", french: "inutilisable" },
+    { name: "BROKEN", french: "Inutilisable" },
   ];
   const route = useRouter();
 
@@ -132,7 +132,7 @@ const FormArticle = ({ formikProps }: { formikProps: FormikProps<any> }) => {
           <OSTextField
             fullWidth
             id="outlined-basic"
-            label="code"
+            label="Code"
             variant="outlined"
             name="numOptim"
           />

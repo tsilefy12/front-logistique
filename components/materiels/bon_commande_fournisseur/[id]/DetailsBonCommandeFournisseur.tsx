@@ -190,10 +190,10 @@ const DetailsBCI = () => {
                           <TableCell component="th" scope="row">
                             {item.designation}
                           </TableCell>
-                          <TableCell align="left">{item.unitPrice}</TableCell>
+                          <TableCell align="left">{formatMontant(item.unitPrice)}</TableCell>
                           <TableCell align="left">{item.quantite}</TableCell>
                           <TableCell align="left">
-                            {formatMontant(item.montant)}
+                            {formatMontant(item.montant)} ar
                           </TableCell>
                           <TableCell align="left">{item.details}</TableCell>
                         </TableRow>
