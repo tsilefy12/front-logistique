@@ -118,6 +118,7 @@ const ListFournisseur = () => {
                 rows.slice().sort(getComparator(order, orderBy)) */}
                   {fournisseurList
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: FournisseurItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
 

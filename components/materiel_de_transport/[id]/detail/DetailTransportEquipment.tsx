@@ -105,7 +105,7 @@ const DetailTransportEquipment = () => {
               <Grid item xs={12} md={12}>
                 <InfoItems direction="row" spacing={2}>
                   <Typography variant="body1" color="secondary">
-                    Status :
+                    Statut :
                   </Typography>
                   <Typography variant="body1" color="gray">
                     {transportationEquipment.status}

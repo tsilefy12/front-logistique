@@ -38,11 +38,16 @@ const DetailBonDeVoiture = () => {
   const dispatch = useAppDispatch();
   const { id }: any = router.query;
   const { activitys } = useAppSelector((state) => state.activity);
+  const [details, setDetail] = useState<any>()
 
   const getDetailCarVoucher = () => {
     const args: any = {
       include: {
-        carVoucher: true,
+        carVoucher: {
+          include:{
+            transportationEquipment: true,
+          }
+        },
       },
     };
     dispatch(getActivity({ id, args }));
@@ -57,6 +62,12 @@ const DetailBonDeVoiture = () => {
       calcul += element.montants;
       setTotal(calcul);
     });
+    const detail = activitys.find(e => e.carVoucher.id === id)
+    if(detail){
+      console.log(detail)
+      setDetail(detail.carVoucher)
+    }
+    console.log("details", details)
   }, [id, activitys]);
 
   return (
@@ -78,6 +89,16 @@ const DetailBonDeVoiture = () => {
         </SectionNavigation>
         <Divider />
       </NavigationContainer>
+      <Stack direction="row"
+          sx={{
+            flex: "1 1 100%",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}>
+        <Typography>Matériel : {details?.transportationEquipment?.registration}</Typography>
+        <Typography>Référence : {details?.reference}</Typography>
+        <Typography>Date :<Moment format="DD/MM/yyyy">{details?.date}</Moment></Typography>
+      </Stack>
       <Table>
         <TableHead>
           <TableRow>
@@ -92,7 +113,7 @@ const DetailBonDeVoiture = () => {
             <TableRow key={index}>
               <TableCell>{row.activite}</TableCell>
               <TableCell>{row.nombre}</TableCell>
-              <TableCell>{formatMontant(row.pu)}</TableCell>
+              <TableCell>{formatMontant(row.pu)} ar</TableCell>
               <TableCell>{formatMontant(row.montants)}</TableCell>
             </TableRow>
           ))}
@@ -104,7 +125,7 @@ const DetailBonDeVoiture = () => {
                 colSpan={4}
                 sx={{ textAlign: "center", fontSize: "1.1em", color: "black" }}
               >
-                Total : {formatMontant(total)}
+                Total : {formatMontant(total)} ar
               </TableCell>
             </TableRow>
           ) : (

@@ -26,7 +26,6 @@ export const carVoucherSlice = createSlice({
     },
     extraReducers: {
 
-
         // get Car Voucher
         [getCarVoucher.pending.type]: (state) => {
             state.loading = true;

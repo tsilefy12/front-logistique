@@ -125,6 +125,7 @@ export default function OrderEquipmentItemList() {
                 <TableBody>
                   {orderEquipmentItemListe
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: OrderEquipmentItemsItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

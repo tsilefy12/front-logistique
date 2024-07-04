@@ -64,7 +64,7 @@ const TypeEquipmentForm = () => {
           <Form>
             <Stack spacing={4}>
               <Typography variant="h5" color="initial">
-                Formulaire (Créer/Modifier)
+                Nouveau / Modification
               </Typography>
               <OSTextField label="Matériel (Ex: Table)" name="type" />
               <OSTextField label="Type" name="prefix" />

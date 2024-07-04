@@ -160,6 +160,7 @@ const ListCommande = () => {
                 rows.slice().sort(getComparator(order, orderBy)) */}
                   {orderEquipmentList
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: OrderEquipmentItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
 

@@ -159,6 +159,7 @@ export default function BonCommandeInterneList() {
                 <TableBody>
                   {bonCommandeInternes
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: BonCommandeItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

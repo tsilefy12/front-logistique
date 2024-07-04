@@ -70,36 +70,37 @@ const ListeUniteStock = () => {
                         />
                     </Stack>
                     {uniteStocks ? uniteStocks
-                    .map((row: uniteStockItem, index: any) => {
-                      return (
-                        <Stack direction="row" spacing={2} sx={{
-                                flex: "1 1 100%",
-                                justifyContent: "space-around",
-                                alignItems: "center",
-                                padding: "4px",
-                                width: "100%"
-                            }} >
-                            <Container>
-                                <FormLabel sx={{ padding: "10" }} >{row.uniteStock}</FormLabel>
-                            </Container>
-                            <IconButton
-                                color="primary"
-                                aria-label="Modifier"
-                                component="span"
-                                onClick={() => handleClickEdit(row.id)}
-                            >
-                                <Edit />
-                            </IconButton>
-                            <IconButton
-                                color="warning"
-                                aria-label="Supprimer"
-                                component="span"
-                                onClick={() => handleclickDelete(row.id)}
-                            >
-                                <Delete />
-                            </IconButton>
-                        </Stack> );
-                    }): (<Stack direction="row" spacing={2} sx={{
+                        .sort((a, b) => (b.id!).localeCompare(a.id!))
+                        .map((row: uniteStockItem, index: any) => {
+                        return (
+                            <Stack direction="row" spacing={2} sx={{
+                                    flex: "1 1 100%",
+                                    justifyContent: "space-around",
+                                    alignItems: "center",
+                                    padding: "4px",
+                                    width: "100%"
+                                }} >
+                                <Container>
+                                    <FormLabel sx={{ padding: "10" }} >{row.uniteStock}</FormLabel>
+                                </Container>
+                                <IconButton
+                                    color="primary"
+                                    aria-label="Modifier"
+                                    component="span"
+                                    onClick={() => handleClickEdit(row.id)}
+                                >
+                                    <Edit />
+                                </IconButton>
+                                <IconButton
+                                    color="warning"
+                                    aria-label="Supprimer"
+                                    component="span"
+                                    onClick={() => handleclickDelete(row.id)}
+                                >
+                                    <Delete />
+                                </IconButton>
+                            </Stack> );
+                        }): (<Stack direction="row" spacing={2} sx={{
                         flex: "1 1 100%",
                         justifyContent: "space-around",
                         alignItems: "center",

@@ -1,14 +1,10 @@
 import React from "react";
 import { alpha } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { EnhancedTableToolbarProps } from "./type-variable";
 import { TextField, Stack, Typography } from "@mui/material";
-import { selectedItemsLabel } from "../../../../../config/table.config";
 const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-  const { numSelected } = props;
+  const { numSelected , category } = props;
   return (
     <Toolbar
       sx={{
@@ -32,7 +28,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         }}
       >
         <Typography variant="h5" id="tableTitle" component="div">
-          Détail de stock par type
+          Détail de stock {category}
         </Typography>
         <TextField
           variant="outlined"

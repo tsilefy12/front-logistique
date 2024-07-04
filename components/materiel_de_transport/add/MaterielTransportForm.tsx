@@ -216,7 +216,7 @@ const MaterielTransportForm = () => {
                 <Stack direction="row" spacing={2} margin={2}>
                   <OSSelectField
                     id="outlined-basic"
-                    label="Status"
+                    label="Statut"
                     variant="outlined"
                     options={ListStatus}
                     dataKey="name"

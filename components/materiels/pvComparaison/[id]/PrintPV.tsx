@@ -10,8 +10,6 @@ import {
      View,
 } from "@react-pdf/renderer";
 import { PvComparaisonItem } from "../../../../redux/features/pvComparaison/pvComparaison.interface";
-import { format } from "date-fns";
-import { useEffect, useState } from "react";
 
 function PrintPVComparaison({ pdfData }: { pdfData: any }) {
      return (

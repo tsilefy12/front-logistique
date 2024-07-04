@@ -122,6 +122,7 @@ export default function PvComparaisonList() {
                 <TableBody>
                   {pvComparaisons
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: PvComparaisonItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       let modePaie: string | undefined = undefined;

@@ -34,19 +34,13 @@ export const createArticleCommandeExterne = createAsyncThunk(
     async (data: ArticleBCEItem, thunkAPI) => {
         try {
             const response = await axios.post("/logistique/article-commande-bce", data);
-            thunkAPI.dispatch(
-                enqueueSnackbar({
-                    message: "Article BCE créer avec succès",
-                    options: { variant: "success" },
-                })
-            );
             return response.data;
         } catch (error: any) {
             if (error.response) {
                 console.log(error.response)
                 thunkAPI.dispatch(
                     enqueueSnackbar({
-                        message: "Equipment not created",
+                        message: "Article non créer",
                         options: { variant: "error" },
                     })
                 );
@@ -63,14 +57,6 @@ export const deleteArticleCommandeExterne = createAsyncThunk(
     async (data: { id: string }, thunkAPI) => {
         try {
           const response = await axios.delete(`/logistique/article-commande-bce/${data.id}`);
-          thunkAPI.dispatch(
-            enqueueSnackbar({
-              message: "Article BCE supprimé avec succès",
-              options: {
-                variant: "success",
-              },
-            })
-          );
           return response.data;
         } catch (error: any) {
           if (error.response) {

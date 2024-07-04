@@ -158,6 +158,7 @@ export default function BonTransfertList() {
                 <TableBody>
                   {bonTransferts
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: bonTransfertItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

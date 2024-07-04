@@ -43,6 +43,7 @@ const ListSuiviCarburant = () => {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [filtre, setFiltre] = React.useState("")
 
   const confirm = useConfirm();
   const router = useRouter();
@@ -126,7 +127,7 @@ const ListSuiviCarburant = () => {
       <SectionTable>
         <Box sx={{ width: "100%", mb: 2 }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <SuiviCarburantTableToolbar />
+            <SuiviCarburantTableToolbar filter={filtre} setFilter={setFiltre} />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
@@ -137,6 +138,8 @@ const ListSuiviCarburant = () => {
                 <TableBody>
                   {suiviCarburants
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
+                    .filter(item => (`${item.transportationEquipment?.registration} ${item.itineraire} ${item.personnelTransporte} ${grantList.find((e: any) => e.id === item?.grant)?.code} ${budgetLineList.find((e: any) => e.id === item?.ligneBudgetaire)?.code} ${item?.modePaiement}`).toLowerCase().includes(filtre.toLowerCase()))
                     .map((row: SuiviCarburantItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

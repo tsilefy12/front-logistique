@@ -61,10 +61,9 @@ const ListTransport = () => {
   const [positionMois, setPositionMois]: any = useState("tous");
   const [mois, setMois]: any = useState("tous");
   const [annee, setAnne]: any = useState("tous");
+  const [filtre, setFiltre] = useState("")
   const [montantMensuel, setMontantMensuel]: any = useState(0);
-  const [filteredCarVouchers, setFilteredCarVouchers] = useState<
-    CarVoucherItem[]
-  >([]);
+  const [filteredCarVouchers, setFilteredCarVouchers] = useState<CarVoucherItem[]>([]);
 
   React.useEffect(() => {
     fetchTransportEquipements();
@@ -229,7 +228,7 @@ const ListTransport = () => {
       <SectionTable>
         <Box sx={{ width: "100%", mb: 2 }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <CarVoucherTableToolbar />
+            <CarVoucherTableToolbar filtre={filtre} setFiltre={setFiltre} />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
@@ -240,12 +239,8 @@ const ListTransport = () => {
                 <TableBody>
                   {filteredCarVouchers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .sort((a, b) => {
-                      const dateA: any = new Date(a.date || "");
-                      const dateB: any = new Date(b.date || "");
-
-                      return dateA - dateB;
-                    })
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
+                    .filter(item => (`${item.transportationEquipment?.registration} ${item.reference}`).toLowerCase().includes(filtre.toLowerCase()))
                     .map((row: CarVoucherItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

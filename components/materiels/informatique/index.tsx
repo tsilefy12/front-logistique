@@ -36,7 +36,8 @@ import {
 import useFetchEquipment from "./hooks/useFetchEquipment";
 import EquipmentTableHeader from "./organism/table/EquipmentTableHeader";
 import EquipmentTableToolbar from "./organism/table/EquipmentTableToolbar";
-export const getTextStatus = (status: string | undefined) => {
+
+const getTextStatus = (status: string | undefined) => {
   switch (status) {
     case "GOOD":
       return "Bon etat";
@@ -167,6 +168,8 @@ const ListInfo = () => {
               >
                 <EquipmentTableHeader />
                 {equipments.length > 0 && equipments
+                  .slice()
+                  .sort((a, b) => (b.id!).localeCompare(a.id!))
                   .filter((item) => (`${item.numOptim} ${item.designation} ${item.type} ${total.find((e: any) => e.id === item?.ownerId)?.name} ${item.status}`).toLowerCase().includes(filtre.toLowerCase()))
                   .map((item: any, index: any) => (
                     <TableBody key={index}>

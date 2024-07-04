@@ -17,7 +17,7 @@ export const deleteCarVoucher = createAsyncThunk(
 			const response = await axios.delete(`/logistique/car-voucher/${data.id}`);
 			thunkAPI.dispatch(
 				enqueueSnackbar({
-					message: "Car voucher supprimé avec succès",
+					message: "Entretien supprimer avec succès",
 					options: { variant: "success" },
 				})
 			);

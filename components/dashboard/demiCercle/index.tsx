@@ -93,7 +93,8 @@ const DemiCercleChart: React.FC = () => {
         margin: "4px",
       }}
     >
-      {listResteCarburant.map((m, index) => (
+      {listResteCarburant
+      .map((m, index) => (
         <Stack key={index} direction={"column"} gap={2} width={150}>
           <Stack direction={"row"} gap={2}>
             <span

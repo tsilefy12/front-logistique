@@ -40,6 +40,7 @@ export default function SuplyAndCosumableList() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [filtre, setFiltre] = React.useState("")
 
   const router = useRouter();
 
@@ -121,7 +122,7 @@ export default function SuplyAndCosumableList() {
         <Box sx={{ width: "100%", mb: 2 }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
             {/* <ArticleTableToolbar /> */}
-            <SuplyAndConsumableTableToolbar />
+            <SuplyAndConsumableTableToolbar filtre={filtre} setFiltre={setFiltre} />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
@@ -133,6 +134,8 @@ export default function SuplyAndCosumableList() {
                 <TableBody>
                   {suplyAndConsumableList
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
+                    .filter((item) => (`${item.designation} ${item.reste} ${item.seuil}`).toLowerCase().includes(filtre.toLowerCase()))
                     .map((row: SuplyAndConsumableItem | any, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

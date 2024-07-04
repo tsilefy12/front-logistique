@@ -103,7 +103,7 @@ const MissionForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
               sx={{ marginInline: 3 }}
               type="submit"
             >
-              {isEditing ? "Modifier" : "Ajouter"}
+              Enregistrer
             </Button>
             <Button
               variant="text"
@@ -120,7 +120,7 @@ const MissionForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
             </Button>
           </Stack>
           <Typography variant="h4">
-            {isEditing ? "Modifier" : "Ajouter"}
+            {isEditing ? "Modifier" : "Nouveau"} location interne
           </Typography>
         </SectionNavigation>
         <Divider />
@@ -200,7 +200,7 @@ const MissionForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
         <FormControl fullWidth>
           <OSTextField
             id="outlined-basic"
-            label="prix unitaire"
+            label="Prix unitaire"
             variant="outlined"
             name="pu"
             type="number"

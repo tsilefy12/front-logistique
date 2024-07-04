@@ -131,6 +131,7 @@ export default function BonCommandeExterneList() {
                 <TableBody>
                   {bonCommandeExternes
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .filter((item) => (`${item.ref} ${item.conditionLivraison} ${item.modePaiement}`).toLowerCase().includes(filtre.toLowerCase()))
                     .map((row: BonCommandeExterneItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;

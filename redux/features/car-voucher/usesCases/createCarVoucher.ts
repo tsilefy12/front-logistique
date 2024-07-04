@@ -19,7 +19,7 @@ import { CarVoucherItem } from "../carVoucher.interface";
             const response = await axios.post("/logistique/car-voucher", carVoucher);
             thunkAPI.dispatch(
                 enqueueSnackbar({
-                    message: "Car voucher created successfully",
+                    message: "Entretien créer avec succès",
                     options: { variant: "success" },
                 })
             );

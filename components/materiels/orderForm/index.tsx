@@ -129,6 +129,7 @@ export default function OrderFormList() {
                       page * rowsPerPage,
                       page * rowsPerPage + rowsPerPage
                     )
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: OrderFormItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

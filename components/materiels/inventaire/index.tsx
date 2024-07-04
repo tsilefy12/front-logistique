@@ -98,6 +98,7 @@ export default function InventaireList() {
                 <TableBody>
                   {inventaireList
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: InventaireItem | any, index) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

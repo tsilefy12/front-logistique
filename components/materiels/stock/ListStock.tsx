@@ -31,7 +31,7 @@ import {
   defaultLabelDisplayedRows,
   labelRowsPerPage,
 } from "../../../config/table.config";
-import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
+import { useAppSelector } from "../../../hooks/reduxHooks";
 import { EquipmentStockItem } from "../../../redux/features/equipmentStock/equipmentStock.interface";
 import useFetchEquipmentStock from "./hooks/useFetchVendors";
 import EquipmentStockTableHeader from "./table/EquipmentStockTableHeader";
@@ -51,43 +51,7 @@ const ListStock = () => {
   useEffect(() => {
     fetchEquipmentList();
   }, []);
-  // const handleRequestSort = (
-  //   event: React.MouseEvent<unknown>,
-  //   property: keyof Data
-  // ) => {
-  //   const isAsc = orderBy === property && order === "asc";
-  //   setOrder(isAsc ? "desc" : "asc");
-  //   setOrderBy(property);
-  // };
-
-  // const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.checked) {
-  //     const newSelecteds = rows.map((n) => n.article);
-  //     setSelected(newSelecteds);
-  //     return;
-  //   }
-  //   setSelected([]);
-  // };
-
-  // const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-  //   const selectedIndex = selected.indexOf(name);
-  //   let newSelected: readonly string[] = [];
-
-  //   if (selectedIndex === -1) {
-  //     newSelected = newSelected.concat(selected, name);
-  //   } else if (selectedIndex === 0) {
-  //     newSelected = newSelected.concat(selected.slice(1));
-  //   } else if (selectedIndex === selected.length - 1) {
-  //     newSelected = newSelected.concat(selected.slice(0, -1));
-  //   } else if (selectedIndex > 0) {
-  //     newSelected = newSelected.concat(
-  //       selected.slice(0, selectedIndex),
-  //       selected.slice(selectedIndex + 1)
-  //     );
-  //   }
-
-  //   setSelected(newSelected);
-  // };
+ 
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -143,6 +107,7 @@ const ListStock = () => {
               rows.slice().sort(getComparator(order, orderBy)) */}
                   {equipmentStockList
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .filter((item) => (`${item.id} ${item.type} ${item.type}`).toLowerCase().includes(filtre.toLowerCase()))
                     .map((row: EquipmentStockItem, index: any) => {
                       // const isItemSelected = isSelected(row.article);
@@ -165,9 +130,6 @@ const ListStock = () => {
                             >
                               {row.type}
                             </TableCell>
-                            {/* <TableCell align="left">{row.acquisitionDate}</TableCell>
-                            <TableCell align="left">{row.status}</TableCell>
-                            <TableCell align="left">{row.inStock}</TableCell> */}
                             <TableCell align="right">
                               <BtnActionContainer
                                 direction="row"

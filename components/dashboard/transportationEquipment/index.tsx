@@ -41,28 +41,29 @@ const CardTranpostationEquipment = () => {
       <Stack direction={"column"} gap={2}>
         <p>Nombre de materièle de transport</p>
         <Stack direction={"column"} gap={1}>
-          {typeEquipmentList.map(
-            (t: TypeEquipmentItem, index) =>
-              transportationEquipments.filter((f) => f.type == t.id).length !==
-                0 && (
-                <Stack
-                  key={t.id}
-                  direction={"row"}
-                  gap={8}
-                  alignItems={"center"}
-                >
-                  <span style={{ color: colors[index % colors.length] }}>
-                    {
-                      transportationEquipments.filter((f) => f.type == t.id)
-                        .length
-                    }
-                  </span>
-                  <span style={{ color: "GrayText", fontWeight: "normal" }}>
-                    - {t.type} {t.prefix}
-                  </span>
-                </Stack>
-              )
-          )}
+          {typeEquipmentList
+            .map(
+              (t: TypeEquipmentItem, index) =>
+                transportationEquipments.filter((f) => f.type == t.id).length !==
+                  0 && (
+                  <Stack
+                    key={t.id}
+                    direction={"row"}
+                    gap={8}
+                    alignItems={"center"}
+                  >
+                    <span style={{ color: colors[index % colors.length] }}>
+                      {
+                        transportationEquipments.filter((f) => f.type == t.id)
+                          .length
+                      }
+                    </span>
+                    <span style={{ color: "GrayText", fontWeight: "normal" }}>
+                      - {t.type} {t.prefix}
+                    </span>
+                  </Stack>
+                )
+            )}
         </Stack>
       </Stack>
     </Card>

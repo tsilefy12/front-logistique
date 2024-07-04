@@ -15,6 +15,7 @@ export default interface Data {
   
   export interface EnhancedTableToolbarProps {
     numSelected: number;
+    category: string;
   }
   
   export interface EnhancedTableProps {

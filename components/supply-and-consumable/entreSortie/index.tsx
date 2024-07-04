@@ -157,6 +157,7 @@ export default function LogSupplyAndConsumableList() {
                 <TableBody>
                   {logSuplyAndConsumableList
                     .filter((i) => i.OperationType === operate)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row: LogSuplyAndConsumableItem | any, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;

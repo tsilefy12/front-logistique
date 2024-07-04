@@ -105,26 +105,28 @@ const Dashboard = () => {
                   margingLeft: 3,
                 }}
               >
-                {listFiltered.map((i) => (
-                  <Stack key={i.id} direction={"column"} sx={{ width: "100%" }}>
-                    <Stack
-                      direction={"row"}
-                      alignItems={"center"}
-                      justifyContent={"space-between"}
-                      sx={{ width: "100%" }}
-                    >
-                      <p>{i.id}</p>
-                      <p
-                        style={{
-                          color: i.name <= 5 ? "red" : "rgb(75, 192, 192)",
-                        }}
+                {listFiltered
+                  .sort((a, b) => (b.id!).localeCompare(a.id!))
+                  .map((i) => (
+                    <Stack key={i.id} direction={"column"} sx={{ width: "100%" }}>
+                      <Stack
+                        direction={"row"}
+                        alignItems={"center"}
+                        justifyContent={"space-between"}
+                        sx={{ width: "100%" }}
                       >
-                        {i.name}
-                      </p>
+                        <p>{i.id}</p>
+                        <p
+                          style={{
+                            color: i.name <= 5 ? "red" : "rgb(75, 192, 192)",
+                          }}
+                        >
+                          {i.name}
+                        </p>
+                      </Stack>
+                      <Divider />
                     </Stack>
-                    <Divider />
-                  </Stack>
-                ))}
+                  ))}
               </Stack>
             </Card>
             <Card

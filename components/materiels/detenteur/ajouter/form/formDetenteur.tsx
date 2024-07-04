@@ -15,10 +15,12 @@ import { getEmployees, getEquipments } from '../../../../../redux/features/equip
 import { getInterns } from '../../../../../redux/features/employeStagiaire/stagiaireSlice';
 import Moment from 'react-moment';
 import { useRouter } from 'next/router';
+import { getPrograms } from "../../../../../redux/features/program/programSlice";
 
 const FormDetenteur = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: FormikProps<any>,valuesArticle:any,setValuesArticle:any}) => {
     const route = useRouter();
     const { isEditing, holder } = useAppSelector((state) => state.holder);
+    const { programs } = useAppSelector((state) => state.program);
 
     const dispatch = useAppDispatch();
     const { employees } = useAppSelector((state) => state.employe);
@@ -34,23 +36,13 @@ const FormDetenteur = ({formikProps,valuesArticle,setValuesArticle}: {formikProp
         }
     })]
 
-    const fonctionListe = [
-        { id: "CCP", name: "CCP" },
-        { id: "SPC", name: "SPC" },
-        { id: "ADM", name: "ADM" },
-        // { id: "SUIVI_ET_EVALUATION", name: "SUIVI_ET_EVALUATION" },
-        // { id: "RH", name: "RH" },
-        // { id: "PRESTATAIRE", name: "PRESTATAIRE" },
-        // { id: "STAGIAIRE", name: "STAGIAIRE" },
-        // { id: "AUTRES", name: "AUTRES" },
-    ];
-
     const { equipments} = useAppSelector((state) => state.equipment);
 
     const fetchUtilsData = () => {
         dispatch(getEquipments({}));
         dispatch(getEmployees({}));
         dispatch(getInterns({}));
+        dispatch(getPrograms({}));
     };
     
     useEffect(() => {
@@ -165,7 +157,7 @@ const FormDetenteur = ({formikProps,valuesArticle,setValuesArticle}: {formikProp
                     id="outlined-basic"
                     label="Programme"
                     name="function"
-                    options={fonctionListe}
+                    options={programs}
                     dataKey="name"
                     valueKey="name"
                 />

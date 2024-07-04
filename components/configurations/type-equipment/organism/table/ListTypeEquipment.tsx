@@ -26,6 +26,7 @@ const ListValeurIndice = () => {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [ filtre, setFiltre] = React.useState("")
   const dispatch: any = useAppDispatch();
   const { typeEquipmentList } = useAppSelector((state) => state.typeEquipment);
   const router = useRouter();
@@ -82,7 +83,7 @@ const ListValeurIndice = () => {
     <TableSection>
       <Box sx={{ width: "100%" }}>
         <Paper sx={{ width: "100%", mb: 2 }}>
-          <TypeEquipmentTableToolbar />
+          <TypeEquipmentTableToolbar filtre={filtre} setFiltre={setFiltre} />
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
@@ -95,6 +96,8 @@ const ListValeurIndice = () => {
             rows.slice().sort(getComparator(order, orderBy)) */}
                 {typeEquipmentList
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .sort((a, b) => (b.id!).localeCompare(a.id!))
+                  .filter(item => (`${item.type} ${item.prefix}`).toLowerCase().includes(filtre.toLowerCase()))
                   .map((row: TypeEquipmentItem, index: any) => {
                     const labelId = `enhanced-table-checkbox-${index}`;
                     return (
@@ -124,7 +127,7 @@ const ListValeurIndice = () => {
                           padding="normal"
                           align="left"
                         >
-                          {formatMontant(row?.unitPrice!)}
+                          {row?.unitPrice! > 0 ? formatMontant(row?.unitPrice!)+`ar /km` :""} 
                         </TableCell>
                         <TableCell align="right">
                           <BtnActionContainer

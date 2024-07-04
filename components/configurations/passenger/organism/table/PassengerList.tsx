@@ -106,44 +106,46 @@ export default function PassengerListe () {
               <TableBody>
                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
             rows.slice().sort(getComparator(order, orderBy)) */}
-                {passengerListe.map((row: PassengerItem, index: any) => {
-                  const labelId = `enhanced-table-checkbox-${index}`;
-                  return (
-                    <TableRow hover tabIndex={-1} key={row.id}>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="normal"
-                        align="left"
-                      >
-                        {row.name}
-                      </TableCell>
-                      <TableCell align="right">
-                        <BtnActionContainer
-                          direction="row"
-                          justifyContent="flex-end"
+                {passengerListe
+                  .sort((a, b) => (b.id!).localeCompare(a.id!))
+                  .map((row: PassengerItem, index: any) => {
+                    const labelId = `enhanced-table-checkbox-${index}`;
+                    return (
+                      <TableRow hover tabIndex={-1} key={row.id}>
+                        <TableCell
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          padding="normal"
+                          align="left"
                         >
-                          <IconButton
-                            color="primary"
-                            aria-label="Modifier"
-                            component="span"
-                            onClick={() => handleClickEdit(row.id)}
+                          {row.name}
+                        </TableCell>
+                        <TableCell align="right">
+                          <BtnActionContainer
+                            direction="row"
+                            justifyContent="flex-end"
                           >
-                            <EditIcon />
-                          </IconButton>
-                          <IconButton
-                            color="warning"
-                            aria-label="Supprimer"
-                            component="span"
-                            onClick={() => handleclickDelete(row.id)}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </BtnActionContainer>
-                      </TableCell>
-                    </TableRow>
-                  );
+                            <IconButton
+                              color="primary"
+                              aria-label="Modifier"
+                              component="span"
+                              onClick={() => handleClickEdit(row.id)}
+                            >
+                              <EditIcon />
+                            </IconButton>
+                            <IconButton
+                              color="warning"
+                              aria-label="Supprimer"
+                              component="span"
+                              onClick={() => handleclickDelete(row.id)}
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </BtnActionContainer>
+                        </TableCell>
+                      </TableRow>
+                    );
                 })}
                 {emptyRows > 0 && (
                   <TableRow

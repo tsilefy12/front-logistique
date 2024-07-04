@@ -16,37 +16,29 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
 import { usePermitted } from "../../../config/middleware";
-import { useAppSelector } from "../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import CardDetenteur from "./home/CardDetenteur";
 import SearchDetenteur from "./home/Search";
 import useFetchDetenteurListe from "./hooks/useFetchDetenteurListe";
+import { getPrograms } from "../../../redux/features/program/programSlice";
 
 const ListDetenteur = () => {
   const theme = useTheme();
-  const [key, setKey] = useState<any>("");
   const [fonction, setFonction] = useState<any>("");
   const [filtre, setFiltre] = React.useState("");
+  const dispatch = useAppDispatch();
   const router = useRouter();
+  const { programs } = useAppSelector((state) => state.program);
 
   const { holderListe } = useAppSelector((state) => state.holder);
 
   const validate = usePermitted();
 
-  const fonctionListe = [
-    { id: "CCP", name: "Communaute et Conservation" },
-    { id: "SPC", name: "Espece et Conservation" },
-    { id: "ADM", name: "Administration" },
-    // { id: "SUIVI_ET_EVALUATION", name: "SUIVI_ET_EVALUATION" },
-    // { id: "RH", name: "RH" },
-    // { id: "PRESTATAIRE", name: "PRESTATAIRE" },
-    // { id: "STAGIAIRE", name: "STAGIAIRE" },
-    // { id: "AUTRES", name: "AUTRES" },
-  ];
-  
   const fetchDetenteurList = useFetchDetenteurListe();
 
   React.useEffect(() => {
     fetchDetenteurList();
+    dispatch(getPrograms({}));
   }, [router.query]);
 
   return (
@@ -78,7 +70,7 @@ const ListDetenteur = () => {
                 >
                   Tous les programmes
                 </Typography>
-                {fonctionListe.map((currentFonction) => (
+                {programs.map((currentFonction) => (
                   <Typography
                     key={currentFonction.name}
                     variant="body1"
@@ -125,6 +117,7 @@ const ListDetenteur = () => {
                 )}
               </CustomBtnAdd>
               {holderListe
+                .sort((a, b) => (b.id!).localeCompare(a.id!))
                 .filter((item) => (`${item.matricule} ${item.function} ${item.contact} ${item.name} ${item.id}`).toLowerCase().includes(filtre.toLowerCase()))
                 .map((holder, index) => (
                   <Fragment key={index}>

@@ -173,6 +173,7 @@ export default function BonReceptionList() {
                 <TableBody>
                   {bonReceptions
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: bonReceptionItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

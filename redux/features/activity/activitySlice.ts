@@ -1,11 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { enqueueSnackbar } from "../notification/notificationSlice";
-
 import { axios } from "../../../lib/axios";
 import { ActivityInitialState, ActivityItem } from "./activity.interface";
 
 
-const ActivityInitialState: ActivityInitialState = {
+const ActivityInitial: ActivityInitialState = {
     activitys: [],
     activity: {},
     isEdit: false,
@@ -33,14 +31,6 @@ export const createActivity = createAsyncThunk(
     async (data: ActivityItem, thunkAPI) => {
         try {
             const response = await axios.post("/logistique/activity", data);
-            thunkAPI.dispatch(
-                enqueueSnackbar({
-                    message: "Activity créée avec succès",
-                    options: {
-                        variant: "success",
-                    },
-                })
-            );
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -56,14 +46,6 @@ export const deleteActivity = createAsyncThunk(
     async (data: { id: string }, thunkAPI) => {
         try {
             const response = await axios.delete(`/logistique/activity/${data.id}`);
-            thunkAPI.dispatch(
-                enqueueSnackbar({
-                    message: "Activity supprimée avec succès",
-                    options: {
-                        variant: "success",
-                    },
-                })
-            );
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -120,14 +102,6 @@ export const updateActivity = createAsyncThunk(
         `/logistique/activity/${data.id}`,
         data.activity
       );
-      thunkAPI.dispatch(
-        enqueueSnackbar({
-          message: "Activity mis à jour avec succès",
-          options: {
-            variant: "success",
-          },
-        })
-      );
       return response.data;
     } catch (error: any) {
       if (error.response) {
@@ -141,7 +115,7 @@ export const updateActivity = createAsyncThunk(
 
 export const activitySlice = createSlice({
     name: "activity",
-    initialState: ActivityInitialState,
+    initialState: ActivityInitial,
     reducers: {
         cancelEdit: (state) => {
             state.isEdit = false;
