@@ -35,7 +35,7 @@ import PassengerTableHeader from "./PassengerTableHeader";
 export default function PassengerListe () {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   // const useFetchPCG = useFetchPlanComptable();
   const dispatch: any = useAppDispatch();
   // const { journalTypeList } = useAppSelector((state) => state.journalType);

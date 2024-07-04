@@ -39,7 +39,7 @@ import FournisseurTableToolbar from "./table/FournisseurTableToolbar";
 const ListFournisseur = () => {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const dispatch: any = useAppDispatch();
   const { fournisseurList } = useAppSelector((state) => state.fournisseur);
   const router = useRouter();
