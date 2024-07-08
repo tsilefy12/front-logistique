@@ -4,7 +4,6 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 import useFetchCarVouchers from "../../materiel_de_transport/bon_de_voiture/hooks/useFetchCarVoucher";
 import { useRouter } from "next/router";
-import { linearGradient } from "polished";
 
 const CercleChart: React.FC = () => {
   const { carVouchers } = useAppSelector((state) => state.carVoucher);
@@ -32,62 +31,80 @@ const CercleChart: React.FC = () => {
     fetchCarVouchers();
   }, []);
 
-  const [dataLabels, setDataLabels] = useState<string[]>([]);
-  const [data, setData] = useState<number[]>([]);
+  const [dataLabels, setDataLabels] = useState<string[]>(monthsInLetters);
+  const [datasets, setDatasets] = useState<any[]>([]);
 
   useEffect(() => {
     if (carVouchers.length === 0) return;
 
     const now = new Date().getFullYear();
-    const totalMontantByMonth: { [key: string]: number } = {};
+    const totalMontantByCarAndMonth: {
+      [car: string]: { [month: string]: number };
+    } = {};
 
     carVouchers.forEach((result) => {
       const date = new Date(result.date || 0);
       const month = monthsInLetters[date.getMonth()];
       const year = date.getFullYear();
+      const car = result.transportationEquipment.registration; // Assurez-vous que c'est le bon champ pour le numéro de voiture
 
       if (year === now) {
         const montantTotal = parseInt(result.montantTotal || "0", 10);
         if (month && !isNaN(montantTotal)) {
-          totalMontantByMonth[month] =
-            (totalMontantByMonth[month] || 0) + montantTotal;
+          if (!totalMontantByCarAndMonth[car]) {
+            totalMontantByCarAndMonth[car] = {};
+          }
+          totalMontantByCarAndMonth[car][month] =
+            (totalMontantByCarAndMonth[car][month] || 0) + montantTotal;
         }
       }
     });
 
-    const listMois = monthsInLetters.map((month) => month);
-    const listMontant = listMois.map(
-      (month) => totalMontantByMonth[month] || 0
+    const newDatasets = Object.keys(totalMontantByCarAndMonth).map(
+      (car, index) => {
+        const carData = monthsInLetters.map(
+          (month) => totalMontantByCarAndMonth[car][month] || 0
+        );
+
+        return {
+          label: `Voiture ${car}`,
+          data: carData,
+          backgroundColor: colors[index % colors.length],
+          borderColor: colors[index % colors.length],
+          borderWidth: 2,
+          cubicInterpolationMode: "monotone",
+          pointHoverBorderWidth: 1,
+          tension: 0.1,
+          fill: false,
+        };
+      }
     );
-    setDataLabels(listMois);
-    setData(listMontant);
+
+    setDatasets(newDatasets);
   }, [carVouchers]);
+
+  const colors = [
+    "#f44336", // red
+    "rgb(75, 192, 192)", // blue
+    "#ffeb3b", // yellow
+    "#ff9800", // orange
+    "#9c27b0", // purple
+    "#4caf50", // green
+  ];
 
   useEffect(() => {
     if (!chartRef.current) return;
 
     if (chartInstanceRef.current) {
       chartInstanceRef.current.data.labels = dataLabels;
-      chartInstanceRef.current.data.datasets[0].data = data;
+      chartInstanceRef.current.data.datasets = datasets;
       chartInstanceRef.current.update();
     } else {
       chartInstanceRef.current = new Chart(chartRef.current, {
         type: "line",
         data: {
           labels: dataLabels,
-          datasets: [
-            {
-              label: "Montant par mois",
-              data: data,
-              backgroundColor: "rgb(75, 192, 192)",
-              borderColor: "rgb(75, 192, 192)",
-              borderWidth: 2,
-              cubicInterpolationMode: "monotone",
-              pointHoverBorderWidth: 1,
-              tension: 0.1,
-              fill: false,
-            },
-          ],
+          datasets: datasets,
         },
         options: {
           plugins: {
@@ -97,6 +114,9 @@ const CercleChart: React.FC = () => {
               align: "center",
               anchor: "center",
               textAlign: "center",
+            },
+            legend: {
+              position: "bottom",
             },
           },
           scales: {
@@ -116,7 +136,7 @@ const CercleChart: React.FC = () => {
         chartInstanceRef.current = null;
       }
     };
-  }, [dataLabels, data]);
+  }, [dataLabels, datasets]);
 
   return (
     <div style={{ width: "auto", display: "flex" }}>

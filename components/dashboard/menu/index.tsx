@@ -2,14 +2,15 @@ import { Box, FormLabel, Icon, Stack, styled } from "@mui/material";
 import Link from "@mui/material/Link";
 import allMenu from "../../../config/menu";
 
-const VerticalMenu = ({ matches }: any) => {
+const VerticalMenu = () => {
   const navMenu = allMenu();
 
   return (
     <ListPageContainer>
-      {navMenu.map((page, index) => (
+      {navMenu.map((page: any, index: number) => (
         <Link
-          href={`/logistique/${page.link}`}
+          key={index}
+          href={`${page.link}`}
           component={"a"}
           sx={{ textDecoration: "none" }}
         >

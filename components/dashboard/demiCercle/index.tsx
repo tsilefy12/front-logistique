@@ -35,7 +35,6 @@ const BarChart: React.FC = () => {
     "#4caf50", // green
     "#f44336", // red
     "rgb(75, 192, 192)", // blue
-    "#ffeb3b", // yellow
     "#ff9800", // orange
     "#9c27b0", // purple
   ];
@@ -50,12 +49,12 @@ const BarChart: React.FC = () => {
           (_, index) => colors[index % colors.length]
         ),
         borderWidth: 1,
-        barThickness: 30, // Adjust this value for the desired width of the bars
+        barThickness: 40,
       },
     ],
   };
 
-  const options = {
+  const options: any = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -67,7 +66,7 @@ const BarChart: React.FC = () => {
       },
       datalabels: {
         formatter: (value: any) => {
-          return value; // Display the raw data value
+          return value;
         },
         color: "#fff",
         font: {
@@ -79,17 +78,25 @@ const BarChart: React.FC = () => {
       x: {
         beginAtZero: true,
         ticks: {
-          stepSize: 5,
+          stepSize: 2,
         },
         grid: {
-          display: false, // Disable grid lines for the x-axis
+          display: false,
         },
+        position: "bottom",
       },
       y: {
         beginAtZero: true,
-        grid: {
-          display: true, // Keep grid lines for the y-axis (if needed)
+        ticks: {
+          stepSize: 5,
+          callback: function (value: number) {
+            return value + "L";
+          },
         },
+        grid: {
+          display: true,
+        },
+        position: "right",
       },
     },
   };

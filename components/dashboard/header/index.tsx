@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NavbarMobile from "../menuMobile";
 import { useAppSelector } from "../../../hooks/reduxHooks";
+import { Home } from "@mui/icons-material";
+import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 
 const HeaderDashboard = () => {
   const today = format(new Date(), "dd/MM/yyyy");
@@ -18,7 +20,6 @@ const HeaderDashboard = () => {
         now.toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
-          second: "2-digit",
         })
       );
     }, 1000); // Met à jour chaque seconde
@@ -39,19 +40,23 @@ const HeaderDashboard = () => {
       alignItems={"center"}
       sx={{
         backgroundColor: "#DFE3E8",
-        padding: "2px",
+        padding: "10px",
       }}
     >
-      <Stack paddingLeft={6}>
-        <img
-          src={`/logistique/images/logo/MV_logo.png`}
-          style={{ width: "60px", height: "60px" }}
-        />
+      <Stack
+        paddingLeft={3}
+        direction={"row"}
+        gap={4}
+        color={"GrayText"}
+        alignItems={"center"}
+      >
+        <Home style={{ width: "25px", height: "25px" }} />{" "}
+        <span>Dashboard</span>
       </Stack>
       <Stack
         direction="row"
         justifyContent="space-between"
-        gap={1}
+        gap={5}
         paddingRight={5}
       >
         <Stack
@@ -61,19 +66,12 @@ const HeaderDashboard = () => {
             justifyContent: "space-between",
             gap: 10,
             alignItems: "center",
+            backgroundColor: "white",
+            padding: "8px",
+            borderRadius: "5px",
           }}
         >
-          {" "}
-          <Link
-            href="/logistique/materiels"
-            component={"a"}
-            sx={{ textDecoration: "none", color: "GrayText" }}
-          >
-            <Button variant="contained" sx={{ backgroundColor: "#9DBF4C" }}>
-              Accueil
-            </Button>
-          </Link>
-          <span style={{ color: "GrayText" }}>{today}</span>
+          <span style={{ color: "GrayText" }}> Section {today}</span>
           <span
             style={{
               color: "GrayText",
@@ -82,17 +80,18 @@ const HeaderDashboard = () => {
             {currentTime}
           </span>
         </Stack>
-        <Stack direction="row" gap={1} alignItems={"center"}>
-          <span style={{ color: "GrayText" }}>{nomUtilisateur}</span>
+        <Stack direction="row" gap={5} alignItems={"center"}>
+          <CircleNotificationsIcon
+            fontSize="large"
+            style={{ color: "GrayText" }}
+          />
           {user?.profileImageUrl != null ? (
             <img
               src={user?.profileImageUrl}
               style={{ width: "20px", height: "20px" }}
             />
           ) : (
-            <AccountCircleIcon
-              style={{ fontSize: "25px", color: "GrayText" }}
-            />
+            <AccountCircleIcon fontSize="large" style={{ color: "GrayText" }} />
           )}
         </Stack>
       </Stack>
