@@ -61,7 +61,7 @@ function PrintBCE({ pdfData }: { pdfData: any }) {
                     <View style={{width: "100%",marginTop:20,}}>
                          <View style={[styles.rowBody]}>
                               <Text style={[styles.th,{borderLeft:"none !important"}]}>Fournisseur</Text>
-                              <Text style={[styles.th,{width: "50%",}]}>Designation</Text>
+                              <Text style={[styles.th,{width: "50%",}]}>Désignation</Text>
                               <Text style={[styles.th,{width: "50%",}]}>Caractéristique</Text>
                               <Text style={styles.th}>Quantité</Text>
                               <Text style={styles.th}>PU</Text>

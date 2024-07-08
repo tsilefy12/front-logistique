@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { enqueueSnackbar } from "../notification/notificationSlice";
 import { axios } from "../../../lib/axios";
 
 import {
@@ -34,14 +33,6 @@ export const createArticleCommandeInterne = createAsyncThunk(
     async (data: ArticleCommandeItem, thunkAPI) => {
       try {
         const response = await axios.post("/logistique/article-commande", data);
-        thunkAPI.dispatch(
-          enqueueSnackbar({
-            message: "Article BCI créé avec succès",
-            options: {
-              variant: "success",
-            },
-          })
-        );
         return response.data;
       } catch (error: any) {
         if (error.response) {
@@ -57,14 +48,6 @@ export const deleteArticleCommandeInterne = createAsyncThunk(
     async (data: { id: string }, thunkAPI) => {
       try {
         const response = await axios.delete(`/logistique/article-commande/${data.id}`);
-        thunkAPI.dispatch(
-          enqueueSnackbar({
-            message: "Article BCI supprimé avec succès",
-            options: {
-              variant: "success",
-            },
-          })
-        );
         return response.data;
       } catch (error: any) {
         if (error.response) {
@@ -99,14 +82,6 @@ export const updateArticleCommande = createAsyncThunk(
       const response = await axios.patch(
         `/logistique/article-commande/${data.id}`,
         data.updateData
-      );
-      thunkAPI.dispatch(
-        enqueueSnackbar({
-          message: "Article mis à jour avec succès",
-          options: {
-            variant: "success",
-          },
-        })
       );
       return response.data;
     } catch (error: any) {

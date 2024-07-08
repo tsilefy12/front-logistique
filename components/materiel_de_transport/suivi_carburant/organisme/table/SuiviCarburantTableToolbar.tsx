@@ -8,40 +8,10 @@ import { debounce } from "lodash";
 import { useAppSelector } from "../../../../../hooks/reduxHooks";
 import { TableLoading } from "../../../../shared/loading";
 
-const SuiviCarburantTableToolbar = () => {
+const SuiviCarburantTableToolbar = ({filtre , setFiltre} : any) => {
   const { loading } = useAppSelector(
     (state) => state.suiviCarburant
   );
-
-  const [key, setKey] = React.useState<any>("");
-
-  const router = useRouter();
-
-  // initialisation du champ de recherche
-  React.useEffect(() => {
-    if (router?.query?.search) {
-      setKey(router.query.search);
-    }
-  }, [router.query.search]);
-
-  const search = (key: string) => {
-    const query = { ...router.query, search: key };
-    router.push({
-      pathname: router.pathname,
-      query: query,
-    });
-  };
-
-  const debouncedSearch = React.useCallback(debounce(search, 300), [
-    router.query,
-  ]);
-
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setKey(event.target.value);
-    debouncedSearch(event.target.value);
-  };
 
   return (
     <>
@@ -63,14 +33,14 @@ const SuiviCarburantTableToolbar = () => {
             Liste des courses ville
           </Typography>
           <TextField
-            variant="outlined"
-            id="search"
-            name="search"
-            placeholder="Recherche"
-            size="small"
-            value={key}
-            onChange={handleChange}
-          />
+						variant="outlined"
+						id="search"
+						name="search"
+						placeholder="Recherche"
+						size="small"
+						value={filtre}
+						onChange={(e)=> setFiltre(e.target.value)}
+					/>
         </Stack>
       </Toolbar>
       {loading && <TableLoading />}

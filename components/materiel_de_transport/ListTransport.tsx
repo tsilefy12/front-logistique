@@ -37,6 +37,7 @@ import TransportEquipmentTableToolbar from "./organism/table/TransportEquipmentT
 const ListTransport = () => {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
+  const [filtre, setFiltre] = React.useState("")
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const confirm = useConfirm();
@@ -117,7 +118,7 @@ const ListTransport = () => {
       <SectionTable>
         <Box sx={{ width: "100%", mb: 2 }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <TransportEquipmentTableToolbar />
+            <TransportEquipmentTableToolbar filtre={filtre} setFiltre={setFiltre} />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
@@ -128,6 +129,8 @@ const ListTransport = () => {
                 <TableBody>
                   {transportationEquipments
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
+                    .filter(item => (`${item.registration} ${item.brand} ${item.otherInformation} ${item.status} ${item.fournisseur ? item?.vendor?.name : ""} ${item?.typeEquipment?.type} - ${item?.typeEquipment?.prefix}`).toLowerCase().includes(filtre.toLowerCase()))
                     .map(
                       (row: TransportationEquipmentItem | any, index: any) => {
                         const labelId = `enhanced-table-checkbox-${index}`;

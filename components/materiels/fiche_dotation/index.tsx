@@ -39,7 +39,7 @@ import BonTransfertTableToolbar from "./table/FicheDotationTableToolbar";
 export default function FicheDotationList() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   // const { suplyAndConsumable } = useAppSelector(
   //   (state) => state.suplyAndConsumable
   // );
@@ -134,6 +134,7 @@ export default function FicheDotationList() {
                 <BonTransfertTableHeader />
                 <TableBody>
                   {ficheDotations
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row: ficheDotationItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;

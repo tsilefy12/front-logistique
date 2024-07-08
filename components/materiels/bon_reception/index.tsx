@@ -66,8 +66,8 @@ export default function BonReceptionList() {
 
   const handleClickDelete = async (id: any) => {
     confirm({
-      title: "Supprimer le fournisseur",
-      description: "Voulez-vous vraiment supprimer ce Bon de reception?",
+      title: "Supprimer le bon de réception",
+      description: "Voulez-vous vraiment supprimer ce bon de réception?",
       cancellationText: "Annuler",
       confirmationText: "Supprimer",
       cancellationButtonProps: {
@@ -155,7 +155,7 @@ export default function BonReceptionList() {
               </Button>
             </Link>
           )}
-          <Typography variant="h4"> Liste de Bon des Receptions</Typography>
+          <Typography variant="h4">Liste de bon des réceptions</Typography>
         </SectionNavigation>
         {/* <Divider /> */}
       </NavigationContainer>
@@ -173,6 +173,7 @@ export default function BonReceptionList() {
                 <TableBody>
                   {bonReceptions
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: bonReceptionItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

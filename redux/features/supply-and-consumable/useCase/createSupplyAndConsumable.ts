@@ -22,7 +22,7 @@ export const createSuplyAndConsumable = createAsyncThunk(
       );
       thunkAPI.dispatch(
         enqueueSnackbar({
-          message: "Fiche de Stock créé avec succès",
+          message: "Fiche de stock créé avec succès",
           options: { variant: "success" },
         })
       );
@@ -32,7 +32,7 @@ export const createSuplyAndConsumable = createAsyncThunk(
         if (error.response.data.statusCode == 409) {
           thunkAPI.dispatch(
             enqueueSnackbar({
-              message: "Cet Fiche de Stock a déjà été enregistré",
+              message: "Cet fiche de stock a déjà été enregistré",
               options: { variant: "error" },
             })
           );

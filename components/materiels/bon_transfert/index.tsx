@@ -132,14 +132,15 @@ export default function BonTransfertList() {
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
-          {validate("Logistiques BT", "C") && (
-            <Link href={"/materiels/bon_transfert/ajouter"}>
+          <Link href={"/materiels/bon_transfert/ajouter"}>
               <Button variant="contained" startIcon={<Add />} size="small">
                 Ajouter
               </Button>
             </Link>
-          )}
-          <Typography variant="h4"> Liste de Bon des transferts</Typography>
+          {/* {validate("Logistiques BT", "C") && (
+            
+          )} */}
+          <Typography variant="h4"> Liste de bon des transferts</Typography>
         </SectionNavigation>
         {/* <Divider /> */}
       </NavigationContainer>
@@ -157,6 +158,7 @@ export default function BonTransfertList() {
                 <TableBody>
                   {bonTransferts
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: bonTransfertItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (
@@ -208,8 +210,7 @@ export default function BonTransfertList() {
                               >
                                 <Visibility />
                               </IconButton>
-                              {validate("Logistiques BT", "U") && (
-                                <IconButton
+                               <IconButton
                                   color="primary"
                                   aria-label="Modifier"
                                   component="span"
@@ -220,8 +221,6 @@ export default function BonTransfertList() {
                                 >
                                   <Edit />
                                 </IconButton>
-                              )}
-                              {validate("Logistiques BT", "D") && (
                                 <IconButton
                                   color="warning"
                                   aria-label="Supprimer"
@@ -233,7 +232,6 @@ export default function BonTransfertList() {
                                 >
                                   <Delete />
                                 </IconButton>
-                              )}
                             </BtnActionContainer>
                           </TableCell>
                         </TableRow>

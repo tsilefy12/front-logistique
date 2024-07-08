@@ -36,9 +36,28 @@ import {
 import useFetchEquipment from "./hooks/useFetchEquipment";
 import EquipmentTableHeader from "./organism/table/EquipmentTableHeader";
 import EquipmentTableToolbar from "./organism/table/EquipmentTableToolbar";
+
+const getTextStatus = (status: string | undefined) => {
+  switch (status) {
+    case "GOOD":
+      return "Bon etat";
+      break;
+    case "BAD":
+      return "Mauvais";
+      break;
+    case "BROKEN":
+      return "Inutilisable";
+      break;
+    default:
+      break;
+  }
+};
+
 const ListInfo = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [filtre, setFiltre] = React.useState("");
+
   const router = useRouter();
   const confirm = useConfirm();
   const dispatch = useAppDispatch();
@@ -73,8 +92,8 @@ const ListInfo = () => {
   }, [router.query]);
   const handleClickDelete = async (id: any) => {
     confirm({
-      title: "Supprimer le materiel",
-      description: "Voulez-vous vraiment supprimer ce materiel ?",
+      title: "Supprimer le matériel",
+      description: "Voulez-vous vraiment supprimer ce matériel ?",
       cancellationText: "Annuler",
       confirmationText: "Supprimer",
       cancellationButtonProps: {
@@ -140,7 +159,7 @@ const ListInfo = () => {
       <SectionTable>
         <Box sx={{ width: "100%" }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <EquipmentTableToolbar />
+            <EquipmentTableToolbar filtre={filtre} setFiltre={setFiltre}/>
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
@@ -148,8 +167,11 @@ const ListInfo = () => {
                 size="small"
               >
                 <EquipmentTableHeader />
-                {equipments.length > 0 &&
-                  equipments.map((item: any, index: any) => (
+                {equipments.length > 0 && equipments
+                  .slice()
+                  .sort((a, b) => (b.id!).localeCompare(a.id!))
+                  .filter((item) => (`${item.numOptim} ${item.designation} ${item.type} ${total.find((e: any) => e.id === item?.ownerId)?.name} ${item.status}`).toLowerCase().includes(filtre.toLowerCase()))
+                  .map((item: any, index: any) => (
                     <TableBody key={index}>
                       <TableCell align="left">{item.numOptim}</TableCell>
                       <TableCell align="left">{item.designation}</TableCell>
@@ -157,7 +179,7 @@ const ListInfo = () => {
                       <TableCell align="left">
                         {total.find((e: any) => e.id === item?.ownerId)?.name}
                       </TableCell>
-                      <TableCell align="left">{item.status}</TableCell>
+                      <TableCell align="left">{getTextStatus(item.status)}</TableCell>
                       <TableCell align="right">
                         <BtnActionContainer
                           direction="row"

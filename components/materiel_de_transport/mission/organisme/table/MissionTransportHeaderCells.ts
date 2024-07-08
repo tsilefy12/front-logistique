@@ -11,7 +11,7 @@ export const MissionTransporTableaHeaderCells: readonly HeadCell[] = [
     id: "pj",
     numeric: false,
     disablePadding: false,
-    label: "Référence budgetaire",
+    label: "Référence budgétaire",
   },
   {
     id: "date",
@@ -47,6 +47,6 @@ export const MissionTransporTableaHeaderCells: readonly HeadCell[] = [
     id: "ligneBudgetaire",
     numeric: false,
     disablePadding: false,
-    label: "Ligne budgetaire",
+    label: "Ligne budgétaire",
   },
 ];

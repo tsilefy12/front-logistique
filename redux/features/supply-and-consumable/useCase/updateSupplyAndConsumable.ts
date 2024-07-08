@@ -24,7 +24,7 @@ export const updateSuplyAndConsumable = createAsyncThunk(
       );
       thunkAPI.dispatch(
         enqueueSnackbar({
-          message: "Fiche de Stock updated successfully",
+          message: "Fiche de stock modifier avec succès",
           options: { variant: "success" },
         })
       );

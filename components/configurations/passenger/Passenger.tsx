@@ -27,7 +27,7 @@ const Passenger = () => {
               Retour
             </Button>
           </Link>
-          <Typography variant="h4"> Etat Materiel </Typography>
+          <Typography variant="h4"> Etat matériel </Typography>
         </SectionNavigation>
         <Divider />
       </Stack>

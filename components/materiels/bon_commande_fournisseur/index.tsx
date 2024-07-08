@@ -131,6 +131,7 @@ export default function BonCommandeFournisseurList() {
                 <TableBody>
                   {commandeFournisseurs
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: CommandeFournisseurItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

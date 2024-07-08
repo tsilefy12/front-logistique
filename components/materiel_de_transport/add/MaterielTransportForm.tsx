@@ -116,7 +116,7 @@ const MaterielTransportForm = () => {
             "Veuillez remplir le champ date d'acquisition"
           ),
           kilometrageInitial: Yup.string().required(
-            "Veuillez remplir le champ kilometrage initial"
+            "Veuillez remplir le champ Kilométrage initial"
           ),
           reservoir: Yup.string().required(
             "Veuillez remplir le champ reservoir"
@@ -177,7 +177,7 @@ const MaterielTransportForm = () => {
                     </Button>
                   </Stack>
                   <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"} Materiel de transport
+                    {isEditing ? "Modifier" : "Ajouter"} matériel de transport
                   </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -216,7 +216,7 @@ const MaterielTransportForm = () => {
                 <Stack direction="row" spacing={2} margin={2}>
                   <OSSelectField
                     id="outlined-basic"
-                    label="Status"
+                    label="Statut"
                     variant="outlined"
                     options={ListStatus}
                     dataKey="name"
@@ -236,7 +236,7 @@ const MaterielTransportForm = () => {
                 <Stack direction="row" spacing={3} margin={2}>
                   <OSTextField
                     id="outlined-basic"
-                    label="Kilometrage initial"
+                    label="Kilométrage initial"
                     variant="outlined"
                     name="kilometrageInitial"
                     type="number"
@@ -255,7 +255,7 @@ const MaterielTransportForm = () => {
                   />
                   <OSTextField
                     id="outlined-basic"
-                    label="Kilometrage actuel"
+                    label="Kilométrage actuel"
                     variant="outlined"
                     name="kilometrageActuel"
                     value={formikProps.values.kilometrageInitial}

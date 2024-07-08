@@ -11,7 +11,7 @@ export const deletePassenger = createAsyncThunk(
       );
       thunkAPI.dispatch(
         enqueueSnackbar({
-          message: "Etat materiel supprimé avec succès",
+          message: "Etat matériel supprimé avec succès",
           options: {
             variant: "success",
           },

@@ -6,34 +6,8 @@ import { useRouter } from "next/router";
 import { debounce } from "lodash";
 import { TableLoading } from "../../../../shared/loading";
 
-const TypeEquipmentTableToolbar = () => {
+const TypeEquipmentTableToolbar = ({filtre , setFiltre} : any) => {
   const { loading } = useAppSelector((state) => state.typeEquipment);
-  const [key, setKey] = useState<any>("");
-  const router = useRouter();
-
-  // initial search input value
-  useEffect(() => {
-    if (router?.query?.search) {
-      setKey(router.query.search);
-    }
-  }, [router.query.search]);
-
-  const search = (key: string) => {
-    const query = { ...router.query, search: key };
-    router.push({
-      pathname: router.pathname,
-      query: query,
-    });
-  };
-
-  const deboncedSearch = React.useCallback(debounce(search, 300), [
-    router.query,
-  ]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setKey(event.target.value);
-    deboncedSearch(event.target.value);
-  };
   return (
     <>
       <Toolbar
@@ -54,14 +28,14 @@ const TypeEquipmentTableToolbar = () => {
             Liste des types de materiels
           </Typography>
           <TextField
-            variant="outlined"
-            id="search"
-            name="search"
-            placeholder="Recherche"
-            size="small"
-            value={key}
-            onChange={handleChange}
-          />
+						variant="outlined"
+						id="search"
+						name="search"
+						placeholder="Recherche"
+						size="small"
+						value={filtre}
+						onChange={(e)=> setFiltre(e.target.value)}
+					/>
         </Stack>
       </Toolbar>
       {loading && <TableLoading />}

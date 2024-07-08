@@ -10,7 +10,7 @@ export const createPassenger = createAsyncThunk(
       const response = await axios.post("/logistique/passenger", data);
       thunkAPI.dispatch(
         enqueueSnackbar({
-          message: "Etat materiel créé avec succès",
+          message: "Etat matériel créé avec succès",
           options: {
             variant: "success",
           },

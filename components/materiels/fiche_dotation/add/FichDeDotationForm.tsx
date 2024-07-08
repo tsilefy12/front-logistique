@@ -103,7 +103,6 @@ export default function FichDotationForm() {
                         commune:Yup.string().required("Champ obligatoire"),
                         fokontany:Yup.string().required("Champ obligatoire"),
                         grant: Yup.string().required("Champ obligatoire"),
-                        ligneBudgetaire: Yup.string().required("Champ obligatoire"),
                     })}
                     onSubmit={(value: any, action: any) => {
                         handleSubmit(value);

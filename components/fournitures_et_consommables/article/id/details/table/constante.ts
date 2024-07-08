@@ -30,7 +30,7 @@ export const headCells: readonly HeadCell[] = [
     id: "prix_Unitaire",
     numeric: true,
     disablePadding: false,
-    label: "Prix Unitaire",
+    label: "Prix unitaire",
   },
   {
     id: "valeur_stockée",

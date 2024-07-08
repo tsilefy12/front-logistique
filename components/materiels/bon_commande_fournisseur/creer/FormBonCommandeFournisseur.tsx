@@ -74,7 +74,7 @@ const FormBonCommandeFournisseur  = ({formikProps,valuesArticle,setValuesArticle
                     </Button>
                 </Stack>
                 <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"} Bon de commande fournisseur
+                    {isEditing ? "Modifier" : "Ajouter"} bon de commande fournisseur
                 </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -177,7 +177,7 @@ const FormBonCommandeFournisseur  = ({formikProps,valuesArticle,setValuesArticle
                             <Table sx={{ minWidth: 700 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Designation</TableCell>
+                                        <TableCell>Désignation</TableCell>
                                         <TableCell align="left">PU</TableCell>
                                         <TableCell align="left">Quantité</TableCell>
                                         <TableCell align="left">Détail</TableCell>

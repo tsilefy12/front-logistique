@@ -13,6 +13,7 @@ import { format } from "date-fns";
 import { BonCommandeItem } from "../../../../redux/features/bon_commande_interne/bonCommandeInterne.interface";
 // @ts-ignore
 import { NumberToLetter } from 'convertir-nombre-lettre';
+import formatMontant from "../../../../hooks/format";
 
 function PrintBCI({ pdfData }: { pdfData: any }) {
 
@@ -69,7 +70,7 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                                              <Text style={[styles.tr,{width:'60%'}]}>{element?.designation}</Text>
                                              <Text style={[styles.tr,{width:'60%'}]}>{element?.caracteristik}</Text>
                                              <Text style={styles.tr}>{element?.quantite}</Text>
-                                             <Text style={styles.tr}>{element?.pu} ar</Text>
+                                             <Text style={styles.tr}>{formatMontant(element?.pu)} ar</Text>
                                              <Text style={styles.tr}>{element?.valueArticle} ar</Text>
                                         </View>
                                    </View>
@@ -87,11 +88,11 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                     </View>
                     <View style={{width: "100%"}}>
                          <View style={[styles.rowBody]}>
-                              <Text style={{width:'60%',fontSize: 10,padding:2}}>MONTANT TOTAL</Text>
+                              <Text style={{width:'60%'}}></Text>
                               <Text style={{width:'60%'}}></Text>
                               <Text style={{width:'30%'}}></Text>
-                              <Text style={{width:'30%'}}></Text>
-                              <Text style={[styles.tr,{backgroundColor:"#D5D8DC",textAlign:"center"}]}>{pdfData?.montantTotal} ar</Text>
+                              <Text style={{width:'30%',fontSize: 10,padding:2}}>MONTANT TOTAL</Text>
+                              <Text style={[styles.tr,{backgroundColor:"#D5D8DC",textAlign:"center"}]}>{formatMontant(pdfData?.montantTotal)} ar</Text>
                          </View>
                     </View>  
                     <View style={{width: "100%"}}>

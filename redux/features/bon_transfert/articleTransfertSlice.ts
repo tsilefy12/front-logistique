@@ -34,14 +34,6 @@ export const createArticleTransfert = createAsyncThunk(
     async (data: articleTransfertItem, thunkAPI) => {
       try {
         const response = await axios.post("/logistique/article-transfert", data);
-        thunkAPI.dispatch(
-          enqueueSnackbar({
-            message: "Article créé avec succès",
-            options: {
-              variant: "success",
-            },
-          })
-        );
         return response.data;
       } catch (error: any) {
         if (error.response) {
@@ -57,14 +49,6 @@ export const deleteArticleTransfert = createAsyncThunk(
     async (data: { id: string }, thunkAPI) => {
       try {
         const response = await axios.delete(`/logistique/article-transfert/${data.id}`);
-        thunkAPI.dispatch(
-          enqueueSnackbar({
-            message: "Article supprimé avec succès",
-            options: {
-              variant: "success",
-            },
-          })
-        );
         return response.data;
       } catch (error: any) {
         if (error.response) {
@@ -100,14 +84,6 @@ export const updateArticleTransfert = createAsyncThunk(
       const response = await axios.patch(
         `/logistique/article-transfert/${data.id}`,
         data.updateData
-      );
-      thunkAPI.dispatch(
-        enqueueSnackbar({
-          message: "Article mis à jour avec succès",
-          options: {
-            variant: "success",
-          },
-        })
       );
       return response.data;
     } catch (error: any) {

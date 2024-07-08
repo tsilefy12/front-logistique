@@ -198,8 +198,8 @@ const FormCommande = () => {
                   <FormControl fullWidth>
                     <OSSelectField
                       id="status"
-                      label="Status"
-                      name="status"
+                      label="Statut"
+                      name=""
                       options={status}
                       dataKey={"value"}
                       valueKey="id"

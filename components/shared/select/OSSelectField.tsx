@@ -1,14 +1,6 @@
-import {
-  Box,
-  FormControlLabel,
-  Menu,
-  MenuItem,
-  Switch,
-  TextField,
-} from "@mui/material";
+import { Box, Menu, MenuItem, TextField } from "@mui/material";
 import { useField, useFormikContext } from "formik";
 import React, { useEffect, useState } from "react";
-import OSTextField from "../input copy/OSTextField";
 
 const OSSelectField = ({
   name,
@@ -28,7 +20,6 @@ const OSSelectField = ({
   const { setFieldValue } = useFormikContext();
   const [search, setSearch] = useState<string>("");
   const [filteredData, setFilterdData] = useState<any[]>(options);
-  const [activeSearch, setActiveSearch] = useState<boolean>(false);
   const [field, meta] = useField(name);
 
   const initialValue = () => {
@@ -119,7 +110,9 @@ const OSSelectField = ({
     setFilterdData((prev: any[]) => {
       if (Array.isArray(dataKey)) {
         return options.filter((option: any) => {
-          const labelArray = dataKey.map((key: string) => option[key]);
+          const labelArray = dataKey.map(
+            (key: string) => option[key]
+          );
           const label = labelArray.join(separator);
           return label.toLowerCase().includes(search.toLowerCase());
         });
@@ -146,37 +139,23 @@ const OSSelectField = ({
         }}
         PaperProps={{
           sx: {
-            width: "80%",
+            width: "max-content",
           },
         }}
       >
-        {activeSearch && (
-          <Box sx={{ padding: 2 }}>
-            <TextField
-              name="searchSelect"
-              value={search}
-              onKeyDown={(e) => e.stopPropagation()}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setSearch(e.target.value);
-              }}
-              label="Recherche"
-              variant="outlined"
-              fullWidth
-            />
-          </Box>
-        )}
-        <Box sx={{ paddingLeft: 1 }}>
-          <FormControlLabel
-            control={
-              <Switch
-                value={activeSearch}
-                onChange={(e, v) => setActiveSearch(v)}
-              />
-            }
-            label="Filtrer"
+        <Box sx={{ padding: 2 }}>
+          <TextField
+            name="searchSelect"
+            value={search}
+            onKeyDown={(e) => e.stopPropagation()}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setSearch(e.target.value);
+            }}
+            label="Recherche"
+            variant="outlined"
+            fullWidth
           />
         </Box>
-
         {selectOptions()}
       </Menu>
     </>

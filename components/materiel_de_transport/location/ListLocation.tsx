@@ -42,6 +42,7 @@ const ListLocation = () => {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [filtre, setFiltre] = React.useState("")
   const validate = usePermitted();
   const confirm = useConfirm();
   const router = useRouter();
@@ -116,7 +117,7 @@ const ListLocation = () => {
               </Button>
             </Link>
           )}
-          <Typography variant="h4">Toutes locations de transport</Typography>
+          <Typography variant="h4">Location externe</Typography>
         </SectionNavigation>
         {/* <Divider /> */}
       </NavigationContainer>
@@ -124,7 +125,7 @@ const ListLocation = () => {
       <SectionTable>
         <Box sx={{ width: "100%", mb: 2 }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <LocationDeTransportTableToolbar />
+            <LocationDeTransportTableToolbar filtre={filtre} setFiltre={setFiltre}/>
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
@@ -135,6 +136,8 @@ const ListLocation = () => {
                 <TableBody>
                   {locationDeTransports
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
+                    .filter(item => (`${item.transportationEquipment?.registration} ${item.vendor?.name} ${item.itineraire} ${employees.find((e: any) => e.id! === item.responsable)?.name} ${employees.find((e: any) => e.id! === item.responsable)?.surname} ${budgetLineList.find((e: any) => e.id === item?.ligneBudgetaire)?.code} ${item?.referenceBudgetaire}`).toLowerCase().includes(filtre.toLowerCase()))
                     .map((row: LocationItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

@@ -140,7 +140,7 @@ export default function BonCommandeInterneList() {
           )}
           <Typography variant="h4">
             {" "}
-            Liste de Bon des commandes Interne
+            Liste de bon des commandes interne
           </Typography>
         </SectionNavigation>
         {/* <Divider /> */}
@@ -159,6 +159,7 @@ export default function BonCommandeInterneList() {
                 <TableBody>
                   {bonCommandeInternes
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: BonCommandeItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

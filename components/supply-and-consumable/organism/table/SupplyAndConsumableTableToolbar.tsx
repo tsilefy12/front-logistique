@@ -8,7 +8,7 @@ import { useAppSelector } from "../../../../hooks/reduxHooks";
 import { TableLoading } from "../../../shared/loading";
 import { debounce } from "lodash";
 
-const SuplyAndConsumableTableToolbar = () => {
+const SuplyAndConsumableTableToolbar = ({filtre, setFiltre}:any) => {
   const { loading } = useAppSelector((state) => state.suplyAndConsumable);
 
   const [key, setKey] = React.useState<any>("");
@@ -56,17 +56,17 @@ const SuplyAndConsumableTableToolbar = () => {
           }}
         >
           <Typography variant="h6" id="tableTitle" component="div">
-            Liste des Fiches de Stock
+            Liste des fiches de stock
           </Typography>
           <TextField
-            variant="outlined"
-            id="search"
-            name="search"
-            placeholder="Recherche"
-            size="small"
-            value={key}
-            onChange={handleChange}
-          />
+						variant="outlined"
+						id="search"
+						name="search"
+						placeholder="Recherche"
+						size="small"
+						value={filtre}
+						onChange={(e)=> setFiltre(e.target.value)}
+					/>
         </Stack>
       </Toolbar>
       {loading && <TableLoading />}

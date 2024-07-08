@@ -76,7 +76,7 @@ const DetailsBCI = () => {
           <PDFButton data={pdf} />
         </Stack>
         <Typography variant="h4" color="GrayText">
-          Details d'une bon de commande fournisseur
+          Détails d'un bon de commande fournisseur
         </Typography>
       </SectionNavigation>
       <DetailsContainer>
@@ -190,10 +190,10 @@ const DetailsBCI = () => {
                           <TableCell component="th" scope="row">
                             {item.designation}
                           </TableCell>
-                          <TableCell align="left">{item.unitPrice}</TableCell>
+                          <TableCell align="left">{formatMontant(item.unitPrice)}</TableCell>
                           <TableCell align="left">{item.quantite}</TableCell>
                           <TableCell align="left">
-                            {formatMontant(item.montant)}
+                            {formatMontant(item.montant)} ar
                           </TableCell>
                           <TableCell align="left">{item.details}</TableCell>
                         </TableRow>

@@ -34,14 +34,6 @@ export const createproduitRecu = createAsyncThunk(
     async (data: produitRecuItem, thunkAPI) => {
       try {
         const response = await axios.post("/logistique/produit-recu", data);
-        thunkAPI.dispatch(
-          enqueueSnackbar({
-            message: "Produit créé avec succès",
-            options: {
-              variant: "success",
-            },
-          })
-        );
         return response.data;
       } catch (error: any) {
         if (error.response) {
@@ -57,14 +49,6 @@ export const deleteproduitRecu = createAsyncThunk(
     async (data: { id: string }, thunkAPI) => {
       try {
         const response = await axios.delete(`/logistique/produit-recu/${data.id}`);
-        thunkAPI.dispatch(
-          enqueueSnackbar({
-            message: "Produit Recu supprimé avec succès",
-            options: {
-              variant: "success",
-            },
-          })
-        );
         return response.data;
       } catch (error: any) {
         if (error.response) {
@@ -100,14 +84,6 @@ export const updateProduiRecu = createAsyncThunk(
       const response = await axios.patch(
         `/logistique/produit-recu/${data.id}`,
         data.updateProduitRecu
-      );
-      thunkAPI.dispatch(
-        enqueueSnackbar({
-          message: "Produit mis à jour avec succès",
-          options: {
-            variant: "success",
-          },
-        })
       );
       return response.data;
     } catch (error: any) {

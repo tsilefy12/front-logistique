@@ -61,8 +61,8 @@ export default function LogSupplyAndConsumableList() {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [operate, setOperate] = useState<"INPUT" | "OUTPUT">("INPUT");
-  const [operationLabel, setOperationLabel] = useState<"Entrée" | "Sortie">(
-    "Entrée"
+  const [operationLabel, setOperationLabel] = useState<"entrée" | "sortie">(
+    "entrée"
   );
 
   const router = useRouter();
@@ -117,7 +117,7 @@ export default function LogSupplyAndConsumableList() {
                           setOperate("OUTPUT");
                         }
                         setOperate("INPUT");
-                        setOperationLabel("Entrée");
+                        setOperationLabel("entrée");
                       }}
                       control={<Radio checked={operate === "INPUT"} />}
                       label="Entrée"
@@ -129,7 +129,7 @@ export default function LogSupplyAndConsumableList() {
                           setOperate("INPUT");
                         }
                         setOperate("OUTPUT");
-                        setOperationLabel("Sortie");
+                        setOperationLabel("sortie");
                       }}
                       control={<Radio checked={operate === "OUTPUT"} />}
                       label="Sortie"
@@ -157,6 +157,7 @@ export default function LogSupplyAndConsumableList() {
                 <TableBody>
                   {logSuplyAndConsumableList
                     .filter((i) => i.OperationType === operate)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row: LogSuplyAndConsumableItem | any, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;

@@ -34,7 +34,7 @@ import OrderFormTableHeader from "./organism/table/OrderFormTableHeader";
 export default function OrderFormList() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const router = useRouter();
 
@@ -129,6 +129,7 @@ export default function OrderFormList() {
                       page * rowsPerPage,
                       page * rowsPerPage + rowsPerPage
                     )
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: OrderFormItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

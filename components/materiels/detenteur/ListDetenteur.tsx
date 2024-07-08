@@ -16,73 +16,29 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
 import { usePermitted } from "../../../config/middleware";
-import { useAppSelector } from "../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import CardDetenteur from "./home/CardDetenteur";
 import SearchDetenteur from "./home/Search";
 import useFetchDetenteurListe from "./hooks/useFetchDetenteurListe";
+import { getPrograms } from "../../../redux/features/program/programSlice";
 
 const ListDetenteur = () => {
   const theme = useTheme();
-  const [key, setKey] = useState<any>("");
   const [fonction, setFonction] = useState<any>("");
+  const [filtre, setFiltre] = React.useState("");
+  const dispatch = useAppDispatch();
   const router = useRouter();
+  const { programs } = useAppSelector((state) => state.program);
 
   const { holderListe } = useAppSelector((state) => state.holder);
 
   const validate = usePermitted();
 
-  useEffect(() => {
-    if (router?.query?.search) {
-      setKey(router.query.search);
-    }
-
-    if (router?.query?.filter) {
-      setFonction(router.query.filter);
-    }
-  }, [router.query.search, router.query.filter]);
-
-  const search = (key: string) => {
-    const query = { ...router.query, search: key };
-    router.push({
-      pathname: router.pathname,
-      query: query,
-    });
-  };
-
-  const filter = (fonction: string) => {
-    const query = { ...router.query, filter: fonction };
-    router.push({
-      pathname: router.pathname,
-      query: query,
-    });
-  };
-
-  const deboncedSearch = React.useCallback(debounce(search, 300), [
-    router.query,
-  ]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setKey(event.target.value);
-    deboncedSearch(event.target.value);
-    if (event.target.value === "") {
-      setKey("");
-    }
-  };
-
-  const fonctionListe = [
-    { id: "COMMUNAUTE_ET_CONSERVATION", name: "Communaute et Conservation" },
-    { id: "ESPECE_ET_CONSERVATION", name: "Espece et Conservation" },
-    { id: "ADMINISTRATION", name: "Administration" },
-    { id: "SUIVI_ET_EVALUATION", name: "Suivi et Evaluation" },
-    { id: "RH", name: "RH" },
-    { id: "PRESTATAIRE", name: "Prestataire" },
-    { id: "STAGIAIRE", name: "Stagiaire" },
-    { id: "AUTRES", name: "Autres" },
-  ];
   const fetchDetenteurList = useFetchDetenteurListe();
 
   React.useEffect(() => {
     fetchDetenteurList();
+    dispatch(getPrograms({}));
   }, [router.query]);
 
   return (
@@ -105,16 +61,16 @@ const ListDetenteur = () => {
                   component="span"
                   onClick={() => {
                     setFonction("");
-                    filter("");
+                    setFiltre("");
                   }}
                   sx={{
                     cursor: "pointer",
                     textTransform: "none",
                   }}
                 >
-                  Tous les Fonctions
+                  Tous les programmes
                 </Typography>
-                {fonctionListe.map((currentFonction) => (
+                {programs.map((currentFonction) => (
                   <Typography
                     key={currentFonction.name}
                     variant="body1"
@@ -129,8 +85,7 @@ const ListDetenteur = () => {
                       cursor: "pointer",
                     }}
                     onClick={() => {
-                      setFonction(currentFonction?.id!);
-                      filter(currentFonction?.id!);
+                      setFiltre(currentFonction?.id!);
                     }}
                   >
                     {currentFonction.name}
@@ -142,7 +97,7 @@ const ListDetenteur = () => {
         </Grid>
         <Grid item xs={12} md={9}>
           <ContainerListEmploye>
-            <SearchDetenteur />
+            <SearchDetenteur filtre={filtre} setFiltre={setFiltre}/>
             <Divider />
             <ListEmployeContent>
               <CustomBtnAdd>
@@ -161,11 +116,14 @@ const ListDetenteur = () => {
                   </Link>
                 )}
               </CustomBtnAdd>
-              {holderListe.map((holder, index) => (
-                <Fragment key={index}>
-                  <CardDetenteur holder={holder} />
-                </Fragment>
-              ))}
+              {holderListe
+                .sort((a, b) => (b.id!).localeCompare(a.id!))
+                .filter((item) => (`${item.matricule} ${item.function} ${item.contact} ${item.name} ${item.id}`).toLowerCase().includes(filtre.toLowerCase()))
+                .map((holder, index) => (
+                  <Fragment key={index}>
+                    <CardDetenteur holder={holder} />
+                  </Fragment>
+                ))}
             </ListEmployeContent>
           </ContainerListEmploye>
         </Grid>

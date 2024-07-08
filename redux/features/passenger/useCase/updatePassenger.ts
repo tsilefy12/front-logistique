@@ -13,7 +13,7 @@ export const updatePassenger = createAsyncThunk(
       );
       thunkAPI.dispatch(
         enqueueSnackbar({
-          message: "Etat materiel mis à jour avec succès",
+          message: "Etat matériel mis à jour avec succès",
           options: {
             variant: "success",
           },

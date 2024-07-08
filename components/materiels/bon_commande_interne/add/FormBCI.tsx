@@ -114,7 +114,7 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
                     </Button>
                 </Stack>
                 <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"} Bon de commande interne
+                    {isEditing ? "Modifier" : "Ajouter"} bon de commande interne
                 </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -143,7 +143,7 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
                             fullWidth
                             id="outlined-basic"
                             variant="outlined"
-                            label="Réference"
+                            label="Référence"
                             name="reference"
                         />
                     </FormControl>
@@ -248,7 +248,7 @@ const FormBCI  = ({formikProps,valuesArticle,setValuesArticle,setIdDelete}: {for
                             <Table sx={{ minWidth: 700 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Designation</TableCell>
+                                        <TableCell>Désignation</TableCell>
                                         <TableCell align="left">Caractéristique</TableCell>
                                         <TableCell align="left">PU</TableCell>
                                         <TableCell align="left">Quantité</TableCell>

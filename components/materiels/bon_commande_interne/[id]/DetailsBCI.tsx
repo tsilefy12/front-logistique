@@ -115,7 +115,7 @@ const DetailsBCI = () => {
           <PDFButton data={pdf} />
         </Stack>
         <Typography variant="h4" color="GrayText">
-          Details d'une bon de commande interne
+          Détails d'un bon de commande interne
         </Typography>
       </SectionNavigation>
       <DetailsContainer>
@@ -133,7 +133,7 @@ const DetailsBCI = () => {
                 <Grid item xs={12} md={12}>
                   <InfoItems direction="row" spacing={2}>
                     <Typography variant="body1" color="secondary">
-                      Réference
+                      Référence
                     </Typography>
                     <Typography variant="body1" color="gray">
                       {bonCommandeInterne.reference}
@@ -265,7 +265,7 @@ const DetailsBCI = () => {
               <Table sx={{ minWidth: 700 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Designation</TableCell>
+                    <TableCell>Désignation</TableCell>
                     <TableCell align="left">Caractéristique</TableCell>
                     <TableCell align="left">PU</TableCell>
                     <TableCell align="left">Quantité</TableCell>

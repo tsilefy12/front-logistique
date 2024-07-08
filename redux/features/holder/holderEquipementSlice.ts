@@ -19,7 +19,7 @@ export const createHolderEquipement = createAsyncThunk(
         const response = await axios.post("/logistique/holder-equipment", holder);
         thunkAPI.dispatch(
           enqueueSnackbar({
-            message: "Materiel créer avec succès",
+            message: "Matériel créer avec succès",
             options: { variant: "success" },
           })
         );

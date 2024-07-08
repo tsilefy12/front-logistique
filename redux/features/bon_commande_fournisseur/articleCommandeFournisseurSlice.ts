@@ -36,14 +36,6 @@ export const createArticleCommandeFournisseur = createAsyncThunk(
     async (data: ArticleCommandeFournisseurItem, thunkAPI) => {
       try {
         const response = await axios.post("/logistique/article-fournisseur", data);
-        thunkAPI.dispatch(
-          enqueueSnackbar({
-            message: "Article de commande fournisseur créé avec succès",
-            options: {
-              variant: "success",
-            },
-          })
-        );
         return response.data;
       } catch (error: any) {
         if (error.response) {
@@ -60,14 +52,6 @@ export const deleteArticleCommandeFournisseur = createAsyncThunk(
       console.log("data.id" + data.id)
       try {
         const response = await axios.delete(`/logistique/article-fournisseur/${data.id}`);
-        thunkAPI.dispatch(
-          enqueueSnackbar({
-            message: "Artcile de commande fournisseur supprimé avec succès",
-            options: {
-              variant: "success",
-            },
-          })
-        );
         return response.data;
       } catch (error: any) {
         if (error.response) {
@@ -121,14 +105,6 @@ export const updateArticleCommandeFournisseur = createAsyncThunk(
       const response = await axios.patch(
         `/logistique/article-fournisseur${data.id}`,
         data.updateData
-      );
-      thunkAPI.dispatch(
-        enqueueSnackbar({
-          message: "mis à jour avec succès",
-          options: {
-            variant: "success",
-          },
-        })
       );
       return response.data;
     } catch (error: any) {

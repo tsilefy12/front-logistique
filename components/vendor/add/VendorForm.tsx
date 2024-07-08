@@ -159,7 +159,7 @@ export default function VendorForm() {
                     </Button>
                   </Stack>
                   <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"} Fournisseurs
+                    {isEditing ? "Modifier" : "Ajouter"} fournisseurs
                   </Typography>
                 </SectionNavigation>
                 <Divider />

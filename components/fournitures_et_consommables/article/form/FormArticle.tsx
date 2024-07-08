@@ -73,7 +73,7 @@ const FormArticle = () => {
         <FormControl fullWidth>
           <TextField
             id="outlined-basic"
-            label="Quantite stocké"
+            label="Quantité stocké"
             variant="outlined"
           />
         </FormControl>

@@ -37,6 +37,7 @@ export default function BonCommandeExterneList() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [filtre, setFiltre] = React.useState("");
   // const { suplyAndConsumable } = useAppSelector(
   //   (state) => state.suplyAndConsumable
   // );
@@ -60,7 +61,7 @@ export default function BonCommandeExterneList() {
 
   const handleClickDelete = async (id: any) => {
     confirm({
-      title: "Supprimer le fournisseur",
+      title: "Supprimer le BCE",
       description: "Voulez-vous vraiment supprimer ce BCE ?",
       cancellationText: "Annuler",
       confirmationText: "Supprimer",
@@ -111,7 +112,7 @@ export default function BonCommandeExterneList() {
             </Link>
           )}
           <Typography variant="h4">
-            Liste de Bon des commandes externe
+            Liste de bon des commandes externe
           </Typography>
         </SectionNavigation>
         {/* <Divider /> */}
@@ -119,17 +120,19 @@ export default function BonCommandeExterneList() {
       <SectionTable>
         <Box sx={{ width: "100%", mb: 2 }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <BonCommandeExterneTableToolbar />
+            <BonCommandeExterneTableToolbar filtre={filtre} setFiltre={setFiltre} />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
                 size="small"
               >
-                <BonCommandeExterneTableHeader />
+                <BonCommandeExterneTableHeader  />
                 <TableBody>
                   {bonCommandeExternes
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
+                    .filter((item) => (`${item.ref} ${item.conditionLivraison} ${item.modePaiement}`).toLowerCase().includes(filtre.toLowerCase()))
                     .map((row: BonCommandeExterneItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

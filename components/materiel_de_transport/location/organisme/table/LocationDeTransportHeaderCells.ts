@@ -23,7 +23,7 @@ export const LocationTransporTableaHeaderCells: readonly HeadCell[] = [
     id: "referenceBudgetaire",
     numeric: false,
     disablePadding: false,
-    label: "Référence budgetaire",
+    label: "Référence budgétaire",
   },
 
   {
@@ -49,7 +49,7 @@ export const LocationTransporTableaHeaderCells: readonly HeadCell[] = [
     id: "ligneBudgetaire",
     numeric: false,
     disablePadding: false,
-    label: "Ligne budgetaire",
+    label: "Ligne budgétaire",
   },
   {
     id: "itineraire",

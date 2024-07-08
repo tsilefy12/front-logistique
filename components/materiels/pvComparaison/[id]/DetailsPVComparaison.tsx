@@ -108,7 +108,7 @@ const DetailsPvComparaison = () => {
           <PDFButton data={pdf} />
         </Stack>
         <Typography variant="h4" color="GrayText">
-          Details d'une bon de pv de comparaison d'offre
+          Détails d'un pv de comparaison d'offre
         </Typography>
       </SectionNavigation>
       <DetailsContainer>
@@ -148,7 +148,7 @@ const DetailsPvComparaison = () => {
                 <Grid item xs={12} md={12}>
                   <InfoItems direction="row" spacing={2}>
                     <Typography variant="body1" color="secondary">
-                      Materiel
+                      Matériel
                     </Typography>
                     <Typography variant="body1" color="gray">
                       {pvComparaison.bce
@@ -293,7 +293,7 @@ const DetailsPvComparaison = () => {
                   <TableRow>
                     <TableCell></TableCell>
                     <TableCell>Fournisseur</TableCell>
-                    <TableCell align="left">Mode de Paie</TableCell>
+                    <TableCell align="left">Mode de paie</TableCell>
                     <TableCell align="left">Désignation</TableCell>
                     <TableCell align="left">Montant total</TableCell>
                     <TableCell></TableCell>

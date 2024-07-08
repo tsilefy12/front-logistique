@@ -56,7 +56,7 @@ export default function PvComparaisonList() {
 
   const handleClickDelete = async (id: any) => {
     confirm({
-      title: "Supprimer le fournisseur",
+      title: "Supprimer PV de vomparaison d'offre",
       description:
         "Voulez-vous vraiment supprimer ce pv de comparaison d'offre ?",
       cancellationText: "Annuler",
@@ -104,7 +104,7 @@ export default function PvComparaisonList() {
               </Button>
             </Link>
           )}
-          <Typography variant="h4"> Liste Pv Comparaison Offre</Typography>
+          <Typography variant="h4"> Liste PV des comparaisons d’offre</Typography>
         </SectionNavigation>
         {/* <Divider /> */}
       </NavigationContainer>
@@ -122,6 +122,7 @@ export default function PvComparaisonList() {
                 <TableBody>
                   {pvComparaisons
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: PvComparaisonItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       let modePaie: string | undefined = undefined;

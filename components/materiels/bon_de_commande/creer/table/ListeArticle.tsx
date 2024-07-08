@@ -155,7 +155,7 @@ const ListeArticle = () => {
                 <TableCell padding="none">
                   <TextField
                     id="filled-basic"
-                    label="Quantite"
+                    label="Quantité"
                     variant="filled"
                     style={{ width: "100%" }}
                   />

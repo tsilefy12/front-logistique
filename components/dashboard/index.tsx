@@ -1,19 +1,10 @@
-import {
-  Box,
-  Card,
-  Divider,
-  FormLabel,
-  Icon,
-  ListItemIcon,
-  ListItemText,
-  Stack,
-} from "@mui/material";
+import { Box, Card, Divider, FormLabel, Icon, Stack } from "@mui/material";
 import HeaderDashboard from "./header";
 import CercleChart from "./cercleChart";
 import useFetchSuplyAndConsumableList from "../supply-and-consumable/entreSortie/hooks/useFetchSupplyAndConsumables";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { useAppSelector } from "../../hooks/reduxHooks";
 import DemiCercleChart from "./demiCercle";
 import useFetchVendors from "../vendor/hooks/useFetchVendors";
 import useFetchTypeEquipment from "../configurations/type-equipment/hooks/useFetchTypeEquipment";
@@ -44,12 +35,18 @@ const Dashboard = () => {
     {}
   );
   const menu = allMenu();
+
   useEffect(() => {
     fetchSuplyAndConsumableList();
     fetchVendors();
     fetchTypeEquipment();
     fetchEquipment();
-  }, []);
+  }, [
+    fetchSuplyAndConsumableList,
+    fetchVendors,
+    fetchTypeEquipment,
+    fetchEquipment,
+  ]);
 
   useEffect(() => {
     const filteredList = suplyAndConsumableList.filter(
@@ -89,8 +86,6 @@ const Dashboard = () => {
             alignItems={"center"}
             sx={{ width: "100%" }}
             gap={3}
-            display={"flex"}
-            flexDirection={"row"}
           >
             <Card
               sx={{
@@ -114,29 +109,35 @@ const Dashboard = () => {
                   height: "auto",
                   marginTop: -3.5,
                   width: "85%",
-                  margingLeft: 3,
+                  marginLeft: 3,
                 }}
               >
-                {listFiltered.map((i) => (
-                  <Stack key={i.id} direction={"column"} sx={{ width: "100%" }}>
+                {listFiltered
+                  .sort((a, b) => b.id.localeCompare(a.id))
+                  .map((i) => (
                     <Stack
-                      direction={"row"}
-                      alignItems={"center"}
-                      justifyContent={"space-between"}
+                      key={i.id}
+                      direction={"column"}
                       sx={{ width: "100%" }}
                     >
-                      <p>{i.id}</p>
-                      <p
-                        style={{
-                          color: i.name <= 5 ? "red" : "rgb(75, 192, 192)",
-                        }}
+                      <Stack
+                        direction={"row"}
+                        alignItems={"center"}
+                        justifyContent={"space-between"}
+                        sx={{ width: "100%" }}
                       >
-                        {i.name}
-                      </p>
+                        <p>{i.id}</p>
+                        <p
+                          style={{
+                            color: i.name <= 5 ? "red" : "rgb(75, 192, 192)",
+                          }}
+                        >
+                          {i.name}
+                        </p>
+                      </Stack>
+                      <Divider />
                     </Stack>
-                    <Divider />
-                  </Stack>
-                ))}
+                  ))}
               </Stack>
             </Card>
             <Card
@@ -146,7 +147,7 @@ const Dashboard = () => {
                 justifyContent: "flex-start",
                 alignItems: "start",
                 height: "100%",
-                paddiingright: 2,
+                paddingRight: 2,
               }}
             >
               <Stack justifyContent={"left"} alignItems={"start"}>
@@ -311,6 +312,7 @@ const Dashboard = () => {
     </Stack>
   );
 };
+
 export default Dashboard;
 
 const styleCard = {

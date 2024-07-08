@@ -147,7 +147,7 @@ export default function SuplyAndConsumableForm() {
                     </Button>
                   </Stack>
                   <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"} Fiche de Stock
+                    {isEditing ? "Modifier" : "Ajouter"} fiche de stock
                   </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -162,7 +162,7 @@ export default function SuplyAndConsumableForm() {
                <Stack direction="row" spacing={2}>
                <OSTextField
                   id="outlined-basic"
-                  label="Quantite"
+                  label="Quantité"
                   name="quantity"
                   type="number"
                   min="0"
@@ -178,7 +178,7 @@ export default function SuplyAndConsumableForm() {
                 />
                 <OSTextField
                   id="outlined-basic"
-                  label="Prix Unitaire"
+                  label="Prix unitaire"
                   name="unitPrice"
                   type="number"
                   min="0"
@@ -250,7 +250,7 @@ export default function SuplyAndConsumableForm() {
                     id="outlined-basic"
                     label="Catégorie"
                     name="categorieStock"
-                    options={typeEquipmentList.map((e)=> ({...e,prefix:" - " + e.prefix}))}
+                    options={typeEquipmentList.map((e:any)=> ({...e,prefix:" - " + e.prefix}))}
                     dataKey={["type","prefix"]}
                     valueKey="id"
                     type="text"

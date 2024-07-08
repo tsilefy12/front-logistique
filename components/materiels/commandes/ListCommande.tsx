@@ -43,7 +43,7 @@ import OrderEquipementTableToolbar from "./table/OrderEquipementTableToolbar";
 const ListCommande = () => {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const dispatch: any = useAppDispatch();
   const { orderEquipmentList } = useAppSelector(
     (state) => state.orderEquipment
@@ -160,6 +160,7 @@ const ListCommande = () => {
                 rows.slice().sort(getComparator(order, orderBy)) */}
                   {orderEquipmentList
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: OrderEquipmentItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
 

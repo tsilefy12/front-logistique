@@ -167,6 +167,7 @@ export default function ConsumableList() {
                 <TableBody>
                   {consumables
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: ConsumableItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

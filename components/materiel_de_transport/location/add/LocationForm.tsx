@@ -93,7 +93,7 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
               sx={{ marginInline: 3 }}
               type="submit"
             >
-              {isEditing ? "Modifier" : "Ajouter"}
+              Enregistrer
             </Button>
             <Button
               variant="text"
@@ -110,7 +110,7 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
             </Button>
           </Stack>
           <Typography variant="h4">
-            {isEditing ? "Modifier" : "Ajouter"}
+            {isEditing ? "Modifier" : "Nouveau"} location externe
           </Typography>
         </SectionNavigation>
         <Divider />
@@ -146,7 +146,7 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
           variant="outlined"
           name="responsable"
           options={employees}
-          dataKey={"name"}
+          dataKey={["name", "surname"]}
           valueKey="id"
           inputProps={{ autoComplete: "off" }}
         />
@@ -164,7 +164,7 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
         <FormControl fullWidth>
           <OSTextField
             id="outlined-basic"
-            label="Référence budgetaire"
+            label="Référence budgétaire"
             name="referenceBudgetaire"
             inputProps={{ autoComplete: "off" }}
           />
@@ -191,7 +191,7 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
         <FormControl fullWidth>
           <OSTextField
             id="outlined-basic"
-            label="prix unitaire"
+            label="Prix unitaire"
             variant="outlined"
             name="pu"
             type="number"
@@ -246,7 +246,7 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
         />
         <OSSelectField
           id="outlined-basic"
-          label="Ligne budgetaire"
+          label="Ligne budgétaire"
           variant="outlined"
           options={budgetLineList}
           dataKey={["code"]}

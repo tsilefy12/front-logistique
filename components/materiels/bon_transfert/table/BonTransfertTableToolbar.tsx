@@ -56,7 +56,7 @@ const BonTransfertTableToolbar = () => {
 					}}
 				>
 					<Typography variant="h6" id="tableTitle" component="div">
-						Liste de Bon des transferts
+						Liste de bon des transferts
 					</Typography>
 					<TextField
 						variant="outlined"

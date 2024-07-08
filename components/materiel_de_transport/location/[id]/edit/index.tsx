@@ -9,7 +9,7 @@ const EditLocationDeTransport = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (router.query.id) {
-        getLocationDeTransport(router.query.id as string);
+      getLocationDeTransport(router.query.id as string);
     }
   }, [router.query]);
 

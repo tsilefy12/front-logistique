@@ -110,7 +110,7 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
                     </Button>
                 </Stack>
                 <Typography variant="h4">
-                    {isEditing ? "Modifier" : "Ajouter"} Bon de commande Externe
+                    {isEditing ? "Modifier" : "Ajouter"} bon de commande externe
                 </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -139,7 +139,7 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
                             fullWidth
                             id="outlined-basic"
                             variant="outlined"
-                            label="Réference"
+                            label="Référence"
                             name="ref"
                         />
                     </FormControl>
@@ -259,14 +259,14 @@ const FormBCE  = ({formikProps,valuesArticle,setValuesArticle}: {formikProps: Fo
                             }}
                             >
                             <Typography variant="h6" id="tableTitle" component="div">
-                                Article à Commander
+                                Article à commander 
                             </Typography>
                         </Stack>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 700 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Designation</TableCell>
+                                        <TableCell>Désignation</TableCell>
                                         <TableCell align="left">Caractéristique</TableCell>
                                         <TableCell align="left">Fournisseur</TableCell>
                                         <TableCell align="left">PU</TableCell>

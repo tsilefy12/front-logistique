@@ -27,7 +27,7 @@ const TypeEquipmentSection = () => {
               Retour
             </Button>
           </Link>
-          <Typography variant="h4"> Type de Materiel </Typography>
+          <Typography variant="h4"> Type de matériel </Typography>
         </SectionNavigation>
         <Divider />
       </Stack>

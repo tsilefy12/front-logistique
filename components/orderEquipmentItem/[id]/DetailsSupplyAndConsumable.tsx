@@ -70,7 +70,7 @@ const DetailsOrderEquipmentItem = () => {
           <Grid item xs={12} md={12}>
             <InfoItems direction="row" spacing={2}>
               <Typography variant="body1" color="secondary">
-                Quantite :
+               Quantité :
               </Typography>
               <Typography variant="body1" color="gray">
                 {orderEquipmentItem.quantity}

@@ -25,7 +25,7 @@ const useFetchPassenger = () => {
     }
     if (router.query.orderBy && router.query.order) {
       switch (router.query.orderBy) {
-        case "Etat Article":
+        case "Etat article":
           args.orderBy = {
             name: router.query.order,
           };

@@ -50,7 +50,7 @@ const BarChart: React.FC = () => {
           (_, index) => colors[index % colors.length]
         ),
         borderWidth: 1,
-        barThickness: 30,
+        barThickness: 30, // Adjust this value for the desired width of the bars
       },
     ],
   };
@@ -82,11 +82,14 @@ const BarChart: React.FC = () => {
           stepSize: 5,
         },
         grid: {
-          display: false,
+          display: false, // Disable grid lines for the x-axis
         },
       },
       y: {
         beginAtZero: true,
+        grid: {
+          display: true, // Keep grid lines for the y-axis (if needed)
+        },
       },
     },
   };
@@ -97,7 +100,7 @@ const BarChart: React.FC = () => {
         display: "flex",
         flexDirection: "column",
         width: "100%",
-        margin: "10px",
+        margin: "4px",
       }}
     >
       <Bar data={data} options={options} />

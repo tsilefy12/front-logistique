@@ -185,7 +185,7 @@ export default function ListArticle() {
   const columns: GridColumns = [
     {
       field: "designation",
-      headerName: "Designation",
+      headerName: "Désignation",
       editable: true,
       flex: 1,
       align: "left",
@@ -193,7 +193,7 @@ export default function ListArticle() {
     },
     {
       field: "quantity",
-      headerName: "Quantite",
+      headerName: "Quantité",
       type: "number",
       editable: true,
       flex: 1,

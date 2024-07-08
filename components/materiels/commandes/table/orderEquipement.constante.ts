@@ -35,6 +35,6 @@ export const orderequipmentheadCells: readonly OrderEquipementHeadCell[] = [
     id: "status",
     numeric: false,
     disablePadding: false,
-    label: "Status",
+    label: "Statut",
   },
 ];

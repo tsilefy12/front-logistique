@@ -17,7 +17,7 @@ export const fournisseurheadCells: readonly FournisseurHeadCell[] = [
     id: "tel",
     numeric: false,
     disablePadding: false,
-    label: "Télephone",
+    label: "Téléphone",
   },
   {
     id: "email",

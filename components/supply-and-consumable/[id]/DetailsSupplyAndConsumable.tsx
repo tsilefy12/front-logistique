@@ -54,7 +54,7 @@ const DetailsSuplyAndConsumable = () => {
           </Button>
         </Link>
         <Typography variant="h4" color="GrayText">
-          Details Fiche de Stock
+          Détails fiche de stock
         </Typography>
       </SectionNavigation>
       <DetailsContainer>
@@ -82,7 +82,7 @@ const DetailsSuplyAndConsumable = () => {
               <Grid item xs={12} md={12}>
                 <InfoItems direction="row" spacing={2}>
                   <Typography variant="body1" color="secondary">
-                    Quantite :
+                    Quantité :
                   </Typography>
                   <Typography variant="body1" color="gray">
                     {suplyAndConsumable.quantity}
@@ -94,7 +94,7 @@ const DetailsSuplyAndConsumable = () => {
               <Grid item xs={12} md={12}>
                 <InfoItems direction="row" spacing={2}>
                   <Typography variant="body1" color="secondary">
-                    Prix Unitaire :
+                    Prix unitaire :
                   </Typography>
                   <Typography variant="body1" color="gray">
                     {formatMontant(suplyAndConsumable.unitPrice ?? 0)}
@@ -132,7 +132,7 @@ const DetailsSuplyAndConsumable = () => {
               <Grid item xs={12} md={12}>
                 <InfoItems direction="row" spacing={2}>
                   <Typography variant="body1" color="secondary">
-                    Unité de Gestion de Stock :
+                    Unité de gestion de stock :
                   </Typography>
                   <Typography variant="body1" color="gray">
                     {suplyAndConsumable.uniteStock?.uniteStock}

@@ -5,7 +5,7 @@ export const FicheDotationHeadCells: readonly HeadCell[] = [
         id: "reference",
         numeric: false,
         disablePadding: false,
-        label: "Réference",
+        label: "Référence",
     },
     {
         id: "date",
@@ -46,6 +46,6 @@ export const FicheDotationHeadCells: readonly HeadCell[] = [
         id: "ligneBudgetaire",
         numeric: false,
         disablePadding: false,
-        label: "Ligne budgetaire",
+        label: "Ligne budgétaire",
     } 
 ];

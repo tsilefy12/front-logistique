@@ -120,6 +120,7 @@ export default function VendorList() {
                 <TableBody>
                   {vendors
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: VendorItem | any, index) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

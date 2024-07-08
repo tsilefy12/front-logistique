@@ -43,7 +43,7 @@ export default function InventaireList() {
   
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const router = useRouter();
 
@@ -98,6 +98,7 @@ export default function InventaireList() {
                 <TableBody>
                   {inventaireList
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .map((row: InventaireItem | any, index) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

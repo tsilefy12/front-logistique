@@ -22,7 +22,7 @@ import { CarVoucherItem } from "../carVoucher.interface";
 			);
 			thunkAPI.dispatch(
 				enqueueSnackbar({
-					message: "Car voucher updated successfully",
+					message: "Entretien modifié avec succès",
 					options: { variant: "success" },
 				})
 			);

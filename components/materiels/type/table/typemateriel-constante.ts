@@ -6,7 +6,7 @@ export const typematerielheadCells: readonly TypeMaterielHeadCell[] = [
         id : 'type',
         numeric: false,
         disablePadding: true,
-        label: 'Type de materiel',
+        label: 'Type de matériel',
     },
     {
         id : 'prefix',
