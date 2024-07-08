@@ -117,11 +117,11 @@ const ListFournisseur = () => {
                   {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                 rows.slice().sort(getComparator(order, orderBy)) */}
                   {fournisseurList
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .slice()
                     .sort((a, b) => (b.id!).localeCompare(a.id!))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row: FournisseurItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
-
                       return (
                         <TableRow hover tabIndex={-1} key={row.id}>
                           <TableCell
