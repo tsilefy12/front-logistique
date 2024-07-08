@@ -15,6 +15,7 @@ import allMenu from "../../config/menu";
 import Link from "next/link";
 import FooterBackOffice from "../../layouts/backOffice/FooterBackOffice";
 import { borderColor } from "polished";
+import { ShoppingBag } from "@mui/icons-material";
 
 const Dashboard = () => {
   const { suplyAndConsumableList } = useAppSelector(
@@ -27,8 +28,11 @@ const Dashboard = () => {
   const fetchSuplyAndConsumableList = useFetchSuplyAndConsumableList();
   const fetchVendors = useFetchVendors();
   const fetchTypeEquipment = useFetchTypeEquipment();
+  const { typeEquipmentList } = useAppSelector((state) => state.typeEquipment);
   const fetchEquipment = useFetchEquipment();
-
+  const { transportationEquipments } = useAppSelector(
+    (state) => state.transportationEquipment
+  );
   const [listFiltered, setListFiltered] = useState<
     { id: string; name: number }[]
   >([]);
@@ -81,7 +85,7 @@ const Dashboard = () => {
           marginLeft: 4,
           marginRight: 4,
           marginTop: 4,
-          marginBottom: 4,
+          marginBottom: 1,
         }}
       >
         <Stack direction={"column"}>
@@ -250,11 +254,16 @@ const Dashboard = () => {
               </Card>
             </Stack>
           </Stack>
-          <Stack direction={"row"} justifyContent={"space-between"} padding={2}>
+          <Stack
+            direction={"row"}
+            justifyContent={"space-between"}
+            padding={2}
+            gap={4}
+          >
             <Card
               sx={{
                 ...styleCard,
-                width: "70%",
+                width: "50%",
                 alignItems: "start",
                 height: "5%",
               }}
@@ -283,85 +292,158 @@ const Dashboard = () => {
               height={"100%"}
               fontWeight={"bold"}
             >
-              <CardTranpostationEquipment />
-              <Card
-                sx={{
-                  paddingLeft: 3,
-                  paddingRight: 3,
-                  paddingTop: 1,
-                  height: 145,
-                }}
-              >
-                <Stack
-                  direction={"column"}
-                  gap={2}
-                  alignItems={"center"}
-                  paddingTop={2}
+              <Stack direction={"row"} justifyContent={"space-between"} gap={2}>
+                <Card
+                  sx={{
+                    paddingLeft: 3,
+                    paddingRight: 3,
+                    paddingTop: 1,
+                    height: 150,
+                    width: "50%",
+                    border: "1px solid #E0E0E0",
+                    backgroundColor: "#A4C754",
+                  }}
                 >
-                  <p>
-                    Nombre de{" "}
-                    {vendors.length > 1 ? "fournisseurs" : "fournisseur"}
-                  </p>
-                  <span
-                    style={{
-                      textAlign: "center",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "rgb(75, 192, 192)",
-                      paddingTop: "5%",
-                    }}
-                  >
-                    {vendors.length}
-                  </span>
-                </Stack>
-              </Card>
-              <Card
-                sx={{
-                  paddingLeft: 3,
-                  paddingRight: 3,
-                  paddingTop: 1,
-                  height: 160,
-                  overflow: "auto",
-                }}
-              >
-                <Stack direction={"column"} gap={2}>
-                  <p>Nombre de materièle selon leur état</p>
-                  <Stack direction={"column"} gap={1}>
-                    {Object.keys(statusCounts).map((status, index) => (
-                      <Stack
-                        key={index}
-                        direction={"row"}
-                        gap={8}
-                        alignItems={"center"}
-                        paddingBottom={1}
-                      >
-                        <span
-                          style={{
-                            color:
-                              status === "BAD"
-                                ? "red"
-                                : status === "GOOD"
-                                ? "rgb(75, 192, 192)"
-                                : "brown",
-                          }}
-                        >
-                          {statusCounts[status]}
-                        </span>
-                        <span
-                          style={{ color: "GrayText", fontWeight: "normal" }}
-                        >
-                          -{" "}
-                          {status == "GOOD"
-                            ? "Bon"
-                            : status == "BAD"
-                            ? "Mauvais"
-                            : "Neuf"}
+                  <Stack direction={"column"} gap={2}>
+                    <Stack
+                      direction={"row"}
+                      justifyContent={"space-between"}
+                      alignItems={"center"}
+                    >
+                      <p>
+                        {vendors.length > 1 ? "Fournisseurs" : "Fournisseur"}
+                      </p>
+                      <ShoppingBag fontSize="large" />
+                    </Stack>
+                    <span
+                      style={{
+                        textAlign: "center",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "blue",
+                        fontSize: "35px",
+                        paddingTop: "5px",
+                      }}
+                    >
+                      {vendors.length}
+                    </span>
+                  </Stack>
+                </Card>
+                <CardTranpostationEquipment />
+              </Stack>
+              <Stack direction={"row"} justifyContent={"space-between"}>
+                <Card
+                  sx={{
+                    paddingLeft: 3,
+                    paddingRight: 3,
+                    paddingTop: 1,
+                    height: 170,
+                    width: "60%",
+                    backgroundColor: "#A4C754",
+                  }}
+                >
+                  <Stack direction={"column"} gap={2}>
+                    <p>Matériel de transport</p>
+                    <Stack
+                      direction={"row"}
+                      gap={2}
+                      justifyContent={"space-between"}
+                    >
+                      <Stack direction={"column"} gap={2} alignItems={"center"}>
+                        <span>Voiture</span>
+                        <span style={{ color: "white", fontSize: "35px" }}>
+                          {(() => {
+                            const count = transportationEquipments
+                              .filter(
+                                (f) =>
+                                  f.type && f.typeEquipment?.type === "Voiture"
+                              )
+                              .reduce((total, f) => total + 1, 0);
+
+                            return count;
+                          })()}
                         </span>
                       </Stack>
-                    ))}
+                      <Stack direction={"column"} gap={2} alignItems={"center"}>
+                        <span>Moto</span>
+                        <span style={{ color: "yellow", fontSize: "35px" }}>
+                          {(() => {
+                            const count = transportationEquipments
+                              .filter(
+                                (f) =>
+                                  f.type && f.typeEquipment?.type === "Moto"
+                              )
+                              .reduce((total, f) => total + 1, 0);
+
+                            return count;
+                          })()}
+                        </span>
+                      </Stack>
+                      <Stack direction={"column"} gap={2} alignItems={"center"}>
+                        <span>Avion</span>
+                        <span style={{ color: "blue", fontSize: "35px" }}>
+                          {(() => {
+                            const count = transportationEquipments
+                              .filter(
+                                (f) =>
+                                  f.type && f.typeEquipment?.type === "Avion"
+                              )
+                              .reduce((total, f) => total + 1, 0);
+
+                            return count;
+                          })()}
+                        </span>
+                      </Stack>
+                      <Stack direction={"column"} gap={2} alignItems={"center"}>
+                        <span>Bateau</span>
+                        <span
+                          style={{
+                            color: "blue",
+                            fontSize: "35px",
+                          }}
+                        >
+                          {(() => {
+                            const count = transportationEquipments
+                              .filter(
+                                (f) =>
+                                  f.type && f.typeEquipment?.type === "Pirogue"
+                              )
+                              .reduce((total, f) => total + 1, 0);
+
+                            return count;
+                          })()}
+                        </span>
+                      </Stack>
+                    </Stack>
                   </Stack>
-                </Stack>
-              </Card>
+                </Card>
+                <Card
+                  sx={{
+                    paddingLeft: 3,
+                    paddingRight: 3,
+                    paddingTop: 1,
+                    height: 170,
+                    width: "35%",
+                    backgroundColor: "#A4C754",
+                  }}
+                >
+                  <Stack direction={"column"} gap={2}>
+                    <p>Stock matériels</p>
+                    <span
+                      style={{
+                        color: "blue",
+                        fontSize: "35px",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      {equipments.length}
+                    </span>
+                  </Stack>
+                </Card>
+              </Stack>
             </Stack>
           </Stack>
         </Stack>

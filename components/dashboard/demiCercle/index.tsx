@@ -32,7 +32,7 @@ const BarChart: React.FC = () => {
   });
 
   const colors = [
-    "#4caf50", // green
+    "#A4C754", // green
     "#f44336", // red
     "rgb(75, 192, 192)", // blue
     "#ff9800", // orange

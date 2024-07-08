@@ -112,7 +112,7 @@ const CercleChart: React.FC = () => {
               color: "white",
               display: true,
               align: "center",
-              anchor: "center",
+              anchor: "start",
               textAlign: "center",
             },
             legend: {
@@ -128,8 +128,6 @@ const CercleChart: React.FC = () => {
         plugins: [ChartDataLabels],
       });
     }
-
-    // Cleanup function to destroy the chart when the component unmounts
     return () => {
       if (chartInstanceRef.current) {
         chartInstanceRef.current.destroy();

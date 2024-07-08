@@ -1,32 +1,39 @@
 import { Card, Stack } from "@mui/material";
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { useAppSelector } from "../../../hooks/reduxHooks";
-import useFetchTransportationEquipments from "../../materiel_de_transport/hooks/useFetchTransportationEquipments";
 import useFetchTypeEquipment from "../../configurations/type-equipment/hooks/useFetchTypeEquipment";
-import { TypeEquipmentItem } from "../../../redux/features/typeEquipment/typeEquipmentSlice.interface";
 
-const CardTranpostationEquipment = () => {
-  const fetchTransportationEquipments = useFetchTransportationEquipments();
+const CardTransportationEquipment = () => {
   const fetchTypeEquipment = useFetchTypeEquipment();
-
-  const { transportationEquipments } = useAppSelector(
-    (state) => state.transportationEquipment
-  );
   const { typeEquipmentList } = useAppSelector((state) => state.typeEquipment);
-  const stableFetchTypeEquipment = useCallback(fetchTypeEquipment, []);
 
   useEffect(() => {
-    stableFetchTypeEquipment();
-  }, [stableFetchTypeEquipment]);
+    fetchTypeEquipment();
+  }, []);
 
   const colors = [
-    "#4caf50", // green
-    "#f44336", // red
-    "rgb(75, 192, 192)", // blue
-    "#ffeb3b", // yellow
-    "#ff9800", // orange
-    "#9c27b0", // purple
+    "white", // white
+    "blue", // blue
+    "yellow", // yellow
   ];
+
+  // Filter and reduce to count types
+  const typeCounts = typeEquipmentList
+    .filter((f) => f.prefix)
+    .reduce((acc, curr) => {
+      const type = curr.prefix;
+      if (acc[type]) {
+        acc[type].count += 1;
+      } else {
+        acc[type] = {
+          type,
+          count: 1,
+        };
+      }
+      return acc;
+    }, {});
+
+  const typeEntries = Object.values(typeCounts);
 
   return (
     <Card
@@ -34,39 +41,37 @@ const CardTranpostationEquipment = () => {
         paddingLeft: 3,
         paddingRight: 3,
         paddingTop: 2,
-        height: 175,
+        height: 150,
+        backgroundColor: "#A4C754",
         overflow: "auto",
       }}
     >
       <Stack direction={"column"} gap={2}>
-        <p>Nombre de materièle de transport</p>
-        <Stack direction={"column"} gap={1}>
-          {typeEquipmentList
-            .map(
-              (t: TypeEquipmentItem, index) =>
-                transportationEquipments.filter((f) => f.type == t.id).length !==
-                  0 && (
-                  <Stack
-                    key={t.id}
-                    direction={"row"}
-                    gap={8}
-                    alignItems={"center"}
-                  >
-                    <span style={{ color: colors[index % colors.length] }}>
-                      {
-                        transportationEquipments.filter((f) => f.type == t.id)
-                          .length
-                      }
-                    </span>
-                    <span style={{ color: "GrayText", fontWeight: "normal" }}>
-                      - {t.type} {t.prefix}
-                    </span>
-                  </Stack>
-                )
-            )}
-        </Stack>
+        <p style={{ display: "flex" }}>Matériels</p>
+        {typeEntries.map((entry, index) => (
+          <Stack
+            key={entry.type}
+            direction={"row"}
+            gap={8}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+          >
+            <span style={{ color: colors[index % colors.length] }}>
+              {entry.type}
+            </span>
+            <span
+              style={{
+                color: colors[index % colors.length],
+                fontWeight: "normal",
+              }}
+            >
+              {entry.count}
+            </span>
+          </Stack>
+        ))}
       </Stack>
     </Card>
   );
 };
-export default CardTranpostationEquipment;
+
+export default CardTransportationEquipment;
