@@ -1,4 +1,13 @@
-import { Card, Divider, FormLabel, Stack } from "@mui/material";
+import {
+  Box,
+  Card,
+  Divider,
+  FormLabel,
+  Icon,
+  ListItemIcon,
+  ListItemText,
+  Stack,
+} from "@mui/material";
 import HeaderDashboard from "./header";
 import CercleChart from "./cercleChart";
 import useFetchSuplyAndConsumableList from "../supply-and-consumable/entreSortie/hooks/useFetchSupplyAndConsumables";
@@ -11,6 +20,8 @@ import useFetchTypeEquipment from "../configurations/type-equipment/hooks/useFet
 import useFetchEquipment from "../materiels/informatique/hooks/useFetchEquipment";
 import { EquipmentItem } from "../../redux/features/equipment/equipment.interface";
 import CardTranpostationEquipment from "./transportationEquipment";
+import allMenu from "../../config/menu";
+import Link from "next/link";
 
 const Dashboard = () => {
   const { suplyAndConsumableList } = useAppSelector(
@@ -32,7 +43,7 @@ const Dashboard = () => {
   const [statusCounts, setStatusCounts] = useState<{ [key: string]: number }>(
     {}
   );
-
+  const menu = allMenu();
   useEffect(() => {
     fetchSuplyAndConsumableList();
     fetchVendors();
@@ -88,6 +99,7 @@ const Dashboard = () => {
                 justifyContent: "flex-start",
                 alignItems: "start",
                 overflow: "auto",
+                height: "100%",
               }}
             >
               <Stack>
@@ -130,9 +142,11 @@ const Dashboard = () => {
             <Card
               sx={{
                 ...styleCard,
-                width: "100%",
+                width: "auto",
                 justifyContent: "flex-start",
                 alignItems: "start",
+                height: "100%",
+                paddiingright: 2,
               }}
             >
               <Stack justifyContent={"left"} alignItems={"start"}>
@@ -140,9 +154,44 @@ const Dashboard = () => {
                   Recharge du carburant
                 </p>
               </Stack>
-              <Stack direction={"row"} sx={{ marginTop: -3.5 }}>
+              <Stack
+                direction={"row"}
+                sx={{ marginTop: -3.5, paddingRight: 4 }}
+              >
                 <DemiCercleChart />
               </Stack>
+            </Card>
+            <Card
+              sx={{
+                ...styleCard,
+                width: "auto",
+                justifyContent: "center",
+                alignItems: "start",
+                height: "100%",
+              }}
+            >
+              {menu.map((i: any) => (
+                <Stack key={i.id}>
+                  <Stack direction={"row"} gap={1}>
+                    <Box
+                      component="a"
+                      href={i.link}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        textDecoration: "none",
+                        "&:hover": {
+                          backgroundColor: "green",
+                          cursor: "pointer",
+                        },
+                      }}
+                    >
+                      <Icon sx={{ paddingRight: 2 }}>{i.icon}</Icon>
+                      <span>{i.name}</span>
+                    </Box>
+                  </Stack>
+                </Stack>
+              ))}
             </Card>
           </Stack>
         </Stack>
@@ -271,5 +320,4 @@ const styleCard = {
   flexDirection: "column",
   gap: 5,
   padding: 2,
-  height: 125,
 };

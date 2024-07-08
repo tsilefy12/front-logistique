@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Bar } from "react-chartjs-2";
+import { Chart as ChartJS, BarElement, Tooltip, Legend } from "chart.js";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 import useFetchTransportationEquipments from "../../materiel_de_transport/hooks/useFetchTransportationEquipments";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Stack } from "@mui/material";
 
-ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
+ChartJS.register(BarElement, Tooltip, Legend, ChartDataLabels);
 
-const DemiCercleChart: React.FC = () => {
+const BarChart: React.FC = () => {
   const { transportationEquipments } = useAppSelector(
     (state) => state.transportationEquipment
   );
@@ -44,15 +44,13 @@ const DemiCercleChart: React.FC = () => {
     labels: listMateriel.length !== 0 ? listMateriel : ["vide"],
     datasets: [
       {
-        label: "Reste",
+        label: "Reste de carburant (L)",
         data: listResteCarburant.length !== 0 ? listResteCarburant : [0],
         backgroundColor: listResteCarburant.map(
           (_, index) => colors[index % colors.length]
         ),
-        borderWidth: 0,
-        cutout: "85%", // Creates the semi-circle effect
-        rotation: -0.5 * Math.PI, // Start angle (top)
-        circumference: Math.PI, // Only half of the circle
+        borderWidth: 1,
+        barThickness: 30,
       },
     ],
   };
@@ -60,16 +58,15 @@ const DemiCercleChart: React.FC = () => {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    animation: false,
     plugins: {
       tooltip: {
-        enabled: false,
+        enabled: true,
       },
       legend: {
         position: "top" as const,
       },
       datalabels: {
-        formatter: (value: any, context: any) => {
+        formatter: (value: any) => {
           return value; // Display the raw data value
         },
         color: "#fff",
@@ -78,61 +75,34 @@ const DemiCercleChart: React.FC = () => {
         },
       },
     },
+    scales: {
+      x: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 5,
+        },
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        beginAtZero: true,
+      },
+    },
   };
-  const totalResteCarburant = listResteCarburant.reduce(
-    (acc, curr) => acc + curr,
-    0
-  );
 
   return (
     <div
       style={{
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "column",
         width: "100%",
-        margin: "4px",
+        margin: "10px",
       }}
     >
-      {listResteCarburant.map((m, index) => (
-        <Stack key={index} direction={"column"} gap={2} width={150}>
-          <Stack direction={"row"} gap={2}>
-            <span
-              style={{
-                width: `${(m * 100) / totalResteCarburant}%`,
-                backgroundColor: colors[index % colors.length],
-                padding: "5px 10px",
-                color: "#fff",
-                borderRadius: "5px",
-                textAlign: "center",
-              }}
-            >
-              {/* Optionally include some content inside the span if needed */}
-            </span>
-          </Stack>
-          <Stack direction={"row"} gap={4}>
-            <Stack direction={"row"} gap={1} alignItems={"center"}>
-              <div
-                style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: "50%",
-                  backgroundColor: colors[index % colors.length],
-                }}
-              ></div>
-              <div>
-                {" "}
-                {listMateriel[index]} :{" "}
-                <span style={{ color: m <= 5 ? "red" : "rgb(75, 192, 192)" }}>
-                  {m}
-                </span>{" "}
-                {m > 1 ? "L" : "L"}
-              </div>
-            </Stack>
-          </Stack>
-        </Stack>
-      ))}
+      <Bar data={data} options={options} />
     </div>
   );
 };
 
-export default DemiCercleChart;
+export default BarChart;
