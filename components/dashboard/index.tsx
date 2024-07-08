@@ -288,7 +288,7 @@ const Dashboard = () => {
             </Card>
             <Stack
               direction={"column"}
-              gap={2}
+              gap={3}
               height={"100%"}
               fontWeight={"bold"}
             >
@@ -337,7 +337,7 @@ const Dashboard = () => {
                     paddingLeft: 3,
                     paddingRight: 3,
                     paddingTop: 1,
-                    height: 170,
+                    height: 180,
                     width: "60%",
                     backgroundColor: "#A4C754",
                   }}
@@ -422,7 +422,7 @@ const Dashboard = () => {
                     paddingLeft: 3,
                     paddingRight: 3,
                     paddingTop: 1,
-                    height: 170,
+                    height: 180,
                     width: "35%",
                     backgroundColor: "#A4C754",
                   }}
