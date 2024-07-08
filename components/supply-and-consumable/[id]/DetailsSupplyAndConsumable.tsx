@@ -157,7 +157,7 @@ const DetailsSuplyAndConsumable = () => {
               <Grid item xs={12} md={12}>
                 <InfoItems direction="row" spacing={2}>
                   <Typography variant="body1" color="secondary">
-                    Founisseur :
+                    Fournisseur :
                   </Typography>
                   <Typography variant="body1" color="gray">
                     {suplyAndConsumable.vendor?.name}

@@ -28,7 +28,7 @@ function PrintBonCommandeFournisseur({ pdfData }: { pdfData: any }) {
                                    />
                               </Text>
                               <View style={styles.row2}>
-                                   <Text style={{textAlign:"center",alignItems:"center",width:"100%",fontSize:14}}>BON DE COMMANDE</Text>
+                                   <Text style={{textAlign:"center",alignItems:"center",width:"100%",fontSize:14 ,color:"#ffffff",fontWeight:900,backgroundColor:"#76923E", padding:"4"}}>BON DE COMMANDE</Text>
                               </View>
                          </View>
                     </View>
@@ -138,6 +138,8 @@ const styles = StyleSheet.create({
           paddingTop: 2,
           paddingBottom: 2,
           paddingLeft:2,
+          backgroundColor:"#4AADC4",
+          color:"#ffffff",
           fontWeight: "bold",
           fontSize: 10,
      },
@@ -147,6 +149,8 @@ const styles = StyleSheet.create({
           borderLeft: "1px solid #000",
           paddingTop:4,
           padding :2,
+          backgroundColor:"#4AADC4",
+          color:"#ffffff",
           fontWeight: "bold",
           fontSize: 12,
      },
@@ -154,6 +158,8 @@ const styles = StyleSheet.create({
           width: "15%",
           textAlign: "center",
           borderLeft: "1px solid #000",
+          backgroundColor:"#4AADC4",
+          color:"#ffffff",
           paddingTop:4,
           padding :2,
           fontWeight: "bold",

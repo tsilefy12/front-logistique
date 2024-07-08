@@ -31,23 +31,23 @@ function PrintFicheDotation({ pdfData }: { pdfData: any }) {
                                    <Text style={{textAlign:"center",width:"100%",fontSize:10}}>BP 5181, 101 Antananarivo</Text>
                                    <Text style={{textAlign:"center",width:"100%",fontSize:10}}>+261 34 25 155 23</Text>
                                    <Text style={{textAlign:"center",width:"100%",fontSize:10}}>voakajy@vokajy.mg</Text>
-                                   <Text style={{textAlign:"center",width:"100%",fontSize:12,marginTop:10,backgroundColor:"#28549c",fontWeight:"bold",padding:4}}>FICHE DE DOTATION</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:12,marginTop:10,color:"#ffffff",backgroundColor:"#76923E", padding:"4",fontWeight:"bold"}}>FICHE DE DOTATION</Text>
                               </View>
                          </View>
                     </View>
                     <View style={styles.table}>
                          <View style={{width: "100%", border:"1px solid #000" ,display: "flex",flexDirection: "row"}}>
-                              <Text style={{width: "40%",padding:2,fontSize:10,}}>Date : {pdfData.date ? format(new Date(pdfData.date),"dd/MM/yyyy") :""}</Text>
-                              <Text style={{width: "40%",padding:2,fontSize:10,borderLeft: "1px solid #000",}}>Région:  {pdfData.region}</Text>
-                              <Text style={{width: "40%",padding:2,fontSize:10,borderLeft: "1px solid #000",}}>District  {pdfData.district}</Text>
+                              <Text style={{width: "40%",padding:2,fontSize:10,}}>Date{" "} :{"  "} {pdfData.date ? format(new Date(pdfData.date),"dd/MM/yyyy") :""}</Text>
+                              <Text style={{width: "40%",padding:2,fontSize:10,borderLeft: "1px solid #000",}}>Région {" "}:{"  "}  {pdfData.region}</Text>
+                              <Text style={{width: "40%",padding:2,fontSize:10,borderLeft: "1px solid #000",}}>District{" "}:{"  "} {pdfData.district}</Text>
                          </View>
                          <View style={{width: "100%",display: "flex",border:"1px solid #000",borderTop:"none",flexDirection: "row"}}>
-                              <Text style={{width: "50%",padding:2,fontSize:10}}>Commune :  {pdfData.commune}</Text>
-                              <Text style={{width: "50%",padding:2,fontSize:10,borderLeft: "1px solid #000",}}>Fokontany:  {pdfData.fokontany}</Text>
+                              <Text style={{width: "50%",padding:2,fontSize:10}}>Commune {" "}: {"  "} {pdfData.commune}</Text>
+                              <Text style={{width: "50%",padding:2,fontSize:10,borderLeft: "1px solid #000",}}>Fokontany {" "}: {"  "} {pdfData.fokontany}</Text>
                          </View>
                          <View style={{width: "100%",border:"1px solid #000",borderTop:"none",display: "flex",flexDirection: "row"}}>
-                              <Text style={{width: "50%",padding:2,fontSize:10}}>Grant :  {pdfData.grant}</Text>
-                              <Text style={{width: "50%",padding:2,fontSize:10,borderLeft: "1px solid #000",}}>Ligne budgétaire:  {pdfData.ligneBudgetaire}</Text>
+                              <Text style={{width: "50%",padding:2,fontSize:10}}>Grant {" "}: {"  "} {pdfData.grant}</Text>
+                              <Text style={{width: "50%",padding:2,fontSize:10,borderLeft: "1px solid #000",}}>Ligne budgétaire{" "}:{"  "}  {pdfData.ligneBudgetaire}</Text>
                          </View>
                     </View>
                     <View style={{width: "100%",marginTop:20,}}>
@@ -219,6 +219,8 @@ const styles = StyleSheet.create({
           textAlign: "center",
           borderLeft: "1px solid #000",
           paddingTop:4,
+          backgroundColor:"#4AADC4",
+          color:"#ffffff",
           padding :2,
           fontWeight: "bold",
           fontSize: 12,
