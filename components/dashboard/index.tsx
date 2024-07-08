@@ -89,16 +89,11 @@ const Dashboard = () => {
         }}
       >
         <Stack direction={"column"}>
-          <Stack direction={"row"} justifyContent={"space-between"} padding={2}>
-            <img
-              src={`/logistique/images/logo/logo.png`}
-              style={{ width: "80px", height: "60px" }}
-            />
-            <FormLabel style={{ fontSize: 35, color: "#A4C754" }}>
-              Vkajy Logistique
-            </FormLabel>
-            <Stack></Stack>
-          </Stack>
+          <Stack
+            direction={"row"}
+            justifyContent={"space-between"}
+            padding={2}
+          ></Stack>
           <Stack direction={"column"} padding={2} gap={1}>
             <Stack
               direction={"row"}
@@ -141,6 +136,11 @@ const Dashboard = () => {
                     alignItems: "start",
                     width: "100%",
                     border: "none",
+                    paddingLet: 2,
+                    paddingRight: 2,
+                    paddingTop: 0,
+                    paddingBottom: 2,
+                    gap: 1,
                   }}
                 >
                   {listFiltered
@@ -202,7 +202,7 @@ const Dashboard = () => {
               <Card
                 sx={{
                   ...styleCard,
-                  width: "auto",
+                  width: "auto !important",
                   justifyContent: "center",
                   alignItems: "start",
                   minHeight: "100%",
@@ -210,13 +210,14 @@ const Dashboard = () => {
                 }}
               >
                 {menu.map((i: any) => (
-                  <Stack key={i.id}>
+                  <Stack key={i.id} width="100%">
                     <Box
                       component="a"
                       href={`/logistique/${i.link}`}
                       sx={{
+                        color: "GrayText",
                         "&:hover": {
-                          backgroundColor: "darkgray",
+                          backgroundColor: "#F0F8FF",
                           cursor: "pointer",
                           minWidth: "100%",
                           maxWidth: "100%",
@@ -233,7 +234,13 @@ const Dashboard = () => {
                         paddingLeft={2}
                         paddingBottom={1}
                       >
-                        <Icon>{i.icon}</Icon>
+                        <Icon
+                          sx={{
+                            color: "GrayText",
+                          }}
+                        >
+                          {i.icon}
+                        </Icon>
                         <FormLabel
                           sx={{
                             color: "GrayText",
@@ -460,7 +467,7 @@ const styleCard = {
   display: "flex",
   alignItems: "center",
   flexDirection: "column",
-  gap: 5,
+  gap: 3,
   padding: 2,
   border: "1px solid #E0E0E0",
 };

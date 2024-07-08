@@ -1,4 +1,11 @@
-import { Button, Link, Stack, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Button,
+  FormLabel,
+  Link,
+  Stack,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -50,9 +57,18 @@ const HeaderDashboard = () => {
         color={"GrayText"}
         alignItems={"center"}
       >
-        <Home style={{ width: "25px", height: "25px" }} />{" "}
-        <span>Dashboard</span>
+        <img
+          src={`/logistique/images/logo/MV_logo.png`}
+          style={{
+            width: "60px",
+            height: "60px",
+            backgroundColor: "transparent",
+          }}
+        />
       </Stack>
+      <FormLabel style={{ fontSize: 30, color: "#A4C754" }}>
+        Vkajy Logistique
+      </FormLabel>
       <Stack
         direction="row"
         justifyContent="space-between"

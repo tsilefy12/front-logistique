@@ -4,6 +4,7 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 import useFetchCarVouchers from "../../materiel_de_transport/bon_de_voiture/hooks/useFetchCarVoucher";
 import { useRouter } from "next/router";
+import { X } from "@mui/icons-material";
 
 const CercleChart: React.FC = () => {
   const { carVouchers } = useAppSelector((state) => state.carVoucher);
@@ -97,14 +98,20 @@ const CercleChart: React.FC = () => {
 
     if (chartInstanceRef.current) {
       chartInstanceRef.current.data.labels = dataLabels;
-      chartInstanceRef.current.data.datasets = datasets;
+      chartInstanceRef.current.data.datasets = datasets.map((dataset) => ({
+        ...dataset,
+        pointRadius: 0, // Enlever les billes
+      }));
       chartInstanceRef.current.update();
     } else {
       chartInstanceRef.current = new Chart(chartRef.current, {
         type: "line",
         data: {
           labels: dataLabels,
-          datasets: datasets,
+          datasets: datasets.map((dataset) => ({
+            ...dataset,
+            pointRadius: 0, // Enlever les billes
+          })),
         },
         options: {
           plugins: {
@@ -118,8 +125,23 @@ const CercleChart: React.FC = () => {
             legend: {
               position: "bottom",
             },
+            tooltip: {
+              enabled: true,
+              mode: "nearest",
+              intersect: false,
+              callbacks: {
+                label: function (tooltipItem) {
+                  return `${tooltipItem.dataset.label}: ${tooltipItem.raw}`;
+                },
+              },
+            },
           },
           scales: {
+            x: {
+              grid: {
+                display: false,
+              },
+            },
             y: {
               beginAtZero: true,
             },
