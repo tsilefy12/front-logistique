@@ -10,6 +10,7 @@ import {
      View,
 } from "@react-pdf/renderer";
 import { PvComparaisonItem } from "../../../../redux/features/pvComparaison/pvComparaison.interface";
+import formatMontant from "../../../../hooks/format";
 
 function PrintPVComparaison({ pdfData }: { pdfData: any }) {
      return (
@@ -73,7 +74,7 @@ function PrintPVComparaison({ pdfData }: { pdfData: any }) {
                               <Text style={styles.tr}>Montant total</Text>
                               {pdfData.tableComparaison?.map((item:any , index:any) => {
                                    return(
-                                        <Text key={index}  style={styles.tr}>{item.amount} ar</Text>
+                                        <Text key={index}  style={styles.tr}>{item.amount ? formatMontant(item.amount) :""} ar</Text>
                                    )
                               })}
                          </View>
@@ -99,13 +100,13 @@ function PrintPVComparaison({ pdfData }: { pdfData: any }) {
                               <View style={{width: "100%",display: "flex",borderTop:"none",flexDirection: "column"}}>
                                    <Text style={{padding:4,fontSize:10}}>JUSTIFICATION DE CHOIX : si le choix ne correspond pas aux critère requis</Text>
                                    <Text style={{padding:4,fontSize:10}}>Fournir un argumentaires</Text>
-                                   <View style={{display:"flex",flexDirection:"row"}}>
-                                        <Text style={{marginLeft:4,width:"15px",height:"15px",fontSize:10,border:"1px solid #000", backgroundColor: pdfData.offre?.motif && pdfData.offre?.motif.includes("moins_distant") ? "#49be25" :"transparent"}}></Text>
-                                        <Text style={{padding:4,fontSize:10}}>Moins distant</Text>
+                                   <View style={{ display: "flex", flexDirection: "row" }}>
+                                        <Image style={styles.checkbox} src={pdfData.offre?.motif && pdfData.offre?.motif.includes("moins_distant") ? "/logistique/images/checkbox.png" : "/logistique/images/empty-checkbox.png"} />
+                                        <Text style={{ padding: 4, fontSize: 10 }}>Moins distant</Text>
                                    </View>
-                                   <View style={{display:"flex",flexDirection:"row",marginTop:2,marginBottom:2}}>
-                                        <Text style={{marginLeft:4,width:"15px",height:"15px",fontSize:10,border:"1px solid #000", backgroundColor: pdfData.offre?.motif && pdfData.offre?.motif.includes("conforme_aux_besoins") ? "#49be25" :"transparent"}}></Text>
-                                        <Text style={{padding:4,fontSize:10}}>conforme au besoin</Text>
+                                   <View style={{ display: "flex", flexDirection: "row", marginTop: 2, marginBottom: 2 }}>
+                                        <Image style={styles.checkbox} src={pdfData.offre?.motif && pdfData.offre?.motif.includes("conforme_aux_besoins") ? "/logistique/images/checkbox.png" : "/path/to/empty-checkbox.png"} />
+                                        <Text style={{ padding: 4, fontSize: 10 }}>conforme au besoin</Text>
                                    </View>
                               </View>
                             <View style={{width: "100%",display: "flex",flexDirection: "column",borderLeft:"1px solid #000"}}>
@@ -178,6 +179,11 @@ const styles = StyleSheet.create({
           textAlign: "center",
           paddingTop: 2,
           paddingBottom: 2,
+     },
+     checkbox: {
+          width: 15,
+          height: 15,
+          marginLeft: 4,
      },
      row2: {
           width: "100%",

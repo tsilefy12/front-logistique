@@ -1,8 +1,8 @@
-export default function formatMontant(nb: number) {
+export default function formatMontant(nb: any) {
   // if (!comptaFile.currency) return nb.toLocaleString();
   //   let n: number | string = nb > 0 ? nb : nb * -1;
-  let n: number | string = nb;
-  n = n
+  let n: number = parseInt(nb);
+  let nombre :string = n
     .toLocaleString("en-EN", {
       style: "currency",
       currency: "USD",
@@ -14,5 +14,5 @@ export default function formatMontant(nb: number) {
     .replaceAll(",", " ")
     .replace(".", ",");
 
-  return n;
+  return nombre;
 }

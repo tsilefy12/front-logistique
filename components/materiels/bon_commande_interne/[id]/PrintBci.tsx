@@ -32,7 +32,7 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                                    />
                               </Text>
                               <View style={styles.row2}>
-                                   <Text>Bon de commande interne</Text>
+                                   <Text style={{color:"#ffffff",fontWeight:900,backgroundColor:"#76923E", padding:"4",textAlign: "center"}}>Bon de commande interne</Text>
                               </View>
                               <View style={styles.row3}>
                                    <Text>PO5-0I.BCI</Text>
@@ -57,7 +57,7 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                          <View style={[styles.rowBody,{backgroundColor:"#D5D8DC"}]}>
                               <Text style={[styles.th,{width:"60%"}]}>Désignation</Text>
                               <Text style={[styles.th,{width:"60%"}]}>Caractéristique</Text>
-                              <Text style={styles.th}>Quantité</Text>
+                              <Text style={styles.th}>Qté</Text>
                               <Text style={styles.th}>PU</Text>
                               <Text style={styles.th}>Valeur</Text>
                          </View>
@@ -191,6 +191,8 @@ const styles = StyleSheet.create({
           width: "30%",
           textAlign: "center",
           borderLeft: "1px solid #000",
+          backgroundColor:"#4AADC4",
+          color:"#ffffff",
           padding :2,
           fontWeight: "bold",
           fontSize: 12,

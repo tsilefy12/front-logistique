@@ -69,6 +69,7 @@ const ListCategorie = () => {
                         />
                     </Stack>
                     {categorieStocks
+                        .slice()
                         .sort((a, b) => (b.id!).localeCompare(a.id!))
                         .map((row: categorieStockItem, index: any) => {
                         return (

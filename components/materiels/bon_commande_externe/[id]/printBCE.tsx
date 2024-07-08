@@ -14,6 +14,7 @@ import { format } from "date-fns";
 import { BonCommandeExterneItem } from "../../../../redux/features/bon_commande_externe/bonCommandeExterne.interface";
 // @ts-ignore
 import { NumberToLetter } from 'convertir-nombre-lettre';
+import formatMontant from "../../../../hooks/format";
 
 function PrintBCE({ pdfData }: { pdfData: any }) {
 
@@ -35,16 +36,16 @@ function PrintBCE({ pdfData }: { pdfData: any }) {
                               <View style={styles.row2}>
                                    <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5}}>Lot II F 14 P Bis A-Andraisora</Text>
                                    <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5}}>BP 5181, 101 Antananarivo</Text>
-                                   <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5,borderBottom:"1px solid #000"}}>Antananarivo : Tél: 261342515523</Text>
-                                   <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5,borderBottom:"1px solid #000"}}>Moramanga: Tél: 231341570461</Text>
-                                   <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5,borderBottom:"1px solid #000"}}>Diégo-suarez: Tél 261346746335</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10}}><Text style={{padding:5 ,borderBottom:"1px solid #000"}}>Antananarivo : Tél: 261342515523</Text></Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10}}><Text style={{padding:5 ,borderBottom:"1px solid #000"}}>Moramanga: Tél: 231341570461</Text></Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10}}><Text style={{padding:5 ,borderBottom:"1px solid #000"}}>Diégo-suarez: Tél 261346746335</Text></Text>
                                    <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5,textDecoration:"underline",color:"#219ae6"}}>voakajy@vokajy.mg</Text>
-                                   <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5,borderBottom:"1px solid #000",textDecoration:"underline",color:"#219ae6",fontWeight:500}}>www.madagasikara-voakajy.org</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:10,padding:5,textDecoration:"underline",color:"#219ae6",fontWeight:500}}>www.madagasikara-voakajy.org</Text>
                               </View>
                          </View>
                     </View>
                     <View style={styles.table}>
-                        <Text style={{textAlign:"center",width:"100%",fontSize:14,fontWeight:"bold"}}>BON DE COMMANDE DU DON EXTERNE</Text>
+                        <Text style={{textAlign:"center",width:"100%",fontSize:14,fontWeight:"bold", color:"#ffffff",backgroundColor:"#76923E", padding:"4"}}>BON DE COMMANDE DU DON EXTERNE</Text>
                     </View>
                     <View style={[styles.table,{marginLeft:20}]}>
                          <View style={{width: "100%" ,display: "flex",flexDirection: "row"}}>
@@ -60,10 +61,10 @@ function PrintBCE({ pdfData }: { pdfData: any }) {
                     </View>
                     <View style={{width: "100%",marginTop:20,}}>
                          <View style={[styles.rowBody]}>
-                              <Text style={[styles.th,{borderLeft:"none !important"}]}>Fournisseur</Text>
+                              <Text style={[styles.th,{borderLeft:"none !important", width:"60% !important"}]}>Fournisseur</Text>
                               <Text style={[styles.th,{width: "50%",}]}>Désignation</Text>
                               <Text style={[styles.th,{width: "50%",}]}>Caractéristique</Text>
-                              <Text style={styles.th}>Quantité</Text>
+                              <Text style={styles.th}>Qté</Text>
                               <Text style={styles.th}>PU</Text>
                          </View>
                     </View>
@@ -72,11 +73,11 @@ function PrintBCE({ pdfData }: { pdfData: any }) {
                               return (
                                    <View key={index} style={{width: "100%"}}>
                                         <View style={[styles.rowBody,{borderTop:"none !important"}]}>
-                                             <Text style={[styles.tr,{borderLeft:"none !important"}]}>{element?.vendor?.name}</Text>
+                                             <Text style={[styles.tr,{borderLeft:"none !important",width:"60% !important"}]}>{element?.vendor?.name}</Text>
                                              <Text style={[styles.tr,{width: "50%",}]}>{element?.designation}</Text>
                                              <Text style={[styles.tr,{width: "50%",}]}>{element?.caracteristik}</Text>
                                              <Text style={styles.tr}>{element?.quantite}</Text>
-                                             <Text style={styles.tr}>{element?.pu} ar</Text>
+                                             <Text style={styles.tr}>{element?.pu ?formatMontant(element?.pu) :""} ar</Text>
                                         </View>
                                    </View>
                               )
@@ -86,10 +87,13 @@ function PrintBCE({ pdfData }: { pdfData: any }) {
                          <View style={{width: "100%",display: "flex",flexDirection: "column"}}>
                               <Text style={{padding:10,fontSize:10,display:"flex", flexDirection:"row"}}>
                                    <Text style={{textDecoration:"underline"}}>Montant en lettre:</Text>
-                                   <Text>{amountWords}</Text>
+                                   <Text>{amountWords ? formatMontant(amountWords) :""}</Text>
                               </Text>
-                              <Text style={{padding:10,fontSize:10 ,textDecoration:"underline"}}>Béneficiaire: {pdfData?.beneficiaire} </Text>
-                              <Text style={{padding:10,fontSize:10 ,textDecoration:"underline"}}>Pièces jointe:  </Text>
+                              <Text style={{padding:10,fontSize:10,display:"flex", flexDirection:"row"}}>
+                                   <Text style={{textDecoration:"underline"}}>Béneficiaire:</Text>
+                                   <Text>{pdfData?.beneficiaire}</Text>
+                              </Text>
+                              {/* <Text style={{padding:10,fontSize:10 ,textDecoration:"underline"}}>Pièces jointe:  </Text> */}
                          </View>
                     </View>
                     <View style={{width:"100%"}}>
@@ -154,7 +158,8 @@ const styles = StyleSheet.create({
           textAlign: "center",
           borderLeft: "1px solid #000",
           paddingTop: 4,
-          textDecoration:"underline",
+          backgroundColor:"#4AADC4",
+          color:"#ffffff",
           padding :2,
           fontWeight: "bold",
           fontSize: 12,
@@ -206,11 +211,15 @@ const styles = StyleSheet.create({
       headerCadre1:{
           width: "33%",
           textAlign: "left",
+          backgroundColor:"#4AADC4",
+          color:"#ffffff",
           paddingLeft: 5,
           paddingVertical: 2,
       },
       headerCadre:{
         width: "33%",
+        backgroundColor:"#4AADC4",
+        color:"#ffffff",
         textAlign: "left",
         borderLeft: "1px solid #000",
         paddingLeft: 5,
@@ -231,6 +240,14 @@ const styles = StyleSheet.create({
         paddingVertical: 2,
         height: 62,
       },
+      underline: {
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 1,
+          backgroundColor: 'black',
+     },
 });
 export default function PDFButton({ data }: { data: BonCommandeExterneItem }) {
      return (

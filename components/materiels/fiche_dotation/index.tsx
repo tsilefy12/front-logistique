@@ -134,6 +134,7 @@ export default function FicheDotationList() {
                 <BonTransfertTableHeader />
                 <TableBody>
                   {ficheDotations
+                    .slice()
                     .sort((a, b) => (b.id!).localeCompare(a.id!))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row: ficheDotationItem, index: any) => {

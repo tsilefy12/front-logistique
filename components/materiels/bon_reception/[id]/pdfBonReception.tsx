@@ -27,7 +27,7 @@ function PrintBonReception({ pdfData }: { pdfData: any }) {
                                    />
                               </Text>
                               <View style={styles.row2}>
-                                   <Text>Bon de réception</Text>
+                                   <Text style={{width:"100%",color:"#ffffff",fontWeight:900,backgroundColor:"#76923E", padding:"4",textAlign: "center"}}>Bon de réception</Text>
                               </View>
                          </View>
                     </View>
@@ -43,13 +43,13 @@ function PrintBonReception({ pdfData }: { pdfData: any }) {
                     <View style={{width: "100%",marginTop:20,}}>
                          <View style={[styles.rowBody]}>
                               <Text style={[styles.th, {borderLeft:"none !important"}]}>Date</Text>
-                              <Text style={[styles.th,{width:"60%"}]}>Fournisseurs</Text>
+                              <Text style={[styles.th,{width:"80% !important"}]}>Fournisseurs</Text>
                          </View>
                     </View>
                     <View style={{width: "100%"}}>
                          <View style={[styles.rowBody,{border:'none !important'}]}>
                               <Text style={[styles.tr,{border:"none !important",textAlign: "center"}]}>{pdfData.dateReception ? format(new Date(pdfData.dateReception),"dd/MM/yyyy") :""}</Text>
-                              <Text style={[styles.tr, {border:"none !important",textAlign: "center",}]}>Nom:</Text>
+                              <Text style={[styles.tr, {border:"none !important",textAlign: "center",width:"80% !important"}]}>Nom:</Text>
                          </View>
                     </View>
 
@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
           width: "50%",
           textAlign: "center",
           borderLeft: "1px solid #000",
-          textDecoration: "underline",
+          color:"#ffffff",
+          backgroundColor:"#4AADC4",
           paddingTop:4,
           padding :2,
           fontWeight: "bold",

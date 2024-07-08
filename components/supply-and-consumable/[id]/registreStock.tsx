@@ -31,7 +31,6 @@ import useFetchLogSuplyAndConsumableList from "../entreSortie/hooks/useFetchLogS
 const FormLogEntreSortie = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  // const ficheStock = router.query.id;
   const { logSuplyAndConsumable, isEditing } = useAppSelector(
     (state) => state.logSuplyAndConsumable
   );
@@ -182,11 +181,11 @@ const FormLogEntreSortie = () => {
                       Annuler
                     </Button>
                   </Stack>
-                  {/* <Typography variant="h4">
-                    Créer fourniture et consommable
-                  </Typography> */}
+                  <Stack>
+                    {}
+                  </Stack>
                   <Typography variant="h4">
-                    creer fourniture et consumable
+                    Entré et sortie
                   </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -250,7 +249,7 @@ const FormLogEntreSortie = () => {
                   disabled
                 />
                 <FormControl>
-                  <Field as={RadioGroup} row name="OperationType">
+                  <Field as={RadioGroup} column name="OperationType">
                     <FormControlLabel
                       value="INPUT"
                       control={<Radio />}

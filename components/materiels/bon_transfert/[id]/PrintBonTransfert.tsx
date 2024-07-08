@@ -25,7 +25,7 @@ function PrintBonTransfert({ pdfData }: { pdfData: any }) {
                                    />
                               </Text>
                               <View style={styles.row2}>
-                                   <Text style={{textAlign:"center",width:"100%",fontSize:12,backgroundColor:"#76923E",padding:4,color:"#ffffff",fontWeight:900}}>BON DE TRANSFERT</Text>
+                                   <Text style={{textAlign:"center",width:"100%",fontSize:12,padding:4,color:"#ffffff",fontWeight:900,backgroundColor:"#76923E"}}>BON DE TRANSFERT</Text>
                               </View>
                          </View>
                     </View>
