@@ -12,9 +12,9 @@ const CardTransportationEquipment = () => {
   }, []);
 
   const colors = [
-    "white", // white
-    "blue", // blue
-    "yellow", // yellow
+    "#42391b", // white
+    "#005259", // blue
+    "#f8fff8", // yellow
   ];
 
   // Filter and reduce to count types
@@ -63,6 +63,7 @@ const CardTransportationEquipment = () => {
               style={{
                 color: colors[index % colors.length],
                 fontWeight: "normal",
+                fontSize: "20px",
               }}
             >
               {entry.count}

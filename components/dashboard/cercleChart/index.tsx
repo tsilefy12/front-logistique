@@ -60,12 +60,17 @@ const CercleChart: React.FC = () => {
       }
     });
     const colors = [
-      "#f44336", // red
-      "rgb(75, 192, 192)", // blue
-      "#ffeb3b", // yellow
-      "#ff9800", // orange
-      "#9c27b0", // purple
-      "#4caf50", // green
+      "#005259",
+      "#ff9800",
+      "#A4C754",
+      "#009063",
+      "#b1bdc5",
+      "#43655a",
+      "#005a34",
+      "#7fd1ae",
+      "rgb(75, 192, 192)",
+      "#324b4c",
+      "brown",
     ];
 
     const newDatasets = Object.keys(totalMontantByCarAndMonth).map(
@@ -161,6 +166,7 @@ const CercleChart: React.FC = () => {
       style={{
         width: "auto",
         display: "flex",
+        paddingTop: 10,
       }}
     >
       <canvas

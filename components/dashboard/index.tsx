@@ -324,7 +324,7 @@ const Dashboard = () => {
                         textAlign: "center",
                         alignItems: "center",
                         justifyContent: "center",
-                        color: "blue",
+                        color: "#005259",
                         fontSize: "35px",
                         paddingTop: "5px",
                       }}
@@ -341,7 +341,7 @@ const Dashboard = () => {
                     paddingLeft: 3,
                     paddingRight: 3,
                     paddingTop: 1,
-                    paddingBottom: 2,
+                    paddingBottom: 4,
                     minHeight: "100%",
                     maxHeight: "100%",
                     width: "60%",
@@ -372,7 +372,7 @@ const Dashboard = () => {
                       </Stack>
                       <Stack direction={"column"} gap={2} alignItems={"center"}>
                         <span>Moto</span>
-                        <span style={{ color: "yellow", fontSize: "35px" }}>
+                        <span style={{ color: "#18af3a", fontSize: "35px" }}>
                           {(() => {
                             const count = transportationEquipments
                               .filter(
@@ -387,7 +387,7 @@ const Dashboard = () => {
                       </Stack>
                       <Stack direction={"column"} gap={2} alignItems={"center"}>
                         <span>Avion</span>
-                        <span style={{ color: "blue", fontSize: "35px" }}>
+                        <span style={{ color: "#005259", fontSize: "35px" }}>
                           {(() => {
                             const count = transportationEquipments
                               .filter(
@@ -404,7 +404,7 @@ const Dashboard = () => {
                         <span>Bateau</span>
                         <span
                           style={{
-                            color: "blue",
+                            color: "#006b71",
                             fontSize: "35px",
                           }}
                         >
@@ -438,7 +438,7 @@ const Dashboard = () => {
                     <p>Stock matériels</p>
                     <span
                       style={{
-                        color: "blue",
+                        color: "#005259",
                         fontSize: "35px",
                         justifyContent: "center",
                         textAlign: "center",

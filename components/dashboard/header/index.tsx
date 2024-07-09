@@ -57,14 +57,17 @@ const HeaderDashboard = () => {
         color={"GrayText"}
         alignItems={"center"}
       >
-        <img
-          src={`/logistique/images/logo/logo.png`}
-          style={{
-            width: "70px",
-            height: "45px",
-            backgroundColor: "transparent",
-          }}
-        />
+        <Link href="/">
+          <img
+            src={`/logistique/images/logo/logo.png`}
+            style={{
+              width: "70px",
+              height: "45px",
+              backgroundColor: "transparent",
+              cursor: "pointer",
+            }}
+          />
+        </Link>
       </Stack>
       <span></span>
       <FormLabel style={{ fontSize: 25, color: "#A4C754", fontWeight: "bold" }}>
