@@ -58,15 +58,15 @@ const HeaderDashboard = () => {
         alignItems={"center"}
       >
         <img
-          src={`/logistique/images/logo/MV_logo.png`}
+          src={`/logistique/images/logo/logo.png`}
           style={{
-            width: "60px",
-            height: "60px",
+            width: "70px",
+            height: "45px",
             backgroundColor: "transparent",
           }}
         />
       </Stack>
-      <FormLabel style={{ fontSize: 30, color: "#A4C754" }}>
+      <FormLabel style={{ fontSize: 25, color: "#A4C754", fontWeight: "bold" }}>
         Vkajy Logistique
       </FormLabel>
       <Stack

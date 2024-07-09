@@ -31,13 +31,13 @@ const BarChart: React.FC = () => {
     }
   });
 
-  const colors = [
-    "#A4C754", // green
-    "#f44336", // red
-    "rgb(75, 192, 192)", // blue
-    "#ff9800", // orange
-    "#9c27b0", // purple
-  ];
+  // const colors = [
+  //   "#A4C754", // green
+  //   "#f44336", // red
+  //   "rgb(75, 192, 192)", // blue
+  //   "#ff9800", // orange
+  //   "#9c27b0", // purple
+  // ];
 
   const data = {
     labels: listMateriel.length !== 0 ? listMateriel : ["vide"],
@@ -45,11 +45,15 @@ const BarChart: React.FC = () => {
       {
         label: "Reste de carburant (L)",
         data: listResteCarburant.length !== 0 ? listResteCarburant : [0],
-        backgroundColor: listResteCarburant.map(
-          (_, index) => colors[index % colors.length]
+        backgroundColor: listResteCarburant.map((_, index) =>
+          listResteCarburant[index] < 15
+            ? "#f44336"
+            : listResteCarburant[index] >= 15 && listResteCarburant[index] <= 30
+            ? "#ff9800"
+            : "#A4C754"
         ),
         borderWidth: 1,
-        barThickness: 40,
+        barThickness: 36,
       },
     ],
   };

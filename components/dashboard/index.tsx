@@ -161,7 +161,7 @@ const Dashboard = () => {
                           <p
                             style={{
                               color: i.name <= 5 ? "red" : "rgb(75, 192, 192)",
-                              paddingRight: 6,
+                              paddingRight: 4,
                             }}
                           >
                             {i.name}

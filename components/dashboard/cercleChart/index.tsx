@@ -4,7 +4,6 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 import useFetchCarVouchers from "../../materiel_de_transport/bon_de_voiture/hooks/useFetchCarVoucher";
 import { useRouter } from "next/router";
-import { X } from "@mui/icons-material";
 
 const CercleChart: React.FC = () => {
   const { carVouchers } = useAppSelector((state) => state.carVoucher);
@@ -60,6 +59,14 @@ const CercleChart: React.FC = () => {
         }
       }
     });
+    const colors = [
+      "#f44336", // red
+      "rgb(75, 192, 192)", // blue
+      "#ffeb3b", // yellow
+      "#ff9800", // orange
+      "#9c27b0", // purple
+      "#4caf50", // green
+    ];
 
     const newDatasets = Object.keys(totalMontantByCarAndMonth).map(
       (car, index) => {
@@ -68,7 +75,7 @@ const CercleChart: React.FC = () => {
         );
 
         return {
-          label: `Voiture ${car}`,
+          label: `${car} ${" "}`,
           data: carData,
           backgroundColor: colors[index % colors.length],
           borderColor: colors[index % colors.length],
@@ -83,15 +90,6 @@ const CercleChart: React.FC = () => {
 
     setDatasets(newDatasets);
   }, [carVouchers]);
-
-  const colors = [
-    "#f44336", // red
-    "rgb(75, 192, 192)", // blue
-    "#ffeb3b", // yellow
-    "#ff9800", // orange
-    "#9c27b0", // purple
-    "#4caf50", // green
-  ];
 
   useEffect(() => {
     if (!chartRef.current) return;
