@@ -51,7 +51,7 @@ const HeaderDashboard = () => {
       }}
     >
       <Stack
-        paddingLeft={3}
+        paddingLeft={1}
         direction={"row"}
         gap={4}
         color={"GrayText"}
@@ -66,6 +66,7 @@ const HeaderDashboard = () => {
           }}
         />
       </Stack>
+      <span></span>
       <FormLabel style={{ fontSize: 25, color: "#A4C754", fontWeight: "bold" }}>
         Vkajy Logistique
       </FormLabel>
@@ -107,7 +108,7 @@ const HeaderDashboard = () => {
               style={{ width: "20px", height: "20px" }}
             />
           ) : (
-            <AccountCircleIcon fontSize="large" style={{ color: "GrayText" }} />
+            <span style={{ color: "GrayText" }}>{nomUtilisateur}</span>
           )}
         </Stack>
       </Stack>

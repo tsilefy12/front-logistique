@@ -82,18 +82,11 @@ const Dashboard = () => {
         sx={{
           minWidth: "auto",
           maxWidth: "auto",
-          marginLeft: 4,
-          marginRight: 4,
-          marginTop: 4,
-          marginBottom: 1,
+          margin: 2,
         }}
       >
         <Stack direction={"column"}>
-          <Stack
-            direction={"row"}
-            justifyContent={"space-between"}
-            padding={2}
-          ></Stack>
+          <Stack direction={"row"} justifyContent={"space-between"}></Stack>
           <Stack direction={"column"} padding={2} gap={1}>
             <Stack
               direction={"row"}
