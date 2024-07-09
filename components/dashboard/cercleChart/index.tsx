@@ -157,7 +157,12 @@ const CercleChart: React.FC = () => {
   }, [dataLabels, datasets]);
 
   return (
-    <div style={{ width: "auto", display: "flex" }}>
+    <div
+      style={{
+        width: "auto",
+        display: "flex",
+      }}
+    >
       <canvas
         ref={chartRef}
         id="circle-chart"

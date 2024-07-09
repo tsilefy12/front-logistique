@@ -266,13 +266,17 @@ const Dashboard = () => {
             justifyContent={"space-between"}
             padding={2}
             gap={4}
+            minHeight="100%"
+            maxHeight="100%"
           >
             <Card
               sx={{
                 ...styleCard,
                 width: "50%",
                 alignItems: "start",
-                height: "5%",
+                minHeight: "100%",
+                maxHeight: "100%",
+                paddingBottom: 0,
               }}
             >
               <Stack>
@@ -295,7 +299,7 @@ const Dashboard = () => {
             </Card>
             <Stack
               direction={"column"}
-              gap={3}
+              gap={4}
               height={"100%"}
               fontWeight={"bold"}
             >
@@ -344,7 +348,8 @@ const Dashboard = () => {
                     paddingLeft: 3,
                     paddingRight: 3,
                     paddingTop: 1,
-                    height: 180,
+                    minHeight: "100%",
+                    maxHeight: "100%",
                     width: "60%",
                     backgroundColor: "#A4C754",
                   }}
@@ -429,7 +434,8 @@ const Dashboard = () => {
                     paddingLeft: 3,
                     paddingRight: 3,
                     paddingTop: 1,
-                    height: 180,
+                    minHeight: "100%",
+                    maxHeight: "100%",
                     width: "35%",
                     backgroundColor: "#A4C754",
                   }}
