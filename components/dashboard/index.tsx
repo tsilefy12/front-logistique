@@ -341,6 +341,7 @@ const Dashboard = () => {
                     paddingLeft: 3,
                     paddingRight: 3,
                     paddingTop: 1,
+                    paddingBottom: 2,
                     minHeight: "100%",
                     maxHeight: "100%",
                     width: "60%",
