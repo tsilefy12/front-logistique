@@ -25,21 +25,22 @@ import TypeJournalTableToolbar from "./PassengerTableToolbar";
 import TypeJournalTableHeader from "./PassengerTableHeader";
 import Badge from "@mui/material/Badge";
 import useFetchPassenger from "../../hooks/useFetchPassenger";
-import { deletePassenger, editPassenger } from "../../../../../redux/features/passenger";
+import {
+  deletePassenger,
+  editPassenger,
+} from "../../../../../redux/features/passenger";
 import { PassengerItem } from "../../../../../redux/features/passenger/passengerSlice.interface";
 import PassengerTableToolbar from "./PassengerTableToolbar";
 import PassengerTableHeader from "./PassengerTableHeader";
 
-
-
-export default function PassengerListe () {
+export default function PassengerListe() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   // const useFetchPCG = useFetchPlanComptable();
   const dispatch: any = useAppDispatch();
   // const { journalTypeList } = useAppSelector((state) => state.journalType);
-  const { passengerListe } = useAppSelector((state) => state.passenger)
+  const { passengerListe } = useAppSelector((state) => state.passenger);
   const router = useRouter();
   const confirm = useConfirm();
 
@@ -48,7 +49,6 @@ export default function PassengerListe () {
   useEffect(() => {
     fetchPassenger();
   }, [router.query]);
-
 
   const handleClickEdit = async (id: any) => {
     await dispatch(editPassenger({ id }));
@@ -106,46 +106,44 @@ export default function PassengerListe () {
               <TableBody>
                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
             rows.slice().sort(getComparator(order, orderBy)) */}
-                {passengerListe
-                  .sort((a, b) => (b.id!).localeCompare(a.id!))
-                  .map((row: PassengerItem, index: any) => {
-                    const labelId = `enhanced-table-checkbox-${index}`;
-                    return (
-                      <TableRow hover tabIndex={-1} key={row.id}>
-                        <TableCell
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="normal"
-                          align="left"
+                {passengerListe.map((row: PassengerItem, index: any) => {
+                  const labelId = `enhanced-table-checkbox-${index}`;
+                  return (
+                    <TableRow hover tabIndex={-1} key={row.id}>
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="normal"
+                        align="left"
+                      >
+                        {row.name}
+                      </TableCell>
+                      <TableCell align="right">
+                        <BtnActionContainer
+                          direction="row"
+                          justifyContent="flex-end"
                         >
-                          {row.name}
-                        </TableCell>
-                        <TableCell align="right">
-                          <BtnActionContainer
-                            direction="row"
-                            justifyContent="flex-end"
+                          <IconButton
+                            color="primary"
+                            aria-label="Modifier"
+                            component="span"
+                            onClick={() => handleClickEdit(row.id)}
                           >
-                            <IconButton
-                              color="primary"
-                              aria-label="Modifier"
-                              component="span"
-                              onClick={() => handleClickEdit(row.id)}
-                            >
-                              <EditIcon />
-                            </IconButton>
-                            <IconButton
-                              color="warning"
-                              aria-label="Supprimer"
-                              component="span"
-                              onClick={() => handleclickDelete(row.id)}
-                            >
-                              <DeleteIcon />
-                            </IconButton>
-                          </BtnActionContainer>
-                        </TableCell>
-                      </TableRow>
-                    );
+                            <EditIcon />
+                          </IconButton>
+                          <IconButton
+                            color="warning"
+                            aria-label="Supprimer"
+                            component="span"
+                            onClick={() => handleclickDelete(row.id)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </BtnActionContainer>
+                      </TableCell>
+                    </TableRow>
+                  );
                 })}
                 {emptyRows > 0 && (
                   <TableRow
