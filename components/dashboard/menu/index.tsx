@@ -1,62 +1,42 @@
-import { Box, FormLabel, Icon, Stack, styled } from "@mui/material";
-import Link from "@mui/material/Link";
+import { Icon, Stack, Typography } from "@mui/material";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { Fragment } from "react";
+import { usePermitted } from "../../../config/middleware";
 import allMenu from "../../../config/menu";
+import CardModule from "../utils/util";
 
-const VerticalMenu = () => {
+export default function Menu() {
+  const validate = usePermitted();
   const navMenu = allMenu();
+  const router = useRouter();
 
   return (
-    <ListPageContainer>
-      {navMenu.map((page: any, index: number) => (
-        <Link
-          key={index}
-          href={`${page.link}`}
-          component={"a"}
-          sx={{ textDecoration: "none" }}
-        >
-          <StyledStack direction={"row"}>
-            <Icon sx={{ margin: 2 }}>{page.icon}</Icon>
-            <FormLabel
-              sx={{
-                margin: 2,
-                cursor: "pointer",
-                fontWeight: "bold",
-                "&:hover": {
-                  color: "black",
-                },
-              }}
+    <Stack
+      direction={"column"}
+      width={"100%"}
+      justifyContent={"center"}
+      alignItems={"center"}
+    >
+      <Stack direction={"column"} justifyContent={"center"} flexWrap={"wrap"}>
+        {navMenu.map((page: any, index: number) =>
+          page.items.length === 0 ? (
+            <CardModule href={page.link} color={page.color} key={index}>
+              <Icon fontSize="medium">{page.icon}</Icon>
+              <Typography variant="body2">{page.name}</Typography>
+            </CardModule>
+          ) : (
+            <CardModule
+              color={page.color}
+              href={page.items[0].link}
+              key={index}
             >
-              {page.name}
-            </FormLabel>
-          </StyledStack>
-        </Link>
-      ))}
-    </ListPageContainer>
+              <Icon fontSize="medium">{page.icon}</Icon>
+              <Typography variant="body2">{page.name}</Typography>
+            </CardModule>
+          )
+        )}
+      </Stack>
+    </Stack>
   );
-};
-
-export default VerticalMenu;
-
-const ListPageContainer = styled(Box)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  gap: 30,
-  padding: 10,
-  height: "100%",
-}));
-
-const StyledStack = styled(Stack)(({ theme }) => ({
-  backgroundColor: "transparent",
-  cursor: "pointer",
-  width: "100%", // Définir une largeur initiale
-  color: "GrayText",
-  "&:hover": {
-    fontWeight: "bold",
-    cursor: "pointer",
-    // backgroundColor: "#eaffbf",
-    minWidth: "100%",
-    borderRadius: 8,
-    color: "black",
-  },
-}));
+}

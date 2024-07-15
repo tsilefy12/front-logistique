@@ -17,7 +17,6 @@ const CardTransportationEquipment = () => {
     "#f8fff8", // yellow
   ];
 
-  // Filter and reduce to count types
   const typeCounts = typeEquipmentList
     .filter((f) => f.prefix)
     .reduce((acc, curr) => {
@@ -46,30 +45,43 @@ const CardTransportationEquipment = () => {
         overflow: "auto",
       }}
     >
-      <Stack direction={"column"} gap={2}>
-        <p style={{ display: "flex" }}>Matériels</p>
-        {typeEntries.map((entry, index) => (
-          <Stack
-            key={entry.type}
-            direction={"row"}
-            gap={8}
-            alignItems={"center"}
-            justifyContent={"space-between"}
-          >
-            <span style={{ color: colors[index % colors.length] }}>
-              {entry.type}
-            </span>
-            <span
-              style={{
-                color: colors[index % colors.length],
-                fontWeight: "normal",
-                fontSize: "20px",
-              }}
+      <Stack direction={"column"} gap={2} sx={{ maxHeight: "100%" }}>
+        <p
+          style={{
+            display: "flex",
+            position: "sticky",
+            top: 0,
+            backgroundColor: "#A4C754",
+            zIndex: 1,
+            margin: 0,
+          }}
+        >
+          Matériels
+        </p>
+        <div style={{ overflowY: "auto", maxHeight: "100%" }}>
+          {typeEntries.map((entry, index) => (
+            <Stack
+              key={entry.type}
+              direction={"row"}
+              gap={8}
+              alignItems={"center"}
+              justifyContent={"space-between"}
             >
-              {entry.count}
-            </span>
-          </Stack>
-        ))}
+              <span style={{ color: colors[index % colors.length] }}>
+                {entry.type}
+              </span>
+              <span
+                style={{
+                  color: colors[index % colors.length],
+                  fontWeight: "normal",
+                  fontSize: "20px",
+                }}
+              >
+                {entry.count}
+              </span>
+            </Stack>
+          ))}
+        </div>
       </Stack>
     </Card>
   );

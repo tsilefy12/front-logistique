@@ -12,10 +12,15 @@ import useFetchEquipment from "../materiels/informatique/hooks/useFetchEquipment
 import { EquipmentItem } from "../../redux/features/equipment/equipment.interface";
 import CardTranpostationEquipment from "./transportationEquipment";
 import allMenu from "../../config/menu";
-import Link from "next/link";
 import FooterBackOffice from "../../layouts/backOffice/FooterBackOffice";
-import { borderColor } from "polished";
-import { ShoppingBag } from "@mui/icons-material";
+import Warehouse from "@mui/icons-material/Warehouse";
+import Menu from "./menu";
+import {
+  DirectionsCar,
+  TwoWheeler,
+  DirectionsBoat,
+  Business,
+} from "@mui/icons-material";
 
 const Dashboard = () => {
   const { suplyAndConsumableList } = useAppSelector(
@@ -202,55 +207,7 @@ const Dashboard = () => {
                   maxHeight: "100%",
                 }}
               >
-                {menu.map((i: any) => (
-                  <Stack key={i.id} width="100%">
-                    <Box
-                      component="a"
-                      href={`/logistique/${i.link}`}
-                      sx={{
-                        color: "GrayText",
-                        "&:hover": {
-                          backgroundColor: "#F0F8FF",
-                          cursor: "pointer",
-                          minWidth: "100%",
-                          maxWidth: "100%",
-                          borderRadius: "5px",
-                        },
-                      }}
-                    >
-                      <Stack
-                        direction={"row"}
-                        gap={2}
-                        fontSize={14}
-                        marginTop={1}
-                        paddingRight={2}
-                        paddingLeft={2}
-                        paddingBottom={1}
-                      >
-                        <Icon
-                          sx={{
-                            color: "GrayText",
-                          }}
-                        >
-                          {i.icon}
-                        </Icon>
-                        <FormLabel
-                          sx={{
-                            color: "GrayText",
-                            minWidth: "100%",
-                            maxWidth: "100%",
-                            "&:hover": {
-                              cursor: "pointer",
-                              color: "green",
-                            },
-                          }}
-                        >
-                          {i.name}
-                        </FormLabel>
-                      </Stack>
-                    </Box>
-                  </Stack>
-                ))}
+                <Menu />
               </Card>
             </Stack>
           </Stack>
@@ -301,7 +258,7 @@ const Dashboard = () => {
                   sx={{
                     paddingLeft: 3,
                     paddingRight: 3,
-                    paddingTop: 1,
+                    paddingTop: 2,
                     height: 150,
                     width: "50%",
                     border: "1px solid #E0E0E0",
@@ -317,7 +274,7 @@ const Dashboard = () => {
                       <p>
                         {vendors.length > 1 ? "Fournisseurs" : "Fournisseur"}
                       </p>
-                      <ShoppingBag fontSize="large" />
+                      <Business fontSize="large" />
                     </Stack>
                     <span
                       style={{
@@ -356,7 +313,9 @@ const Dashboard = () => {
                       justifyContent={"space-between"}
                     >
                       <Stack direction={"column"} gap={2} alignItems={"center"}>
-                        <span>Voiture</span>
+                        <span>
+                          <DirectionsCar fontSize="large" />
+                        </span>
                         <span style={{ color: "white", fontSize: "35px" }}>
                           {(() => {
                             const count = transportationEquipments
@@ -371,7 +330,9 @@ const Dashboard = () => {
                         </span>
                       </Stack>
                       <Stack direction={"column"} gap={2} alignItems={"center"}>
-                        <span>Moto</span>
+                        <span>
+                          <TwoWheeler fontSize="large" />
+                        </span>
                         <span style={{ color: "#18af3a", fontSize: "35px" }}>
                           {(() => {
                             const count = transportationEquipments
@@ -386,22 +347,9 @@ const Dashboard = () => {
                         </span>
                       </Stack>
                       <Stack direction={"column"} gap={2} alignItems={"center"}>
-                        <span>Avion</span>
-                        <span style={{ color: "#005259", fontSize: "35px" }}>
-                          {(() => {
-                            const count = transportationEquipments
-                              .filter(
-                                (f) =>
-                                  f.type && f.typeEquipment?.type === "Avion"
-                              )
-                              .reduce((total, f) => total + 1, 0);
-
-                            return count;
-                          })()}
+                        <span>
+                          <DirectionsBoat fontSize="large" />
                         </span>
-                      </Stack>
-                      <Stack direction={"column"} gap={2} alignItems={"center"}>
-                        <span>Bateau</span>
                         <span
                           style={{
                             color: "#006b71",
@@ -427,7 +375,7 @@ const Dashboard = () => {
                   sx={{
                     paddingLeft: 3,
                     paddingRight: 3,
-                    paddingTop: 1,
+                    paddingTop: 2,
                     minHeight: "100%",
                     maxHeight: "100%",
                     width: "35%",
@@ -435,7 +383,15 @@ const Dashboard = () => {
                   }}
                 >
                   <Stack direction={"column"} gap={2}>
-                    <p>Stock matériels</p>
+                    <Stack
+                      direction="row"
+                      gap={2}
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <p>Stock matériels</p>
+                      <img src="/images/warehouse.png" width={35} height={35} />
+                    </Stack>
                     <span
                       style={{
                         color: "#005259",
@@ -446,7 +402,7 @@ const Dashboard = () => {
                         alignItems: "center",
                       }}
                     >
-                      {equipments.length}
+                      {suplyAndConsumableList.length}
                     </span>
                   </Stack>
                 </Card>

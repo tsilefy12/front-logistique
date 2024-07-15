@@ -91,7 +91,7 @@ const HeaderDashboard = () => {
             borderRadius: "5px",
           }}
         >
-          <span style={{ color: "GrayText" }}> Section {today}</span>
+          <span style={{ color: "GrayText" }}>{today}</span>
           <span
             style={{
               color: "GrayText",

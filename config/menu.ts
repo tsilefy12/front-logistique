@@ -10,6 +10,7 @@ function allMenu() {
         name: "Matériels",
         link: "/materiels",
         icon: "inventory_2",
+        color: "accent",
         items: [],
       },
       {
@@ -18,12 +19,14 @@ function allMenu() {
         link: "/fournitures_et_consommables",
         icon: "inventory_2",
         items: [],
+        color: "warning",
       },
       {
         id: 3,
         name: "Matériel de transport",
         link: "/materiel_de_transport",
         icon: "local_shipping",
+        color: "info",
         items: [],
       },
     ];
@@ -204,6 +207,7 @@ function allMenu() {
           name: "Fournisseurs",
           link: "/fournisseurs",
           icon: "contacts",
+          color: "success",
           items: [],
         });
       }
@@ -217,6 +221,7 @@ function allMenu() {
           name: "Configurations",
           link: "/configurations/etat_materiel",
           icon: "settings",
+          color: "error",
           items: [
             {
               id: 51,
