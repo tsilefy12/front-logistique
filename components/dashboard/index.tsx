@@ -1,9 +1,8 @@
-import { Box, Card, Divider, FormLabel, Icon, Stack } from "@mui/material";
+import { Card, Stack } from "@mui/material";
 import HeaderDashboard from "./header";
 import CercleChart from "./cercleChart";
 import useFetchSuplyAndConsumableList from "../supply-and-consumable/entreSortie/hooks/useFetchSupplyAndConsumables";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import DemiCercleChart from "./demiCercle";
 import useFetchVendors from "../vendor/hooks/useFetchVendors";
@@ -13,13 +12,12 @@ import { EquipmentItem } from "../../redux/features/equipment/equipment.interfac
 import CardTranpostationEquipment from "./transportationEquipment";
 import allMenu from "../../config/menu";
 import FooterBackOffice from "../../layouts/backOffice/FooterBackOffice";
-import Warehouse from "@mui/icons-material/Warehouse";
 import Menu from "./menu";
 import {
-  DirectionsCar,
-  TwoWheeler,
-  DirectionsBoat,
   Business,
+  TwoWheelerOutlined,
+  DirectionsCarOutlined,
+  DirectionsBoatOutlined,
 } from "@mui/icons-material";
 
 const Dashboard = () => {
@@ -256,13 +254,14 @@ const Dashboard = () => {
               <Stack direction={"row"} justifyContent={"space-between"} gap={2}>
                 <Card
                   sx={{
-                    paddingLeft: 3,
-                    paddingRight: 3,
-                    paddingTop: 2,
+                    paddingLeft: 1,
+                    paddingRight: 1,
+                    paddingTop: 1,
                     height: 150,
                     width: "50%",
                     border: "1px solid #E0E0E0",
                     backgroundColor: "#A4C754",
+                    borderRadius: "10px",
                   }}
                 >
                   <Stack direction={"column"} gap={2}>
@@ -274,7 +273,11 @@ const Dashboard = () => {
                       <p>
                         {vendors.length > 1 ? "Fournisseurs" : "Fournisseur"}
                       </p>
-                      <Business fontSize="large" />
+                      <img
+                        src="/logistique/images/logo/vendor.png"
+                        width={40}
+                        height={40}
+                      />
                     </Stack>
                     <span
                       style={{
@@ -295,14 +298,15 @@ const Dashboard = () => {
               <Stack direction={"row"} justifyContent={"space-between"}>
                 <Card
                   sx={{
-                    paddingLeft: 3,
-                    paddingRight: 3,
+                    paddingLeft: 1,
+                    paddingRight: 1,
                     paddingTop: 1,
                     paddingBottom: 4,
                     minHeight: "100%",
                     maxHeight: "100%",
                     width: "60%",
                     backgroundColor: "#A4C754",
+                    borderRadius: "10px",
                   }}
                 >
                   <Stack direction={"column"} gap={2}>
@@ -314,7 +318,7 @@ const Dashboard = () => {
                     >
                       <Stack direction={"column"} gap={2} alignItems={"center"}>
                         <span>
-                          <DirectionsCar fontSize="large" />
+                          <DirectionsCarOutlined fontSize="large" />
                         </span>
                         <span style={{ color: "white", fontSize: "35px" }}>
                           {(() => {
@@ -331,7 +335,7 @@ const Dashboard = () => {
                       </Stack>
                       <Stack direction={"column"} gap={2} alignItems={"center"}>
                         <span>
-                          <TwoWheeler fontSize="large" />
+                          <TwoWheelerOutlined fontSize="large" />
                         </span>
                         <span style={{ color: "#18af3a", fontSize: "35px" }}>
                           {(() => {
@@ -348,7 +352,7 @@ const Dashboard = () => {
                       </Stack>
                       <Stack direction={"column"} gap={2} alignItems={"center"}>
                         <span>
-                          <DirectionsBoat fontSize="large" />
+                          <DirectionsBoatOutlined fontSize="large" />
                         </span>
                         <span
                           style={{
@@ -373,9 +377,9 @@ const Dashboard = () => {
                 </Card>
                 <Card
                   sx={{
-                    paddingLeft: 3,
-                    paddingRight: 3,
-                    paddingTop: 2,
+                    paddingLeft: 1,
+                    paddingRight: 1,
+                    paddingTop: 1,
                     minHeight: "100%",
                     maxHeight: "100%",
                     width: "35%",
@@ -390,7 +394,11 @@ const Dashboard = () => {
                       alignItems="center"
                     >
                       <p>Stock matériels</p>
-                      <img src="/images/warehouse.png" width={35} height={35} />
+                      <img
+                        src="/logistique/images/logo/warehouse.png"
+                        width={35}
+                        height={35}
+                      />
                     </Stack>
                     <span
                       style={{
@@ -426,4 +434,5 @@ const styleCard = {
   gap: 3,
   padding: 2,
   border: "1px solid #E0E0E0",
+  // borderRadius: "10px",
 };

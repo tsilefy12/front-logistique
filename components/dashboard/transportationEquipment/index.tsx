@@ -21,24 +21,26 @@ const CardTransportationEquipment = () => {
     .filter((f) => f.prefix)
     .reduce((acc, curr) => {
       const type = curr.prefix;
-      if (acc[type]) {
-        acc[type].count += 1;
-      } else {
-        acc[type] = {
-          type,
-          count: 1,
-        };
+      if (type !== undefined) {
+        if (acc[type]) {
+          acc[type].count += 1;
+        } else {
+          acc[type] = {
+            type,
+            count: 1,
+          };
+        }
       }
       return acc;
-    }, {});
+    }, {} as { [key: string]: { type: string; count: number } });
 
   const typeEntries = Object.values(typeCounts);
 
   return (
     <Card
       sx={{
-        paddingLeft: 3,
-        paddingRight: 3,
+        paddingLeft: 1,
+        paddingRight: 1,
         paddingTop: 2,
         height: 150,
         backgroundColor: "#A4C754",
