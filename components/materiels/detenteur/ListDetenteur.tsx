@@ -42,8 +42,8 @@ const ListDetenteur = () => {
   }, [router.query]);
 
   return (
-    <Container maxWidth="xl">
-      <Grid container spacing={4}>
+    <>
+      <Grid container spacing={4} paddingLeft={2} paddingRight={2}>
         <Grid item xs={12} md={3}>
           <FilterContainer>
             <FilterTitle>
@@ -97,7 +97,7 @@ const ListDetenteur = () => {
         </Grid>
         <Grid item xs={12} md={9}>
           <ContainerListEmploye>
-            <SearchDetenteur filtre={filtre} setFiltre={setFiltre}/>
+            <SearchDetenteur filtre={filtre} setFiltre={setFiltre} />
             <Divider />
             <ListEmployeContent>
               <CustomBtnAdd>
@@ -117,8 +117,12 @@ const ListDetenteur = () => {
                 )}
               </CustomBtnAdd>
               {holderListe
-                .sort((a, b) => (b.id!).localeCompare(a.id!))
-                .filter((item) => (`${item.matricule} ${item.function} ${item.contact} ${item.name} ${item.id}`).toLowerCase().includes(filtre.toLowerCase()))
+                // .sort((a, b) => (b.id!).localeCompare(a.id!))
+                .filter((item) =>
+                  `${item.matricule} ${item.function} ${item.contact} ${item.name} ${item.id}`
+                    .toLowerCase()
+                    .includes(filtre.toLowerCase())
+                )
                 .map((holder, index) => (
                   <Fragment key={index}>
                     <CardDetenteur holder={holder} />
@@ -128,7 +132,7 @@ const ListDetenteur = () => {
           </ContainerListEmploye>
         </Grid>
       </Grid>
-    </Container>
+    </>
   );
 };
 
