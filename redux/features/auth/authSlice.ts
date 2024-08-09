@@ -55,7 +55,11 @@ export const fetchLinkedEmployee = createAsyncThunk(
     "auth/getLinkedEmployee",
     async (data: { employeeId: string }, thunkAPI) => {
         try {
-            const response = await axios.get(`/rh/employee/${data.employeeId}`);
+            const response = await Promise.any([
+      axios.get(`/rh/prestataire/${data.employeeId}`),
+      axios.get(`/rh/employee/${data.employeeId}`),
+      axios.get(`/rh/intern/${data.employeeId}`),
+    ]);
             return response.data;
         } catch (error: any) {
             if (!error.response) {
