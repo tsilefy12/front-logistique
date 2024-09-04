@@ -24,6 +24,7 @@ import useFetchGrant from "../hooks/useFetchGrant";
 import OSSelectField from "../../../shared/select/OSSelectField";
 import useFetchTransportationEquipments from "../../hooks/useFetchTransportationEquipments";
 import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
+import useFetchModePaiementList from "../../../configurations/mode-paiement/hooks/useFetchUniteStock";
 
 const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
   const route = useRouter();
@@ -37,10 +38,12 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
   const { transportationEquipments } = useAppSelector(
     (state) => state.transportationEquipment
   );
-
+  const fetchModePaiementList = useFetchModePaiementList();
+  const { modePaiements } = useAppSelector((state) => state.modePaiement);
   React.useEffect(() => {
     fetchGrant();
     fetchMateriels();
+    fetchModePaiementList();
   }, []);
 
   React.useEffect(() => {
@@ -82,9 +85,10 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
     }
   }, [formikProps.values]);
   const modePaiement = [
-    { id: "Virement bancaire", name: "Virement bancaire" },
-    { id: "Chèque bancaire", name: "Chèque bancaire" },
+    { id: "Virement", name: "Virement" },
+    { id: "Chèque", name: "Chèque" },
     { id: "Mobile Money", name: "Mobile Money" },
+    { id: "Espèces", name: "Espèces" },
   ];
   return (
     <Form>
@@ -249,9 +253,9 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
             variant="outlined"
             name="modePaiement"
             type="text"
-            options={modePaiement}
-            dataKey={"name"}
-            valueKey="id"
+            options={modePaiements}
+            dataKey={"modePaiementMV"}
+            valueKey="modePaiementMV"
           />
         </FormControl>
       </Stack>

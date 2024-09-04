@@ -6,7 +6,7 @@ function allMenu() {
   const menus = useMemo(() => {
     let temp: any = [
       {
-        id: 1,
+        id: 2,
         name: "Matériels",
         link: "/materiels",
         icon: "inventory_2",
@@ -14,7 +14,7 @@ function allMenu() {
         items: [],
       },
       {
-        id: 2,
+        id: 3,
         name: "Fournitures et consommables",
         link: "/fournitures_et_consommables",
         icon: "inventory_2",
@@ -22,7 +22,7 @@ function allMenu() {
         color: "warning",
       },
       {
-        id: 3,
+        id: 4,
         name: "Matériel de transport",
         link: "/materiel_de_transport",
         icon: "local_shipping",
@@ -30,10 +30,23 @@ function allMenu() {
         items: [],
       },
     ];
+    if (
+      user &&
+      user.groups?.some((g) => g.service.name === "Logistiques FRS")
+    ) {
+      temp.unshift({
+        id: 1,
+        name: "Fournisseurs",
+        link: "/fournisseurs",
+        icon: "contacts",
+        color: "success",
+        items: [],
+      });
+    }
     if (user) {
       if (user.groups?.some((g) => g.service.name === "Logistiques BCE")) {
         temp
-          .find((t: any) => t.id === 1)
+          .find((t: any) => t.id === 2)
           ?.items.push({
             id: 14,
             name: "Bon de commende externe (BCE)",
@@ -43,7 +56,7 @@ function allMenu() {
       }
       if (user.groups?.some((g) => g.service.name === "Logistiques BCF")) {
         temp
-          .find((t: any) => t.id === 1)
+          .find((t: any) => t.id === 2)
           ?.items.push({
             id: 15,
             name: "Bon de commande fournisseur",
@@ -53,7 +66,7 @@ function allMenu() {
       }
       if (user.groups?.some((g) => g.service.name === "Logistiques BCI")) {
         temp
-          .find((t: any) => t.id === 1)
+          .find((t: any) => t.id === 2)
           ?.items.push({
             id: 16,
             name: "Bon de commande interne (BCI)",
@@ -63,7 +76,7 @@ function allMenu() {
       }
       if (user.groups?.some((g) => g.service.name === "Logistiques BR")) {
         temp
-          .find((t: any) => t.id === 1)
+          .find((t: any) => t.id === 2)
           ?.items.push({
             id: 17,
             name: "Bon de reception",
@@ -73,7 +86,7 @@ function allMenu() {
       }
       if (user.groups?.some((g) => g.service.name === "Logistiques BT")) {
         temp
-          .find((t: any) => t.id === 1)
+          .find((t: any) => t.id === 2)
           ?.items.push({
             id: 18,
             name: "Bon de transfert",
@@ -83,7 +96,7 @@ function allMenu() {
       }
       if (user.groups?.some((g) => g.service.name === "Logistiques FD")) {
         temp
-          .find((t: any) => t.id === 1)
+          .find((t: any) => t.id === 2)
           ?.items.push({
             id: 19,
             name: "Fiche de dotation",
@@ -93,7 +106,7 @@ function allMenu() {
       }
       if (user.groups?.some((g) => g.service.name === "Logistiques FDM")) {
         temp
-          .find((t: any) => t.id === 1)
+          .find((t: any) => t.id === 2)
           ?.items.push({
             id: 20,
             name: "Fiche détention materielle",
@@ -103,7 +116,7 @@ function allMenu() {
       }
       if (user.groups?.some((g) => g.service.name === "Logistiques LMS")) {
         temp
-          .find((t: any) => t.id === 1)
+          .find((t: any) => t.id === 2)
           ?.items.push(
             ...[
               {
@@ -123,7 +136,7 @@ function allMenu() {
       }
       if (user.groups?.some((g) => g.service.name === "Logistiques PV")) {
         temp
-          .find((t: any) => t.id === 1)
+          .find((t: any) => t.id === 2)
           ?.items.push({
             id: 22,
             name: "PV de comparaison",
@@ -133,7 +146,7 @@ function allMenu() {
       }
       if (user.groups?.some((g) => g.service.name === "Logistiques FS")) {
         temp
-          .find((t: any) => t.id === 2)
+          .find((t: any) => t.id === 3)
           ?.items.push({
             id: 21,
             name: "Fiche de stock",
@@ -143,7 +156,7 @@ function allMenu() {
       }
       if (user.groups?.some((g) => g.service.name === "Logistiques ES")) {
         temp
-          .find((t: any) => t.id === 2)
+          .find((t: any) => t.id === 3)
           ?.items.push({
             id: 22,
             name: "Entrée et sortie",
@@ -153,7 +166,7 @@ function allMenu() {
       }
       if (user.groups?.some((g) => g.service.name === "Logistiques Mat")) {
         temp
-          .find((t: any) => t.id === 3)
+          .find((t: any) => t.id === 4)
           ?.items.push({
             id: 31,
             name: "Tous les matériels",
@@ -163,7 +176,7 @@ function allMenu() {
       }
       if (user.groups?.some((g) => g.service.name === "Logistiques Ent")) {
         temp
-          .find((t: any) => t.id === 3)
+          .find((t: any) => t.id === 4)
           ?.items.push({
             id: 32,
             name: "Entretien",
@@ -173,7 +186,7 @@ function allMenu() {
       }
       if (user.groups?.some((g) => g.service.name === "Logistiques CV")) {
         temp
-          .find((t: any) => t.id === 3)
+          .find((t: any) => t.id === 4)
           ?.items.push({
             id: 33,
             name: "Course ville",
@@ -183,7 +196,7 @@ function allMenu() {
       }
       if (user.groups?.some((g) => g.service.name === "Logistiques LE")) {
         temp
-          .find((t: any) => t.id === 3)
+          .find((t: any) => t.id === 4)
           ?.items.push({
             id: 34,
             name: "Location externe",
@@ -193,23 +206,13 @@ function allMenu() {
       }
       if (user.groups?.some((g) => g.service.name === "Logistiques LI")) {
         temp
-          .find((t: any) => t.id === 3)
+          .find((t: any) => t.id === 4)
           ?.items.push({
             id: 35,
             name: "Location interne",
             link: "/materiel_de_transport/mission",
             icon: "",
           });
-      }
-      if (user.groups?.some((g) => g.service.name === "Logistiques FRS")) {
-        temp.push({
-          id: 4,
-          name: "Fournisseurs",
-          link: "/fournisseurs",
-          icon: "contacts",
-          color: "success",
-          items: [],
-        });
       }
       if (
         user.groups?.some(
@@ -245,6 +248,12 @@ function allMenu() {
               id: 54,
               name: "Type de produit (Fournisseur)",
               link: "/configurations/type_produit",
+              icon: "",
+            },
+            {
+              id: 5,
+              name: "Mode de paiement",
+              link: "/configurations/mode_de_paiement",
               icon: "",
             },
           ],

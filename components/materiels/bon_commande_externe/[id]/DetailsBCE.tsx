@@ -25,6 +25,8 @@ import { getFournisseurList } from "../../../../redux/features/fournisseur";
 import { getGrantList } from "../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
 import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
 import formatMontant from "../../../../hooks/format";
+import useFetchPrestataire from "../hooks/getPrestataire";
+import useFetchModePaiementList from "../../../configurations/mode-paiement/hooks/useFetchUniteStock";
 
 const DetailsBCE = () => {
   const router = useRouter();
@@ -39,7 +41,12 @@ const DetailsBCE = () => {
   const { grantList } = useAppSelector((state) => state.grant);
   const { budgetLineList } = useAppSelector((state) => state.lineBugetaire);
   const [pdf, setPdf] = useState<any>({});
-
+  const fetchPrestataire = useFetchPrestataire();
+  const { prestataireListe } = useAppSelector(
+    (state: any) => state.prestataire
+  );
+  const fetchModePaiementList = useFetchModePaiementList();
+  const { modePaiements } = useAppSelector((state) => state.modePaiement);
   const total = [
     ...employees.map((i: any) => {
       return {
@@ -53,6 +60,13 @@ const DetailsBCE = () => {
         id: i.id,
         name: i.name + " " + i.surname,
         type: "intern",
+      };
+    }),
+    ...prestataireListe.map((i: any) => {
+      return {
+        id: i.id,
+        name: i.matricule + " " + i.name + " " + i.surname,
+        type: "prestataire",
       };
     }),
   ];
@@ -80,6 +94,7 @@ const DetailsBCE = () => {
 
   useEffect(() => {
     fetchUtilsData();
+    fetchPrestataire();
   }, [[id]]);
 
   useEffect(() => {
@@ -96,7 +111,7 @@ const DetailsBCE = () => {
       )?.code,
       beneficiaire: bonCommandeExterne.beneficiaire,
       modePaiement: bonCommandeExterne.modePaiement,
-      conditionLivraison: bonCommandeExterne.conditionLivraison,
+      // conditionLivraison: bonCommandeExterne.conditionLivraison,
       articleCommandeBce: bonCommandeExterne.articleCommandeBce,
     };
     setPdf(data);
@@ -151,11 +166,15 @@ const DetailsBCE = () => {
                       Mode de paiement
                     </Typography>
                     <Typography variant="body1" color="gray">
-                      {bonCommandeExterne.modePaiement}
+                      {
+                        modePaiements.find(
+                          (e: any) => e.id === bonCommandeExterne?.modePaiement
+                        )?.modePaiementMV
+                      }
                     </Typography>
                   </InfoItems>
                 </Grid>
-                <Grid item xs={12} md={12}>
+                {/* <Grid item xs={12} md={12}>
                   <InfoItems direction="row" spacing={2}>
                     <Typography variant="body1" color="secondary">
                       Condition de livraison
@@ -164,7 +183,7 @@ const DetailsBCE = () => {
                       {bonCommandeExterne.conditionLivraison}
                     </Typography>
                   </InfoItems>
-                </Grid>
+                </Grid> */}
               </Grid>
               <Grid container spacing={4} my={1}>
                 <Grid item xs={12} md={12}>
@@ -289,7 +308,7 @@ const DetailsBCE = () => {
                         <TableCell align="left">
                           {formatMontant(item.pu)}
                         </TableCell>
-                        <TableCell align="left">{item.quantity}</TableCell>
+                        {/* <TableCell align="left">{item.quantity}</TableCell> */}
                       </TableRow>
                     )
                   )}

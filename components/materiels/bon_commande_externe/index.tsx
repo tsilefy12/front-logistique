@@ -24,7 +24,10 @@ import Moment from "react-moment";
 import { usePermitted } from "../../../config/middleware";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { BonCommandeExterneItem } from "../../../redux/features/bon_commande_externe/bonCommandeExterne.interface";
-import { deleteBonCommandeExterne } from "../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
+import {
+  deleteBonCommandeExterne,
+  editBonCommandeExterne,
+} from "../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
 import {
   defaultLabelDisplayedRows,
   labelRowsPerPage,
@@ -32,6 +35,8 @@ import {
 import useFetchBonCommandeExterne from "./hooks/useFetchBonCommandeExterne";
 import BonCommandeExterneTableHeader from "./table/BonCommandeExterneTableHeader";
 import BonCommandeExterneTableToolbar from "./table/BonCommandeExterneTableToolbar";
+import useFetchModePaiementList from "../../configurations/mode-paiement/hooks/useFetchUniteStock";
+import { Edit } from "@mui/icons-material";
 
 export default function BonCommandeExterneList() {
   const [page, setPage] = React.useState(0);
@@ -54,9 +59,11 @@ export default function BonCommandeExterneList() {
   const fetchBonCommandeExterne = useFetchBonCommandeExterne();
 
   const validate = usePermitted();
-
+  const fetchModePaiementList = useFetchModePaiementList();
+  const { modePaiements } = useAppSelector((state) => state.modePaiement);
   React.useEffect(() => {
     fetchBonCommandeExterne();
+    fetchModePaiementList();
   }, [router.query]);
 
   const handleClickDelete = async (id: any) => {
@@ -99,7 +106,9 @@ export default function BonCommandeExterneList() {
     page > 0
       ? Math.max(0, (1 + page) * rowsPerPage - bonCommandeExternes.length)
       : 0;
-
+  const handleClickEdit = async (id: any) => {
+    await dispatch(editBonCommandeExterne({ id }));
+  };
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
@@ -120,19 +129,26 @@ export default function BonCommandeExterneList() {
       <SectionTable>
         <Box sx={{ width: "100%", mb: 2 }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <BonCommandeExterneTableToolbar filtre={filtre} setFiltre={setFiltre} />
+            <BonCommandeExterneTableToolbar
+              filtre={filtre}
+              setFiltre={setFiltre}
+            />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
                 size="small"
               >
-                <BonCommandeExterneTableHeader  />
+                <BonCommandeExterneTableHeader />
                 <TableBody>
                   {bonCommandeExternes
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .sort((a, b) => (b.id!).localeCompare(a.id!))
-                    .filter((item) => (`${item.ref} ${item.conditionLivraison} ${item.modePaiement}`).toLowerCase().includes(filtre.toLowerCase()))
+                    .sort((a, b) => b.id!.localeCompare(a.id!))
+                    .filter((item) =>
+                      `${item.ref} ${item.modePaiement}`
+                        .toLowerCase()
+                        .includes(filtre.toLowerCase())
+                    )
                     .map((row: BonCommandeExterneItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (
@@ -143,10 +159,11 @@ export default function BonCommandeExterneList() {
                             </Moment>
                           </TableCell>
                           <TableCell align="left">
-                            {row?.conditionLivraison}
-                          </TableCell>
-                          <TableCell align="left">
-                            {row?.modePaiement}
+                            {
+                              modePaiements.find(
+                                (e: any) => e.id === row?.modePaiement
+                              )?.modePaiementMV
+                            }
                           </TableCell>
                           <TableCell align="left">{row?.ref}</TableCell>
                           <TableCell align="left">{row?.objet}</TableCell>
@@ -166,6 +183,23 @@ export default function BonCommandeExterneList() {
                               >
                                 <Visibility />
                               </IconButton>
+                              {validate("Logistiques BCE", "D") && (
+                                <Link
+                                  href={`/materiels/bon_commande_externe/${row.id}/edit`}
+                                >
+                                  <IconButton
+                                    color="primary"
+                                    aria-label="Edit"
+                                    component="span"
+                                    size="small"
+                                    onClick={() => {
+                                      handleClickEdit(row.id);
+                                    }}
+                                  >
+                                    <Edit />
+                                  </IconButton>
+                                </Link>
+                              )}
                               {validate("Logistiques BCE", "D") && (
                                 <IconButton
                                   color="warning"

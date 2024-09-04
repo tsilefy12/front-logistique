@@ -53,6 +53,8 @@ import { programSlice } from "./features/program/programSlice";
 import { BonCommandeFournisseurSlice } from "./features/bon_commande_fournisseur/bonCommandeFournisseurSlice";
 import { ArticleCommandeFournisseurSlice } from "./features/bon_commande_fournisseur/articleCommandeFournisseurSlice";
 import { OffreRetenuSlice } from "./features/pvComparaison/offreRetenuSlice";
+import { ModePaiementSlice } from "./features/configuration/modePaiementSlice";
+import { prestataireSlice } from "./features/prestataire/prestataireSlice";
 
 export const store = configureStore({
   reducer: {
@@ -88,29 +90,31 @@ export const store = configureStore({
     typeProduit: typeProduitSlice.reducer,
     inventaire: InventaireSlice.reducer,
     employe: employeSlice.reducer,
-    stagiaire : stagiaireSlice.reducer,
-    bonCommandeInterne : bonCommandeInterneSlice.reducer,
-    articleCommandeInterne : ArticleCommandeInterneSlice.reducer,
-    pvComparaison : pvComparaisonSlice.reducer,
+    stagiaire: stagiaireSlice.reducer,
+    bonCommandeInterne: bonCommandeInterneSlice.reducer,
+    articleCommandeInterne: ArticleCommandeInterneSlice.reducer,
+    pvComparaison: pvComparaisonSlice.reducer,
     pvComparaisonFournisseurs: pvComparaisonFournisseurSlice.reducer,
     bonCommendeExterne: bonCommandeExterneSlice.reducer,
-    bonReceptions : bonReceptionSlice.reducer,
+    bonReceptions: bonReceptionSlice.reducer,
     articleTransfert: ArticleTransfertSlice.reducer,
     produiReçu: produitRecuSlice.reducer,
-    bonTransfert:bonTransfertSlice.reducer,
+    bonTransfert: bonTransfertSlice.reducer,
     articleCommandeBce: ArticleCommandeExterneSlice.reducer,
     suiviCarburant: suiviCarburantSlice.reducer,
     missionDeTransport: missionTransportSlice.reducer,
     locationDeTransport: locationSlice.reducer,
     ficheDotation: ficheDotationSlice.reducer,
-    grant : grantSlice.reducer,
-    lineBugetaire : budgetLineSlice.reducer,
-    holderEquipment : holderEquipementSlice.reducer,
+    grant: grantSlice.reducer,
+    lineBugetaire: budgetLineSlice.reducer,
+    holderEquipment: holderEquipementSlice.reducer,
     activity: activitySlice.reducer,
     program: programSlice.reducer,
-    bonDeCommandeFournisseur : BonCommandeFournisseurSlice.reducer,
-    articleCommanedFournisseur : ArticleCommandeFournisseurSlice.reducer,
-    offreRetenu : OffreRetenuSlice.reducer
+    bonDeCommandeFournisseur: BonCommandeFournisseurSlice.reducer,
+    articleCommanedFournisseur: ArticleCommandeFournisseurSlice.reducer,
+    offreRetenu: OffreRetenuSlice.reducer,
+    modePaiement: ModePaiementSlice.reducer,
+    prestataire: prestataireSlice.reducer,
   },
 });
 

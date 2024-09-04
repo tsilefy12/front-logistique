@@ -23,16 +23,15 @@ const HeaderDashboard = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       const now = new Date();
-      setCurrentTime(
-        now.toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        })
-      );
-    }, 1000); // Met à jour chaque seconde
+      const options = { timeZone: "Indian/Antananarivo", hour12: false };
+      const timeString = now.toLocaleTimeString("en-GB", options);
+
+      setCurrentTime(timeString);
+    }, 1000);
 
     return () => clearInterval(intervalId);
   }, []);
+
   const [nomUtilisateur, setNomUtilisateur] = useState<string>("");
   useEffect(() => {
     const timer = setTimeout(() => {

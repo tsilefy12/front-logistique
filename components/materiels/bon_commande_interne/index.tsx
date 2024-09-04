@@ -37,6 +37,7 @@ import {
 import useFetchBonCommandeInterne from "./hooks/useFetchBonCommandeInterne";
 import BonCommandeInterneTableHeader from "./table/BonCommandeInterneTableHeader";
 import BonCommandeInterneTableToolbar from "./table/BonCommandeInterneTableToolbar";
+import useFetchPrestataire from "../bon_commande_externe/hooks/getPrestataire";
 
 export default function BonCommandeInterneList() {
   const [page, setPage] = React.useState(0);
@@ -58,7 +59,10 @@ export default function BonCommandeInterneList() {
   const { employees } = useAppSelector((state) => state.employe);
   const { interns } = useAppSelector((state) => state.stagiaire);
   const validate = usePermitted();
-
+  const fetchPrestataire = useFetchPrestataire();
+  const { prestataireListe } = useAppSelector(
+    (state: any) => state.prestataire
+  );
   const total = [
     ...employees.map((i: any) => {
       return {
@@ -74,6 +78,13 @@ export default function BonCommandeInterneList() {
         type: "intern",
       };
     }),
+    ...prestataireListe.map((i: any) => {
+      return {
+        id: i.id,
+        name: i.matricule + " " + i.name + " " + i.surname,
+        type: "prestataire",
+      };
+    }),
   ];
 
   React.useEffect(() => {
@@ -81,6 +92,7 @@ export default function BonCommandeInterneList() {
     dispatch(getInterns({}));
     dispatch(getEmployees({}));
     dispatch(getGrantList({}));
+    fetchPrestataire();
   }, [router.query]);
 
   const handleClickEdit = async (id: any) => {
@@ -159,7 +171,7 @@ export default function BonCommandeInterneList() {
                 <TableBody>
                   {bonCommandeInternes
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .sort((a, b) => (b.id!).localeCompare(a.id!))
+                    .sort((a, b) => b.id!.localeCompare(a.id!))
                     .map((row: BonCommandeItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

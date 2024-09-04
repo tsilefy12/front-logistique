@@ -19,6 +19,7 @@ import {
 import { getBonCommandeFournisseur } from "../../../../redux/features/bon_commande_fournisseur/bonCommandeFournisseurSlice";
 import PDFButton from "./printBonCommandeFournisseur";
 import formatMontant from "../../../../hooks/format";
+import useFetchModePaiementList from "../../../configurations/mode-paiement/hooks/useFetchUniteStock";
 
 const DetailsBCI = () => {
   const router = useRouter();
@@ -29,7 +30,8 @@ const DetailsBCI = () => {
   );
 
   const [pdf, setPdf] = useState<any>({});
-
+  const fetchModePaiementList = useFetchModePaiementList();
+  const { modePaiements } = useAppSelector((state) => state.modePaiement);
   const getDetailsBCI = () => {
     dispatch(
       getBonCommandeFournisseur({
@@ -56,6 +58,7 @@ const DetailsBCI = () => {
       articleFournisseur: commandeFournisseur?.articleFournisseur,
     };
     setPdf(dataPdf);
+    fetchModePaiementList();
   }, [id, commandeFournisseur]);
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
@@ -119,7 +122,12 @@ const DetailsBCI = () => {
                       Mode de paiement
                     </Typography>
                     <Typography variant="body1" color="gray">
-                      {commandeFournisseur.paymentMethod}
+                      {
+                        modePaiements.find(
+                          (e: any) =>
+                            e.id === commandeFournisseur?.paymentMethod
+                        )?.modePaiementMV
+                      }
                     </Typography>
                   </InfoItems>
                 </Grid>
@@ -190,10 +198,14 @@ const DetailsBCI = () => {
                           <TableCell component="th" scope="row">
                             {item.designation}
                           </TableCell>
-                          <TableCell align="left">{item.unitPrice ? formatMontant(item.unitPrice) :""}</TableCell>
+                          <TableCell align="left">
+                            {item.unitPrice
+                              ? formatMontant(item.unitPrice)
+                              : ""}
+                          </TableCell>
                           <TableCell align="left">{item.quantite}</TableCell>
                           <TableCell align="left">
-                            {item.montant ? formatMontant(item.montant) :""} ar
+                            {item.montant ? formatMontant(item.montant) : ""}
                           </TableCell>
                           <TableCell align="left">{item.details}</TableCell>
                         </TableRow>

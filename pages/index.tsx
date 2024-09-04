@@ -10,9 +10,7 @@ import Dashboard from "../components/dashboard";
 
 const Home: NextPage = () => {
   const basePath = useBasePath();
-  return (
-    <Dashboard />
-  );
+  return <Dashboard />;
 };
 
 export default Home;

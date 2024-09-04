@@ -173,7 +173,7 @@ export default function BonReceptionList() {
                 <TableBody>
                   {bonReceptions
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .sort((a, b) => (b.id!).localeCompare(a.id!))
+                    .sort((a, b) => b.id!.localeCompare(a.id!))
                     .map((row: bonReceptionItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (
@@ -184,6 +184,8 @@ export default function BonReceptionList() {
                               ? row.bonDeCommandeExterne?.ref + "(BCE)"
                               : row.bonDeCommandeInterne?.reference + "(BCI)"}
                           </TableCell>
+                          <TableCell align="left">{row?.etat}</TableCell>
+                          <TableCell align="left">{row?.observation}</TableCell>
                           <TableCell align="left">
                             <Moment format="DD/MM/YYYY">
                               {row?.dateReception}

@@ -37,6 +37,7 @@ import {
 import useFetchBonTransfert from "./hooks/useFetchBonTransfert";
 import BonTransfertTableHeader from "./table/BonTransfertTableHeader";
 import BonTransfertTableToolbar from "./table/BonTransfertTableToolbar";
+import useFetchPrestataire from "../bon_commande_externe/hooks/getPrestataire";
 
 export default function BonTransfertList() {
   const [page, setPage] = React.useState(0);
@@ -58,7 +59,10 @@ export default function BonTransfertList() {
   const { interns } = useAppSelector((state) => state.stagiaire);
   const { grantList } = useAppSelector((state) => state.grant);
   const { programs } = useAppSelector((state) => state.program);
-
+  const fetchPrestataire = useFetchPrestataire();
+  const { prestataireListe } = useAppSelector(
+    (state: any) => state.prestataire
+  );
   const total = [
     ...employees.map((i: any) => {
       return {
@@ -74,6 +78,13 @@ export default function BonTransfertList() {
         type: "intern",
       };
     }),
+    ...prestataireListe.map((i: any) => {
+      return {
+        id: i.id,
+        name: i.matricule + " " + i.name + " " + i.surname,
+        type: "prestataire",
+      };
+    }),
   ];
 
   const fetchBonTransfert = useFetchBonTransfert();
@@ -84,6 +95,7 @@ export default function BonTransfertList() {
     dispatch(getEmployees({}));
     dispatch(getGrantList({}));
     dispatch(getPrograms({}));
+    fetchPrestataire();
   }, [router.query]);
 
   const handleClickEdit = async (id: any) => {
@@ -133,10 +145,10 @@ export default function BonTransfertList() {
       <NavigationContainer>
         <SectionNavigation>
           <Link href={"/materiels/bon_transfert/ajouter"}>
-              <Button variant="contained" startIcon={<Add />} size="small">
-                Ajouter
-              </Button>
-            </Link>
+            <Button variant="contained" startIcon={<Add />} size="small">
+              Ajouter
+            </Button>
+          </Link>
           {/* {validate("Logistiques BT", "C") && (
             
           )} */}
@@ -158,7 +170,7 @@ export default function BonTransfertList() {
                 <TableBody>
                   {bonTransferts
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .sort((a, b) => (b.id!).localeCompare(a.id!))
+                    .sort((a, b) => b.id!.localeCompare(a.id!))
                     .map((row: bonTransfertItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (
@@ -210,28 +222,28 @@ export default function BonTransfertList() {
                               >
                                 <Visibility />
                               </IconButton>
-                               <IconButton
-                                  color="primary"
-                                  aria-label="Modifier"
-                                  component="span"
-                                  size="small"
-                                  onClick={() => {
-                                    handleClickEdit(row.id);
-                                  }}
-                                >
-                                  <Edit />
-                                </IconButton>
-                                <IconButton
-                                  color="warning"
-                                  aria-label="Supprimer"
-                                  component="span"
-                                  size="small"
-                                  onClick={() => {
-                                    handleClickDelete(row.id);
-                                  }}
-                                >
-                                  <Delete />
-                                </IconButton>
+                              <IconButton
+                                color="primary"
+                                aria-label="Modifier"
+                                component="span"
+                                size="small"
+                                onClick={() => {
+                                  handleClickEdit(row.id);
+                                }}
+                              >
+                                <Edit />
+                              </IconButton>
+                              <IconButton
+                                color="warning"
+                                aria-label="Supprimer"
+                                component="span"
+                                size="small"
+                                onClick={() => {
+                                  handleClickDelete(row.id);
+                                }}
+                              >
+                                <Delete />
+                              </IconButton>
                             </BtnActionContainer>
                           </TableCell>
                         </TableRow>

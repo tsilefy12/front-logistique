@@ -24,6 +24,7 @@ import { getEmployees } from "../../../../redux/features/orderEquipment";
 import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
 import { getPrograms } from "../../../../redux/features/program/programSlice";
 import formatMontant from "../../../../hooks/format";
+import useFetchPrestataire from "../../bon_commande_externe/hooks/getPrestataire";
 const DetailsBCI = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -36,6 +37,10 @@ const DetailsBCI = () => {
   const { grantList } = useAppSelector((state) => state.grant);
   const { budgetLineList } = useAppSelector((state) => state.lineBugetaire);
   const { programs } = useAppSelector((state) => state.program);
+  const fetchPrestataire = useFetchPrestataire();
+  const { prestataireListe } = useAppSelector(
+    (state: any) => state.prestataire
+  );
 
   const [pdf, setPdf] = useState<any>({});
 
@@ -52,6 +57,13 @@ const DetailsBCI = () => {
         id: i.id,
         name: i.name + " " + i.surname,
         type: "intern",
+      };
+    }),
+    ...prestataireListe.map((i: any) => {
+      return {
+        id: i.id,
+        name: i.matricule + " " + i.name + " " + i.surname,
+        type: "prestataire",
       };
     }),
   ];
@@ -72,6 +84,7 @@ const DetailsBCI = () => {
     dispatch(getGrantList({}));
     dispatch(getBudgetLineList({}));
     dispatch(getPrograms({}));
+    fetchPrestataire();
   };
 
   useEffect(() => {
