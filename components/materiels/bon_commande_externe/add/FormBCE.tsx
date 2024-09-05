@@ -12,6 +12,7 @@ import {
   Divider,
   FormControl,
   IconButton,
+  Link,
   Stack,
   Table,
   TableBody,
@@ -35,6 +36,7 @@ import { getGrantList } from "../../../../redux/features/grant_ligneBudgétaire_
 import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
 import useFetchModePaiementList from "../../../configurations/mode-paiement/hooks/useFetchUniteStock";
 import useFetchPrestataire from "../hooks/getPrestataire";
+import { cancelEdit } from "../../../../redux/features/bon_commande_externe/articleBCESlice";
 
 const FormBCE = ({
   formikProps,
@@ -126,17 +128,19 @@ const FormBCE = ({
       <NavigationContainer>
         <SectionNavigation>
           <Stack flexDirection={"row"}>
-            <Button
-              color="info"
-              variant="text"
-              startIcon={<ArrowBack />}
-              onClick={() => {
-                route.back();
-                formikProps.resetForm();
-              }}
-            >
-              Retour
-            </Button>
+            <Link href="/materiels/bon_commande_externe">
+              <Button
+                color="info"
+                variant="text"
+                startIcon={<ArrowBack />}
+                onClick={() => {
+                  formikProps.resetForm();
+                  dispatch(cancelEdit());
+                }}
+              >
+                Retour
+              </Button>
+            </Link>
             <Button
               variant="contained"
               color="primary"

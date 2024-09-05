@@ -23,13 +23,17 @@ import {
 import { ModePaiementItem } from "../../../../redux/features/configuration/modePaiement.interface";
 
 const ListeModePaiement = () => {
-  const { modePaiements } = useAppSelector((state) => state.modePaiement);
   const fetchModePaiementList = useFetchModePaiementList();
+  const { modePaiements } = useAppSelector((state) => state.modePaiement);
   const router = useRouter();
 
   const confirm = useConfirm();
   const dispatch: any = useAppDispatch();
 
+  React.useEffect(() => {
+    fetchModePaiementList();
+  }, []);
+  console.log(modePaiements);
   const handleClickEdit = async (id: any) => {
     await dispatch(editModePaiement({ id }));
   };
@@ -55,9 +59,6 @@ const ListeModePaiement = () => {
       .catch(() => {});
   };
 
-  React.useEffect(() => {
-    fetchModePaiementList();
-  }, [router.query]);
   return (
     <TableSection>
       <Box sx={{ width: "100%" }}>
@@ -82,7 +83,7 @@ const ListeModePaiement = () => {
               sx={{ padding: "20px" }}
             />
           </Stack>
-          {modePaiements ? (
+          {modePaiements.length > 0 ? (
             modePaiements.map((row: ModePaiementItem, index: any) => {
               return (
                 <Stack

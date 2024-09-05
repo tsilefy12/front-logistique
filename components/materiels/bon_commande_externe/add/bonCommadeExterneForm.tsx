@@ -6,7 +6,10 @@ import { Formik } from "formik";
 
 import * as Yup from "yup";
 
-import { createBonCommandeExterne } from "../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
+import {
+  createBonCommandeExterne,
+  updateBonCommandeExterne,
+} from "../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
 import { createArticleCommandeExterne } from "../../../../redux/features/bon_commande_externe/articleBCESlice";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import FormBCE from "./FormBCE";
@@ -26,12 +29,12 @@ export default function BonCommandeExterneForm() {
   const handleSubmit = async (values: any) => {
     try {
       if (isEditing) {
-        // await dispatch(
-        //   updateConsumable({
-        //     id: consumable.id!,
-        //     consumable: values,
-        //   })
-        // );
+        await dispatch(
+          updateBonCommandeExterne({
+            id: bonCommandeExterne.id!,
+            bonCommandeExterne: values,
+          })
+        );
       } else {
         if (values.pieceJointe && values.pieceJointe.name !== null) {
           const formData = new FormData();

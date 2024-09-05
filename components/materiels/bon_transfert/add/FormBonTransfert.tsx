@@ -34,6 +34,8 @@ import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import OSDatePicker from "../../../shared/date/OSDatePicker";
 import { getPrograms } from "../../../../redux/features/program/programSlice";
 import useFetchPrestataire from "../../bon_commande_externe/hooks/getPrestataire";
+import useFetchBonCommandeExterne from "../../bon_commande_externe/hooks/useFetchBonCommandeExterne";
+import useFetchBonCommandeInterne from "../../bon_commande_interne/hooks/useFetchBonCommandeInterne";
 
 const FormBonTransfert = ({
   formikProps,
@@ -60,7 +62,16 @@ const FormBonTransfert = ({
     (state: any) => state.prestataire
   );
   const [idValues, setIdValues] = useState<any>({});
+  const { bonCommandeExternes } = useAppSelector(
+    (state) => state.bonCommendeExterne
+  );
 
+  const fetchBonCommandeExterne = useFetchBonCommandeExterne();
+  const { bonCommandeInternes } = useAppSelector(
+    (state) => state.bonCommandeInterne
+  );
+
+  const fetchBonCommandeInterne = useFetchBonCommandeInterne();
   const total = [
     ...employees.map((i: any) => {
       return {
@@ -110,6 +121,22 @@ const FormBonTransfert = ({
     formikProps.setFieldValue("type", Val?.type);
   }, [formikProps.values.destination]);
 
+  const ref = [
+    ...bonCommandeExternes.map((i: any) => {
+      return {
+        id: i.id,
+        name: i.reference,
+      };
+    }),
+    ...bonCommandeInternes.map((i: any) => {
+      return {
+        id: i.id,
+        name: i.reference,
+      };
+    }),
+    { id: "Don", name: "Don" },
+    { id: "Autre", name: "Autre" },
+  ];
   return (
     <Form>
       <NavigationContainer>
@@ -280,11 +307,11 @@ const FormBonTransfert = ({
             <Table sx={{ minWidth: 700 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
+                  <TableCell>Référence</TableCell>
                   <TableCell>Designation</TableCell>
                   <TableCell align="left">Quantité commander</TableCell>
                   <TableCell align="left">Quantité expédié</TableCell>
                   <TableCell align="left">Observation</TableCell>
-                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -293,6 +320,7 @@ const FormBonTransfert = ({
                     key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
+                    <TableCell align="left">{item.ref}</TableCell>
                     <TableCell component="th" scope="row">
                       {item.designation}
                     </TableCell>
@@ -315,6 +343,7 @@ const FormBonTransfert = ({
                           component="span"
                           size="small"
                           onClick={() => {
+                            formikProps.setFieldValue("ref", item.ref);
                             formikProps.setFieldValue(
                               "designation",
                               item.designation
@@ -377,6 +406,17 @@ const FormBonTransfert = ({
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
+                    <FormControl fullWidth sx={{ marginBottom: 10 }}>
+                      <OSSelectField
+                        id="ref"
+                        label="Référence"
+                        name="ref"
+                        type="text"
+                        options={ref}
+                        dataKey={"name"}
+                        valueKey="id"
+                      />
+                    </FormControl>
                     <FormControl fullWidth>
                       <OSTextField
                         id="designation"
@@ -431,6 +471,7 @@ const FormBonTransfert = ({
                       <IconButton
                         type="button"
                         onClick={() => {
+                          const ref = formikProps.values.ref;
                           const designation = formikProps.values.designation;
                           const quantiteCommande =
                             formikProps.values.quantiteCommande;
@@ -450,6 +491,7 @@ const FormBonTransfert = ({
                                     if (indexUpdate === idValues.index) {
                                       return {
                                         id: idValues.idVal,
+                                        ref,
                                         designation,
                                         quantiteCommande,
                                         quantiteExpedie,
@@ -468,6 +510,7 @@ const FormBonTransfert = ({
                                     let indexUpdate = index + 1;
                                     if (indexUpdate === idValues.index) {
                                       return {
+                                        ref,
                                         designation,
                                         quantiteCommande,
                                         quantiteExpedie,
@@ -483,6 +526,7 @@ const FormBonTransfert = ({
                               setValuesArticle((prev: any[]) => {
                                 let temp = [...prev];
                                 temp.push({
+                                  ref: ref,
                                   designation: designation,
                                   quantiteCommande: quantiteCommande,
                                   quantiteExpedie: quantiteExpedie,
@@ -491,6 +535,7 @@ const FormBonTransfert = ({
                                 return temp;
                               });
                             }
+                            formikProps.setFieldValue("ref", "");
                             formikProps.setFieldValue("designation", "");
                             formikProps.setFieldValue("quantiteCommande", 0);
                             formikProps.setFieldValue("quantiteExpedie", 0);
@@ -503,6 +548,7 @@ const FormBonTransfert = ({
                       <IconButton
                         type="button"
                         onClick={() => {
+                          formikProps.setFieldValue("ref", "");
                           formikProps.setFieldValue("designation", "");
                           formikProps.setFieldValue("quantiteCommande", 0);
                           formikProps.setFieldValue("quantiteExpedie", 0);

@@ -107,7 +107,7 @@ export default function BonCommandeExterneList() {
       ? Math.max(0, (1 + page) * rowsPerPage - bonCommandeExternes.length)
       : 0;
   const handleClickEdit = async (id: any) => {
-    await dispatch(editBonCommandeExterne({ id }));
+    router.push(`/materiels/bon_commande_externe/${id}/edit`);
   };
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
@@ -184,21 +184,17 @@ export default function BonCommandeExterneList() {
                                 <Visibility />
                               </IconButton>
                               {validate("Logistiques BCE", "D") && (
-                                <Link
-                                  href={`/materiels/bon_commande_externe/${row.id}/edit`}
+                                <IconButton
+                                  color="primary"
+                                  aria-label="Edit"
+                                  component="span"
+                                  size="small"
+                                  onClick={() => {
+                                    handleClickEdit(row.id);
+                                  }}
                                 >
-                                  <IconButton
-                                    color="primary"
-                                    aria-label="Edit"
-                                    component="span"
-                                    size="small"
-                                    onClick={() => {
-                                      handleClickEdit(row.id);
-                                    }}
-                                  >
-                                    <Edit />
-                                  </IconButton>
-                                </Link>
+                                  <Edit />
+                                </IconButton>
                               )}
                               {validate("Logistiques BCE", "D") && (
                                 <IconButton
