@@ -22,13 +22,11 @@ function PrintFicheDotation({ pdfData }: { pdfData: any }) {
     : null;
   const [personne, setPersone] = useState<any[]>([]);
   useEffect(() => {
-    if (id) {
-      const data = pdfData.personneConcerne?.filter(
-        (f: any) => f.ficheDotationId == id
-      );
-      setPersone(data);
-    }
-  }, [id]);
+    const data = pdfData.personneConcerne?.filter(
+      (f: any) => f.ficheDotationId == id
+    );
+    setPersone(data);
+  }, [pdfData]);
   return (
     <Document>
       <Page style={{ padding: 15 }} orientation="landscape">
