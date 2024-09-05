@@ -133,7 +133,7 @@ export default function InventaireList() {
                               ? "Bon etat"
                               : row.etatMateriel == "BAD"
                               ? "Mauvais"
-                              : "inutilisable"}
+                              : "Inutilisable"}
                           </TableCell>
                           <TableCell align="left">
                             {row.valeurInventaire}

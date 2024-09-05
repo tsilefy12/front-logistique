@@ -229,7 +229,13 @@ const AddInventaireForm = () => {
                     id="outlined-basic"
                     label="Etat matériel"
                     name="etatMateriel"
-                    value={etat}
+                    value={
+                      etat == "GOOD"
+                        ? "Bon etat"
+                        : etat == "BAD"
+                        ? "Mauvais"
+                        : "Inutilisable"
+                    }
                     onChange={(value: any) =>
                       formikProps.setFieldValue("etatMateriel", value)
                     }
