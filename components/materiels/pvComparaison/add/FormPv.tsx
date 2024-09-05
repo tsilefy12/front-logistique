@@ -290,17 +290,6 @@ const FormPv = ({
           <FormControl fullWidth>
             <OSSelectField
               id="outlined-basic"
-              label="Matériel"
-              name="materiel"
-              options={materiel}
-              dataKey={["designation"]}
-              valueKey="id"
-              type="text"
-            />
-          </FormControl>
-          <FormControl fullWidth>
-            <OSSelectField
-              id="outlined-basic"
               label="Programme"
               name="programme"
               options={programs}
@@ -469,10 +458,14 @@ const FormPv = ({
                   </TableCell>
                   <TableCell align="left">
                     <FormControl fullWidth>
-                      <OSTextField
+                      <OSSelectField
                         id="designation"
                         label="Designation"
                         name="designation"
+                        options={total}
+                        dataKey={["name", "type"]}
+                        valueKey="id"
+                        type="text"
                       />
                     </FormControl>
                   </TableCell>

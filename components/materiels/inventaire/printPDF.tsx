@@ -7,6 +7,7 @@ import {
   StyleSheet,
   PDFDownloadLink,
 } from "@react-pdf/renderer";
+import { CircularProgress } from "@mui/material";
 
 // Styles pour le PDF
 const styles = StyleSheet.create({
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 5,
     borderBottom: "1px solid #ccc",
+    fontSize: 10,
   },
 });
 
@@ -35,6 +37,10 @@ const styles = StyleSheet.create({
 const InventairePDF = ({ inventaireList }: any) => (
   <Document>
     <Page size="A4" style={styles.page}>
+      <View style={{ fontSize: 10 }}>
+        Matériel :{" "}
+        {inventaireList.map((item: any) => item.equipment?.designation)}
+      </View>
       <View style={styles.table}>
         <View style={styles.tableRow}>
           <Text style={styles.tableCell}>Désignation</Text>
@@ -72,7 +78,7 @@ const ExportPDFButton = ({ inventaireList }: any) => (
     fileName="inventaire.pdf"
   >
     {({ blob, url, loading, error }) =>
-      loading ? "Chargement du PDF..." : "Télécharger le PDF"
+      loading ? <CircularProgress color="primary" /> : "PDF"
     }
   </PDFDownloadLink>
 );

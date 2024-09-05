@@ -31,6 +31,7 @@ import {
 import useFetchpvComparaison from "./hooks/useFetchPvComparaisonFournisseur";
 import PvComparaisonTableHeader from "./table/pvComparaisonTableHeader";
 import PvComparaisonTableToolbar from "./table/pvComparaisonTableToolbar";
+import { Edit } from "@mui/icons-material";
 
 export default function PvComparaisonList() {
   const [page, setPage] = React.useState(0);
@@ -81,6 +82,9 @@ export default function PvComparaisonList() {
   const handleClickDetails = async (id: any) => {
     router.push(`/materiels/pv_comparaison//${id}/details`);
   };
+  const handleClickEdit = async (id: any) => {
+    router.push(`/materiels/pv_comparaison//${id}/edit`);
+  };
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -104,7 +108,10 @@ export default function PvComparaisonList() {
               </Button>
             </Link>
           )}
-          <Typography variant="h4"> Liste PV des comparaisons d’offre</Typography>
+          <Typography variant="h4">
+            {" "}
+            Liste PV des comparaisons d’offre
+          </Typography>
         </SectionNavigation>
         {/* <Divider /> */}
       </NavigationContainer>
@@ -122,7 +129,7 @@ export default function PvComparaisonList() {
                 <TableBody>
                   {pvComparaisons
                     .slice()
-                    .sort((a, b) => (b.id!).localeCompare(a.id!))
+                    .sort((a, b) => b.id!.localeCompare(a.id!))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row: PvComparaisonItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
@@ -165,6 +172,19 @@ export default function PvComparaisonList() {
                               >
                                 <Visibility />
                               </IconButton>
+                              {validate("Logistiques PV", "D") && (
+                                <IconButton
+                                  color="primary"
+                                  aria-label="Modifier"
+                                  component="span"
+                                  size="small"
+                                  onClick={() => {
+                                    handleClickEdit(row.id);
+                                  }}
+                                >
+                                  <Edit />
+                                </IconButton>
+                              )}
                               {validate("Logistiques PV", "D") && (
                                 <IconButton
                                   color="warning"

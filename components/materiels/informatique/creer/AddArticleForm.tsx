@@ -20,6 +20,12 @@ const AddArticleForm = () => {
     values.acquisitionDate = new Date(values?.acquisitionDate).toISOString();
     try {
       if (isEditing) {
+        if (values.image && values.image.name !== null) {
+          const formData = new FormData();
+          formData.append("file", values.image);
+          const { images } = await dispatch(createFile(formData)).unwrap();
+          values.image = images[0].url;
+        }
         await dispatch(
           updateEquipment({
             id: equipment.id!,

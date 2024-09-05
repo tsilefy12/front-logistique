@@ -4,14 +4,14 @@ export interface SuplyAndConsumableItem {
   quantity?: number;
   unitPrice?: number;
   SKU?: string;
-  uniteStock?:any;
-  montant?: number,
-  seuil?: number,
-  reste?: number,
+  uniteStock?: any;
+  montant?: number;
+  seuil?: number;
+  reste?: number;
   moisPrevision?: number;
   fournisseur?: string;
   categorieStock?: string;
-  grant?: string;
+  // grant?: string;
   vendor?: any;
   typeEquipment?: any;
 }

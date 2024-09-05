@@ -35,12 +35,13 @@ import {
 import useFetchSuplyAndConsumableList from "./entreSortie/hooks/useFetchSupplyAndConsumables";
 import SuplyAndConsumableTableHeader from "./organism/table/SupplyAndConsumableTableHeader";
 import SuplyAndConsumableTableToolbar from "./organism/table/SupplyAndConsumableTableToolbar";
+import * as XLSX from "xlsx";
 
 export default function SuplyAndCosumableList() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [filtre, setFiltre] = React.useState("")
+  const [filtre, setFiltre] = React.useState("");
 
   const router = useRouter();
 
@@ -102,6 +103,28 @@ export default function SuplyAndCosumableList() {
       ? Math.max(0, (1 + page) * rowsPerPage - suplyAndConsumableList.length)
       : 0;
 
+  //Export Excell
+  const exportToExcel = (data: SuplyAndConsumableItem[]) => {
+    const formattedData = data.map((item) => ({
+      Designation: item.designation,
+      Quantity: "",
+      UnitPrice: "",
+      SKU: "",
+      UnitStock: item.uniteStock?.uniteStock,
+      Montant: "",
+      Reste: item.reste,
+      Seuil: item.seuil,
+      moisPrevision: "",
+      fournisseur: "",
+      categorieStock: "",
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(formattedData);
+    const wb = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(wb, ws, "Supplies & Consumables");
+    XLSX.writeFile(wb, "Supplies_and_Consumables.xlsx");
+  };
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
@@ -113,6 +136,11 @@ export default function SuplyAndCosumableList() {
               </Button>
             </Link>
           )}
+          {validate("Logistiques FS", "C") && (
+            <Button onClick={() => exportToExcel(suplyAndConsumableList)}>
+              Excel
+            </Button>
+          )}
           <Typography variant="h4">Fiche de stock </Typography>
         </SectionNavigation>
         {/* <Divider /> */}
@@ -122,7 +150,10 @@ export default function SuplyAndCosumableList() {
         <Box sx={{ width: "100%", mb: 2 }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
             {/* <ArticleTableToolbar /> */}
-            <SuplyAndConsumableTableToolbar filtre={filtre} setFiltre={setFiltre} />
+            <SuplyAndConsumableTableToolbar
+              filtre={filtre}
+              setFiltre={setFiltre}
+            />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
@@ -134,8 +165,12 @@ export default function SuplyAndCosumableList() {
                 <TableBody>
                   {suplyAndConsumableList
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .sort((a, b) => (b.id!).localeCompare(a.id!))
-                    .filter((item) => (`${item.designation} ${item.reste} ${item.seuil}`).toLowerCase().includes(filtre.toLowerCase()))
+                    .sort((a, b) => b.id!.localeCompare(a.id!))
+                    .filter((item) =>
+                      `${item.designation} ${item.reste} ${item.seuil}`
+                        .toLowerCase()
+                        .includes(filtre.toLowerCase())
+                    )
                     .map((row: SuplyAndConsumableItem | any, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

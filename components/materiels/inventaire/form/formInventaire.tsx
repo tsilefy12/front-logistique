@@ -8,7 +8,7 @@ import {
   Divider,
 } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { Check, Close, Save } from "@mui/icons-material";
 import { Form, Formik } from "formik";
@@ -20,6 +20,7 @@ import OSDatePicker from "../../../shared/date/OSDatePicker";
 import { createInventaire } from "../../../../redux/features/inventaire";
 import { useRouter } from "next/router";
 import { cancelEdit } from "../../../../redux/features/equipment/equipmentSlice";
+import useFetchEquipment from "../../informatique/hooks/useFetchEquipment";
 
 const AddInventaireForm = () => {
   const dispatch: any = useAppDispatch();
@@ -29,10 +30,18 @@ const AddInventaireForm = () => {
   const { isEditing, equipment, equipments } = useAppSelector(
     (state) => state.equipment
   );
+  const fetchEquipment = useFetchEquipment();
+  const [etat, setEtat] = useState<any>("");
 
-  const dureAmortissement = isEditing
-    ? equipment?.type.dureAmortissement
-    : null;
+  useEffect(() => {
+    fetchEquipment();
+  }, []);
+
+  useEffect(() => {
+    setEtat(equipments.find((e: any) => e.id == id)?.status);
+  }, [equipments]);
+  const dureAmortissement =
+    isEditing && equipment?.type ? equipment.type.dureAmortissement : null;
   const acquisitionValue = isEditing ? equipment?.acquisitionValue : null;
   const handleSubmit = async (values: any) => {
     try {
@@ -153,7 +162,7 @@ const AddInventaireForm = () => {
                     const date2 = new Date(
                       formikProps.values.datePreciation
                     ).getTime();
-                    const calculDure = (date1 - date2) / 1000 / 60 / 60 / 24;
+                    const calculDure = Math.ceil((date1 - date2) / 86400000);
                     formikProps.setFieldValue("dureDeVie", calculDure);
                   }}
                 />
@@ -170,7 +179,7 @@ const AddInventaireForm = () => {
                     const date2 = new Date(
                       formikProps.values.datePreciation
                     ).getTime();
-                    const calculDure = (date1 - date2) / 1000 / 60 / 60 / 24;
+                    const calculDure = Math.ceil((date1 - date2) / 86400000);
                     formikProps.setFieldValue("dureDeVie", calculDure);
                   }}
                 />
@@ -182,16 +191,11 @@ const AddInventaireForm = () => {
                   label="Durée de vie"
                   type="number"
                   min="0"
-                  value={() => {
-                    const date1 = new Date(
-                      formikProps.values.dateInventaire
-                    ).getTime();
-                    const date2 = new Date(
-                      formikProps.values.datePreciation
-                    ).getTime();
-                    const calculDure = (date1 - date2) / 1000 / 60 / 60 / 24;
-                    return calculDure;
-                  }}
+                  value={Math.ceil(
+                    (formikProps.values.dateInventaire.getTime() -
+                      new Date(formikProps.values.datePreciation).getTime()) /
+                      86400000
+                  )}
                   onChange={(value: any) =>
                     formikProps.setFieldValue("dureDeVie", value)
                   }
@@ -221,15 +225,14 @@ const AddInventaireForm = () => {
                   min="0"
                 />
                 <FormControl fullWidth>
-                  <OSSelectField
+                  <OSTextField
                     id="outlined-basic"
                     label="Etat matériel"
                     name="etatMateriel"
-                    options={equipments}
-                    dataKey={`${
-                      equipments.find((e: any) => e.id === id)?.status
-                    }`}
-                    valueKey={"status"}
+                    value={etat}
+                    onChange={(value: any) =>
+                      formikProps.setFieldValue("etatMateriel", value)
+                    }
                   />
                 </FormControl>
               </FormContainer>

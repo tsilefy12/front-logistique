@@ -77,7 +77,7 @@ export default function InventaireList() {
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
-          <Stack direction="row" spacing={3}>
+          <Stack direction="row" gap={2}>
             <Button
               color="info"
               variant="text"
@@ -86,6 +86,9 @@ export default function InventaireList() {
             >
               Retour
             </Button>
+            <ExportPDFButton
+              inventaireList={inventaireList.filter((f) => f.equipmentId == id)}
+            />
           </Stack>
         </SectionNavigation>
         {/* <Divider /> */}
@@ -149,11 +152,6 @@ export default function InventaireList() {
                   )}
                 </TableBody>
               </Table>
-              <ExportPDFButton
-                inventaireList={inventaireList.filter(
-                  (f) => f.equipmentId == id
-                )}
-              />
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
