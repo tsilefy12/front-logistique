@@ -25,6 +25,7 @@ import { InventaireItem } from "../../../redux/features/inventaire/inventaire.in
 import useFetchInventaireList from "./hooks/useFetchInventaire";
 import Moment from "react-moment";
 import { ArrowBack } from "@mui/icons-material";
+import ExportPDFButton from "./printPDF";
 
 export default function InventaireList() {
   const dispatch = useAppDispatch();
@@ -40,14 +41,14 @@ export default function InventaireList() {
         break;
     }
   }
-  
+
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const router = useRouter();
-
-  const {inventaireList} = useAppSelector((state) => state.inventaire);
+  const { id } = router.query;
+  const { inventaireList } = useAppSelector((state) => state.inventaire);
 
   const fetchInventaireList = useFetchInventaireList();
 
@@ -76,10 +77,15 @@ export default function InventaireList() {
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
-          <Stack direction='row' spacing={3}>
-              <Button color="info" variant="text" onClick={()=> router.back()} startIcon={<ArrowBack />}>
-                Retour
-              </Button>
+          <Stack direction="row" spacing={3}>
+            <Button
+              color="info"
+              variant="text"
+              onClick={() => router.back()}
+              startIcon={<ArrowBack />}
+            >
+              Retour
+            </Button>
           </Stack>
         </SectionNavigation>
         {/* <Divider /> */}
@@ -97,26 +103,38 @@ export default function InventaireList() {
                 <InventaireTableHeader />
                 <TableBody>
                   {inventaireList
+                    .filter((f) => f.equipmentId == id)
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .sort((a, b) => (b.id!).localeCompare(a.id!))
+                    .sort((a, b) => b.id!.localeCompare(a.id!))
                     .map((row: InventaireItem | any, index) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (
                         <TableRow hover tabIndex={-1} key={row.id}>
                           <TableCell component="th" id={labelId} align="left">
-                            {row.equipment?.designation} {row.equipment?.numOptim}
+                            {row.equipment?.designation}{" "}
+                            {row.equipment?.numOptim}
                           </TableCell>
                           <TableCell component="th" id={labelId} align="left">
-                            <Moment format="DD/MM/YYYY">{row.dateInventaire}</Moment>
+                            <Moment format="DD/MM/YYYY">
+                              {row.dateInventaire}
+                            </Moment>
                           </TableCell>
                           <TableCell component="th" id={labelId} align="left">
-                            <Moment format="DD/MM/YYYY">{row.datePreciation}</Moment>
+                            <Moment format="DD/MM/YYYY">
+                              {row.datePreciation}
+                            </Moment>
+                          </TableCell>
+                          <TableCell align="left">{row.dureDeVie}</TableCell>
+                          <TableCell align="left">
+                            {row.etatMateriel === "GOOD"
+                              ? "Bon etat"
+                              : row.etatMateriel == "BAD"
+                              ? "Mauvais"
+                              : "inutilisable"}
                           </TableCell>
                           <TableCell align="left">
-                            {row.dureDeVie}
+                            {row.valeurInventaire}
                           </TableCell>
-                          <TableCell align="left">{row.etatMateriel}</TableCell>
-                          <TableCell align="left">{row.valeurInventaire}</TableCell>
                         </TableRow>
                       );
                     })}
@@ -131,6 +149,11 @@ export default function InventaireList() {
                   )}
                 </TableBody>
               </Table>
+              <ExportPDFButton
+                inventaireList={inventaireList.filter(
+                  (f) => f.equipmentId == id
+                )}
+              />
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}

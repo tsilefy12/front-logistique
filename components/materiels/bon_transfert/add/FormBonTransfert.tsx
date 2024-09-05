@@ -125,7 +125,7 @@ const FormBonTransfert = ({
     ...bonCommandeExternes.map((i: any) => {
       return {
         id: i.id,
-        name: i.reference,
+        name: i.ref,
       };
     }),
     ...bonCommandeInternes.map((i: any) => {
@@ -406,7 +406,7 @@ const FormBonTransfert = ({
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    <FormControl fullWidth sx={{ marginBottom: 10 }}>
+                    <FormControl fullWidth>
                       <OSSelectField
                         id="ref"
                         label="Référence"
@@ -417,6 +417,8 @@ const FormBonTransfert = ({
                         valueKey="id"
                       />
                     </FormControl>
+                  </TableCell>
+                  <TableCell component="th" scope="row">
                     <FormControl fullWidth>
                       <OSTextField
                         id="designation"
