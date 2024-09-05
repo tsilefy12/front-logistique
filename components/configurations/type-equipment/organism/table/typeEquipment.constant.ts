@@ -14,9 +14,15 @@ export const typeequipmentheadCells: readonly TypeEquipmentHeadCell[] = [
     label: "Type",
   },
   {
-    id:"unitPrice",
+    id: "unitPrice",
     numeric: false,
     disablePadding: false,
     label: "Prix unitaire",
-  }
+  },
+  {
+    id: "dureAmortissement",
+    numeric: false,
+    disablePadding: false,
+    label: "Durée d'amortissement",
+  },
 ];

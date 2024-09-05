@@ -25,6 +25,7 @@ import { getTypeEquipmentList } from "../../../../redux/features/typeEquipment";
 import { getBonCommandeInternes } from "../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice";
 import { getGrantList } from "../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
 import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
+import OSFileUpload from "../../../shared/input/OSFileUpload";
 
 const FormArticle = ({ formikProps }: { formikProps: FormikProps<any> }) => {
   const dispatch = useAppDispatch();
@@ -293,6 +294,9 @@ const FormArticle = ({ formikProps }: { formikProps: FormikProps<any> }) => {
                     type="text"
                 /> */}
         </Stack>
+        <FormControl fullWidth>
+          <OSFileUpload name="image" label="Pièce jointe" />
+        </FormControl>
       </FormContainer>
     </Form>
   );

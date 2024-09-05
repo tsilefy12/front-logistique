@@ -46,9 +46,12 @@ const TypeEquipmentForm = () => {
           isEditing
             ? typeEquipment
             : {
-                type: isEditing ? typeEquipment.type :"",
-                prefix: isEditing ? typeEquipment.prefix :"",
-                unitPrice:isEditing ? typeEquipment.unitPrice :0
+                type: isEditing ? typeEquipment.type : "",
+                prefix: isEditing ? typeEquipment.prefix : "",
+                unitPrice: isEditing ? typeEquipment.unitPrice : 0,
+                dureAmortissement: isEditing
+                  ? typeEquipment.dureAmortissement
+                  : 0,
               }
         }
         validationSchema={Yup.object({
@@ -68,7 +71,16 @@ const TypeEquipmentForm = () => {
               </Typography>
               <OSTextField label="Matériel (Ex: Table)" name="type" />
               <OSTextField label="Type" name="prefix" />
-              <OSTextField label="Prix unitaire" name="unitPrice" type="number"/>
+              <OSTextField
+                label="Prix unitaire"
+                name="unitPrice"
+                type="number"
+              />
+              <OSTextField
+                label="Durée d'amortissement"
+                name="dureAmortissement"
+                type="number"
+              />
               <BtnContainer
                 direction="row"
                 spacing={2}

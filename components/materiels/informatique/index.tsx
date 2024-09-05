@@ -159,7 +159,7 @@ const ListInfo = () => {
       <SectionTable>
         <Box sx={{ width: "100%" }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <EquipmentTableToolbar filtre={filtre} setFiltre={setFiltre}/>
+            <EquipmentTableToolbar filtre={filtre} setFiltre={setFiltre} />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
@@ -167,81 +167,99 @@ const ListInfo = () => {
                 size="small"
               >
                 <EquipmentTableHeader />
-                {equipments.length > 0 && equipments
-                  .slice()
-                  .sort((a, b) => (b.id!).localeCompare(a.id!))
-                  .filter((item) => (`${item.numOptim} ${item.designation} ${item.type} ${total.find((e: any) => e.id === item?.ownerId)?.name} ${item.status}`).toLowerCase().includes(filtre.toLowerCase()))
-                  .map((item: any, index: any) => (
-                    <TableBody key={index}>
-                      <TableCell align="left">{item.numOptim}</TableCell>
-                      <TableCell align="left">{item.designation}</TableCell>
-                      <TableCell align="left">{item.type?.type}</TableCell>
-                      <TableCell align="left">
-                        {total.find((e: any) => e.id === item?.ownerId)?.name}
-                      </TableCell>
-                      <TableCell align="left">{getTextStatus(item.status)}</TableCell>
-                      <TableCell align="right">
-                        <BtnActionContainer
-                          direction="row"
-                          justifyContent="center"
-                        >
-                          {validate("Logistiques I", "RA") && (
-                            <Button
-                              variant="outlined"
-                              size="small"
-                              startIcon={<Add />}
-                              color="info"
-                              sx={{ mr: 1 }}
-                              onClick={() => {
-                                handleClickNewInventaire(item.id);
-                              }}
-                            >
-                              Gérer inventaire
-                            </Button>
-                          )}
-                          <Link
-                            href={`/materiels/informatiques/${item.id}/detail`}
+                {equipments.length > 0 &&
+                  equipments
+                    .slice()
+                    .sort((a, b) => b.id!.localeCompare(a.id!))
+                    .filter((item) =>
+                      `${item.numOptim} ${item.designation} ${item.type} ${
+                        total.find((e: any) => e.id === item?.ownerId)?.name
+                      } ${item.status}`
+                        .toLowerCase()
+                        .includes(filtre.toLowerCase())
+                    )
+                    .map((item: any, index: any) => (
+                      <TableBody key={index}>
+                        <TableCell align="left">
+                          <img
+                            src={`${process.env.NEXT_PUBLIC_API_URL}
+                          ${item.image}`}
+                            alt=""
+                            width="100px"
+                            height="100px"
+                          />
+                        </TableCell>
+                        <TableCell align="left">{item.numOptim}</TableCell>
+                        <TableCell align="left">{item.designation}</TableCell>
+                        <TableCell align="left">{item.type?.type}</TableCell>
+                        <TableCell align="left">
+                          {total.find((e: any) => e.id === item?.ownerId)?.name}
+                        </TableCell>
+                        <TableCell align="left">
+                          {getTextStatus(item.status)}
+                        </TableCell>
+                        <TableCell align="right">
+                          <BtnActionContainer
+                            direction="row"
+                            justifyContent="center"
                           >
-                            <Stack direction="row" spacing={2}>
-                              <IconButton
-                                color="accent"
-                                aria-label="Details"
-                                component="span"
+                            {validate("Logistiques I", "RA") && (
+                              <Button
+                                variant="outlined"
+                                size="small"
+                                startIcon={<Add />}
+                                color="info"
+                                sx={{ mr: 1 }}
+                                onClick={() => {
+                                  handleClickNewInventaire(item.id);
+                                }}
                               >
-                                <VisibilityIcon />
+                                Gérer inventaire
+                              </Button>
+                            )}
+                            <Link
+                              href={`/materiels/informatiques/${item.id}/detail`}
+                            >
+                              <Stack direction="row" spacing={2}>
+                                <IconButton
+                                  color="accent"
+                                  aria-label="Details"
+                                  component="span"
+                                >
+                                  <VisibilityIcon />
+                                </IconButton>
+                              </Stack>
+                            </Link>
+                            {validate("Logistiques LMS", "U") && (
+                              <IconButton
+                                color="primary"
+                                aria-label="Modifier"
+                                component="span"
+                                size="small"
+                                onClick={() => {
+                                  handleClickEdit(item.id);
+                                }}
+                              >
+                                <EditIcon />
                               </IconButton>
-                            </Stack>
-                          </Link>
-                          {validate("Logistiques LMS", "U") && (
-                            <IconButton
-                              color="primary"
-                              aria-label="Modifier"
-                              component="span"
-                              size="small"
-                              onClick={() => {
-                                handleClickEdit(item.id);
-                              }}
-                            >
-                              <EditIcon />
-                            </IconButton>
-                          )}
-                          {validate("Logistiques LMS", "D") && (
-                            <IconButton
-                              color="warning"
-                              aria-label="Supprimer"
-                              component="span"
-                              size="small"
-                              onClick={() => {
-                                handleClickDelete(item.id);
-                              }}
-                            >
-                              <DeleteIcon />
-                            </IconButton>
-                          )}
-                        </BtnActionContainer>
-                      </TableCell>
-                    </TableBody>
-                  ))}
+                            )}
+                            {validate("Logistiques LMS", "D") && (
+                              <IconButton
+                                color="warning"
+                                aria-label="Supprimer"
+                                component="span"
+                                size="small"
+                                onClick={() => {
+                                  handleClickDelete(item.id);
+                                }}
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            )}
+                          </BtnActionContainer>
+                        </TableCell>
+                      </TableBody>
+                    ))}
               </Table>
             </TableContainer>
             <TablePagination

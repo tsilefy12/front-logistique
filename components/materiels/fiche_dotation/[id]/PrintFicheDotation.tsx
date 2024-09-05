@@ -15,15 +15,13 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 function PrintFicheDotation({ pdfData }: { pdfData: any }) {
-  const router = useRouter();
-  const { id } = router.query;
   const img = pdfData.pieceJointe
     ? process.env.NEXT_PUBLIC_API_URL + pdfData.pieceJointe
     : null;
   const [personne, setPersone] = useState<any[]>([]);
   useEffect(() => {
     const data = pdfData.personneConcerne?.filter(
-      (f: any) => f.ficheDotationId == id
+      (f: any) => f.ficheDotationId == pdfData.id
     );
     setPersone(data);
   }, [pdfData]);

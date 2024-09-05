@@ -200,7 +200,7 @@ const DetailsInformatique = () => {
                   Durée d'amortissement
                 </Typography>
                 <Typography variant="body1" color="gray">
-                  {equipment.dureAmortissement} ans
+                  {equipment?.type?.dureAmortissement}
                 </Typography>
               </InfoItems>
             </Grid>

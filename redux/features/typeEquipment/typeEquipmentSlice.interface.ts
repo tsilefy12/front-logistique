@@ -5,6 +5,7 @@ export interface TypeEquipmentItem {
   unitPrice?: number;
   imageUrl?: string;
   equipments?: any[];
+  dureAmortissement?: number;
 }
 
 export interface TypeEquipmentInitialState {
