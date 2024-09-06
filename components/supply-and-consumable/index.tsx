@@ -108,7 +108,7 @@ export default function SuplyAndCosumableList() {
     const formattedData = data.map((item) => ({
       Designation: item.designation,
       Quantité: "",
-      "Prix undefined": "",
+      "Prix unitaire": "",
       SKU: "",
       "Unité de stock": item.uniteStock?.uniteStock,
       Montant: formatMontant(item.montant!),
@@ -119,9 +119,7 @@ export default function SuplyAndCosumableList() {
       "Catégorie de stock": "",
     }));
 
-    const ws = XLSX.utils.json_to_sheet(formattedData, { header: [""] });
-
-    // Définir la largeur de chaque colonne à 200 pixels
+    const ws = XLSX.utils.json_to_sheet(formattedData);
     ws["!cols"] = [
       { wpx: 200 },
       { wpx: 200 },
