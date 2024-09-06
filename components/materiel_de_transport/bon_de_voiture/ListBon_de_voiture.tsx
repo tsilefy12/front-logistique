@@ -179,7 +179,7 @@ const ListTransport = () => {
       });
       setFilteredCarVouchers(temp);
 
-      if (materiel != "tous") {
+      if (materiel != "tous" && annee == "tous" && mois == "tous") {
         const data: any = temp.filter((row: CarVoucherItem) => {
           const mat = row.transportationEquipment?.registration;
           if (mat == materiel) {
