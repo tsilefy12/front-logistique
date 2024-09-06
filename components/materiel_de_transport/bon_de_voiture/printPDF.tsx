@@ -48,7 +48,10 @@ const PrintPDF = ({ filteredCarVouchers }: any) => {
 
   useEffect(() => {
     const des = filteredCarVouchers.map(
-      (item: any) => item.transportationEquipment?.registration
+      (item: any) =>
+        item.transportationEquipment?.registration +
+        "-" +
+        item.transportationEquipment?.brand
     );
 
     des.forEach((itemYear: any) => {
@@ -95,7 +98,9 @@ const PrintPDF = ({ filteredCarVouchers }: any) => {
           {filteredCarVouchers.map((item: any) => (
             <View key={item.id} style={styles.tableRow}>
               <Text style={styles.tableCell}>
-                {item.transportationEquipment?.registration}
+                {item.transportationEquipment?.registration +
+                  "-" +
+                  item.transportationEquipment?.brand}
               </Text>
               <Text style={styles.tableCell}>
                 {format(new Date(item.date), "dd/MM/yyyy")}
