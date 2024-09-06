@@ -249,7 +249,9 @@ export default function SuplyAndCosumableList() {
                                     size="small"
                                     disabled={(() => {
                                       const currentDate = new Date();
-                                      const targetDate = new Date(`2024-09-06`);
+                                      const targetDate = new Date(
+                                        `${row.annee}-12-31`
+                                      );
                                       return (
                                         currentDate.getFullYear() ===
                                           targetDate.getFullYear() &&
@@ -287,6 +289,20 @@ export default function SuplyAndCosumableList() {
                                   onClick={() => {
                                     handleClickEdit(row.id);
                                   }}
+                                  disabled={(() => {
+                                    const currentDate = new Date();
+                                    const targetDate = new Date(
+                                      `${row.annee}-12-31`
+                                    );
+                                    return (
+                                      currentDate.getFullYear() ===
+                                        targetDate.getFullYear() &&
+                                      currentDate.getMonth() ===
+                                        targetDate.getMonth() &&
+                                      currentDate.getDate() ===
+                                        targetDate.getDate()
+                                    );
+                                  })()}
                                 >
                                   <Edit />
                                 </IconButton>
