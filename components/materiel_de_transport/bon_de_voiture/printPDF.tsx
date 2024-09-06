@@ -1,4 +1,4 @@
-import { Print } from "@mui/icons-material";
+import { Download, Print } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import {
   Document,
@@ -48,7 +48,7 @@ const PrintPDF = ({ filteredCarVouchers }: any) => {
 
   useEffect(() => {
     const des = filteredCarVouchers.map(
-      (item: any) => item.typeEquipmentList?.registration
+      (item: any) => item.transportationEquipment?.registration
     );
 
     des.forEach((itemYear: any) => {
@@ -95,7 +95,7 @@ const PrintPDF = ({ filteredCarVouchers }: any) => {
           {filteredCarVouchers.map((item: any) => (
             <View key={item.id} style={styles.tableRow}>
               <Text style={styles.tableCell}>
-                {item.typeEquipmentList?.registration}
+                {item.transportationEquipment?.registration}
               </Text>
               <Text style={styles.tableCell}>
                 {format(new Date(item.date), "dd/MM/yyyy")}
@@ -124,7 +124,7 @@ const PrintPDF = ({ filteredCarVouchers }: any) => {
     <Button
       variant="contained"
       color="primary"
-      startIcon={<Print />}
+      startIcon={<Download />}
       onClick={clickPDF}
     >
       PDF

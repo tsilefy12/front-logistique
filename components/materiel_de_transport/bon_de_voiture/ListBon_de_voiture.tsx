@@ -25,7 +25,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useConfirm } from "material-ui-confirm";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Moment from "react-moment";
 import { usePermitted } from "../../../config/middleware";
 import formatMontant from "../../../hooks/format";
@@ -67,7 +67,7 @@ const ListTransport = () => {
   const [filteredCarVouchers, setFilteredCarVouchers] = useState<
     CarVoucherItem[]
   >([]);
-  const [materiel, setMateriel]: any = useState("tous");
+  const [materiel, setMateriel] = useState<string>("");
 
   React.useEffect(() => {
     fetchTransportEquipements();
@@ -179,17 +179,17 @@ const ListTransport = () => {
         setMontantMensuel(calcul);
       });
       setFilteredCarVouchers(temp);
-
-      if (materiel != "" && annee == "" && mois == "") {
-        const data: any = carVouchers.filter(
-          (row: CarVoucherItem) =>
-            row.transportationEquipment?.registration == materiel
-        );
-        setFilteredCarVouchers(data);
-      }
     }
   };
-
+  useEffect(() => {
+    if (materiel != "" && annee == "" && mois == "") {
+      const data: any = carVouchers.filter(
+        (row: CarVoucherItem) =>
+          row.transportationEquipment?.registration == materiel
+      );
+      setFilteredCarVouchers(data);
+    }
+  }, [carVouchers, materiel]);
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
@@ -215,6 +215,7 @@ const ListTransport = () => {
                   value={mois}
                   onChange={(e) => setMois(e.target.value)}
                   size="small"
+                  sx={{ width: 150 }}
                 >
                   {ListMois.map((element: any) => (
                     <MenuItem key={element.id} value={element.id}>
@@ -230,6 +231,7 @@ const ListTransport = () => {
                   value={annee}
                   onChange={(e) => setAnne(e.target.value)}
                   size="small"
+                  sx={{ width: 150 }}
                 >
                   {[...ListeAnnee].map((element: any) => (
                     <MenuItem key={element} value={element}>
@@ -245,6 +247,7 @@ const ListTransport = () => {
                   value={materiel}
                   onChange={(e) => setMateriel(e.target.value)}
                   size="small"
+                  sx={{ width: 150 }}
                 >
                   {[...ListeMateriel].map((element: any) => (
                     <MenuItem key={element} value={element}>
