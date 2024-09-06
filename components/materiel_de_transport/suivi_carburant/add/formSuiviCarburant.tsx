@@ -110,6 +110,8 @@ const FormSuiviCarburant = () => {
           pu: isEditing ? suiviCarburant?.pu : 0,
           ligneBudgetaire: isEditing ? suiviCarburant?.ligneBudgetaire : "",
           modePaiement: isEditing ? suiviCarburant?.modePaiement : "",
+          motif: isEditing ? suiviCarburant?.motif : "",
+          localisation: isEditing ? suiviCarburant?.localisation : "",
         }}
         validationSchema={Yup.object({
           materiel: Yup.string().required("Veuillez remplir le champ matériel"),

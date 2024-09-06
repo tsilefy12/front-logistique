@@ -240,13 +240,6 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
           />
         </FormControl>
         <FormControl fullWidth>
-          {/* <OSTextField
-            id="outlined-basic"
-            label="Mode paiement"
-            variant="outlined"
-            name="modePaiement"
-            type="text"
-          /> */}
           <OSSelectField
             id="outlined-basic"
             label="Mode paiement"
@@ -256,6 +249,26 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
             options={modePaiements}
             dataKey={"modePaiementMV"}
             valueKey="modePaiementMV"
+          />
+        </FormControl>
+      </Stack>
+      <Stack direction="row" spacing={3}>
+        <FormControl fullWidth>
+          <OSTextField
+            id="outlined-basic"
+            label="Motif"
+            variant="outlined"
+            name="motif"
+            inputProps={{ autoComplete: "off" }}
+          />
+        </FormControl>
+        <FormControl fullWidth>
+          <OSTextField
+            id="outlined-basic"
+            label="Localisation"
+            variant="outlined"
+            name="localisation"
+            inputProps={{ autoComplete: "off" }}
           />
         </FormControl>
       </Stack>

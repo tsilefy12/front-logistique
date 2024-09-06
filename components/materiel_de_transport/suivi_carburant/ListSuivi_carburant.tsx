@@ -5,6 +5,7 @@ import {
   Button,
   Container,
   IconButton,
+  MenuItem,
   Stack,
   styled,
   Typography,
@@ -20,7 +21,7 @@ import TableRow from "@mui/material/TableRow";
 import { useConfirm } from "material-ui-confirm";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 
 import Moment from "react-moment";
@@ -38,12 +39,13 @@ import useFetchLigneBudgetaire from "./hooks/useFetchLigneBudgetaire";
 import useFetchSuiviCarburants from "./hooks/useFetchSuiviCarburant";
 import SuiviCarburantTableHeader from "./organisme/table/SuiviCarburantTableHeader";
 import SuiviCarburantTableToolbar from "./organisme/table/SuiviCarburantTableToolbar";
+import OSTextField from "../../shared/input copy/OSTextField";
 
 const ListSuiviCarburant = () => {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [filtre, setFiltre] = React.useState("")
+  const [filtre, setFiltre] = React.useState("");
 
   const confirm = useConfirm();
   const router = useRouter();
@@ -56,6 +58,9 @@ const ListSuiviCarburant = () => {
   const { grantList } = useAppSelector((state) => state.grant);
   const { budgetLineList } = useAppSelector((state) => state.lineBugetaire);
   const fetchLignebudgetaire = useFetchLigneBudgetaire();
+  const [filter, setFilter] = useState<string>("toutes");
+  const [dataFilter, setDataFilter] = useState<any[]>([]);
+
   // const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment)
 
   React.useEffect(() => {
@@ -108,17 +113,57 @@ const ListSuiviCarburant = () => {
       ? Math.max(0, (1 + page) * rowsPerPage - suiviCarburants.length)
       : 0;
 
+  const ListeLocalisation: any = useMemo(() => {
+    if (suiviCarburants && suiviCarburants.length > 0) {
+      return new Set(
+        suiviCarburants.map((item: SuiviCarburantItem) => item.localisation)
+      );
+    }
+    return [];
+  }, [suiviCarburants]);
+  // Filtre par localisation
+  useEffect(() => {
+    if (filter !== "toutes") {
+      const data = suiviCarburants
+        .filter((item: any) =>
+          ` ${item?.localisation}`.toLowerCase().includes(filter.toLowerCase())
+        )
+        .map((item: any) => item.id);
+      setDataFilter([...data].reverse());
+    } else {
+      setDataFilter([...suiviCarburants].reverse());
+    }
+  }, [filter, suiviCarburants]);
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
-          {validate("Logistiques CV", "C") && (
-            <Link href={"/materiel_de_transport/suivi_carburant/add"}>
-              <Button variant="contained" startIcon={<Add />} size="small">
-                Ajouter
-              </Button>
-            </Link>
-          )}
+          <Stack direction="row" gap={2} alignItems="center">
+            {validate("Logistiques CV", "C") && (
+              <Link href={"/materiel_de_transport/suivi_carburant/add"}>
+                <Button variant="contained" startIcon={<Add />} size="small">
+                  Ajouter
+                </Button>
+              </Link>
+            )}
+            <OSTextField
+              fullWidth
+              select
+              id="outlined-basic"
+              label="Filtre"
+              variant="outlined"
+              name="filter"
+              value={filter}
+              onChange={(e: any) => setFilter(e.target.value)}
+            >
+              <MenuItem value="toutes">Toutes</MenuItem>
+              {[...ListeLocalisation].map((element: any) => (
+                <MenuItem key={element} value={element}>
+                  {element}
+                </MenuItem>
+              ))}
+            </OSTextField>
+          </Stack>
           <Typography variant="h4">Tous les courses ville</Typography>
         </SectionNavigation>
         {/* <Divider /> */}
@@ -138,8 +183,20 @@ const ListSuiviCarburant = () => {
                 <TableBody>
                   {suiviCarburants
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .sort((a, b) => (b.id!).localeCompare(a.id!))
-                    .filter(item => (`${item.transportationEquipment?.registration} ${item.itineraire} ${item.personnelTransporte} ${grantList.find((e: any) => e.id === item?.grant)?.code} ${budgetLineList.find((e: any) => e.id === item?.ligneBudgetaire)?.code} ${item?.modePaiement}`).toLowerCase().includes(filtre.toLowerCase()))
+                    .sort((a, b) => b.id!.localeCompare(a.id!))
+                    .filter((item) =>
+                      `${item.transportationEquipment?.registration} ${
+                        item.itineraire
+                      } ${item.personnelTransporte} ${
+                        grantList.find((e: any) => e.id === item?.grant)?.code
+                      } ${
+                        budgetLineList.find(
+                          (e: any) => e.id === item?.ligneBudgetaire
+                        )?.code
+                      } ${item?.modePaiement}`
+                        .toLowerCase()
+                        .includes(filtre.toLowerCase())
+                    )
                     .map((row: SuiviCarburantItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

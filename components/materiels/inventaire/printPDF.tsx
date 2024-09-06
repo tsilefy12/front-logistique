@@ -89,7 +89,7 @@ const ExportPDFButton = ({ inventaireList }: any) => {
           <View style={styles.tableRow}>
             <Text style={styles.tableCell}>Désignation</Text>
             <Text style={styles.tableCell}>Date d'inventaire</Text>
-            <Text style={styles.tableCell}>Date de péremption</Text>
+            <Text style={styles.tableCell}>Date de dépréciation</Text>
             <Text style={styles.tableCell}>Durée de vie</Text>
             <Text style={styles.tableCell}>État matériel</Text>
             <Text style={styles.tableCell}>Valeur</Text>
