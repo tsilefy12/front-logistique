@@ -166,7 +166,6 @@ const ListSuiviCarburant = () => {
           </Stack>
           <Typography variant="h4">Tous les courses ville</Typography>
         </SectionNavigation>
-        {/* <Divider /> */}
       </NavigationContainer>
 
       <SectionTable>
