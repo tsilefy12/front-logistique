@@ -59,12 +59,17 @@ const FormBonDeVoiture = () => {
   React.useEffect(() => {
     const temp = valuesArticle.map((m) => parseInt(m.reference));
     if (temp.length > 0) {
-      const max = Math.max(...temp);
+      let max = Math.max(...temp);
+      if (max == null || max == undefined) {
+        max = 0;
+        const calcul = max + 1;
+        return setRef(calcul.toString().padStart(3, "0"));
+      }
       const calcul = max + 1;
-      setRef(calcul.toString().padStart(3, "0"));
+      return setRef(calcul.toString().padStart(3, "0"));
     }
   }, [valuesArticle]);
-  console.log(ref);
+
   const handleSubmit = async (values: any) => {
     values.reference = ref;
     try {
