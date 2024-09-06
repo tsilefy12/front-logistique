@@ -11,6 +11,8 @@ export interface VendorItem {
   typeProduit: string;
   categorieFournisseur: string;
   evaluation: string;
+  rib?: number;
+  agence?: string;
   typeProduct: typeProduitItem[];
 }
 

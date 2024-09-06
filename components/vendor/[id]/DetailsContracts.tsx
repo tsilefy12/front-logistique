@@ -95,6 +95,18 @@ const DetailsVendor = () => {
                 </InfoItems>
               </Grid>
             </Grid>
+            <Grid container spacing={4} my={1}>
+              <Grid item xs={12} md={12}>
+                <InfoItems direction="row" spacing={2}>
+                  <Typography variant="body1" color="secondary">
+                    RIB :
+                  </Typography>
+                  <Typography variant="body1" color="gray">
+                    {vendor.rib}
+                  </Typography>
+                </InfoItems>
+              </Grid>
+            </Grid>
           </Stack>
           <Stack direction={"column"} gap={2}>
             <Grid container spacing={4} my={1}>
@@ -129,6 +141,18 @@ const DetailsVendor = () => {
                   </Typography>
                   <Typography variant="body1" color="gray">
                     {vendor.website}
+                  </Typography>
+                </InfoItems>
+              </Grid>
+            </Grid>
+            <Grid container spacing={4} my={1}>
+              <Grid item xs={12} md={12}>
+                <InfoItems direction="row" spacing={2}>
+                  <Typography variant="body1" color="secondary">
+                    Agence :
+                  </Typography>
+                  <Typography variant="body1" color="gray">
+                    {vendor.agence}
                   </Typography>
                 </InfoItems>
               </Grid>

@@ -103,6 +103,8 @@ export default function VendorForm() {
                   ? vendor?.categorieFournisseur
                   : "",
                 evaluation: isEditing ? vendor?.evaluation : "",
+                rib: isEditing ? vendor?.rib : 0,
+                agence: isEditing ? vendor?.agence : "",
               }
         }
         validationSchema={Yup.object({
@@ -226,6 +228,20 @@ export default function VendorForm() {
                     options={EvaluationList}
                     dataKey="name"
                     valueKey="name"
+                  />
+                </Stack>
+                <Stack direction="row" spacing={3}>
+                  <OSTextField
+                    id="outlined-basic"
+                    label="RIB"
+                    name="rib"
+                    type="number"
+                    min="0"
+                  />
+                  <OSTextField
+                    id="outlined-basic"
+                    label="Agence"
+                    name="agence"
                   />
                 </Stack>
               </FormContainer>
