@@ -64,7 +64,7 @@ const FormBonDeVoiture = () => {
       setRef(calcul.toString().padStart(3, "0"));
     }
   }, [valuesArticle]);
-
+  console.log(ref);
   const handleSubmit = async (values: any) => {
     values.reference = ref;
     try {

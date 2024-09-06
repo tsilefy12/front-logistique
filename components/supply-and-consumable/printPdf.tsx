@@ -1,6 +1,14 @@
 import { Print } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import { Image, Page, pdf, StyleSheet, Text, View } from "@react-pdf/renderer";
+import {
+  Document,
+  Image,
+  Page,
+  pdf,
+  StyleSheet,
+  Text,
+  View,
+} from "@react-pdf/renderer";
 import { useEffect, useState } from "react";
 const styles = StyleSheet.create({
   page: {
@@ -42,49 +50,53 @@ const PrintPDF = ({ suplyAndConsumableList }: any) => {
       return setYear(des);
     }
   }, [suplyAndConsumableList]);
-  const Document = ({ suplyAndConsumableList }: any) => (
-    <Page size="A4" style={styles.page}>
-      <View
-        style={{
-          fontSize: 12,
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <View>
-          <Image
-            style={styles.logo}
-            src={`/logistique/images/logo/MV_logo.png`}
-          />
-        </View>
-        <View style={{ paddingRight: 80 }}>
-          <Text>Fournitures et consommable du : {year}</Text>
-        </View>
-      </View>
-      <View style={styles.table}>
-        <View style={styles.tableRow}>
-          <Text style={styles.tableCell}>Désignation</Text>
-          <Text style={styles.tableCell}>Reste</Text>
-          <Text style={styles.tableCell}>Unité de stock</Text>
-          <Text style={styles.tableCell}>Seuil</Text>
-        </View>
-        {suplyAndConsumableList.map((item: any) => (
-          <View key={item.id} style={styles.tableRow}>
-            <Text style={styles.tableCell}>{item.designation}</Text>
-            <Text style={styles.tableCell}>{item.reste}</Text>
-            <Text style={styles.tableCell}>{item.uniteStock?.uniteStock}</Text>
-            <Text style={styles.tableCell}>{item.seuil}</Text>
+  const DocumentPDF = ({ suplyAndConsumableList }: any) => (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View
+          style={{
+            fontSize: 12,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <View>
+            <Image
+              style={styles.logo}
+              src={`/logistique/images/logo/MV_logo.png`}
+            />
           </View>
-        ))}
-      </View>
-    </Page>
+          <View style={{ paddingRight: 80 }}>
+            <Text>Fournitures et consommable du : {year}</Text>
+          </View>
+        </View>
+        <View style={styles.table}>
+          <View style={styles.tableRow}>
+            <Text style={styles.tableCell}>Désignation</Text>
+            <Text style={styles.tableCell}>Reste</Text>
+            <Text style={styles.tableCell}>Unité de stock</Text>
+            <Text style={styles.tableCell}>Seuil</Text>
+          </View>
+          {suplyAndConsumableList.map((item: any) => (
+            <View key={item.id} style={styles.tableRow}>
+              <Text style={styles.tableCell}>{item.designation}</Text>
+              <Text style={styles.tableCell}>{item.reste}</Text>
+              <Text style={styles.tableCell}>
+                {item.uniteStock?.uniteStock}
+              </Text>
+              <Text style={styles.tableCell}>{item.seuil}</Text>
+            </View>
+          ))}
+        </View>
+      </Page>
+    </Document>
   );
 
   const clickPDF = async () => {
     const pdfBlob = await pdf(
-      <Document suplyAndConsumableList={suplyAndConsumableList} />
+      <DocumentPDF suplyAndConsumableList={suplyAndConsumableList} />
     ).toBlob();
     const downloadLink = document.createElement("a");
     downloadLink.href = URL.createObjectURL(pdfBlob);
