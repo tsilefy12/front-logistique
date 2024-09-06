@@ -195,7 +195,7 @@ const ListTransport = () => {
       <NavigationContainer>
         <SectionNavigation>
           <Typography>
-            <Stack direction="row" spacing={4}>
+            <Stack direction="row" gap={2}>
               {validate("Logistiques Ent", "C") && (
                 <Link href={"/materiel_de_transport/bon_de_voiture/add"}>
                   <Button
