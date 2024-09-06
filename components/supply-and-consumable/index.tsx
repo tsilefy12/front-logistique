@@ -37,6 +37,7 @@ import SuplyAndConsumableTableHeader from "./organism/table/SupplyAndConsumableT
 import SuplyAndConsumableTableToolbar from "./organism/table/SupplyAndConsumableTableToolbar";
 import * as XLSX from "xlsx";
 import { FormLabel } from "@mui/material";
+import { Download } from "@mui/icons-material";
 
 export default function SuplyAndCosumableList() {
   const [page, setPage] = React.useState(0);
@@ -159,6 +160,8 @@ export default function SuplyAndCosumableList() {
                 onClick={() => exportToExcel(suplyAndConsumableList)}
                 variant="contained"
                 color="primary"
+                size="small"
+                startIcon={<Download />}
               >
                 Excel
               </Button>

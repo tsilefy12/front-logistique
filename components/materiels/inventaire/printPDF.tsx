@@ -12,6 +12,7 @@ import {
 import { Button, CircularProgress } from "@mui/material";
 import { Print } from "@mui/icons-material";
 import { log } from "console";
+import { format } from "date-fns";
 
 // Styles pour le PDF
 const styles = StyleSheet.create({
@@ -36,8 +37,8 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
     marginBottom: 10,
   },
 });
@@ -46,7 +47,7 @@ const ExportPDFButton = ({ inventaireList }: any) => {
   const InventairePDF = ({ inventaireList }: any) => (
     <Document>
       <Page size="A4" style={styles.page}>
-        <View style={{ fontSize: 10 }}>
+        <View style={{ fontSize: 12, display: "flex", flexDirection: "row" }}>
           <View>
             <Image
               style={styles.logo}
@@ -74,8 +75,12 @@ const ExportPDFButton = ({ inventaireList }: any) => {
               <Text style={styles.tableCell}>
                 {item.equipment?.designation}
               </Text>
-              <Text style={styles.tableCell}>{item.dateInventaire}</Text>
-              <Text style={styles.tableCell}>{item.datePreciation}</Text>
+              <Text style={styles.tableCell}>
+                {format(new Date(item.dateInventaire), "dd/MM/yyyy")}
+              </Text>
+              <Text style={styles.tableCell}>
+                {format(new Date(item.datePreciation), "dd/MM/yyyy")}
+              </Text>
               <Text style={styles.tableCell}>{item.dureDeVie}</Text>
               <Text style={styles.tableCell}>
                 {item.etatMateriel === "GOOD"
@@ -92,7 +97,9 @@ const ExportPDFButton = ({ inventaireList }: any) => {
     </Document>
   );
   const clickPDF = async () => {
-    const pdfBlob = await pdf(<InventairePDF inventaireList={[]} />).toBlob();
+    const pdfBlob = await pdf(
+      <InventairePDF inventaireList={inventaireList} />
+    ).toBlob();
     const downloadLink = document.createElement("a");
     downloadLink.href = URL.createObjectURL(pdfBlob);
     downloadLink.download = "Inventaire.pdf";
