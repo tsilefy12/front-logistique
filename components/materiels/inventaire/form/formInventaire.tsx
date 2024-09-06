@@ -44,6 +44,7 @@ const AddInventaireForm = () => {
     isEditing && equipment?.type ? equipment.type.dureAmortissement : null;
   const acquisitionValue = isEditing ? equipment?.acquisitionValue : null;
   const handleSubmit = async (values: any) => {
+    values.etatMateriel = etat;
     try {
       if (isEditing) {
         values.valeurInventaire =
@@ -236,8 +237,8 @@ const AddInventaireForm = () => {
                         ? "Mauvais"
                         : "Inutilisable"
                     }
-                    onChange={(value: any) =>
-                      formikProps.setFieldValue("etatMateriel", value)
+                    onChange={(e: any) =>
+                      formikProps.setFieldValue("etatMateriel", e.target.value)
                     }
                   />
                 </FormControl>

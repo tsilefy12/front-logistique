@@ -107,24 +107,40 @@ export default function SuplyAndCosumableList() {
   const exportToExcel = (data: SuplyAndConsumableItem[]) => {
     const formattedData = data.map((item) => ({
       Designation: item.designation,
-      Quantity: "",
-      UnitPrice: "",
+      Quantité: "",
+      "Prix undefined": "",
       SKU: "",
-      UnitStock: item.uniteStock?.uniteStock,
-      Montant: "",
+      "Unité de stock": item.uniteStock?.uniteStock,
+      Montant: formatMontant(item.montant!),
       Reste: item.reste,
       Seuil: item.seuil,
-      moisPrevision: "",
-      fournisseur: "",
-      categorieStock: "",
+      "Mois de prévision": "",
+      Fournisseur: "",
+      "Catégorie de stock": "",
     }));
 
-    const ws = XLSX.utils.json_to_sheet(formattedData);
-    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(formattedData, { header: [""] });
 
+    // Définir la largeur de chaque colonne à 200 pixels
+    ws["!cols"] = [
+      { wpx: 200 },
+      { wpx: 200 },
+      { wpx: 200 },
+      { wpx: 200 },
+      { wpx: 200 },
+      { wpx: 200 },
+      { wpx: 200 },
+      { wpx: 200 },
+      { wpx: 200 },
+      { wpx: 200 },
+      { wpx: 200 },
+    ];
+
+    const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Supplies & Consumables");
     XLSX.writeFile(wb, "Supplies_and_Consumables.xlsx");
   };
+
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
