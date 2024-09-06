@@ -138,9 +138,6 @@ const FormBonDeVoiture = () => {
         validationSchema={Yup.object({
           materiel: Yup.string().required("Veuillez remplir le champ matériel"),
           date: Yup.string().required("Veuillez remplir le champ date"),
-          reference: Yup.string().required(
-            "Veuillez remplir le champ référence"
-          ),
         })}
         onSubmit={(value: any, action: any) => {
           handleSubmit(value);
