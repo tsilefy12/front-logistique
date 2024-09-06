@@ -40,6 +40,7 @@ import useFetchTransportationEquipments from "../hooks/useFetchTransportationEqu
 import useFetchCarVouchers from "./hooks/useFetchCarVoucher";
 import CarVoucherTableHeader from "./organism/table/CarVoucherTableHeader";
 import CarVoucherTableToolbar from "./organism/table/CarVoucherTableToolbar";
+import PrintPDF from "./printPDF";
 
 const ListTransport = () => {
   const [page, setPage] = React.useState(0);
@@ -253,6 +254,7 @@ const ListTransport = () => {
                   ))}
                 </TextField>
               </FormControl>
+              <PrintPDF filteredCarVouchers={filteredCarVouchers} />
             </Stack>
           </Typography>
           <Typography variant="h4">Tous les entretiens</Typography>

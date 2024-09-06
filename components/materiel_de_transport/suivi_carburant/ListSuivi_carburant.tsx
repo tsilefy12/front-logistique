@@ -8,6 +8,7 @@ import {
   MenuItem,
   Stack,
   styled,
+  TextField,
   Typography,
 } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -58,7 +59,7 @@ const ListSuiviCarburant = () => {
   const { grantList } = useAppSelector((state) => state.grant);
   const { budgetLineList } = useAppSelector((state) => state.lineBugetaire);
   const fetchLignebudgetaire = useFetchLigneBudgetaire();
-  const [filter, setFilter] = useState<string>("toutes");
+  const [filter, setFilter] = useState<string>("");
   const [dataFilter, setDataFilter] = useState<any[]>([]);
 
   // const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment)
@@ -123,15 +124,15 @@ const ListSuiviCarburant = () => {
   }, [suiviCarburants]);
   // Filtre par localisation
   useEffect(() => {
-    if (filter !== "toutes") {
+    if (filter == "") {
+      setDataFilter([...suiviCarburants].reverse());
+    } else {
       const data = suiviCarburants
         .filter((item: any) =>
           ` ${item?.localisation}`.toLowerCase().includes(filter.toLowerCase())
         )
         .map((item: any) => item.id);
       setDataFilter(data);
-    } else {
-      setDataFilter([...suiviCarburants].reverse());
     }
   }, [filter, suiviCarburants]);
   return (
@@ -146,7 +147,7 @@ const ListSuiviCarburant = () => {
                 </Button>
               </Link>
             )}
-            <OSTextField
+            <TextField
               fullWidth
               select
               id="outlined-basic"
@@ -155,14 +156,15 @@ const ListSuiviCarburant = () => {
               name="filter"
               value={filter}
               onChange={(e: any) => setFilter(e.target.value)}
+              size="small"
+              sx={{ width: 250 }}
             >
-              <MenuItem value="toutes">Toutes</MenuItem>
               {[...ListeLocalisation].map((element: any) => (
                 <MenuItem key={element} value={element}>
                   {element}
                 </MenuItem>
               ))}
-            </OSTextField>
+            </TextField>
           </Stack>
           <Typography variant="h4">Tous les courses ville</Typography>
         </SectionNavigation>

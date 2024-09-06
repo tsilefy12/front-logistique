@@ -84,12 +84,7 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
       }
     }
   }, [formikProps.values]);
-  const modePaiement = [
-    { id: "Virement", name: "Virement" },
-    { id: "Chèque", name: "Chèque" },
-    { id: "Mobile Money", name: "Mobile Money" },
-    { id: "Espèces", name: "Espèces" },
-  ];
+
   return (
     <Form>
       <NavigationContainer>
@@ -158,6 +153,7 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
           variant="outlined"
           value={formikProps.values.date}
           onChange={(value: any) => formikProps.setFieldValue("date", value)}
+          name="date"
         />
       </Stack>
       <Stack direction="row" spacing={2} margin={2}>
