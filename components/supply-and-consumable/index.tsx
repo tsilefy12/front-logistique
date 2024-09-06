@@ -236,6 +236,18 @@ export default function SuplyAndCosumableList() {
                                     color="accent"
                                     variant="outlined"
                                     size="small"
+                                    disabled={(() => {
+                                      const currentDate = new Date();
+                                      const targetDate = new Date(`2024-09-06`);
+                                      return (
+                                        currentDate.getFullYear() ===
+                                          targetDate.getFullYear() &&
+                                        currentDate.getMonth() ===
+                                          targetDate.getMonth() &&
+                                        currentDate.getDate() ===
+                                          targetDate.getDate()
+                                      );
+                                    })()}
                                   >
                                     <AddIcon />
                                     Gerer

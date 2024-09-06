@@ -35,6 +35,8 @@ const styles = StyleSheet.create({
     padding: 5,
     borderBottom: "1px solid #ccc",
     fontSize: 10,
+    border: 1,
+    borderColor: "darkgrey",
   },
   logo: {
     width: 50,
@@ -62,12 +64,12 @@ const ExportPDFButton = ({ inventaireList }: any) => {
               src={`/logistique/images/logo/MV_logo.png`}
             />
           </View>
-          <View>
+          <View style={{ paddingRight: 30 }}>
             <Text>
               Inventaire du matériel :{" "}
               {inventaireList.map((item: any) => {
-                const designation = item.equipment?.designation;
-                return designation;
+                const unique = new Set(item.equipment?.designation);
+                return unique;
               })}
             </Text>
           </View>
