@@ -41,15 +41,21 @@ const styles = StyleSheet.create({
 });
 
 const PrintPDF = ({ suplyAndConsumableList }: any) => {
-  const [year, setYear] = useState<number>(0);
-  const uniques = new Set<any>("");
+  const [year, setYear] = useState<any[]>([]);
+  const uniques = new Set<any>();
+
   useEffect(() => {
     const des = suplyAndConsumableList.map((item: any) => item.annee);
-    if (uniques.has(des)) {
-      uniques.add(des);
-      return setYear(des);
-    }
+
+    des.forEach((itemYear: any) => {
+      if (!uniques.has(itemYear)) {
+        uniques.add(itemYear);
+      }
+    });
+
+    setYear(Array.from(uniques));
   }, [suplyAndConsumableList]);
+
   const DocumentPDF = ({ suplyAndConsumableList }: any) => (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -68,8 +74,11 @@ const PrintPDF = ({ suplyAndConsumableList }: any) => {
               src={`/logistique/images/logo/MV_logo.png`}
             />
           </View>
-          <View style={{ paddingRight: 80 }}>
+          <View>
             <Text>Fournitures et consommable du : {year}</Text>
+          </View>
+          <View>
+            <Text></Text>
           </View>
         </View>
         <View style={styles.table}>

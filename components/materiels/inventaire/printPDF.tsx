@@ -81,6 +81,9 @@ const ExportPDFButton = ({ inventaireList }: any) => {
           <View style={{ textAlign: "center" }}>
             <Text>Inventaire du matériel : {design}</Text>
           </View>
+          <View style={{ textAlign: "center" }}>
+            <Text></Text>
+          </View>
         </View>
         <View style={styles.table}>
           <View style={styles.tableRow}>
