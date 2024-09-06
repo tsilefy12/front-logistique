@@ -3,6 +3,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
+  Avatar,
   Button,
   Container,
   IconButton,
@@ -181,12 +182,14 @@ const ListInfo = () => {
                     .map((item: any, index: any) => (
                       <TableBody key={index}>
                         <TableCell align="left">
-                          <img
-                            src={`${process.env.NEXT_PUBLIC_API_URL}
-                          ${item.image}`}
-                            alt=""
-                            width="100px"
-                            height="100px"
+                          <Avatar
+                            sx={{ width: 80, height: 80 }}
+                            alt="Remy Sharp"
+                            src={
+                              item.image
+                                ? process.env.NEXT_PUBLIC_API_URL + item?.image
+                                : ""
+                            }
                           />
                         </TableCell>
                         <TableCell align="left">{item.numOptim}</TableCell>
