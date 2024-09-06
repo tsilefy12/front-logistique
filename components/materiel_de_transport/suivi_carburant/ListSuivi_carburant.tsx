@@ -129,7 +129,7 @@ const ListSuiviCarburant = () => {
           ` ${item?.localisation}`.toLowerCase().includes(filter.toLowerCase())
         )
         .map((item: any) => item.id);
-      setDataFilter([...data].reverse());
+      setDataFilter(data);
     } else {
       setDataFilter([...suiviCarburants].reverse());
     }
@@ -181,7 +181,7 @@ const ListSuiviCarburant = () => {
               >
                 <SuiviCarburantTableHeader />
                 <TableBody>
-                  {suiviCarburants
+                  {dataFilter
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .sort((a, b) => b.id!.localeCompare(a.id!))
                     .filter((item) =>

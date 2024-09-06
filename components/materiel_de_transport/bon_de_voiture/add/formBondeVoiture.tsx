@@ -68,6 +68,9 @@ const FormBonDeVoiture = () => {
       const calcul = max + 1;
       return setRef(calcul.toString().padStart(3, "0"));
     }
+    let max = 0;
+    const calcul = max + 1;
+    return setRef(calcul.toString().padStart(3, "0"));
   }, [valuesArticle]);
 
   const handleSubmit = async (values: any) => {
