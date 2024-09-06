@@ -31,12 +31,14 @@ import formatMontant from "../../../hooks/format";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { LocationItem } from "../../../redux/features/location/location.interface";
 import { deleteLocation } from "../../../redux/features/location/locationSlice";
-import useFetchEmployes from "../../Order-Supply-And-Consumable/hooks/useFetchEmployees";
 import useFetchVendors from "../../vendor/hooks/useFetchVendors";
 import useFetchTransportationEquipments from "../hooks/useFetchTransportationEquipments";
 import useFetchLocationDeTransport from "./hooks/useFetchLocationDeTransport";
 import LocationTransportTableHeader from "./organisme/table/LocationDeTransportTableHeader";
 import LocationDeTransportTableToolbar from "./organisme/table/LocationDeTransportTableToolbar";
+import { getInterns } from "../../../redux/features/employeStagiaire/stagiaireSlice";
+import useFetchPrestataire from "../../materiels/bon_commande_externe/hooks/getPrestataire";
+import useFetchEmployes from "../../materiels/informatique/hooks/useFetchEmployees";
 
 const ListLocation = () => {
   const [page, setPage] = React.useState(0);
@@ -57,12 +59,17 @@ const ListLocation = () => {
   const { budgetLineList } = useAppSelector((state) => state.lineBugetaire);
   const fetchEmploye = useFetchEmployes();
   const { employees } = useAppSelector((state) => state.employe);
+  const { interns } = useAppSelector((state) => state.stagiaire);
+  const fetchPrestataire = useFetchPrestataire();
+  const { prestataireListe } = useAppSelector((state) => state.prestataire);
 
   React.useEffect(() => {
     fetchLocationTransport();
     fetchTransportationEquipment();
     fetchVendor();
     fetchEmploye();
+    dispatch(getInterns({}));
+    fetchPrestataire();
   }, [router.query]);
 
   const handleClickEdit = async (id: any) => {
@@ -105,7 +112,29 @@ const ListLocation = () => {
     page > 0
       ? Math.max(0, (1 + page) * rowsPerPage - locationDeTransports.length)
       : 0;
-
+  const total = [
+    ...employees.map((i: any) => {
+      return {
+        id: i.id,
+        name: i.matricule + " " + i.name + " " + i.surname,
+        type: "employe",
+      };
+    }),
+    ...interns.map((i: any) => {
+      return {
+        id: i.id,
+        name: i.matricule + " " + i.name + " " + i.surname,
+        type: "intern",
+      };
+    }),
+    ...prestataireListe.map((i: any) => {
+      return {
+        id: i.id,
+        name: i.matricule + " " + i.name + " " + i.surname,
+        type: "prestataire",
+      };
+    }),
+  ];
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
@@ -151,11 +180,9 @@ const ListLocation = () => {
                       `${item.transportationEquipment?.registration} ${
                         item.vendor?.name
                       } ${item.itineraire} ${
-                        employees.find((e: any) => e.id! === item.responsable)
-                          ?.name
+                        total.find((e: any) => e.id! === item.responsable)?.name
                       } ${
-                        employees.find((e: any) => e.id! === item.responsable)
-                          ?.surname
+                        total.find((e: any) => e.id! === item.responsable)?.name
                       } ${
                         budgetLineList.find(
                           (e: any) => e.id === item?.ligneBudgetaire
@@ -185,15 +212,9 @@ const ListLocation = () => {
 
                           <TableCell align="left">
                             {
-                              employees.find(
-                                (e: any) => e.id! === row.responsable
-                              )?.name
+                              total.find((e: any) => e.id! === row.responsable)
+                                ?.name
                             }{" "}
-                            {
-                              employees.find(
-                                (e: any) => e.id! === row.responsable
-                              )?.surname
-                            }
                           </TableCell>
 
                           <TableCell align="left">

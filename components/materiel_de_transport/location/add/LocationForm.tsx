@@ -21,6 +21,8 @@ import useFetchVendors from "../../../vendor/hooks/useFetchVendors";
 import useFetchTransportationEquipments from "../../hooks/useFetchTransportationEquipments";
 import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
 import useFetchEmployes from "../../../Order-Supply-And-Consumable/hooks/useFetchEmployees";
+import useFetchPrestataire from "../../../materiels/bon_commande_externe/hooks/getPrestataire";
+import { getInterns } from "../../../../redux/features/employeStagiaire/stagiaireSlice";
 
 const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
   const route = useRouter();
@@ -37,11 +39,16 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
   );
   const fetchEmploye = useFetchEmployes();
   const { employees } = useAppSelector((state) => state.employe);
+  const { interns } = useAppSelector((state) => state.stagiaire);
+  const fetchPrestataire = useFetchPrestataire();
+  const { prestataireListe } = useAppSelector((state) => state.prestataire);
   React.useEffect(() => {
     fetchGrant();
     fetchVendors();
     fetchMateriels();
     fetchEmploye();
+    dispatch(getInterns({}));
+    fetchPrestataire();
   }, []);
   const listMateriel: { id: string; name: string }[] = [];
 
@@ -68,6 +75,29 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
       );
     }
   }, [formikProps.values.grant]);
+  const total = [
+    ...employees.map((i: any) => {
+      return {
+        id: i.id,
+        name: i.matricule + " " + i.name + " " + i.surname,
+        type: "employe",
+      };
+    }),
+    ...interns.map((i: any) => {
+      return {
+        id: i.id,
+        name: i.matricule + " " + i.name + " " + i.surname,
+        type: "intern",
+      };
+    }),
+    ...prestataireListe.map((i: any) => {
+      return {
+        id: i.id,
+        name: i.matricule + " " + i.name + " " + i.surname,
+        type: "prestataire",
+      };
+    }),
+  ];
   return (
     <Form>
       <NavigationContainer>
@@ -145,7 +175,7 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
           label="Responsable"
           variant="outlined"
           name="responsable"
-          options={employees}
+          options={total}
           dataKey={["name", "surname"]}
           valueKey="id"
           inputProps={{ autoComplete: "off" }}

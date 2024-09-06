@@ -180,7 +180,7 @@ const ListTransport = () => {
       setFilteredCarVouchers(temp);
 
       if (materiel != "tous" && annee == "tous" && mois == "tous") {
-        const data: any = temp.filter((row: CarVoucherItem) => {
+        const data: any = carVouchers.filter((row: CarVoucherItem) => {
           const mat = row.transportationEquipment?.registration;
           if (mat == materiel) {
             return setFilteredCarVouchers(data);
@@ -216,7 +216,6 @@ const ListTransport = () => {
                   onChange={(e) => setMois(e.target.value)}
                   size="small"
                 >
-                  <MenuItem value="tous">Tous les mois</MenuItem>
                   {ListMois.map((element: any) => (
                     <MenuItem key={element.id} value={element.id}>
                       {element.name}
@@ -232,7 +231,6 @@ const ListTransport = () => {
                   onChange={(e) => setAnne(e.target.value)}
                   size="small"
                 >
-                  <MenuItem value="tous">Tous les années</MenuItem>
                   {[...ListeAnnee].map((element: any) => (
                     <MenuItem key={element} value={element}>
                       {element}
@@ -248,7 +246,6 @@ const ListTransport = () => {
                   onChange={(e) => setMateriel(e.target.value)}
                   size="small"
                 >
-                  <MenuItem value="tous">Matériel</MenuItem>
                   {[...ListeMateriel].map((element: any) => (
                     <MenuItem key={element} value={element}>
                       {element}
