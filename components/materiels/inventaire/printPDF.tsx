@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Page,
   Text,
@@ -45,6 +45,15 @@ const styles = StyleSheet.create({
   },
 });
 const ExportPDFButton = ({ inventaireList }: any) => {
+  const [design, setDesign] = useState<string>("");
+  const uniques = new Set<string>("");
+  useEffect(() => {
+    const des = inventaireList.map((item: any) => item.equipment?.designation);
+    if (uniques.has(des)) {
+      uniques.add(des);
+      return setDesign(des);
+    }
+  }, [inventaireList]);
   // Composant pour le document PDF
   const InventairePDF = ({ inventaireList }: any) => (
     <Document>
@@ -65,13 +74,7 @@ const ExportPDFButton = ({ inventaireList }: any) => {
             />
           </View>
           <View style={{ paddingRight: 80 }}>
-            <Text>
-              Inventaire du matériel :{" "}
-              {inventaireList.map((item: any) => {
-                const unique = new Set(item.equipment?.designation);
-                return unique;
-              })}
-            </Text>
+            <Text>Inventaire du matériel : {design}</Text>
           </View>
         </View>
         <View style={styles.table}>

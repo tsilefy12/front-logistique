@@ -1,6 +1,7 @@
 import { Print } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { Image, Page, pdf, StyleSheet, Text, View } from "@react-pdf/renderer";
+import { useEffect, useState } from "react";
 const styles = StyleSheet.create({
   page: {
     padding: 30,
@@ -32,6 +33,15 @@ const styles = StyleSheet.create({
 });
 
 const PrintPDF = ({ suplyAndConsumableList }: any) => {
+  const [year, setYear] = useState<number>(0);
+  const uniques = new Set<any>("");
+  useEffect(() => {
+    const des = suplyAndConsumableList.map((item: any) => item.annee);
+    if (uniques.has(des)) {
+      uniques.add(des);
+      return setYear(des);
+    }
+  }, [suplyAndConsumableList]);
   const Document = () => (
     <Page size="A4" style={styles.page}>
       <View
@@ -50,13 +60,7 @@ const PrintPDF = ({ suplyAndConsumableList }: any) => {
           />
         </View>
         <View style={{ paddingRight: 80 }}>
-          <Text>
-            Fournitures et consommable du :{" "}
-            {suplyAndConsumableList.map((item: any) => {
-              const unique = new Set(item.annee);
-              return unique;
-            })}
-          </Text>
+          <Text>Fournitures et consommable du : {year}</Text>
         </View>
       </View>
       <View style={styles.table}>
