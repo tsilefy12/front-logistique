@@ -61,9 +61,12 @@ const ListTransport = () => {
   const [positionMois, setPositionMois]: any = useState("tous");
   const [mois, setMois]: any = useState("tous");
   const [annee, setAnne]: any = useState("tous");
-  const [filtre, setFiltre] = useState("")
+  const [filtre, setFiltre] = useState("");
   const [montantMensuel, setMontantMensuel]: any = useState(0);
-  const [filteredCarVouchers, setFilteredCarVouchers] = useState<CarVoucherItem[]>([]);
+  const [filteredCarVouchers, setFilteredCarVouchers] = useState<
+    CarVoucherItem[]
+  >([]);
+  const [materiel, setMateriel]: any = useState("tous");
 
   React.useEffect(() => {
     fetchTransportEquipements();
@@ -133,9 +136,19 @@ const ListTransport = () => {
     return [];
   }, [carVouchers]);
 
+  const ListeMateriel: any = useMemo(() => {
+    if (carVouchers && carVouchers.length > 0) {
+      return new Set(
+        carVouchers.map(
+          (item: CarVoucherItem) => item.transportationEquipment?.registration
+        )
+      );
+    }
+    return [];
+  }, [carVouchers]);
   React.useEffect(() => {
     filtreData();
-  }, [mois, annee, carVouchers]);
+  }, [mois, annee, carVouchers, materiel]);
 
   const filtreData = () => {
     let temp = [...carVouchers];
@@ -164,6 +177,16 @@ const ListTransport = () => {
         calcul += montantM;
         setMontantMensuel(calcul);
       });
+      setFilteredCarVouchers(temp);
+
+      if (materiel != "tous") {
+        temp = temp.filter((row: CarVoucherItem) => {
+          const mat = row.transportationEquipment?.registration;
+          if (mat == materiel) {
+            return row;
+          }
+        });
+      }
       setFilteredCarVouchers(temp);
     }
   };
@@ -218,6 +241,22 @@ const ListTransport = () => {
                   ))}
                 </TextField>
               </FormControl>
+              <FormControl fullWidth>
+                <TextField
+                  select
+                  label="Matériel"
+                  value={materiel}
+                  onChange={(e) => setAnne(e.target.value)}
+                  size="small"
+                >
+                  <MenuItem value="tous">Matériel</MenuItem>
+                  {[...ListeMateriel].map((element: any) => (
+                    <MenuItem key={element} value={element}>
+                      {element}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </FormControl>
             </Stack>
           </Typography>
           <Typography variant="h4">Tous les entretiens</Typography>
@@ -239,8 +278,12 @@ const ListTransport = () => {
                 <TableBody>
                   {filteredCarVouchers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .sort((a, b) => (b.id!).localeCompare(a.id!))
-                    .filter(item => (`${item.transportationEquipment?.registration} ${item.reference}`).toLowerCase().includes(filtre.toLowerCase()))
+                    .sort((a, b) => b.id!.localeCompare(a.id!))
+                    .filter((item) =>
+                      `${item.transportationEquipment?.registration} ${item.reference}`
+                        .toLowerCase()
+                        .includes(filtre.toLowerCase())
+                    )
                     .map((row: CarVoucherItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (

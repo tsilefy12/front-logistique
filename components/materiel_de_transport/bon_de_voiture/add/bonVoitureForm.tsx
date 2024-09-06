@@ -141,14 +141,14 @@ const FormBonVoiture = ({
               valueKey="id"
               name="materiel"
             />
-            <OSTextField
+            {/* <OSTextField
               fullWidth
               id="outlined-basic"
               label="Référence"
               variant="outlined"
               name="reference"
               inputProps={{ autoComplete: "off" }}
-            />
+            /> */}
             <OSDatePicker
               fullWidth
               id="outlined-basic"

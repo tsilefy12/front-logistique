@@ -186,6 +186,13 @@ const MaterielTransportForm = () => {
               <FormContainer spacing={2}>
                 <Stack direction="row" spacing={3} margin={2}>
                   <OSTextField
+                    id="outlined-basic"
+                    label="Marque"
+                    variant="outlined"
+                    name="brand"
+                    inputProps={{ autoComplete: "off" }}
+                  />
+                  <OSTextField
                     fullWidth
                     id="outlined-basic"
                     label="Immatriculation/Reference"
@@ -204,13 +211,6 @@ const MaterielTransportForm = () => {
                     dataKey={["type", "prefix"]}
                     valueKey="id"
                     name="type"
-                  />
-                  <OSTextField
-                    id="outlined-basic"
-                    label="Marque"
-                    variant="outlined"
-                    name="brand"
-                    inputProps={{ autoComplete: "off" }}
                   />
                 </Stack>
                 <Stack direction="row" spacing={2} margin={2}>
