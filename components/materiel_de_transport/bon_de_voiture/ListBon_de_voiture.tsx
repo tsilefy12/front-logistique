@@ -180,14 +180,13 @@ const ListTransport = () => {
       setFilteredCarVouchers(temp);
 
       if (materiel != "tous") {
-        temp = temp.filter((row: CarVoucherItem) => {
+        const data: any = temp.filter((row: CarVoucherItem) => {
           const mat = row.transportationEquipment?.registration;
           if (mat == materiel) {
-            return row;
+            return setFilteredCarVouchers(data);
           }
         });
       }
-      setFilteredCarVouchers(temp);
     }
   };
 
