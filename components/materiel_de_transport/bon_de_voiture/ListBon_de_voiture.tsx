@@ -59,10 +59,10 @@ const ListTransport = () => {
   const fetchTransportEquipements = useFetchTransportationEquipments();
 
   const fetchCarVouchers = useFetchCarVouchers();
-  const [positionMois, setPositionMois]: any = useState("tous");
-  const [mois, setMois]: any = useState("tous");
-  const [annee, setAnne]: any = useState("tous");
-  const [filtre, setFiltre] = useState("");
+  const [positionMois, setPositionMois]: any = useState("");
+  const [mois, setMois] = useState<any>("");
+  const [annee, setAnne] = useState<any>("");
+  const [filtre, setFiltre] = useState<string>("");
   const [montantMensuel, setMontantMensuel]: any = useState(0);
   const [filteredCarVouchers, setFilteredCarVouchers] = useState<
     CarVoucherItem[]
@@ -153,10 +153,10 @@ const ListTransport = () => {
 
   const filtreData = () => {
     let temp = [...carVouchers];
-    if (mois == "tous" && annee == "tous") {
+    if (mois == "" && annee == "") {
       setFilteredCarVouchers(carVouchers);
     } else {
-      if (mois != "tous") {
+      if (mois != "") {
         temp = temp.filter((row: CarVoucherItem) => {
           const rowDate = new Date(row.date!).getMonth() + 1;
           if (rowDate == mois) {
@@ -164,7 +164,7 @@ const ListTransport = () => {
           }
         });
       }
-      if (annee != "tous") {
+      if (annee != "") {
         temp = temp.filter((row: CarVoucherItem) => {
           const rowDate = new Date(row.date!).getFullYear();
           if (rowDate == annee) {
@@ -180,13 +180,12 @@ const ListTransport = () => {
       });
       setFilteredCarVouchers(temp);
 
-      if (materiel != "tous" && annee == "tous" && mois == "tous") {
-        const data: any = carVouchers.filter((row: CarVoucherItem) => {
-          const mat = row.transportationEquipment?.registration;
-          if (mat == materiel) {
-            return setFilteredCarVouchers(data);
-          }
-        });
+      if (materiel != "" && annee == "" && mois == "") {
+        const data: any = carVouchers.filter(
+          (row: CarVoucherItem) =>
+            row.transportationEquipment?.registration == materiel
+        );
+        setFilteredCarVouchers(data);
       }
     }
   };

@@ -151,7 +151,7 @@ const ListSuiviCarburant = () => {
               fullWidth
               select
               id="outlined-basic"
-              label="Filtre"
+              label="Filtre par localisation"
               variant="outlined"
               name="filter"
               value={filter}
