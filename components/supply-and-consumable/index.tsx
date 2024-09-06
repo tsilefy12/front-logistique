@@ -36,6 +36,7 @@ import useFetchSuplyAndConsumableList from "./entreSortie/hooks/useFetchSupplyAn
 import SuplyAndConsumableTableHeader from "./organism/table/SupplyAndConsumableTableHeader";
 import SuplyAndConsumableTableToolbar from "./organism/table/SupplyAndConsumableTableToolbar";
 import * as XLSX from "xlsx";
+import { FormLabel } from "@mui/material";
 
 export default function SuplyAndCosumableList() {
   const [page, setPage] = React.useState(0);
@@ -162,6 +163,8 @@ export default function SuplyAndCosumableList() {
                 Excel
               </Button>
             )}
+
+            <FormLabel>{`Année ${new Date().getFullYear()}`}</FormLabel>
           </Stack>
           <Typography variant="h4">Fiche de stock </Typography>
         </SectionNavigation>
