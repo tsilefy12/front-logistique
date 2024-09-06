@@ -42,7 +42,7 @@ const PrintPDF = ({ suplyAndConsumableList }: any) => {
       return setYear(des);
     }
   }, [suplyAndConsumableList]);
-  const Document = () => (
+  const Document = ({ suplyAndConsumableList }: any) => (
     <Page size="A4" style={styles.page}>
       <View
         style={{
@@ -83,7 +83,9 @@ const PrintPDF = ({ suplyAndConsumableList }: any) => {
   );
 
   const clickPDF = async () => {
-    const pdfBlob = await pdf(<Document />).toBlob();
+    const pdfBlob = await pdf(
+      <Document suplyAndConsumableList={suplyAndConsumableList} />
+    ).toBlob();
     const downloadLink = document.createElement("a");
     downloadLink.href = URL.createObjectURL(pdfBlob);
     downloadLink.download = "Fournitures-et-consommables.pdf";

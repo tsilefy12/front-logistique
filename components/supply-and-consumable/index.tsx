@@ -19,11 +19,12 @@ import Typography from "@mui/material/Typography";
 import { useConfirm } from "material-ui-confirm";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { usePermitted } from "../../config/middleware";
 import formatMontant from "../../hooks/format";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import {
+  createSuplyAndConsumable,
   deleteSuplyAndConsumable,
   editSuplyAndConsumable,
 } from "../../redux/features/supply-and-consumable";
@@ -143,6 +144,25 @@ export default function SuplyAndCosumableList() {
     XLSX.utils.book_append_sheet(wb, ws, "Supplies & Consumables");
     XLSX.writeFile(wb, "Supplies_and_Consumables.xlsx");
   };
+  const promises: Promise<any>[] = [];
+
+  useEffect(() => {
+    const now = new Date().getFullYear();
+    const temp = suplyAndConsumableList.filter((f) => f.annee === now);
+
+    const updateSupplies = async () => {
+      for (let i = 0; i < temp.length; i++) {
+        const item = temp[i];
+
+        if (now === item.annee && item.annee + 1) {
+          item.annee = now;
+          promises.push(dispatch(createSuplyAndConsumable(item)));
+        }
+      }
+      await Promise.all(promises);
+    };
+    updateSupplies();
+  }, [suplyAndConsumableList]);
 
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
@@ -153,7 +173,7 @@ export default function SuplyAndCosumableList() {
               <Link
                 href={"/fournitures_et_consommables/fiche_de_stock/ajouter"}
               >
-                <Button variant="contained" startIcon={<Add />} size="small">
+                <Button variant="contained" startIcon={<Add />}>
                   Ajouter
                 </Button>
               </Link>
@@ -163,7 +183,6 @@ export default function SuplyAndCosumableList() {
                 onClick={() => exportToExcel(suplyAndConsumableList)}
                 variant="contained"
                 color="primary"
-                size="small"
                 startIcon={<Download />}
               >
                 Excel
@@ -172,7 +191,7 @@ export default function SuplyAndCosumableList() {
             {validate("Logistiques FS", "C") && (
               <PrintPDF
                 suplyAndConsumableList={suplyAndConsumableList.filter(
-                  (f) => f.annee === new Date().getFullYear()
+                  (f) => f.annee == new Date().getFullYear()
                 )}
               />
             )}

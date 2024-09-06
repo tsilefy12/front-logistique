@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Page,
   Text,
@@ -46,14 +46,19 @@ const styles = StyleSheet.create({
 });
 const ExportPDFButton = ({ inventaireList }: any) => {
   const [design, setDesign] = useState<string>("");
-  const uniques = new Set<string>("");
+  const uniques = useRef(new Set<string>());
   useEffect(() => {
-    const des = inventaireList.map((item: any) => item.equipment?.designation);
-    if (uniques.has(des)) {
-      uniques.add(des);
-      return setDesign(des);
-    }
+    const des = inventaireList
+      .map((item: any) => item.equipment?.designation)
+      .filter((d: string | undefined) => d);
+    des.forEach((d: any) => {
+      if (!uniques.current.has(d)) {
+        uniques.current.add(d);
+        setDesign(d);
+      }
+    });
   }, [inventaireList]);
+
   // Composant pour le document PDF
   const InventairePDF = ({ inventaireList }: any) => (
     <Document>
@@ -73,7 +78,7 @@ const ExportPDFButton = ({ inventaireList }: any) => {
               src={`/logistique/images/logo/MV_logo.png`}
             />
           </View>
-          <View style={{ paddingRight: 80 }}>
+          <View style={{ textAlign: "center" }}>
             <Text>Inventaire du matériel : {design}</Text>
           </View>
         </View>
