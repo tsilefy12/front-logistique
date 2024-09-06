@@ -110,30 +110,27 @@ export default function LogSupplyAndConsumableList() {
                   name="choixEntreSortie"
                 >
                   <Stack direction="row" spacing={4}>
-                    <FormControlLabel
-                      value="INPUT"
-                      onChange={(e, c) => {
-                        if (!c) {
-                          setOperate("OUTPUT");
-                        }
+                    <Button
+                      variant="contained"
+                      onClick={() => {
                         setOperate("INPUT");
                         setOperationLabel("entrée");
                       }}
-                      control={<Radio checked={operate === "INPUT"} />}
-                      label="Entrée"
-                    />
-                    <FormControlLabel
-                      value="OUTPUT"
-                      onChange={(e, c) => {
-                        if (!c) {
-                          setOperate("INPUT");
-                        }
+                      color={operate === "INPUT" ? "primary" : "inherit"}
+                    >
+                      Entrée
+                    </Button>
+
+                    <Button
+                      variant="contained"
+                      onClick={() => {
                         setOperate("OUTPUT");
                         setOperationLabel("sortie");
                       }}
-                      control={<Radio checked={operate === "OUTPUT"} />}
-                      label="Sortie"
-                    />
+                      color={operate === "OUTPUT" ? "primary" : "inherit"}
+                    >
+                      Sortie
+                    </Button>
                   </Stack>
                 </RadioGroup>
               </Stack>
@@ -157,7 +154,7 @@ export default function LogSupplyAndConsumableList() {
                 <TableBody>
                   {logSuplyAndConsumableList
                     .filter((i) => i.OperationType === operate)
-                    .sort((a, b) => (b.id!).localeCompare(a.id!))
+                    .sort((a, b) => b.id!.localeCompare(a.id!))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row: LogSuplyAndConsumableItem | any, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
