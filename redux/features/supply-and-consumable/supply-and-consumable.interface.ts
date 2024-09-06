@@ -11,7 +11,7 @@ export interface SuplyAndConsumableItem {
   moisPrevision?: number;
   fournisseur?: string;
   categorieStock?: string;
-  // grant?: string;
+  annee?: number;
   vendor?: any;
   typeEquipment?: any;
 }

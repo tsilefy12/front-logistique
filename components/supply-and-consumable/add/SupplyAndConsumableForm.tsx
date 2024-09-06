@@ -64,6 +64,7 @@ export default function SuplyAndConsumableForm() {
           })
         );
       } else {
+        values.annee = new Date().getFullYear();
         await dispatch(createSuplyAndConsumable(values));
       }
       route.push("/fournitures_et_consommables/fiche_de_stock");
@@ -90,7 +91,7 @@ export default function SuplyAndConsumableForm() {
                 categorieStock: isEditing
                   ? suplyAndConsumable.categorieStock
                   : "",
-                // grant: isEditing ? suplyAndConsumable.grant : "",
+                annee: new Date().getFullYear(),
               }
         }
         validationSchema={Yup.object({

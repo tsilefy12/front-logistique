@@ -47,7 +47,15 @@ const ExportPDFButton = ({ inventaireList }: any) => {
   const InventairePDF = ({ inventaireList }: any) => (
     <Document>
       <Page size="A4" style={styles.page}>
-        <View style={{ fontSize: 12, display: "flex", flexDirection: "row" }}>
+        <View
+          style={{
+            fontSize: 12,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <View>
             <Image
               style={styles.logo}
@@ -57,7 +65,10 @@ const ExportPDFButton = ({ inventaireList }: any) => {
           <View>
             <Text>
               Inventaire du matériel :{" "}
-              {inventaireList.map((item: any) => item.equipment?.designation)}
+              {inventaireList.map((item: any) => {
+                const designation = item.equipment?.designation;
+                return designation;
+              })}
             </Text>
           </View>
         </View>
