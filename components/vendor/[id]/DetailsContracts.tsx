@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { useRouter } from "next/router";
 import { getVendor } from "../../../redux/features/vendor";
 import useFetchTypeProduitList from "../../configurations/type_produit/hooks/useFetchTypeProduitList";
+import insertSeparatorAtMiddle from "../../../hooks/formateurCompte";
 
 const DetailsVendor = () => {
   const router = useRouter();
@@ -102,7 +103,7 @@ const DetailsVendor = () => {
                     RIB :
                   </Typography>
                   <Typography variant="body1" color="gray">
-                    {vendor.rib}
+                    {insertSeparatorAtMiddle(vendor.rib!.toString())}
                   </Typography>
                 </InfoItems>
               </Grid>
