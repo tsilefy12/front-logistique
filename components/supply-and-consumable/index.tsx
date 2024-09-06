@@ -38,6 +38,7 @@ import SuplyAndConsumableTableToolbar from "./organism/table/SupplyAndConsumable
 import * as XLSX from "xlsx";
 import { FormLabel } from "@mui/material";
 import { Download } from "@mui/icons-material";
+import PrintPDF from "./printPdf";
 
 export default function SuplyAndCosumableList() {
   const [page, setPage] = React.useState(0);
@@ -107,19 +108,21 @@ export default function SuplyAndCosumableList() {
 
   //Export Excell
   const exportToExcel = (data: SuplyAndConsumableItem[]) => {
-    const formattedData = data.map((item) => ({
-      Designation: item.designation,
-      Quantité: "",
-      "Prix unitaire": "",
-      SKU: "",
-      "Unité de stock": item.uniteStock?.uniteStock,
-      Montant: formatMontant(item.montant!),
-      Reste: item.reste,
-      Seuil: item.seuil,
-      "Mois de prévision": "",
-      Fournisseur: "",
-      "Catégorie de stock": "",
-    }));
+    const formattedData = data
+      .filter((f) => f.annee === new Date().getFullYear())
+      .map((item: SuplyAndConsumableItem) => ({
+        Designation: item.designation,
+        Quantité: "",
+        "Prix unitaire": "",
+        SKU: "",
+        "Unité de stock": item.uniteStock?.uniteStock,
+        Montant: formatMontant(item.montant!),
+        Reste: item.reste,
+        Seuil: item.seuil,
+        "Mois de prévision": "",
+        Fournisseur: "",
+        "Catégorie de stock": "",
+      }));
 
     const ws = XLSX.utils.json_to_sheet(formattedData);
     ws["!cols"] = [
@@ -165,6 +168,13 @@ export default function SuplyAndCosumableList() {
               >
                 Excel
               </Button>
+            )}
+            {validate("Logistiques FS", "C") && (
+              <PrintPDF
+                suplyAndConsumableList={suplyAndConsumableList.filter(
+                  (f) => f.annee === new Date().getFullYear()
+                )}
+              />
             )}
 
             <FormLabel>{`Année ${new Date().getFullYear()}`}</FormLabel>

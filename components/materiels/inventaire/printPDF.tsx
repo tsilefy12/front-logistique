@@ -64,7 +64,7 @@ const ExportPDFButton = ({ inventaireList }: any) => {
               src={`/logistique/images/logo/MV_logo.png`}
             />
           </View>
-          <View style={{ paddingRight: 30 }}>
+          <View style={{ paddingRight: 80 }}>
             <Text>
               Inventaire du matériel :{" "}
               {inventaireList.map((item: any) => {
