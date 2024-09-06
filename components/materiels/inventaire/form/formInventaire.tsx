@@ -79,9 +79,6 @@ const AddInventaireForm = () => {
         validationSchema={Yup.object({
           dateInventaire: Yup.date().required("Veuillez saisir une date"),
           datePreciation: Yup.date().required("Veuillez saisir une date"),
-          etatMateriel: Yup.string().required(
-            "Veuillez sélectionner un eta matériel"
-          ),
           dureDeVie: Yup.number().required("Veuillez remplir le durée de vie"),
           valeurInventaire: Yup.number().required("Veuillez remplir le valeur"),
         })}

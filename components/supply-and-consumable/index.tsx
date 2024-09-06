@@ -145,18 +145,26 @@ export default function SuplyAndCosumableList() {
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
-          {validate("Logistiques FS", "C") && (
-            <Link href={"/fournitures_et_consommables/fiche_de_stock/ajouter"}>
-              <Button variant="contained" startIcon={<Add />} size="small">
-                Ajouter
+          <Stack direction="row" gap={2} alignItems="center">
+            {validate("Logistiques FS", "C") && (
+              <Link
+                href={"/fournitures_et_consommables/fiche_de_stock/ajouter"}
+              >
+                <Button variant="contained" startIcon={<Add />} size="small">
+                  Ajouter
+                </Button>
+              </Link>
+            )}
+            {validate("Logistiques FS", "C") && (
+              <Button
+                onClick={() => exportToExcel(suplyAndConsumableList)}
+                variant="contained"
+                color="primary"
+              >
+                Excel
               </Button>
-            </Link>
-          )}
-          {validate("Logistiques FS", "C") && (
-            <Button onClick={() => exportToExcel(suplyAndConsumableList)}>
-              Excel
-            </Button>
-          )}
+            )}
+          </Stack>
           <Typography variant="h4">Fiche de stock </Typography>
         </SectionNavigation>
         {/* <Divider /> */}
