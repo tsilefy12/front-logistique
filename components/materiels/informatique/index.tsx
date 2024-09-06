@@ -183,7 +183,7 @@ const ListInfo = () => {
                       <TableBody key={index}>
                         <TableCell align="left">
                           <Avatar
-                            sx={{ width: 80, height: 80 }}
+                            sx={{ width: 100, height: 100 }}
                             alt="Remy Sharp"
                             src={
                               item.image
