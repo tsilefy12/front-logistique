@@ -192,6 +192,7 @@ export default function SuplyAndCosumableList() {
                 <SuplyAndConsumableTableHeader />
                 <TableBody>
                   {suplyAndConsumableList
+                    .filter((item) => item.annee === new Date().getFullYear())
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .sort((a, b) => b.id!.localeCompare(a.id!))
                     .filter((item) =>
