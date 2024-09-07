@@ -15,6 +15,7 @@ export interface TransportationEquipmentItem {
   consommation?: number;
   typeEquipment?: TypeEquipmentItem;
   fournisseur?: string;
+  localisation?: string;
   vendor?: any;
 }
 

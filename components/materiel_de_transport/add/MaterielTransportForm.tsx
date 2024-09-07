@@ -31,16 +31,20 @@ import {
 import OSDatePicker from "../../shared/date/OSDatePicker";
 import useFetchVendors from "../../vendor/hooks/useFetchVendors";
 import { getTypeEquipmentList } from "../../../redux/features/typeEquipment";
+import useFetchLocalisationList from "../../configurations/localisation/hooks/useFetchUniteStock";
 
 const MaterielTransportForm = () => {
   const route = useRouter();
   const dispatch = useAppDispatch();
   const { vendors } = useAppSelector((state) => state.vendor);
   const { typeEquipmentList } = useAppSelector((state) => state.typeEquipment);
+  const fetchLocalisation = useFetchLocalisationList();
+  const { localisations } = useAppSelector((state) => state.localisation);
 
   const fetchVendor = useFetchVendors();
   useEffect(() => {
     fetchVendor();
+    fetchLocalisation();
     dispatch(getTypeEquipmentList({}));
   }, [route.query]);
 
@@ -101,6 +105,7 @@ const MaterielTransportForm = () => {
             ? transportationEquipment.kilometrageActuel
             : 0,
           fournisseur: isEditing ? transportationEquipment.fournisseur : "",
+          localisation: isEditing ? transportationEquipment.localisation : "",
         }}
         validationSchema={Yup.object({
           registration: Yup.string().required(
@@ -126,6 +131,9 @@ const MaterielTransportForm = () => {
           ),
           fournisseur: Yup.string().required(
             "Veuillez remplir le champ fournisseur"
+          ),
+          localisation: Yup.string().required(
+            "Veuillez remplir le champ localisation"
           ),
         })}
         onSubmit={(value: any, action: any) => {
@@ -222,6 +230,15 @@ const MaterielTransportForm = () => {
                     dataKey="name"
                     valueKey="id"
                     name="status"
+                  />
+                  <OSSelectField
+                    id="outlined-basic"
+                    label="Localisation"
+                    variant="outlined"
+                    options={localisations}
+                    dataKey="localisation"
+                    valueKey="id"
+                    name="localisation"
                   />
                   <OSDatePicker
                     id="outlined-basic"
