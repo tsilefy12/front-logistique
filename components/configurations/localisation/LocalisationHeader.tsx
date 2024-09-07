@@ -5,9 +5,6 @@ import { cancelEdit } from "../../../redux/features/configuration/uniteStockSlic
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import OSTextField from "../../shared/input/OSTextField";
-import useFetchModePaiementList from "./hooks/useFetchUniteStock";
-import { updateModePaiement } from "../../../redux/features/configuration/modePaiementSlice";
-import { createModePaiement } from "../../../redux/features/configuration/useCase/modePaiement/createModePaiement";
 import useFetchLocalisationList from "./hooks/useFetchUniteStock";
 import { updateLocalisation } from "../../../redux/features/configuration/localisationSlice";
 import { createLocalisation } from "../../../redux/features/configuration/useCase/localisation/createLocalisation";
@@ -59,9 +56,9 @@ const LocalisationHeader = () => {
                 </Typography>
                 <OSTextField
                   id="outlined-basic"
-                  label="Mode de paiement MV"
+                  label="Localisation"
                   variant="outlined"
-                  name="modePaiementMV"
+                  name="localisation"
                   value={formikProps.values.localisation}
                 />
                 <BtnContainer
