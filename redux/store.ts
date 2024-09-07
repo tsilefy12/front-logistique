@@ -55,6 +55,7 @@ import { ArticleCommandeFournisseurSlice } from "./features/bon_commande_fournis
 import { OffreRetenuSlice } from "./features/pvComparaison/offreRetenuSlice";
 import { ModePaiementSlice } from "./features/configuration/modePaiementSlice";
 import { prestataireSlice } from "./features/prestataire/prestataireSlice";
+import { LocalisationSlice } from "./features/configuration/localisationSlice";
 
 export const store = configureStore({
   reducer: {
@@ -115,6 +116,7 @@ export const store = configureStore({
     offreRetenu: OffreRetenuSlice.reducer,
     modePaiement: ModePaiementSlice.reducer,
     prestataire: prestataireSlice.reducer,
+    localisation: LocalisationSlice.reducer,
   },
 });
 

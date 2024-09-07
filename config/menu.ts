@@ -256,6 +256,12 @@ function allMenu() {
               link: "/configurations/mode_de_paiement",
               icon: "",
             },
+            {
+              id: 5,
+              name: "Localisation",
+              link: "/configurations/localisation",
+              icon: "",
+            },
           ],
         });
       }
