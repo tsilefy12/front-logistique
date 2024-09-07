@@ -18,6 +18,7 @@ import { getEmployees } from "../../../../redux/features/employeStagiaire/employ
 import Moment from "react-moment";
 import { getGrantList } from "../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
 import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
+import useFetchPassenger from "../../../configurations/passenger/hooks/useFetchPassenger";
 
 const DetailsInformatique = () => {
   const router = useRouter();
@@ -28,6 +29,8 @@ const DetailsInformatique = () => {
   const { interns } = useAppSelector((state) => state.stagiaire);
   const { grantList } = useAppSelector((state) => state.grant);
   const { budgetLineList } = useAppSelector((state) => state.lineBugetaire);
+  const fetchPassenger = useFetchPassenger();
+  const { passengerListe } = useAppSelector((state) => state.passenger);
 
   const total = [
     ...employees.map((i: any) => {
@@ -48,6 +51,7 @@ const DetailsInformatique = () => {
 
   useEffect(() => {
     getDetailInformatique();
+    fetchPassenger();
   }, [id]);
 
   const getDetailInformatique = () => {
@@ -63,23 +67,6 @@ const DetailsInformatique = () => {
     dispatch(getGrantList({}));
     dispatch(getBudgetLineList({}));
   };
-  // console.log(equipment);
-  function getText(etat: any) {
-    switch (etat) {
-      case "GOOD":
-        return "Bon etat";
-        break;
-      case "BAD":
-        return "Mauvais";
-        break;
-      case "BROKEN":
-        return "Inutilisable";
-        break;
-
-      default:
-        break;
-    }
-  }
 
   return (
     <Container maxWidth="xl" sx={{ backgroundColor: "#fff", pb: 5 }}>
@@ -254,7 +241,7 @@ const DetailsInformatique = () => {
                   Etat :
                 </Typography>
                 <Typography variant="body1" color="gray">
-                  {getText(equipment?.status)}
+                  {passengerListe.find((f) => f.id == equipment.status)?.name}
                 </Typography>
               </InfoItems>
             </Grid>

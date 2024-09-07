@@ -37,22 +37,24 @@ import {
 import useFetchEquipment from "./hooks/useFetchEquipment";
 import EquipmentTableHeader from "./organism/table/EquipmentTableHeader";
 import EquipmentTableToolbar from "./organism/table/EquipmentTableToolbar";
+import useFetchPassenger from "../../configurations/passenger/hooks/useFetchPassenger";
+import { PassengerItem } from "../../../redux/features/passenger/passengerSlice.interface";
 
-const getTextStatus = (status: string | undefined) => {
-  switch (status) {
-    case "GOOD":
-      return "Bon etat";
-      break;
-    case "BAD":
-      return "Mauvais";
-      break;
-    case "BROKEN":
-      return "Inutilisable";
-      break;
-    default:
-      break;
-  }
-};
+// const getTextStatus = (status: string | undefined) => {
+//   switch (status) {
+//     case "GOOD":
+//       return "Bon etat";
+//       break;
+//     case "BAD":
+//       return "Mauvais";
+//       break;
+//     case "BROKEN":
+//       return "Inutilisable";
+//       break;
+//     default:
+//       break;
+//   }
+// };
 
 const ListInfo = () => {
   const [page, setPage] = React.useState(0);
@@ -65,7 +67,8 @@ const ListInfo = () => {
   const { equipments } = useAppSelector((state) => state.equipment);
   const { employees } = useAppSelector((state) => state.employe);
   const { interns } = useAppSelector((state) => state.stagiaire);
-
+  const fetchPassenger = useFetchPassenger();
+  const { passengerListe } = useAppSelector((state) => state.passenger);
   const validate = usePermitted();
 
   const total = [
@@ -90,6 +93,7 @@ const ListInfo = () => {
     fetchEquipment();
     dispatch(getInterns({}));
     dispatch(getEmployees({}));
+    fetchPassenger();
   }, [router.query]);
   const handleClickDelete = async (id: any) => {
     confirm({
@@ -175,7 +179,9 @@ const ListInfo = () => {
                     .filter((item) =>
                       `${item.numOptim} ${item.designation} ${item.type} ${
                         total.find((e: any) => e.id === item?.ownerId)?.name
-                      } ${item.status}`
+                      } ${
+                        passengerListe.find((f) => f.id == item.status)?.name
+                      }`
                         .toLowerCase()
                         .includes(filtre.toLowerCase())
                     )
@@ -199,7 +205,11 @@ const ListInfo = () => {
                           {total.find((e: any) => e.id === item?.ownerId)?.name}
                         </TableCell>
                         <TableCell align="left">
-                          {getTextStatus(item.status)}
+                          {
+                            passengerListe.find(
+                              (f: PassengerItem) => f.id == item.status
+                            )?.name
+                          }
                         </TableCell>
                         <TableCell align="right">
                           <BtnActionContainer

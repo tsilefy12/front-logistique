@@ -26,14 +26,12 @@ import { getBonCommandeInternes } from "../../../../redux/features/bon_commande_
 import { getGrantList } from "../../../../redux/features/grant_ligneBudgétaire_programme/grantSlice";
 import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
 import OSFileUpload from "../../../shared/input/OSFileUpload";
+import useFetchPassenger from "../../../configurations/passenger/hooks/useFetchPassenger";
 
 const FormArticle = ({ formikProps }: { formikProps: FormikProps<any> }) => {
   const dispatch = useAppDispatch();
-  const etat = [
-    { name: "GOOD", french: "Bon etat" },
-    { name: "BAD", french: "Mauvais" },
-    { name: "BROKEN", french: "Inutilisable" },
-  ];
+  const fetchPassenger = useFetchPassenger();
+  const { passengerListe } = useAppSelector((state) => state.passenger);
   const route = useRouter();
 
   const { employees, isEditing, equipment } = useAppSelector(
@@ -53,6 +51,7 @@ const FormArticle = ({ formikProps }: { formikProps: FormikProps<any> }) => {
     dispatch(getTypeEquipmentList({}));
     dispatch(getBonCommandeInternes({}));
     dispatch(getGrantList({}));
+    fetchPassenger();
   };
 
   useEffect(() => {
@@ -156,9 +155,9 @@ const FormArticle = ({ formikProps }: { formikProps: FormikProps<any> }) => {
               id="workplaceId"
               label="Etat"
               name="status"
-              options={etat}
-              dataKey="french"
-              valueKey="name"
+              options={passengerListe}
+              dataKey="name"
+              valueKey="id"
             />
           </FormControl>
         </CustomStack>
