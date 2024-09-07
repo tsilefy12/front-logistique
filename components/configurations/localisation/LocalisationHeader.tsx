@@ -60,6 +60,7 @@ const LocalisationHeader = () => {
                   variant="outlined"
                   name="localisation"
                   value={formikProps.values.localisation}
+                  inputProps={{ autoComplete: "off" }}
                 />
                 <BtnContainer
                   direction="row"

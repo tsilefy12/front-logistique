@@ -1,12 +1,15 @@
 export default function insertSeparatorAtMiddle(
-  rib: string,
+  rib: number,
   separator: string = " "
 ): string {
   if (!rib) return "";
+  const ribStr = rib.toString();
 
-  const middleIndex = Math.floor(rib.length / 2);
-  const ribWithSeparator =
-    rib.slice(0, middleIndex) + separator + rib.slice(middleIndex);
+  if (ribStr.length !== 16) {
+    throw new Error("Le numéro RIB doit contenir exactement 16 caractères.");
+  }
+
+  const ribWithSeparator = ribStr.replace(/(.{4})/g, `$1${separator}`).trim();
 
   return ribWithSeparator;
 }

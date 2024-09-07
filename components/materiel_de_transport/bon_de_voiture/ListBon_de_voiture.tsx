@@ -202,60 +202,62 @@ const ListTransport = () => {
                     variant="contained"
                     startIcon={<Add />}
                     size="small"
-                    sx={{ height: 40, width: "260px" }}
+                    sx={{ height: 40, width: 100 }}
                   >
                     Ajouter
                   </Button>
                 </Link>
               )}
-              <FormControl fullWidth>
-                <TextField
-                  select
-                  label="Mois"
-                  value={mois}
-                  onChange={(e) => setMois(e.target.value)}
-                  size="small"
-                  sx={{ width: 150 }}
-                >
-                  {ListMois.map((element: any) => (
-                    <MenuItem key={element.id} value={element.id}>
-                      {element.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </FormControl>
-              <FormControl fullWidth>
-                <TextField
-                  select
-                  label="Année"
-                  value={annee}
-                  onChange={(e) => setAnne(e.target.value)}
-                  size="small"
-                  sx={{ width: 150 }}
-                >
-                  {[...ListeAnnee].map((element: any) => (
-                    <MenuItem key={element} value={element}>
-                      {element}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </FormControl>
-              <FormControl fullWidth>
-                <TextField
-                  select
-                  label="Matériel"
-                  value={materiel}
-                  onChange={(e) => setMateriel(e.target.value)}
-                  size="small"
-                  sx={{ width: 150 }}
-                >
-                  {[...ListeMateriel].map((element: any) => (
-                    <MenuItem key={element} value={element}>
-                      {element}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </FormControl>
+              <Stack direction="row" gap={2} alignItems="center">
+                <FormControl fullWidth>
+                  <TextField
+                    select
+                    label="Mois"
+                    value={mois}
+                    onChange={(e) => setMois(e.target.value)}
+                    size="small"
+                    sx={{ width: 150 }}
+                  >
+                    {ListMois.map((element: any) => (
+                      <MenuItem key={element.id} value={element.id}>
+                        {element.name}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </FormControl>
+                <FormControl fullWidth>
+                  <TextField
+                    select
+                    label="Année"
+                    value={annee}
+                    onChange={(e) => setAnne(e.target.value)}
+                    size="small"
+                    sx={{ width: 150 }}
+                  >
+                    {[...ListeAnnee].map((element: any) => (
+                      <MenuItem key={element} value={element}>
+                        {element}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </FormControl>
+                <FormControl fullWidth>
+                  <TextField
+                    select
+                    label="Matériel"
+                    value={materiel}
+                    onChange={(e) => setMateriel(e.target.value)}
+                    size="small"
+                    sx={{ width: 150 }}
+                  >
+                    {[...ListeMateriel].map((element: any) => (
+                      <MenuItem key={element} value={element}>
+                        {element}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </FormControl>
+              </Stack>
               <PrintPDF filteredCarVouchers={filteredCarVouchers} />
             </Stack>
           </Typography>

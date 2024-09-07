@@ -55,4 +55,16 @@ export const SuiviCarburantHeaderCells: readonly HeadCell[] = [
     disablePadding: false,
     label: "Mode paiement",
   },
+  {
+    id: "motif",
+    numeric: false,
+    disablePadding: false,
+    label: "Motif",
+  },
+  {
+    id: "localisation",
+    numeric: false,
+    disablePadding: false,
+    label: "Localisation",
+  },
 ];

@@ -103,7 +103,7 @@ const DetailsVendor = () => {
                     RIB :
                   </Typography>
                   <Typography variant="body1" color="gray">
-                    {insertSeparatorAtMiddle(vendor.rib!.toString())}
+                    {insertSeparatorAtMiddle(vendor.rib || 0)}
                   </Typography>
                 </InfoItems>
               </Grid>

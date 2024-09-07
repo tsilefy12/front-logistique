@@ -25,6 +25,7 @@ import OSSelectField from "../../../shared/select/OSSelectField";
 import useFetchTransportationEquipments from "../../hooks/useFetchTransportationEquipments";
 import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
 import useFetchModePaiementList from "../../../configurations/mode-paiement/hooks/useFetchUniteStock";
+import useFetchLocalisationList from "../../../configurations/localisation/hooks/useFetchUniteStock";
 
 const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
   const route = useRouter();
@@ -40,9 +41,12 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
   );
   const fetchModePaiementList = useFetchModePaiementList();
   const { modePaiements } = useAppSelector((state) => state.modePaiement);
+  const fetchLocalisation = useFetchLocalisationList();
+  const { localisations } = useAppSelector((state) => state.localisation);
   React.useEffect(() => {
     fetchGrant();
     fetchMateriels();
+    fetchLocalisation();
     fetchModePaiementList();
   }, []);
 
@@ -259,12 +263,14 @@ const SuiviForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
           />
         </FormControl>
         <FormControl fullWidth>
-          <OSTextField
+          <OSSelectField
             id="outlined-basic"
             label="Localisation"
             variant="outlined"
+            options={localisations}
+            dataKey="localisation"
+            valueKey="id"
             name="localisation"
-            inputProps={{ autoComplete: "off" }}
           />
         </FormControl>
       </Stack>

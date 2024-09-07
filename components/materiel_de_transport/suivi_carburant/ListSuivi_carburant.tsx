@@ -41,6 +41,7 @@ import useFetchSuiviCarburants from "./hooks/useFetchSuiviCarburant";
 import SuiviCarburantTableHeader from "./organisme/table/SuiviCarburantTableHeader";
 import SuiviCarburantTableToolbar from "./organisme/table/SuiviCarburantTableToolbar";
 import OSTextField from "../../shared/input copy/OSTextField";
+import useFetchLocalisationList from "../../configurations/localisation/hooks/useFetchUniteStock";
 
 const ListSuiviCarburant = () => {
   const [page, setPage] = React.useState(0);
@@ -61,6 +62,8 @@ const ListSuiviCarburant = () => {
   const fetchLignebudgetaire = useFetchLigneBudgetaire();
   const [filter, setFilter] = useState<string>("");
   const [dataFilter, setDataFilter] = useState<any[]>([]);
+  const { localisations } = useAppSelector((state) => state.localisation);
+  const fetchLocalisation = useFetchLocalisationList();
 
   // const { transportationEquipments } = useAppSelector((state) =>state.transportationEquipment)
 
@@ -240,6 +243,14 @@ const ListSuiviCarburant = () => {
                             }
                           </TableCell>
                           <TableCell align="left">{row.modePaiement}</TableCell>
+                          <TableCell align="left">{row.motif}</TableCell>
+                          <TableCell align="left">
+                            {
+                              localisations.find(
+                                (e) => e.id === row?.localisation
+                              )?.localisation
+                            }
+                          </TableCell>
                           <TableCell align="right" width={"100px"}>
                             <BtnActionContainer
                               direction="row"
