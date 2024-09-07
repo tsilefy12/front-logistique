@@ -1,8 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { LocalisationInitialState } from "./localisation.interface";
+import {
+  LocalisationInitialState,
+  LocalisationItem,
+} from "./localisation.interface";
 import { axios } from "../../../lib/axios";
 import { createLocalisation } from "./useCase/localisation/createLocalisation";
 import { getLocalisations } from "./useCase/localisation/getLocalisation";
+import { enqueueSnackbar } from "../notification/notificationSlice";
 
 const localisationInitialState: LocalisationInitialState = {
   localisations: [],
@@ -35,6 +39,14 @@ export const deleteLocalisation = createAsyncThunk(
           method: "DELETE",
         }
       );
+      thunkAPI.dispatch(
+        enqueueSnackbar({
+          message: "Localisation supprimé avec succès",
+          options: {
+            variant: "success",
+          },
+        })
+      );
       return response.data;
     } catch (error: any) {
       if (error.response) {
@@ -47,14 +59,19 @@ export const deleteLocalisation = createAsyncThunk(
 
 export const updateLocalisation = createAsyncThunk(
   "localisation/updateLocalisation",
-  async (data: { id: string; localisation: any }, thunkAPI) => {
+  async (data: { id: string; localisation: LocalisationItem }, thunkAPI) => {
     try {
       const response = await axios.patch(
         `/logistique/localisation/${data.id}`,
-        {
-          method: "PATCH",
-          body: JSON.stringify(data.localisation),
-        }
+        data.localisation
+      );
+      thunkAPI.dispatch(
+        enqueueSnackbar({
+          message: "Localisation mis à jour avec succès",
+          options: {
+            variant: "success",
+          },
+        })
       );
       return response.data;
     } catch (error: any) {
