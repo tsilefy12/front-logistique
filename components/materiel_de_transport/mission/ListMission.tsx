@@ -36,12 +36,13 @@ import useFetchTransportationEquipments from "../hooks/useFetchTransportationEqu
 import useFetchMissionTransport from "./hooks/useFectMission";
 import MissionTransportTableHeader from "./organisme/table/MissionTransportTableHeader";
 import MissionTransportTableToolbar from "./organisme/table/MissionTransportTableToolbar";
+import useFetchLigneBudget from "../location/hooks/useFetchLigneBudget";
 
 const ListMission = () => {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [filtre ,setFiltre] = React.useState("")
+  const [filtre, setFiltre] = React.useState("");
 
   const validate = usePermitted();
 
@@ -58,8 +59,11 @@ const ListMission = () => {
   );
   const { grantList } = useAppSelector((state) => state.grant);
   const { budgetLineList } = useAppSelector((state) => state.lineBugetaire);
+  const fetchLigneBudget = useFetchLigneBudget();
+  const { lineBudgetList } = useAppSelector((state) => state.ligneBudget);
 
   React.useEffect(() => {
+    fetchLigneBudget();
     fetchMissionTransport();
     fetchTransportationEquipment();
   }, [router.query]);
@@ -124,7 +128,10 @@ const ListMission = () => {
       <SectionTable>
         <Box sx={{ width: "100%", mb: 2 }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
-            <MissionTransportTableToolbar filtre={filtre} setFiltre={setFiltre} />
+            <MissionTransportTableToolbar
+              filtre={filtre}
+              setFiltre={setFiltre}
+            />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
@@ -135,8 +142,20 @@ const ListMission = () => {
                 <TableBody>
                   {missionTransports
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .sort((a, b) => (b.id!).localeCompare(a.id!))
-                    .filter(item => (`${item.transportationEquipment?.registration} ${item.libelle} ${item.utilisateur}  ${grantList.find((e: any) => e.id === item?.grant)?.code} ${budgetLineList.find((e: any) => e.id === item?.ligneBudgetaire)?.code}`).toLowerCase().includes(filtre.toLowerCase()))
+                    .sort((a, b) => b.id!.localeCompare(a.id!))
+                    .filter((item) =>
+                      `${item.transportationEquipment?.registration} ${
+                        item.libelle
+                      } ${item.utilisateur}  ${
+                        grantList.find((e: any) => e.id === item?.grant)?.code
+                      } ${
+                        budgetLineList.find(
+                          (e: any) => e.id === item?.ligneBudgetaire
+                        )?.code
+                      }`
+                        .toLowerCase()
+                        .includes(filtre.toLowerCase())
+                    )
                     .map((row: MissionTranportItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (
@@ -147,7 +166,12 @@ const ListMission = () => {
                               : ""}
                           </TableCell>
 
-                          <TableCell align="left">{row.pj}</TableCell>
+                          <TableCell align="left">
+                            {
+                              lineBudgetList.find((e: any) => e.id === row?.pj)
+                                ?.name
+                            }
+                          </TableCell>
 
                           <TableCell align="left">
                             <Moment format="DD/MM/yyyy">{row.date}</Moment>

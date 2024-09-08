@@ -289,6 +289,15 @@ const MissionForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
             type="text"
           />
         </FormControl>
+        <FormControl fullWidth>
+          <OSTextField
+            id="outlined-basic"
+            label="Motif"
+            variant="outlined"
+            name="motif"
+            inputProps={{ autoComplete: "off" }}
+          />
+        </FormControl>
       </Stack>
     </Form>
   );

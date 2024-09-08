@@ -24,7 +24,7 @@ const HeaderDashboard = () => {
     const intervalId = setInterval(() => {
       const now = new Date();
       const options = { timeZone: "Indian/Antananarivo", hour12: false };
-      const timeString = now.toLocaleTimeString("en-GB", options);
+      const timeString = now.toLocaleTimeString("en-US", options);
 
       setCurrentTime(timeString);
     }, 1000);

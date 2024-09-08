@@ -147,24 +147,27 @@ const ListLocation = () => {
   const ListeDate: any = useMemo(() => {
     if (locationDeTransports && locationDeTransports.length > 0) {
       return new Set(
-        locationDeTransports.map(
-          (item: LocationItem) => new Date(item.date as Date)
+        locationDeTransports.map((item: LocationItem) =>
+          new Date(item.date!).toLocaleDateString()
         )
       );
     }
     return [];
   }, [locationDeTransports]);
+
   const [filterParDate, setFilterParDate] = React.useState<any>("");
+
   React.useEffect(() => {
-    if (filterParDate == "") {
+    if (filterParDate === "") {
       setDataFilter([...locationDeTransports].reverse());
     } else {
-      const data = locationDeTransports
-        .filter((item: any) => item?.date == filterParDate)
-        .map((item: any) => item.id);
+      const data = locationDeTransports.filter(
+        (item: any) =>
+          new Date(item?.date).toLocaleDateString() === filterParDate
+      );
       setDataFilter(data);
     }
-  }, [filterParDate]);
+  }, [filterParDate, locationDeTransports]);
 
   useEffect(() => {
     const donnee = locationDeTransports.filter((item) =>

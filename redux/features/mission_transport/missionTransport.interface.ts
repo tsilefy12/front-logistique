@@ -12,6 +12,7 @@ export interface MissionTranportItem {
   ligneBudgetaire?: string;
   transportationEquipment?: any;
   kilometrageFinale?: number;
+  motif?: string;
 }
 
 export interface MissionTransportInitialState {

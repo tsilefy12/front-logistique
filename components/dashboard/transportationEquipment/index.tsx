@@ -11,12 +11,6 @@ const CardTransportationEquipment = () => {
     fetchTypeEquipment();
   }, []);
 
-  const colors = [
-    "#42391b", // white
-    "#005259", // blue
-    "#f8fff8", // yellow
-  ];
-
   const typeCounts = typeEquipmentList
     .filter((f) => f.prefix)
     .reduce((acc, curr) => {
@@ -69,12 +63,10 @@ const CardTransportationEquipment = () => {
               alignItems={"center"}
               justifyContent={"space-between"}
             >
-              <span style={{ color: colors[index % colors.length] }}>
-                {entry.type}
-              </span>
+              <span style={{ color: "black" }}>{entry.type}</span>
               <span
                 style={{
-                  color: colors[index % colors.length],
+                  color: "black",
                   fontWeight: "normal",
                   fontSize: "20px",
                 }}

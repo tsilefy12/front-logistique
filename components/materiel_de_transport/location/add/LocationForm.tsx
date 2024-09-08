@@ -243,6 +243,7 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
             label="Kilométrage final"
             name="kilometrageFinale"
             type="number"
+            value={formikProps.values.kilometrageFinale}
             inputProps={{ autoComplete: "off", min: 0 }}
           />
         </FormControl>

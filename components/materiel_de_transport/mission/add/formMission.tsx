@@ -101,6 +101,7 @@ const FormMission = () => {
           kilometrageFinale: isEditing
             ? missionTransport?.kilometrageFinale
             : 0,
+          motif: isEditing ? missionTransport?.motif : "",
         }}
         validationSchema={Yup.object({
           materiel: Yup.string().required("Veuillez remplir le champ matériel"),
