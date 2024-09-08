@@ -42,6 +42,7 @@ import { getInterns } from "../../../redux/features/employeStagiaire/stagiaireSl
 import useFetchPrestataire from "../../materiels/bon_commande_externe/hooks/getPrestataire";
 import useFetchEmployes from "../../materiels/informatique/hooks/useFetchEmployees";
 import useFetchLigneBudget from "./hooks/useFetchLigneBudget";
+import { format } from "date-fns";
 
 const ListLocation = () => {
   const [page, setPage] = React.useState(0);
@@ -210,8 +211,11 @@ const ListLocation = () => {
               {[...ListeDate].map((element: any) => (
                 <MenuItem key={element} value={element}>
                   {element instanceof Date
-                    ? element.toLocaleDateString()
-                    : element}
+                    ? format(
+                        new Date(element.toLocaleDateString()),
+                        "dd/MM/yyyy"
+                      )
+                    : format(new Date(element), "dd/MM/yyyy")}
                 </MenuItem>
               ))}
             </TextField>
