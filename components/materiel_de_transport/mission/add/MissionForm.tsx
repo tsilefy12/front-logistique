@@ -28,6 +28,7 @@ import useFetchLigneBudgetaire from "../../suivi_carburant/hooks/useFetchLigneBu
 import OSSelectField from "../../../shared/select/OSSelectField";
 import useFetchTransportationEquipments from "../../hooks/useFetchTransportationEquipments";
 import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgétaire_programme/budgeteLineSlice";
+import useFetchLigneBudget from "../../location/hooks/useFetchLigneBudget";
 
 const MissionForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
   const route = useRouter();
@@ -42,10 +43,12 @@ const MissionForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
   const { transportationEquipments } = useAppSelector(
     (state) => state.transportationEquipment
   );
-
+  const fetchLigneBudget = useFetchLigneBudget();
+  const { lineBudgetList } = useAppSelector((state) => state.ligneBudget);
   React.useEffect(() => {
     fetchGrant();
     fetchMissionTransport();
+    fetchLigneBudget();
     fetchMateriels();
     if (id) {
       dispatch(editMissionDeTransport({ id }));
@@ -76,7 +79,35 @@ const MissionForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
       );
     }
   }, [formikProps.values.grant]);
+  React.useEffect(() => {
+    const prix = transportationEquipments.find(
+      (e) => e.id === formikProps.values.materiel
+    )?.typeEquipment?.unitPrice;
+    if (
+      typeof formikProps.values.kilometrageFinale === "number" &&
+      typeof prix === "number" &&
+      transportationEquipments.find((e) => e.id === formikProps.values.materiel)
+    ) {
+      const newValue =
+        (formikProps.values.kilometrageFinale -
+          transportationEquipments.find(
+            (e) => e.id === formikProps.values.materiel
+          )!.kilometrageActuel!) *
+          prix ?? 0;
 
+      if (newValue < 0) {
+        formikProps.setFieldValue(
+          "montant",
+          formikProps.values.pu * formikProps.values.nombreJour
+        );
+      } else {
+        formikProps.setFieldValue(
+          "montant",
+          newValue + formikProps.values.pu * formikProps.values.nombreJour
+        );
+      }
+    }
+  }, [formikProps.values]);
   return (
     <Form>
       <NavigationContainer>
@@ -142,12 +173,13 @@ const MissionForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
           valueKey="id"
           name="materiel"
         />
-        <OSTextField
-          fullWidth
+        <OSSelectField
           id="outlined-basic"
           label="Référence budgétaire"
-          variant="outlined"
           name="pj"
+          options={lineBudgetList}
+          dataKey={"name"}
+          valueKey="id"
           inputProps={{ autoComplete: "off" }}
         />
       </Stack>
@@ -164,7 +196,7 @@ const MissionForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
         <FormControl fullWidth>
           <OSTextField
             id="outlined-basic"
-            label="Libellé"
+            label="Itinéraire"
             name="libelle"
             inputProps={{ autoComplete: "off" }}
           />
@@ -189,12 +221,15 @@ const MissionForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
             min="0"
             inputProps={{ autoComplete: "off", min: 0 }}
             value={formikProps.values.nombreJour}
-            onChange={(event: any) => {
-              const newValue = parseInt(event.target.value);
-              formikProps.setFieldValue("nombreJour", newValue);
-              const newMontant = newValue * (formikProps.values.pu ?? 0);
-              formikProps.setFieldValue("montant", newMontant);
-            }}
+          />
+        </FormControl>
+        <FormControl fullWidth sx={{ marginBottom: 2 }}>
+          <OSTextField
+            id="outlined-basic"
+            label="Kilométrage final"
+            name="kilometrageFinale"
+            type="number"
+            inputProps={{ autoComplete: "off", min: 0 }}
           />
         </FormControl>
         <FormControl fullWidth>
@@ -207,13 +242,6 @@ const MissionForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
             min="0"
             inputProps={{ autoComplete: "off", min: 0 }}
             value={formikProps.values.pu}
-            onChange={(event: any) => {
-              const newValue = parseInt(event.target.value);
-              formikProps.setFieldValue("pu", newValue);
-              const newMontant =
-                (formikProps.values.nombreJour ?? 0) * newValue;
-              formikProps.setFieldValue("montant", newMontant);
-            }}
           />
         </FormControl>
         <FormControl fullWidth>
@@ -222,13 +250,12 @@ const MissionForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
             label="Montant"
             variant="outlined"
             name="montant"
-            value={
-              (formikProps.values.nombreJour ?? 0) *
-              (formikProps.values.pu ?? 0)
-            }
             type="number"
             min="0"
-            disabled
+            value={formikProps.values.montant}
+            onChange={(event: any) =>
+              formikProps.setFieldValue("montant", parseInt(event.target.value))
+            }
           />
         </FormControl>
       </Stack>

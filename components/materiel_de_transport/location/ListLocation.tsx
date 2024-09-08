@@ -5,8 +5,10 @@ import {
   Button,
   Container,
   IconButton,
+  MenuItem,
   Stack,
   styled,
+  TextField,
   Typography,
 } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -20,7 +22,7 @@ import TableRow from "@mui/material/TableRow";
 import { useConfirm } from "material-ui-confirm";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import Moment from "react-moment";
 import { usePermitted } from "../../../config/middleware";
 import {
@@ -39,6 +41,7 @@ import LocationDeTransportTableToolbar from "./organisme/table/LocationDeTranspo
 import { getInterns } from "../../../redux/features/employeStagiaire/stagiaireSlice";
 import useFetchPrestataire from "../../materiels/bon_commande_externe/hooks/getPrestataire";
 import useFetchEmployes from "../../materiels/informatique/hooks/useFetchEmployees";
+import useFetchLigneBudget from "./hooks/useFetchLigneBudget";
 
 const ListLocation = () => {
   const [page, setPage] = React.useState(0);
@@ -62,6 +65,10 @@ const ListLocation = () => {
   const { interns } = useAppSelector((state) => state.stagiaire);
   const fetchPrestataire = useFetchPrestataire();
   const { prestataireListe } = useAppSelector((state) => state.prestataire);
+  const fetchLigneBudget = useFetchLigneBudget();
+  const { lineBudgetList } = useAppSelector((state) => state.ligneBudget);
+  const [filter, setFilter] = React.useState<string>("");
+  const [dataFilter, setDataFilter] = React.useState<any[]>([]);
 
   React.useEffect(() => {
     fetchLocationTransport();
@@ -70,6 +77,7 @@ const ListLocation = () => {
     fetchEmploye();
     dispatch(getInterns({}));
     fetchPrestataire();
+    fetchLigneBudget();
   }, [router.query]);
 
   const handleClickEdit = async (id: any) => {
@@ -135,17 +143,76 @@ const ListLocation = () => {
       };
     }),
   ];
+
+  const ListeDate: any = useMemo(() => {
+    if (locationDeTransports && locationDeTransports.length > 0) {
+      return new Set(
+        locationDeTransports.map(
+          (item: LocationItem) => new Date(item.date as Date)
+        )
+      );
+    }
+    return [];
+  }, [locationDeTransports]);
+  const [filterParDate, setFilterParDate] = React.useState<any>("");
+  React.useEffect(() => {
+    if (filterParDate == "") {
+      setDataFilter([...locationDeTransports].reverse());
+    } else {
+      const data = locationDeTransports
+        .filter((item: any) => item?.date == filterParDate)
+        .map((item: any) => item.id);
+      setDataFilter(data);
+    }
+  }, [filterParDate]);
+
+  useEffect(() => {
+    const donnee = locationDeTransports.filter((item) =>
+      `${item.transportationEquipment?.registration} ${item.vendor?.name} ${
+        item.itineraire
+      } ${total.find((e: any) => e.id! === item.responsable)?.name} ${
+        total.find((e: any) => e.id! === item.responsable)?.name
+      } ${
+        budgetLineList.find((e: any) => e.id === item?.ligneBudgetaire)?.code
+      } ${lineBudgetList.find((f) => f.id === item?.referenceBudgetaire)?.name}`
+        .toLowerCase()
+        .includes(filtre.toLowerCase())
+    );
+    setDataFilter(donnee);
+  }, [locationDeTransports, filtre]);
   return (
     <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
       <NavigationContainer>
         <SectionNavigation>
-          {validate("Logistiques LE", "C") && (
-            <Link href={"/materiel_de_transport/location/add"}>
-              <Button variant="contained" startIcon={<Add />} size="small">
-                Ajouter
-              </Button>
-            </Link>
-          )}
+          <Stack direction="row" gap={2} alignItems="center">
+            {validate("Logistiques LE", "C") && (
+              <Link href={"/materiel_de_transport/location/add"}>
+                <Button variant="contained" startIcon={<Add />} size="small">
+                  Ajouter
+                </Button>
+              </Link>
+            )}
+            <TextField
+              fullWidth
+              select
+              id="outlined-basic"
+              label="Filtre par date"
+              variant="outlined"
+              value={filterParDate}
+              onChange={(e: any) => setFilterParDate(e.target.value)}
+              size="small"
+              sx={{ width: 150 }}
+            >
+              <MenuItem value="">Toutes les dates</MenuItem>
+              {[...ListeDate].map((element: any) => (
+                <MenuItem key={element} value={element}>
+                  {element instanceof Date
+                    ? element.toLocaleDateString()
+                    : element}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Stack>
           <Stack direction={"row"} gap={2} alignItems={"center"}>
             <Link href={"/materiel_de_transport/location_externe"}>
               <Button variant="contained" size="small">
@@ -173,24 +240,10 @@ const ListLocation = () => {
               >
                 <LocationTransportTableHeader />
                 <TableBody>
-                  {locationDeTransports
+                  {dataFilter
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .sort((a, b) => b.id!.localeCompare(a.id!))
-                    .filter((item) =>
-                      `${item.transportationEquipment?.registration} ${
-                        item.vendor?.name
-                      } ${item.itineraire} ${
-                        total.find((e: any) => e.id! === item.responsable)?.name
-                      } ${
-                        total.find((e: any) => e.id! === item.responsable)?.name
-                      } ${
-                        budgetLineList.find(
-                          (e: any) => e.id === item?.ligneBudgetaire
-                        )?.code
-                      } ${item?.referenceBudgetaire}`
-                        .toLowerCase()
-                        .includes(filtre.toLowerCase())
-                    )
+
                     .map((row: LocationItem, index: any) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (
@@ -218,7 +271,11 @@ const ListLocation = () => {
                           </TableCell>
 
                           <TableCell align="left">
-                            {row.referenceBudgetaire}
+                            {
+                              lineBudgetList.find(
+                                (f) => f.id === row?.referenceBudgetaire
+                              )?.name
+                            }
                           </TableCell>
 
                           <TableCell align="left">

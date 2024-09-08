@@ -23,6 +23,7 @@ import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgét
 import useFetchEmployes from "../../../Order-Supply-And-Consumable/hooks/useFetchEmployees";
 import useFetchPrestataire from "../../../materiels/bon_commande_externe/hooks/getPrestataire";
 import { getInterns } from "../../../../redux/features/employeStagiaire/stagiaireSlice";
+import useFetchLigneBudget from "../hooks/useFetchLigneBudget";
 
 const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
   const route = useRouter();
@@ -42,6 +43,8 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
   const { interns } = useAppSelector((state) => state.stagiaire);
   const fetchPrestataire = useFetchPrestataire();
   const { prestataireListe } = useAppSelector((state) => state.prestataire);
+  const fetchLigneBudget = useFetchLigneBudget();
+  const { lineBudgetList } = useAppSelector((state) => state.ligneBudget);
   React.useEffect(() => {
     fetchGrant();
     fetchVendors();
@@ -49,6 +52,7 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
     fetchEmploye();
     dispatch(getInterns({}));
     fetchPrestataire();
+    fetchLigneBudget();
   }, []);
   const listMateriel: { id: string; name: string }[] = [];
 
@@ -98,6 +102,35 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
       };
     }),
   ];
+  React.useEffect(() => {
+    const prix = transportationEquipments.find(
+      (e) => e.id === formikProps.values.materiel
+    )?.typeEquipment?.unitPrice;
+    if (
+      typeof formikProps.values.kilometrageFinale === "number" &&
+      typeof prix === "number" &&
+      transportationEquipments.find((e) => e.id === formikProps.values.materiel)
+    ) {
+      const newValue =
+        (formikProps.values.kilometrageFinale -
+          transportationEquipments.find(
+            (e) => e.id === formikProps.values.materiel
+          )!.kilometrageActuel!) *
+          prix ?? 0;
+
+      if (newValue < 0) {
+        formikProps.setFieldValue(
+          "montant",
+          formikProps.values.pu * formikProps.values.nombreJour
+        );
+      } else {
+        formikProps.setFieldValue(
+          "montant",
+          newValue + formikProps.values.pu * formikProps.values.nombreJour
+        );
+      }
+    }
+  }, [formikProps.values]);
   return (
     <Form>
       <NavigationContainer>
@@ -192,15 +225,27 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
           />
         </FormControl>
         <FormControl fullWidth>
-          <OSTextField
+          <OSSelectField
             id="outlined-basic"
             label="Référence budgétaire"
             name="referenceBudgetaire"
+            options={lineBudgetList}
+            dataKey={"name"}
+            valueKey="id"
             inputProps={{ autoComplete: "off" }}
           />
         </FormControl>
       </Stack>
       <Stack direction="row" spacing={3} margin={2}>
+        <FormControl fullWidth sx={{ marginBottom: 2 }}>
+          <OSTextField
+            id="outlined-basic"
+            label="Kilométrage final"
+            name="kilometrageFinale"
+            type="number"
+            inputProps={{ autoComplete: "off", min: 0 }}
+          />
+        </FormControl>
         <FormControl fullWidth>
           <OSTextField
             id="outlined-basic"
@@ -210,12 +255,6 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
             min="0"
             inputProps={{ autoComplete: "off", min: 0 }}
             value={formikProps.values.nombreJour}
-            onChange={(event: any) => {
-              const newValue = parseInt(event.target.value);
-              formikProps.setFieldValue("nombreJour", newValue);
-              const newMontant = newValue * (formikProps.values.pu ?? 0);
-              formikProps.setFieldValue("montant", newMontant);
-            }}
           />
         </FormControl>
         <FormControl fullWidth>
@@ -228,13 +267,6 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
             min="0"
             inputProps={{ autoComplete: "off", min: 0 }}
             value={formikProps.values.pu}
-            onChange={(event: any) => {
-              const newValue = parseInt(event.target.value);
-              formikProps.setFieldValue("pu", newValue);
-              const newMontant =
-                (formikProps.values.nombreJour ?? 0) * newValue;
-              formikProps.setFieldValue("montant", newMontant);
-            }}
           />
         </FormControl>
         <FormControl fullWidth>
@@ -242,18 +274,25 @@ const LocationForm = ({ formikProps }: { formikProps: FormikProps<any> }) => {
             id="outlined-basic"
             label="Montant"
             variant="outlined"
-            value={
-              (formikProps.values.nombreJour ?? 0) *
-              (formikProps.values.pu ?? 0)
-            }
+            value={formikProps.values.montant}
             name="montant"
             type="number"
             min="0"
-            disabled
+            onChange={(event: any) =>
+              formikProps.setFieldValue("montant", parseInt(event.target.value))
+            }
           />
         </FormControl>
       </Stack>
       <Stack direction="row" spacing={2} margin={2}>
+        <OSTextField
+          id="outlined-basic"
+          label="Motif"
+          variant="outlined"
+          name="motif"
+          type="text"
+          inputProps={{ autoComplete: "off" }}
+        />
         <OSSelectField
           id="outlined-basic"
           label="Fournisseur"
