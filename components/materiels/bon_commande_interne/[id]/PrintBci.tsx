@@ -174,7 +174,9 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
               fontSize: "10",
             }}
           >
-            <Text style={styles.headerCadre1}>Date et signature</Text>
+            <Text
+              style={{ ...styles.headerCadre1, borderBottom: "none" }}
+            ></Text>
             <Text style={styles.headerCadre}>Demandeur</Text>
             <Text style={styles.headerCadre}>Verification technique</Text>
             <Text style={styles.headerCadre}>Verification financière</Text>
@@ -187,10 +189,50 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
               styles.headerSignature,
             ]}
           >
-            <Text style={styles.row1Cadre}></Text>
-            <Text style={styles.row2Cadre}>{pdfData.demandeur}</Text>
-            <Text style={styles.row2Cadre}>{pdfData.techVerify}</Text>
-            <Text style={styles.row2Cadre}>{pdfData.financilaVerify}</Text>
+            <Text
+              style={{
+                ...styles.row1Cadre,
+                justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+                borderTop: "none",
+              }}
+            >
+              Date et signature
+            </Text>
+            <Text
+              style={{
+                ...styles.row2Cadre,
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
+              <Text>{pdfData.demandeur}</Text>
+              <Text>......</Text>
+            </Text>
+            <Text
+              style={{
+                ...styles.row2Cadre,
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
+              <Text>{pdfData.techVerify}</Text>
+              <Text>......</Text>
+            </Text>
+            <Text
+              style={{
+                ...styles.row2Cadre,
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
+              <Text>{pdfData.financilaVerify}</Text>
+              <Text>......</Text>
+            </Text>
             <Text style={styles.row2Cadre}></Text>
           </View>
         </View>
