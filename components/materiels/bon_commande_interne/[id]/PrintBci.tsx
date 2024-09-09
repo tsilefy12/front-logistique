@@ -195,7 +195,7 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                 justifyContent: "center",
                 display: "flex",
                 alignItems: "center",
-                padding: 10,
+                padding: 20,
                 borderTop: "none",
               }}
             >
@@ -206,11 +206,20 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                 ...styles.row2Cadre,
                 display: "flex",
                 flexDirection: "column",
-                flexWrap: "wrap",
               }}
             >
-              <Text>{pdfData.demandeur}</Text>
-              <Text style={{ marginTop: 10 }}>............</Text>
+              <Text style={{ marginBottom: 10 }}>{pdfData.demandeur}</Text>
+              <Text>............</Text>
+            </Text>
+            <Text
+              style={{
+                ...styles.row2Cadre,
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Text style={{ marginBottom: 10 }}>{pdfData.techVerify}</Text>
+              <Text>............</Text>
             </Text>
             <Text
               style={{
@@ -220,19 +229,10 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                 flexWrap: "wrap",
               }}
             >
-              <Text>{pdfData.techVerify}</Text>
-              <Text style={{ marginTop: 10 }}>......</Text>
-            </Text>
-            <Text
-              style={{
-                ...styles.row2Cadre,
-                display: "flex",
-                flexDirection: "column",
-                flexWrap: "wrap",
-              }}
-            >
-              <Text>{pdfData.financilaVerify}</Text>
-              <Text style={{ marginTop: 10 }}>......</Text>
+              <Text style={{ marginBottom: 10 }}>
+                {pdfData.financilaVerify}
+              </Text>
+              <Text>............</Text>
             </Text>
             <Text style={styles.row2Cadre}></Text>
           </View>
