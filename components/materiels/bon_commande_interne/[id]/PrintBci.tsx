@@ -14,6 +14,11 @@ import { BonCommandeItem } from "../../../../redux/features/bon_commande_interne
 // @ts-ignore
 import { NumberToLetter } from "convertir-nombre-lettre";
 import formatMontant from "../../../../hooks/format";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
+import useFetchPrestataire from "../../bon_commande_externe/hooks/getPrestataire";
+import { getEmployees } from "../../../../redux/features/orderEquipment";
+import { getInterns } from "../../../../redux/features/employeStagiaire/stagiaireSlice";
+import { useEffect } from "react";
 
 function PrintBCI({ pdfData }: { pdfData: any }) {
   const montantTotal = pdfData.montantTotal
@@ -117,8 +122,8 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                     {element?.caracteristik}
                   </Text>
                   <Text style={styles.tr}>{element?.quantite}</Text>
-                  <Text style={styles.tr}>{formatMontant(element?.pu)} ar</Text>
-                  <Text style={styles.tr}>{element?.valueArticle} ar</Text>
+                  <Text style={styles.tr}>{formatMontant(element?.pu)}</Text>
+                  <Text style={styles.tr}>{element?.valueArticle}</Text>
                 </View>
               </View>
             );
@@ -146,7 +151,7 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                 { backgroundColor: "#D5D8DC", textAlign: "center" },
               ]}
             >
-              {formatMontant(pdfData?.montantTotal)} ar
+              {formatMontant(pdfData?.montantTotal)} Ar
             </Text>
           </View>
         </View>
@@ -154,7 +159,7 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
           <View style={[styles.rowBody]}>
             <Text style={{ fontSize: 12, padding: 2 }}>Soit :</Text>
             <Text style={{ fontSize: 12, padding: 2 }}>
-              {amountWords} ariary
+              {amountWords} Ariary
             </Text>
           </View>
         </View>
@@ -183,9 +188,9 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
             ]}
           >
             <Text style={styles.row1Cadre}></Text>
-            <Text style={styles.row2Cadre}></Text>
-            <Text style={styles.row2Cadre}></Text>
-            <Text style={styles.row2Cadre}></Text>
+            <Text style={styles.row2Cadre}>{pdfData.demandeur}</Text>
+            <Text style={styles.row2Cadre}>{pdfData.techVerify}</Text>
+            <Text style={styles.row2Cadre}>{pdfData.financilaVerify}</Text>
             <Text style={styles.row2Cadre}></Text>
           </View>
         </View>

@@ -106,6 +106,18 @@ const DetailsBCI = () => {
       numBonCommande: bonCommandeInterne.numBonCommande,
       montantTotal: bonCommandeInterne.montantTotal,
       ArticleCommande: bonCommandeInterne.ArticleCommande,
+      techVerify: total.find(
+        (e: any) =>
+          e.id ==
+          grantList.find((f: any) => f.id == bonCommandeInterne?.grant)
+            ?.techValidator
+      )?.name,
+      financilaVerify: total.find(
+        (e: any) =>
+          e.id ==
+          grantList.find((f: any) => f.id == bonCommandeInterne?.grant)
+            ?.financeVerificator
+      )?.name,
     };
     setPdf(dataPdf);
   }, [id, bonCommandeInterne]);

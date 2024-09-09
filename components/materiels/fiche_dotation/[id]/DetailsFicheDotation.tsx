@@ -227,7 +227,7 @@ const DetailsFicheDotation = () => {
               >
                 Télécharger
               </Button>
-              <FormLabel>{ficheDotation?.pieceJointe}</FormLabel>
+              {/* <FormLabel>{ficheDotation?.pieceJointe}</FormLabel> */}
             </Stack>
           </FormContainer>
         </Box>

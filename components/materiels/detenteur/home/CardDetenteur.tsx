@@ -16,27 +16,38 @@ import { getInterns } from "../../../../redux/features/employeStagiaire/stagiair
 const CardDetenteur = ({ holder }: any) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
-    
+
   const { employees } = useAppSelector((state) => state.employe);
   const { interns } = useAppSelector((state) => state.stagiaire);
 
-  const total = [...employees.map((i:any)=>{
+  const total = [
+    ...employees.map((i: any) => {
       return {
-      id : i.id,matricule:i.matricule, name:i.name +" "+ i.surname, type: "employe"
-      }
-  }),...interns.map((i:any)=>{
+        id: i.id,
+        matricule: i.matricule,
+        name: i.name + " " + i.surname,
+        type: "employe",
+        img: i.photoURL,
+      };
+    }),
+    ...interns.map((i: any) => {
       return {
-          id : i.id,matricule:i.matricule, name:i.name +" "+ i.surname, type: "intern"
-      }
-  })]
+        id: i.id,
+        matricule: i.matricule,
+        name: i.name + " " + i.surname,
+        type: "intern",
+        img: i.photoURL,
+      };
+    }),
+  ];
 
   const fetchUtilsData = () => {
-      dispatch(getEmployees({}));
-      dispatch(getInterns({}));
+    dispatch(getEmployees({}));
+    dispatch(getInterns({}));
   };
 
   useEffect(() => {
-      fetchUtilsData();
+    fetchUtilsData();
   }, []);
 
   return (
@@ -47,19 +58,23 @@ const CardDetenteur = ({ holder }: any) => {
             <Avatar
               sx={{ width: 80, height: 80 }}
               alt="Remy Sharp"
-              src={process.env.NEXT_PUBLIC_API_URL + holder?.photoURL}
+              src={
+                process.env.NEXT_PUBLIC_API_URL +
+                total.find((e) => e.id == holder?.name)?.img
+              }
             />
           </CardImg>
-          <CardDesc sx={{justifyContent: "space-between"}}>
+          <CardDesc sx={{ justifyContent: "space-between" }}>
             <Typography variant="h6" color="initial">
               {total.find((e) => e.id == holder?.name)?.name}
             </Typography>
-            <Typography variant="body2" color={palette.accent.main}>
+            {/* <Typography variant="body2" color={palette.accent.main}>
               {holder?.matricule}
-            </Typography>
+            </Typography> */}
             <Typography variant="caption" color={theme.palette.grey[600]}>
               {holder?.function}
-            </Typography><br></br>
+            </Typography>
+            <br></br>
             <Typography variant="caption" color={theme.palette.grey[600]}>
               {holder?.contact}
             </Typography>

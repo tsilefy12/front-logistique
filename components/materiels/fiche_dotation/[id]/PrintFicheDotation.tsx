@@ -25,6 +25,7 @@ function PrintFicheDotation({ pdfData }: { pdfData: any }) {
     );
     setPersone(data);
   }, [pdfData]);
+  console.log("personne", personne);
   return (
     <Document>
       <Page style={{ padding: 15 }} orientation="landscape">

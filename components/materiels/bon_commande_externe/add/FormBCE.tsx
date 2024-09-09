@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, FormikProps } from "formik";
 import { getInterns } from "../../../../redux/features/employeStagiaire/stagiaireSlice";
 import { getEmployees } from "../../../../redux/features/employeStagiaire/employeeSlice";
@@ -37,6 +37,7 @@ import { getBudgetLineList } from "../../../../redux/features/grant_ligneBudgét
 import useFetchModePaiementList from "../../../configurations/mode-paiement/hooks/useFetchUniteStock";
 import useFetchPrestataire from "../hooks/getPrestataire";
 import { cancelEdit } from "../../../../redux/features/bon_commande_externe/articleBCESlice";
+import useFetchWorkPlace from "../hooks/useFetchWorkPlace";
 
 const FormBCE = ({
   formikProps,
@@ -62,16 +63,22 @@ const FormBCE = ({
   const { prestataireListe } = useAppSelector(
     (state: any) => state.prestataire
   );
+  const { workplaces } = useAppSelector((state) => state.workplace);
+  const fetchWorkPlace = useFetchWorkPlace();
+  const [getId, setId] = useState<any>("");
   useEffect(() => {
+    fetchWorkPlace();
     fetchModePaiementList();
     fetchPrestataire();
   }, []);
+  console.log(formikProps.values.demandeur);
   const total = [
     ...employees.map((i: any) => {
       return {
         id: i.id,
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "employe",
+        lieuTravail: i.workplaceId,
       };
     }),
     ...interns.map((i: any) => {
@@ -79,6 +86,7 @@ const FormBCE = ({
         id: i.id,
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "intern",
+        lieuTravail: i.workplaceId,
       };
     }),
     ...prestataireListe.map((i: any) => {
@@ -86,6 +94,7 @@ const FormBCE = ({
         id: i.id,
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "prestataire",
+        lieuTravail: i.workplaceId,
       };
     }),
   ];
@@ -122,6 +131,16 @@ const FormBCE = ({
       );
     }
   }, [formikProps.values.grant]);
+  useEffect(() => {
+    const demandeur = total.find(
+      (e: any) => e.id === formikProps.values.demandeur
+    )?.lieuTravail;
+    if (demandeur) {
+      const lieuTravail = workplaces.find((e: any) => e.id === demandeur)?.name;
+
+      console.log("Lieu de travail :", lieuTravail);
+    }
+  }, [formikProps.values.demandeur, total, workplaces]);
 
   return (
     <Form>
@@ -222,6 +241,7 @@ const FormBCE = ({
               options={total}
               dataKey={["name"]}
               valueKey="id"
+              onChange={(e: any) => setId(e.target.value)}
             />
           </FormControl>
           <FormControl fullWidth>

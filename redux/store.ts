@@ -57,6 +57,7 @@ import { ModePaiementSlice } from "./features/configuration/modePaiementSlice";
 import { prestataireSlice } from "./features/prestataire/prestataireSlice";
 import { LocalisationSlice } from "./features/configuration/localisationSlice";
 import { lineBudgetSlice } from "./features/lineBudget/lineBudgetSlice";
+import { workplaceSlice } from "./features/workplace/workplaceSlice";
 
 export const store = configureStore({
   reducer: {
@@ -119,6 +120,7 @@ export const store = configureStore({
     prestataire: prestataireSlice.reducer,
     localisation: LocalisationSlice.reducer,
     ligneBudget: lineBudgetSlice.reducer,
+    workplace: workplaceSlice.reducer,
   },
 });
 

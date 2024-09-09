@@ -459,11 +459,11 @@ const FormPv = ({
                   <TableCell align="left">
                     <FormControl fullWidth>
                       <OSSelectField
-                        id="designation"
-                        label="Designation"
-                        name="designation"
-                        options={total}
-                        dataKey={["name", "type"]}
+                        id="outlined-basic"
+                        label="Matériel"
+                        name="materiel"
+                        options={materiel}
+                        dataKey={["designation"]}
                         valueKey="id"
                         type="text"
                       />

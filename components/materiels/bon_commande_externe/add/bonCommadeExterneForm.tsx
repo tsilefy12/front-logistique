@@ -25,7 +25,7 @@ export default function BonCommandeExterneForm() {
   const { isEditing, bonCommandeExterne } = useAppSelector(
     (state) => state.bonCommendeExterne
   );
-
+  
   const handleSubmit = async (values: any) => {
     try {
       if (isEditing) {
@@ -105,10 +105,10 @@ export default function BonCommandeExterneForm() {
             pu: 0,
             quantite: 0,
           }}
-          validationSchema={Yup.object({
-            ref: Yup.string().required("Champ obligatoire"),
-            objet: Yup.string().required("Champ obligatoire"),
-          })}
+          // validationSchema={Yup.object({
+          //   ref: Yup.string().required("Champ obligatoire"),
+          //   objet: Yup.string().required("Champ obligatoire"),
+          // })}
           onSubmit={(value: any, action: any) => {
             handleSubmit(value);
             action.resetForm();

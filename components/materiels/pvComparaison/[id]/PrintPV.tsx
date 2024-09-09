@@ -366,6 +366,9 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     paddingVertical: 2,
     height: 62,
+    display: "flex",
+    flexDirection: "column",
+    flexWrap: "wrap",
   },
 });
 export default function PDFButton({ data }: { data: PvComparaisonItem }) {

@@ -13,12 +13,16 @@ import {
 import { format } from "date-fns";
 import { CommandeFournisseurItem } from "../../../../redux/features/bon_commande_fournisseur/bonCommandeFournisseur.interface";
 import formatMontant from "../../../../hooks/format";
+// @ts-ignore
+import { NumberToLetter } from "convertir-nombre-lettre";
 
 function PrintBonCommandeFournisseur({ pdfData }: { pdfData: any }) {
   const montantTotal = pdfData.articleFournisseur?.reduce(
     (acc: any, curr: any) => acc + curr.montant,
     0
   );
+  const amountWords = montantTotal ? NumberToLetter(montantTotal) : "";
+  console.log(NumberToLetter(4194945));
   return (
     <Document>
       <Page style={{ padding: 15 }} orientation="portrait">
@@ -132,11 +136,11 @@ function PrintBonCommandeFournisseur({ pdfData }: { pdfData: any }) {
                   </Text>
                   <Text style={styles.tr1}>{element?.details}</Text>
                   <Text style={styles.tr}>
-                    {formatMontant(element?.unitPrice)} Ar
+                    {formatMontant(element?.unitPrice)}
                   </Text>
                   <Text style={styles.tr2}>{element?.quantite}</Text>
                   <Text style={styles.tr}>
-                    {formatMontant(element?.montant)} Ar
+                    {formatMontant(element?.montant)}
                   </Text>
                 </View>
               </View>
@@ -165,6 +169,14 @@ function PrintBonCommandeFournisseur({ pdfData }: { pdfData: any }) {
               ]}
             >
               {formatMontant(montantTotal)} Ar
+            </Text>
+          </View>
+        </View>
+        <View style={{ width: "100%" }}>
+          <View style={[styles.rowBody]}>
+            <Text style={{ fontSize: 12, padding: 2 }}>Soit :</Text>
+            <Text style={{ fontSize: 12, padding: 2 }}>
+              {amountWords} Ariary
             </Text>
           </View>
         </View>
