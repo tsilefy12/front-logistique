@@ -196,7 +196,10 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                 display: "flex",
                 alignItems: "center",
                 padding: 20,
+                paddingLeft: 10,
+                textAlign: "center",
                 borderTop: "none",
+                paddingTop: 20,
               }}
             >
               Date et signature
@@ -206,33 +209,32 @@ function PrintBCI({ pdfData }: { pdfData: any }) {
                 ...styles.row2Cadre,
                 display: "flex",
                 flexDirection: "column",
+                alignItems: "center",
               }}
             >
               <Text style={{ marginBottom: 10 }}>{pdfData.demandeur}</Text>
-              <Text>............</Text>
             </Text>
             <Text
               style={{
                 ...styles.row2Cadre,
                 display: "flex",
                 flexDirection: "column",
+                alignItems: "center",
               }}
             >
               <Text style={{ marginBottom: 10 }}>{pdfData.techVerify}</Text>
-              <Text>............</Text>
             </Text>
             <Text
               style={{
                 ...styles.row2Cadre,
                 display: "flex",
                 flexDirection: "column",
-                flexWrap: "wrap",
+                alignItems: "center",
               }}
             >
               <Text style={{ marginBottom: 10 }}>
                 {pdfData.financilaVerify}
               </Text>
-              <Text>............</Text>
             </Text>
             <Text style={styles.row2Cadre}></Text>
           </View>

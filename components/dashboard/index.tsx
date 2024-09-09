@@ -2,7 +2,7 @@ import { Card, Stack } from "@mui/material";
 import HeaderDashboard from "./header";
 import CercleChart from "./cercleChart";
 import useFetchSuplyAndConsumableList from "../supply-and-consumable/entreSortie/hooks/useFetchSupplyAndConsumables";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import DemiCercleChart from "./demiCercle";
 import useFetchVendors from "../vendor/hooks/useFetchVendors";
@@ -19,6 +19,10 @@ import {
   DirectionsCarOutlined,
   DirectionsBoatOutlined,
 } from "@mui/icons-material";
+import useFetchLocationDeTransport from "../materiel_de_transport/location/hooks/useFetchLocationDeTransport";
+import useFetchGrant from "../materiel_de_transport/suivi_carburant/hooks/useFetchGrant";
+import formatMontant from "../../hooks/format";
+import useFetchMissionTransport from "../materiel_de_transport/mission/hooks/useFectMission";
 
 const Dashboard = () => {
   const { suplyAndConsumableList } = useAppSelector(
@@ -43,13 +47,25 @@ const Dashboard = () => {
   const [statusCounts, setStatusCounts] = useState<{ [key: string]: number }>(
     {}
   );
+  const { locationDeTransports } = useAppSelector(
+    (state) => state.locationDeTransport
+  );
+  const fetchLocationTransport = useFetchLocationDeTransport();
   const menu = allMenu();
-
+  const fetchGrant = useFetchGrant();
+  const { grantList } = useAppSelector((state) => state.grant);
+  const { missionTransports } = useAppSelector(
+    (state) => state.missionDeTransport
+  );
+  const fetchMissionTransport = useFetchMissionTransport();
   useEffect(() => {
     fetchSuplyAndConsumableList();
     fetchVendors();
     fetchTypeEquipment();
     fetchEquipment();
+    fetchLocationTransport();
+    fetchGrant();
+    fetchMissionTransport();
   }, []);
 
   useEffect(() => {
@@ -77,7 +93,39 @@ const Dashboard = () => {
 
     setNomUtilisateur(user?.name || "");
   }, [suplyAndConsumableList, equipments, user]);
+  const [locationExter, setLocationExter] = useState<any[]>([]);
 
+  useEffect(() => {
+    const grantSums = locationDeTransports.reduce((acc: any, item: any) => {
+      if (item.grant) {
+        if (!acc[item.grant]) {
+          acc[item.grant] = { grant: item.grant, montant: 0 };
+        }
+        acc[item.grant].montant += item.montant;
+      }
+      return acc;
+    }, {});
+
+    const groupedList = Object.values(grantSums);
+    setLocationExter(groupedList);
+  }, [locationDeTransports]);
+
+  const [locationInterne, setLocationInterne] = useState<any[]>([]);
+
+  useEffect(() => {
+    const grantSums = missionTransports.reduce((acc: any, item: any) => {
+      if (item.grant) {
+        if (!acc[item.grant]) {
+          acc[item.grant] = { grant: item.grant, montant: 0 };
+        }
+        acc[item.grant].montant += item.montant;
+      }
+      return acc;
+    }, {});
+
+    const groupedList = Object.values(grantSums);
+    setLocationInterne(groupedList);
+  }, [missionTransports]);
   return (
     <Stack direction="column" sx={{ backgroundColor: "#EFF2E80A" }}>
       <HeaderDashboard />
@@ -416,6 +464,146 @@ const Dashboard = () => {
                 </Card>
               </Stack>
             </Stack>
+          </Stack>
+          <Stack
+            direction={"row"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+            padding={2}
+            gap={4}
+          >
+            <Card
+              sx={{
+                ...styleCard,
+                width: "50%",
+                justifyContent: "flex-start",
+                alignItems: "start",
+                overflow: "auto",
+                minHeight: "100%",
+                maxHeight: "100%",
+                gap: 1,
+                backgroundColor: "#A4C754",
+              }}
+            >
+              <Stack>
+                <p style={{ textAlign: "center", fontWeight: "bold" }}>
+                  Liste par Grant des locations externes
+                </p>
+              </Stack>
+              <Stack
+                direction={"row"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+                width={"100%"}
+                paddingLeft={2}
+                paddingRight={2}
+                borderBottom={"2px solid #000000"}
+              >
+                <span>Grant</span>
+                <span>Montant</span>
+              </Stack>
+              <Stack
+                sx={{
+                  ...styleCard,
+                  justifyContent: "flex-start",
+                  alignItems: "start",
+                  width: "100%",
+                  border: "none",
+                  paddingLeft: 2, // Fixed paddingLeft typo
+                  paddingRight: 2,
+                  paddingTop: 0,
+                  paddingBottom: 2,
+                  gap: 1,
+                }}
+              >
+                {locationExter.map((i) => (
+                  <Stack key={i.id} direction={"column"} sx={{ width: "100%" }}>
+                    <Stack
+                      direction={"row"}
+                      alignItems={"center"}
+                      justifyContent={"space-between"}
+                      sx={{ width: "100%" }}
+                    >
+                      <p>{grantList.find((e) => e.id === i.grant)?.code}</p>
+                      <p
+                        style={{
+                          color: "black",
+                          paddingRight: 4,
+                        }}
+                      >
+                        {formatMontant(i.montant)}
+                      </p>
+                    </Stack>
+                  </Stack>
+                ))}
+              </Stack>
+            </Card>
+            <Card
+              sx={{
+                ...styleCard,
+                width: "50%",
+                justifyContent: "flex-start",
+                alignItems: "start",
+                overflow: "auto",
+                minHeight: "100%",
+                maxHeight: "100%",
+                gap: 1,
+                backgroundColor: "#A4C754",
+              }}
+            >
+              <Stack>
+                <p style={{ textAlign: "center", fontWeight: "bold" }}>
+                  Liste par Grant des locations internes
+                </p>
+              </Stack>
+              <Stack
+                direction={"row"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+                width={"100%"}
+                paddingLeft={2}
+                paddingRight={2}
+                borderBottom={"2px solid #000000"}
+              >
+                <span>Grant</span>
+                <span>Montant</span>
+              </Stack>
+              <Stack
+                sx={{
+                  ...styleCard,
+                  justifyContent: "flex-start",
+                  alignItems: "start",
+                  width: "100%",
+                  border: "none",
+                  paddingLeft: 2,
+                  paddingRight: 2,
+                  paddingTop: 0,
+                  paddingBottom: 2,
+                  gap: 1,
+                }}
+              >
+                {locationInterne.map((i) => (
+                  <Stack key={i.id} direction={"column"} sx={{ width: "100%" }}>
+                    <Stack
+                      direction={"row"}
+                      alignItems={"center"}
+                      justifyContent={"space-between"}
+                      sx={{ width: "100%" }}
+                    >
+                      <p>{grantList.find((e) => e.id === i.grant)?.code}</p>
+                      <p
+                        style={{
+                          color: "black",
+                          paddingRight: 4,
+                        }}
+                      >
+                        {formatMontant(i.montant)}
+                      </p>
+                    </Stack>
+                  </Stack>
+                ))}
+              </Stack>
+            </Card>
           </Stack>
         </Stack>
       </Card>
