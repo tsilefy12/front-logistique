@@ -143,37 +143,33 @@ const FormBonTransfert = ({
     { id: "Don", name: "Don" },
     { id: "Autre", name: "Autre" },
   ];
-  useEffect(() => {
-    const expediteur = total.find(
-      (e: any) => e.id === formikProps.values.expediteur
-    )?.lieuTravail;
-    if (expediteur) {
-      const lieuTravail = workplaces.find(
-        (e: any) => e.id === expediteur
-      )?.name;
-      let referenceTana = "BCT/TNR-001";
-      let referenceDiego = "BCT/DS-001";
-      let referenceAmbatondrazaka = "BCT/AZK-001";
-      let referenceMoramanga = "BCT/MRG-001";
-      let referenceMorondava = "BCT/MRD-001";
-      if (lieuTravail === "Antananarivo" || lieuTravail === "Tana") {
-        formikProps.setFieldValue("reference", referenceTana);
-      } else if (lieuTravail === "Diego Garcia") {
-        formikProps.setFieldValue("reference", referenceDiego);
-      } else if (lieuTravail === "Ambatondrazaka") {
-        formikProps.setFieldValue("reference", referenceAmbatondrazaka);
-      } else if (lieuTravail === "Morondava") {
-        formikProps.setFieldValue("reference", referenceMorondava);
-      } else if (lieuTravail === "Mormanga") {
-        formikProps.setFieldValue("reference", referenceMoramanga);
-      } else {
-        formikProps.setFieldValue(
-          "reference",
-          `BCT/${lieuTravail!.slice(0, 3)}-001`
-        );
-      }
+  const expediteur = total.find(
+    (e: any) => e.id === formikProps.values.expediteur
+  )?.lieuTravail;
+  if (expediteur) {
+    const lieuTravail = workplaces.find((e: any) => e.id === expediteur)?.name;
+    let referenceTana = "BCT/TNR-001";
+    let referenceDiego = "BCT/DS-001";
+    let referenceAmbatondrazaka = "BCT/AZK-001";
+    let referenceMoramanga = "BCT/MRG-001";
+    let referenceMorondava = "BCT/MRD-001";
+    if (lieuTravail === "Antananarivo" || lieuTravail === "Tana") {
+      formikProps.setFieldValue("reference", referenceTana);
+    } else if (lieuTravail === "Diego Garcia") {
+      formikProps.setFieldValue("reference", referenceDiego);
+    } else if (lieuTravail === "Ambatondrazaka") {
+      formikProps.setFieldValue("reference", referenceAmbatondrazaka);
+    } else if (lieuTravail === "Morondava") {
+      formikProps.setFieldValue("reference", referenceMorondava);
+    } else if (lieuTravail === "Mormanga") {
+      formikProps.setFieldValue("reference", referenceMoramanga);
+    } else {
+      formikProps.setFieldValue(
+        "reference",
+        `BCT/${lieuTravail!.slice(0, 3)}-001`
+      );
     }
-  }, [formikProps.values.expediteur, total, workplaces]);
+  }
   return (
     <Form>
       <NavigationContainer>

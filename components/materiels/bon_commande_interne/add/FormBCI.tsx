@@ -66,6 +66,20 @@ const FormBCI = ({
   );
   const { workplaces } = useAppSelector((state) => state.workplace);
   const fetchWorkPlace = useFetchWorkPlace();
+
+  const fetchUtilsData = () => {
+    dispatch(getInterns({}));
+    dispatch(getEmployees({}));
+    dispatch(getFournisseurList({}));
+    fetchPrestataire();
+    dispatch(getGrantList({}));
+    dispatch(getPrograms({}));
+    fetchWorkPlace();
+  };
+
+  useEffect(() => {
+    fetchUtilsData();
+  }, []);
   const total = [
     ...employees.map((i: any) => {
       return {
@@ -93,20 +107,6 @@ const FormBCI = ({
     }),
   ];
 
-  const fetchUtilsData = () => {
-    dispatch(getInterns({}));
-    dispatch(getEmployees({}));
-    dispatch(getFournisseurList({}));
-    dispatch(getGrantList({}));
-    dispatch(getPrograms({}));
-  };
-
-  useEffect(() => {
-    fetchUtilsData();
-    fetchPrestataire();
-    fetchWorkPlace();
-  }, []);
-
   useEffect(() => {
     if (formikProps.values.demandeur) {
       const Val: any = total.find(
@@ -130,35 +130,33 @@ const FormBCI = ({
     }
   }, [formikProps.values.grant]);
 
-  useEffect(() => {
-    const demandeur = total.find(
-      (e: any) => e.id === formikProps.values.demandeur
-    )?.lieuTravail;
-    if (demandeur) {
-      const lieuTravail = workplaces.find((e: any) => e.id === demandeur)?.name;
-      let referenceTana = "BCI/TNR-001";
-      let referenceDiego = "BCI/DS-001";
-      let referenceAmbatondrazaka = "BCI/AZK-001";
-      let referenceMoramanga = "BCI/MRG-001";
-      let referenceMorondava = "BCI/MRD-001";
-      if (lieuTravail === "Antananarivo" || lieuTravail === "Tana") {
-        formikProps.setFieldValue("reference", referenceTana);
-      } else if (lieuTravail === "Diego Garcia") {
-        formikProps.setFieldValue("reference", referenceDiego);
-      } else if (lieuTravail === "Ambatondrazaka") {
-        formikProps.setFieldValue("reference", referenceAmbatondrazaka);
-      } else if (lieuTravail === "Morondava") {
-        formikProps.setFieldValue("reference", referenceMorondava);
-      } else if (lieuTravail === "Mormanga") {
-        formikProps.setFieldValue("reference", referenceMoramanga);
-      } else {
-        formikProps.setFieldValue(
-          "reference",
-          `BCI/${lieuTravail!.slice(0, 3)}-001`
-        );
-      }
+  const demandeur = total.find(
+    (e: any) => e.id === formikProps.values.demandeur
+  )?.lieuTravail;
+  if (demandeur) {
+    const lieuTravail = workplaces.find((e: any) => e.id === demandeur)?.name;
+    let referenceTana = "BCI/TNR-001";
+    let referenceDiego = "BCI/DS-001";
+    let referenceAmbatondrazaka = "BCI/AZK-001";
+    let referenceMoramanga = "BCI/MRG-001";
+    let referenceMorondava = "BCI/MRD-001";
+    if (lieuTravail === "Antananarivo" || lieuTravail === "Tana") {
+      formikProps.setFieldValue("reference", referenceTana);
+    } else if (lieuTravail === "Diego Garcia") {
+      formikProps.setFieldValue("reference", referenceDiego);
+    } else if (lieuTravail === "Ambatondrazaka") {
+      formikProps.setFieldValue("reference", referenceAmbatondrazaka);
+    } else if (lieuTravail === "Morondava") {
+      formikProps.setFieldValue("reference", referenceMorondava);
+    } else if (lieuTravail === "Mormanga") {
+      formikProps.setFieldValue("reference", referenceMoramanga);
+    } else {
+      formikProps.setFieldValue(
+        "reference",
+        `BCI/${lieuTravail!.slice(0, 3)}-001`
+      );
     }
-  }, [formikProps.values.demandeur, total, workplaces]);
+  }
   return (
     <Form>
       <NavigationContainer>

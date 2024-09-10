@@ -105,9 +105,9 @@ const FormBonReception = ({
           prev = Val.payload.articleCommandeBce;
           return prev;
         });
-        formikProps.setFieldValue("reference", response?.ref);
+        formikProps.setFieldValue("reference", response?.name);
       } else {
-        formikProps.setFieldValue("reference", response?.reference);
+        formikProps.setFieldValue("reference", response?.name);
         const Val = await dispatch(
           getBonCommandeInterne({
             id,

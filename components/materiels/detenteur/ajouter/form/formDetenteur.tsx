@@ -140,35 +140,33 @@ const FormDetenteur = ({
     }
   }, [formikProps.values.name]);
 
-  useEffect(() => {
-    const name = total.find(
-      (e: any) => e.id === formikProps.values.name
-    )?.lieuTravail;
-    if (name) {
-      const lieuTravail = workplaces.find((e: any) => e.id === name)?.name;
-      let referenceTana = "DEM/TNR-001";
-      let referenceDiego = "DEM/DS-001";
-      let referenceAmbatondrazaka = "BCI/AZK-001";
-      let referenceMoramanga = "DEM/MRG-001";
-      let referenceMorondava = "DEM/MRD-001";
-      if (lieuTravail === "Antananarivo" || lieuTravail === "Tana") {
-        formikProps.setFieldValue("reference", referenceTana);
-      } else if (lieuTravail === "Diego Garcia") {
-        formikProps.setFieldValue("reference", referenceDiego);
-      } else if (lieuTravail === "Ambatondrazaka") {
-        formikProps.setFieldValue("reference", referenceAmbatondrazaka);
-      } else if (lieuTravail === "Morondava") {
-        formikProps.setFieldValue("reference", referenceMorondava);
-      } else if (lieuTravail === "Mormanga") {
-        formikProps.setFieldValue("reference", referenceMoramanga);
-      } else {
-        formikProps.setFieldValue(
-          "reference",
-          `DEM/${lieuTravail!.slice(0, 3)}-001`
-        );
-      }
+  const name = total.find(
+    (e: any) => e.id === formikProps.values.name
+  )?.lieuTravail;
+  if (name) {
+    const lieuTravail = workplaces.find((e: any) => e.id === name)?.name;
+    let referenceTana = "DEM/TNR-001";
+    let referenceDiego = "DEM/DS-001";
+    let referenceAmbatondrazaka = "BCI/AZK-001";
+    let referenceMoramanga = "DEM/MRG-001";
+    let referenceMorondava = "DEM/MRD-001";
+    if (lieuTravail === "Antananarivo" || lieuTravail === "Tana") {
+      formikProps.setFieldValue("reference", referenceTana);
+    } else if (lieuTravail === "Diego Garcia") {
+      formikProps.setFieldValue("reference", referenceDiego);
+    } else if (lieuTravail === "Ambatondrazaka") {
+      formikProps.setFieldValue("reference", referenceAmbatondrazaka);
+    } else if (lieuTravail === "Morondava") {
+      formikProps.setFieldValue("reference", referenceMorondava);
+    } else if (lieuTravail === "Mormanga") {
+      formikProps.setFieldValue("reference", referenceMoramanga);
+    } else {
+      formikProps.setFieldValue(
+        "reference",
+        `DEM/${lieuTravail!.slice(0, 3)}-001`
+      );
     }
-  }, [formikProps.values.name, total, workplaces]);
+  }
 
   return (
     <Form>
