@@ -64,33 +64,36 @@ const FormDetenteur = ({
   const fetchWorkPlace = useFetchWorkPlace();
   const total = [
     ...employees.map((i: any) => {
+      const lieuTravail =
+        workplaces.find((e: any) => e.id === i.workplaceId)?.name ||
+        "Non spécifié";
       return {
         id: i.id,
-        matricule: i.matricule,
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "employe",
-        contact: i.phone,
-        lieuTravail: i.workplaceId,
+        lieuTravail: lieuTravail,
       };
     }),
     ...interns.map((i: any) => {
+      const lieuTravail =
+        workplaces.find((e: any) => e.id === i.workplaceId)?.name ||
+        "Non spécifié";
       return {
         id: i.id,
-        matricule: i.matricule,
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "intern",
-        contact: i.phone,
-        lieuTravail: i.workplaceId,
+        lieuTravail: lieuTravail,
       };
     }),
     ...prestataireListe.map((i: any) => {
+      const lieuTravail =
+        workplaces.find((e: any) => e.id === i.workplaceId)?.name ||
+        "Non spécifié";
       return {
         id: i.id,
-        matricule: i.matricule,
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "prestataire",
-        contact: i.phone,
-        lieuTravail: i.workplaceId,
+        lieuTravail: lieuTravail,
       };
     }),
   ];
@@ -140,33 +143,35 @@ const FormDetenteur = ({
     }
   }, [formikProps.values.name]);
 
-  const name = total.find(
-    (e: any) => e.id === formikProps.values.name
-  )?.lieuTravail;
-  if (name) {
-    const lieuTravail = workplaces.find((e: any) => e.id === name)?.name;
-    let referenceTana = "DEM/TNR-001";
-    let referenceDiego = "DEM/DS-001";
-    let referenceAmbatondrazaka = "BCI/AZK-001";
-    let referenceMoramanga = "DEM/MRG-001";
-    let referenceMorondava = "DEM/MRD-001";
-    if (lieuTravail === "Antananarivo" || lieuTravail === "Tana") {
-      formikProps.setFieldValue("reference", referenceTana);
-    } else if (lieuTravail === "Diego Garcia") {
-      formikProps.setFieldValue("reference", referenceDiego);
-    } else if (lieuTravail === "Ambatondrazaka") {
-      formikProps.setFieldValue("reference", referenceAmbatondrazaka);
-    } else if (lieuTravail === "Morondava") {
-      formikProps.setFieldValue("reference", referenceMorondava);
-    } else if (lieuTravail === "Mormanga") {
-      formikProps.setFieldValue("reference", referenceMoramanga);
+  useEffect(() => {
+    const lieu: any = total.find(
+      (e: any) => e.id === formikProps.values.name
+    )?.lieuTravail;
+
+    const referenceTana = "DEM/TNR-001";
+    const referenceDiego = "DEM/DS-001";
+    const referenceAmbatondrazaka = "DEM/AZK-001";
+    const referenceMoramanga = "DEM/MRG-001";
+    const referenceMorondava = "DEM/MRD-001";
+
+    if (lieu) {
+      if (lieu === "Antananarivo" || lieu === "Tana") {
+        formikProps.setFieldValue("ref", referenceTana);
+      } else if (lieu === "Diego Garcia") {
+        formikProps.setFieldValue("ref", referenceDiego);
+      } else if (lieu === "Ambatondrazaka") {
+        formikProps.setFieldValue("ref", referenceAmbatondrazaka);
+      } else if (lieu === "Morondava") {
+        formikProps.setFieldValue("ref", referenceMorondava);
+      } else if (lieu === "Moramanga") {
+        formikProps.setFieldValue("ref", referenceMoramanga);
+      } else {
+        formikProps.setFieldValue("ref", `DEM/${lieu.slice(0, 3)}-001`);
+      }
     } else {
-      formikProps.setFieldValue(
-        "reference",
-        `DEM/${lieuTravail!.slice(0, 3)}-001`
-      );
+      formikProps.setFieldValue("ref", "DEM/UNKNOWN");
     }
-  }
+  }, [formikProps.values.expediteur]);
 
   return (
     <Form>

@@ -76,27 +76,36 @@ const FormBonTransfert = ({
   const fetchBonCommandeInterne = useFetchBonCommandeInterne();
   const total = [
     ...employees.map((i: any) => {
+      const lieuTravail =
+        workplaces.find((e: any) => e.id === i.workplaceId)?.name ||
+        "Non spécifié";
       return {
         id: i.id,
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "employe",
-        lieuTravail: i.workplaceId,
+        lieuTravail: lieuTravail,
       };
     }),
     ...interns.map((i: any) => {
+      const lieuTravail =
+        workplaces.find((e: any) => e.id === i.workplaceId)?.name ||
+        "Non spécifié";
       return {
         id: i.id,
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "intern",
-        lieuTravail: i.workplaceId,
+        lieuTravail: lieuTravail,
       };
     }),
     ...prestataireListe.map((i: any) => {
+      const lieuTravail =
+        workplaces.find((e: any) => e.id === i.workplaceId)?.name ||
+        "Non spécifié";
       return {
         id: i.id,
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "prestataire",
-        lieuTravail: i.workplaceId,
+        lieuTravail: lieuTravail,
       };
     }),
   ];
@@ -143,33 +152,35 @@ const FormBonTransfert = ({
     { id: "Don", name: "Don" },
     { id: "Autre", name: "Autre" },
   ];
-  const expediteur = total.find(
-    (e: any) => e.id === formikProps.values.expediteur
-  )?.lieuTravail;
-  if (expediteur) {
-    const lieuTravail = workplaces.find((e: any) => e.id === expediteur)?.name;
-    let referenceTana = "BCT/TNR-001";
-    let referenceDiego = "BCT/DS-001";
-    let referenceAmbatondrazaka = "BCT/AZK-001";
-    let referenceMoramanga = "BCT/MRG-001";
-    let referenceMorondava = "BCT/MRD-001";
-    if (lieuTravail === "Antananarivo" || lieuTravail === "Tana") {
-      formikProps.setFieldValue("reference", referenceTana);
-    } else if (lieuTravail === "Diego Garcia") {
-      formikProps.setFieldValue("reference", referenceDiego);
-    } else if (lieuTravail === "Ambatondrazaka") {
-      formikProps.setFieldValue("reference", referenceAmbatondrazaka);
-    } else if (lieuTravail === "Morondava") {
-      formikProps.setFieldValue("reference", referenceMorondava);
-    } else if (lieuTravail === "Mormanga") {
-      formikProps.setFieldValue("reference", referenceMoramanga);
+  useEffect(() => {
+    const lieu: any = total.find(
+      (e: any) => e.id === formikProps.values.expediteur
+    )?.lieuTravail;
+
+    const referenceTana = "BCT/TNR-001";
+    const referenceDiego = "BCT/DS-001";
+    const referenceAmbatondrazaka = "BCT/AZK-001";
+    const referenceMoramanga = "BCT/MRG-001";
+    const referenceMorondava = "BCT/MRD-001";
+
+    if (lieu) {
+      if (lieu === "Antananarivo" || lieu === "Tana") {
+        formikProps.setFieldValue("ref", referenceTana);
+      } else if (lieu === "Diego Garcia") {
+        formikProps.setFieldValue("ref", referenceDiego);
+      } else if (lieu === "Ambatondrazaka") {
+        formikProps.setFieldValue("ref", referenceAmbatondrazaka);
+      } else if (lieu === "Morondava") {
+        formikProps.setFieldValue("ref", referenceMorondava);
+      } else if (lieu === "Moramanga") {
+        formikProps.setFieldValue("ref", referenceMoramanga);
+      } else {
+        formikProps.setFieldValue("ref", `BCT/${lieu.slice(0, 3)}-001`);
+      }
     } else {
-      formikProps.setFieldValue(
-        "reference",
-        `BCT/${lieuTravail!.slice(0, 3)}-001`
-      );
+      formikProps.setFieldValue("ref", "BCT/UNKNOWN");
     }
-  }
+  }, [formikProps.values.expediteur]);
   return (
     <Form>
       <NavigationContainer>
