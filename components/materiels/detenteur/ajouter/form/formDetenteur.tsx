@@ -73,6 +73,7 @@ const FormDetenteur = ({
         type: "employe",
         lieuTravail: lieuTravail,
         contact: i.phone,
+        matricule: i.matricule,
       };
     }),
     ...interns.map((i: any) => {
@@ -85,6 +86,7 @@ const FormDetenteur = ({
         type: "intern",
         lieuTravail: lieuTravail,
         contact: i.phone,
+        matricule: i.matricule,
       };
     }),
     ...prestataireListe.map((i: any) => {
@@ -97,6 +99,7 @@ const FormDetenteur = ({
         type: "prestataire",
         lieuTravail: lieuTravail,
         contact: i.phone,
+        matricule: i.matricule,
       };
     }),
   ];
