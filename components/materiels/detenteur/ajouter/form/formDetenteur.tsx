@@ -156,20 +156,20 @@ const FormDetenteur = ({
 
     if (lieu) {
       if (lieu === "Antananarivo" || lieu === "Tana") {
-        formikProps.setFieldValue("ref", referenceTana);
+        formikProps.setFieldValue("reference", referenceTana);
       } else if (lieu === "Diego Garcia") {
-        formikProps.setFieldValue("ref", referenceDiego);
+        formikProps.setFieldValue("reference", referenceDiego);
       } else if (lieu === "Ambatondrazaka") {
-        formikProps.setFieldValue("ref", referenceAmbatondrazaka);
+        formikProps.setFieldValue("reference", referenceAmbatondrazaka);
       } else if (lieu === "Morondava") {
-        formikProps.setFieldValue("ref", referenceMorondava);
+        formikProps.setFieldValue("reference", referenceMorondava);
       } else if (lieu === "Moramanga") {
-        formikProps.setFieldValue("ref", referenceMoramanga);
+        formikProps.setFieldValue("reference", referenceMoramanga);
       } else {
-        formikProps.setFieldValue("ref", `DEM/${lieu.slice(0, 3)}-001`);
+        formikProps.setFieldValue("reference", `DEM/${lieu.slice(0, 3)}-001`);
       }
     } else {
-      formikProps.setFieldValue("ref", "DEM/UNKNOWN");
+      formikProps.setFieldValue("reference", "");
     }
   }, [formikProps.values.expediteur]);
 
@@ -220,6 +220,7 @@ const FormDetenteur = ({
           id="outlined-basic"
           label="Réference"
           name="reference"
+          value={formikProps.values.reference}
           variant="outlined"
         />
 

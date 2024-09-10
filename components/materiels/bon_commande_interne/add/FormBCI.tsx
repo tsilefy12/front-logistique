@@ -152,20 +152,20 @@ const FormBCI = ({
 
     if (lieu) {
       if (lieu === "Antananarivo" || lieu === "Tana") {
-        formikProps.setFieldValue("ref", referenceTana);
+        formikProps.setFieldValue("reference", referenceTana);
       } else if (lieu === "Diego Garcia") {
-        formikProps.setFieldValue("ref", referenceDiego);
+        formikProps.setFieldValue("reference", referenceDiego);
       } else if (lieu === "Ambatondrazaka") {
-        formikProps.setFieldValue("ref", referenceAmbatondrazaka);
+        formikProps.setFieldValue("reference", referenceAmbatondrazaka);
       } else if (lieu === "Morondava") {
-        formikProps.setFieldValue("ref", referenceMorondava);
+        formikProps.setFieldValue("reference", referenceMorondava);
       } else if (lieu === "Moramanga") {
-        formikProps.setFieldValue("ref", referenceMoramanga);
+        formikProps.setFieldValue("reference", referenceMoramanga);
       } else {
-        formikProps.setFieldValue("ref", `BCI/${lieu.slice(0, 3)}-001`);
+        formikProps.setFieldValue("reference", `BCI/${lieu.slice(0, 3)}-001`);
       }
     } else {
-      formikProps.setFieldValue("ref", "BCI/UNKNOWN");
+      formikProps.setFieldValue("reference", "");
     }
   }, [formikProps.values.demandeur]);
   return (
@@ -239,6 +239,7 @@ const FormBCI = ({
               id="outlined-basic"
               variant="outlined"
               label="Référence"
+              value={formikProps.values.reference}
               name="reference"
             />
           </FormControl>

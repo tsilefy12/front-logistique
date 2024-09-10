@@ -170,7 +170,7 @@ const FormBCE = ({
         formikProps.setFieldValue("ref", `BCE/${lieu.slice(0, 3)}-001`);
       }
     } else {
-      formikProps.setFieldValue("ref", "BCE/UNKNOWN");
+      formikProps.setFieldValue("ref", "");
     }
   }, [formikProps.values.demandeur]);
 
