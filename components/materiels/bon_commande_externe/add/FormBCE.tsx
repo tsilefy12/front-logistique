@@ -138,7 +138,7 @@ const FormBCE = ({
   const demandeur = total.find(
     (e: any) => e.id === formikProps.values.demandeur
   )?.lieuTravail;
-  if (demandeur) {
+  if (demandeur && workplaces.find((e: any) => e.id === demandeur)) {
     const lieuTravail = workplaces.find((e: any) => e.id === demandeur)?.name;
     let referenceTana = "BCE/TNR-001";
     let referenceDiego = "BCE/DS-001";
@@ -233,6 +233,7 @@ const FormBCE = ({
               variant="outlined"
               label="Référence"
               name="ref"
+              value={formikProps.values.ref}
               disabled
             />
           </FormControl>
