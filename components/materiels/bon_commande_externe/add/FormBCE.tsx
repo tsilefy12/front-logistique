@@ -135,29 +135,31 @@ const FormBCE = ({
     }
   }, [formikProps.values.grant]);
 
-  const lieu = total.find(
-    (e: any) => e.id === formikProps.values.demandeur
-  )?.lieuTravail;
+  useEffect(() => {
+    const lieu = total.find(
+      (e: any) => e.id === formikProps.values.demandeur
+    )?.lieuTravail;
 
-  const referenceTana = "BCE/TNR-001";
-  const referenceDiego = "BCE/DS-001";
-  const referenceAmbatondrazaka = "BCE/AZK-001";
-  const referenceMoramanga = "BCE/MRG-001";
-  const referenceMorondava = "BCE/MRD-001";
+    const referenceTana = "BCE/TNR-001";
+    const referenceDiego = "BCE/DS-001";
+    const referenceAmbatondrazaka = "BCE/AZK-001";
+    const referenceMoramanga = "BCE/MRG-001";
+    const referenceMorondava = "BCE/MRD-001";
 
-  if (lieu === "Antananarivo" || lieu === "Tana") {
-    formikProps.setFieldValue("ref", referenceTana);
-  } else if (lieu === "Diego Garcia") {
-    formikProps.setFieldValue("ref", referenceDiego);
-  } else if (lieu === "Ambatondrazaka") {
-    formikProps.setFieldValue("ref", referenceAmbatondrazaka);
-  } else if (lieu === "Morondava") {
-    formikProps.setFieldValue("ref", referenceMorondava);
-  } else if (lieu === "Mormanga") {
-    formikProps.setFieldValue("ref", referenceMoramanga);
-  } else {
-    formikProps.setFieldValue("ref", `BCE/${lieu!.slice(0, 3)}-001`);
-  }
+    if (lieu === "Antananarivo" || lieu === "Tana") {
+      formikProps.setFieldValue("ref", referenceTana);
+    } else if (lieu === "Diego Garcia") {
+      formikProps.setFieldValue("ref", referenceDiego);
+    } else if (lieu === "Ambatondrazaka") {
+      formikProps.setFieldValue("ref", referenceAmbatondrazaka);
+    } else if (lieu === "Morondava") {
+      formikProps.setFieldValue("ref", referenceMorondava);
+    } else if (lieu === "Mormanga") {
+      formikProps.setFieldValue("ref", referenceMoramanga);
+    } else {
+      formikProps.setFieldValue("ref", `BCE/${lieu!.slice(0, 3)}-001`);
+    }
+  }, [formikProps.values.demandeur]);
   return (
     <Form>
       <NavigationContainer>
