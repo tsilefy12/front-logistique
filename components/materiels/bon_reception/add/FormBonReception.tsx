@@ -105,7 +105,9 @@ const FormBonReception = ({
           prev = Val.payload.articleCommandeBce;
           return prev;
         });
+        formikProps.setFieldValue("reference", response?.ref);
       } else {
+        formikProps.setFieldValue("reference", response?.reference);
         const Val = await dispatch(
           getBonCommandeInterne({
             id,
@@ -202,6 +204,7 @@ const FormBonReception = ({
             variant="outlined"
             label="Référence"
             name="reference"
+            disabled
           />
         </FormControl>
         <FormControl fullWidth>

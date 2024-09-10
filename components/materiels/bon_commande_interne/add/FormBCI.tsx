@@ -35,6 +35,7 @@ import OSDatePicker from "../../../shared/date/OSDatePicker";
 import { getPrograms } from "../../../../redux/features/program/programSlice";
 import { cancelEdit } from "../../../../redux/features/bon_commande_interne/bonCommandeInterneSlice";
 import useFetchPrestataire from "../../bon_commande_externe/hooks/getPrestataire";
+import useFetchWorkPlace from "../../bon_commande_externe/hooks/useFetchWorkPlace";
 
 const FormBCI = ({
   formikProps,
@@ -63,13 +64,15 @@ const FormBCI = ({
   const { prestataireListe } = useAppSelector(
     (state: any) => state.prestataire
   );
-
+  const { workplaces } = useAppSelector((state) => state.workplace);
+  const fetchWorkPlace = useFetchWorkPlace();
   const total = [
     ...employees.map((i: any) => {
       return {
         id: i.id,
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "employe",
+        lieuTravail: i.workplaceId,
       };
     }),
     ...interns.map((i: any) => {
@@ -77,6 +80,7 @@ const FormBCI = ({
         id: i.id,
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "intern",
+        lieuTravail: i.workplaceId,
       };
     }),
     ...prestataireListe.map((i: any) => {
@@ -84,6 +88,7 @@ const FormBCI = ({
         id: i.id,
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "prestataire",
+        lieuTravail: i.workplaceId,
       };
     }),
   ];
@@ -99,6 +104,7 @@ const FormBCI = ({
   useEffect(() => {
     fetchUtilsData();
     fetchPrestataire();
+    fetchWorkPlace();
   }, []);
 
   useEffect(() => {
@@ -123,6 +129,36 @@ const FormBCI = ({
       );
     }
   }, [formikProps.values.grant]);
+
+  useEffect(() => {
+    const demandeur = total.find(
+      (e: any) => e.id === formikProps.values.demandeur
+    )?.lieuTravail;
+    if (demandeur) {
+      const lieuTravail = workplaces.find((e: any) => e.id === demandeur)?.name;
+      let referenceTana = "BCI/TNR-001";
+      let referenceDiego = "BCI/DS-001";
+      let referenceAmbatondrazaka = "BCI/AZK-001";
+      let referenceMoramanga = "BCI/MRG-001";
+      let referenceMorondava = "BCI/MRD-001";
+      if (lieuTravail === "Antananarivo" || lieuTravail === "Tana") {
+        formikProps.setFieldValue("reference", referenceTana);
+      } else if (lieuTravail === "Diego Garcia") {
+        formikProps.setFieldValue("reference", referenceDiego);
+      } else if (lieuTravail === "Ambatondrazaka") {
+        formikProps.setFieldValue("reference", referenceAmbatondrazaka);
+      } else if (lieuTravail === "Morondava") {
+        formikProps.setFieldValue("reference", referenceMorondava);
+      } else if (lieuTravail === "Mormanga") {
+        formikProps.setFieldValue("reference", referenceMoramanga);
+      } else {
+        formikProps.setFieldValue(
+          "reference",
+          `BCI/${lieuTravail!.slice(0, 3)}-001`
+        );
+      }
+    }
+  }, [formikProps.values.demandeur, total, workplaces]);
   return (
     <Form>
       <NavigationContainer>

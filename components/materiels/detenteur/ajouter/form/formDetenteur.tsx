@@ -38,6 +38,7 @@ import Moment from "react-moment";
 import { useRouter } from "next/router";
 import { getPrograms } from "../../../../../redux/features/program/programSlice";
 import useFetchPrestataire from "../../../bon_commande_externe/hooks/getPrestataire";
+import useFetchWorkPlace from "../../../bon_commande_externe/hooks/useFetchWorkPlace";
 
 const FormDetenteur = ({
   formikProps,
@@ -59,7 +60,8 @@ const FormDetenteur = ({
   const { prestataireListe } = useAppSelector(
     (state: any) => state.prestataire
   );
-
+  const { workplaces } = useAppSelector((state) => state.workplace);
+  const fetchWorkPlace = useFetchWorkPlace();
   const total = [
     ...employees.map((i: any) => {
       return {
@@ -68,6 +70,7 @@ const FormDetenteur = ({
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "employe",
         contact: i.phone,
+        lieuTravail: i.workplaceId,
       };
     }),
     ...interns.map((i: any) => {
@@ -77,6 +80,7 @@ const FormDetenteur = ({
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "intern",
         contact: i.phone,
+        lieuTravail: i.workplaceId,
       };
     }),
     ...prestataireListe.map((i: any) => {
@@ -86,6 +90,7 @@ const FormDetenteur = ({
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "prestataire",
         contact: i.phone,
+        lieuTravail: i.workplaceId,
       };
     }),
   ];
@@ -98,6 +103,7 @@ const FormDetenteur = ({
     dispatch(getInterns({}));
     dispatch(getPrograms({}));
     fetchPrestataire();
+    fetchWorkPlace();
   };
 
   useEffect(() => {
@@ -133,6 +139,37 @@ const FormDetenteur = ({
       formikProps.setFieldValue("contact", Val?.contact);
     }
   }, [formikProps.values.name]);
+
+  useEffect(() => {
+    const name = total.find(
+      (e: any) => e.id === formikProps.values.name
+    )?.lieuTravail;
+    if (name) {
+      const lieuTravail = workplaces.find((e: any) => e.id === name)?.name;
+      let referenceTana = "DEM/TNR-001";
+      let referenceDiego = "DEM/DS-001";
+      let referenceAmbatondrazaka = "BCI/AZK-001";
+      let referenceMoramanga = "DEM/MRG-001";
+      let referenceMorondava = "DEM/MRD-001";
+      if (lieuTravail === "Antananarivo" || lieuTravail === "Tana") {
+        formikProps.setFieldValue("reference", referenceTana);
+      } else if (lieuTravail === "Diego Garcia") {
+        formikProps.setFieldValue("reference", referenceDiego);
+      } else if (lieuTravail === "Ambatondrazaka") {
+        formikProps.setFieldValue("reference", referenceAmbatondrazaka);
+      } else if (lieuTravail === "Morondava") {
+        formikProps.setFieldValue("reference", referenceMorondava);
+      } else if (lieuTravail === "Mormanga") {
+        formikProps.setFieldValue("reference", referenceMoramanga);
+      } else {
+        formikProps.setFieldValue(
+          "reference",
+          `DEM/${lieuTravail!.slice(0, 3)}-001`
+        );
+      }
+    }
+  }, [formikProps.values.name, total, workplaces]);
+
   return (
     <Form>
       <NavigationContainer>

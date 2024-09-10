@@ -61,7 +61,6 @@ const FormBonCommandeFournisseur = ({
     fetchUtilsData();
     fetchModePaiementList();
   }, []);
-
   return (
     <Form>
       <NavigationContainer>
