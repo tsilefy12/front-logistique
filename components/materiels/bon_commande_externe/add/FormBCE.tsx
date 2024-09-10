@@ -135,15 +135,18 @@ const FormBCE = ({
     }
   }, [formikProps.values.grant]);
 
-  const demandeur = total.find(
+  const idLieu = total.find(
     (e: any) => e.id === formikProps.values.demandeur
   )?.lieuTravail;
-  const lieu = workplaces.find((e: any) => e.id === demandeur)?.name;
+
+  const lieu = workplaces.find((e: any) => e.id == idLieu)?.name;
+
   let referenceTana = "BCE/TNR-001";
   let referenceDiego = "BCE/DS-001";
   let referenceAmbatondrazaka = "BCE/AZK-001";
   let referenceMoramanga = "BCE/MRG-001";
   let referenceMorondava = "BCE/MRD-001";
+
   if (lieu === "Antananarivo" || lieu === "Tana") {
     formikProps.setFieldValue("ref", referenceTana);
   } else if (lieu === "Diego") {
