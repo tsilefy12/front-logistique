@@ -138,26 +138,24 @@ const FormBCE = ({
   const demandeur = total.find(
     (e: any) => e.id === formikProps.values.demandeur
   )?.lieuTravail;
-  if (demandeur && workplaces.find((e: any) => e.id === demandeur)) {
-    const lieuTravail = workplaces.find((e: any) => e.id === demandeur)?.name;
-    let referenceTana = "BCE/TNR-001";
-    let referenceDiego = "BCE/DS-001";
-    let referenceAmbatondrazaka = "BCE/AZK-001";
-    let referenceMoramanga = "BCE/MRG-001";
-    let referenceMorondava = "BCE/MRD-001";
-    if (lieuTravail === "Antananarivo" || lieuTravail === "Tana") {
-      formikProps.setFieldValue("ref", referenceTana);
-    } else if (lieuTravail === "Diego Garcia") {
-      formikProps.setFieldValue("ref", referenceDiego);
-    } else if (lieuTravail === "Ambatondrazaka") {
-      formikProps.setFieldValue("ref", referenceAmbatondrazaka);
-    } else if (lieuTravail === "Morondava") {
-      formikProps.setFieldValue("ref", referenceMorondava);
-    } else if (lieuTravail === "Mormanga") {
-      formikProps.setFieldValue("ref", referenceMoramanga);
-    } else {
-      formikProps.setFieldValue("ref", `BCE/${lieuTravail!.slice(0, 3)}-001`);
-    }
+  const lieu = workplaces.find((e: any) => e.id === demandeur)?.name;
+  let referenceTana = "BCE/TNR-001";
+  let referenceDiego = "BCE/DS-001";
+  let referenceAmbatondrazaka = "BCE/AZK-001";
+  let referenceMoramanga = "BCE/MRG-001";
+  let referenceMorondava = "BCE/MRD-001";
+  if (lieu === "Antananarivo" || lieu === "Tana") {
+    formikProps.setFieldValue("ref", referenceTana);
+  } else if (lieu === "Diego") {
+    formikProps.setFieldValue("ref", referenceDiego);
+  } else if (lieu === "Ambatondrazaka") {
+    formikProps.setFieldValue("ref", referenceAmbatondrazaka);
+  } else if (lieu === "Morondava") {
+    formikProps.setFieldValue("ref", referenceMorondava);
+  } else if (lieu === "Moramanga") {
+    formikProps.setFieldValue("ref", referenceMoramanga);
+  } else {
+    formikProps.setFieldValue("ref", `BCE/${lieu!.slice(0, 3)}-001`);
   }
 
   return (
