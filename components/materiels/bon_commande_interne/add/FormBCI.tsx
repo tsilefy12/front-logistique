@@ -241,6 +241,7 @@ const FormBCI = ({
               label="Référence"
               value={formikProps.values.reference}
               name="reference"
+              disabled
             />
           </FormControl>
           <FormControl fullWidth>

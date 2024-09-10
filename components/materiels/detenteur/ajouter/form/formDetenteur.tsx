@@ -171,7 +171,7 @@ const FormDetenteur = ({
     } else {
       formikProps.setFieldValue("reference", "");
     }
-  }, [formikProps.values.expediteur]);
+  }, [formikProps.values.name]);
 
   return (
     <Form>
@@ -222,6 +222,7 @@ const FormDetenteur = ({
           name="reference"
           value={formikProps.values.reference}
           variant="outlined"
+          disabled
         />
 
         <Typography variant="h6">Detenteur</Typography>
