@@ -89,27 +89,36 @@ const FormBCE = ({
   // console.log(formikProps.values.demandeur);
   const total = [
     ...employees.map((i: any) => {
+      const lieuTravail =
+        workplaces.find((e: any) => e.id === i.workplaceId)?.name ||
+        "Non spécifié";
       return {
         id: i.id,
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "employe",
-        lieuTravail: workplaces.find((e: any) => e.id === i.workplaceId)?.name,
+        lieuTravail: lieuTravail,
       };
     }),
     ...interns.map((i: any) => {
+      const lieuTravail =
+        workplaces.find((e: any) => e.id === i.workplaceId)?.name ||
+        "Non spécifié";
       return {
         id: i.id,
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "intern",
-        lieuTravail: workplaces.find((e: any) => e.id === i.workplaceId)?.name,
+        lieuTravail: lieuTravail,
       };
     }),
     ...prestataireListe.map((i: any) => {
+      const lieuTravail =
+        workplaces.find((e: any) => e.id === i.workplaceId)?.name ||
+        "Non spécifié";
       return {
         id: i.id,
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "prestataire",
-        lieuTravail: workplaces.find((e: any) => e.id === i.workplaceId)?.name,
+        lieuTravail: lieuTravail,
       };
     }),
   ];
@@ -136,7 +145,7 @@ const FormBCE = ({
   }, [formikProps.values.grant]);
 
   useEffect(() => {
-    const lieu = total.find(
+    const lieu: any = total.find(
       (e: any) => e.id === formikProps.values.demandeur
     )?.lieuTravail;
 
@@ -146,20 +155,25 @@ const FormBCE = ({
     const referenceMoramanga = "BCE/MRG-001";
     const referenceMorondava = "BCE/MRD-001";
 
-    if (lieu === "Antananarivo" || lieu === "Tana") {
-      formikProps.setFieldValue("ref", referenceTana);
-    } else if (lieu === "Diego Garcia") {
-      formikProps.setFieldValue("ref", referenceDiego);
-    } else if (lieu === "Ambatondrazaka") {
-      formikProps.setFieldValue("ref", referenceAmbatondrazaka);
-    } else if (lieu === "Morondava") {
-      formikProps.setFieldValue("ref", referenceMorondava);
-    } else if (lieu === "Mormanga") {
-      formikProps.setFieldValue("ref", referenceMoramanga);
+    if (lieu) {
+      if (lieu === "Antananarivo" || lieu === "Tana") {
+        formikProps.setFieldValue("ref", referenceTana);
+      } else if (lieu === "Diego Garcia") {
+        formikProps.setFieldValue("ref", referenceDiego);
+      } else if (lieu === "Ambatondrazaka") {
+        formikProps.setFieldValue("ref", referenceAmbatondrazaka);
+      } else if (lieu === "Morondava") {
+        formikProps.setFieldValue("ref", referenceMorondava);
+      } else if (lieu === "Moramanga") {
+        formikProps.setFieldValue("ref", referenceMoramanga);
+      } else {
+        formikProps.setFieldValue("ref", `BCE/${lieu.slice(0, 3)}-001`);
+      }
     } else {
-      formikProps.setFieldValue("ref", `BCE/${lieu!.slice(0, 3)}-001`);
+      formikProps.setFieldValue("ref", "BCE/UNKNOWN");
     }
   }, [formikProps.values.demandeur]);
+
   return (
     <Form>
       <NavigationContainer>
