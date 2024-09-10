@@ -72,6 +72,7 @@ const FormDetenteur = ({
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "employe",
         lieuTravail: lieuTravail,
+        contact: i.phone,
       };
     }),
     ...interns.map((i: any) => {
@@ -83,6 +84,7 @@ const FormDetenteur = ({
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "intern",
         lieuTravail: lieuTravail,
+        contact: i.phone,
       };
     }),
     ...prestataireListe.map((i: any) => {
@@ -94,6 +96,7 @@ const FormDetenteur = ({
         name: i.matricule + " " + i.name + " " + i.surname,
         type: "prestataire",
         lieuTravail: lieuTravail,
+        contact: i.phone,
       };
     }),
   ];
