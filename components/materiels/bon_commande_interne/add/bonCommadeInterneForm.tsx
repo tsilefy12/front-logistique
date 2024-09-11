@@ -154,6 +154,8 @@ export default function BonCommandeInterneForm() {
             reference: Yup.string().required("Champ obligatoire"),
             numBonCommande: Yup.string().required("Champ obligatoire"),
             observation: Yup.string().required("Champ obligatoire"),
+            grant: Yup.string().required("Champ obligatoire"),
+            ligneBudgetaire: Yup.string().required("Champ obligatoire"),
           })}
           onSubmit={(value: any, action: any) => {
             handleSubmit(value);

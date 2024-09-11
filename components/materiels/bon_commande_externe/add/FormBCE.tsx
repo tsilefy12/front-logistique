@@ -241,6 +241,17 @@ const FormBCE = ({
           spacing={2}
         >
           <FormControl fullWidth>
+            <OSSelectField
+              id="outlined-basic"
+              label="Demandeur"
+              name="demandeur"
+              options={total}
+              dataKey={["name"]}
+              valueKey="id"
+              onChange={(e: any) => setId(e.target.value)}
+            />
+          </FormControl>
+          <FormControl fullWidth>
             <OSTextField
               fullWidth
               id="outlined-basic"
@@ -251,15 +262,6 @@ const FormBCE = ({
               disabled
             />
           </FormControl>
-          <FormControl fullWidth>
-            <OSTextField
-              fullWidth
-              id="outlined-basic"
-              variant="outlined"
-              label="Objet"
-              name="objet"
-            />
-          </FormControl>
         </Stack>
         <Stack
           direction="row"
@@ -268,14 +270,12 @@ const FormBCE = ({
           spacing={2}
         >
           <FormControl fullWidth>
-            <OSSelectField
+            <OSTextField
+              fullWidth
               id="outlined-basic"
-              label="Demandeur"
-              name="demandeur"
-              options={total}
-              dataKey={["name"]}
-              valueKey="id"
-              onChange={(e: any) => setId(e.target.value)}
+              variant="outlined"
+              label="Objet"
+              name="objet"
             />
           </FormControl>
           <FormControl fullWidth>

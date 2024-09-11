@@ -165,20 +165,20 @@ const FormBonTransfert = ({
 
     if (lieu) {
       if (lieu === "Antananarivo" || lieu === "Tana") {
-        formikProps.setFieldValue("ref", referenceTana);
+        formikProps.setFieldValue("reference", referenceTana);
       } else if (lieu === "Diego Garcia") {
-        formikProps.setFieldValue("ref", referenceDiego);
+        formikProps.setFieldValue("reference", referenceDiego);
       } else if (lieu === "Ambatondrazaka") {
-        formikProps.setFieldValue("ref", referenceAmbatondrazaka);
+        formikProps.setFieldValue("reference", referenceAmbatondrazaka);
       } else if (lieu === "Morondava") {
-        formikProps.setFieldValue("ref", referenceMorondava);
+        formikProps.setFieldValue("reference", referenceMorondava);
       } else if (lieu === "Moramanga") {
-        formikProps.setFieldValue("ref", referenceMoramanga);
+        formikProps.setFieldValue("reference", referenceMoramanga);
       } else {
-        formikProps.setFieldValue("ref", `BCT/${lieu.slice(0, 3)}-001`);
+        formikProps.setFieldValue("reference", `BCT/${lieu.slice(0, 3)}-001`);
       }
     } else {
-      formikProps.setFieldValue("ref", "BCT/UNKNOWN");
+      formikProps.setFieldValue("reference", "");
     }
   }, [formikProps.values.expediteur]);
   return (
@@ -246,16 +246,6 @@ const FormBonTransfert = ({
           spacing={2}
         >
           <FormControl fullWidth>
-            <OSTextField
-              fullWidth
-              id="outlined-basic"
-              variant="outlined"
-              label="Référence"
-              value={formikProps.values.reference}
-              name="reference"
-            />
-          </FormControl>
-          <FormControl fullWidth>
             <OSSelectField
               id="outlined-basic"
               label="Expéditeur"
@@ -263,6 +253,16 @@ const FormBonTransfert = ({
               options={total}
               dataKey={["name"]}
               valueKey="id"
+            />
+          </FormControl>
+          <FormControl fullWidth>
+            <OSTextField
+              fullWidth
+              id="outlined-basic"
+              variant="outlined"
+              label="Référence"
+              value={formikProps.values.reference}
+              name="reference"
             />
           </FormControl>
           <FormControl fullWidth>

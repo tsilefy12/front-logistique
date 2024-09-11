@@ -234,6 +234,16 @@ const FormBCI = ({
           spacing={2}
         >
           <FormControl fullWidth>
+            <OSSelectField
+              id="outlined-basic"
+              label="Demandeur"
+              name="demandeur"
+              options={total}
+              dataKey={["name"]}
+              valueKey="id"
+            />
+          </FormControl>
+          <FormControl fullWidth>
             <OSTextField
               fullWidth
               id="outlined-basic"
@@ -242,15 +252,6 @@ const FormBCI = ({
               value={formikProps.values.reference}
               name="reference"
               disabled
-            />
-          </FormControl>
-          <FormControl fullWidth>
-            <OSTextField
-              fullWidth
-              id="outlined-basic"
-              variant="outlined"
-              label="N° Bon Commande"
-              name="numBonCommande"
             />
           </FormControl>
         </Stack>
@@ -285,13 +286,12 @@ const FormBCI = ({
           </FormControl>
         </Stack>
         <FormControl fullWidth>
-          <OSSelectField
+          <OSTextField
+            fullWidth
             id="outlined-basic"
-            label="Demandeur"
-            name="demandeur"
-            options={total}
-            dataKey={["name"]}
-            valueKey="id"
+            variant="outlined"
+            label="N° Bon Commande"
+            name="numBonCommande"
           />
         </FormControl>
         <OSTextField
