@@ -1,10 +1,9 @@
 import { Container } from "@mui/material";
 import Head from "next/head";
 import React from "react";
-import Index from "../../../../../components/Order-Supply-And-Consumable/[id]/edit/Index";
 import useBasePath from "../../../../../hooks/useBasePath";
 import BackOfficeLayout from "../../../../../layouts/backOffice";
-import BonCommandeExterneForm from "../../../../../components/materiels/bon_commande_externe/add/bonCommadeExterneForm";
+import FormBCE from "../../../../../components/materiels/bon_commande_externe/add/bonCommadeExterneForm";
 const Edit = () => {
   const basePath = useBasePath();
   return (
@@ -15,7 +14,7 @@ const Edit = () => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
       </Head>
       <Container maxWidth="xl">
-        <BonCommandeExterneForm />
+        <FormBCE />
       </Container>
     </BackOfficeLayout>
   );
