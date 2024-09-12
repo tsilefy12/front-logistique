@@ -109,7 +109,7 @@ const FormPv = ({
   const optionsOffres = valuesArticle.map((item: any, index: any) => ({
     index: index,
     value: item.fournisseur,
-    label: Offre N°${index + 1} : ${item.fournisseurName},
+    label: `Offre N°${index + 1} : ${item.fournisseurName}`,
   }));
 
   useEffect(() => {
@@ -193,7 +193,6 @@ const FormPv = ({
   useEffect(() => {
     fetchUtilsData();
   }, []);
-  const [selectedEmployes, setSelectedEmployes] = useState<any[]>([]);
 
   return (
     <Form>
