@@ -104,7 +104,7 @@ const ListTransportExterne = () => {
       <NavigationContainer>
         <SectionNavigation>
           {validate("Logistiques Mat", "C") && (
-            <Link href={"/materiel_de_transport/addMaterielExterne"}>
+            <Link href={"/materiel_de_transport/location/addMaterielExterne"}>
               <Button variant="contained" startIcon={<Add />} size="small">
                 Ajouter
               </Button>

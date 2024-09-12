@@ -323,11 +323,11 @@ const DetailsPvComparaison = () => {
                             {item.vendor?.name}
                           </TableCell>
                           <TableCell align="left">{item.modePaie}</TableCell>
-                          <TableCell align="left">
-                            <Stack direction="column" gap={1} flexWrap={"wrap"}>
-                              <span>{item.designation}</span>
-                              <br />
-                            </Stack>
+                          <TableCell
+                            align="left"
+                            sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}
+                          >
+                            {item.designation}
                           </TableCell>
                           <TableCell align="left">
                             {formatMontant(item.amount!)}
