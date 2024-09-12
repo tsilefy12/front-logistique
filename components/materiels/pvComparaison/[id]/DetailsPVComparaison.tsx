@@ -152,12 +152,10 @@ const DetailsPvComparaison = () => {
                     </Typography>
                     <Typography variant="body1" color="gray">
                       {pvComparaison.bce
-                        ? pvComparaison.bonDeCommandeExterne?.articleCommandeBce?.find(
-                            (e: any) => e.id === pvComparaison.materiel
-                          )?.designation
-                        : pvComparaison.bonDeCommandeInterne?.ArticleCommande?.find(
-                            (e: any) => e.id === pvComparaison.materiel
-                          )?.designation}
+                        ? pvComparaison.bonDeCommandeExterne?.articleCommandeBce
+                            ?.designation
+                        : pvComparaison.bonDeCommandeInterne?.ArticleCommande
+                            ?.designation}
                     </Typography>
                   </InfoItems>
                 </Grid>

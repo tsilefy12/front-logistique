@@ -66,6 +66,7 @@ const FormPv = ({
   const [idValues, setIdValues] = useState<any>({});
 
   const [materiel, setMateriel] = useState<any[]>([]);
+  const [selectedMateriel, setSelectedMateriel] = useState<any[]>([]);
   const { fournisseurList } = useAppSelector((state) => state.fournisseur);
   const { grantList } = useAppSelector((state) => state.grant);
   const { budgetLineList } = useAppSelector((state) => state.lineBugetaire);
@@ -195,11 +196,15 @@ const FormPv = ({
   useEffect(() => {
     fetchUtilsData();
   }, []);
-  const [selectedMateriel, setSelectedMateriel] = useState<any[]>([]);
+
   console.log("selected materiel", selectedMateriel);
-  formikProps.setFieldValue("designation", [
-    ...selectedMateriel.map((e: any) => e.id),
-  ]);
+  useEffect(() => {
+    formikProps.setFieldValue(
+      "designation",
+      selectedMateriel.map((e: any) => e.designation)
+    );
+  }, [selectedMateriel]);
+  console.log("values ", formikProps.values.designation);
   return (
     <Form>
       <NavigationContainer>
