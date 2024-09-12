@@ -152,8 +152,8 @@ const DetailsPvComparaison = () => {
                     </Typography>
                     <Typography variant="body1" color="gray">
                       {pvComparaison.tableComparaison?.map((item: any) => (
-                        <Stack direction="column" spacing={1} key={item.id}>
-                          <span>{item.designation}</span>
+                        <Stack direction="column" gap={1} key={item.id}>
+                          <span>{item.designation.join("; ")}</span>
                         </Stack>
                       ))}
                     </Typography>
@@ -324,7 +324,7 @@ const DetailsPvComparaison = () => {
                           </TableCell>
                           <TableCell align="left">{item.modePaie}</TableCell>
                           <TableCell align="left">
-                            <Stack direction="column" spacing={1}>
+                            <Stack direction="column" gap={1} flexWrap={"wrap"}>
                               <span>{item.designation}</span>
                             </Stack>
                           </TableCell>
