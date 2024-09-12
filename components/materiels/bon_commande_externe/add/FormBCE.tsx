@@ -179,19 +179,18 @@ const FormBCE = ({
       <NavigationContainer>
         <SectionNavigation>
           <Stack flexDirection={"row"}>
-            <Link href="/materiels/bon_commande_externe">
-              <Button
-                color="info"
-                variant="text"
-                startIcon={<ArrowBack />}
-                onClick={() => {
-                  formikProps.resetForm();
-                  dispatch(cancelEdit());
-                }}
-              >
-                Retour
-              </Button>
-            </Link>
+            <Button
+              color="info"
+              variant="text"
+              startIcon={<ArrowBack />}
+              onClick={() => {
+                dispatch(cancelEdit());
+                route.back();
+                formikProps.resetForm();
+              }}
+            >
+              Retour
+            </Button>
             <Button
               variant="contained"
               color="primary"
