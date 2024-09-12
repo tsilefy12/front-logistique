@@ -169,7 +169,7 @@ const ListTransport = () => {
                               {row?.fournisseur ? row?.vendor?.name : ""}
                             </TableCell>
 
-                            <TableCell align="left">{row.status}</TableCell>
+                            {/* <TableCell align="left">{row.status}</TableCell> */}
 
                             <TableCell align="right" width={"150px"}>
                               <BtnActionContainer

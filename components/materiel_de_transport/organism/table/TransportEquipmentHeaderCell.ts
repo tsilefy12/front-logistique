@@ -31,10 +31,10 @@ export const transportEquipmentHeadCells: readonly HeadCell[] = [
     disablePadding: false,
     label: "Fournisseur",
   },
-  {
-    id: "status",
-    numeric: false,
-    disablePadding: false,
-    label: "Statut",
-  },
+  // {
+  //   id: "status",
+  //   numeric: false,
+  //   disablePadding: false,
+  //   label: "Statut",
+  // },
 ];

@@ -3,37 +3,30 @@ import {
   Container,
   styled,
   Typography,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Stack,
-  Grid,
   Divider,
-  TextField,
 } from "@mui/material";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import ArrowBack from "@mui/icons-material/ArrowBack";
-import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { Check, Close, Save } from "@mui/icons-material";
 import { Form, Formik } from "formik";
-import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import * as Yup from "yup";
-import OSTextField from "../../shared/input copy/OSTextField";
-import OSSelectField from "../../shared/select/OSSelectField";
-import { cancelEdit } from "../../../redux/features/transportation_equipment/transportationEquipmentSlice";
 import { useRouter } from "next/router";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
+import useFetchLocalisationList from "../../../configurations/localisation/hooks/useFetchUniteStock";
+import useFetchVendors from "../../../vendor/hooks/useFetchVendors";
+import { getTypeEquipmentList } from "../../../../redux/features/typeEquipment";
 import {
   createTransportEquipment,
   updateTransportationEquipment,
-} from "../../../redux/features/transportation_equipment";
-import OSDatePicker from "../../shared/date/OSDatePicker";
-import useFetchVendors from "../../vendor/hooks/useFetchVendors";
-import { getTypeEquipmentList } from "../../../redux/features/typeEquipment";
-import useFetchLocalisationList from "../../configurations/localisation/hooks/useFetchUniteStock";
+} from "../../../../redux/features/transportation_equipment";
+import { cancelEdit } from "../../../../redux/features/transportation_equipment/transportationEquipmentSlice";
+import OSTextField from "../../../shared/input/OSTextField";
+import OSSelectField from "../../../shared/select/OSSelectField";
+import OSDatePicker from "../../../shared/date/OSDatePicker";
 
-const MaterielTransportForm = () => {
+const AddMaterielExterne = () => {
   const route = useRouter();
   const dispatch = useAppDispatch();
   const { vendors } = useAppSelector((state) => state.vendor);
@@ -53,7 +46,7 @@ const MaterielTransportForm = () => {
   );
 
   const handleSubmit = async (values: any) => {
-    values.status = "Location interne";
+    values.status = "Location externe";
     try {
       if (isEditing) {
         await dispatch(
@@ -66,7 +59,7 @@ const MaterielTransportForm = () => {
         values.reste = values.reservoir;
         await dispatch(createTransportEquipment(values));
       }
-      route.push("/materiel_de_transport");
+      route.push("/materiel_de_transport/location_externe");
     } catch (error) {
       console.log("error", error);
     }
@@ -95,7 +88,7 @@ const MaterielTransportForm = () => {
             : "",
           status: isEditing
             ? transportationEquipment.status
-            : "Location interne",
+            : "Location externe",
           dateAcquisition: isEditing
             ? transportationEquipment.dateAcquisition
             : new Date(),
@@ -149,7 +142,7 @@ const MaterielTransportForm = () => {
               <NavigationContainer>
                 <SectionNavigation>
                   <Stack flexDirection={"row"}>
-                    <Link href="/materiel_de_transport">
+                    <Link href="/materiel_de_transport/location_externe">
                       <Button
                         color="info"
                         variant="text"
@@ -188,6 +181,7 @@ const MaterielTransportForm = () => {
                   </Stack>
                   <Typography variant="h4">
                     {isEditing ? "Modifier" : "Ajouter"} matériel de transport
+                    externe
                   </Typography>
                 </SectionNavigation>
                 <Divider />
@@ -225,14 +219,14 @@ const MaterielTransportForm = () => {
                 </Stack>
                 <Stack direction="row" spacing={2} margin={2}>
                   {/* <OSSelectField
-                    id="outlined-basic"
-                    label="Statut"
-                    variant="outlined"
-                    options={ListStatus}
-                    dataKey="name"
-                    valueKey="id"
-                    name="status"
-                  /> */}
+                      id="outlined-basic"
+                      label="Statut"
+                      variant="outlined"
+                      options={ListStatus}
+                      dataKey="name"
+                      valueKey="id"
+                      name="status"
+                    /> */}
                   <OSSelectField
                     id="outlined-basic"
                     label="Localisation"
@@ -330,7 +324,7 @@ const MaterielTransportForm = () => {
   );
 };
 
-export default MaterielTransportForm;
+export default AddMaterielExterne;
 
 export const CustomStack = styled(Stack)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {

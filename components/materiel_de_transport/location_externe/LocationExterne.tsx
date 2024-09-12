@@ -104,7 +104,7 @@ const ListTransportExterne = () => {
       <NavigationContainer>
         <SectionNavigation>
           {validate("Logistiques Mat", "C") && (
-            <Link href={"/materiel_de_transport/add"}>
+            <Link href={"/materiel_de_transport/addMaterielExterne"}>
               <Button variant="contained" startIcon={<Add />} size="small">
                 Ajouter
               </Button>
@@ -169,7 +169,7 @@ const ListTransportExterne = () => {
                               {row?.fournisseur ? row?.vendor?.name : ""}
                             </TableCell>
 
-                            <TableCell align="left">{row.status}</TableCell>
+                            {/* <TableCell align="left">{row.status}</TableCell> */}
 
                             <TableCell align="right" width={"150px"}>
                               <BtnActionContainer
