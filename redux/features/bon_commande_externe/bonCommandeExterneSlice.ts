@@ -17,10 +17,14 @@ const initialState: BonCommandeExternInitialState = {
 
 export const editBonCommandeExterne = createAsyncThunk(
   "fourniture_consommable/editBonCommandeExterne",
-  async (data: { id: string }, thunkAPI) => {
+  async (data: { id: string; args?: any }, thunkAPI) => {
     try {
+      const params = {
+        args: JSON.stringify(data.args),
+      };
       const response = await axios.get(
-        `/logistique/bon-de-commande-externe/${data.id}`
+        `/logistique/bon-de-commande-externe/${data.id}`,
+        { params }
       );
       console.log(response.data);
       return response.data;

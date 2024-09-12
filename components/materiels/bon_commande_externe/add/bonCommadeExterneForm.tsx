@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
@@ -8,6 +8,7 @@ import * as Yup from "yup";
 
 import {
   createBonCommandeExterne,
+  editBonCommandeExterne,
   updateBonCommandeExterne,
 } from "../../../../redux/features/bon_commande_externe/bonCommandeExterneSlice";
 import { createArticleCommandeExterne } from "../../../../redux/features/bon_commande_externe/articleBCESlice";
@@ -19,7 +20,7 @@ import { createFile } from "../../../../redux/features/file/fileSlice";
 export default function BonCommandeExterneForm() {
   const dispatch = useAppDispatch();
   const route = useRouter();
-
+  const { id }: any = route.query;
   const [valuesArticle, setValuesArticle] = useState<any[]>([]);
 
   const { isEditing, bonCommandeExterne } = useAppSelector(
@@ -77,7 +78,33 @@ export default function BonCommandeExterneForm() {
       console.log("error", error);
     }
   };
+  const handleFech = async (id: any) => {
+    try {
+      const Val = await dispatch(
+        editBonCommandeExterne({
+          id,
+          args: {
+            include: {
+              articleCommandeBce: true,
+            },
+          },
+        })
+      );
+      setValuesArticle((prev: any[]) => {
+        console.log(prev);
+        prev = Val.payload.articleCommandeBce;
+        return prev;
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
+  useEffect(() => {
+    if (id) {
+      handleFech(id);
+    }
+  }, [id]);
   return (
     <>
       <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
