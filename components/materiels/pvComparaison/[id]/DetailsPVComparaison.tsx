@@ -153,7 +153,7 @@ const DetailsPvComparaison = () => {
                     <Typography variant="body1" color="gray">
                       {pvComparaison.tableComparaison?.map((item: any) => (
                         <Stack direction="column" gap={1} key={item.id}>
-                          <span>{item.designation.join(",")}</span>
+                          <span>{item.designation.join("; ")}</span>
                         </Stack>
                       ))}
                     </Typography>
@@ -324,15 +324,11 @@ const DetailsPvComparaison = () => {
                           </TableCell>
                           <TableCell align="left">{item.modePaie}</TableCell>
                           <TableCell align="left">
-                            <Stack direction="column" spacing={1}>
-                              {item.designation
-                                .split("\n")
-                                .map((line: any, index: any) => (
-                                  <span key={index}>{line}</span>
-                                ))}
+                            <Stack direction="column" gap={1} flexWrap={"wrap"}>
+                              <span>{item.designation}</span>
+                              <br />
                             </Stack>
                           </TableCell>
-
                           <TableCell align="left">
                             {formatMontant(item.amount!)}
                           </TableCell>
