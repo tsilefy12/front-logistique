@@ -51,11 +51,14 @@ const DetailTransportEquipment = () => {
           justifyContent="space-between"
           sx={{ mb: 2 }}
         >
-          <Link href="//materiel_de_transport">
-            <Button color="info" variant="text" startIcon={<ArrowBackIcon />}>
-              Retour
-            </Button>
-          </Link>
+          <Button
+            color="info"
+            variant="text"
+            startIcon={<ArrowBackIcon />}
+            onClick={() => router.back()}
+          >
+            Retour
+          </Button>
           <Typography variant="h4" color="GrayText">
             Détails matériel de transport
           </Typography>
