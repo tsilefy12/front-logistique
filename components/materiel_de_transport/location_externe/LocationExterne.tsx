@@ -55,7 +55,7 @@ const ListTransportExterne = () => {
   }, [router.query]);
 
   const handleClickEdit = async (id: any) => {
-    router.push(`/materiel_de_transport/${id}/edit`);
+    router.push(`/materiel_de_transport/location/${id}/modif`);
   };
 
   const handleClickDetail = async (id: any) => {
