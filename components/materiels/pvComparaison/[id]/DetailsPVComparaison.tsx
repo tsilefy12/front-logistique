@@ -325,7 +325,7 @@ const DetailsPvComparaison = () => {
                           <TableCell align="left">{item.modePaie}</TableCell>
                           <TableCell align="left">
                             <Stack direction="column" gap={1} flexWrap={"wrap"}>
-                              <span>{item.designation}</span>
+                              <span>{`${item.designation}"\n"`}</span>
                             </Stack>
                           </TableCell>
                           <TableCell align="left">
