@@ -179,7 +179,7 @@ const FormBCE = ({
       <NavigationContainer>
         <SectionNavigation>
           <Stack flexDirection={"row"}>
-            <Link href="logistique/materiels/bon_commande_externe">
+            <Link href="/materiels/bon_commande_externe">
               <Button
                 color="info"
                 variant="text"
