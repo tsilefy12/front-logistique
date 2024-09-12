@@ -1,5 +1,6 @@
 import Delete from "@mui/icons-material/Delete";
 import {
+  Autocomplete,
   Box,
   Button,
   Checkbox,
@@ -19,6 +20,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   Typography,
   styled,
 } from "@mui/material";
@@ -193,7 +195,11 @@ const FormPv = ({
   useEffect(() => {
     fetchUtilsData();
   }, []);
-
+  const [selectedMateriel, setSelectedMateriel] = useState<any[]>([]);
+  console.log("selected materiel", selectedMateriel);
+  formikProps.setFieldValue("designation", [
+    ...selectedMateriel.map((e: any) => e.id),
+  ]);
   return (
     <Form>
       <NavigationContainer>
@@ -458,14 +464,25 @@ const FormPv = ({
                   </TableCell>
                   <TableCell align="left">
                     <FormControl fullWidth>
-                      <OSSelectField
+                      <Autocomplete
+                        multiple
                         id="outlined-basic"
-                        label="Matériel"
-                        name="materiel"
                         options={materiel}
-                        dataKey={["designation"]}
-                        valueKey="id"
-                        type="text"
+                        getOptionLabel={(option) => option.designation}
+                        onChange={(event, newValue) => {
+                          setSelectedMateriel(newValue);
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Matériel"
+                            variant="outlined"
+                          />
+                        )}
+                        value={selectedMateriel}
+                        isOptionEqualToValue={(option, value) =>
+                          option.id === value.id
+                        }
                       />
                     </FormControl>
                   </TableCell>
