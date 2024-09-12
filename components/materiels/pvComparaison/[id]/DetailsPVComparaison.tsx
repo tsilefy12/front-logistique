@@ -151,11 +151,11 @@ const DetailsPvComparaison = () => {
                       Matériel
                     </Typography>
                     <Typography variant="body1" color="gray">
-                      {pvComparaison.bce
-                        ? pvComparaison.bonDeCommandeExterne?.articleCommandeBce
-                            ?.designation
-                        : pvComparaison.bonDeCommandeInterne?.ArticleCommande
-                            ?.designation}
+                      {pvComparaison.tableComparaison?.map((item: any) => (
+                        <Stack direction="column" spacing={1} key={item.id}>
+                          <span>{item.designation}</span>
+                        </Stack>
+                      ))}
                     </Typography>
                   </InfoItems>
                 </Grid>
@@ -323,7 +323,11 @@ const DetailsPvComparaison = () => {
                             {item.vendor?.name}
                           </TableCell>
                           <TableCell align="left">{item.modePaie}</TableCell>
-                          <TableCell align="left">{item.designation}</TableCell>
+                          <TableCell align="left">
+                            <Stack direction="column" spacing={1}>
+                              <span>{item.designation}</span>
+                            </Stack>
+                          </TableCell>
                           <TableCell align="left">
                             {formatMontant(item.amount!)}
                           </TableCell>
