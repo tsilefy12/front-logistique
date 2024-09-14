@@ -151,11 +151,41 @@ const DetailsPvComparaison = () => {
                       Matériel
                     </Typography>
                     <Typography variant="body1" color="gray">
-                      {pvComparaison.tableComparaison?.map((item: any) => (
-                        <Stack direction="column" gap={1} key={item.id}>
-                          <span>{item.designation.join("; ")}</span>
-                        </Stack>
-                      ))}
+                      {(() => {
+                        const displayedValues = new Set<string>();
+
+                        return pvComparaison.tableComparaison?.map(
+                          (item: any) => (
+                            <Stack
+                              direction="column"
+                              gap={1}
+                              key={item.description}
+                            >
+                              <span>
+                                {Array.isArray(item.designation) &&
+                                item.designation.length > 0 ? (
+                                  item.designation
+                                    .filter((line: any) => {
+                                      if (!displayedValues.has(line)) {
+                                        displayedValues.add(line);
+                                        return true;
+                                      }
+                                      return false;
+                                    })
+                                    .map((line: any, index: any) => (
+                                      <span key={index}>
+                                        {line}
+                                        <br />
+                                      </span>
+                                    ))
+                                ) : (
+                                  <span>Aucune donnée</span>
+                                )}
+                              </span>
+                            </Stack>
+                          )
+                        );
+                      })()}
                     </Typography>
                   </InfoItems>
                 </Grid>
@@ -323,11 +353,18 @@ const DetailsPvComparaison = () => {
                             {item.vendor?.name}
                           </TableCell>
                           <TableCell align="left">{item.modePaie}</TableCell>
-                          <TableCell
-                            align="left"
-                            sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}
-                          >
-                            {item.designation}
+                          <TableCell align="left">
+                            {Array.isArray(item.designation) &&
+                            item.designation.length > 0 ? (
+                              item.designation.map((line: any, index: any) => (
+                                <span key={index}>
+                                  {[...new Set([line])].join(", ")}
+                                  <br />
+                                </span>
+                              ))
+                            ) : (
+                              <span>Aucune donnée</span>
+                            )}
                           </TableCell>
                           <TableCell align="left">
                             {formatMontant(item.amount!)}

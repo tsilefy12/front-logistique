@@ -11,6 +11,7 @@ import {
 } from "@react-pdf/renderer";
 import { PvComparaisonItem } from "../../../../redux/features/pvComparaison/pvComparaison.interface";
 import formatMontant from "../../../../hooks/format";
+import { InfoItems } from "../../bon_commande_externe/[id]/DetailsBCE";
 
 function PrintPVComparaison({ pdfData }: { pdfData: any }) {
   return (
@@ -119,13 +120,23 @@ function PrintPVComparaison({ pdfData }: { pdfData: any }) {
             ]}
           >
             <Text style={styles.row1Cadre}>DESIGNATION</Text>
-            {pdfData.tableComparaison?.map((item: any, index: any) => {
-              return (
+            {(() => {
+              return pdfData.tableComparaison?.map((item: any, index: any) => (
                 <Text key={index} style={styles.row2Cadre}>
-                  {item.designation}
+                  {Array.isArray(item.designation) &&
+                  item.designation.length > 0 ? (
+                    item.designation.map((line: any, index: any) => (
+                      <Text key={index}>
+                        {line}
+                        {"\n"}
+                      </Text>
+                    ))
+                  ) : (
+                    <Text>Aucune donnée</Text>
+                  )}
                 </Text>
-              );
-            })}
+              ));
+            })()}
           </View>
         </View>
         <View style={{ width: "100%" }}>

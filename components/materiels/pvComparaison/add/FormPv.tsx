@@ -196,8 +196,6 @@ const FormPv = ({
   useEffect(() => {
     fetchUtilsData();
   }, []);
-
-  console.log("selected materiel", selectedMateriel);
   useEffect(() => {
     formikProps.setFieldValue(
       "designation",
@@ -373,7 +371,19 @@ const FormPv = ({
                       {element.fournisseurName}
                     </TableCell>
                     <TableCell align="left">{element.modePaie}</TableCell>
-                    <TableCell align="left">{element.designation}</TableCell>
+                    <TableCell align="left">
+                      {Array.isArray(element.designation) &&
+                      element.designation.length > 0 ? (
+                        element.designation.map((line: any, index: any) => (
+                          <span key={index}>
+                            {line}
+                            <br />
+                          </span>
+                        ))
+                      ) : (
+                        <span>Aucune donnée</span>
+                      )}
+                    </TableCell>
                     <TableCell align="left">{element.amount}</TableCell>
                     <TableCell
                       align="center"
