@@ -237,7 +237,7 @@ const DetailsPvComparaison = () => {
                 <Grid item xs={12} md={12}>
                   <InfoItems direction="row" spacing={2}>
                     <Typography variant="body1" color="secondary">
-                      Offre retenu
+                      Offre retenue
                     </Typography>
                     <Typography variant="body1" color="gray">
                       Offre n°{offre.index}
@@ -321,7 +321,7 @@ const DetailsPvComparaison = () => {
                   <TableRow>
                     <TableCell></TableCell>
                     <TableCell>Fournisseur</TableCell>
-                    <TableCell align="left">Mode de paie</TableCell>
+                    <TableCell align="left">Mode de paiement</TableCell>
                     <TableCell align="left">Désignation</TableCell>
                     <TableCell align="left">Montant total</TableCell>
                     <TableCell></TableCell>

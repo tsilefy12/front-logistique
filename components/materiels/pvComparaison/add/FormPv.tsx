@@ -355,7 +355,7 @@ const FormPv = ({
               <TableHead>
                 <TableRow>
                   <TableCell>Fournisseur</TableCell>
-                  <TableCell align="left">Mode de paie</TableCell>
+                  <TableCell align="left">Mode de paiement</TableCell>
                   <TableCell align="left">Désignation</TableCell>
                   <TableCell align="left">Montant total</TableCell>
                   <TableCell></TableCell>
@@ -469,7 +469,7 @@ const FormPv = ({
                     <FormControl fullWidth>
                       <OSSelectField
                         id="designation"
-                        label="Mode de paie"
+                        label="Mode de paiement"
                         name="modePaie"
                         options={modePaiements}
                         dataKey={"modePaiementMV"}
@@ -625,7 +625,7 @@ const FormPv = ({
             <FormControl fullWidth>
               <OSSelectField
                 id="outlined-basic"
-                label="Offres Retenu"
+                label="Offre Retenue"
                 name="offreRetenu"
                 options={optionsOffres}
                 dataKey={["label"]}
