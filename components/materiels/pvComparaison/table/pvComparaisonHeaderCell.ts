@@ -17,7 +17,7 @@ export const BonCommandeInterneHeadCells: readonly HeadCell[] = [
         id: "offreRetenu",
         numeric: false,
         disablePadding: false,
-        label: "Offre retenu",
+        label: "Offre retenue",
     },
     {
         id: "modePaie",

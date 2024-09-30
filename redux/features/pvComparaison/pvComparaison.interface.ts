@@ -11,7 +11,6 @@ export interface PvComparaisonItem {
   tableComparaison?: any;
   bonDeCommandeExterne?: any;
   bonDeCommandeInterne?: any;
-  pvComparaisonFournisseur?: any;
 }
 export interface PvComparaisonInitialState {
   pvComparaisons: PvComparaisonItem[];

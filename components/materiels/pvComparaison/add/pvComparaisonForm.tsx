@@ -70,33 +70,48 @@ export default function PvComparaisonForm() {
     }
   };
 
-  // const handleFech = async (id: any) => {
-  //   try {
-  //     const Val = await dispatch(
-  //       editPvComparaison({
-  //         id,
-  //         args: {
-  //           include: {
-  //             pvComparaisonFournisseur: true,
-  //           },
-  //         },
-  //       })
-  //     );
-  //     setValuesArticle((prev: any[]) => {
-  //       console.log(prev);
-  //       prev = Val.payload.pvComparaisonFournisseur;
-  //       return prev;
-  //     });
-  //   } catch (error) {
-  //     console.log("error", error);
-  //   }
-  // };
+  const handleFech = async (id: any) => {
+    try {
+      const Val = await dispatch(
+        editPvComparaison({
+          id,
+        args: {
+          include: {
+            bonDeCommandeExterne: {
+              include: {
+                articleCommandeBce: true,
+              },
+            },
+            bonDeCommandeInterne: {
+              include: {
+                ArticleCommande: true,
+              },
+            },
+            tableComparaison: {
+              include: {
+                offreRetenu: true,
+                vendor: true,
+              },
+            },
+          },
+        },
+        })
+      );
+      setValuesArticle((prev: any[]) => {
+        console.log(prev);
+        prev = Val.payload.tableComparaison;
+        return prev;
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
-  // useEffect(() => {
-  //   if (id) {
-  //     handleFech(id);
-  //   }
-  // }, [id]);
+  useEffect(() => {
+    if (id) {
+      handleFech(id);
+    }
+  }, [id]);
   return (
     <>
       <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
