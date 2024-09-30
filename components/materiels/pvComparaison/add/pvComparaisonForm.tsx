@@ -25,7 +25,7 @@ export default function PvComparaisonForm() {
     try {
       if (isEditing) {
         // await dispatch(
-        //   updateConsumable({
+        //   update({
         //     id: consumable.id!,
         //     consumable: values,
         //   })
@@ -75,38 +75,41 @@ export default function PvComparaisonForm() {
       const Val = await dispatch(
         editPvComparaison({
           id,
-        args: {
-          include: {
-            bonDeCommandeExterne: {
-              include: {
-                articleCommandeBce: true,
+          args: {
+            include: {
+              bonDeCommandeExterne: {
+                include: {
+                  articleCommandeBce: true,
+                },
               },
-            },
-            bonDeCommandeInterne: {
-              include: {
-                ArticleCommande: true,
+              bonDeCommandeInterne: {
+                include: {
+                  ArticleCommande: true,
+                },
               },
-            },
-            tableComparaison: {
-              include: {
-                offreRetenu: true,
-                vendor: true,
+              tableComparaison: {
+                include: {
+                  offreRetenu: true,
+                  vendor: true,
+                },
               },
             },
           },
-        },
         })
       );
-      setValuesArticle((prev: any[]) => {
-        console.log(prev);
-        prev = Val.payload.tableComparaison;
-        return prev;
+  
+      setValuesArticle(() => {
+        const externalArticles = Val.payload.bonDeCommandeExterne?.articleCommandeBce || [];
+        const internalArticles = Val.payload.bonDeCommandeInterne?.ArticleCommande || [];
+        const tableComparisons = Val.payload.tableComparaison || [];
+        const combinedValues = [...externalArticles, ...internalArticles, ...tableComparisons];
+        return combinedValues;
       });
     } catch (error) {
       console.log("error", error);
     }
   };
-
+  
   useEffect(() => {
     if (id) {
       handleFech(id);
@@ -118,11 +121,11 @@ export default function PvComparaisonForm() {
         <Formik
           enableReinitialize={isEditing ? true : false}
           initialValues={{
-            objet: "",
+            objet: isEditing ? pvComparaison.objet : "",
             ref: "",
-            programme: "",
-            grant: 0,
-            ligneBudgetaire: 0,
+            programme: isEditing ? pvComparaison.programme : "",
+            grant: isEditing ? pvComparaison.grant : 0,
+            ligneBudgetaire: isEditing ? pvComparaison.ligneBudgetaire : 0,
             materiel: "",
             fournisseur: "",
             modePaie: "",
