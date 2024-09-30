@@ -16,9 +16,12 @@ const initialState: PvComparaisonInitialState = {
 
 export const editPvComparaison = createAsyncThunk(
     "pvComparaison/editPvComparaison",
-    async (data: { id: string }, thunkAPI) => {
+    async (data: { id: string, args?: any }, thunkAPI) => {
         try {
-            const response = await axios.get(`/logistique/pv-de-comparaison/${data.id}`);
+          const params = {
+            args: JSON.stringify(data.args),
+          };
+            const response = await axios.get(`/logistique/pv-de-comparaison/${data.id}`, { params });
             return response.data;
         } catch (error: any) {
             if (error.response) {

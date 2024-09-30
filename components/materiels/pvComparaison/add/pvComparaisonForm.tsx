@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
@@ -6,7 +6,7 @@ import { Formik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 import * as Yup from "yup";
 
-import { createPvComparaison } from "../../../../redux/features/pvComparaison/pvComparaisonSlice";
+import { createPvComparaison, editPvComparaison } from "../../../../redux/features/pvComparaison/pvComparaisonSlice";
 import { createPvComparaisonFournisseur } from "../../../../redux/features/pvComparaison/pvComparaisonFournisseurSlice";
 import FormPv from "./FormPv";
 import { styled } from "@mui/material";
@@ -15,7 +15,7 @@ import { createOffreRetenu } from "../../../../redux/features/pvComparaison/offr
 export default function PvComparaisonForm() {
   const dispatch = useAppDispatch();
   const route = useRouter();
-
+  const { id } = route.query;
   const [valuesArticle, setValuesArticle] = useState<any[]>([]);
   const { isEditing, pvComparaison } = useAppSelector(
     (state) => state.pvComparaison
@@ -69,6 +69,34 @@ export default function PvComparaisonForm() {
       console.log("error", error);
     }
   };
+
+  const handleFech = async (id: any) => {
+    try {
+      const Val = await dispatch(
+        editPvComparaison({
+          id,
+          args: {
+            include: {
+              pvComparaisonFournisseur: true,
+            },
+          },
+        })
+      );
+      setValuesArticle((prev: any[]) => {
+        console.log(prev);
+        prev = Val.payload.pvComparaisonFournisseur;
+        return prev;
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      handleFech(id);
+    }
+  }, [id]);
   return (
     <>
       <Container maxWidth="xl" sx={{ paddingBottom: 8 }}>
