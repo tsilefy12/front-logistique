@@ -232,7 +232,7 @@ export default function SuplyAndConsumableForm() {
                   />
                   <OSTextField
                     id="outlined-basic"
-                    label="Seuil"
+                    label="Seuil mensuel"
                     name="seuil"
                     type="number"
                     min="0"

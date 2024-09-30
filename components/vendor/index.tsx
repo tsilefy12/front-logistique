@@ -135,7 +135,7 @@ export default function VendorList() {
 
                           <TableCell align="left">{row.email}</TableCell>
 
-                          <TableCell align="left">{row.website}</TableCell>
+                          {/* <TableCell align="left">{row.website}</TableCell> */}
                           <TableCell align="right" width={"150px"}>
                             <BtnActionContainer
                               direction="row"

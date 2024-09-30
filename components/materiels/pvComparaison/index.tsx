@@ -83,7 +83,7 @@ export default function PvComparaisonList() {
     router.push(`/materiels/pv_comparaison//${id}/details`);
   };
   const handleClickEdit = async (id: any) => {
-    router.push(`/materiels/pv_comparaison//${id}/edit`);
+    router.push(`/materiels/pv_comparaison/${id}/edit`);
   };
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>

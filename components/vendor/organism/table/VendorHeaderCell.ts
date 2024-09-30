@@ -25,10 +25,10 @@ export const vendorHeadCells: readonly HeadCell[] = [
 		disablePadding: false,
 		label: "Email",
 	},
-	{
-		id: "stat",
-		numeric: false,
-		disablePadding: false,
-		label: "Stat",
-	},
+	// {
+	// 	id: "stat",
+	// 	numeric: false,
+	// 	disablePadding: false,
+	// 	label: "Stat",
+	// },
 ];

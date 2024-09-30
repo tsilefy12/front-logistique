@@ -298,7 +298,7 @@ const FormBCI = ({
           fullWidth
           id="outlined-basic"
           variant="outlined"
-          label="Observation"
+          label="Justification"
           name="observation"
         />
         <Stack

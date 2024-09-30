@@ -41,6 +41,6 @@ export const suplyAndConsumableHeadCells: readonly HeadCell[] = [
     id: "seuil",
     numeric: false,
     disablePadding: false,
-    label: "Seuil",
+    label: "Seuil mensuel",
   },
 ];
