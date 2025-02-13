@@ -23,16 +23,16 @@ const AuthProvider = ({ children }: any) => {
       function (response: any) {
         return response;
       },
-      async function (error: any) {
-        if (
-          error.response.status === 401 ||
-          error.response.status === 403
-        ) {
-          await dispatch(logout({}));
-          window.location.href = "/login";
-        }
-        return Promise.reject(error);
-      }
+      // async function (error: any) {
+      //   if (
+      //     error.response.status === 401 ||
+      //     error.response.status === 403
+      //   ) {
+      //     await dispatch(logout({}));
+      //     window.location.href = "/login";
+      //   }
+      //   return Promise.reject(error);
+      // }
     );
   };
 
